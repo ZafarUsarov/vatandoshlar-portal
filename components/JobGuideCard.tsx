@@ -2,14 +2,16 @@ import Link from "next/link";
 
 import type { JobGuide } from "@/data/jobs";
 
+import { Badge, Card } from "./ui";
+
 type JobGuideCardProps = {
   guide: JobGuide;
   index?: number;
 };
 
-interface IconProps {
+type IconProps = {
   className?: string;
-}
+};
 
 function ArrowUpRightIcon({ className }: IconProps) {
   return (
@@ -54,25 +56,19 @@ export default function JobGuideCard({
   index = 0,
 }: JobGuideCardProps) {
   const href = `/jobs/${guide.slug}`;
+  const titleId = `job-guide-${guide.id}-title`;
 
   return (
-    <article
+    <Card
+      as="article"
+      variant="interactive"
+      padding="none"
+      aria-labelledby={titleId}
       className="
-        group relative isolate flex h-full min-h-[430px]
+        group relative isolate flex min-h-[430px]
         overflow-hidden rounded-[2rem]
-        border border-slate-200/80
-        bg-white/90
-        p-6
-        shadow-[0_18px_60px_-38px_rgba(15,23,42,0.38)]
-        backdrop-blur-xl
-        transition duration-500
-        hover:-translate-y-1.5
-        hover:border-slate-300
-        hover:shadow-[0_30px_80px_-40px_rgba(15,23,42,0.45)]
-        sm:p-7
-        dark:border-white/[0.08]
-        dark:bg-white/[0.045]
-        dark:hover:border-white/[0.14]
+        bg-surface
+        animate-fade-in-up
       "
       style={{
         animationDelay: `${index * 70}ms`,
@@ -81,13 +77,13 @@ export default function JobGuideCard({
       <div
         aria-hidden="true"
         className="
-          absolute inset-x-0 top-0 h-40
+          pointer-events-none absolute inset-x-0 top-0 h-40
           bg-gradient-to-b
-          from-blue-500/[0.12]
-          via-cyan-500/[0.05]
+          from-brand/15
+          via-brand/5
           to-transparent
-          transition
-          duration-500
+          opacity-80
+          transition-opacity duration-500
           group-hover:opacity-100
         "
       />
@@ -95,10 +91,10 @@ export default function JobGuideCard({
       <div
         aria-hidden="true"
         className="
-          absolute -right-20 -top-20
-          h-56 w-56 rounded-full
-          border border-blue-500/[0.08]
-          transition duration-700
+          pointer-events-none absolute -right-20 -top-20
+          size-56 rounded-full
+          border border-brand/10
+          transition-transform duration-700
           group-hover:scale-125
         "
       />
@@ -106,161 +102,113 @@ export default function JobGuideCard({
       <div
         aria-hidden="true"
         className="
-          absolute -bottom-20 -left-20
-          h-56 w-56 rounded-full
-          bg-blue-500/[0.05]
-          blur-3xl
-          transition duration-700
+          pointer-events-none absolute -bottom-20 -left-20
+          size-56 rounded-full
+          bg-brand/5 blur-3xl
+          transition-transform duration-700
           group-hover:scale-125
         "
       />
 
-      <div className="relative z-10 flex h-full flex-col">
+      <div className="relative z-10 flex w-full flex-col p-6 sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div
+            aria-hidden="true"
             className="
-              flex h-16 w-16 items-center justify-center
-              rounded-2xl
-              border border-blue-200/70
+              flex size-16 shrink-0 items-center justify-center
+              rounded-2xl border border-brand/15
               bg-gradient-to-br
-              from-blue-50
-              to-cyan-50
-              text-2xl
-              shadow-sm
-              transition
-              duration-300
+              from-brand/10
+              to-accent/10
+              text-2xl shadow-sm
+              transition-transform duration-300
               group-hover:scale-110
-              dark:border-blue-400/20
-              dark:bg-blue-500/10
             "
           >
             {guide.icon}
           </div>
 
-          <span
-            className="
-              inline-flex items-center
-              rounded-full
-              border border-slate-200
-              bg-slate-100/80
-              px-3 py-1.5
-              text-xs font-semibold
-              uppercase tracking-[0.12em]
-              text-slate-700
-              dark:border-white/[0.08]
-              dark:bg-white/[0.05]
-              dark:text-slate-300
-            "
+          <Badge
+            variant="neutral"
+            className="max-w-[60%] text-center uppercase tracking-[0.12em]"
           >
             {guide.category}
-          </span>
+          </Badge>
         </div>
 
         <div className="mt-7">
           <h3
+            id={titleId}
             className="
-              text-xl font-semibold
-              leading-8
-              tracking-[-0.02em]
-              text-slate-950
+              text-xl font-bold
+              leading-8 tracking-[-0.02em]
+              text-text-primary
               sm:text-2xl
-              dark:text-white
             "
           >
             <Link
               href={href}
               className="
-                outline-none transition
-                group-hover:text-blue-700
+                outline-none
+                transition-colors duration-200
+                group-hover:text-brand
                 focus-visible:rounded-md
                 focus-visible:ring-2
-                focus-visible:ring-blue-500
+                focus-visible:ring-brand
                 focus-visible:ring-offset-4
-                dark:group-hover:text-blue-300
-                dark:focus-visible:ring-offset-slate-950
+                focus-visible:ring-offset-surface
               "
             >
               <span
                 aria-hidden="true"
-                className="absolute inset-0"
+                className="absolute inset-0 z-20"
               />
 
               {guide.shortTitle}
             </Link>
           </h3>
 
-          <p
-            className="
-              mt-4
-              text-[15px]
-              leading-7
-              text-slate-600
-              dark:text-slate-400
-            "
-          >
+          <p className="mt-4 text-[15px] leading-7 text-text-secondary">
             {guide.description}
           </p>
         </div>
 
-        <ul className="mt-7 space-y-3">
-          {guide.highlights.slice(0, 3).map((highlight) => (
-            <li
-              key={highlight}
-              className="
-                flex items-start gap-3
-                text-sm
-                leading-6
-                text-slate-600
-                dark:text-slate-400
-              "
-            >
-              <span
-                className="
-                  mt-0.5 flex h-6 w-6 shrink-0
-                  items-center justify-center
-                  rounded-full
-                  bg-emerald-100
-                  text-emerald-600
-                  dark:bg-emerald-500/15
-                  dark:text-emerald-400
-                "
+        {guide.highlights.length > 0 && (
+          <ul
+            aria-label="Qo‘llanmaning asosiy mavzulari"
+            className="mt-7 space-y-3"
+          >
+            {guide.highlights.slice(0, 3).map((highlight) => (
+              <li
+                key={highlight}
+                className="flex items-start gap-3 text-sm leading-6 text-text-secondary"
               >
-                <CheckIcon className="h-3.5 w-3.5" />
-              </span>
+                <span
+                  aria-hidden="true"
+                  className="
+                    mt-0.5 flex size-6 shrink-0
+                    items-center justify-center
+                    rounded-full
+                    bg-accent/10 text-accent
+                  "
+                >
+                  <CheckIcon className="size-3.5" />
+                </span>
 
-              <span>{highlight}</span>
-            </li>
-          ))}
-        </ul>
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className="mt-auto pt-8">
-          <div
-            className="
-              flex items-center justify-between gap-4
-              border-t border-slate-200/80
-              pt-5
-              dark:border-white/[0.08]
-            "
-          >
-            <div>
-              <p
-                className="
-                  text-xs font-medium uppercase
-                  tracking-[0.12em]
-                  text-slate-500
-                  dark:text-slate-400
-                "
-              >
+          <div className="flex items-end justify-between gap-5 border-t border-border-default pt-5">
+            <div className="min-w-0">
+              <p className="text-xs font-medium uppercase tracking-[0.12em] text-text-muted">
                 Qo‘llanma
               </p>
 
-              <p
-                className="
-                  mt-1 text-sm font-semibold
-                  text-slate-700
-                  dark:text-slate-300
-                "
-              >
+              <p className="mt-1 text-sm font-semibold text-text-secondary">
                 Bosqichma-bosqich tushuntirilgan
               </p>
             </div>
@@ -268,19 +216,23 @@ export default function JobGuideCard({
             <span
               aria-hidden="true"
               className="
-                flex items-center gap-2
-                text-sm font-semibold
-                text-blue-700
-                transition duration-300
+                flex shrink-0 items-center gap-2
+                text-sm font-semibold text-brand
+                transition-all duration-300
                 group-hover:gap-3
-                dark:text-blue-300
               "
             >
-              Qo‘llanmani ochish
+              <span className="hidden sm:inline">
+                Qo‘llanmani ochish
+              </span>
+
+              <span className="sm:hidden">
+                Ochish
+              </span>
 
               <ArrowUpRightIcon
                 className="
-                  h-4 w-4
+                  size-4
                   transition-transform duration-300
                   group-hover:translate-x-0.5
                   group-hover:-translate-y-0.5
@@ -290,6 +242,6 @@ export default function JobGuideCard({
           </div>
         </div>
       </div>
-    </article>
+    </Card>
   );
 }
