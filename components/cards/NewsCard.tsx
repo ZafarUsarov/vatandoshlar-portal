@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import type { NewsItem } from "@/data/news";
 import { formatNewsDate } from "@/data/news";
+import type { NewsItem } from "@/types/news";
 
 import { Badge, Card } from "../ui";
 
