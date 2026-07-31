@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import EventCard from "@/components/EventCard";
+import EventCard from "@/components/cards/EventCard";
 import EventsEmptyState from "@/components/EventsEmptyState";
 import { getUpcomingEvents } from "@/data/events";
 

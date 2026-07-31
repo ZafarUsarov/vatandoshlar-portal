@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-import type { JobGuide } from "@/data/jobs";
+import type { ServiceItem } from "@/data/services";
 
-import { Badge, Card } from "./ui";
+import { Badge, Card } from "../ui";
 
-type JobGuideCardProps = {
-  guide: JobGuide;
+type ServiceCardProps = {
+  service: ServiceItem;
   index?: number;
 };
 
@@ -32,7 +32,7 @@ function ArrowUpRightIcon({ className }: IconProps) {
   );
 }
 
-function CheckIcon({ className }: IconProps) {
+function LocationIcon({ className }: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -41,22 +41,56 @@ function CheckIcon({ className }: IconProps) {
       viewBox="0 0 24 24"
     >
       <path
-        d="m6.5 12 3.2 3.2L17.5 7.5"
+        d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
+        strokeWidth="1.7"
+      />
+
+      <circle
+        cx="12"
+        cy="10"
+        r="2.2"
+        stroke="currentColor"
+        strokeWidth="1.7"
       />
     </svg>
   );
 }
 
-export default function JobGuideCard({
-  guide,
+function VerifiedIcon({ className }: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="m9.4 3.8 2.6-1.3 2.6 1.3 2.9.4.5 2.9 1.3 2.6L18 12.3l-.5 2.9-2.9.4-2.6 1.3-2.6-1.3-2.9-.4-.5-2.9-1.3-2.6L6 7.1l.5-2.9 2.9-.4Z"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+
+      <path
+        d="m9.2 9.8 1.8 1.8 3.9-4"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+    </svg>
+  );
+}
+
+export default function ServiceCard({
+  service,
   index = 0,
-}: JobGuideCardProps) {
-  const href = `/jobs/${guide.slug}`;
-  const titleId = `job-guide-${guide.id}-title`;
+}: ServiceCardProps) {
+  const href = `/services/${service.slug}`;
+  const titleId = `service-${service.id}-title`;
 
   return (
     <Card
@@ -65,7 +99,7 @@ export default function JobGuideCard({
       padding="none"
       aria-labelledby={titleId}
       className="
-        group relative isolate flex min-h-[430px]
+        group relative isolate flex min-h-[370px]
         overflow-hidden rounded-[2rem]
         bg-surface
         animate-fade-in-up
@@ -77,7 +111,7 @@ export default function JobGuideCard({
       <div
         aria-hidden="true"
         className="
-          pointer-events-none absolute inset-x-0 top-0 h-40
+          pointer-events-none absolute inset-x-0 top-0 h-44
           bg-gradient-to-b
           from-brand/15
           via-brand/5
@@ -92,7 +126,7 @@ export default function JobGuideCard({
         aria-hidden="true"
         className="
           pointer-events-none absolute -right-20 -top-20
-          size-56 rounded-full
+          size-52 rounded-full
           border border-brand/10
           transition-transform duration-700
           group-hover:scale-125
@@ -102,7 +136,7 @@ export default function JobGuideCard({
       <div
         aria-hidden="true"
         className="
-          pointer-events-none absolute -bottom-20 -left-20
+          pointer-events-none absolute -bottom-28 -left-24
           size-56 rounded-full
           bg-brand/5 blur-3xl
           transition-transform duration-700
@@ -115,33 +149,39 @@ export default function JobGuideCard({
           <div
             aria-hidden="true"
             className="
-              flex size-16 shrink-0 items-center justify-center
-              rounded-2xl border border-brand/15
+              flex size-14 shrink-0 items-center justify-center
+              rounded-2xl
+              border border-brand/15
               bg-gradient-to-br
               from-brand/10
               to-accent/10
-              text-2xl shadow-sm
+              text-2xl
               transition-transform duration-300
-              group-hover:scale-110
+              group-hover:scale-105
+              group-hover:-rotate-2
             "
           >
-            {guide.icon}
+            {service.icon}
           </div>
 
           <Badge
             variant="neutral"
-            className="max-w-[60%] text-center uppercase tracking-[0.12em]"
+            className="max-w-[60%]"
           >
-            {guide.category}
+            <VerifiedIcon className="mr-1 size-3.5 shrink-0" />
+            <span className="truncate">
+              {service.category}
+            </span>
           </Badge>
         </div>
 
-        <div className="mt-7">
+        <div className="mt-8">
           <h3
             id={titleId}
             className="
               text-xl font-bold
-              leading-8 tracking-[-0.02em]
+              leading-8
+              tracking-[-0.025em]
               text-text-primary
               sm:text-2xl
             "
@@ -164,71 +204,45 @@ export default function JobGuideCard({
                 className="absolute inset-0 z-20"
               />
 
-              {guide.shortTitle}
+              {service.shortTitle}
             </Link>
           </h3>
 
-          <p className="mt-4 text-[15px] leading-7 text-text-secondary">
-            {guide.description}
+          <p className="mt-4 truncate-lines-3 text-[15px] leading-7 text-text-secondary">
+            {service.description}
           </p>
         </div>
 
-        {guide.highlights.length > 0 && (
-          <ul
-            aria-label="Qo‘llanmaning asosiy mavzulari"
-            className="mt-7 space-y-3"
-          >
-            {guide.highlights.slice(0, 3).map((highlight) => (
-              <li
-                key={highlight}
-                className="flex items-start gap-3 text-sm leading-6 text-text-secondary"
-              >
-                <span
-                  aria-hidden="true"
-                  className="
-                    mt-0.5 flex size-6 shrink-0
-                    items-center justify-center
-                    rounded-full
-                    bg-accent/10 text-accent
-                  "
-                >
-                  <CheckIcon className="size-3.5" />
-                </span>
-
-                <span>{highlight}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-
         <div className="mt-auto pt-8">
-          <div className="flex items-end justify-between gap-5 border-t border-border-default pt-5">
-            <div className="min-w-0">
-              <p className="text-xs font-medium uppercase tracking-[0.12em] text-text-muted">
-                Qo‘llanma
-              </p>
+          <div className="flex items-center justify-between gap-4 border-t border-border-default pt-5">
+            <div className="flex min-w-0 items-center gap-2 text-sm text-text-muted">
+              <span
+                aria-hidden="true"
+                className="
+                  flex size-8 shrink-0 items-center justify-center
+                  rounded-full
+                  bg-surface-muted
+                "
+              >
+                <LocationIcon className="size-4" />
+              </span>
 
-              <p className="mt-1 text-sm font-semibold text-text-secondary">
-                Bosqichma-bosqich tushuntirilgan
-              </p>
+              <span className="truncate">
+                {service.location}
+              </span>
             </div>
 
             <span
               aria-hidden="true"
               className="
                 flex shrink-0 items-center gap-2
-                text-sm font-semibold text-brand
+                text-sm font-semibold
+                text-brand
                 transition-all duration-300
                 group-hover:gap-3
               "
             >
-              <span className="hidden sm:inline">
-                Qo‘llanmani ochish
-              </span>
-
-              <span className="sm:hidden">
-                Ochish
-              </span>
+              Batafsil
 
               <ArrowUpRightIcon
                 className="

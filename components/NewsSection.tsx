@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import NewsCard from "@/components/NewsCard";
+import NewsCard from "@/components/cards/NewsCard";
 import { getLatestNews } from "@/data/news";
 
 interface IconProps {

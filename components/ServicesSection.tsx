@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import ServiceCard from "@/components/ServiceCard";
+import ServiceCard from "@/components/cards/ServiceCard";
 import { services } from "@/data/services";
 
 interface IconProps {

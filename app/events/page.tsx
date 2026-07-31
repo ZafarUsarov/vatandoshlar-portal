@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import EventCard from "../../components/EventCard";
+import EventCard from "../../components/cards/EventCard";
 import Header from "../../components/Header";
 import {
   getPastEvents,

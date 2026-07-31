@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { NewsItem } from "@/data/news";
 import { formatNewsDate } from "@/data/news";
 
-import { Badge, Card } from "./ui";
+import { Badge, Card } from "../ui";
 
 type NewsCardProps = {
   item: NewsItem;

@@ -7,7 +7,7 @@ import {
   type EventItem,
 } from "@/data/events";
 
-import { Badge, Card } from "./ui";
+import { Badge, Card } from "../ui";
 
 type EventCardProps = {
   event: EventItem;

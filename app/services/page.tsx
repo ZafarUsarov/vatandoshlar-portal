@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import Header from "../../components/Header";
-import ServiceCard from "../../components/ServiceCard";
+import ServiceCard from "../../components/cards/ServiceCard";
 import {
   Card,
   Container,

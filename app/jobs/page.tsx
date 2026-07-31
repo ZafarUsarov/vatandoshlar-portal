@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import Header from "../../components/Header";
-import JobGuideCard from "../../components/JobGuideCard";
+import JobGuideCard from "../../components/cards/JobGuideCard";
 import JobPlatformsDirectory from "../../components/JobPlatformsDirectory";
 import {
   Badge,

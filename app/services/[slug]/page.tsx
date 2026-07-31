@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import Header from "../../../components/Header";
-import ServiceCard from "../../../components/ServiceCard";
+import ServiceCard from "../../../components/cards/ServiceCard";
 import {
   getServiceBySlug,
   services,

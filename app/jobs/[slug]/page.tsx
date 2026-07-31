@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import Header from "../../../components/Header";
-import JobGuideCard from "../../../components/JobGuideCard";
+import JobGuideCard from "../../../components/cards/JobGuideCard";
 import {
   formatJobDate,
   getJobGuideBySlug,

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import Header from "../../components/Header";
-import NewsCard from "../../components/NewsCard";
+import NewsCard from "../../components/cards/NewsCard";
 import {
   Badge,
   ButtonLink,

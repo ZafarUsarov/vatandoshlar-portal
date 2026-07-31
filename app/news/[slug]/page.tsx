@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import Header from "../../../components/Header";
-import NewsCard from "../../../components/NewsCard";
+import NewsCard from "../../../components/cards/NewsCard";
 import {
   formatNewsDate,
   getLatestNews,
