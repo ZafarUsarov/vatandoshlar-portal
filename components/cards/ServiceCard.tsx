@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import type { ServiceItem } from "@/data/services";
+import type { ServiceItem } from "@/types/service";
 
 import { Badge, Card } from "../ui";
 
@@ -169,6 +169,7 @@ export default function ServiceCard({
             className="max-w-[60%]"
           >
             <VerifiedIcon className="mr-1 size-3.5 shrink-0" />
+
             <span className="truncate">
               {service.category}
             </span>

@@ -1,28 +1,4 @@
-export type ServiceCategory =
-  | "Tarjima"
-  | "Huquq"
-  | "Soliq"
-  | "Tibbiyot"
-  | "Hunarmandchilik"
-  | "Iste’molchi huquqlari";
-
-export type ServiceItem = {
-  id: number;
-  slug: string;
-  title: string;
-  shortTitle: string;
-  description: string;
-  category: ServiceCategory;
-  icon: string;
-  services: string[];
-  verificationSteps: string[];
-  importantNotes: string[];
-  officialSourceName: string;
-  officialSourceUrl: string;
-  sourceDescription: string;
-  location: string;
-  featured?: boolean;
-};
+import type { ServiceItem } from "@/types/service";
 
 export const services: ServiceItem[] = [
   {
@@ -54,7 +30,8 @@ export const services: ServiceItem[] = [
     ],
     officialSourceName:
       "Germaniya adliya tizimining tarjimonlar va og‘zaki tarjimonlar bazasi",
-    officialSourceUrl: "https://www.justiz-dolmetscher.de/Recherche/de/Suchen",
+    officialSourceUrl:
+      "https://www.justiz-dolmetscher.de/Recherche/de/Suchen",
     sourceDescription:
       "Rasmiy bazada umumiy qasamyod qilgan, vakolatli yoki davlat tomonidan tan olingan tarjimon va og‘zaki tarjimonlarni til, hudud va faoliyat turi bo‘yicha qidirish mumkin.",
     location: "Butun Germaniya",
@@ -188,7 +165,8 @@ export const services: ServiceItem[] = [
       "Telefon orqali aytilgan narx bilan yakuniy hisob o‘rtasida farq bo‘lmasligi uchun yozma taklif oling.",
       "Katta summani ish boshlanishidan oldin to‘liq to‘lamang.",
     ],
-    officialSourceName: "Handwerkskammern in Deutschland — Handwerkersuche",
+    officialSourceName:
+      "Handwerkskammern in Deutschland — Handwerkersuche",
     officialSourceUrl:
       "https://www.handwerkskammer.de/artikel/handwerkersuche-5620,0,15.html",
     sourceDescription:
