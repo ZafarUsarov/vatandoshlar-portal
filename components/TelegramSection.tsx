@@ -1,4 +1,5 @@
-import TelegramCard, { type TelegramGroup } from "./cards/TelegramCard";
+import TelegramCard from "@/components/cards/TelegramCard";
+import type { TelegramGroup } from "@/types/telegram";
 
 const telegramGroups: TelegramGroup[] = [
   {
