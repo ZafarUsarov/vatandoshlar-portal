@@ -1,41 +1,924 @@
-const navigation = [
-  { name: "Bosh sahifa", href: "#" },
-  { name: "Telegram", href: "#telegram" },
-  { name: "Xizmatlar", href: "#xizmatlar" },
-  { name: "Ish", href: "#ish" },
-  { name: "Tadbirlar", href: "#tadbirlar" },
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
+
+type NavigationItem = {
+  name: string;
+  href: string;
+  description: string;
+  icon: ReactNode;
+};
+
+type IconProps = {
+  children: ReactNode;
+  className?: string;
+};
+
+function Icon({
+  children,
+  className = "h-5 w-5",
+}: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      viewBox="0 0 24 24"
+    >
+      {children}
+    </svg>
+  );
+}
+
+function HomeIcon() {
+  return (
+    <Icon>
+      <path
+        d="m3 10.75 9-7 9 7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M5.25 9.25V20h13.5V9.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.25 20v-6.25h5.5V20"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+}
+
+function NewsIcon() {
+  return (
+    <Icon>
+      <path
+        d="M5 4.75h11.5A2.5 2.5 0 0 1 19 7.25V19H7.5A2.5 2.5 0 0 1 5 16.5V4.75Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M19 9h1.25v7.75A2.25 2.25 0 0 1 18 19"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.5 9h7M8.5 12.5h7M8.5 16h4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+}
+
+function ServicesIcon() {
+  return (
+    <Icon>
+      <path
+        d="M14.25 6.25a4.5 4.5 0 0 0-5.9 5.9L3.5 17a2.12 2.12 0 0 0 3 3l4.85-4.85a4.5 4.5 0 0 0 5.9-5.9l-2.6 2.6-2.5-.5-.5-2.5 2.6-2.6Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+}
+
+function JobsIcon() {
+  return (
+    <Icon>
+      <path
+        d="M4 7.75h16A2.25 2.25 0 0 1 22.25 10v8A2.25 2.25 0 0 1 20 20.25H4A2.25 2.25 0 0 1 1.75 18v-8A2.25 2.25 0 0 1 4 7.75Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.25 7.75V6A2.25 2.25 0 0 1 10.5 3.75h3A2.25 2.25 0 0 1 15.75 6v1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M1.75 12.25A22.7 22.7 0 0 0 12 14.5a22.7 22.7 0 0 0 10.25-2.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+}
+
+function TelegramIcon() {
+  return (
+    <Icon>
+      <path
+        d="m3.75 11 15.5-6.25c.7-.28 1.38.38 1.1 1.08l-5.5 14c-.25.64-1.1.74-1.5.18l-3.25-4.5-3.75 2.25.5-5.25L17 7.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+}
+
+function EventsIcon() {
+  return (
+    <Icon>
+      <path
+        d="M5 4.75h14A2.25 2.25 0 0 1 21.25 7v12A2.25 2.25 0 0 1 19 21.25H5A2.25 2.25 0 0 1 2.75 19V7A2.25 2.25 0 0 1 5 4.75Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7.5 2.75v4M16.5 2.75v4M2.75 9.25h18.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <Icon>
+      <circle cx="10.75" cy="10.75" r="6.75" />
+      <path d="m16 16 4.25 4.25" strokeLinecap="round" />
+    </Icon>
+  );
+}
+
+function SunIcon() {
+  return (
+    <Icon>
+      <circle cx="12" cy="12" r="4" />
+      <path
+        d="M12 2.5v2M12 19.5v2M4.5 12h-2M21.5 12h-2M5.3 5.3 3.9 3.9M20.1 20.1l-1.4-1.4M18.7 5.3l1.4-1.4M3.9 20.1l1.4-1.4"
+        strokeLinecap="round"
+      />
+    </Icon>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <Icon>
+      <path
+        d="M20.25 15.25A8.5 8.5 0 0 1 8.75 3.75 8.5 8.5 0 1 0 20.25 15.25Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+}
+
+function MenuIcon() {
+  return (
+    <Icon className="h-6 w-6">
+      <path
+        d="M4 7h16M4 12h16M4 17h16"
+        strokeLinecap="round"
+      />
+    </Icon>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <Icon className="h-6 w-6">
+      <path
+        d="m5 5 14 14M19 5 5 19"
+        strokeLinecap="round"
+      />
+    </Icon>
+  );
+}
+
+function ArrowRightIcon() {
+  return (
+    <Icon>
+      <path
+        d="M5 12h14M14 7l5 5-5 5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+}
+
+const navigation: NavigationItem[] = [
+  {
+    name: "Bosh sahifa",
+    href: "/",
+    description: "Portalning asosiy sahifasi",
+    icon: <HomeIcon />,
+  },
+  {
+    name: "Yangiliklar",
+    href: "/news",
+    description: "Rasmiy va tekshirilgan ma’lumotlar",
+    icon: <NewsIcon />,
+  },
+  {
+    name: "Xizmatlar",
+    href: "/services",
+    description: "Mutaxassis va xizmatlar katalogi",
+    icon: <ServicesIcon />,
+  },
+  {
+    name: "Ish",
+    href: "/jobs",
+    description: "Ish qidirish va karyera qo‘llanmalari",
+    icon: <JobsIcon />,
+  },
+  {
+    name: "Telegram",
+    href: "/telegram",
+    description: "Bundeslandlar bo‘yicha guruhlar",
+    icon: <TelegramIcon />,
+  },
+  {
+    name: "Tadbirlar",
+    href: "/events",
+    description: "Tekshirilgan uchrashuv va tadbirlar",
+    icon: <EventsIcon />,
+  },
 ];
 
+function getInitialDarkMode(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const storedTheme = window.localStorage.getItem(
+    "vatandoshlar-theme",
+  );
+
+  if (storedTheme === "dark") {
+    return true;
+  }
+
+  if (storedTheme === "light") {
+    return false;
+  }
+
+  return window.matchMedia(
+    "(prefers-color-scheme: dark)",
+  ).matches;
+}
+
 export default function Header() {
+  const pathname = usePathname();
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] =
+    useState(false);
+
+  const [isDarkMode, setIsDarkMode] =
+    useState(false);
+
+  const [isScrolled, setIsScrolled] =
+    useState(false);
+
+  const isActiveRoute = useCallback(
+    (href: string) => {
+      if (href === "/") {
+        return pathname === "/";
+      }
+
+      return pathname.startsWith(href);
+    },
+    [pathname],
+  );
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
+
+  const openCommandPalette = useCallback(() => {
+    setIsMobileMenuOpen(false);
+
+    window.dispatchEvent(
+      new Event("open-command-palette"),
+    );
+  }, []);
+
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(
+      (currentValue) => !currentValue,
+    );
+  }, []);
+
+  const applyTheme = useCallback(
+    (darkModeEnabled: boolean) => {
+      document.documentElement.classList.toggle(
+        "dark",
+        darkModeEnabled,
+      );
+
+      document.documentElement.style.colorScheme =
+        darkModeEnabled ? "dark" : "light";
+    },
+    [],
+  );
+
+  const toggleTheme = useCallback(() => {
+    setIsDarkMode((currentMode) => {
+      const nextMode = !currentMode;
+
+      applyTheme(nextMode);
+
+      window.localStorage.setItem(
+        "vatandoshlar-theme",
+        nextMode ? "dark" : "light",
+      );
+
+      return nextMode;
+    });
+  }, [applyTheme]);
+
+  useEffect(() => {
+    const initialDarkMode = getInitialDarkMode();
+
+    applyTheme(initialDarkMode);
+    setIsDarkMode(initialDarkMode);
+  }, [applyTheme]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 16);
+    };
+
+    handleScroll();
+
+    window.addEventListener(
+      "scroll",
+      handleScroll,
+      {
+        passive: true,
+      },
+    );
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        handleScroll,
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleEscape = (
+      event: KeyboardEvent,
+    ) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener(
+      "keydown",
+      handleEscape,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleEscape,
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow =
+      isMobileMenuOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
-        <a
-          href="#"
-          className="text-xl font-bold tracking-tight text-emerald-600 sm:text-2xl"
+    <>
+      <header
+        className={`
+          fixed inset-x-0 top-0 z-50
+          border-b
+          transition-[background-color,border-color,box-shadow]
+          duration-300
+          ${
+            isScrolled
+              ? "border-slate-200/90 bg-white/80 shadow-[0_12px_40px_-24px_rgba(15,23,42,0.35)] backdrop-blur-2xl dark:border-white/10 dark:bg-slate-950/80"
+              : "border-slate-200/80 bg-white/90 shadow-[0_1px_20px_rgba(15,23,42,0.04)] backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-950/90"
+          }
+        `}
+      >
+        <div
+          className={`
+            mx-auto flex max-w-[1440px]
+            items-center gap-5 px-4
+            transition-[height] duration-300
+            sm:px-6 lg:px-8
+            ${isScrolled ? "h-16" : "h-20"}
+          `}
         >
-          Vatandoshlar.de
-        </a>
-
-        <nav className="hidden items-center gap-8 md:flex">
-          {navigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-sm font-medium text-slate-600 transition hover:text-slate-950"
+          <Link
+            href="/"
+            aria-label="Vatandoshlar.de bosh sahifasi"
+            className="group flex shrink-0 items-center gap-3"
+          >
+            <span
+              className={`
+                relative flex items-center justify-center
+                overflow-hidden
+                bg-gradient-to-br
+                from-emerald-500 via-emerald-600 to-teal-700
+                font-black text-white
+                shadow-lg shadow-emerald-600/20
+                transition-all duration-300
+                group-hover:-translate-y-0.5
+                group-hover:shadow-xl
+                group-hover:shadow-emerald-600/25
+                ${
+                  isScrolled
+                    ? "h-9 w-9 rounded-xl text-base"
+                    : "h-11 w-11 rounded-2xl text-lg"
+                }
+              `}
             >
-              {item.name}
-            </a>
-          ))}
-        </nav>
+              <span className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
+              <span className="relative">V</span>
+            </span>
 
-        <a
-          href="#telegram"
-          className="rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
-        >
-          Kirish
-        </a>
-      </div>
-    </header>
+            <span className="hidden min-[390px]:block">
+              <span
+                className={`
+                  block font-extrabold tracking-tight
+                  text-slate-950
+                  transition-[font-size] duration-300
+                  dark:text-white
+                  ${
+                    isScrolled
+                      ? "text-base sm:text-lg"
+                      : "text-lg sm:text-xl"
+                  }
+                `}
+              >
+                Vatandoshlar
+                <span className="text-emerald-600 dark:text-emerald-400">
+                  .de
+                </span>
+              </span>
+
+              <span
+                className={`
+                  block overflow-hidden
+                  text-[10px] font-semibold
+                  uppercase tracking-[0.16em]
+                  text-slate-400
+                  transition-all duration-300
+                  ${
+                    isScrolled
+                      ? "max-h-0 opacity-0"
+                      : "max-h-4 opacity-100"
+                  }
+                `}
+              >
+                Germaniyadagi o‘zbeklar portali
+              </span>
+            </span>
+          </Link>
+
+          <nav
+            aria-label="Asosiy navigatsiya"
+            className="mx-auto hidden items-center gap-1 xl:flex"
+          >
+            {navigation.map((item) => {
+              const isActive = isActiveRoute(
+                item.href,
+              );
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={
+                    isActive ? "page" : undefined
+                  }
+                  className={`
+                    relative rounded-xl
+                    text-sm font-semibold
+                    transition-all duration-300
+                    ${
+                      isScrolled
+                        ? "px-3 py-2"
+                        : "px-3.5 py-2.5"
+                    }
+                    ${
+                      isActive
+                        ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
+                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                    }
+                  `}
+                >
+                  {item.name}
+
+                  {isActive && (
+                    <span
+                      className={`
+                        absolute inset-x-4
+                        h-0.5 rounded-full
+                        bg-emerald-500
+                        transition-[bottom] duration-300
+                        ${
+                          isScrolled
+                            ? "-bottom-[13px]"
+                            : "-bottom-[19px]"
+                        }
+                      `}
+                    />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="ml-auto hidden items-center gap-2 md:flex">
+            <button
+              type="button"
+              onClick={openCommandPalette}
+              aria-label="Tezkor qidiruvni ochish"
+              aria-keyshortcuts="Meta+K Control+K"
+              className={`
+                flex shrink-0 items-center justify-center
+                overflow-hidden rounded-xl
+                border border-slate-200
+                bg-white text-slate-500
+                transition-all duration-300
+                hover:border-slate-300
+                hover:bg-slate-50
+                hover:text-slate-950
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-emerald-500
+                focus-visible:ring-offset-2
+                dark:border-slate-700
+                dark:bg-slate-900
+                dark:text-slate-400
+                dark:hover:border-slate-600
+                dark:hover:bg-slate-800
+                dark:hover:text-white
+                dark:focus-visible:ring-offset-slate-950
+                ${
+                  isScrolled
+                    ? "h-10 w-10 gap-0 px-0"
+                    : "h-11 w-[154px] gap-2.5 px-3.5"
+                }
+              `}
+            >
+              <span className="flex shrink-0 items-center justify-center">
+                <SearchIcon />
+              </span>
+
+              <span
+                aria-hidden={isScrolled}
+                className={`
+                  shrink-0 whitespace-nowrap
+                  text-sm font-medium
+                  transition-all duration-300
+                  ${
+                    isScrolled
+                      ? "max-w-0 -translate-x-1 overflow-hidden opacity-0"
+                      : "max-w-20 translate-x-0 opacity-100"
+                  }
+                `}
+              >
+                Qidirish
+              </span>
+
+              <kbd
+                aria-hidden={isScrolled}
+                className={`
+                  shrink-0 items-center gap-1
+                  overflow-hidden rounded-md
+                  border border-slate-200
+                  bg-slate-50
+                  text-[10px] font-semibold
+                  text-slate-400
+                  transition-all duration-300
+                  dark:border-slate-700
+                  dark:bg-slate-800
+                  ${
+                    isScrolled
+                      ? "hidden max-w-0 border-0 px-0 py-0 opacity-0"
+                      : "hidden max-w-12 px-1.5 py-0.5 opacity-100 lg:inline-flex"
+                  }
+                `}
+              >
+                <span className="text-xs">⌘</span>
+                <span>K</span>
+              </kbd>
+            </button>
+
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={
+                isDarkMode
+                  ? "Yorug‘ rejimni yoqish"
+                  : "Tungi rejimni yoqish"
+              }
+              className={`
+                flex items-center justify-center rounded-xl
+                border border-slate-200
+                bg-white text-slate-600
+                transition-all duration-300
+                hover:border-slate-300
+                hover:bg-slate-50
+                hover:text-emerald-600
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-emerald-500
+                focus-visible:ring-offset-2
+                dark:border-slate-700
+                dark:bg-slate-900
+                dark:text-slate-300
+                dark:hover:border-slate-600
+                dark:hover:bg-slate-800
+                dark:hover:text-emerald-400
+                dark:focus-visible:ring-offset-slate-950
+                ${
+                  isScrolled
+                    ? "h-10 w-10"
+                    : "h-11 w-11"
+                }
+              `}
+            >
+              {isDarkMode ? (
+                <SunIcon />
+              ) : (
+                <MoonIcon />
+              )}
+            </button>
+
+            <Link
+              href="/login"
+              className={`
+                flex items-center rounded-xl
+                bg-gradient-to-r
+                from-emerald-600 to-teal-600
+                text-sm font-bold text-white
+                shadow-lg shadow-emerald-600/20
+                transition-all duration-300
+                hover:-translate-y-0.5
+                hover:shadow-xl
+                hover:shadow-emerald-600/25
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-emerald-500
+                focus-visible:ring-offset-2
+                dark:focus-visible:ring-offset-slate-950
+                ${
+                  isScrolled
+                    ? "h-10 px-4"
+                    : "h-11 px-5"
+                }
+              `}
+            >
+              Kirish
+            </Link>
+          </div>
+
+          <div className="ml-auto flex items-center gap-2 md:hidden">
+            <button
+              type="button"
+              onClick={openCommandPalette}
+              aria-label="Tezkor qidiruvni ochish"
+              aria-keyshortcuts="Meta+K Control+K"
+              className={`
+                flex items-center justify-center
+                rounded-xl
+                border border-slate-200
+                bg-white text-slate-600
+                transition-all duration-300
+                active:scale-95
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-emerald-500
+                focus-visible:ring-offset-2
+                dark:border-slate-700
+                dark:bg-slate-900
+                dark:text-slate-300
+                dark:focus-visible:ring-offset-slate-950
+                ${
+                  isScrolled
+                    ? "h-10 w-10"
+                    : "h-11 w-11"
+                }
+              `}
+            >
+              <SearchIcon />
+            </button>
+
+            <button
+              type="button"
+              onClick={toggleMobileMenu}
+              aria-controls="mobile-navigation"
+              aria-expanded={isMobileMenuOpen}
+              aria-label={
+                isMobileMenuOpen
+                  ? "Menyuni yopish"
+                  : "Menyuni ochish"
+              }
+              className={`
+                flex items-center justify-center
+                rounded-xl
+                bg-slate-950 text-white
+                transition-all duration-300
+                active:scale-95
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-emerald-500
+                focus-visible:ring-offset-2
+                dark:bg-white
+                dark:text-slate-950
+                dark:focus-visible:ring-offset-slate-950
+                ${
+                  isScrolled
+                    ? "h-10 w-10"
+                    : "h-11 w-11"
+                }
+              `}
+            >
+              {isMobileMenuOpen ? (
+                <CloseIcon />
+              ) : (
+                <MenuIcon />
+              )}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          <button
+            type="button"
+            onClick={closeMobileMenu}
+            aria-label="Mobil menyuni yopish"
+            className="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"
+          />
+
+          <div
+            id="mobile-navigation"
+            className={`
+              absolute inset-x-0
+              overflow-y-auto
+              border-b border-slate-200
+              bg-white shadow-2xl
+              transition-[top,max-height] duration-300
+              dark:border-slate-800
+              dark:bg-slate-950
+              ${
+                isScrolled
+                  ? "top-16 max-h-[calc(100vh-4rem)]"
+                  : "top-20 max-h-[calc(100vh-5rem)]"
+              }
+            `}
+          >
+            <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
+              <div className="mb-5 flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">
+                    Navigatsiya
+                  </p>
+
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                    Portal bo‘limini tanlang
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={closeMobileMenu}
+                  aria-label="Mobil menyuni yopish"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white dark:focus-visible:ring-offset-slate-950"
+                >
+                  <CloseIcon />
+                </button>
+              </div>
+
+              <div className="grid gap-2">
+                {navigation.map((item) => {
+                  const isActive = isActiveRoute(
+                    item.href,
+                  );
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={closeMobileMenu}
+                      aria-current={
+                        isActive
+                          ? "page"
+                          : undefined
+                      }
+                      className={`
+                        flex items-center gap-4
+                        rounded-2xl border p-4
+                        transition
+                        focus-visible:outline-none
+                        focus-visible:ring-2
+                        focus-visible:ring-emerald-500
+                        focus-visible:ring-offset-2
+                        dark:focus-visible:ring-offset-slate-950
+                        ${
+                          isActive
+                            ? "border-emerald-200 bg-emerald-50 text-emerald-700 shadow-sm dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-400"
+                            : "border-transparent text-slate-700 hover:border-slate-200 hover:bg-slate-50 dark:text-slate-200 dark:hover:border-slate-700 dark:hover:bg-slate-900"
+                        }
+                      `}
+                    >
+                      <span
+                        className={`
+                          flex h-11 w-11 shrink-0
+                          items-center justify-center
+                          rounded-xl
+                          ${
+                            isActive
+                              ? "bg-emerald-600 text-white"
+                              : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300"
+                          }
+                        `}
+                      >
+                        {item.icon}
+                      </span>
+
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-bold">
+                          {item.name}
+                        </span>
+
+                        <span className="mt-0.5 block text-sm text-slate-500 dark:text-slate-400">
+                          {item.description}
+                        </span>
+                      </span>
+
+                      <span className="shrink-0 text-slate-300 dark:text-slate-600">
+                        <ArrowRightIcon />
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <button
+                type="button"
+                onClick={openCommandPalette}
+                className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-950"
+              >
+                <SearchIcon />
+                Portal bo‘ylab qidirish
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-950"
+              >
+                {isDarkMode ? (
+                  <SunIcon />
+                ) : (
+                  <MoonIcon />
+                )}
+
+                {isDarkMode
+                  ? "Yorug‘ rejim"
+                  : "Tungi rejim"}
+              </button>
+
+              <Link
+                href="/login"
+                onClick={closeMobileMenu}
+                className="mt-3 flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-4 font-bold text-white shadow-lg shadow-emerald-600/20 transition hover:shadow-xl hover:shadow-emerald-600/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
+              >
+                Portalga kirish
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
