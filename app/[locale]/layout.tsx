@@ -1,78 +1,10 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import CommandPalette from "../../components/CommandPalette";
 import { routing } from "../../i18n/routing";
-
-import "../globals.css";
-
-export const metadata: Metadata = {
-  metadataBase: new URL("https://vatandoshlar.de"),
-
-  title: {
-    default: "Vatandoshlar.de",
-    template: "%s | Vatandoshlar.de",
-  },
-
-  description:
-    "Germaniyadagi o‘zbekistonliklar uchun yangiliklar, xizmatlar, ish, Telegram guruhlari va tadbirlar portali.",
-
-  applicationName: "Vatandoshlar.de",
-
-  keywords: [
-    "Vatandoshlar",
-    "Germaniyadagi o‘zbeklar",
-    "O‘zbekistonliklar Germaniyada",
-    "Germaniyada ish",
-    "Telegram guruhlari",
-    "Germaniyadagi tadbirlar",
-  ],
-
-  authors: [
-    {
-      name: "Vatandoshlar.de",
-    },
-  ],
-
-  creator: "Vatandoshlar.de",
-  publisher: "Vatandoshlar.de",
-
-  openGraph: {
-    type: "website",
-    locale: "uz_UZ",
-    siteName: "Vatandoshlar.de",
-    title: "Vatandoshlar.de",
-    description:
-      "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma.",
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
-
-const themeInitializationScript = `
-  (function () {
-    try {
-      var storedTheme = localStorage.getItem("vatandoshlar-theme");
-      var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      var shouldUseDark =
-        storedTheme === "dark" ||
-        (!storedTheme && prefersDark);
-
-      document.documentElement.classList.toggle("dark", shouldUseDark);
-      document.documentElement.style.colorScheme =
-        shouldUseDark ? "dark" : "light";
-    } catch (error) {
-      console.error("Theme initialization failed:", error);
-    }
-  })();
-`;
 
 type LocaleLayoutProps = Readonly<{
   children: ReactNode;
@@ -99,23 +31,11 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
+  const messages = await getMessages();
+
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: themeInitializationScript,
-          }}
-        />
-      </head>
-
-      <body className="min-h-screen bg-white text-slate-950 antialiased transition-colors duration-200 dark:bg-slate-950 dark:text-slate-50">
-        <NextIntlClientProvider>
-          {children}
-
-          <CommandPalette />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      {children}
+    </NextIntlClientProvider>
   );
 }
