@@ -1,1 +1,17 @@
-{}
+{
+  "Home": {
+    "hero": {
+      "badge": "Portal für Usbeken in Deutschland",
+      "title": "Wichtige Informationen für das Leben in Deutschland",
+      "highlight": "jetzt an einem Ort",
+      "description": "Offizielle Nachrichten, geprüfte Dienstleistungen, Informationen zu Arbeit und Karriere, Telegram-Gruppen sowie Veranstaltungen an einem Ort.",
+      "servicesCta": "Dienstleistungen ansehen",
+      "jobsCta": "Zum Arbeitsbereich",
+      "trust": {
+        "officialSources": "Offizielle Quellen",
+        "verifiedListings": "Keine gefälschten Anzeigen",
+        "mobileFriendly": "Für mobile Geräte optimiert"
+      }
+    }
+  }
+}

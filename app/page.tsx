@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 import EventsSection from "../components/EventsSection";
 import Features from "../components/Features";
@@ -123,7 +124,9 @@ const quickLinks = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const t = await getTranslations("Home.hero");
+
   return (
     <>
       <Header />
@@ -149,21 +152,19 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-300 backdrop-blur">
                 <span className="h-2 w-2 rounded-full bg-emerald-400" />
 
-                Germaniyadagi o‘zbekistonliklar uchun portal
+                {t("badge")}
               </div>
 
               <h1 className="mt-7 max-w-4xl text-balance text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl lg:leading-[1.05]">
-                Germaniyada hayot uchun kerakli ma’lumotlar
+                {t("title")}
 
                 <span className="block bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
-                  endi bir joyda
+                  {t("highlight")}
                 </span>
               </h1>
 
               <p className="mt-7 max-w-3xl text-pretty text-lg leading-8 text-slate-300 sm:text-xl">
-                Rasmiy yangiliklar, tekshirilgan xizmatlar, ish va karyera
-                qo‘llanmalari, Telegram guruhlari hamda tadbirlarni qulay
-                platformada toping.
+                {t("description")}
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -171,7 +172,7 @@ export default function HomePage() {
                   href="/services"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-7 py-4 font-bold text-white shadow-xl shadow-emerald-950/30 transition duration-300 hover:-translate-y-0.5 hover:from-emerald-400 hover:to-teal-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                 >
-                  Xizmatlarni ko‘rish
+                  {t("servicesCta")}
 
                   <svg
                     aria-hidden="true"
@@ -193,7 +194,7 @@ export default function HomePage() {
                   href="/jobs"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-7 py-4 font-bold text-white backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                 >
-                  Ish bo‘limiga o‘tish
+                  {t("jobsCta")}
                 </Link>
               </div>
 
@@ -203,7 +204,7 @@ export default function HomePage() {
                     ✓
                   </span>
 
-                  Rasmiy manbalar
+                  {t("trust.officialSources")}
                 </span>
 
                 <span className="flex items-center gap-2">
@@ -211,7 +212,7 @@ export default function HomePage() {
                     ✓
                   </span>
 
-                  Uydirma e’lonlarsiz
+                  {t("trust.verifiedListings")}
                 </span>
 
                 <span className="flex items-center gap-2">
@@ -219,7 +220,7 @@ export default function HomePage() {
                     ✓
                   </span>
 
-                  Mobil qurilmalarga mos
+                  {t("trust.mobileFriendly")}
                 </span>
               </div>
             </div>
@@ -509,9 +510,7 @@ export default function HomePage() {
           <div className="mt-10 flex flex-col gap-3 border-t border-slate-200 pt-7 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:text-slate-400">
             <p>© 2026 Vatandoshlar.de</p>
 
-            <p>
-              Germaniyadagi o‘zbekistonliklar uchun raqamli platforma
-            </p>
+            <p>Germaniyadagi o‘zbekistonliklar uchun raqamli platforma</p>
           </div>
         </div>
       </footer>

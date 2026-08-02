@@ -1,1 +1,17 @@
-{}
+{
+  "Home": {
+    "hero": {
+      "badge": "Germaniyadagi o‘zbekistonliklar uchun portal",
+      "title": "Germaniyada hayot uchun kerakli ma’lumotlar",
+      "highlight": "endi bir joyda",
+      "description": "Rasmiy yangiliklar, tekshirilgan xizmatlar, ish va karyera qo‘llanmalari, Telegram guruhlari hamda tadbirlarni qulay platformada toping.",
+      "servicesCta": "Xizmatlarni ko‘rish",
+      "jobsCta": "Ish bo‘limiga o‘tish",
+      "trust": {
+        "officialSources": "Rasmiy manbalar",
+        "verifiedListings": "Uydirma e’lonlarsiz",
+        "mobileFriendly": "Mobil qurilmalarga mos"
+      }
+    }
+  }
+}
