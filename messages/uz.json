@@ -82,7 +82,7 @@
       "events": "Tekshirilgan uchrashuv va tadbirlar"
     },
     "brand": {
-      "subtitle": "Germaniyadagi o‘zbeklar portali"
+      "subtitle": "Germaniyadagi o‘zbekistonliklar portali"
     },
     "actions": {
       "search": "Qidirish",
@@ -94,7 +94,7 @@
     },
     "mobile": {
       "navigationTitle": "Navigatsiya",
-      "navigationDescription": "Portal bo‘limini tanlang"
+      "navigationDescription": "Kerakli portal bo‘limini tanlang"
     },
     "accessibility": {
       "homeLink": "Vatandoshlar.de bosh sahifasi",
@@ -456,6 +456,141 @@
           "Ariza topshirishdan oldin elchixonaning rasmiy sahifasidagi amaldagi hujjatlar ro‘yxati va ko‘rsatmalarni tekshirish zarur."
         ]
       }
+    }
+  },
+  "CommandPalette": {
+    "title": "Tezkor qidiruv",
+    "placeholder": "Sahifa, xizmat yoki ma’lumotni qidiring...",
+    "popularTitle": "Mashhur qidiruvlar",
+    "recentTitle": "Oxirgi qidiruvlar",
+    "clearRecent": "Tozalash",
+    "resultCount": "{count} ta natija",
+    "categories": {
+      "main": "Asosiy",
+      "news": "Yangilik",
+      "services": "Xizmat",
+      "jobs": "Ish",
+      "community": "Hamjamiyat"
+    },
+    "popularSearches": {
+      "minijob": "Minijob",
+      "werkstudent": "Werkstudent",
+      "translator": "Tarjimon",
+      "telegram": "Telegram",
+      "ausbildung": "Ausbildung",
+      "internship": "Praktikum"
+    },
+    "keyboard": {
+      "select": "Tanlash",
+      "open": "Ochish"
+    },
+    "emptyState": {
+      "title": "Mos natija topilmadi",
+      "description": "Boshqa kalit so‘z bilan qayta qidirib ko‘ring.",
+      "clear": "Qidiruvni tozalash"
+    },
+    "accessibility": {
+      "closeDialog": "Qidiruv oynasini yopish",
+      "searchInput": "Sayt bo‘yicha qidirish",
+      "results": "Qidiruv natijalari"
+    },
+    "commands": {
+      "home": {
+        "title": "Bosh sahifa",
+        "description": "Vatandoshlar.de asosiy sahifasiga o‘tish"
+      },
+      "news": {
+        "title": "Rasmiy yangiliklar",
+        "description": "Germaniyada yashash, o‘qish va ishlash bo‘yicha ma’lumotlar"
+      },
+      "services": {
+        "title": "Tekshirilgan xizmatlar",
+        "description": "Tarjimon, yurist, shifokor va boshqa mutaxassislarni topish"
+      },
+      "translationServices": {
+        "title": "Tarjimon va til xizmatlari",
+        "description": "Hujjat tarjimasi, rasmiy tasdiqlash va tarjimon topish"
+      },
+      "legalServices": {
+        "title": "Huquqiy xizmatlar",
+        "description": "Advokat, migratsiya va iste’molchilar huquqi bo‘yicha yordam"
+      },
+      "taxServices": {
+        "title": "Soliq maslahatchisi",
+        "description": "Germaniyada soliq va deklaratsiya bo‘yicha ma’lumotlar"
+      },
+      "jobs": {
+        "title": "Ish va karyera",
+        "description": "Minijob, Werkstudent, Ausbildung va professional ishlar"
+      },
+      "jobPlatforms": {
+        "title": "Ish platformalari",
+        "description": "Germaniyadagi ishonchli ish qidirish portallari"
+      },
+      "minijob": {
+        "title": "Germaniyada Minijob",
+        "description": "Minijob topish va ishlash qoidalari bo‘yicha qo‘llanma"
+      },
+      "telegram": {
+        "title": "Telegram guruhlari",
+        "description": "Bundeslandlar bo‘yicha faol o‘zbek hamjamiyatlari"
+      },
+      "events": {
+        "title": "Tadbirlar",
+        "description": "Uchrashuv, seminar, networking va madaniy tadbirlar"
+      }
+    }
+  },
+  "Footer": {
+    "cta": {
+      "title": "Germaniyadagi hayotingiz uchun ishonchli ma’lumotlar",
+      "description": "Ish, ta’lim, konsullik, integratsiya, xizmatlar, tadbirlar va vatandoshlar hamjamiyatlari haqidagi foydali ma’lumotlarni bir joyda toping.",
+      "servicesButton": "Xizmatlarni ko‘rish",
+      "telegramButton": "Telegramga qo‘shilish"
+    },
+    "brand": {
+      "subtitle": "Germaniyadagi o‘zbekistonliklar portali",
+      "description": "Germaniyada yashayotgan, o‘qiyotgan va ishlayotgan o‘zbekistonliklar uchun mustaqil axborot va hamjamiyat platformasi.",
+      "trust": "Ma’lumotlar imkon qadar rasmiy va ishonchli manbalar asosida tayyorlanadi."
+    },
+    "columns": {
+      "portal": {
+        "title": "Portal",
+        "links": {
+          "home": "Bosh sahifa",
+          "news": "Yangiliklar",
+          "services": "Xizmatlar",
+          "jobs": "Ish",
+          "events": "Tadbirlar"
+        }
+      },
+      "community": {
+        "title": "Hamjamiyat",
+        "links": {
+          "telegram": "Telegram guruhlari",
+          "nrw": "NRW Telegram bot",
+          "badenWuerttemberg": "Baden-Württemberg",
+          "schleswigHolstein": "Schleswig-Holstein"
+        }
+      },
+      "resources": {
+        "title": "Foydali bo‘limlar",
+        "links": {
+          "officialInformation": "Rasmiy ma’lumotlar",
+          "verifiedServices": "Tekshirilgan xizmatlar",
+          "career": "Ish va karyera",
+          "events": "Tadbir va uchrashuvlar"
+        }
+      }
+    },
+    "bottom": {
+      "copyright": "© {year} Vatandoshlar.de. Barcha huquqlar himoyalangan.",
+      "disclaimer": "Portal yuridik, soliq yoki migratsion maslahat o‘rnini bosmaydi.",
+      "backToTop": "Yuqoriga"
+    },
+    "accessibility": {
+      "homeLink": "Vatandoshlar.de bosh sahifasi",
+      "navigation": "Footer navigatsiyasi"
     }
   }
 }

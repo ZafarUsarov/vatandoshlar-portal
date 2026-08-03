@@ -457,5 +457,140 @@
         ]
       }
     }
+  },
+  "CommandPalette": {
+    "title": "Schnellsuche",
+    "placeholder": "Seite, Dienstleistung oder Information suchen...",
+    "popularTitle": "Beliebte Suchanfragen",
+    "recentTitle": "Letzte Suchanfragen",
+    "clearRecent": "Löschen",
+    "resultCount": "{count, plural, one {# Ergebnis} other {# Ergebnisse}}",
+    "categories": {
+      "main": "Allgemein",
+      "news": "Nachrichten",
+      "services": "Dienstleistungen",
+      "jobs": "Arbeit",
+      "community": "Community"
+    },
+    "popularSearches": {
+      "minijob": "Minijob",
+      "werkstudent": "Werkstudent",
+      "translator": "Dolmetscher",
+      "telegram": "Telegram",
+      "ausbildung": "Ausbildung",
+      "internship": "Praktikum"
+    },
+    "keyboard": {
+      "select": "Auswählen",
+      "open": "Öffnen"
+    },
+    "emptyState": {
+      "title": "Keine passenden Ergebnisse",
+      "description": "Versuchen Sie es mit einem anderen Suchbegriff.",
+      "clear": "Suche zurücksetzen"
+    },
+    "accessibility": {
+      "closeDialog": "Suchdialog schließen",
+      "searchInput": "Website durchsuchen",
+      "results": "Suchergebnisse"
+    },
+    "commands": {
+      "home": {
+        "title": "Startseite",
+        "description": "Zur Startseite von Vatandoshlar.de"
+      },
+      "news": {
+        "title": "Offizielle Nachrichten",
+        "description": "Informationen zum Leben, Studium und Arbeiten in Deutschland"
+      },
+      "services": {
+        "title": "Geprüfte Dienstleistungen",
+        "description": "Dolmetscher, Anwälte, Ärzte und weitere Fachkräfte finden"
+      },
+      "translationServices": {
+        "title": "Übersetzungs- und Sprachdienste",
+        "description": "Dokumentenübersetzung, Beglaubigung und Dolmetschersuche"
+      },
+      "legalServices": {
+        "title": "Rechtliche Dienstleistungen",
+        "description": "Unterstützung zu Recht, Migration und Verbraucherschutz"
+      },
+      "taxServices": {
+        "title": "Steuerberatung",
+        "description": "Informationen zu Steuern und Steuererklärungen in Deutschland"
+      },
+      "jobs": {
+        "title": "Arbeit und Karriere",
+        "description": "Minijob, Werkstudent, Ausbildung und qualifizierte Stellen"
+      },
+      "jobPlatforms": {
+        "title": "Jobportale",
+        "description": "Verlässliche Portale für die Jobsuche in Deutschland"
+      },
+      "minijob": {
+        "title": "Minijob in Deutschland",
+        "description": "Leitfaden zur Suche und zu den Regeln für Minijobs"
+      },
+      "telegram": {
+        "title": "Telegram-Gruppen",
+        "description": "Aktive usbekische Communities nach Bundesland"
+      },
+      "events": {
+        "title": "Veranstaltungen",
+        "description": "Treffen, Seminare, Networking und kulturelle Veranstaltungen"
+      }
+    }
+  },
+  "Footer": {
+    "cta": {
+      "title": "Verlässliche Informationen für Ihr Leben in Deutschland",
+      "description": "Finden Sie Informationen zu Arbeit, Bildung, konsularischen Themen, Integration, Dienstleistungen, Veranstaltungen und usbekischen Communities an einem Ort.",
+      "servicesButton": "Dienstleistungen ansehen",
+      "telegramButton": "Telegram beitreten"
+    },
+    "brand": {
+      "subtitle": "Portal für Usbeken in Deutschland",
+      "description": "Unabhängige Informations- und Community-Plattform für Usbeken, die in Deutschland leben, studieren und arbeiten.",
+      "trust": "Die Inhalte werden nach Möglichkeit auf Grundlage offizieller und verlässlicher Quellen erstellt."
+    },
+    "columns": {
+      "portal": {
+        "title": "Portal",
+        "links": {
+          "home": "Startseite",
+          "news": "Nachrichten",
+          "services": "Dienstleistungen",
+          "jobs": "Arbeit",
+          "events": "Veranstaltungen"
+        }
+      },
+      "community": {
+        "title": "Community",
+        "links": {
+          "telegram": "Telegram-Gruppen",
+          "nrw": "NRW Telegram-Bot",
+          "badenWuerttemberg": "Baden-Württemberg",
+          "schleswigHolstein": "Schleswig-Holstein"
+        }
+      },
+      "resources": {
+        "title": "Nützliche Bereiche",
+        "links": {
+          "officialInformation": "Offizielle Informationen",
+          "verifiedServices": "Geprüfte Dienstleistungen",
+          "career": "Arbeit und Karriere",
+          "events": "Veranstaltungen und Treffen"
+        }
+      }
+    },
+    "bottom": {
+      "copyright": "© {year} Vatandoshlar.de. Alle Rechte vorbehalten.",
+      "disclaimer": "Das Portal ersetzt keine Rechts-, Steuer- oder Migrationsberatung.",
+      "backToTop": "Nach oben"
+    },
+    "accessibility": {
+      "homeLink": "Zur Startseite von Vatandoshlar.de",
+      "navigation": "Footer-Navigation"
+    }
   }
 }
