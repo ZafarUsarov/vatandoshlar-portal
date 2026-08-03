@@ -545,8 +545,7 @@
     "cta": {
       "title": "Verlässliche Informationen für Ihr Leben in Deutschland",
       "description": "Finden Sie Informationen zu Arbeit, Bildung, konsularischen Themen, Integration, Dienstleistungen, Veranstaltungen und usbekischen Communities an einem Ort.",
-      "servicesButton": "Dienstleistungen ansehen",
-      "telegramButton": "Telegram beitreten"
+      "servicesButton": "Dienstleistungen ansehen"
     },
     "brand": {
       "subtitle": "Portal für Usbeken in Deutschland",
@@ -562,15 +561,6 @@
           "services": "Dienstleistungen",
           "jobs": "Arbeit",
           "events": "Veranstaltungen"
-        }
-      },
-      "community": {
-        "title": "Community",
-        "links": {
-          "telegram": "Telegram-Gruppen",
-          "nrw": "NRW Telegram-Bot",
-          "badenWuerttemberg": "Baden-Württemberg",
-          "schleswigHolstein": "Schleswig-Holstein"
         }
       },
       "resources": {

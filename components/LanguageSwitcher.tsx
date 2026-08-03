@@ -96,7 +96,7 @@ export default function LanguageSwitcher({
   return (
     <div
       aria-label={t("groupLabel")}
-      className={`inline-flex h-11 items-center rounded-xl border border-slate-200 bg-white p-1 dark:border-slate-700 dark:bg-slate-900 ${className}`}
+      className={`inline-flex h-10 items-center rounded-xl border border-slate-200 bg-white p-1 dark:border-slate-700 dark:bg-slate-900 ${className}`}
       role="group"
     >
       {locales.map((item) => {
@@ -112,7 +112,7 @@ export default function LanguageSwitcher({
             aria-pressed={isActive}
             disabled={isPending}
             onClick={() => changeLocale(item.code)}
-            className={`flex h-8 min-w-9 items-center justify-center rounded-lg px-2 text-xs font-extrabold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:cursor-wait disabled:opacity-70 ${
+            className={`flex h-7 min-w-8 items-center justify-center rounded-lg px-1.5 text-[11px] font-bold tracking-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:cursor-wait disabled:opacity-70 ${
               isActive
                 ? "bg-emerald-600 text-white shadow-sm"
                 : "text-slate-500 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"

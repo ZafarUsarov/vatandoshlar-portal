@@ -5,7 +5,6 @@ import { Link } from "../i18n/navigation";
 type FooterLink = Readonly<{
   label: string;
   href: string;
-  external?: boolean;
 }>;
 
 type FooterColumn = Readonly<{
@@ -32,19 +31,6 @@ function ArrowUpRightIcon({ className }: IconProps) {
         strokeLinejoin="round"
         strokeWidth="1.8"
       />
-    </svg>
-  );
-}
-
-function TelegramIcon({ className }: IconProps) {
-  return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path d="M21.5 3.5 2.8 10.7c-1.3.5-1.3 1.2-.2 1.6l4.8 1.5 1.9 6c.2.6.1.8.8.8.5 0 .8-.2 1.1-.5l2.7-2.6 5.6 4.1c1 .6 1.8.3 2.1-.9L23 4.8c.4-1.7-.6-2.5-1.5-1.3Z" />
     </svg>
   );
 }
@@ -181,30 +167,6 @@ export default async function Footer() {
       ],
     },
     {
-      title: t("columns.community.title"),
-      links: [
-        {
-          label: t("columns.community.links.telegram"),
-          href: "/telegram",
-        },
-        {
-          label: t("columns.community.links.nrw"),
-          href: "https://t.me/NRW_Vatandoshlar_bot",
-          external: true,
-        },
-        {
-          label: t("columns.community.links.badenWuerttemberg"),
-          href: "https://t.me/baden_wurttemberg_vatandoshlar",
-          external: true,
-        },
-        {
-          label: t("columns.community.links.schleswigHolstein"),
-          href: "https://t.me/SH_Vatandoshlar",
-          external: true,
-        },
-      ],
-    },
-    {
       title: t("columns.resources.title"),
       links: [
         {
@@ -228,12 +190,10 @@ export default async function Footer() {
   ];
 
   return (
-    <footer
-      className="relative isolate overflow-hidden border-t border-white/[0.08] bg-slate-950 text-white"
-    >
+    <footer className="relative isolate overflow-hidden border-t border-slate-200 bg-white text-slate-950 transition-colors dark:border-white/[0.08] dark:bg-slate-950 dark:text-white">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(16,185,129,0.16),transparent_30%),radial-gradient(circle_at_85%_15%,rgba(14,165,233,0.10),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(37,99,235,0.08),transparent_32%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(16,185,129,0.10),transparent_30%),radial-gradient(circle_at_85%_15%,rgba(14,165,233,0.08),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(37,99,235,0.06),transparent_32%)] dark:bg-[radial-gradient(circle_at_15%_0%,rgba(16,185,129,0.16),transparent_30%),radial-gradient(circle_at_85%_15%,rgba(14,165,233,0.10),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(37,99,235,0.08),transparent_32%)]"
       />
 
       <div
@@ -242,93 +202,83 @@ export default async function Footer() {
       />
 
       <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-8">
-        <div className="overflow-hidden rounded-[2rem] border border-white/[0.1] bg-white/[0.045] p-6 backdrop-blur-xl sm:p-8 lg:p-10">
+        <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50/90 p-6 shadow-sm backdrop-blur-xl transition-colors dark:border-white/[0.1] dark:bg-white/[0.045] dark:shadow-none sm:p-8 lg:p-10">
           <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-300">
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
                 <GlobeIcon className="size-4" />
                 Vatandoshlar.de
               </div>
 
-              <h2 className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">
+              <h2 className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-4xl">
                 {t("cta.title")}
               </h2>
 
-              <p className="mt-5 max-w-xl text-base leading-8 text-slate-300">
+              <p className="mt-5 max-w-xl text-base leading-8 text-slate-600 dark:text-slate-300">
                 {t("cta.description")}
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
+            <div className="flex lg:justify-end">
               <Link
                 href="/services"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
               >
                 {t("cta.servicesButton")}
 
                 <ArrowUpRightIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
-
-              <a
-                href="https://t.me/NRW_Vatandoshlar_bot"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-              >
-                <TelegramIcon className="size-4 text-sky-300" />
-                {t("cta.telegramButton")}
-              </a>
             </div>
           </div>
         </div>
 
-        <div className="mt-16 grid gap-12 lg:grid-cols-[1.1fr_1.9fr]">
+        <div className="mt-16 grid gap-12 lg:grid-cols-[1.15fr_1.35fr]">
           <div className="max-w-sm">
             <Link
               href="/"
               aria-label={t("accessibility.homeLink")}
-              className="inline-flex items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
+              className="inline-flex items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 focus-visible:ring-offset-white dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
             >
               <span className="flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-lg font-bold text-white shadow-lg shadow-emerald-500/20">
                 V
               </span>
 
               <span>
-                <span className="block text-lg font-semibold tracking-[-0.025em] text-white">
+                <span className="block text-lg font-semibold tracking-[-0.025em] text-slate-950 dark:text-white">
                   Vatandoshlar.de
                 </span>
 
-                <span className="block text-xs text-slate-400">
+                <span className="block text-xs text-slate-500 dark:text-slate-400">
                   {t("brand.subtitle")}
                 </span>
               </span>
             </Link>
 
-            <p className="mt-6 text-sm leading-7 text-slate-400">
+            <p className="mt-6 text-sm leading-7 text-slate-600 dark:text-slate-400">
               {t("brand.description")}
             </p>
 
             <div className="mt-6 space-y-3">
               <div className="flex items-start gap-3">
-                <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-400/10 text-emerald-300">
+                <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
                   <ShieldCheckIcon className="size-4" />
                 </span>
 
-                <p className="text-sm leading-6 text-slate-400">
+                <p className="text-sm leading-6 text-slate-600 dark:text-slate-400">
                   {t("brand.trust")}
                 </p>
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-sky-400/10 text-sky-300">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-sky-100 text-sky-700 dark:bg-sky-400/10 dark:text-sky-300">
                   <MailIcon className="size-4" />
                 </span>
 
                 <a
-                  href="mailto:info@vatandoshlar.de"
-                  className="text-sm text-slate-400 transition hover:text-white focus-visible:outline-none focus-visible:text-white"
+                  href="mailto:info.vatandoshlar@gmx.de"
+                  className="text-sm text-slate-600 transition hover:text-slate-950 focus-visible:outline-none focus-visible:text-slate-950 dark:text-slate-400 dark:hover:text-white dark:focus-visible:text-white"
                 >
-                  info@vatandoshlar.de
+                  info.vatandoshlar@gmx.de
                 </a>
               </div>
             </div>
@@ -336,36 +286,23 @@ export default async function Footer() {
 
           <nav
             aria-label={t("accessibility.navigation")}
-            className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3"
+            className="grid grid-cols-2 gap-x-8 gap-y-10"
           >
             {footerColumns.map((column) => (
               <div key={column.title}>
-                <h3 className="text-sm font-semibold text-white">
+                <h3 className="text-sm font-semibold text-slate-950 dark:text-white">
                   {column.title}
                 </h3>
 
                 <ul className="mt-5 space-y-3">
                   {column.links.map((link) => (
                     <li key={`${column.title}-${link.label}`}>
-                      {link.external ? (
-                        <a
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-1.5 text-sm leading-6 text-slate-400 transition hover:text-white focus-visible:outline-none focus-visible:text-white"
-                        >
-                          {link.label}
-
-                          <ArrowUpRightIcon className="size-3.5 opacity-60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                        </a>
-                      ) : (
-                        <Link
-                          href={link.href}
-                          className="text-sm leading-6 text-slate-400 transition hover:text-white focus-visible:outline-none focus-visible:text-white"
-                        >
-                          {link.label}
-                        </Link>
-                      )}
+                      <Link
+                        href={link.href}
+                        className="text-sm leading-6 text-slate-600 transition hover:text-slate-950 focus-visible:outline-none focus-visible:text-slate-950 dark:text-slate-400 dark:hover:text-white dark:focus-visible:text-white"
+                      >
+                        {link.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -374,7 +311,7 @@ export default async function Footer() {
           </nav>
         </div>
 
-        <div className="mt-16 flex flex-col gap-5 border-t border-white/[0.08] pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 flex flex-col gap-5 border-t border-slate-200 pt-8 dark:border-white/[0.08] sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-500">
             {t("bottom.copyright", {
               year: currentYear,
@@ -388,7 +325,7 @@ export default async function Footer() {
 
             <a
               href="#top"
-              className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-300 transition hover:text-white focus-visible:outline-none focus-visible:text-white"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition hover:text-slate-950 focus-visible:outline-none focus-visible:text-slate-950 dark:text-slate-300 dark:hover:text-white dark:focus-visible:text-white"
             >
               {t("bottom.backToTop")}
 

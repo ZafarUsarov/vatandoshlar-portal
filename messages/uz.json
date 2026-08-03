@@ -545,8 +545,7 @@
     "cta": {
       "title": "Germaniyadagi hayotingiz uchun ishonchli ma’lumotlar",
       "description": "Ish, ta’lim, konsullik, integratsiya, xizmatlar, tadbirlar va vatandoshlar hamjamiyatlari haqidagi foydali ma’lumotlarni bir joyda toping.",
-      "servicesButton": "Xizmatlarni ko‘rish",
-      "telegramButton": "Telegramga qo‘shilish"
+      "servicesButton": "Xizmatlarni ko‘rish"
     },
     "brand": {
       "subtitle": "Germaniyadagi o‘zbekistonliklar portali",
@@ -562,15 +561,6 @@
           "services": "Xizmatlar",
           "jobs": "Ish",
           "events": "Tadbirlar"
-        }
-      },
-      "community": {
-        "title": "Hamjamiyat",
-        "links": {
-          "telegram": "Telegram guruhlari",
-          "nrw": "NRW Telegram bot",
-          "badenWuerttemberg": "Baden-Württemberg",
-          "schleswigHolstein": "Schleswig-Holstein"
         }
       },
       "resources": {
