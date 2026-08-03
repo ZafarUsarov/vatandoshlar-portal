@@ -428,7 +428,7 @@ export default function Header() {
       >
         <div
           className={`
-            mx-auto flex max-w-[1440px]
+            mx-auto flex max-w-[1380px]
             items-center gap-5 px-4
             transition-[height] duration-300
             sm:px-6 lg:px-8
@@ -504,7 +504,7 @@ export default function Header() {
 
           <nav
             aria-label={t("accessibility.mainNavigation")}
-            className="mx-auto hidden items-center gap-1 xl:flex"
+            className="mx-auto hidden min-w-0 items-center gap-0.5 xl:flex"
           >
             {navigation.map((item) => {
               const isActive = isActiveRoute(
@@ -585,7 +585,7 @@ export default function Header() {
                 ${
                   isScrolled
                     ? "h-10 w-10 gap-0 px-0"
-                    : "h-11 w-[154px] gap-2.5 px-3.5"
+                    : "h-11 w-11 gap-0 px-0 2xl:w-[142px] 2xl:gap-2.5 2xl:px-3.5"
                 }
               `}
             >
@@ -602,7 +602,7 @@ export default function Header() {
                   ${
                     isScrolled
                       ? "max-w-0 -translate-x-1 overflow-hidden opacity-0"
-                      : "max-w-20 translate-x-0 opacity-100"
+                      : "max-w-0 -translate-x-1 overflow-hidden opacity-0 2xl:max-w-20 2xl:translate-x-0 2xl:opacity-100"
                   }
                 `}
               >{t("actions.search")}</span>
@@ -622,7 +622,7 @@ export default function Header() {
                   ${
                     isScrolled
                       ? "hidden max-w-0 border-0 px-0 py-0 opacity-0"
-                      : "hidden max-w-12 px-1.5 py-0.5 opacity-100 lg:inline-flex"
+                      : "hidden max-w-12 px-1.5 py-0.5 opacity-100 2xl:inline-flex"
                   }
                 `}
               >
@@ -677,7 +677,7 @@ export default function Header() {
             <Link
               href="/login"
               className={`
-                flex items-center rounded-xl
+                flex shrink-0 items-center justify-center whitespace-nowrap rounded-xl
                 bg-gradient-to-r
                 from-emerald-600 to-teal-600
                 text-sm font-bold text-white
@@ -693,8 +693,8 @@ export default function Header() {
                 dark:focus-visible:ring-offset-slate-950
                 ${
                   isScrolled
-                    ? "h-10 px-4"
-                    : "h-11 px-5"
+                    ? "h-10 min-w-[108px] px-4"
+                    : "h-11 min-w-[116px] px-5"
                 }
               `}
             >{t("actions.login")}</Link>
