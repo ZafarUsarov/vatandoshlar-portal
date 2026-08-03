@@ -34,98 +34,95 @@ const statistics = [
   },
 ];
 
-const quickLinks = [
-  {
-    title: "Rasmiy yangiliklar",
-    description:
-      "Germaniyada yashash, o‘qish va ishlash bo‘yicha tekshirilgan ma’lumotlar.",
-    href: "/news",
-    label: "Yangiliklarni ko‘rish",
-    icon: (
-      <svg
-        aria-hidden="true"
-        className="h-6 w-6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M5 4.75h11.5A2.5 2.5 0 0 1 19 7.25V19H7.5A2.5 2.5 0 0 1 5 16.5V4.75Z"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        <path
-          d="M19 9h1.25v7.75A2.25 2.25 0 0 1 18 19"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        <path
-          d="M8.5 9h7M8.5 12.5h7M8.5 16h4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    title: "Tekshirilgan xizmatlar",
-    description:
-      "Tarjimon, huquqshunos, soliq maslahatchisi, shifokor va boshqa xizmatlar.",
-    href: "/services",
-    label: "Xizmatlarni topish",
-    icon: (
-      <svg
-        aria-hidden="true"
-        className="h-6 w-6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M14.25 6.25a4.5 4.5 0 0 0-5.9 5.9L3.5 17a2.12 2.12 0 0 0 3 3l4.85-4.85a4.5 4.5 0 0 0 5.9-5.9l-2.6 2.6-2.5-.5-.5-2.5 2.6-2.6Z"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    title: "Ish va karyera",
-    description:
-      "Ish platformalari, Minijob, Werkstudent, Ausbildung va karyera qo‘llanmalari.",
-    href: "/jobs",
-    label: "Ish bo‘limiga o‘tish",
-    icon: (
-      <svg
-        aria-hidden="true"
-        className="h-6 w-6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M4 7.75h16A2.25 2.25 0 0 1 22.25 10v8A2.25 2.25 0 0 1 20 20.25H4A2.25 2.25 0 0 1 1.75 18v-8A2.25 2.25 0 0 1 4 7.75Z"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        <path
-          d="M8.25 7.75V6A2.25 2.25 0 0 1 10.5 3.75h3A2.25 2.25 0 0 1 15.75 6v1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-];
-
 export default async function HomePage() {
-  const t = await getTranslations("Home.hero");
+  const t = await getTranslations("Home");
+
+  const quickLinks = [
+    {
+      title: t("quickLinks.official.title"),
+      description: t("quickLinks.official.description"),
+      href: "/news",
+      label: t("quickLinks.official.title"),
+      icon: (
+        <svg
+          aria-hidden="true"
+          className="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M5 4.75h11.5A2.5 2.5 0 0 1 19 7.25V19H7.5A2.5 2.5 0 0 1 5 16.5V4.75Z"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          <path
+            d="M19 9h1.25v7.75A2.25 2.25 0 0 1 18 19"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          <path
+            d="M8.5 9h7M8.5 12.5h7M8.5 16h4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+    },
+    {
+      title: t("quickLinks.services.title"),
+      description: t("quickLinks.services.description"),
+      href: "/services",
+      label: t("quickLinks.services.title"),
+      icon: (
+        <svg
+          aria-hidden="true"
+          className="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M14.25 6.25a4.5 4.5 0 0 0-5.9 5.9L3.5 17a2.12 2.12 0 0 0 3 3l4.85-4.85a4.5 4.5 0 0 0 5.9-5.9l-2.6 2.6-2.5-.5-.5-2.5 2.6-2.6Z"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+    },
+    {
+      title: t("quickLinks.jobs.title"),
+      description: t("quickLinks.jobs.description"),
+      href: "/jobs",
+      label: t("quickLinks.jobs.title"),
+      icon: (
+        <svg
+          aria-hidden="true"
+          className="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M4 7.75h16A2.25 2.25 0 0 1 22.25 10v8A2.25 2.25 0 0 1 20 20.25H4A2.25 2.25 0 0 1 1.75 18v-8A2.25 2.25 0 0 1 4 7.75Z"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          <path
+            d="M8.25 7.75V6A2.25 2.25 0 0 1 10.5 3.75h3A2.25 2.25 0 0 1 15.75 6v1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -152,19 +149,19 @@ export default async function HomePage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-300 backdrop-blur">
                 <span className="h-2 w-2 rounded-full bg-emerald-400" />
 
-                {t("badge")}
+                {t("hero.badge")}
               </div>
 
               <h1 className="mt-7 max-w-4xl text-balance text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl lg:leading-[1.05]">
-                {t("title")}
+                {t("hero.title")}
 
                 <span className="block bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
-                  {t("highlight")}
+                  {t("hero.highlight")}
                 </span>
               </h1>
 
               <p className="mt-7 max-w-3xl text-pretty text-lg leading-8 text-slate-300 sm:text-xl">
-                {t("description")}
+                {t("hero.description")}
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -172,7 +169,7 @@ export default async function HomePage() {
                   href="/services"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-7 py-4 font-bold text-white shadow-xl shadow-emerald-950/30 transition duration-300 hover:-translate-y-0.5 hover:from-emerald-400 hover:to-teal-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                 >
-                  {t("servicesCta")}
+                  {t("hero.servicesCta")}
 
                   <svg
                     aria-hidden="true"
@@ -194,7 +191,7 @@ export default async function HomePage() {
                   href="/jobs"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-7 py-4 font-bold text-white backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                 >
-                  {t("jobsCta")}
+                  {t("hero.jobsCta")}
                 </Link>
               </div>
 
@@ -204,7 +201,7 @@ export default async function HomePage() {
                     ✓
                   </span>
 
-                  {t("trust.officialSources")}
+                  {t("hero.trust.officialSources")}
                 </span>
 
                 <span className="flex items-center gap-2">
@@ -212,7 +209,7 @@ export default async function HomePage() {
                     ✓
                   </span>
 
-                  {t("trust.verifiedListings")}
+                  {t("hero.trust.verifiedListings")}
                 </span>
 
                 <span className="flex items-center gap-2">
@@ -220,7 +217,7 @@ export default async function HomePage() {
                     ✓
                   </span>
 
-                  {t("trust.mobileFriendly")}
+                  {t("hero.trust.mobileFriendly")}
                 </span>
               </div>
             </div>
@@ -236,7 +233,7 @@ export default async function HomePage() {
                     </p>
 
                     <p className="mt-1 text-xl font-bold">
-                      Tezkor yo‘nalishlar
+                      {t("quickLinks.title")}
                     </p>
                   </div>
 
@@ -287,12 +284,11 @@ export default async function HomePage() {
 
                 <div className="mt-5 rounded-2xl border border-amber-300/15 bg-amber-300/10 p-4">
                   <p className="text-sm font-semibold text-amber-200">
-                    Ishonchli ma’lumot siyosati
+                    {t("quickLinks.policy.title")}
                   </p>
 
                   <p className="mt-2 text-sm leading-6 text-slate-300">
-                    Portalda faqat manbasi ko‘rsatilgan va tekshirilgan
-                    ma’lumotlar joylashtiriladi.
+                    {t("quickLinks.policy.description")}
                   </p>
                 </div>
               </div>

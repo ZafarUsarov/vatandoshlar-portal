@@ -12,8 +12,33 @@
         "verifiedListings": "Keine gefälschten Anzeigen",
         "mobileFriendly": "Für mobile Geräte optimiert"
       }
+    },
+
+    "quickLinks": {
+      "title": "Schnellzugriff",
+
+      "official": {
+        "title": "Offizielle Informationen",
+        "description": "Geprüfte Informationen zum Leben, Studium und Arbeiten in Deutschland."
+      },
+
+      "services": {
+        "title": "Geprüfte Dienstleistungen",
+        "description": "Dolmetscher, Rechtsanwälte, Steuerberater, Ärzte und weitere Dienstleistungen."
+      },
+
+      "jobs": {
+        "title": "Arbeit und Karriere",
+        "description": "Jobbörsen, Minijob, Werkstudent, Ausbildung und Karriereleitfäden."
+      },
+
+      "policy": {
+        "title": "Informationsrichtlinie",
+        "description": "Im Portal werden ausschließlich überprüfte Informationen mit Quellenangaben veröffentlicht."
+      }
     }
   },
+
   "Header": {
     "navigation": {
       "home": "Startseite",

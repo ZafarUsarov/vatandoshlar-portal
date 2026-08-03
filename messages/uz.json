@@ -12,8 +12,33 @@
         "verifiedListings": "Uydirma e’lonlarsiz",
         "mobileFriendly": "Mobil qurilmalarga mos"
       }
+    },
+
+    "quickLinks": {
+      "title": "Tezkor yo‘nalishlar",
+
+      "official": {
+        "title": "Rasmiy yangiliklar",
+        "description": "Germaniyada yashash, o‘qish va ishlash bo‘yicha tekshirilgan ma’lumotlar."
+      },
+
+      "services": {
+        "title": "Tekshirilgan xizmatlar",
+        "description": "Tarjimon, huquqshunos, soliq maslahatchisi, shifokor va boshqa xizmatlar."
+      },
+
+      "jobs": {
+        "title": "Ish va karyera",
+        "description": "Ish platformalari, Minijob, Werkstudent, Ausbildung va karyera qo‘llanmalari."
+      },
+
+      "policy": {
+        "title": "Ishonchli ma’lumot siyosati",
+        "description": "Portalda faqat manbasi ko‘rsatilgan va tekshirilgan ma’lumotlar joylashtiriladi."
+      }
     }
   },
+
   "Header": {
     "navigation": {
       "home": "Bosh sahifa",
