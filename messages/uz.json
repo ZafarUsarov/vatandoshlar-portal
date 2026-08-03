@@ -13,6 +13,49 @@
         "mobileFriendly": "Mobil qurilmalarga mos"
       }
     },
+    "quickLinks": {
+      "title": "Tezkor yo‘nalishlar",
+      "official": {
+        "title": "Rasmiy yangiliklar",
+        "description": "Germaniyada yashash, o‘qish va ishlash bo‘yicha tekshirilgan ma’lumotlar."
+      },
+      "services": {
+        "title": "Tekshirilgan xizmatlar",
+        "description": "Tarjimon, huquqshunos, soliq maslahatchisi, shifokor va boshqa xizmatlar."
+      },
+      "jobs": {
+        "title": "Ish va karyera",
+        "description": "Ish platformalari, Minijob, Werkstudent, Ausbildung va karyera qo‘llanmalari."
+      },
+      "policy": {
+        "title": "Ishonchli ma’lumot siyosati",
+        "description": "Portalda faqat manbasi ko‘rsatilgan va tekshirilgan ma’lumotlar joylashtiriladi."
+      }
+    },
+    "statistics": {
+      "items": {
+        "regions": {
+          "value": "16",
+          "label": "Bundesland",
+          "description": "Germaniyaning barcha hududlari bo‘yicha ma’lumot"
+        },
+        "verified": {
+          "value": "100%",
+          "label": "Tekshirilgan",
+          "description": "Rasmiy manbalarga asoslangan ma’lumotlar"
+        },
+        "availability": {
+          "value": "24/7",
+          "label": "Ochiq portal",
+          "description": "Kerakli ma’lumotlardan istalgan vaqtda foydalaning"
+        },
+        "platform": {
+          "value": "1",
+          "label": "Yagona platforma",
+          "description": "Yangilik, xizmat, ish va hamjamiyat bir joyda"
+        }
+      }
+    },
     "finalCta": {
       "badge": "Vatandoshlar hamjamiyati",
       "title": "Germaniyadagi hayotingizni ishonchli ma’lumot bilan osonlashtiring",
@@ -29,6 +72,48 @@
       "jobs": "Ish",
       "telegram": "Telegram",
       "events": "Tadbirlar"
+    },
+    "navigationDescriptions": {
+      "home": "Portalning asosiy sahifasi",
+      "news": "Rasmiy va tekshirilgan ma’lumotlar",
+      "services": "Mutaxassis va xizmatlar katalogi",
+      "jobs": "Ish qidirish va karyera qo‘llanmalari",
+      "telegram": "Bundeslandlar bo‘yicha guruhlar",
+      "events": "Tekshirilgan uchrashuv va tadbirlar"
+    },
+    "brand": {
+      "subtitle": "Germaniyadagi o‘zbeklar portali"
+    },
+    "actions": {
+      "search": "Qidirish",
+      "searchPortal": "Portal bo‘ylab qidirish",
+      "login": "Kirish",
+      "loginToPortal": "Portalga kirish",
+      "lightMode": "Yorug‘ rejim",
+      "darkMode": "Tungi rejim"
+    },
+    "mobile": {
+      "navigationTitle": "Navigatsiya",
+      "navigationDescription": "Portal bo‘limini tanlang"
+    },
+    "accessibility": {
+      "homeLink": "Vatandoshlar.de bosh sahifasi",
+      "mainNavigation": "Asosiy navigatsiya",
+      "openSearch": "Tezkor qidiruvni ochish",
+      "enableLightMode": "Yorug‘ rejimni yoqish",
+      "enableDarkMode": "Tungi rejimni yoqish",
+      "openMenu": "Menyuni ochish",
+      "closeMenu": "Menyuni yopish",
+      "closeMobileMenu": "Mobil menyuni yopish"
+    },
+    "languageSwitcher": {
+      "title": "Til",
+      "groupLabel": "Tilni tanlash",
+      "switchTo": "{language} tiliga o‘tish",
+      "languages": {
+        "uz": "O‘zbekcha",
+        "de": "Deutsch"
+      }
     }
   },
   "SearchSection": {
@@ -104,6 +189,272 @@
       "events": {
         "title": "Tadbirlar",
         "description": "Tekshirilgan uchrashuv va tadbirlar"
+      }
+    }
+  },
+  "FeaturesSection": {
+    "badge": "Platforma imkoniyatlari",
+    "title": "Germaniyadagi hayotingiz uchun kerakli imkoniyatlar bir joyda",
+    "description": "Ish topishdan tortib, ishonchli xizmatlar, tadbirlar va mahalliy hamjamiyatlargacha — Vatandoshlar.de sizga kerakli ma’lumotni tez va qulay topishga yordam beradi.",
+    "viewAll": "Barcha bo‘limlarni ko‘rish",
+    "items": {
+      "telegramGroups": {
+        "title": "Telegram guruhlari",
+        "description": "Germaniyaning turli shahar va hududlaridagi o‘zbeklar Telegram guruhlarini toping.",
+        "linkLabel": "Guruhlarni ko‘rish"
+      },
+      "jobs": {
+        "title": "Ish va karyera",
+        "description": "Vakansiyalar, Minijob, Ausbildung va Germaniyada ishlash bo‘yicha foydali qo‘llanmalar.",
+        "linkLabel": "Ish bo‘limiga o‘tish"
+      },
+      "services": {
+        "title": "Ishonchli xizmatlar",
+        "description": "Tarjimonlar, yuristlar, ustalar va boshqa mutaxassislarni bir joydan toping.",
+        "linkLabel": "Xizmatlarni ko‘rish"
+      },
+      "events": {
+        "title": "Tadbir va uchrashuvlar",
+        "description": "Konsertlar, seminarlar, uchrashuvlar va hamjamiyat tadbirlaridan xabardor bo‘ling.",
+        "linkLabel": "Tadbirlarni ko‘rish"
+      }
+    }
+  },
+  "NewsSection": {
+    "badge": "Yangiliklar",
+    "title": "Germaniyadagi eng muhim yangiliklar va qo‘llanmalar",
+    "description": "Ish, Ausbildung, Minijob, integratsiya, soliqlar, konsullik va Germaniyada yashashga oid eng muhim ma’lumotlarni bitta joyda kuzating.",
+    "viewAll": "Barcha maqolalar",
+    "items": {
+      "1": {
+        "title": "Germaniyada integratsiya kurslari: qatnashish va xarajatlar",
+        "excerpt": "BAMF integratsiya kurslari kimlar uchun mo‘ljallangani, kurs xarajatlari va ayrim hollarda to‘lovdan ozod bo‘lish imkoniyatlari haqida rasmiy ma’lumot beradi.",
+        "category": "Integratsiya",
+        "contentType": "Foydali qo‘llanma",
+        "readingTime": "5 daqiqa",
+        "location": "Germaniya"
+      },
+      "2": {
+        "title": "BAMF-NAvI orqali yaqin integratsiya kursini qanday topish mumkin?",
+        "excerpt": "BAMF-NAvI yashash joyiga yaqin integratsiya kurslari, kurs tashkilotchilari va mas’ul idoralarning manzillarini topishga yordam beradi.",
+        "category": "Nemis tili",
+        "contentType": "Foydali qo‘llanma",
+        "readingTime": "3 daqiqa",
+        "location": "Germaniya"
+      },
+      "3": {
+        "title": "Opportunity Card orqali Germaniyada ish qidirish",
+        "excerpt": "Opportunity Card malakali xorijiy mutaxassislarga Germaniyada ish qidirish imkonini beruvchi yashash ruxsati shaklidir.",
+        "category": "Ish",
+        "contentType": "Ish va migratsiya",
+        "readingTime": "5 daqiqa",
+        "location": "Germaniya"
+      }
+    }
+  },
+  "NewsCard": {
+    "verified": "Tekshirildi",
+    "details": "Batafsil"
+  },
+  "NewsPage": {
+    "metadata": {
+      "title": "Yangiliklar va foydali ma’lumotlar | Vatandoshlar.de",
+      "description": "Germaniyadagi o‘zbekistonliklar uchun rasmiy manbalarga asoslangan integratsiya, ish, ta’lim va konsullik ma’lumotlari."
+    },
+    "hero": {
+      "title": "Yangiliklar va foydali ma’lumotlar",
+      "description": "Germaniyada yashash, o‘qish va ishlashga oid materiallar faqat tekshiriladigan rasmiy manbalar asosida tayyorlanadi."
+    },
+    "featured": {
+      "badge": "Tavsiya etilgan material",
+      "officialSource": "Rasmiy manba",
+      "readMore": "Batafsil o‘qish",
+      "verified": "Tekshirildi:"
+    },
+    "all": {
+      "eyebrow": "Barcha materiallar",
+      "title": "Tekshirilgan ma’lumotlar",
+      "description": "Integratsiya, ish, ta’lim, huquqiy masalalar va konsullik xizmatlariga oid ishonchli materiallarni bir joyda toping.",
+      "count": "Jami {count} ta material"
+    },
+    "footer": "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
+    "items": {
+      "1": {
+        "title": "Germaniyada integratsiya kurslari: qatnashish va xarajatlar",
+        "excerpt": "BAMF integratsiya kurslari kimlar uchun mo‘ljallangani, kurs xarajatlari va ayrim hollarda to‘lovdan ozod bo‘lish imkoniyatlari haqida rasmiy ma’lumot beradi.",
+        "category": "Integratsiya",
+        "contentType": "Foydali qo‘llanma",
+        "readingTime": "5 daqiqa",
+        "location": "Germaniya",
+        "sourceLanguage": "Nemis tili"
+      },
+      "2": {
+        "title": "BAMF-NAvI orqali yaqin integratsiya kursini qanday topish mumkin?",
+        "excerpt": "BAMF-NAvI yashash joyiga yaqin integratsiya kurslari, kurs tashkilotchilari va mas’ul idoralarning manzillarini topishga yordam beradi.",
+        "category": "Nemis tili",
+        "contentType": "Foydali qo‘llanma",
+        "readingTime": "3 daqiqa",
+        "location": "Germaniya",
+        "sourceLanguage": "Nemis tili"
+      },
+      "3": {
+        "title": "Opportunity Card orqali Germaniyada ish qidirish",
+        "excerpt": "Opportunity Card malakali xorijiy mutaxassislarga Germaniyada ish qidirish imkonini beruvchi yashash ruxsati shaklidir.",
+        "category": "Ish",
+        "contentType": "Ish va migratsiya",
+        "readingTime": "5 daqiqa",
+        "location": "Germaniya",
+        "sourceLanguage": "Ingliz va nemis tillari"
+      },
+      "4": {
+        "title": "DAAD stipendiyalar bazasidan qanday foydalanish mumkin?",
+        "excerpt": "DAAD bazasida xalqaro talabalar, bitiruvchilar, doktorantlar va tadqiqotchilar uchun stipendiya dasturlarini qidirish mumkin.",
+        "category": "Stipendiya",
+        "contentType": "Ta’lim",
+        "readingTime": "4 daqiqa",
+        "location": "Germaniya",
+        "sourceLanguage": "Nemis va ingliz tillari"
+      },
+      "5": {
+        "title": "O‘zbekistonning Berlindagi konsullik bo‘limi haqida ma’lumot",
+        "excerpt": "O‘zbekistonning Germaniyadagi elchixonasi konsullik xizmatlari, bog‘lanish ma’lumotlari va fuqarolar qabuli bo‘yicha rasmiy ma’lumot taqdim etadi.",
+        "category": "Elchixona",
+        "contentType": "Konsullik",
+        "readingTime": "3 daqiqa",
+        "location": "Berlin",
+        "sourceLanguage": "O‘zbek tili"
+      },
+      "6": {
+        "title": "Germaniyada vaqtincha konsullik ro‘yxatiga turish tartibi",
+        "excerpt": "O‘zbekistonning Germaniyadagi elchixonasi vaqtincha xorijda yashayotgan fuqarolar uchun konsullik ro‘yxatiga turish tartibini e’lon qilgan.",
+        "category": "Konsullik",
+        "contentType": "Rasmiy ma’lumot",
+        "readingTime": "4 daqiqa",
+        "location": "Germaniya",
+        "sourceLanguage": "O‘zbek tili"
+      }
+    }
+  },
+  "NewsDetailPage": {
+    "metadata": {
+      "notFound": "Ma’lumot topilmadi | Vatandoshlar.de",
+      "title": "{title} | Vatandoshlar.de"
+    },
+    "backToAll": "Barcha materiallar",
+    "lastVerified": "Ma’lumot oxirgi marta {date} kuni tekshirildi.",
+    "source": {
+      "eyebrow": "Rasmiy manba",
+      "language": "Manba tili:",
+      "verified": "Oxirgi tekshiruv:",
+      "open": "Rasmiy manbani ochish"
+    },
+    "disclaimer": {
+      "title": "Muhim eslatma",
+      "description": "Qonunlar, to‘lovlar, ariza talablari, muddatlar va idoralarning ish tartibi o‘zgarishi mumkin. Rasmiy harakatni boshlashdan oldin yuqoridagi birlamchi manbani qayta tekshiring."
+    },
+    "preparedNote": "Material rasmiy manba asosida Vatandoshlar.de uchun o‘zbek tilida tayyorlandi.",
+    "related": {
+      "eyebrow": "Foydali ma’lumotlar",
+      "title": "Boshqa materiallar"
+    },
+    "footer": "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
+    "items": {
+      "1": {
+        "title": "Germaniyada integratsiya kurslari: qatnashish va xarajatlar",
+        "excerpt": "BAMF integratsiya kurslari kimlar uchun mo‘ljallangani, kurs xarajatlari va ayrim hollarda to‘lovdan ozod bo‘lish imkoniyatlari haqida rasmiy ma’lumot beradi.",
+        "category": "Integratsiya",
+        "contentType": "Foydali qo‘llanma",
+        "readingTime": "5 daqiqa",
+        "location": "Germaniya",
+        "content": [
+          "Germaniyada integratsiya kurslari nemis tilini o‘rganish hamda mamlakatning tarixi, madaniyati, huquqiy tizimi va kundalik hayoti bilan tanishishga yordam beradi.",
+          "Umumiy integratsiya kursi odatda til kursi va orientatsiya kursidan tashkil topadi. Kurs hajmi va davomiyligi kurs turiga hamda ishtirokchining ehtiyojiga qarab farq qilishi mumkin.",
+          "Kursda qatnashish uchun to‘lov talab qilinishi mumkin. Ayrim hollarda ijtimoiy yordam oluvchi yoki moliyaviy qiyinchilikka duch kelgan ishtirokchilar to‘lovdan ozod qilish uchun ariza topshirishlari mumkin.",
+          "Kursni muvaffaqiyatli yakunlagan ayrim ishtirokchilar to‘langan xarajatning bir qismini qaytarish uchun BAMFga ariza berish imkoniyatiga ega bo‘lishi mumkin.",
+          "Ishtirok etish huquqi, to‘lov miqdori va imtiyozlar shaxsning yashash maqomi hamda individual holatiga bog‘liq. Ariza topshirishdan oldin BAMF rasmiy sahifasidagi amaldagi talablarni tekshirish zarur."
+        ],
+        "sourceLanguage": "Nemis tili"
+      },
+      "2": {
+        "title": "BAMF-NAvI orqali yaqin integratsiya kursini qanday topish mumkin?",
+        "excerpt": "BAMF-NAvI yashash joyiga yaqin integratsiya kurslari, kurs tashkilotchilari va mas’ul idoralarning manzillarini topishga yordam beradi.",
+        "category": "Nemis tili",
+        "contentType": "Foydali qo‘llanma",
+        "readingTime": "3 daqiqa",
+        "location": "Germaniya",
+        "content": [
+          "BAMF-NAvI Germaniya Migratsiya va qochqinlar federal idorasining rasmiy qidiruv xizmatidir.",
+          "Platforma orqali yashash manzili yoki pochta indeksini kiritib, yaqin atrofdagi integratsiya kurslarini qidirish mumkin.",
+          "Qidiruv natijalarida kurs tashkilotchisining nomi, manzili va bog‘lanish ma’lumotlari ko‘rsatilishi mumkin.",
+          "Kursga yozilishdan oldin tashkilot bilan bevosita bog‘lanib, boshlanish sanasi, bo‘sh joylar, dars vaqti hamda talab qilinadigan hujjatlarni aniqlashtirish tavsiya etiladi.",
+          "BAMF-NAvI ma’lumotlari o‘zgarishi mumkin. Shu sababli topilgan ma’lumotni tegishli kurs tashkilotchisi bilan tasdiqlash kerak."
+        ],
+        "sourceLanguage": "Nemis tili"
+      },
+      "3": {
+        "title": "Opportunity Card orqali Germaniyada ish qidirish",
+        "excerpt": "Opportunity Card malakali xorijiy mutaxassislarga Germaniyada ish qidirish imkonini beruvchi yashash ruxsati shaklidir.",
+        "category": "Ish",
+        "contentType": "Ish va migratsiya",
+        "readingTime": "5 daqiqa",
+        "location": "Germaniya",
+        "content": [
+          "Opportunity Card, nemis tilida Chancenkarte, xorijiy mutaxassislarga Germaniyada ish qidirish imkonini beradi.",
+          "Talabgor Germaniyada tan olingan malakali mutaxassis bo‘lishi yoki belgilangan ball tizimi orqali zarur shartlarni bajarishi mumkin.",
+          "Opportunity Card uchun ariza berishda kasbiy yoki akademik malaka, til bilimi, ish tajribasi, yosh va Germaniya bilan avvalgi aloqalar kabi mezonlar hisobga olinishi mumkin.",
+          "Talabgor Germaniyada yashash davridagi xarajatlarini qoplay olishini ham tasdiqlashi kerak.",
+          "Make it in Germany portalida talablarni dastlabki tekshirish uchun rasmiy Self-Check vositasi mavjud.",
+          "Viza va migratsiya talablari individual holatga bog‘liq. Ariza topshirishdan oldin Germaniya vakolatxonasi yoki mas’ul Ausländerbehörde ma’lumotlarini tekshirish kerak."
+        ],
+        "sourceLanguage": "Ingliz va nemis tillari"
+      },
+      "4": {
+        "title": "DAAD stipendiyalar bazasidan qanday foydalanish mumkin?",
+        "excerpt": "DAAD bazasida xalqaro talabalar, bitiruvchilar, doktorantlar va tadqiqotchilar uchun stipendiya dasturlarini qidirish mumkin.",
+        "category": "Stipendiya",
+        "contentType": "Ta’lim",
+        "readingTime": "4 daqiqa",
+        "location": "Germaniya",
+        "sourceLanguage": "Nemis va ingliz tillari",
+        "content": [
+          "DAAD Germaniyada o‘qish va ilmiy tadqiqot olib borishni istagan xalqaro talabalar hamda tadqiqotchilar uchun stipendiyalar bazasini taqdim etadi.",
+          "Bazadan ta’lim darajasi, mutaxassislik, kelib chiqish mamlakati va stipendiya turi bo‘yicha mos dasturlarni qidirish mumkin.",
+          "DAAD bazasida tashkilotning o‘z dasturlari bilan birga ayrim boshqa moliyalashtiruvchi tashkilotlarning stipendiya takliflari ham ko‘rsatilishi mumkin.",
+          "Har bir stipendiya sahifasida nomzodga qo‘yiladigan talablar, moliyalashtirish turi, ariza topshirish tartibi va muddatlar alohida beriladi.",
+          "Stipendiya dasturini tanlashdan oldin barcha talablarni va ariza muddatini tegishli rasmiy sahifada tekshirish zarur."
+        ]
+      },
+      "5": {
+        "title": "O‘zbekistonning Berlindagi konsullik bo‘limi haqida ma’lumot",
+        "excerpt": "O‘zbekistonning Germaniyadagi elchixonasi konsullik xizmatlari, bog‘lanish ma’lumotlari va fuqarolar qabuli bo‘yicha rasmiy ma’lumot taqdim etadi.",
+        "category": "Elchixona",
+        "contentType": "Konsullik",
+        "readingTime": "3 daqiqa",
+        "location": "Berlin",
+        "sourceLanguage": "O‘zbek tili",
+        "content": [
+          "O‘zbekiston Respublikasining Germaniya Federativ Respublikasidagi elchixonasi konsullik bo‘limi Berlinda faoliyat yuritadi.",
+          "Konsullik bo‘limi fuqarolik, pasport, notarial harakatlar, hujjatlarni rasmiylashtirish va boshqa konsullik masalalari bo‘yicha xizmat ko‘rsatadi.",
+          "Konsullik xizmatidan foydalanishdan oldin tegishli xizmat sahifasidagi hujjatlar ro‘yxati va ariza topshirish tartibini tekshirish tavsiya etiladi.",
+          "Qabul kunlari, ish vaqti va xizmat ko‘rsatish tartibi o‘zgarishi mumkin.",
+          "Elchixonaga borishdan oldin uning rasmiy saytidagi amaldagi ma’lumotlarni tekshirish yoki konsullik bo‘limi bilan bog‘lanish zarur."
+        ]
+      },
+      "6": {
+        "title": "Germaniyada vaqtincha konsullik ro‘yxatiga turish tartibi",
+        "excerpt": "O‘zbekistonning Germaniyadagi elchixonasi vaqtincha xorijda yashayotgan fuqarolar uchun konsullik ro‘yxatiga turish tartibini e’lon qilgan.",
+        "category": "Konsullik",
+        "contentType": "Rasmiy ma’lumot",
+        "readingTime": "4 daqiqa",
+        "location": "Germaniya",
+        "sourceLanguage": "O‘zbek tili",
+        "content": [
+          "O‘zbekistonning Germaniyadagi elchixonasi konsullik okrugida yashayotgan fuqarolar uchun vaqtincha konsullik ro‘yxatiga turish xizmatini taqdim etadi.",
+          "Uzoq muddatli ta’lim, qonuniy mehnat faoliyati, davolanish yoki xizmat safari bilan xorijda bo‘lgan fuqarolar uchun konsullik ro‘yxati foydali bo‘lishi mumkin.",
+          "Ro‘yxatdan o‘tish orqali elchixona favqulodda vaziyatlar yoki muhim rasmiy xabarlar paytida fuqaro bilan bog‘lanish imkoniga ega bo‘ladi.",
+          "Ro‘yxatdan o‘tish uchun talab qilinadigan hujjatlar shaxsning holati va yashash maqomiga qarab farq qilishi mumkin.",
+          "Ariza topshirishdan oldin elchixonaning rasmiy sahifasidagi amaldagi hujjatlar ro‘yxati va ko‘rsatmalarni tekshirish zarur."
+        ]
       }
     }
   }

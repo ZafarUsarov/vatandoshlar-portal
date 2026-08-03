@@ -13,6 +13,49 @@
         "mobileFriendly": "Für mobile Geräte optimiert"
       }
     },
+    "quickLinks": {
+      "title": "Schnellzugriff",
+      "official": {
+        "title": "Offizielle Informationen",
+        "description": "Geprüfte Informationen zum Leben, Studium und Arbeiten in Deutschland."
+      },
+      "services": {
+        "title": "Geprüfte Dienstleistungen",
+        "description": "Dolmetscher, Rechtsanwälte, Steuerberater, Ärzte und weitere Dienstleistungen."
+      },
+      "jobs": {
+        "title": "Arbeit und Karriere",
+        "description": "Jobbörsen, Minijob, Werkstudent, Ausbildung und Karriereleitfäden."
+      },
+      "policy": {
+        "title": "Informationsrichtlinie",
+        "description": "Im Portal werden ausschließlich überprüfte Informationen mit Quellenangaben veröffentlicht."
+      }
+    },
+    "statistics": {
+      "items": {
+        "regions": {
+          "value": "16",
+          "label": "Bundesländer",
+          "description": "Informationen aus allen Regionen Deutschlands"
+        },
+        "verified": {
+          "value": "100%",
+          "label": "Geprüft",
+          "description": "Informationen auf Grundlage offizieller Quellen"
+        },
+        "availability": {
+          "value": "24/7",
+          "label": "Jederzeit verfügbar",
+          "description": "Greifen Sie jederzeit auf wichtige Informationen zu"
+        },
+        "platform": {
+          "value": "1",
+          "label": "Zentrale Plattform",
+          "description": "Nachrichten, Dienstleistungen, Arbeit und Community an einem Ort"
+        }
+      }
+    },
     "finalCta": {
       "badge": "Vatandoshlar-Community",
       "title": "Erleichtern Sie Ihr Leben in Deutschland mit verlässlichen Informationen",
@@ -29,6 +72,48 @@
       "jobs": "Arbeit",
       "telegram": "Telegram",
       "events": "Veranstaltungen"
+    },
+    "navigationDescriptions": {
+      "home": "Startseite des Portals",
+      "news": "Offizielle und geprüfte Informationen",
+      "services": "Verzeichnis von Fachkräften und Dienstleistungen",
+      "jobs": "Jobsuche und Karriereinformationen",
+      "telegram": "Gruppen nach Bundesland",
+      "events": "Geprüfte Treffen und Veranstaltungen"
+    },
+    "brand": {
+      "subtitle": "Portal für Usbeken in Deutschland"
+    },
+    "actions": {
+      "search": "Suchen",
+      "searchPortal": "Das Portal durchsuchen",
+      "login": "Anmelden",
+      "loginToPortal": "Am Portal anmelden",
+      "lightMode": "Heller Modus",
+      "darkMode": "Dunkler Modus"
+    },
+    "mobile": {
+      "navigationTitle": "Navigation",
+      "navigationDescription": "Wählen Sie einen Portalbereich"
+    },
+    "accessibility": {
+      "homeLink": "Zur Startseite von Vatandoshlar.de",
+      "mainNavigation": "Hauptnavigation",
+      "openSearch": "Schnellsuche öffnen",
+      "enableLightMode": "Hellen Modus aktivieren",
+      "enableDarkMode": "Dunklen Modus aktivieren",
+      "openMenu": "Menü öffnen",
+      "closeMenu": "Menü schließen",
+      "closeMobileMenu": "Mobiles Menü schließen"
+    },
+    "languageSwitcher": {
+      "title": "Sprache",
+      "groupLabel": "Sprache auswählen",
+      "switchTo": "Zur Sprache {language} wechseln",
+      "languages": {
+        "uz": "O‘zbekcha",
+        "de": "Deutsch"
+      }
     }
   },
   "SearchSection": {
@@ -104,6 +189,272 @@
       "events": {
         "title": "Veranstaltungen",
         "description": "Geprüfte Treffen und Veranstaltungen"
+      }
+    }
+  },
+  "FeaturesSection": {
+    "badge": "Funktionen der Plattform",
+    "title": "Wichtige Angebote für Ihr Leben in Deutschland an einem Ort",
+    "description": "Von der Jobsuche über verlässliche Dienstleistungen und Veranstaltungen bis zu lokalen Communities hilft Ihnen Vatandoshlar.de, passende Informationen schnell und einfach zu finden.",
+    "viewAll": "Alle Bereiche ansehen",
+    "items": {
+      "telegramGroups": {
+        "title": "Telegram-Gruppen",
+        "description": "Finden Sie usbekische Telegram-Gruppen in verschiedenen Städten und Regionen Deutschlands.",
+        "linkLabel": "Gruppen ansehen"
+      },
+      "jobs": {
+        "title": "Arbeit und Karriere",
+        "description": "Stellenangebote, Minijobs, Ausbildung und hilfreiche Informationen zum Arbeiten in Deutschland.",
+        "linkLabel": "Zum Arbeitsbereich"
+      },
+      "services": {
+        "title": "Verlässliche Dienstleistungen",
+        "description": "Finden Sie Dolmetscher, Anwälte, Handwerker und weitere Fachkräfte an einem Ort.",
+        "linkLabel": "Dienstleistungen ansehen"
+      },
+      "events": {
+        "title": "Veranstaltungen und Treffen",
+        "description": "Bleiben Sie über Konzerte, Seminare, Treffen und Community-Veranstaltungen informiert.",
+        "linkLabel": "Veranstaltungen ansehen"
+      }
+    }
+  },
+  "NewsSection": {
+    "badge": "Nachrichten",
+    "title": "Wichtige Nachrichten und Ratgeber für das Leben in Deutschland",
+    "description": "Bleiben Sie über Arbeit, Ausbildung, Minijobs, Integration, Steuern, konsularische Themen und den Alltag in Deutschland informiert.",
+    "viewAll": "Alle Artikel",
+    "items": {
+      "1": {
+        "title": "Integrationskurse in Deutschland: Teilnahme und Kosten",
+        "excerpt": "Offizielle Informationen des BAMF zu Zielgruppen, Kurskosten und möglichen Befreiungen vom Kostenbeitrag.",
+        "category": "Integration",
+        "contentType": "Praktischer Ratgeber",
+        "readingTime": "5 Minuten",
+        "location": "Deutschland"
+      },
+      "2": {
+        "title": "So finden Sie mit BAMF-NAvI einen Integrationskurs in Ihrer Nähe",
+        "excerpt": "BAMF-NAvI hilft dabei, Integrationskurse, Kursträger und zuständige Stellen in der Umgebung zu finden.",
+        "category": "Deutsch lernen",
+        "contentType": "Praktischer Ratgeber",
+        "readingTime": "3 Minuten",
+        "location": "Deutschland"
+      },
+      "3": {
+        "title": "Mit der Chancenkarte in Deutschland Arbeit suchen",
+        "excerpt": "Die Chancenkarte ist ein Aufenthaltstitel, der qualifizierten Fachkräften aus dem Ausland die Jobsuche in Deutschland ermöglicht.",
+        "category": "Arbeit",
+        "contentType": "Arbeit und Migration",
+        "readingTime": "5 Minuten",
+        "location": "Deutschland"
+      }
+    }
+  },
+  "NewsCard": {
+    "verified": "Geprüft",
+    "details": "Mehr erfahren"
+  },
+  "NewsPage": {
+    "metadata": {
+      "title": "Nachrichten und nützliche Informationen | Vatandoshlar.de",
+      "description": "Offizielle und geprüfte Informationen zu Integration, Arbeit, Bildung und konsularischen Themen für Usbeken in Deutschland."
+    },
+    "hero": {
+      "title": "Nachrichten und nützliche Informationen",
+      "description": "Unsere Inhalte zum Leben, Studium und Arbeiten in Deutschland basieren auf überprüfbaren offiziellen Quellen."
+    },
+    "featured": {
+      "badge": "Empfohlener Beitrag",
+      "officialSource": "Offizielle Quelle",
+      "readMore": "Mehr erfahren",
+      "verified": "Geprüft am:"
+    },
+    "all": {
+      "eyebrow": "Alle Beiträge",
+      "title": "Geprüfte Informationen",
+      "description": "Finden Sie verlässliche Inhalte zu Integration, Arbeit, Bildung, rechtlichen Fragen und konsularischen Dienstleistungen.",
+      "count": "{count, plural, one {Insgesamt # Beitrag} other {Insgesamt # Beiträge}}"
+    },
+    "footer": "Digitale Plattform für Usbeken in Deutschland",
+    "items": {
+      "1": {
+        "title": "Integrationskurse in Deutschland: Teilnahme und Kosten",
+        "excerpt": "Offizielle Informationen des BAMF zu Zielgruppen, Kurskosten und möglichen Befreiungen vom Kostenbeitrag.",
+        "category": "Integration",
+        "contentType": "Praktischer Ratgeber",
+        "readingTime": "5 Minuten",
+        "location": "Deutschland",
+        "sourceLanguage": "Deutsch"
+      },
+      "2": {
+        "title": "So finden Sie mit BAMF-NAvI einen Integrationskurs in Ihrer Nähe",
+        "excerpt": "BAMF-NAvI hilft dabei, Integrationskurse, Kursträger und zuständige Stellen in der Umgebung zu finden.",
+        "category": "Deutsch lernen",
+        "contentType": "Praktischer Ratgeber",
+        "readingTime": "3 Minuten",
+        "location": "Deutschland",
+        "sourceLanguage": "Deutsch"
+      },
+      "3": {
+        "title": "Mit der Chancenkarte in Deutschland Arbeit suchen",
+        "excerpt": "Die Chancenkarte ist ein Aufenthaltstitel, der qualifizierten Fachkräften aus dem Ausland die Jobsuche in Deutschland ermöglicht.",
+        "category": "Arbeit",
+        "contentType": "Arbeit und Migration",
+        "readingTime": "5 Minuten",
+        "location": "Deutschland",
+        "sourceLanguage": "Englisch und Deutsch"
+      },
+      "4": {
+        "title": "So nutzen Sie die DAAD-Stipendiendatenbank",
+        "excerpt": "In der DAAD-Datenbank können internationale Studierende, Graduierte, Promovierende und Forschende nach passenden Förderprogrammen suchen.",
+        "category": "Stipendium",
+        "contentType": "Bildung",
+        "readingTime": "4 Minuten",
+        "location": "Deutschland",
+        "sourceLanguage": "Deutsch und Englisch"
+      },
+      "5": {
+        "title": "Informationen zur Konsularabteilung Usbekistans in Berlin",
+        "excerpt": "Die Botschaft Usbekistans in Deutschland veröffentlicht offizielle Informationen zu konsularischen Dienstleistungen, Kontaktdaten und Sprechzeiten.",
+        "category": "Botschaft",
+        "contentType": "Konsularisches",
+        "readingTime": "3 Minuten",
+        "location": "Berlin",
+        "sourceLanguage": "Usbekisch"
+      },
+      "6": {
+        "title": "Vorübergehende konsularische Registrierung in Deutschland",
+        "excerpt": "Die Botschaft Usbekistans informiert über die vorübergehende konsularische Registrierung für usbekische Staatsangehörige mit längerem Aufenthalt im Ausland.",
+        "category": "Konsularisches",
+        "contentType": "Offizielle Information",
+        "readingTime": "4 Minuten",
+        "location": "Deutschland",
+        "sourceLanguage": "Usbekisch"
+      }
+    }
+  },
+  "NewsDetailPage": {
+    "metadata": {
+      "notFound": "Information nicht gefunden | Vatandoshlar.de",
+      "title": "{title} | Vatandoshlar.de"
+    },
+    "backToAll": "Alle Beiträge",
+    "lastVerified": "Die Informationen wurden zuletzt am {date} geprüft.",
+    "source": {
+      "eyebrow": "Offizielle Quelle",
+      "language": "Quellsprache:",
+      "verified": "Letzte Prüfung:",
+      "open": "Offizielle Quelle öffnen"
+    },
+    "disclaimer": {
+      "title": "Wichtiger Hinweis",
+      "description": "Gesetze, Gebühren, Antragsvoraussetzungen, Fristen und behördliche Abläufe können sich ändern. Prüfen Sie vor verbindlichen Schritten stets erneut die oben genannte Primärquelle."
+    },
+    "preparedNote": "Dieser Beitrag wurde auf Grundlage einer offiziellen Quelle für Vatandoshlar.de verständlich aufbereitet.",
+    "related": {
+      "eyebrow": "Nützliche Informationen",
+      "title": "Weitere Beiträge"
+    },
+    "footer": "Digitale Plattform für Usbeken in Deutschland",
+    "items": {
+      "1": {
+        "title": "Integrationskurse in Deutschland: Teilnahme und Kosten",
+        "excerpt": "Offizielle Informationen des BAMF zu Zielgruppen, Kurskosten und möglichen Befreiungen vom Kostenbeitrag.",
+        "category": "Integration",
+        "contentType": "Praktischer Ratgeber",
+        "readingTime": "5 Minuten",
+        "location": "Deutschland",
+        "content": [
+          "Integrationskurse helfen dabei, Deutsch zu lernen und zugleich Geschichte, Kultur, Rechtsordnung und Alltag in Deutschland kennenzulernen.",
+          "Ein allgemeiner Integrationskurs besteht üblicherweise aus einem Sprachkurs und einem Orientierungskurs. Umfang und Dauer können je nach Kursart und individuellem Bedarf variieren.",
+          "Für die Teilnahme können Kosten entstehen. Personen, die Sozialleistungen beziehen oder sich in einer finanziellen Notlage befinden, können unter bestimmten Voraussetzungen eine Kostenbefreiung beantragen.",
+          "Nach erfolgreichem Abschluss können bestimmte Teilnehmende möglicherweise die teilweise Erstattung bereits gezahlter Kurskosten beim BAMF beantragen.",
+          "Teilnahmeberechtigung, Kosten und Vergünstigungen hängen vom Aufenthaltsstatus und der persönlichen Situation ab. Vor einer Anmeldung sollten die aktuellen Voraussetzungen auf der offiziellen BAMF-Seite geprüft werden."
+        ],
+        "sourceLanguage": "Deutsch"
+      },
+      "2": {
+        "title": "So finden Sie mit BAMF-NAvI einen Integrationskurs in Ihrer Nähe",
+        "excerpt": "BAMF-NAvI hilft dabei, Integrationskurse, Kursträger und zuständige Stellen in der Umgebung zu finden.",
+        "category": "Deutsch lernen",
+        "contentType": "Praktischer Ratgeber",
+        "readingTime": "3 Minuten",
+        "location": "Deutschland",
+        "content": [
+          "BAMF-NAvI ist der offizielle Suchdienst des Bundesamts für Migration und Flüchtlinge.",
+          "Über die Plattform lassen sich anhand einer Adresse oder Postleitzahl Integrationskurse in der Nähe suchen.",
+          "In den Suchergebnissen können Name, Anschrift und Kontaktdaten des Kursträgers angezeigt werden.",
+          "Vor der Anmeldung empfiehlt es sich, den Anbieter direkt zu kontaktieren und Beginn, freie Plätze, Unterrichtszeiten sowie erforderliche Unterlagen zu klären.",
+          "Angaben in BAMF-NAvI können sich ändern. Gefundene Informationen sollten deshalb beim jeweiligen Kursträger bestätigt werden."
+        ],
+        "sourceLanguage": "Deutsch"
+      },
+      "3": {
+        "title": "Mit der Chancenkarte in Deutschland Arbeit suchen",
+        "excerpt": "Die Chancenkarte ist ein Aufenthaltstitel, der qualifizierten Fachkräften aus dem Ausland die Jobsuche in Deutschland ermöglicht.",
+        "category": "Arbeit",
+        "contentType": "Arbeit und Migration",
+        "readingTime": "5 Minuten",
+        "location": "Deutschland",
+        "content": [
+          "Die Chancenkarte ermöglicht ausländischen Fachkräften, zur Arbeitsplatzsuche nach Deutschland zu kommen.",
+          "Antragstellende können entweder eine in Deutschland anerkannte Fachkraft sein oder die Voraussetzungen über das vorgesehene Punktesystem erfüllen.",
+          "Bei der Prüfung können berufliche oder akademische Qualifikation, Sprachkenntnisse, Berufserfahrung, Alter und bisherige Bezüge zu Deutschland berücksichtigt werden.",
+          "Außerdem muss nachgewiesen werden, dass der Lebensunterhalt während des Aufenthalts gesichert ist.",
+          "Das Portal Make it in Germany bietet einen offiziellen Self-Check zur ersten Einschätzung der Voraussetzungen.",
+          "Visa- und Aufenthaltsvoraussetzungen hängen vom Einzelfall ab. Vor dem Antrag sollten die Angaben der zuständigen deutschen Auslandsvertretung oder Ausländerbehörde geprüft werden."
+        ],
+        "sourceLanguage": "Englisch und Deutsch"
+      },
+      "4": {
+        "title": "So nutzen Sie die DAAD-Stipendiendatenbank",
+        "excerpt": "In der DAAD-Datenbank können internationale Studierende, Graduierte, Promovierende und Forschende nach passenden Förderprogrammen suchen.",
+        "category": "Stipendium",
+        "contentType": "Bildung",
+        "readingTime": "4 Minuten",
+        "location": "Deutschland",
+        "sourceLanguage": "Deutsch und Englisch",
+        "content": [
+          "Der DAAD stellt eine Stipendiendatenbank für internationale Studierende und Forschende bereit, die in Deutschland studieren oder wissenschaftlich arbeiten möchten.",
+          "Die Suche kann nach Bildungsstufe, Fachrichtung, Herkunftsland und Art der Förderung gefiltert werden.",
+          "Neben eigenen Programmen des DAAD können auch Angebote weiterer Förderorganisationen aufgeführt sein.",
+          "Auf jeder Programmseite werden Voraussetzungen, Förderumfang, Bewerbungsverfahren und Fristen gesondert beschrieben.",
+          "Vor einer Bewerbung sollten alle Anforderungen und Fristen auf der jeweiligen offiziellen Programmseite geprüft werden."
+        ]
+      },
+      "5": {
+        "title": "Informationen zur Konsularabteilung Usbekistans in Berlin",
+        "excerpt": "Die Botschaft Usbekistans in Deutschland veröffentlicht offizielle Informationen zu konsularischen Dienstleistungen, Kontaktdaten und Sprechzeiten.",
+        "category": "Botschaft",
+        "contentType": "Konsularisches",
+        "readingTime": "3 Minuten",
+        "location": "Berlin",
+        "sourceLanguage": "Usbekisch",
+        "content": [
+          "Die Konsularabteilung der Botschaft der Republik Usbekistan in der Bundesrepublik Deutschland befindet sich in Berlin.",
+          "Sie bearbeitet unter anderem Angelegenheiten zu Staatsangehörigkeit, Pässen, notariellen Dienstleistungen und der Ausstellung von Dokumenten.",
+          "Vor der Nutzung eines konsularischen Dienstes sollten die erforderlichen Unterlagen und das jeweilige Antragsverfahren auf der offiziellen Seite geprüft werden.",
+          "Sprechzeiten, Öffnungszeiten und Abläufe können sich ändern.",
+          "Vor einem Besuch empfiehlt es sich, die aktuellen Informationen auf der offiziellen Website zu prüfen oder die Konsularabteilung direkt zu kontaktieren."
+        ]
+      },
+      "6": {
+        "title": "Vorübergehende konsularische Registrierung in Deutschland",
+        "excerpt": "Die Botschaft Usbekistans informiert über die vorübergehende konsularische Registrierung für usbekische Staatsangehörige mit längerem Aufenthalt im Ausland.",
+        "category": "Konsularisches",
+        "contentType": "Offizielle Information",
+        "readingTime": "4 Minuten",
+        "location": "Deutschland",
+        "sourceLanguage": "Usbekisch",
+        "content": [
+          "Die Botschaft Usbekistans bietet für Staatsangehörige in ihrem Konsularbezirk die Möglichkeit einer vorübergehenden konsularischen Registrierung an.",
+          "Sie kann insbesondere für Personen sinnvoll sein, die sich wegen Studium, legaler Beschäftigung, medizinischer Behandlung oder einer Dienstreise länger im Ausland aufhalten.",
+          "Durch die Registrierung kann die Botschaft Betroffene bei Notfällen oder wichtigen amtlichen Mitteilungen leichter erreichen.",
+          "Die erforderlichen Unterlagen können je nach persönlicher Situation und Aufenthaltsstatus variieren.",
+          "Vor der Antragstellung sollten die aktuellen Hinweise und die Liste der benötigten Dokumente auf der offiziellen Website der Botschaft geprüft werden."
+        ]
       }
     }
   }

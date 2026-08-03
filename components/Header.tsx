@@ -245,37 +245,37 @@ export default function Header() {
     {
       name: t("navigation.home"),
       href: "/",
-      description: "Portalning asosiy sahifasi",
+      description: t("navigationDescriptions.home"),
       icon: <HomeIcon />,
     },
     {
       name: t("navigation.news"),
       href: "/news",
-      description: "Rasmiy va tekshirilgan ma’lumotlar",
+      description: t("navigationDescriptions.news"),
       icon: <NewsIcon />,
     },
     {
       name: t("navigation.services"),
       href: "/services",
-      description: "Mutaxassis va xizmatlar katalogi",
+      description: t("navigationDescriptions.services"),
       icon: <ServicesIcon />,
     },
     {
       name: t("navigation.jobs"),
       href: "/jobs",
-      description: "Ish qidirish va karyera qo‘llanmalari",
+      description: t("navigationDescriptions.jobs"),
       icon: <JobsIcon />,
     },
     {
       name: t("navigation.telegram"),
       href: "/telegram",
-      description: "Bundeslandlar bo‘yicha guruhlar",
+      description: t("navigationDescriptions.telegram"),
       icon: <TelegramIcon />,
     },
     {
       name: t("navigation.events"),
       href: "/events",
-      description: "Tekshirilgan uchrashuv va tadbirlar",
+      description: t("navigationDescriptions.events"),
       icon: <EventsIcon />,
     },
   ];
@@ -437,7 +437,7 @@ export default function Header() {
         >
           <Link
             href="/"
-            aria-label="Vatandoshlar.de bosh sahifasi"
+            aria-label={t("accessibility.homeLink")}
             className="group flex shrink-0 items-center gap-3"
           >
             <span
@@ -497,13 +497,13 @@ export default function Header() {
                   }
                 `}
               >
-                Germaniyadagi o‘zbeklar portali
+                {t("brand.subtitle")}
               </span>
             </span>
           </Link>
 
           <nav
-            aria-label="Asosiy navigatsiya"
+            aria-label={t("accessibility.mainNavigation")}
             className="mx-auto hidden items-center gap-1 xl:flex"
           >
             {navigation.map((item) => {
@@ -560,7 +560,7 @@ export default function Header() {
             <button
               type="button"
               onClick={openCommandPalette}
-              aria-label="Tezkor qidiruvni ochish"
+              aria-label={t("accessibility.openSearch")}
               aria-keyshortcuts="Meta+K Control+K"
               className={`
                 flex shrink-0 items-center justify-center
@@ -605,9 +605,7 @@ export default function Header() {
                       : "max-w-20 translate-x-0 opacity-100"
                   }
                 `}
-              >
-                Qidirish
-              </span>
+              >{t("actions.search")}</span>
 
               <kbd
                 aria-hidden={isScrolled}
@@ -640,8 +638,8 @@ export default function Header() {
               onClick={toggleTheme}
               aria-label={
                 isDarkMode
-                  ? "Yorug‘ rejimni yoqish"
-                  : "Tungi rejimni yoqish"
+                  ? t("accessibility.enableLightMode")
+                  : t("accessibility.enableDarkMode")
               }
               className={`
                 flex items-center justify-center rounded-xl
@@ -699,16 +697,14 @@ export default function Header() {
                     : "h-11 px-5"
                 }
               `}
-            >
-              Kirish
-            </Link>
+            >{t("actions.login")}</Link>
           </div>
 
           <div className="ml-auto flex items-center gap-2 md:hidden">
             <button
               type="button"
               onClick={openCommandPalette}
-              aria-label="Tezkor qidiruvni ochish"
+              aria-label={t("accessibility.openSearch")}
               aria-keyshortcuts="Meta+K Control+K"
               className={`
                 flex items-center justify-center
@@ -742,8 +738,8 @@ export default function Header() {
               aria-expanded={isMobileMenuOpen}
               aria-label={
                 isMobileMenuOpen
-                  ? "Menyuni yopish"
-                  : "Menyuni ochish"
+                  ? t("accessibility.closeMenu")
+                  : t("accessibility.openMenu")
               }
               className={`
                 flex items-center justify-center
@@ -780,7 +776,7 @@ export default function Header() {
           <button
             type="button"
             onClick={closeMobileMenu}
-            aria-label="Mobil menyuni yopish"
+            aria-label={t("accessibility.closeMobileMenu")}
             className="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"
           />
 
@@ -804,19 +800,15 @@ export default function Header() {
             <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
               <div className="mb-5 flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">
-                    Navigatsiya
-                  </p>
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">{t("mobile.navigationTitle")}</p>
 
-                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                    Portal bo‘limini tanlang
-                  </p>
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t("mobile.navigationDescription")}</p>
                 </div>
 
                 <button
                   type="button"
                   onClick={closeMobileMenu}
-                  aria-label="Mobil menyuni yopish"
+                  aria-label={t("accessibility.closeMobileMenu")}
                   className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white dark:focus-visible:ring-offset-slate-950"
                 >
                   <CloseIcon />
@@ -894,7 +886,7 @@ export default function Header() {
                 className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-950"
               >
                 <SearchIcon />
-                Portal bo‘ylab qidirish
+                {t("actions.searchPortal")}
               </button>
 
               <LanguageSwitcher
@@ -915,8 +907,8 @@ export default function Header() {
                 )}
 
                 {isDarkMode
-                  ? "Yorug‘ rejim"
-                  : "Tungi rejim"}
+                  ? t("actions.lightMode")
+                  : t("actions.darkMode")}
               </button>
 
               <Link
@@ -924,7 +916,7 @@ export default function Header() {
                 onClick={closeMobileMenu}
                 className="mt-3 flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-4 font-bold text-white shadow-lg shadow-emerald-600/20 transition hover:shadow-xl hover:shadow-emerald-600/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
               >
-                Portalga kirish
+                {t("actions.loginToPortal")}
               </Link>
             </div>
           </div>

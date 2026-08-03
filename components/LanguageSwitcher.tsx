@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useTransition } from "react";
 
 import { usePathname, useRouter } from "../i18n/navigation";
@@ -16,10 +16,15 @@ type LanguageSwitcherProps = Readonly<{
 const locales: ReadonlyArray<{
   code: SupportedLocale;
   shortLabel: string;
-  label: string;
 }> = [
-  { code: "uz", shortLabel: "UZ", label: "O‘zbekcha" },
-  { code: "de", shortLabel: "DE", label: "Deutsch" },
+  {
+    code: "uz",
+    shortLabel: "UZ",
+  },
+  {
+    code: "de",
+    shortLabel: "DE",
+  },
 ];
 
 export default function LanguageSwitcher({
@@ -27,6 +32,7 @@ export default function LanguageSwitcher({
   className = "",
   onLocaleChange,
 }: LanguageSwitcherProps) {
+  const t = useTranslations("Header.languageSwitcher");
   const locale = useLocale() as SupportedLocale;
   const pathname = usePathname();
   const router = useRouter();
@@ -40,19 +46,21 @@ export default function LanguageSwitcher({
     onLocaleChange?.();
 
     startTransition(() => {
-      router.replace(pathname, { locale: nextLocale });
+      router.replace(pathname, {
+        locale: nextLocale,
+      });
     });
   };
 
   if (variant === "full") {
     return (
       <div
-        aria-label="Tilni tanlash"
+        aria-label={t("groupLabel")}
         className={`rounded-2xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-900 ${className}`}
         role="group"
       >
         <p className="px-2 pb-2 pt-1 text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
-          Til
+          {t("title")}
         </p>
 
         <div className="grid grid-cols-2 gap-2">
@@ -63,6 +71,9 @@ export default function LanguageSwitcher({
               <button
                 key={item.code}
                 type="button"
+                aria-label={t("switchTo", {
+                  language: t(`languages.${item.code}`),
+                })}
                 aria-pressed={isActive}
                 disabled={isPending}
                 onClick={() => changeLocale(item.code)}
@@ -72,8 +83,8 @@ export default function LanguageSwitcher({
                     : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white"
                 }`}
               >
-                <span className="font-extrabold">{item.shortLabel}</span>
-                <span>{item.label}</span>
+                <span aria-hidden="true">{item.shortLabel}</span>
+                <span>{t(`languages.${item.code}`)}</span>
               </button>
             );
           })}
@@ -84,7 +95,7 @@ export default function LanguageSwitcher({
 
   return (
     <div
-      aria-label="Tilni tanlash"
+      aria-label={t("groupLabel")}
       className={`inline-flex h-11 items-center rounded-xl border border-slate-200 bg-white p-1 dark:border-slate-700 dark:bg-slate-900 ${className}`}
       role="group"
     >
@@ -95,7 +106,9 @@ export default function LanguageSwitcher({
           <button
             key={item.code}
             type="button"
-            aria-label={`${item.label} tiliga o‘tish`}
+            aria-label={t("switchTo", {
+              language: t(`languages.${item.code}`),
+            })}
             aria-pressed={isActive}
             disabled={isPending}
             onClick={() => changeLocale(item.code)}
