@@ -5,7 +5,7 @@ import {
   motion,
   useReducedMotion,
 } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import {
   useCallback,
   useEffect,
@@ -16,219 +16,262 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
-type CommandCategory =
-  | "Asosiy"
-  | "Yangilik"
-  | "Xizmat"
-  | "Ish"
-  | "Hamjamiyat";
+import { useRouter } from "../i18n/navigation";
 
-type CommandItem = {
-  id: string;
-  title: string;
-  description: string;
+type CommandCategory =
+  | "main"
+  | "news"
+  | "services"
+  | "jobs"
+  | "community";
+
+type CommandIconName =
+  | "home"
+  | "news"
+  | "service"
+  | "job"
+  | "telegram"
+  | "event";
+
+type CommandKey =
+  | "home"
+  | "news"
+  | "services"
+  | "translationServices"
+  | "legalServices"
+  | "taxServices"
+  | "jobs"
+  | "jobPlatforms"
+  | "minijob"
+  | "telegram"
+  | "events";
+
+type CommandDefinition = {
+  key: CommandKey;
   href: string;
   category: CommandCategory;
+  icon: CommandIconName;
   keywords: string[];
-  icon:
-    | "home"
-    | "news"
-    | "service"
-    | "job"
-    | "telegram"
-    | "event";
 };
 
-const commands: CommandItem[] = [
+type LocalizedCommand = CommandDefinition & {
+  title: string;
+  description: string;
+};
+
+const commandDefinitions: CommandDefinition[] = [
   {
-    id: "home",
-    title: "Bosh sahifa",
-    description: "Vatandoshlar.de asosiy sahifasiga o‘tish",
+    key: "home",
     href: "/",
-    category: "Asosiy",
+    category: "main",
+    icon: "home",
     keywords: [
-      "bosh sahifa",
-      "asosiy",
       "home",
       "portal",
+      "startseite",
+      "bosh sahifa",
+      "asosiy",
     ],
-    icon: "home",
   },
   {
-    id: "news",
-    title: "Rasmiy yangiliklar",
-    description:
-      "Germaniyada yashash, o‘qish va ishlash bo‘yicha ma’lumotlar",
+    key: "news",
     href: "/news",
-    category: "Yangilik",
+    category: "news",
+    icon: "news",
     keywords: [
+      "news",
+      "nachrichten",
       "yangilik",
-      "rasmiy",
       "bamf",
       "elchixona",
+      "botschaft",
       "integratsiya",
+      "integration",
       "hujjat",
+      "dokumente",
     ],
-    icon: "news",
   },
   {
-    id: "services",
-    title: "Tekshirilgan xizmatlar",
-    description:
-      "Tarjimon, yurist, shifokor va boshqa mutaxassislarni topish",
+    key: "services",
     href: "/services",
-    category: "Xizmat",
+    category: "services",
+    icon: "service",
     keywords: [
+      "services",
+      "dienstleistungen",
       "xizmat",
       "tarjimon",
+      "dolmetscher",
       "yurist",
-      "advokat",
+      "anwalt",
       "shifokor",
-      "soliq",
-      "maslahatchi",
+      "arzt",
     ],
-    icon: "service",
   },
   {
-    id: "translation-services",
-    title: "Tarjimon va til xizmatlari",
-    description:
-      "Hujjat tarjimasi, rasmiy tasdiqlash va tarjimon topish",
+    key: "translationServices",
     href: "/services/qasamyod-qilgan-tarjimonlar",
-    category: "Xizmat",
+    category: "services",
+    icon: "service",
     keywords: [
       "tarjimon",
       "tarjima",
+      "übersetzung",
+      "dolmetscher",
       "til",
+      "sprache",
       "hujjat",
+      "dokument",
       "notar",
       "qasamyod",
+      "beeidigt",
     ],
-    icon: "service",
   },
   {
-    id: "legal-services",
-    title: "Huquqiy xizmatlar",
-    description:
-      "Advokat, migratsiya va iste’molchilar huquqi bo‘yicha yordam",
+    key: "legalServices",
     href: "/services/yuridik-yordam-va-huquqiy-xizmatlar",
-    category: "Xizmat",
+    category: "services",
+    icon: "service",
     keywords: [
       "huquq",
       "yuridik",
       "advokat",
+      "anwalt",
+      "recht",
       "migratsiya",
+      "migration",
       "maslahat",
+      "beratung",
     ],
-    icon: "service",
   },
   {
-    id: "tax-services",
-    title: "Soliq maslahatchisi",
-    description:
-      "Germaniyada soliq va deklaratsiya bo‘yicha ma’lumotlar",
+    key: "taxServices",
     href: "/services/soliq-maslahatchisini-topish",
-    category: "Xizmat",
+    category: "services",
+    icon: "service",
     keywords: [
       "soliq",
       "steuer",
       "deklaratsiya",
+      "steuererklärung",
       "maslahatchi",
+      "steuerberater",
       "finanzamt",
     ],
-    icon: "service",
   },
   {
-    id: "jobs",
-    title: "Ish va karyera",
-    description:
-      "Minijob, Werkstudent, Ausbildung va professional ishlar",
+    key: "jobs",
     href: "/jobs",
-    category: "Ish",
+    category: "jobs",
+    icon: "job",
     keywords: [
       "ish",
+      "arbeit",
       "job",
       "karyera",
+      "karriere",
       "minijob",
       "werkstudent",
       "ausbildung",
       "praktikum",
     ],
-    icon: "job",
   },
   {
-    id: "job-platforms",
-    title: "Ish platformalari",
-    description:
-      "Germaniyadagi ishonchli ish qidirish portallari",
+    key: "jobPlatforms",
     href: "/jobs#job-platforms",
-    category: "Ish",
+    category: "jobs",
+    icon: "job",
     keywords: [
       "ish sayti",
+      "jobbörse",
+      "jobsuche",
       "arbeitsagentur",
       "stepstone",
       "linkedin",
       "eures",
       "xing",
     ],
-    icon: "job",
   },
   {
-    id: "minijob",
-    title: "Germaniyada Minijob",
-    description:
-      "Minijob topish va ishlash qoidalari bo‘yicha qo‘llanma",
+    key: "minijob",
     href: "/jobs/germaniyada-minijob",
-    category: "Ish",
+    category: "jobs",
+    icon: "job",
     keywords: [
       "minijob",
       "ish",
+      "arbeit",
       "qo‘shimcha ish",
+      "nebenjob",
       "oylik",
+      "verdienst",
     ],
-    icon: "job",
   },
   {
-    id: "telegram",
-    title: "Telegram guruhlari",
-    description:
-      "Bundeslandlar bo‘yicha faol o‘zbek hamjamiyatlari",
+    key: "telegram",
     href: "/telegram",
-    category: "Hamjamiyat",
+    category: "community",
+    icon: "telegram",
     keywords: [
       "telegram",
       "guruh",
+      "gruppe",
       "hamjamiyat",
+      "community",
       "bundesland",
       "nrw",
       "berlin",
     ],
-    icon: "telegram",
   },
   {
-    id: "events",
-    title: "Tadbirlar",
-    description:
-      "Uchrashuv, seminar, networking va madaniy tadbirlar",
+    key: "events",
     href: "/events",
-    category: "Hamjamiyat",
+    category: "community",
+    icon: "event",
     keywords: [
       "tadbir",
+      "veranstaltung",
       "event",
       "seminar",
       "uchrashuv",
+      "treffen",
       "networking",
       "konsert",
+      "konzert",
     ],
-    icon: "event",
   },
 ];
 
-function normalizeText(value: string) {
+function normalizeText(value: string, locale: string) {
   return value
-    .toLocaleLowerCase("uz")
+    .toLocaleLowerCase(locale)
     .replace(/[‘’ʼ`]/g, "'")
     .trim();
+}
+
+function readRecentSearches(storageKey: string): string[] {
+  try {
+    const storedValue = window.localStorage.getItem(storageKey);
+
+    if (!storedValue) {
+      return [];
+    }
+
+    const parsedValue = JSON.parse(storedValue) as unknown;
+
+    if (!Array.isArray(parsedValue)) {
+      return [];
+    }
+
+    return parsedValue
+      .filter(
+        (item): item is string =>
+          typeof item === "string" && item.trim().length > 0,
+      )
+      .slice(0, 5);
+  } catch {
+    return [];
+  }
 }
 
 function SearchIcon({
@@ -245,15 +288,8 @@ function SearchIcon({
       strokeWidth="1.8"
       viewBox="0 0 24 24"
     >
-      <circle
-        cx="10.75"
-        cy="10.75"
-        r="6.75"
-      />
-      <path
-        d="m16 16 4.25 4.25"
-        strokeLinecap="round"
-      />
+      <circle cx="10.75" cy="10.75" r="6.75" />
+      <path d="m16 16 4.25 4.25" strokeLinecap="round" />
     </svg>
   );
 }
@@ -277,10 +313,30 @@ function ArrowRightIcon() {
   );
 }
 
+function ClockIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      viewBox="0 0 24 24"
+    >
+      <circle cx="12" cy="12" r="8.5" />
+      <path
+        d="M12 7.5V12l3.25 2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function CommandIcon({
   icon,
 }: {
-  icon: CommandItem["icon"];
+  icon: CommandIconName;
 }) {
   const commonProps = {
     "aria-hidden": true,
@@ -378,47 +434,58 @@ function CommandIcon({
   }
 }
 
-function getCategoryStyles(
-  category: CommandCategory,
-) {
+function getCategoryStyles(category: CommandCategory) {
   switch (category) {
-    case "Yangilik":
+    case "news":
       return "bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-300";
-
-    case "Xizmat":
+    case "services":
       return "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300";
-
-    case "Ish":
+    case "jobs":
       return "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300";
-
-    case "Hamjamiyat":
+    case "community":
       return "bg-cyan-50 text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300";
-
-    default:
+    case "main":
       return "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300";
   }
 }
 
 export default function CommandPalette() {
+  const t = useTranslations("CommandPalette");
+  const locale = useLocale();
   const router = useRouter();
-  const inputRef =
-    useRef<HTMLInputElement>(null);
-  const listRef =
-    useRef<HTMLDivElement>(null);
-  const prefersReducedMotion =
-    useReducedMotion();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
-  const [isMounted, setIsMounted] =
-    useState(false);
-  const [isOpen, setIsOpen] =
-    useState(false);
+  const storageKey = `vatandoshlar-recent-searches-${locale}`;
+
+  const [isMounted, setIsMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [selectedIndex, setSelectedIndex] =
-    useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+
+  const commands = useMemo<LocalizedCommand[]>(
+    () =>
+      commandDefinitions.map((command) => ({
+        ...command,
+        title: t(`commands.${command.key}.title`),
+        description: t(`commands.${command.key}.description`),
+      })),
+    [t],
+  );
+
+  const popularSearches = [
+    t("popularSearches.minijob"),
+    t("popularSearches.werkstudent"),
+    t("popularSearches.translator"),
+    t("popularSearches.telegram"),
+    t("popularSearches.ausbildung"),
+    t("popularSearches.internship"),
+  ];
 
   const filteredCommands = useMemo(() => {
-    const normalizedQuery =
-      normalizeText(query);
+    const normalizedQuery = normalizeText(query, locale);
 
     if (!normalizedQuery) {
       return commands;
@@ -429,21 +496,21 @@ export default function CommandPalette() {
         [
           command.title,
           command.description,
-          command.category,
+          t(`categories.${command.category}`),
           ...command.keywords,
         ].join(" "),
+        locale,
       );
 
-      return searchableText.includes(
-        normalizedQuery,
-      );
+      return searchableText.includes(normalizedQuery);
     });
-  }, [query]);
+  }, [commands, locale, query, t]);
 
   const openPalette = useCallback(() => {
+    setRecentSearches(readRecentSearches(storageKey));
     setIsOpen(true);
     setSelectedIndex(0);
-  }, []);
+  }, [storageKey]);
 
   const closePalette = useCallback(() => {
     setIsOpen(false);
@@ -451,22 +518,64 @@ export default function CommandPalette() {
     setSelectedIndex(0);
   }, []);
 
+  const saveRecentSearch = useCallback(
+    (value: string) => {
+      const cleanedValue = value.trim();
+
+      if (!cleanedValue) {
+        return;
+      }
+
+      setRecentSearches((currentSearches) => {
+        const nextSearches = [
+          cleanedValue,
+          ...currentSearches.filter(
+            (item) =>
+              normalizeText(item, locale) !==
+              normalizeText(cleanedValue, locale),
+          ),
+        ].slice(0, 5);
+
+        window.localStorage.setItem(
+          storageKey,
+          JSON.stringify(nextSearches),
+        );
+
+        return nextSearches;
+      });
+    },
+    [locale, storageKey],
+  );
+
   const selectCommand = useCallback(
-    (command: CommandItem) => {
+    (command: LocalizedCommand) => {
+      saveRecentSearch(query || command.title);
       closePalette();
       router.push(command.href);
     },
-    [closePalette, router],
+    [closePalette, query, router, saveRecentSearch],
   );
+
+  const handleSuggestedSearch = useCallback((value: string) => {
+    setQuery(value);
+    setSelectedIndex(0);
+
+    window.setTimeout(() => {
+      inputRef.current?.focus();
+    }, 20);
+  }, []);
+
+  const clearRecentSearches = useCallback(() => {
+    setRecentSearches([]);
+    window.localStorage.removeItem(storageKey);
+  }, [storageKey]);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
-    const handleGlobalKeyDown = (
-      event: KeyboardEvent,
-    ) => {
+    const handleGlobalKeyDown = (event: KeyboardEvent) => {
       const isCommandShortcut =
         (event.metaKey || event.ctrlKey) &&
         event.key.toLowerCase() === "k";
@@ -483,10 +592,7 @@ export default function CommandPalette() {
         return;
       }
 
-      if (
-        event.key === "Escape" &&
-        isOpen
-      ) {
+      if (event.key === "Escape" && isOpen) {
         event.preventDefault();
         closePalette();
       }
@@ -496,54 +602,36 @@ export default function CommandPalette() {
       openPalette();
     };
 
-    window.addEventListener(
-      "keydown",
-      handleGlobalKeyDown,
-    );
-
+    window.addEventListener("keydown", handleGlobalKeyDown);
     window.addEventListener(
       "open-command-palette",
       handleOpenEvent as EventListener,
     );
 
     return () => {
-      window.removeEventListener(
-        "keydown",
-        handleGlobalKeyDown,
-      );
-
+      window.removeEventListener("keydown", handleGlobalKeyDown);
       window.removeEventListener(
         "open-command-palette",
         handleOpenEvent as EventListener,
       );
     };
-  }, [
-    closePalette,
-    isOpen,
-    openPalette,
-  ]);
+  }, [closePalette, isOpen, openPalette]);
 
   useEffect(() => {
     if (!isOpen) {
       return;
     }
 
-    const previousOverflow =
-      document.body.style.overflow;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
-    document.body.style.overflow =
-      "hidden";
-
-    const focusTimer =
-      window.setTimeout(() => {
-        inputRef.current?.focus();
-      }, 50);
+    const focusTimer = window.setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
 
     return () => {
       window.clearTimeout(focusTimer);
-
-      document.body.style.overflow =
-        previousOverflow;
+      document.body.style.overflow = previousOverflow;
     };
   }, [isOpen]);
 
@@ -568,20 +656,13 @@ export default function CommandPalette() {
     if (event.key === "ArrowDown") {
       event.preventDefault();
 
-      setSelectedIndex(
-        (currentIndex) => {
-          if (
-            filteredCommands.length === 0
-          ) {
-            return 0;
-          }
+      setSelectedIndex((currentIndex) => {
+        if (filteredCommands.length === 0) {
+          return 0;
+        }
 
-          return (
-            (currentIndex + 1) %
-            filteredCommands.length
-          );
-        },
-      );
+        return (currentIndex + 1) % filteredCommands.length;
+      });
 
       return;
     }
@@ -589,22 +670,16 @@ export default function CommandPalette() {
     if (event.key === "ArrowUp") {
       event.preventDefault();
 
-      setSelectedIndex(
-        (currentIndex) => {
-          if (
-            filteredCommands.length === 0
-          ) {
-            return 0;
-          }
+      setSelectedIndex((currentIndex) => {
+        if (filteredCommands.length === 0) {
+          return 0;
+        }
 
-          return (
-            (currentIndex -
-              1 +
-              filteredCommands.length) %
-            filteredCommands.length
-          );
-        },
-      );
+        return (
+          (currentIndex - 1 + filteredCommands.length) %
+          filteredCommands.length
+        );
+      });
 
       return;
     }
@@ -612,8 +687,7 @@ export default function CommandPalette() {
     if (event.key === "Enter") {
       event.preventDefault();
 
-      const selectedCommand =
-        filteredCommands[selectedIndex];
+      const selectedCommand = filteredCommands[selectedIndex];
 
       if (selectedCommand) {
         selectCommand(selectedCommand);
@@ -630,43 +704,21 @@ export default function CommandPalette() {
       {isOpen && (
         <motion.div
           className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto px-4 pb-10 pt-[8vh] sm:px-6 sm:pt-[12vh]"
-          initial={
-            prefersReducedMotion
-              ? false
-              : {
-                  opacity: 0,
-                }
-          }
-          animate={{
-            opacity: 1,
-          }}
-          exit={{
-            opacity: 0,
-          }}
+          initial={prefersReducedMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{
-            duration: prefersReducedMotion
-              ? 0
-              : 0.18,
+            duration: prefersReducedMotion ? 0 : 0.18,
           }}
         >
           <motion.button
             type="button"
-            aria-label="Qidiruv oynasini yopish"
+            aria-label={t("accessibility.closeDialog")}
             className="absolute inset-0 cursor-default bg-slate-950/65 backdrop-blur-md"
             onClick={closePalette}
-            initial={
-              prefersReducedMotion
-                ? false
-                : {
-                    opacity: 0,
-                  }
-            }
-            animate={{
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-            }}
+            initial={prefersReducedMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           />
 
           <motion.div
@@ -694,23 +746,12 @@ export default function CommandPalette() {
               scale: 0.98,
             }}
             transition={{
-              duration:
-                prefersReducedMotion
-                  ? 0
-                  : 0.24,
-              ease: [
-                0.22,
-                1,
-                0.36,
-                1,
-              ],
+              duration: prefersReducedMotion ? 0 : 0.24,
+              ease: [0.22, 1, 0.36, 1],
             }}
           >
-            <h2
-              id="command-palette-title"
-              className="sr-only"
-            >
-              Tezkor qidiruv
+            <h2 id="command-palette-title" className="sr-only">
+              {t("title")}
             </h2>
 
             <div className="h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
@@ -724,25 +765,17 @@ export default function CommandPalette() {
                 ref={inputRef}
                 type="search"
                 value={query}
-                onChange={(event) =>
-                  setQuery(
-                    event.target.value,
-                  )
-                }
-                onKeyDown={
-                  handleInputKeyDown
-                }
-                placeholder="Sahifa, xizmat yoki ma’lumotni qidiring..."
+                onChange={(event) => setQuery(event.target.value)}
+                onKeyDown={handleInputKeyDown}
+                placeholder={t("placeholder")}
                 autoComplete="off"
                 spellCheck={false}
                 className="h-20 min-w-0 flex-1 bg-transparent text-base font-medium text-slate-950 outline-none placeholder:text-slate-400 sm:text-lg dark:text-white"
-                aria-label="Sayt bo‘yicha qidirish"
+                aria-label={t("accessibility.searchInput")}
                 aria-controls="command-palette-results"
                 aria-activedescendant={
-                  filteredCommands[
-                    selectedIndex
-                  ]
-                    ? `command-${filteredCommands[selectedIndex].id}`
+                  filteredCommands[selectedIndex]
+                    ? `command-${filteredCommands[selectedIndex].key}`
                     : undefined
                 }
               />
@@ -750,107 +783,141 @@ export default function CommandPalette() {
               <button
                 type="button"
                 onClick={closePalette}
+                aria-label={t("accessibility.closeDialog")}
                 className="shrink-0 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 font-mono text-xs font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white"
               >
                 ESC
               </button>
             </div>
 
+            {!query && (
+              <div className="border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.15em] text-slate-400">
+                    {t("popularTitle")}
+                  </p>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {popularSearches.map((popularSearch) => (
+                      <button
+                        key={popularSearch}
+                        type="button"
+                        onClick={() =>
+                          handleSuggestedSearch(popularSearch)
+                        }
+                        className="rounded-full border border-slate-200 bg-slate-50 px-3.5 py-2 text-sm font-semibold text-slate-600 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-emerald-500/30 dark:hover:bg-emerald-500/10 dark:hover:text-emerald-300"
+                      >
+                        {popularSearch}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {recentSearches.length > 0 && (
+                  <div className="mt-4">
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-slate-400">
+                        <ClockIcon />
+                        {t("recentTitle")}
+                      </p>
+
+                      <button
+                        type="button"
+                        onClick={clearRecentSearches}
+                        className="text-xs font-semibold text-slate-400 transition hover:text-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                      >
+                        {t("clearRecent")}
+                      </button>
+                    </div>
+
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {recentSearches.map((recentSearch) => (
+                        <button
+                          key={recentSearch}
+                          type="button"
+                          onClick={() =>
+                            handleSuggestedSearch(recentSearch)
+                          }
+                          className="rounded-full bg-slate-100 px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white"
+                        >
+                          {recentSearch}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             <div
               ref={listRef}
               id="command-palette-results"
               role="listbox"
+              aria-label={t("accessibility.results")}
               className="max-h-[min(60vh,32rem)] overflow-y-auto p-2"
             >
-              {filteredCommands.length >
-              0 ? (
-                filteredCommands.map(
-                  (command, index) => {
-                    const isSelected =
-                      selectedIndex ===
-                      index;
+              {filteredCommands.length > 0 ? (
+                filteredCommands.map((command, index) => {
+                  const isSelected = selectedIndex === index;
 
-                    return (
-                      <button
-                        key={command.id}
-                        id={`command-${command.id}`}
-                        type="button"
-                        role="option"
-                        aria-selected={
+                  return (
+                    <button
+                      key={command.key}
+                      id={`command-${command.key}`}
+                      type="button"
+                      role="option"
+                      aria-selected={isSelected}
+                      data-command-index={index}
+                      onMouseEnter={() => setSelectedIndex(index)}
+                      onClick={() => selectCommand(command)}
+                      className={`group flex w-full items-center gap-4 rounded-2xl p-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                        isSelected
+                          ? "bg-slate-100 dark:bg-slate-800"
+                          : "hover:bg-slate-50 dark:hover:bg-slate-800/70"
+                      }`}
+                    >
+                      <span
+                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition ${
                           isSelected
-                        }
-                        data-command-index={
-                          index
-                        }
-                        onMouseEnter={() =>
-                          setSelectedIndex(
-                            index,
-                          )
-                        }
-                        onClick={() =>
-                          selectCommand(
-                            command,
-                          )
-                        }
-                        className={`group flex w-full items-center gap-4 rounded-2xl p-3 text-left transition ${
-                          isSelected
-                            ? "bg-slate-100 dark:bg-slate-800"
-                            : "hover:bg-slate-50 dark:hover:bg-slate-800/70"
+                            ? "bg-emerald-600 text-white shadow-lg shadow-emerald-600/20"
+                            : "bg-slate-100 text-slate-500 group-hover:text-emerald-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:text-emerald-400"
                         }`}
                       >
-                        <span
-                          className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition ${
-                            isSelected
-                              ? "bg-emerald-600 text-white shadow-lg shadow-emerald-600/20"
-                              : "bg-slate-100 text-slate-500 group-hover:text-emerald-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:text-emerald-400"
-                          }`}
-                        >
-                          <CommandIcon
-                            icon={
-                              command.icon
-                            }
-                          />
-                        </span>
+                        <CommandIcon icon={command.icon} />
+                      </span>
 
-                        <span className="min-w-0 flex-1">
-                          <span className="flex flex-wrap items-center gap-2">
-                            <span className="font-bold text-slate-950 dark:text-white">
-                              {
-                                command.title
-                              }
-                            </span>
-
-                            <span
-                              className={`rounded-full px-2.5 py-1 text-[11px] font-bold ${getCategoryStyles(
-                                command.category,
-                              )}`}
-                            >
-                              {
-                                command.category
-                              }
-                            </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="flex flex-wrap items-center gap-2">
+                          <span className="font-bold text-slate-950 dark:text-white">
+                            {command.title}
                           </span>
 
-                          <span className="mt-1 block truncate text-sm text-slate-500 dark:text-slate-400">
-                            {
-                              command.description
-                            }
+                          <span
+                            className={`rounded-full px-2.5 py-1 text-[11px] font-bold ${getCategoryStyles(
+                              command.category,
+                            )}`}
+                          >
+                            {t(`categories.${command.category}`)}
                           </span>
                         </span>
 
-                        <span
-                          className={`shrink-0 transition ${
-                            isSelected
-                              ? "translate-x-0 text-emerald-600 dark:text-emerald-400"
-                              : "-translate-x-1 text-slate-300 group-hover:translate-x-0 group-hover:text-emerald-600 dark:text-slate-600 dark:group-hover:text-emerald-400"
-                          }`}
-                        >
-                          <ArrowRightIcon />
+                        <span className="mt-1 block truncate text-sm text-slate-500 dark:text-slate-400">
+                          {command.description}
                         </span>
-                      </button>
-                    );
-                  },
-                )
+                      </span>
+
+                      <span
+                        className={`shrink-0 transition ${
+                          isSelected
+                            ? "translate-x-0 text-emerald-600 dark:text-emerald-400"
+                            : "-translate-x-1 text-slate-300 group-hover:translate-x-0 group-hover:text-emerald-600 dark:text-slate-600 dark:group-hover:text-emerald-400"
+                        }`}
+                      >
+                        <ArrowRightIcon />
+                      </span>
+                    </button>
+                  );
+                })
               ) : (
                 <div className="px-6 py-14 text-center">
                   <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-slate-400 dark:bg-slate-800">
@@ -858,24 +925,19 @@ export default function CommandPalette() {
                   </div>
 
                   <h3 className="mt-5 text-xl font-bold text-slate-950 dark:text-white">
-                    Mos natija
-                    topilmadi
+                    {t("emptyState.title")}
                   </h3>
 
                   <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500 dark:text-slate-400">
-                    Boshqa kalit so‘z
-                    bilan qayta qidirib
-                    ko‘ring.
+                    {t("emptyState.description")}
                   </p>
 
                   <button
                     type="button"
-                    onClick={() =>
-                      setQuery("")
-                    }
+                    onClick={() => setQuery("")}
                     className="mt-5 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
                   >
-                    Qidiruvni tozalash
+                    {t("emptyState.clear")}
                   </button>
                 </div>
               )}
@@ -887,28 +949,24 @@ export default function CommandPalette() {
                   <kbd className="rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono dark:border-slate-700 dark:bg-slate-800">
                     ↑
                   </kbd>
-
                   <kbd className="rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono dark:border-slate-700 dark:bg-slate-800">
                     ↓
                   </kbd>
-
-                  Tanlash
+                  {t("keyboard.select")}
                 </span>
 
                 <span className="inline-flex items-center gap-1.5">
                   <kbd className="rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono dark:border-slate-700 dark:bg-slate-800">
                     ↵
                   </kbd>
-
-                  Ochish
+                  {t("keyboard.open")}
                 </span>
               </div>
 
               <span>
-                {
-                  filteredCommands.length
-                }{" "}
-                ta natija
+                {t("resultCount", {
+                  count: filteredCommands.length,
+                })}
               </span>
             </div>
           </motion.div>

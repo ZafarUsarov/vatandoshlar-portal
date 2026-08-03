@@ -4,13 +4,17 @@ export type FeatureIconName =
   | "services"
   | "calendar";
 
+export type FeatureMessageKey =
+  | "telegramGroups"
+  | "jobs"
+  | "services"
+  | "events";
+
 export interface FeatureItem {
   id: string;
+  messageKey: FeatureMessageKey;
   icon: FeatureIconName;
-  title: string;
-  description: string;
   href: string;
-  linkLabel: string;
   accentClass: string;
   iconClass: string;
 }
@@ -18,12 +22,9 @@ export interface FeatureItem {
 export const features: FeatureItem[] = [
   {
     id: "telegram-groups",
+    messageKey: "telegramGroups",
     icon: "telegram",
-    title: "Telegram guruhlari",
-    description:
-      "Germaniyaning turli shahar va hududlaridagi o'zbeklar Telegram guruhlarini toping.",
     href: "/telegram",
-    linkLabel: "Guruhlarni ko'rish",
     accentClass:
       "from-sky-500/20 via-cyan-500/10 to-transparent dark:from-sky-400/20",
     iconClass:
@@ -31,12 +32,9 @@ export const features: FeatureItem[] = [
   },
   {
     id: "jobs",
+    messageKey: "jobs",
     icon: "briefcase",
-    title: "Ish va karyera",
-    description:
-      "Vakansiyalar, Minijob, Ausbildung va Germaniyada ishlash bo'yicha foydali qo'llanmalar.",
     href: "/jobs",
-    linkLabel: "Ish bo'limiga o'tish",
     accentClass:
       "from-violet-500/20 via-fuchsia-500/10 to-transparent dark:from-violet-400/20",
     iconClass:
@@ -44,12 +42,9 @@ export const features: FeatureItem[] = [
   },
   {
     id: "services",
+    messageKey: "services",
     icon: "services",
-    title: "Ishonchli xizmatlar",
-    description:
-      "Tarjimonlar, yuristlar, ustalar va boshqa mutaxassislarni bir joydan toping.",
     href: "/services",
-    linkLabel: "Xizmatlarni ko'rish",
     accentClass:
       "from-emerald-500/20 via-teal-500/10 to-transparent dark:from-emerald-400/20",
     iconClass:
@@ -57,12 +52,9 @@ export const features: FeatureItem[] = [
   },
   {
     id: "events",
+    messageKey: "events",
     icon: "calendar",
-    title: "Tadbir va uchrashuvlar",
-    description:
-      "Konsertlar, seminarlar, uchrashuvlar va hamjamiyat tadbirlaridan xabardor bo'ling.",
     href: "/events",
-    linkLabel: "Tadbirlarni ko'rish",
     accentClass:
       "from-amber-500/20 via-orange-500/10 to-transparent dark:from-amber-400/20",
     iconClass:

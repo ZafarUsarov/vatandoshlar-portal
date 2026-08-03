@@ -177,8 +177,13 @@ export function getLatestNews(limit?: number): NewsItem[] {
   return sortedNews;
 }
 
-export function formatNewsDate(date: string): string {
-  return new Intl.DateTimeFormat("uz-UZ", {
+export function formatNewsDate(
+  date: string,
+  locale: string = "uz",
+): string {
+  const dateLocale = locale === "de" ? "de-DE" : "uz-UZ";
+
+  return new Intl.DateTimeFormat(dateLocale, {
     day: "numeric",
     month: "long",
     year: "numeric",

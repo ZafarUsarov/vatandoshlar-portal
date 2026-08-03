@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import Header from "../../components/Header";
 import NewsCard from "../../components/cards/NewsCard";
@@ -15,17 +15,48 @@ import {
   getFeaturedNews,
   getLatestNews,
 } from "../../data/news";
+import { Link } from "../../i18n/navigation";
+import type { NewsItem } from "../../types/news";
 
-export const metadata: Metadata = {
-  title:
-    "Yangiliklar va foydali ma’lumotlar | Vatandoshlar.de",
-  description:
-    "Germaniyadagi o‘zbekistonliklar uchun rasmiy manbalarga asoslangan integratsiya, ish, ta’lim va konsullik ma’lumotlari.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = await getTranslations("NewsPage.metadata");
 
-export default function NewsPage() {
-  const allNews = getLatestNews();
-  const featuredNews = getFeaturedNews();
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: `/${locale}/news`,
+      languages: {
+        uz: "/uz/news",
+        de: "/de/news",
+      },
+    },
+  };
+}
+
+export default async function NewsPage() {
+  const locale = await getLocale();
+  const t = await getTranslations("NewsPage");
+
+  const localizeItem = (item: NewsItem): NewsItem => {
+    const key = String(item.id);
+
+    return {
+      ...item,
+      title: t(`items.${key}.title`),
+      excerpt: t(`items.${key}.excerpt`),
+      category: t(`items.${key}.category`),
+      contentType: t(`items.${key}.contentType`) as NewsItem["contentType"],
+      readingTime: t(`items.${key}.readingTime`),
+      sourceLanguage: t(`items.${key}.sourceLanguage`),
+      location: item.location ? t(`items.${key}.location`) : undefined,
+    };
+  };
+
+  const allNews = getLatestNews().map(localizeItem);
+  const featuredBase = getFeaturedNews();
+  const featuredNews = featuredBase ? localizeItem(featuredBase) : undefined;
 
   return (
     <>
@@ -34,13 +65,8 @@ export default function NewsPage() {
       <main className="page-main">
         <PageHero
           eyebrow="Vatandoshlar.de"
-          title="Yangiliklar va foydali ma’lumotlar"
-          description={
-            <>
-              Germaniyada yashash, o‘qish va ishlashga oid materiallar faqat
-              tekshiriladigan rasmiy manbalar asosida tayyorlanadi.
-            </>
-          }
+          title={t("hero.title")}
+          description={t("hero.description")}
         />
 
         {featuredNews && (
@@ -58,7 +84,7 @@ export default function NewsPage() {
                         variant="neutral"
                         className="border-white/10 bg-white/10 text-white"
                       >
-                        Tavsiya etilgan material
+                        {t("featured.badge")}
                       </Badge>
 
                       <p className="mt-8 text-sm font-semibold uppercase tracking-[0.15em] text-emerald-400">
@@ -68,7 +94,7 @@ export default function NewsPage() {
 
                     <div>
                       <p className="text-sm text-slate-300">
-                        Rasmiy manba
+                        {t("featured.officialSource")}
                       </p>
 
                       <p className="mt-2 text-lg font-semibold text-white">
@@ -82,15 +108,12 @@ export default function NewsPage() {
                       <span className="font-semibold text-brand">
                         {featuredNews.category}
                       </span>
-
                       <span aria-hidden="true">•</span>
-
                       <span>{featuredNews.readingTime}</span>
 
                       {featuredNews.location && (
                         <>
                           <span aria-hidden="true">•</span>
-
                           <span>{featuredNews.location}</span>
                         </>
                       )}
@@ -102,7 +125,7 @@ export default function NewsPage() {
                     >
                       <Link
                         href={`/news/${featuredNews.slug}`}
-                        className="transition-colors hover:text-brand"
+                        className="transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4"
                       >
                         {featuredNews.title}
                       </Link>
@@ -113,19 +136,14 @@ export default function NewsPage() {
                     </p>
 
                     <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-                      <ButtonLink
-                        href={`/news/${featuredNews.slug}`}
-                        size="lg"
-                      >
-                        Batafsil o‘qish
+                      <ButtonLink href={`/news/${featuredNews.slug}`} size="lg">
+                        {t("featured.readMore")}
                       </ButtonLink>
 
                       <p className="text-sm text-text-muted">
-                        Tekshirildi:{" "}
+                        {t("featured.verified")}{" "}
                         <time dateTime={featuredNews.verifiedAt}>
-                          {formatNewsDate(
-                            featuredNews.verifiedAt,
-                          )}
+                          {formatNewsDate(featuredNews.verifiedAt, locale)}
                         </time>
                       </p>
                     </div>
@@ -136,42 +154,27 @@ export default function NewsPage() {
           </Section>
         )}
 
-        <Section
-          tone="page"
-          spacing="xl"
-          aria-labelledby="all-news-heading"
-        >
+        <Section tone="page" spacing="xl" aria-labelledby="all-news-heading">
           <Container>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="page-eyebrow">
-                  Barcha materiallar
-                </p>
-
-                <h2
-                  id="all-news-heading"
-                  className="section-title mt-3"
-                >
-                  Tekshirilgan ma’lumotlar
+                <p className="page-eyebrow">{t("all.eyebrow")}</p>
+                <h2 id="all-news-heading" className="section-title mt-3">
+                  {t("all.title")}
                 </h2>
-
                 <p className="section-description mt-4">
-                  Integratsiya, ish, ta’lim, huquqiy masalalar va konsullik
-                  xizmatlariga oid ishonchli materiallarni bir joyda toping.
+                  {t("all.description")}
                 </p>
               </div>
 
               <p className="shrink-0 text-sm text-text-muted">
-                Jami {allNews.length} ta material
+                {t("all.count", { count: allNews.length })}
               </p>
             </div>
 
             <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-              {allNews.map((item) => (
-                <NewsCard
-                  key={item.id}
-                  item={item}
-                />
+              {allNews.map((item, index) => (
+                <NewsCard key={item.id} item={item} index={index} />
               ))}
             </div>
           </Container>
@@ -181,10 +184,7 @@ export default function NewsPage() {
       <footer className="border-t border-border-default bg-surface py-10 text-text-muted transition-colors duration-300">
         <Container className="flex flex-col gap-4 text-sm sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Vatandoshlar.de</p>
-
-          <p>
-            Germaniyadagi o‘zbekistonliklar uchun raqamli platforma
-          </p>
+          <p>{t("footer")}</p>
         </Container>
       </footer>
     </>

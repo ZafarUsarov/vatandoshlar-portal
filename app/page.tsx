@@ -1,3 +1,11 @@
+import EventsSection from "../components/EventsSection";
+import Features from "../components/Features";
+import Header from "../components/Header";
+import JobsSection from "../components/JobsSection";
+import NewsSection from "../components/NewsSection";
+import Reveal from "../components/Reveal";
+import SearchSection from "../components/SearchSection";
+import ServicesSection from "../components/ServicesSection";
 import {
   FinalCtaSection,
   HeroSection,
@@ -8,11 +16,39 @@ import {
 export default function HomePage() {
   return (
     <>
-      <HeroSection />
+      <Header />
 
-      <StatisticsSection />
+      <main className="min-h-screen bg-white pt-24 text-slate-950 transition-colors lg:pt-28 dark:bg-slate-950 dark:text-white">
+        <HeroSection />
 
-      <FinalCtaSection />
+        <StatisticsSection />
+
+        <Reveal>
+          <SearchSection />
+        </Reveal>
+
+        <Reveal>
+          <Features />
+        </Reveal>
+
+        <Reveal>
+          <NewsSection />
+        </Reveal>
+
+        <Reveal>
+          <ServicesSection />
+        </Reveal>
+
+        <Reveal>
+          <JobsSection />
+        </Reveal>
+
+        <Reveal>
+          <EventsSection />
+        </Reveal>
+
+        <FinalCtaSection />
+      </main>
 
       <HomeFooter />
     </>

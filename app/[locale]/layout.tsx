@@ -1,11 +1,16 @@
-// app/[locale]/layout.tsx
+import {
+  NextIntlClientProvider,
+  hasLocale,
+} from "next-intl";
+import {
+  getMessages,
+  setRequestLocale,
+} from "next-intl/server";
+import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
 
-import {NextIntlClientProvider, hasLocale} from "next-intl";
-import {setRequestLocale} from "next-intl/server";
-import {notFound} from "next/navigation";
-import type {ReactNode} from "react";
-
-import {routing} from "../../i18n/routing";
+import CommandPalette from "../../components/CommandPalette";
+import { routing } from "../../i18n/routing";
 
 type LocaleLayoutProps = Readonly<{
   children: ReactNode;
@@ -15,14 +20,16 @@ type LocaleLayoutProps = Readonly<{
 }>;
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({locale}));
+  return routing.locales.map((locale) => ({
+    locale,
+  }));
 }
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: LocaleLayoutProps) {
-  const {locale} = await params;
+  const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
@@ -30,9 +37,16 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
+  const messages = await getMessages();
+
   return (
-    <NextIntlClientProvider>
+    <NextIntlClientProvider
+      locale={locale}
+      messages={messages}
+    >
       {children}
+
+      <CommandPalette />
     </NextIntlClientProvider>
   );
 }

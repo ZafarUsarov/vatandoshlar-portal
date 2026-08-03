@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { getLocale } from "next-intl/server";
 import type { ReactNode } from "react";
-
-import CommandPalette from "../components/CommandPalette";
 
 import "./globals.css";
 
@@ -56,16 +55,27 @@ const themeInitializationScript = `
   (function () {
     try {
       var storedTheme = localStorage.getItem("vatandoshlar-theme");
-      var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+      var prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+
       var shouldUseDark =
         storedTheme === "dark" ||
         (!storedTheme && prefersDark);
 
-      document.documentElement.classList.toggle("dark", shouldUseDark);
+      document.documentElement.classList.toggle(
+        "dark",
+        shouldUseDark
+      );
+
       document.documentElement.style.colorScheme =
         shouldUseDark ? "dark" : "light";
     } catch (error) {
-      console.error("Theme initialization failed:", error);
+      console.error(
+        "Theme initialization failed:",
+        error
+      );
     }
   })();
 `;
@@ -80,9 +90,14 @@ export default async function RootLayout({
   const locale = await getLocale();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+    >
       <head>
-        <script
+        <Script
+          id="vatandoshlar-theme-initialization"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: themeInitializationScript,
           }}
@@ -91,8 +106,6 @@ export default async function RootLayout({
 
       <body className="min-h-screen bg-white text-slate-950 antialiased transition-colors duration-200 dark:bg-slate-950 dark:text-slate-50">
         {children}
-
-        <CommandPalette />
       </body>
     </html>
   );
