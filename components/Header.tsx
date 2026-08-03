@@ -1,13 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   useCallback,
   useEffect,
   useState,
   type ReactNode,
 } from "react";
+
+import { Link, usePathname } from "../i18n/navigation";
 
 type NavigationItem = {
   name: string;
@@ -213,45 +214,6 @@ function ArrowRightIcon() {
   );
 }
 
-const navigation: NavigationItem[] = [
-  {
-    name: "Bosh sahifa",
-    href: "/",
-    description: "Portalning asosiy sahifasi",
-    icon: <HomeIcon />,
-  },
-  {
-    name: "Yangiliklar",
-    href: "/news",
-    description: "Rasmiy va tekshirilgan ma’lumotlar",
-    icon: <NewsIcon />,
-  },
-  {
-    name: "Xizmatlar",
-    href: "/services",
-    description: "Mutaxassis va xizmatlar katalogi",
-    icon: <ServicesIcon />,
-  },
-  {
-    name: "Ish",
-    href: "/jobs",
-    description: "Ish qidirish va karyera qo‘llanmalari",
-    icon: <JobsIcon />,
-  },
-  {
-    name: "Telegram",
-    href: "/telegram",
-    description: "Bundeslandlar bo‘yicha guruhlar",
-    icon: <TelegramIcon />,
-  },
-  {
-    name: "Tadbirlar",
-    href: "/events",
-    description: "Tekshirilgan uchrashuv va tadbirlar",
-    icon: <EventsIcon />,
-  },
-];
-
 function getInitialDarkMode(): boolean {
   if (typeof window === "undefined") {
     return false;
@@ -275,7 +237,47 @@ function getInitialDarkMode(): boolean {
 }
 
 export default function Header() {
+  const t = useTranslations("Header");
   const pathname = usePathname();
+
+  const navigation: NavigationItem[] = [
+    {
+      name: t("navigation.home"),
+      href: "/",
+      description: "Portalning asosiy sahifasi",
+      icon: <HomeIcon />,
+    },
+    {
+      name: t("navigation.news"),
+      href: "/news",
+      description: "Rasmiy va tekshirilgan ma’lumotlar",
+      icon: <NewsIcon />,
+    },
+    {
+      name: t("navigation.services"),
+      href: "/services",
+      description: "Mutaxassis va xizmatlar katalogi",
+      icon: <ServicesIcon />,
+    },
+    {
+      name: t("navigation.jobs"),
+      href: "/jobs",
+      description: "Ish qidirish va karyera qo‘llanmalari",
+      icon: <JobsIcon />,
+    },
+    {
+      name: t("navigation.telegram"),
+      href: "/telegram",
+      description: "Bundeslandlar bo‘yicha guruhlar",
+      icon: <TelegramIcon />,
+    },
+    {
+      name: t("navigation.events"),
+      href: "/events",
+      description: "Tekshirilgan uchrashuv va tadbirlar",
+      icon: <EventsIcon />,
+    },
+  ];
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] =
     useState(false);

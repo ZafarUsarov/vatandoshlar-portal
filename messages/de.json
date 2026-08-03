@@ -13,5 +13,15 @@
         "mobileFriendly": "Für mobile Geräte optimiert"
       }
     }
+  },
+  "Header": {
+    "navigation": {
+      "home": "Startseite",
+      "news": "Nachrichten",
+      "services": "Dienstleistungen",
+      "jobs": "Arbeit",
+      "telegram": "Telegram",
+      "events": "Veranstaltungen"
+    }
   }
 }

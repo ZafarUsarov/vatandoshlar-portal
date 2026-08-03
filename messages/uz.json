@@ -13,5 +13,15 @@
         "mobileFriendly": "Mobil qurilmalarga mos"
       }
     }
+  },
+  "Header": {
+    "navigation": {
+      "home": "Bosh sahifa",
+      "news": "Yangiliklar",
+      "services": "Xizmatlar",
+      "jobs": "Ish",
+      "telegram": "Telegram",
+      "events": "Tadbirlar"
+    }
   }
 }
