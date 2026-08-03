@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import { Link, usePathname } from "../i18n/navigation";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 type NavigationItem = {
   name: string;
@@ -632,6 +633,8 @@ export default function Header() {
               </kbd>
             </button>
 
+            <LanguageSwitcher variant="compact" />
+
             <button
               type="button"
               onClick={toggleTheme}
@@ -893,6 +896,12 @@ export default function Header() {
                 <SearchIcon />
                 Portal bo‘ylab qidirish
               </button>
+
+              <LanguageSwitcher
+                variant="full"
+                className="mt-3"
+                onLocaleChange={closeMobileMenu}
+              />
 
               <button
                 type="button"
