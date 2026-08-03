@@ -13,32 +13,14 @@
         "mobileFriendly": "Für mobile Geräte optimiert"
       }
     },
-
-    "quickLinks": {
-      "title": "Schnellzugriff",
-
-      "official": {
-        "title": "Offizielle Informationen",
-        "description": "Geprüfte Informationen zum Leben, Studium und Arbeiten in Deutschland."
-      },
-
-      "services": {
-        "title": "Geprüfte Dienstleistungen",
-        "description": "Dolmetscher, Rechtsanwälte, Steuerberater, Ärzte und weitere Dienstleistungen."
-      },
-
-      "jobs": {
-        "title": "Arbeit und Karriere",
-        "description": "Jobbörsen, Minijob, Werkstudent, Ausbildung und Karriereleitfäden."
-      },
-
-      "policy": {
-        "title": "Informationsrichtlinie",
-        "description": "Im Portal werden ausschließlich überprüfte Informationen mit Quellenangaben veröffentlicht."
-      }
+    "finalCta": {
+      "badge": "Vatandoshlar-Community",
+      "title": "Erleichtern Sie Ihr Leben in Deutschland mit verlässlichen Informationen",
+      "description": "Finden Sie Dienstleistungen, Jobangebote, offizielle Informationen und Communities in Ihrer Region mit wenigen Klicks.",
+      "telegramButton": "Telegram-Gruppen ansehen",
+      "eventsButton": "Veranstaltungen ansehen"
     }
   },
-
   "Header": {
     "navigation": {
       "home": "Startseite",
@@ -47,6 +29,82 @@
       "jobs": "Arbeit",
       "telegram": "Telegram",
       "events": "Veranstaltungen"
+    }
+  },
+  "SearchSection": {
+    "badge": "Globale Suche",
+    "title": "Finden Sie wichtige Informationen in wenigen Sekunden",
+    "description": "Durchsuchen Sie Jobs, Dienstleistungen, Nachrichten, Telegram-Gruppen und Veranstaltungen an einem Ort.",
+    "inputLabel": "Das Portal durchsuchen",
+    "placeholder": "Zum Beispiel: Elektriker, Berlin, Anwalt, Minijob...",
+    "searchButton": "Suchen",
+    "categoryFilterLabel": "Suchkategorien",
+    "categories": {
+      "all": "Alle",
+      "news": "Nachrichten",
+      "services": "Dienstleistungen",
+      "jobs": "Arbeit",
+      "telegram": "Telegram",
+      "events": "Veranstaltungen"
+    },
+    "results": {
+      "title": "Ergebnisse",
+      "count": "{count, plural, one {# passender Eintrag gefunden} other {# passende Einträge gefunden}}",
+      "clearFilters": "Filter zurücksetzen"
+    },
+    "emptyState": {
+      "title": "Keine passenden Informationen gefunden",
+      "description": "Versuchen Sie es mit einem anderen Suchbegriff oder wählen Sie eine andere Kategorie.",
+      "clearSearch": "Suche zurücksetzen"
+    },
+    "items": {
+      "officialNews": {
+        "title": "Offizielle Informationen",
+        "description": "Geprüfte Informationen zum Leben, Studium, Arbeiten und zu behördlichen Dokumenten in Deutschland."
+      },
+      "translationServices": {
+        "title": "Übersetzungs- und Sprachdienste",
+        "description": "Hinweise zur Suche nach Dolmetschern, Dokumentenübersetzungen und amtlichen Beglaubigungen."
+      },
+      "legalServices": {
+        "title": "Rechtliche Dienstleistungen",
+        "description": "Informationen zu Anwälten, Migrationsberatung und Verbraucherschutz."
+      },
+      "career": {
+        "title": "Arbeit und Karriere",
+        "description": "Leitfäden zu Minijob, Werkstudententätigkeit, Praktikum, Ausbildung und qualifizierter Beschäftigung."
+      },
+      "jobPlatforms": {
+        "title": "Jobportale",
+        "description": "Bundesagentur für Arbeit, Make it in Germany, EURES, Stepstone und weitere Portale."
+      },
+      "telegramGroups": {
+        "title": "Telegram-Gruppen",
+        "description": "Aktive usbekische Communities und Telegram-Gruppen nach Bundesland."
+      },
+      "events": {
+        "title": "Veranstaltungen",
+        "description": "Kulturelle Treffen, Seminare, Karriereveranstaltungen und Community-Events."
+      }
+    },
+    "preview": {
+      "open": "Öffnen",
+      "jobs": {
+        "title": "Arbeit finden",
+        "description": "Minijobs, Ausbildung und qualifizierte Stellen"
+      },
+      "services": {
+        "title": "Dienstleistungen finden",
+        "description": "Dolmetscher, Anwälte, Ärzte und weitere Fachkräfte"
+      },
+      "telegram": {
+        "title": "Telegram-Gruppen",
+        "description": "Aktive Communities nach Bundesland"
+      },
+      "events": {
+        "title": "Veranstaltungen",
+        "description": "Geprüfte Treffen und Veranstaltungen"
+      }
     }
   }
 }

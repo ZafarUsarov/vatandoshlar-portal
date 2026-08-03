@@ -13,32 +13,14 @@
         "mobileFriendly": "Mobil qurilmalarga mos"
       }
     },
-
-    "quickLinks": {
-      "title": "Tezkor yo‘nalishlar",
-
-      "official": {
-        "title": "Rasmiy yangiliklar",
-        "description": "Germaniyada yashash, o‘qish va ishlash bo‘yicha tekshirilgan ma’lumotlar."
-      },
-
-      "services": {
-        "title": "Tekshirilgan xizmatlar",
-        "description": "Tarjimon, huquqshunos, soliq maslahatchisi, shifokor va boshqa xizmatlar."
-      },
-
-      "jobs": {
-        "title": "Ish va karyera",
-        "description": "Ish platformalari, Minijob, Werkstudent, Ausbildung va karyera qo‘llanmalari."
-      },
-
-      "policy": {
-        "title": "Ishonchli ma’lumot siyosati",
-        "description": "Portalda faqat manbasi ko‘rsatilgan va tekshirilgan ma’lumotlar joylashtiriladi."
-      }
+    "finalCta": {
+      "badge": "Vatandoshlar hamjamiyati",
+      "title": "Germaniyadagi hayotingizni ishonchli ma’lumot bilan osonlashtiring",
+      "description": "Kerakli xizmat, ish platformasi, rasmiy yangilik yoki hududingizdagi hamjamiyatni bir necha bosishda toping.",
+      "telegramButton": "Telegram guruhlarini ko‘rish",
+      "eventsButton": "Tadbirlarni ko‘rish"
     }
   },
-
   "Header": {
     "navigation": {
       "home": "Bosh sahifa",
@@ -47,6 +29,82 @@
       "jobs": "Ish",
       "telegram": "Telegram",
       "events": "Tadbirlar"
+    }
+  },
+  "SearchSection": {
+    "badge": "Global qidiruv",
+    "title": "Kerakli ma’lumotni bir necha soniyada toping",
+    "description": "Ish, xizmat, yangilik, Telegram guruhi yoki tadbirni bitta qidiruv orqali toping.",
+    "inputLabel": "Portal bo‘ylab qidirish",
+    "placeholder": "Masalan: Elektrik, Berlin, yurist, Minijob...",
+    "searchButton": "Qidirish",
+    "categoryFilterLabel": "Qidiruv kategoriyalari",
+    "categories": {
+      "all": "Barchasi",
+      "news": "Yangilik",
+      "services": "Xizmat",
+      "jobs": "Ish",
+      "telegram": "Telegram",
+      "events": "Tadbir"
+    },
+    "results": {
+      "title": "Natijalar",
+      "count": "{count} ta mos ma’lumot topildi",
+      "clearFilters": "Filtrlarni tozalash"
+    },
+    "emptyState": {
+      "title": "Mos ma’lumot topilmadi",
+      "description": "Boshqa kalit so‘z yoki boshqa bo‘limni tanlab qayta qidiring.",
+      "clearSearch": "Qidiruvni tozalash"
+    },
+    "items": {
+      "officialNews": {
+        "title": "Rasmiy yangiliklar",
+        "description": "Germaniyada yashash, o‘qish, ishlash va hujjatlar bo‘yicha tekshirilgan ma’lumotlar."
+      },
+      "translationServices": {
+        "title": "Tarjimon va til xizmatlari",
+        "description": "Tarjimon topish, hujjat tarjimasi va rasmiy tasdiqlash bo‘yicha qo‘llanmalar."
+      },
+      "legalServices": {
+        "title": "Huquqiy xizmatlar",
+        "description": "Advokat, migratsiya maslahati va iste’molchilar huquqlarini himoya qilish bo‘yicha ma’lumot."
+      },
+      "career": {
+        "title": "Ish va karyera",
+        "description": "Minijob, Werkstudent, Praktikum, Ausbildung va malakali mutaxassislar uchun yo‘riqnomalar."
+      },
+      "jobPlatforms": {
+        "title": "Ish platformalari",
+        "description": "Bundesagentur für Arbeit, Make it in Germany, EURES, Stepstone va boshqa portallar."
+      },
+      "telegramGroups": {
+        "title": "Telegram guruhlari",
+        "description": "Bundeslandlar bo‘yicha o‘zbek hamjamiyatlari va faol Telegram guruhlari."
+      },
+      "events": {
+        "title": "Tadbirlar",
+        "description": "Madaniy uchrashuvlar, seminarlar, karyera tadbirlari va jamoat yig‘inlari."
+      }
+    },
+    "preview": {
+      "open": "Ochish",
+      "jobs": {
+        "title": "Ish qidirish",
+        "description": "Minijob, Ausbildung va professional ishlar"
+      },
+      "services": {
+        "title": "Xizmat topish",
+        "description": "Tarjimon, yurist, shifokor va mutaxassislar"
+      },
+      "telegram": {
+        "title": "Telegram guruhlari",
+        "description": "Bundeslandlar bo‘yicha faol hamjamiyatlar"
+      },
+      "events": {
+        "title": "Tadbirlar",
+        "description": "Tekshirilgan uchrashuv va tadbirlar"
+      }
     }
   }
 }
