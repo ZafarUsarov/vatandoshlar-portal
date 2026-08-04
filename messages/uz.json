@@ -711,5 +711,54 @@
       "languages": "Tillar",
       "detailsSoon": "Profil sahifasi tez orada"
     }
+  },
+  "SpecialistDetailPage": {
+    "metadata": {
+      "notFound": "Mutaxassis topilmadi | Vatandoshlar.de",
+      "title": "{name} | Mutaxassislar katalogi"
+    },
+    "backToDirectory": "Barcha mutaxassislar",
+    "verified": "Tekshirilgan profil",
+    "notVerified": "Profil ma’lumoti tekshirilmoqda",
+    "premium": "Premium",
+    "sponsored": "Homiylik",
+    "location": "Joylashuv",
+    "languages": "Tillar",
+    "services": "Xizmatlar va yo‘nalishlar",
+    "pricing": "Narx haqida",
+    "categoriesTitle": "Yo‘nalishlar",
+    "code": "Profil kodi",
+    "contact": {
+      "title": "Bog‘lanish",
+      "description": "Mutaxassis taqdim etgan aloqa kanalidan foydalaning.",
+      "phone": "Telefon",
+      "email": "E-mail",
+      "website": "Veb-sayt",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "instagram": "Instagram",
+      "youtube": "YouTube",
+      "facebook": "Facebook"
+    },
+    "categories": {
+      "medical": "Shifokorlar",
+      "legal": "Advokat va huquq",
+      "technology": "IT mutaxassislari",
+      "automotive": "Avto xizmatlar",
+      "home": "Uy va hunarmandchilik",
+      "education": "Ta’lim va repetitorlik",
+      "language-teaching": "Nemis tili o‘qituvchilari",
+      "academic-documents": "Bachelor, Master va PhD hujjatlari",
+      "beauty": "Go‘zallik xizmatlari",
+      "finance": "Soliq va moliya",
+      "creative": "Foto, video va kreativ"
+    },
+    "languagesMap": {
+      "uz": "O‘zbekcha",
+      "de": "Nemischa",
+      "ru": "Ruscha",
+      "en": "Inglizcha",
+      "tr": "Turkcha"
+    }
   }
 }

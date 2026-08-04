@@ -711,5 +711,54 @@
       "languages": "Sprachen",
       "detailsSoon": "Profilseite demnächst"
     }
+  },
+  "SpecialistDetailPage": {
+    "metadata": {
+      "notFound": "Fachkraft nicht gefunden | Vatandoshlar.de",
+      "title": "{name} | Fachkräfteverzeichnis"
+    },
+    "backToDirectory": "Alle Fachkräfte",
+    "verified": "Geprüftes Profil",
+    "notVerified": "Profilangaben werden geprüft",
+    "premium": "Premium",
+    "sponsored": "Gesponsert",
+    "location": "Standort",
+    "languages": "Sprachen",
+    "services": "Leistungen und Schwerpunkte",
+    "pricing": "Hinweis zum Preis",
+    "categoriesTitle": "Kategorien",
+    "code": "Profilcode",
+    "contact": {
+      "title": "Kontakt",
+      "description": "Nutzen Sie einen vom Profil bereitgestellten Kontaktweg.",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "website": "Website",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "instagram": "Instagram",
+      "youtube": "YouTube",
+      "facebook": "Facebook"
+    },
+    "categories": {
+      "medical": "Ärzte und Medizin",
+      "legal": "Anwälte und Recht",
+      "technology": "IT-Fachkräfte",
+      "automotive": "Fahrzeugservice",
+      "home": "Haus und Handwerk",
+      "education": "Bildung und Nachhilfe",
+      "language-teaching": "Deutschlehrerinnen und Deutschlehrer",
+      "academic-documents": "Bachelor-, Master- und Promotionsunterlagen",
+      "beauty": "Beauty und Friseur",
+      "finance": "Steuern und Finanzen",
+      "creative": "Foto, Video und Kreatives"
+    },
+    "languagesMap": {
+      "uz": "Usbekisch",
+      "de": "Deutsch",
+      "ru": "Russisch",
+      "en": "Englisch",
+      "tr": "Türkisch"
+    }
   }
 }

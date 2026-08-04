@@ -50,7 +50,7 @@ export const specialists: ReadonlyArray<Specialist> = [
       uz: "Maslahat bepul.",
       de: "Die Beratung ist kostenlos.",
     },
-    profilePublished: false,
+    profilePublished: true,
   },
   {
     id: "gulchekhra-agzamova",
@@ -95,7 +95,7 @@ export const specialists: ReadonlyArray<Specialist> = [
       uz: "Narx xizmat turiga qarab kelishiladi.",
       de: "Der Preis wird je nach Leistung vereinbart.",
     },
-    profilePublished: false,
+    profilePublished: true,
   },
   {
     id: "zafar-usarov",
@@ -135,7 +135,7 @@ export const specialists: ReadonlyArray<Specialist> = [
       premium: false,
       sponsored: false,
     },
-    profilePublished: false,
+    profilePublished: true,
   },
 ];
 
