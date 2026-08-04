@@ -582,5 +582,129 @@
       "homeLink": "Zur Startseite von Vatandoshlar.de",
       "navigation": "Footer-Navigation"
     }
+  },
+  "PopularCategoriesSection": {
+    "badge": "Beliebte Kategorien",
+    "title": "Usbekische Fachkräfte schnell nach dem passenden Bereich finden",
+    "description": "Nach dem Start des Verzeichnisses können Fachkräfte nach Beruf, Stadt, Bundesland und Dienstleistung gesucht werden.",
+    "viewAll": "Alle Fachkräfte",
+    "openCategory": "Kategorie ansehen",
+    "status": {
+      "comingSoon": "Demnächst"
+    },
+    "items": {
+      "medical": {
+        "title": "Ärzte und Medizin",
+        "description": "Hausärzte, Fachärzte, Zahnärzte und weitere medizinische Angebote."
+      },
+      "legal": {
+        "title": "Anwälte und Recht",
+        "description": "Fachkräfte für Migration, Arbeit, Familie und weitere Rechtsfragen."
+      },
+      "technology": {
+        "title": "IT-Fachkräfte",
+        "description": "Programmierung, Websites, technischer Support, Netzwerke und digitale Dienste."
+      },
+      "automotive": {
+        "title": "Fahrzeugservice",
+        "description": "Werkstätten, Diagnose, Reparatur und weitere Dienstleistungen rund ums Auto."
+      },
+      "home": {
+        "title": "Haus und Handwerk",
+        "description": "Elektriker, Sanitär, Renovierung, Umzug und Dienstleistungen rund ums Haus."
+      },
+      "education": {
+        "title": "Bildung und Nachhilfe",
+        "description": "Sprachkurse, Nachhilfe, Dokumentenhilfe und Bildungsberatung."
+      },
+      "finance": {
+        "title": "Steuern und Finanzen",
+        "description": "Steuerberatung, Buchhaltung, Versicherungen und Finanzdienstleistungen."
+      },
+      "creative": {
+        "title": "Foto, Video und Kreatives",
+        "description": "Fotografie, Video, Design, Werbung und Dienstleistungen für Veranstaltungen."
+      }
+    }
+  },
+  "FeaturedSpecialistsSection": {
+    "badge": "Empfohlene Fachkräfte",
+    "title": "Verlässliche usbekische Fachkräfte an einem Ort finden",
+    "description": "In das Verzeichnis werden schrittweise nur Profile mit geprüften Kontakt- und Tätigkeitsangaben aufgenommen.",
+    "card": {
+      "verified": "Geprüftes Profil",
+      "premium": "Premium",
+      "sponsored": "Gesponsert",
+      "details": "Profil ansehen",
+      "languages": "Sprachen"
+    },
+    "emptyState": {
+      "eyebrow": "Verzeichnis im Aufbau",
+      "title": "Die Aufnahme der ersten geprüften Fachkräfte hat begonnen",
+      "description": "Usbekische Fachkräfte, die in Deutschland tätig sind, können sich für das Verzeichnis melden. Vor der Veröffentlichung werden die grundlegenden Profilangaben geprüft.",
+      "applyButton": "Aufnahme ins Verzeichnis anfragen"
+    },
+    "benefits": {
+      "verification": {
+        "title": "Geprüfte Angaben",
+        "description": "Profil, Tätigkeitsbereich und Kontaktdaten werden vor der Veröffentlichung geprüft."
+      },
+      "visibility": {
+        "title": "Die passende Zielgruppe erreichen",
+        "description": "Usbeken in Deutschland finden passende Fachkräfte nach Stadt und Fachgebiet."
+      },
+      "premium": {
+        "title": "Zukünftige Premium-Optionen",
+        "description": "Featured-, Premium- und Sponsored-Platzierungen werden später klar und transparent gekennzeichnet."
+      }
+    }
+  },
+  "SpecialistsPage": {
+    "metadata": {
+      "title": "Verzeichnis usbekischer Fachkräfte | Vatandoshlar.de",
+      "description": "Verzeichnis usbekischer Ärzte, Anwälte, IT-Fachkräfte, Handwerker und weiterer Dienstleister in Deutschland."
+    },
+    "hero": {
+      "badge": "Fachkräfteverzeichnis",
+      "title": "Usbekische Fachkräfte in Deutschland finden",
+      "description": "Suchen Sie passende Fachkräfte nach Kategorie, Stadt, Bundesland und Profilstatus."
+    },
+    "filters": {
+      "searchLabel": "Suchen",
+      "searchPlaceholder": "Name, Beruf, Stadt oder Dienstleistung...",
+      "categoryLabel": "Kategorie",
+      "bundeslandLabel": "Bundesland",
+      "allBundeslaender": "Alle Bundesländer",
+      "verifiedOnly": "Nur geprüft",
+      "premiumOnly": "Nur Premium",
+      "reset": "Filter zurücksetzen"
+    },
+    "categories": {
+      "all": "Alle Kategorien",
+      "medical": "Ärzte und Medizin",
+      "legal": "Anwälte und Recht",
+      "technology": "IT-Fachkräfte",
+      "automotive": "Fahrzeugservice",
+      "home": "Haus und Handwerk",
+      "education": "Bildung und Nachhilfe",
+      "finance": "Steuern und Finanzen",
+      "creative": "Foto, Video und Kreatives"
+    },
+    "results": {
+      "title": "Fachkräfte",
+      "count": "{count, plural, one {# Profil gefunden} other {# Profile gefunden}}"
+    },
+    "empty": {
+      "title": "Profile werden derzeit aufgenommen",
+      "description": "Zurzeit sind noch keine geprüften Profile veröffentlicht. Usbekische Fachkräfte in Deutschland können sich für die Aufnahme in das Verzeichnis melden.",
+      "applyButton": "Aufnahme ins Verzeichnis anfragen"
+    },
+    "card": {
+      "verified": "Geprüftes Profil",
+      "premium": "Premium",
+      "sponsored": "Gesponsert",
+      "details": "Profil ansehen",
+      "languages": "Sprachen"
+    }
   }
 }

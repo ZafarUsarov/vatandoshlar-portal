@@ -7,9 +7,11 @@ import Reveal from "../components/Reveal";
 import SearchSection from "../components/SearchSection";
 import ServicesSection from "../components/ServicesSection";
 import {
+  FeaturedSpecialistsSection,
   FinalCtaSection,
   HeroSection,
   HomeFooter,
+  PopularCategoriesSection,
   StatisticsSection,
 } from "../components/home";
 
@@ -25,6 +27,14 @@ export default function HomePage() {
 
         <Reveal>
           <SearchSection />
+        </Reveal>
+
+        <Reveal>
+          <PopularCategoriesSection />
+        </Reveal>
+
+        <Reveal>
+          <FeaturedSpecialistsSection />
         </Reveal>
 
         <Reveal>

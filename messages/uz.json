@@ -582,5 +582,129 @@
       "homeLink": "Vatandoshlar.de bosh sahifasi",
       "navigation": "Footer navigatsiyasi"
     }
+  },
+  "PopularCategoriesSection": {
+    "badge": "Mashhur yo‘nalishlar",
+    "title": "O‘zbek mutaxassislarini kerakli yo‘nalish bo‘yicha tez toping",
+    "description": "Katalog ishga tushgach, mutaxassislarni kasbi, shahri, Bundeslandi va xizmat turi bo‘yicha qidirish mumkin bo‘ladi.",
+    "viewAll": "Barcha mutaxassislar",
+    "openCategory": "Yo‘nalishni ko‘rish",
+    "status": {
+      "comingSoon": "Tez orada"
+    },
+    "items": {
+      "medical": {
+        "title": "Shifokorlar",
+        "description": "Oilaviy shifokor, mutaxassis, stomatolog va boshqa tibbiy xizmatlar."
+      },
+      "legal": {
+        "title": "Advokat va huquqshunoslar",
+        "description": "Migratsiya, mehnat, oila va boshqa huquqiy masalalar bo‘yicha mutaxassislar."
+      },
+      "technology": {
+        "title": "IT mutaxassislari",
+        "description": "Dasturlash, veb-sayt, texnik yordam, tarmoq va raqamli xizmatlar."
+      },
+      "automotive": {
+        "title": "Avto xizmatlar",
+        "description": "Avto ustalar, diagnostika, ta’mirlash va avtomobilga oid xizmatlar."
+      },
+      "home": {
+        "title": "Uy va hunarmandchilik",
+        "description": "Elektrik, santexnik, ta’mirlash, ko‘chirish va uy xizmatlari."
+      },
+      "education": {
+        "title": "Ta’lim va repetitorlik",
+        "description": "Til kurslari, repetitorlar, hujjat tayyorlash va ta’lim bo‘yicha yordam."
+      },
+      "finance": {
+        "title": "Soliq va moliya",
+        "description": "Soliq maslahati, buxgalteriya, sug‘urta va moliyaviy xizmatlar."
+      },
+      "creative": {
+        "title": "Foto, video va kreativ",
+        "description": "Fotograf, videograf, dizayner, reklama va tadbir xizmatlari."
+      }
+    }
+  },
+  "FeaturedSpecialistsSection": {
+    "badge": "Tavsiya etilgan mutaxassislar",
+    "title": "Ishonchli o‘zbek mutaxassislarini bir joyda toping",
+    "description": "Katalogga faqat aloqa ma’lumotlari va faoliyati tekshirilgan profillar bosqichma-bosqich qo‘shiladi.",
+    "card": {
+      "verified": "Tekshirilgan profil",
+      "premium": "Premium",
+      "sponsored": "Homiylik",
+      "details": "Profilni ko‘rish",
+      "languages": "Tillar"
+    },
+    "emptyState": {
+      "eyebrow": "Katalog tayyorlanmoqda",
+      "title": "Birinchi tekshirilgan mutaxassislarni qabul qilish boshlandi",
+      "description": "Germaniyada faoliyat yuritadigan o‘zbek mutaxassislari katalogga qo‘shilish uchun murojaat yuborishlari mumkin. Profil e’lon qilinishidan oldin asosiy ma’lumotlar tekshiriladi.",
+      "applyButton": "Katalogga qo‘shilish uchun yozish"
+    },
+    "benefits": {
+      "verification": {
+        "title": "Tekshirilgan ma’lumot",
+        "description": "Profil, faoliyat turi va bog‘lanish ma’lumotlari e’lon qilishdan oldin ko‘rib chiqiladi."
+      },
+      "visibility": {
+        "title": "O‘z auditoriyangizga yetib boring",
+        "description": "Germaniyadagi o‘zbekistonliklar kerakli mutaxassisni shahar va yo‘nalish bo‘yicha topadi."
+      },
+      "premium": {
+        "title": "Kelajakdagi premium imkoniyatlar",
+        "description": "Featured, Premium va Sponsored joylashuvlar keyingi bosqichda alohida va shaffof belgilanadi."
+      }
+    }
+  },
+  "SpecialistsPage": {
+    "metadata": {
+      "title": "O‘zbek mutaxassislari katalogi | Vatandoshlar.de",
+      "description": "Germaniyadagi o‘zbek shifokorlar, advokatlar, IT mutaxassislari, ustalar va boshqa xizmat ko‘rsatuvchilar katalogi."
+    },
+    "hero": {
+      "badge": "Mutaxassislar katalogi",
+      "title": "Germaniyadagi o‘zbek mutaxassislarini toping",
+      "description": "Kerakli mutaxassisni yo‘nalish, shahar, Bundesland va profil holati bo‘yicha qidiring."
+    },
+    "filters": {
+      "searchLabel": "Qidirish",
+      "searchPlaceholder": "Ism, kasb, shahar yoki xizmat...",
+      "categoryLabel": "Yo‘nalish",
+      "bundeslandLabel": "Bundesland",
+      "allBundeslaender": "Barcha Bundeslandlar",
+      "verifiedOnly": "Faqat tekshirilgan",
+      "premiumOnly": "Faqat Premium",
+      "reset": "Filtrlarni tozalash"
+    },
+    "categories": {
+      "all": "Barcha yo‘nalishlar",
+      "medical": "Shifokorlar",
+      "legal": "Advokat va huquq",
+      "technology": "IT mutaxassislari",
+      "automotive": "Avto xizmatlar",
+      "home": "Uy va hunarmandchilik",
+      "education": "Ta’lim va repetitorlik",
+      "finance": "Soliq va moliya",
+      "creative": "Foto, video va kreativ"
+    },
+    "results": {
+      "title": "Mutaxassislar",
+      "count": "{count} ta profil topildi"
+    },
+    "empty": {
+      "title": "Katalogga profillar qo‘shilmoqda",
+      "description": "Hozircha e’lon qilingan tekshirilgan profil yo‘q. Germaniyada faoliyat yuritadigan o‘zbek mutaxassislari katalogga qo‘shilish uchun murojaat yuborishlari mumkin.",
+      "applyButton": "Katalogga qo‘shilish uchun yozish"
+    },
+    "card": {
+      "verified": "Tekshirilgan profil",
+      "premium": "Premium",
+      "sponsored": "Homiylik",
+      "details": "Profilni ko‘rish",
+      "languages": "Tillar"
+    }
   }
 }
