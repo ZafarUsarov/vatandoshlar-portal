@@ -114,6 +114,7 @@ export default async function FeaturedSpecialistsSection() {
     premium: t("card.premium"),
     sponsored: t("card.sponsored"),
     details: t("card.details"),
+    detailsSoon: t("card.detailsSoon"),
     languages: t("card.languages"),
   };
 

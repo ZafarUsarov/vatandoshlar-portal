@@ -41,6 +41,7 @@ type SpecialistsDirectoryProps = Readonly<{
       premium: string;
       sponsored: string;
       details: string;
+      detailsSoon: string;
       languages: string;
     }>;
   }>;
@@ -56,6 +57,9 @@ const categoryKeys: ReadonlyArray<
   "automotive",
   "home",
   "education",
+  "language-teaching",
+  "academic-documents",
+  "beauty",
   "finance",
   "creative",
 ];
@@ -78,10 +82,15 @@ export default function SpecialistsDirectory({
     () =>
       Array.from(
         new Set(
-          specialists.map(
-            (specialist) =>
-              specialist.location.bundesland,
-          ),
+          specialists
+            .map(
+              (specialist) =>
+                specialist.location?.bundesland,
+            )
+            .filter(
+              (value): value is string =>
+                Boolean(value),
+            ),
         ),
       ).sort((first, second) =>
         first.localeCompare(second),
@@ -99,8 +108,8 @@ export default function SpecialistsDirectory({
           specialist.name,
           specialist.profession,
           specialist.shortDescription,
-          specialist.location.city,
-          specialist.location.bundesland,
+          specialist.location?.city ?? "",
+          specialist.location?.bundesland ?? "",
           ...specialist.services,
           ...specialist.languages,
         ]
@@ -110,11 +119,11 @@ export default function SpecialistsDirectory({
 
       const matchesCategory =
         category === "all" ||
-        specialist.category === category;
+        specialist.categories.includes(category);
 
       const matchesBundesland =
         bundesland === "all" ||
-        specialist.location.bundesland === bundesland;
+        specialist.location?.bundesland === bundesland;
 
       const matchesVerified =
         !verifiedOnly || specialist.status.verified;

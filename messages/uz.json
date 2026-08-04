@@ -636,7 +636,8 @@
       "premium": "Premium",
       "sponsored": "Homiylik",
       "details": "Profilni ko‘rish",
-      "languages": "Tillar"
+      "languages": "Tillar",
+      "detailsSoon": "Profil sahifasi tez orada"
     },
     "emptyState": {
       "eyebrow": "Katalog tayyorlanmoqda",
@@ -688,7 +689,10 @@
       "home": "Uy va hunarmandchilik",
       "education": "Ta’lim va repetitorlik",
       "finance": "Soliq va moliya",
-      "creative": "Foto, video va kreativ"
+      "creative": "Foto, video va kreativ",
+      "languageTeaching": "Nemis tili o‘qituvchilari",
+      "academicDocuments": "Bachelor, Master va PhD hujjatlari",
+      "beauty": "Go‘zallik xizmatlari"
     },
     "results": {
       "title": "Mutaxassislar",
@@ -704,7 +708,8 @@
       "premium": "Premium",
       "sponsored": "Homiylik",
       "details": "Profilni ko‘rish",
-      "languages": "Tillar"
+      "languages": "Tillar",
+      "detailsSoon": "Profil sahifasi tez orada"
     }
   }
 }

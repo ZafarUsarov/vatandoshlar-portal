@@ -8,6 +8,7 @@ type SpecialistCardProps = Readonly<{
     premium: string;
     sponsored: string;
     details: string;
+    detailsSoon: string;
     languages: string;
   }>;
 }>;
@@ -87,10 +88,21 @@ function getInitials(name: string) {
     .join("");
 }
 
+function getLocationLabel(
+  specialist: LocalizedSpecialist,
+) {
+  const city = specialist.location?.city;
+  const bundesland = specialist.location?.bundesland;
+
+  return [city, bundesland].filter(Boolean).join(", ");
+}
+
 export default function SpecialistCard({
   specialist,
   labels,
 }: SpecialistCardProps) {
+  const locationLabel = getLocationLabel(specialist);
+
   return (
     <article className="group relative isolate flex min-h-[390px] overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-emerald-200 hover:shadow-xl hover:shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500/30 dark:hover:shadow-black/20 sm:p-7">
       {specialist.status.sponsored && (
@@ -147,36 +159,46 @@ export default function SpecialistCard({
             </span>
           )}
 
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-            <LocationIcon className="size-3.5" />
-            {specialist.location.city}
-          </span>
+          {locationLabel && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              <LocationIcon className="size-3.5" />
+              {locationLabel}
+            </span>
+          )}
         </div>
 
-        <div className="mt-5">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
-            {labels.languages}
-          </p>
+        {specialist.languages.length > 0 && (
+          <div className="mt-5">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
+              {labels.languages}
+            </p>
 
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-            {specialist.languages
-              .map((language) => language.toUpperCase())
-              .join(" · ")}
-          </p>
-        </div>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+              {specialist.languages
+                .map((language) => language.toUpperCase())
+                .join(" · ")}
+            </p>
+          </div>
+        )}
 
         <div className="mt-auto border-t border-slate-200 pt-5 dark:border-slate-800">
-          <Link
-            href={`/specialists/${specialist.slug}`}
-            className="inline-flex items-center gap-2 text-sm font-bold text-emerald-600 transition-all group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:text-emerald-400 dark:focus-visible:ring-offset-slate-900"
-          >
-            <span
-              aria-hidden="true"
-              className="absolute inset-0"
-            />
-            {labels.details}
-            <ArrowUpRightIcon />
-          </Link>
+          {specialist.profilePublished ? (
+            <Link
+              href={`/specialists/${specialist.slug}`}
+              className="inline-flex items-center gap-2 text-sm font-bold text-emerald-600 transition-all group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:text-emerald-400 dark:focus-visible:ring-offset-slate-900"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute inset-0"
+              />
+              {labels.details}
+              <ArrowUpRightIcon />
+            </Link>
+          ) : (
+            <span className="inline-flex items-center gap-2 text-sm font-bold text-slate-400 dark:text-slate-500">
+              {labels.detailsSoon}
+            </span>
+          )}
         </div>
       </div>
     </article>

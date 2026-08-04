@@ -11,6 +11,9 @@ export type SpecialistCategory =
   | "automotive"
   | "home"
   | "education"
+  | "language-teaching"
+  | "academic-documents"
+  | "beauty"
   | "finance"
   | "creative";
 
@@ -34,11 +37,14 @@ export type SpecialistContact = Readonly<{
   website?: string;
   whatsapp?: string;
   telegram?: string;
+  instagram?: string;
+  youtube?: string;
+  facebook?: string;
 }>;
 
 export type SpecialistLocation = Readonly<{
-  city: string;
-  bundesland: string;
+  city?: string;
+  bundesland?: string;
   postalCode?: string;
 }>;
 
@@ -49,12 +55,14 @@ export type Specialist = Readonly<{
   name: string;
   profession: LocalizedText;
   shortDescription: LocalizedText;
-  category: SpecialistCategory;
+  categories: ReadonlyArray<SpecialistCategory>;
   languages: ReadonlyArray<SpecialistLanguage>;
   services: ReadonlyArray<LocalizedText>;
-  location: SpecialistLocation;
+  location?: SpecialistLocation;
   contact: SpecialistContact;
   status: SpecialistStatus;
+  pricingNote?: LocalizedText;
+  profilePublished: boolean;
   avatarUrl?: string;
   yearsOfExperience?: number;
   rating?: number;
@@ -63,9 +71,13 @@ export type Specialist = Readonly<{
 
 export type LocalizedSpecialist = Omit<
   Specialist,
-  "profession" | "shortDescription" | "services"
+  | "profession"
+  | "shortDescription"
+  | "services"
+  | "pricingNote"
 > & {
   profession: string;
   shortDescription: string;
   services: ReadonlyArray<string>;
+  pricingNote?: string;
 };

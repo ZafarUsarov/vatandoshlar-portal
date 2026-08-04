@@ -636,7 +636,8 @@
       "premium": "Premium",
       "sponsored": "Gesponsert",
       "details": "Profil ansehen",
-      "languages": "Sprachen"
+      "languages": "Sprachen",
+      "detailsSoon": "Profilseite demnächst"
     },
     "emptyState": {
       "eyebrow": "Verzeichnis im Aufbau",
@@ -688,7 +689,10 @@
       "home": "Haus und Handwerk",
       "education": "Bildung und Nachhilfe",
       "finance": "Steuern und Finanzen",
-      "creative": "Foto, Video und Kreatives"
+      "creative": "Foto, Video und Kreatives",
+      "languageTeaching": "Deutschlehrerinnen und Deutschlehrer",
+      "academicDocuments": "Bachelor-, Master- und Promotionsunterlagen",
+      "beauty": "Beauty und Friseur"
     },
     "results": {
       "title": "Fachkräfte",
@@ -704,7 +708,8 @@
       "premium": "Premium",
       "sponsored": "Gesponsert",
       "details": "Profil ansehen",
-      "languages": "Sprachen"
+      "languages": "Sprachen",
+      "detailsSoon": "Profilseite demnächst"
     }
   }
 }

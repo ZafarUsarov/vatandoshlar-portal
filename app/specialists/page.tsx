@@ -29,6 +29,9 @@ const categoryKeys: ReadonlyArray<SpecialistCategory> = [
   "automotive",
   "home",
   "education",
+  "language-teaching",
+  "academic-documents",
+  "beauty",
   "finance",
   "creative",
 ];
@@ -73,6 +76,13 @@ export default async function SpecialistsPage({
     automotive: t("categories.automotive"),
     home: t("categories.home"),
     education: t("categories.education"),
+    "language-teaching": t(
+      "categories.languageTeaching",
+    ),
+    "academic-documents": t(
+      "categories.academicDocuments",
+    ),
+    beauty: t("categories.beauty"),
     finance: t("categories.finance"),
     creative: t("categories.creative"),
   };
@@ -184,6 +194,9 @@ export default async function SpecialistsPage({
                   premium: t("card.premium"),
                   sponsored: t("card.sponsored"),
                   details: t("card.details"),
+                  detailsSoon: t(
+                    "card.detailsSoon",
+                  ),
                   languages: t("card.languages"),
                 },
               }}
