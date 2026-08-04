@@ -760,5 +760,64 @@
       "en": "Englisch",
       "tr": "Türkisch"
     }
+  },
+  "FounderPage": {
+    "metadata": {
+      "title": "Projektgründer und Entwickler | Vatandoshlar.de",
+      "description": "Professionelle Informationen über Zafar Usarov, Gründer und Entwickler von Vatandoshlar.de."
+    },
+    "hero": {
+      "badge": "Projektgründer",
+      "profession": "Projektgründer und Softwareentwickler",
+      "title": "Entwickler einer verlässlichen digitalen Plattform für Usbeken in Deutschland",
+      "description": "Vatandoshlar.de ist ein langfristiges Projekt mit dem Ziel, Usbeken in Deutschland geprüfte Informationen, Dienstleistungen und hilfreiche Orientierung an einem Ort bereitzustellen.",
+      "contactButton": "Kontakt aufnehmen",
+      "specialistButton": "Fachkräfteprofil ansehen"
+    },
+    "story": {
+      "title": "Über mich",
+      "paragraphs": {
+        "0": "Ich bin Zafar Usarov, Gründer und Entwickler von Vatandoshlar.de. Ich entwickle produktionsreife Webanwendungen mit sauberer Architektur, strengem TypeScript und einem Ansatz, der auf langfristige Weiterentwicklung ausgelegt ist.",
+        "1": "Vatandoshlar.de ist für mich keine einfache Website. Ziel ist eine unabhängige, moderne und verantwortungsvolle Plattform, die Usbeken in Deutschland hilft, relevante Informationen und verlässliche Fachkräfte schneller zu finden."
+      }
+    },
+    "mission": {
+      "title": "Die Mission von Vatandoshlar.de",
+      "description": "Die Plattform soll verständliche und überprüfbare Informationen ohne unnötige Komplexität bereitstellen.",
+      "items": {
+        "0": "Informationen auf Basis offizieller und überprüfbarer Quellen",
+        "1": "Komfortable Nutzung auf Usbekisch und Deutsch",
+        "2": "Verlässliche Fachkräfte und Dienstleistungen finden",
+        "3": "Datenschutz, Barrierefreiheit und nachhaltige Entwicklung"
+      }
+    },
+    "work": {
+      "title": "Tätigkeitsschwerpunkte",
+      "description": "Meine Arbeit konzentriert sich auf die Entwicklung digitaler Produkte und praktische Orientierung für Nutzerinnen und Nutzer.",
+      "items": {
+        "platform": {
+          "title": "Entwicklung von Webplattformen",
+          "description": "Schnelle, barrierearme und skalierbare Webanwendungen mit Next.js, React und TypeScript."
+        },
+        "academic": {
+          "title": "Orientierung bei akademischen Unterlagen",
+          "description": "Praktische Unterstützung beim Verständnis von Unterlagen und nächsten Schritten für Bachelor, Master und Promotion."
+        }
+      }
+    },
+    "technologies": {
+      "title": "Technologien"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "description": "Nutzen Sie für berufliche Fragen, Zusammenarbeit oder Anliegen zu Vatandoshlar.de einen der folgenden Kanäle.",
+      "socials": {
+        "email": "E-Mail",
+        "telegram": "Telegram",
+        "instagram": "Instagram",
+        "youtube": "YouTube",
+        "facebook": "Facebook"
+      }
+    }
   }
 }

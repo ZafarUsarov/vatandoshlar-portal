@@ -760,5 +760,64 @@
       "en": "Inglizcha",
       "tr": "Turkcha"
     }
+  },
+  "FounderPage": {
+    "metadata": {
+      "title": "Loyiha asoschisi va dasturchisi | Vatandoshlar.de",
+      "description": "Vatandoshlar.de loyihasi asoschisi va dasturchisi Zafar Usarov haqida professional ma’lumot."
+    },
+    "hero": {
+      "badge": "Loyiha asoschisi",
+      "profession": "Loyiha asoschisi va dasturchisi",
+      "title": "Germaniyadagi o‘zbekistonliklar uchun ishonchli raqamli platforma yaratuvchisi",
+      "description": "Vatandoshlar.de — Germaniyada yashayotgan o‘zbekistonliklarga tekshirilgan ma’lumot, xizmat va foydali yo‘nalishlarni bir joyda taqdim etish maqsadida yaratilgan uzoq muddatli loyiha.",
+      "contactButton": "Bog‘lanish",
+      "specialistButton": "Mutaxassis profilini ko‘rish"
+    },
+    "story": {
+      "title": "Men haqimda",
+      "paragraphs": {
+        "0": "Men — Zafar Usarov, Vatandoshlar.de loyihasining asoschisi va dasturchisiman. Production darajasidagi veb-ilovalarni toza arxitektura, qat’iy TypeScript va uzoq muddatli rivojlanishga mos yondashuv asosida yarataman.",
+        "1": "Vatandoshlar.de men uchun oddiy sayt emas. Uning maqsadi Germaniyadagi o‘zbekistonliklarga kerakli ma’lumot va ishonchli mutaxassislarni tezroq topishga yordam beradigan mustaqil, zamonaviy va mas’uliyatli platforma qurishdir."
+      }
+    },
+    "mission": {
+      "title": "Vatandoshlar.de missiyasi",
+      "description": "Platforma foydalanuvchiga ortiqcha murakkabliksiz, tushunarli va tekshiriladigan ma’lumot taqdim etishga qaratilgan.",
+      "items": {
+        "0": "Rasmiy va tekshiriladigan manbalarga asoslangan ma’lumot",
+        "1": "O‘zbek va nemis tillarida qulay foydalanish",
+        "2": "Ishonchli mutaxassislar va xizmatlarni topish",
+        "3": "Maxfiylik, accessibility va barqaror rivojlanish"
+      }
+    },
+    "work": {
+      "title": "Faoliyat yo‘nalishlari",
+      "description": "Asosiy faoliyatim dasturiy mahsulotlar yaratish va foydalanuvchilarga amaliy yo‘naltirish berishga qaratilgan.",
+      "items": {
+        "platform": {
+          "title": "Veb-platformalar ishlab chiqish",
+          "description": "Next.js, React va TypeScript asosida tezkor, accessible va kengaytiriladigan veb-ilovalar."
+        },
+        "academic": {
+          "title": "Akademik hujjatlar bo‘yicha yo‘naltirish",
+          "description": "Bachelor, Master va PhD jarayonlarida hujjatlar va keyingi qadamlarni tushunishga amaliy yordam."
+        }
+      }
+    },
+    "technologies": {
+      "title": "Texnologiyalar"
+    },
+    "contact": {
+      "title": "Men bilan bog‘lanish",
+      "description": "Professional savollar, hamkorlik yoki Vatandoshlar.de bo‘yicha murojaat uchun quyidagi kanallardan foydalaning.",
+      "socials": {
+        "email": "E-mail",
+        "telegram": "Telegram",
+        "instagram": "Instagram",
+        "youtube": "YouTube",
+        "facebook": "Facebook"
+      }
+    }
   }
 }
