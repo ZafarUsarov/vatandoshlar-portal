@@ -1,9 +1,12 @@
-import TelegramCard from "@/components/cards/TelegramCard";
-import { telegramGroups } from "@/data/telegram";
+import { getLocale } from "next-intl/server";
 
-interface IconProps {
+import TelegramCard from "@/components/cards/TelegramCard";
+import { getTelegramGroups } from "@/data/telegram";
+import type { SupportedTelegramLocale } from "@/types/telegram";
+
+type IconProps = Readonly<{
   className?: string;
-}
+}>;
 
 function TelegramIcon({ className }: IconProps) {
   return (
@@ -37,82 +40,66 @@ function ArrowUpRightIcon({ className }: IconProps) {
   );
 }
 
-export default function TelegramSection() {
+export default async function TelegramSection() {
+  const locale =
+    (await getLocale()) as SupportedTelegramLocale;
+  const groups = getTelegramGroups(locale);
+
+  const copy =
+    locale === "uz"
+      ? {
+          badge: "Telegram hamjamiyati",
+          title:
+            "Germaniya bo‘ylab vatandoshlar Telegram hamjamiyatlari",
+          description:
+            "O‘zingiz yashayotgan federal yer guruhiga qo‘shiling, tajriba almashing, foydali ma’lumotlar va e’lonlarni birinchi bo‘lib oling.",
+          officialChannel: "Rasmiy Telegram kanali",
+          officialAria:
+            "Vatandoshlar.de rasmiy Telegram kanalini ochish",
+          joinAria:
+            "{state} Telegram hamjamiyatiga qo‘shilish",
+        }
+      : {
+          badge: "Telegram-Community",
+          title:
+            "Telegram-Communitys für usbekische Landsleute in ganz Deutschland",
+          description:
+            "Treten Sie der Gruppe Ihres Bundeslandes bei, tauschen Sie Erfahrungen aus und erhalten Sie hilfreiche Informationen und Hinweise.",
+          officialChannel: "Offizieller Telegram-Kanal",
+          officialAria:
+            "Offiziellen Telegram-Kanal von Vatandoshlar.de öffnen",
+          joinAria:
+            "Der Telegram-Community für {state} beitreten",
+        };
+
   return (
     <section
       id="telegram"
       aria-labelledby="telegram-heading"
-      className="
-        relative isolate overflow-hidden
-        bg-gradient-to-b
-        from-sky-50
-        via-white
-        to-slate-50
-        py-24 sm:py-28 lg:py-32
-        dark:from-slate-950
-        dark:via-slate-950
-        dark:to-slate-900
-      "
+      className="relative isolate overflow-hidden bg-gradient-to-b from-sky-50 via-white to-slate-50 py-24 sm:py-28 lg:py-32 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900"
     >
       <div
         aria-hidden="true"
-        className="
-          absolute inset-0
-          bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.12),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.10),transparent_28%)]
-        "
+        className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.12),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.10),transparent_28%)]"
       />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
           <div className="max-w-3xl">
-            <div
-              className="
-                inline-flex items-center gap-2
-                rounded-full
-                border border-sky-200
-                bg-sky-100/80
-                px-3 py-1.5
-                text-xs font-semibold
-                uppercase tracking-[0.16em]
-                text-sky-700
-                dark:border-sky-400/20
-                dark:bg-sky-400/10
-                dark:text-sky-300
-              "
-            >
+            <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-100/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-sky-700 dark:border-sky-400/20 dark:bg-sky-400/10 dark:text-sky-300">
               <TelegramIcon className="size-4" />
-              Telegram hamjamiyati
+              {copy.badge}
             </div>
 
             <h2
               id="telegram-heading"
-              className="
-                mt-6
-                text-3xl
-                font-semibold
-                tracking-[-0.04em]
-                text-slate-950
-                sm:text-4xl
-                lg:text-5xl
-                dark:text-white
-              "
+              className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white"
             >
-              Germaniya bo‘ylab vatandoshlar Telegram hamjamiyatlari
+              {copy.title}
             </h2>
 
-            <p
-              className="
-                mt-5
-                max-w-2xl
-                text-base
-                leading-8
-                text-slate-600
-                sm:text-lg
-                dark:text-slate-400
-              "
-            >
-              O‘zingiz yashayotgan federal yer guruhiga qo‘shiling, tajriba
-              almashing, foydali ma’lumotlar va e’lonlarni birinchi bo‘lib oling.
+            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
+              {copy.description}
             </p>
           </div>
 
@@ -120,46 +107,21 @@ export default function TelegramSection() {
             href="https://t.me/Vatandoshlar_de"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Vatandoshlar.de rasmiy Telegram kanalini ochish"
-            className="
-              group hidden
-              items-center gap-2
-              rounded-full
-              bg-sky-600
-              px-5 py-3
-              text-sm font-semibold
-              text-white
-              shadow-lg shadow-sky-600/25
-              transition
-              hover:-translate-y-0.5
-              hover:bg-sky-700
-              focus-visible:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-sky-500
-              focus-visible:ring-offset-2
-              lg:inline-flex
-              dark:focus-visible:ring-offset-slate-950
-            "
+            aria-label={copy.officialAria}
+            className="group hidden items-center gap-2 rounded-full bg-sky-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-600/25 transition hover:-translate-y-0.5 hover:bg-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 lg:inline-flex dark:focus-visible:ring-offset-slate-950"
           >
-            Rasmiy Telegram kanali
-
-            <ArrowUpRightIcon
-              className="
-                size-4
-                transition-transform duration-300
-                group-hover:translate-x-0.5
-                group-hover:-translate-y-0.5
-              "
-            />
+            {copy.officialChannel}
+            <ArrowUpRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
 
         <div className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-4">
-          {telegramGroups.map((group, index) => (
+          {groups.map((group, index) => (
             <TelegramCard
               key={group.shortName}
               group={group}
               index={index}
+              joinAriaLabel={copy.joinAria}
             />
           ))}
         </div>
@@ -169,36 +131,11 @@ export default function TelegramSection() {
             href="https://t.me/Vatandoshlar_de"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Vatandoshlar.de rasmiy Telegram kanalini ochish"
-            className="
-              group inline-flex
-              items-center gap-2
-              rounded-full
-              bg-sky-600
-              px-5 py-3
-              text-sm font-semibold
-              text-white
-              shadow-lg shadow-sky-600/25
-              transition
-              hover:-translate-y-0.5
-              hover:bg-sky-700
-              focus-visible:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-sky-500
-              focus-visible:ring-offset-2
-              dark:focus-visible:ring-offset-slate-950
-            "
+            aria-label={copy.officialAria}
+            className="group inline-flex items-center gap-2 rounded-full bg-sky-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-600/25 transition hover:-translate-y-0.5 hover:bg-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
           >
-            Rasmiy Telegram kanali
-
-            <ArrowUpRightIcon
-              className="
-                size-4
-                transition-transform duration-300
-                group-hover:translate-x-0.5
-                group-hover:-translate-y-0.5
-              "
-            />
+            {copy.officialChannel}
+            <ArrowUpRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
       </div>

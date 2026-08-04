@@ -560,7 +560,9 @@
           "news": "Nachrichten",
           "services": "Dienstleistungen",
           "jobs": "Arbeit",
-          "events": "Veranstaltungen"
+          "events": "Veranstaltungen",
+          "specialists": "Fachkräfte",
+          "founder": "Projektgründer"
         }
       },
       "resources": {
@@ -668,7 +670,12 @@
     "hero": {
       "badge": "Fachkräfteverzeichnis",
       "title": "Usbekische Fachkräfte in Deutschland finden",
-      "description": "Suchen Sie passende Fachkräfte nach Kategorie, Stadt, Bundesland und Profilstatus."
+      "description": "Finden Sie usbekische Fachkräfte, die deutschlandweit tätig sind, nach Fachgebiet, Einsatzgebiet und Profilstatus.",
+      "statistics": {
+        "profiles": "Profile",
+        "categories": "Kategorien",
+        "verified": "Geprüft"
+      }
     },
     "filters": {
       "searchLabel": "Suchen",
@@ -699,8 +706,8 @@
       "count": "{count, plural, one {# Profil gefunden} other {# Profile gefunden}}"
     },
     "empty": {
-      "title": "Profile werden derzeit aufgenommen",
-      "description": "Zurzeit sind noch keine geprüften Profile veröffentlicht. Usbekische Fachkräfte in Deutschland können sich für die Aufnahme in das Verzeichnis melden.",
+      "title": "In dieser Kategorie gibt es noch keine Fachkraft",
+      "description": "Ändern Sie die Filter oder empfehlen Sie eine passende Fachkraft für die Aufnahme in das Verzeichnis.",
       "applyButton": "Aufnahme ins Verzeichnis anfragen"
     },
     "card": {
@@ -709,7 +716,13 @@
       "sponsored": "Gesponsert",
       "details": "Profil ansehen",
       "languages": "Sprachen",
-      "detailsSoon": "Profilseite demnächst"
+      "detailsSoon": "Profilseite demnächst",
+      "serviceArea": "Einsatzgebiet"
+    },
+    "featured": {
+      "eyebrow": "Empfohlene Profile",
+      "title": "Aktive Fachkräfte im Verzeichnis",
+      "description": "Ausgewählte Profile werden im oberen Bereich des Verzeichnisses angezeigt. Das Prüfzeichen erhalten nur vom Portal geprüfte Profile."
     }
   },
   "SpecialistDetailPage": {

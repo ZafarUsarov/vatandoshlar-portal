@@ -5,7 +5,10 @@ import {
 
 import SpecialistCard from "@/components/specialists/SpecialistCard";
 import { getFeaturedSpecialists } from "@/data/specialists";
-import type { SupportedLocale } from "@/types/specialist";
+import type {
+  SpecialistCategory,
+  SupportedLocale,
+} from "@/types/specialist";
 
 type IconProps = Readonly<{
   className?: string;
@@ -104,10 +107,33 @@ export default async function FeaturedSpecialistsSection() {
   const t = await getTranslations(
     "FeaturedSpecialistsSection",
   );
+  const specialistsT = await getTranslations(
+    "SpecialistsPage",
+  );
   const locale = (await getLocale()) as SupportedLocale;
 
   const featuredSpecialists =
     getFeaturedSpecialists(locale);
+
+  const categories: Readonly<
+    Record<SpecialistCategory, string>
+  > = {
+    medical: specialistsT("categories.medical"),
+    legal: specialistsT("categories.legal"),
+    technology: specialistsT("categories.technology"),
+    automotive: specialistsT("categories.automotive"),
+    home: specialistsT("categories.home"),
+    education: specialistsT("categories.education"),
+    "language-teaching": specialistsT(
+      "categories.languageTeaching",
+    ),
+    "academic-documents": specialistsT(
+      "categories.academicDocuments",
+    ),
+    beauty: specialistsT("categories.beauty"),
+    finance: specialistsT("categories.finance"),
+    creative: specialistsT("categories.creative"),
+  };
 
   const labels = {
     verified: t("card.verified"),
@@ -116,6 +142,8 @@ export default async function FeaturedSpecialistsSection() {
     details: t("card.details"),
     detailsSoon: t("card.detailsSoon"),
     languages: t("card.languages"),
+    serviceArea: specialistsT("card.serviceArea"),
+    categories,
   };
 
   return (

@@ -42,7 +42,7 @@ export const specialists: ReadonlyArray<Specialist> = [
     },
     status: {
       verified: false,
-      featured: false,
+      featured: true,
       premium: false,
       sponsored: false,
     },
@@ -87,7 +87,7 @@ export const specialists: ReadonlyArray<Specialist> = [
     },
     status: {
       verified: false,
-      featured: false,
+      featured: true,
       premium: false,
       sponsored: false,
     },
@@ -122,6 +122,10 @@ export const specialists: ReadonlyArray<Specialist> = [
         de: "Orientierung bei Bachelor-, Master- und Promotionsunterlagen",
       },
     ],
+    serviceArea: {
+      uz: "Germaniya bo‘ylab",
+      de: "Deutschlandweit",
+    },
     contact: {
       email: "info.vatandoshlar@gmx.de",
       telegram: "https://t.me/ZafarUsarov",
@@ -151,6 +155,7 @@ export function localizeSpecialist(
       (service) => service[locale],
     ),
     pricingNote: specialist.pricingNote?.[locale],
+    serviceArea: specialist.serviceArea?.[locale],
   };
 }
 
@@ -162,7 +167,7 @@ export function getFeaturedSpecialists(
     .filter(
       (specialist) =>
         specialist.status.featured &&
-        specialist.status.verified,
+        specialist.profilePublished,
     )
     .slice(0, limit)
     .map((specialist) =>

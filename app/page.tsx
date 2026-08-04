@@ -7,7 +7,6 @@ import Reveal from "../components/Reveal";
 import SearchSection from "../components/SearchSection";
 import ServicesSection from "../components/ServicesSection";
 import {
-  FeaturedSpecialistsSection,
   FinalCtaSection,
   HeroSection,
   HomeFooter,
@@ -31,10 +30,6 @@ export default function HomePage() {
 
         <Reveal>
           <PopularCategoriesSection />
-        </Reveal>
-
-        <Reveal>
-          <FeaturedSpecialistsSection />
         </Reveal>
 
         <Reveal>

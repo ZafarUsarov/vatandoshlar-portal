@@ -6,6 +6,7 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import DirectoryHeader from "@/components/specialists/DirectoryHeader";
 import SpecialistsDirectory from "@/components/specialists/SpecialistsDirectory";
 import {
   localizeSpecialist,
@@ -109,33 +110,42 @@ export default async function SpecialistsPage({
     Thüringen: "Thüringen",
   };
 
+  const uniqueCategories = new Set(
+    specialists.flatMap(
+      (specialist) => specialist.categories,
+    ),
+  ).size;
+
+  const verifiedProfiles = specialists.filter(
+    (specialist) => specialist.status.verified,
+  ).length;
+
   return (
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
       <Header />
 
       <main>
-        <section className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-50 py-20 dark:border-slate-800 dark:bg-slate-950 sm:py-24">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(16,185,129,0.12),transparent_28%),radial-gradient(circle_at_85%_15%,rgba(59,130,246,0.10),transparent_25%)]"
-          />
-
-          <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <span className="inline-flex rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700 shadow-sm dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
-                {t("hero.badge")}
-              </span>
-
-              <h1 className="mt-6 text-4xl font-bold tracking-[-0.05em] text-slate-950 sm:text-5xl lg:text-6xl dark:text-white">
-                {t("hero.title")}
-              </h1>
-
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">
-                {t("hero.description")}
-              </p>
-            </div>
-          </div>
-        </section>
+        <DirectoryHeader
+          labels={{
+            badge: t("hero.badge"),
+            title: t("hero.title"),
+            description: t("hero.description"),
+            profilesLabel: t(
+              "hero.statistics.profiles",
+            ),
+            categoriesLabel: t(
+              "hero.statistics.categories",
+            ),
+            verifiedLabel: t(
+              "hero.statistics.verified",
+            ),
+          }}
+          statistics={{
+            profiles: localizedSpecialists.length,
+            categories: uniqueCategories,
+            verified: verifiedProfiles,
+          }}
+        />
 
         <section className="bg-white py-16 dark:bg-slate-950 sm:py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -173,6 +183,13 @@ export default async function SpecialistsPage({
                 },
                 categories: categoryLabels,
                 bundeslaender: bundeslandLabels,
+                featured: {
+                  eyebrow: t("featured.eyebrow"),
+                  title: t("featured.title"),
+                  description: t(
+                    "featured.description",
+                  ),
+                },
                 results: {
                   title: t("results.title"),
                   count: t("results.count", {
@@ -198,6 +215,9 @@ export default async function SpecialistsPage({
                     "card.detailsSoon",
                   ),
                   languages: t("card.languages"),
+                  serviceArea: t(
+                    "card.serviceArea",
+                  ),
                 },
               }}
             />

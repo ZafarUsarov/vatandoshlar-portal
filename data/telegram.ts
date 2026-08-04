@@ -1,136 +1,103 @@
-import type { TelegramGroup } from "@/types/telegram";
+import type {
+  SupportedTelegramLocale,
+  TelegramGroup,
+} from "@/types/telegram";
 
-export const telegramGroups: TelegramGroup[] = [
+type TelegramGroupSource = Readonly<{
+  state: string;
+  shortName: string;
+  href: string | null;
+  status: "active" | "coming-soon";
+  description: Readonly<
+    Record<SupportedTelegramLocale, string>
+  >;
+}>;
+
+const sources: ReadonlyArray<TelegramGroupSource> = [
   {
     state: "Nordrhein-Westfalen",
     shortName: "NRW",
-    description:
-      "NRW vatandoshlari Telegram hamjamiyatiga qo‘shilish uchun rasmiy botdan foydalaning.",
     href: "https://t.me/NRW_Vatandoshlar_bot",
-    button: "Bot orqali qo‘shilish",
-    status: "Faol",
+    status: "active",
+    description: {
+      uz: "NRW vatandoshlari Telegram hamjamiyatiga qo‘shilish uchun rasmiy botdan foydalaning.",
+      de: "Nutzen Sie den offiziellen Bot, um der Telegram-Community für Landsleute in Nordrhein-Westfalen beizutreten.",
+    },
   },
   {
     state: "Baden-Württemberg",
     shortName: "BW",
-    description:
-      "Baden-Württemberg hududidagi vatandoshlar uchun Telegram guruhi.",
     href: "https://t.me/baden_wurttemberg_vatandoshlar",
-    button: "Telegramga qo‘shilish",
-    status: "Faol",
+    status: "active",
+    description: {
+      uz: "Baden-Württemberg hududidagi vatandoshlar uchun Telegram guruhi.",
+      de: "Telegram-Gruppe für usbekische Landsleute in Baden-Württemberg.",
+    },
   },
   {
     state: "Schleswig-Holstein",
     shortName: "SH",
-    description:
-      "Schleswig-Holstein hududidagi vatandoshlar uchun Telegram guruhi.",
     href: "https://t.me/SH_Vatandoshlar",
-    button: "Telegramga qo‘shilish",
-    status: "Faol",
+    status: "active",
+    description: {
+      uz: "Schleswig-Holstein hududidagi vatandoshlar uchun Telegram guruhi.",
+      de: "Telegram-Gruppe für usbekische Landsleute in Schleswig-Holstein.",
+    },
   },
-  {
-    state: "Berlin",
-    shortName: "BE",
-    description: "Berlin uchun Telegram guruhi tez orada qo‘shiladi.",
+  ...[
+    ["Berlin", "BE"],
+    ["Bayern", "BY"],
+    ["Brandenburg", "BB"],
+    ["Bremen", "HB"],
+    ["Hamburg", "HH"],
+    ["Hessen", "HE"],
+    ["Mecklenburg-Vorpommern", "MV"],
+    ["Niedersachsen", "NI"],
+    ["Rheinland-Pfalz", "RP"],
+    ["Saarland", "SL"],
+    ["Sachsen", "SN"],
+    ["Sachsen-Anhalt", "ST"],
+    ["Thüringen", "TH"],
+  ].map(([state, shortName]) => ({
+    state,
+    shortName,
     href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Bayern",
-    shortName: "BY",
-    description: "Bayern uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Brandenburg",
-    shortName: "BB",
-    description: "Brandenburg uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Bremen",
-    shortName: "HB",
-    description: "Bremen uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Hamburg",
-    shortName: "HH",
-    description: "Hamburg uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Hessen",
-    shortName: "HE",
-    description: "Hessen uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Mecklenburg-Vorpommern",
-    shortName: "MV",
-    description:
-      "Mecklenburg-Vorpommern uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Niedersachsen",
-    shortName: "NI",
-    description: "Niedersachsen uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Rheinland-Pfalz",
-    shortName: "RP",
-    description: "Rheinland-Pfalz uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Saarland",
-    shortName: "SL",
-    description: "Saarland uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Sachsen",
-    shortName: "SN",
-    description: "Sachsen uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Sachsen-Anhalt",
-    shortName: "ST",
-    description: "Sachsen-Anhalt uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
-  {
-    state: "Thüringen",
-    shortName: "TH",
-    description: "Thüringen uchun Telegram guruhi tez orada qo‘shiladi.",
-    href: null,
-    button: "Tez orada",
-    status: "Tez orada",
-  },
+    status: "coming-soon" as const,
+    description: {
+      uz: `${state} uchun Telegram guruhi tez orada qo‘shiladi.`,
+      de: `Die Telegram-Gruppe für ${state} wird in Kürze ergänzt.`,
+    },
+  })),
 ];
+
+export function getTelegramGroups(
+  locale: SupportedTelegramLocale,
+): ReadonlyArray<TelegramGroup> {
+  return sources.map((group) => ({
+    state: group.state,
+    shortName: group.shortName,
+    href: group.href,
+    status: group.status,
+    description: group.description[locale],
+    button:
+      group.status === "active"
+        ? locale === "uz"
+          ? group.shortName === "NRW"
+            ? "Bot orqali qo‘shilish"
+            : "Telegramga qo‘shilish"
+          : group.shortName === "NRW"
+            ? "Über den Bot beitreten"
+            : "Telegram beitreten"
+        : locale === "uz"
+          ? "Tez orada"
+          : "Demnächst",
+    statusLabel:
+      group.status === "active"
+        ? locale === "uz"
+          ? "Faol"
+          : "Aktiv"
+        : locale === "uz"
+          ? "Tez orada"
+          : "Demnächst",
+  }));
+}

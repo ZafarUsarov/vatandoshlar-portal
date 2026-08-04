@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   useEffect,
@@ -11,32 +12,97 @@ import {
 } from "react";
 
 import {
+  getSearchCategoryLabel,
   searchGlobalItems,
   type GlobalSearchItem,
   type SearchCategory,
+  type SearchLocale,
 } from "../data/searchIndex";
 
-type HeaderSearchModalProps = {
+type HeaderSearchModalProps = Readonly<{
   isOpen: boolean;
   onClose: () => void;
+}>;
+
+const popularSearches: Readonly<
+  Record<SearchLocale, ReadonlyArray<string>>
+> = {
+  uz: [
+    "Minijob",
+    "Werkstudent",
+    "Tarjimon",
+    "Telegram",
+    "Ausbildung",
+    "Praktikum",
+  ],
+  de: [
+    "Minijob",
+    "Werkstudent",
+    "Übersetzer",
+    "Telegram",
+    "Ausbildung",
+    "Praktikum",
+  ],
 };
 
-const popularSearches = [
-  "Minijob",
-  "Werkstudent",
-  "Tarjimon",
-  "Telegram",
-  "Ausbildung",
-  "Praktikum",
-];
+const modalCopy = {
+  uz: {
+    close: "Qidiruv oynasini yopish",
+    label: "Portal bo‘ylab qidirish",
+    placeholder:
+      "Minijob, Werkstudent, tarjimon yoki tadbir...",
+    keyboardHint:
+      "Natijani tanlash uchun ↑ ↓ va Enter tugmalaridan foydalaning",
+    popular: "Mashhur qidiruvlar",
+    recent: "Oxirgi qidiruvlar",
+    clear: "Tozalash",
+    searchResults: "Qidiruv natijalari",
+    quickLinks: "Tezkor havolalar",
+    resultsFor: (query: string) =>
+      `“${query}” uchun natijalar`,
+    resultCount: (count: number) =>
+      `${count} ta natija`,
+    noResultsTitle: "Natija topilmadi",
+    noResultsDescription:
+      "Boshqa kalit so‘z bilan qidiring. Masalan: Minijob, Werkstudent, tarjimon, Telegram yoki tadbir.",
+    clearSearch: "Qidiruvni tozalash",
+    footer: "Portal ma’lumotlari bo‘yicha qidiruv",
+    select: "Tanlash",
+    closeShort: "Yopish",
+  },
+  de: {
+    close: "Suchfenster schließen",
+    label: "Im Portal suchen",
+    placeholder:
+      "Minijob, Werkstudent, Übersetzer oder Veranstaltung...",
+    keyboardHint:
+      "Mit ↑ ↓ navigieren und mit Enter auswählen",
+    popular: "Beliebte Suchanfragen",
+    recent: "Letzte Suchanfragen",
+    clear: "Löschen",
+    searchResults: "Suchergebnisse",
+    quickLinks: "Schnellzugriff",
+    resultsFor: (query: string) =>
+      `Ergebnisse für „${query}“`,
+    resultCount: (count: number) =>
+      `${count} Ergebnisse`,
+    noResultsTitle: "Keine Ergebnisse gefunden",
+    noResultsDescription:
+      "Versuchen Sie einen anderen Suchbegriff, zum Beispiel Minijob, Werkstudent, Übersetzer, Telegram oder Veranstaltung.",
+    clearSearch: "Suche löschen",
+    footer: "Suche in den Portalinhalten",
+    select: "Auswählen",
+    closeShort: "Schließen",
+  },
+} as const;
 
 function Icon({
   children,
   className = "h-5 w-5",
-}: {
+}: Readonly<{
   children: ReactNode;
   className?: string;
-}) {
+}>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -55,7 +121,6 @@ function SearchIcon() {
   return (
     <Icon>
       <circle cx="10.75" cy="10.75" r="6.75" />
-
       <path
         strokeLinecap="round"
         d="m16 16 4.25 4.25"
@@ -95,13 +160,11 @@ function HomeIcon() {
         strokeLinejoin="round"
         d="m3 10.75 9-7 9 7"
       />
-
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M5.25 9.25V20h13.5V9.25"
       />
-
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -119,7 +182,6 @@ function NewsIcon() {
         strokeLinejoin="round"
         d="M5 4.75h11.5A2.5 2.5 0 0 1 19 7.25V19H7.5A2.5 2.5 0 0 1 5 16.5V4.75Z"
       />
-
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -149,7 +211,6 @@ function JobsIcon() {
         strokeLinejoin="round"
         d="M4 7.75h16A2.25 2.25 0 0 1 22.25 10v8A2.25 2.25 0 0 1 20 20.25H4A2.25 2.25 0 0 1 1.75 18v-8A2.25 2.25 0 0 1 4 7.75Z"
       />
-
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -179,7 +240,6 @@ function EventsIcon() {
         strokeLinejoin="round"
         d="M5 4.75h14A2.25 2.25 0 0 1 21.25 7v12A2.25 2.25 0 0 1 19 21.25H5A2.25 2.25 0 0 1 2.75 19V7A2.25 2.25 0 0 1 5 4.75Z"
       />
-
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -189,73 +249,62 @@ function EventsIcon() {
   );
 }
 
-function getCategoryIcon(
-  category: SearchCategory,
-) {
+function getCategoryIcon(category: SearchCategory) {
   switch (category) {
     case "Yangilik":
       return <NewsIcon />;
-
     case "Xizmat":
       return <ServicesIcon />;
-
     case "Ish":
     case "Ish platformasi":
       return <JobsIcon />;
-
     case "Telegram":
       return <TelegramIcon />;
-
     case "Tadbir":
       return <EventsIcon />;
-
     case "Sahifa":
     default:
       return <HomeIcon />;
   }
 }
 
-function getCategoryStyles(
-  category: SearchCategory,
-) {
+function getCategoryStyles(category: SearchCategory) {
   switch (category) {
     case "Yangilik":
       return "bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-300";
-
     case "Xizmat":
       return "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300";
-
     case "Ish":
       return "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300";
-
     case "Ish platformasi":
       return "bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300";
-
     case "Telegram":
       return "bg-cyan-50 text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300";
-
     case "Tadbir":
       return "bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-300";
-
     case "Sahifa":
     default:
       return "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300";
   }
 }
 
-function readRecentSearches(): string[] {
+function getStorageKey(locale: SearchLocale): string {
+  return `vatandoshlar-recent-searches-${locale}`;
+}
+
+function readRecentSearches(
+  locale: SearchLocale,
+): string[] {
   try {
     const storedValue = window.localStorage.getItem(
-      "vatandoshlar-recent-searches",
+      getStorageKey(locale),
     );
 
     if (!storedValue) {
       return [];
     }
 
-    const parsedValue = JSON.parse(
-      storedValue,
-    ) as unknown;
+    const parsedValue = JSON.parse(storedValue) as unknown;
 
     if (!Array.isArray(parsedValue)) {
       return [];
@@ -276,26 +325,25 @@ export default function HeaderSearchModal({
   isOpen,
   onClose,
 }: HeaderSearchModalProps) {
+  const currentLocale = useLocale();
+  const locale: SearchLocale =
+    currentLocale === "de" ? "de" : "uz";
+  const copy = modalCopy[locale];
   const router = useRouter();
 
-  const [searchQuery, setSearchQuery] =
-    useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [recentSearches, setRecentSearches] = useState<
+    string[]
+  >([]);
 
-  const [activeIndex, setActiveIndex] =
-    useState(0);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const [recentSearches, setRecentSearches] =
-    useState<string[]>([]);
-
-  const searchInputRef =
-    useRef<HTMLInputElement>(null);
-
-  const results = useMemo(() => {
-    return searchGlobalItems(searchQuery).slice(
-      0,
-      10,
-    );
-  }, [searchQuery]);
+  const results = useMemo(
+    () =>
+      searchGlobalItems(searchQuery, locale).slice(0, 10),
+    [locale, searchQuery],
+  );
 
   useEffect(() => {
     if (!isOpen) {
@@ -303,7 +351,7 @@ export default function HeaderSearchModal({
     }
 
     const stateTimer = window.setTimeout(() => {
-      setRecentSearches(readRecentSearches());
+      setRecentSearches(readRecentSearches(locale));
       setActiveIndex(0);
     }, 0);
 
@@ -315,7 +363,7 @@ export default function HeaderSearchModal({
       window.clearTimeout(stateTimer);
       window.clearTimeout(focusTimer);
     };
-  }, [isOpen]);
+  }, [isOpen, locale]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -327,39 +375,35 @@ export default function HeaderSearchModal({
     };
   }, [searchQuery]);
 
-  const saveRecentSearch = (
-    value: string,
-  ) => {
+  const saveRecentSearch = (value: string) => {
     const cleanedValue = value.trim();
 
     if (!cleanedValue) {
       return;
     }
 
+    const comparisonLocale =
+      locale === "uz" ? "uz" : "de";
+
     const nextRecentSearches = [
       cleanedValue,
       ...recentSearches.filter(
         (item) =>
-          item.toLocaleLowerCase("uz") !==
-          cleanedValue.toLocaleLowerCase("uz"),
+          item.toLocaleLowerCase(comparisonLocale) !==
+          cleanedValue.toLocaleLowerCase(comparisonLocale),
       ),
     ].slice(0, 5);
 
     setRecentSearches(nextRecentSearches);
 
     window.localStorage.setItem(
-      "vatandoshlar-recent-searches",
+      getStorageKey(locale),
       JSON.stringify(nextRecentSearches),
     );
   };
 
-  const openResult = (
-    item: GlobalSearchItem,
-  ) => {
-    saveRecentSearch(
-      searchQuery || item.title,
-    );
-
+  const openResult = (item: GlobalSearchItem) => {
+    saveRecentSearch(searchQuery || item.title);
     onClose();
     setSearchQuery("");
     router.push(item.href);
@@ -374,14 +418,13 @@ export default function HeaderSearchModal({
       setActiveIndex((currentIndex) =>
         Math.min(
           currentIndex + 1,
-          results.length - 1,
+          Math.max(results.length - 1, 0),
         ),
       );
     }
 
     if (event.key === "ArrowUp") {
       event.preventDefault();
-
       setActiveIndex((currentIndex) =>
         Math.max(currentIndex - 1, 0),
       );
@@ -400,9 +443,7 @@ export default function HeaderSearchModal({
     }
   };
 
-  const handleSuggestedSearch = (
-    value: string,
-  ) => {
+  const handleSuggestedSearch = (value: string) => {
     setSearchQuery(value);
 
     window.setTimeout(() => {
@@ -412,9 +453,8 @@ export default function HeaderSearchModal({
 
   const clearRecentSearches = () => {
     setRecentSearches([]);
-
     window.localStorage.removeItem(
-      "vatandoshlar-recent-searches",
+      getStorageKey(locale),
     );
   };
 
@@ -433,7 +473,7 @@ export default function HeaderSearchModal({
         type="button"
         className="absolute inset-0"
         onClick={onClose}
-        aria-label="Qidiruv oynasini yopish"
+        aria-label={copy.close}
       />
 
       <div className="relative w-full max-w-3xl animate-scale-in overflow-hidden rounded-[2rem] border border-white/10 bg-white shadow-2xl shadow-black/30 dark:border-slate-700 dark:bg-slate-900">
@@ -450,7 +490,7 @@ export default function HeaderSearchModal({
               htmlFor="global-search-input"
               className="sr-only"
             >
-              Portal bo‘ylab qidirish
+              {copy.label}
             </label>
 
             <input
@@ -459,18 +499,16 @@ export default function HeaderSearchModal({
               type="search"
               value={searchQuery}
               onChange={(event) =>
-                setSearchQuery(
-                  event.target.value,
-                )
+                setSearchQuery(event.target.value)
               }
               onKeyDown={handleKeyboard}
-              placeholder="Minijob, Werkstudent, tarjimon yoki tadbir..."
+              placeholder={copy.placeholder}
               autoComplete="off"
               className="w-full bg-transparent text-base font-semibold text-slate-950 outline-none placeholder:font-normal placeholder:text-slate-400 dark:text-white"
             />
 
             <p className="mt-1 hidden text-xs text-slate-400 sm:block">
-              Natijani tanlash uchun ↑ ↓ va Enter tugmalaridan foydalaning
+              {copy.keyboardHint}
             </p>
           </div>
 
@@ -478,7 +516,7 @@ export default function HeaderSearchModal({
             type="button"
             onClick={onClose}
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-slate-400 transition hover:bg-slate-100 hover:text-slate-950 dark:hover:bg-slate-800 dark:hover:text-white"
-            aria-label="Qidiruv oynasini yopish"
+            aria-label={copy.close}
           >
             <CloseIcon />
           </button>
@@ -488,11 +526,11 @@ export default function HeaderSearchModal({
           <div className="border-b border-slate-200 px-5 py-5 dark:border-slate-700">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.15em] text-slate-400">
-                Mashhur qidiruvlar
+                {copy.popular}
               </p>
 
               <div className="mt-3 flex flex-wrap gap-2">
-                {popularSearches.map(
+                {popularSearches[locale].map(
                   (popularSearch) => (
                     <button
                       key={popularSearch}
@@ -515,7 +553,7 @@ export default function HeaderSearchModal({
               <div className="mt-5">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-bold uppercase tracking-[0.15em] text-slate-400">
-                    Oxirgi qidiruvlar
+                    {copy.recent}
                   </p>
 
                   <button
@@ -523,27 +561,23 @@ export default function HeaderSearchModal({
                     onClick={clearRecentSearches}
                     className="text-xs font-semibold text-slate-400 transition hover:text-rose-600"
                   >
-                    Tozalash
+                    {copy.clear}
                   </button>
                 </div>
 
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {recentSearches.map(
-                    (recentSearch) => (
-                      <button
-                        key={recentSearch}
-                        type="button"
-                        onClick={() =>
-                          handleSuggestedSearch(
-                            recentSearch,
-                          )
-                        }
-                        className="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white"
-                      >
-                        {recentSearch}
-                      </button>
-                    ),
-                  )}
+                  {recentSearches.map((recentSearch) => (
+                    <button
+                      key={recentSearch}
+                      type="button"
+                      onClick={() =>
+                        handleSuggestedSearch(recentSearch)
+                      }
+                      className="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white"
+                    >
+                      {recentSearch}
+                    </button>
+                  ))}
                 </div>
               </div>
             )}
@@ -555,27 +589,26 @@ export default function HeaderSearchModal({
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.15em] text-slate-400">
                 {searchQuery
-                  ? "Qidiruv natijalari"
-                  : "Tezkor havolalar"}
+                  ? copy.searchResults
+                  : copy.quickLinks}
               </p>
 
               {searchQuery && (
                 <p className="mt-1 text-xs text-slate-400">
-                  “{searchQuery}” uchun natijalar
+                  {copy.resultsFor(searchQuery)}
                 </p>
               )}
             </div>
 
             <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-300">
-              {results.length} ta natija
+              {copy.resultCount(results.length)}
             </span>
           </div>
 
           {results.length > 0 ? (
             <div className="space-y-2">
               {results.map((item, index) => {
-                const isActive =
-                  index === activeIndex;
+                const isActive = index === activeIndex;
 
                 return (
                   <Link
@@ -586,10 +619,8 @@ export default function HeaderSearchModal({
                     }
                     onClick={() => {
                       saveRecentSearch(
-                        searchQuery ||
-                          item.title,
+                        searchQuery || item.title,
                       );
-
                       onClose();
                       setSearchQuery("");
                     }}
@@ -606,9 +637,7 @@ export default function HeaderSearchModal({
                           : "bg-slate-100 text-slate-500 group-hover:bg-emerald-600 group-hover:text-white dark:bg-slate-800 dark:text-slate-300"
                       }`}
                     >
-                      {getCategoryIcon(
-                        item.category,
-                      )}
+                      {getCategoryIcon(item.category)}
                     </span>
 
                     <span className="min-w-0 flex-1">
@@ -623,7 +652,10 @@ export default function HeaderSearchModal({
                           )}`}
                         >
                           {item.badge ??
-                            item.category}
+                            getSearchCategoryLabel(
+                              item.category,
+                              locale,
+                            )}
                         </span>
                       </span>
 
@@ -652,31 +684,26 @@ export default function HeaderSearchModal({
               </div>
 
               <h3 className="mt-5 text-xl font-bold text-slate-950 dark:text-white">
-                Natija topilmadi
+                {copy.noResultsTitle}
               </h3>
 
               <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-slate-500 dark:text-slate-400">
-                Boshqa kalit so‘z bilan qidiring. Masalan: Minijob,
-                Werkstudent, tarjimon, Telegram yoki tadbir.
+                {copy.noResultsDescription}
               </p>
 
               <button
                 type="button"
-                onClick={() =>
-                  setSearchQuery("")
-                }
+                onClick={() => setSearchQuery("")}
                 className="mt-6 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-700"
               >
-                Qidiruvni tozalash
+                {copy.clearSearch}
               </button>
             </div>
           )}
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-slate-50 px-5 py-3 text-xs text-slate-400 dark:border-slate-700 dark:bg-slate-950/50">
-          <span>
-            Portal ma’lumotlari bo‘yicha qidiruv
-          </span>
+          <span>{copy.footer}</span>
 
           <div className="flex items-center gap-3">
             <span className="hidden items-center gap-1 sm:flex">
@@ -688,7 +715,7 @@ export default function HeaderSearchModal({
                 ↓
               </kbd>
 
-              Tanlash
+              {copy.select}
             </span>
 
             <span className="flex items-center gap-1">
@@ -696,7 +723,7 @@ export default function HeaderSearchModal({
                 Esc
               </kbd>
 
-              Yopish
+              {copy.closeShort}
             </span>
           </div>
         </div>

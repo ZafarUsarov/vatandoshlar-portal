@@ -560,7 +560,9 @@
           "news": "Yangiliklar",
           "services": "Xizmatlar",
           "jobs": "Ish",
-          "events": "Tadbirlar"
+          "events": "Tadbirlar",
+          "specialists": "Mutaxassislar",
+          "founder": "Loyiha asoschisi"
         }
       },
       "resources": {
@@ -668,7 +670,12 @@
     "hero": {
       "badge": "Mutaxassislar katalogi",
       "title": "Germaniyadagi o‘zbek mutaxassislarini toping",
-      "description": "Kerakli mutaxassisni yo‘nalish, shahar, Bundesland va profil holati bo‘yicha qidiring."
+      "description": "Butun Germaniya bo‘ylab faoliyat yuritayotgan o‘zbek mutaxassislarini yo‘nalish, xizmat hududi va profil holati bo‘yicha toping.",
+      "statistics": {
+        "profiles": "Profil",
+        "categories": "Yo‘nalish",
+        "verified": "Tekshirilgan"
+      }
     },
     "filters": {
       "searchLabel": "Qidirish",
@@ -699,8 +706,8 @@
       "count": "{count} ta profil topildi"
     },
     "empty": {
-      "title": "Katalogga profillar qo‘shilmoqda",
-      "description": "Hozircha e’lon qilingan tekshirilgan profil yo‘q. Germaniyada faoliyat yuritadigan o‘zbek mutaxassislari katalogga qo‘shilish uchun murojaat yuborishlari mumkin.",
+      "title": "Bu yo‘nalishda hozircha mutaxassis yo‘q",
+      "description": "Filtrlarni o‘zgartirib ko‘ring yoki ushbu yo‘nalishdagi mutaxassisni katalogga tavsiya qiling.",
       "applyButton": "Katalogga qo‘shilish uchun yozish"
     },
     "card": {
@@ -709,7 +716,13 @@
       "sponsored": "Homiylik",
       "details": "Profilni ko‘rish",
       "languages": "Tillar",
-      "detailsSoon": "Profil sahifasi tez orada"
+      "detailsSoon": "Profil sahifasi tez orada",
+      "serviceArea": "Xizmat hududi"
+    },
+    "featured": {
+      "eyebrow": "Tavsiya etilgan profillar",
+      "title": "Katalogdagi faol mutaxassislar",
+      "description": "Tanlangan profillar katalogning yuqori qismida ko‘rsatiladi. Verified belgisi faqat portal tomonidan tekshirilgan profilga beriladi."
     }
   },
   "SpecialistDetailPage": {

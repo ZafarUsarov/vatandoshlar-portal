@@ -59,6 +59,7 @@ export type Specialist = Readonly<{
   languages: ReadonlyArray<SpecialistLanguage>;
   services: ReadonlyArray<LocalizedText>;
   location?: SpecialistLocation;
+  serviceArea?: LocalizedText;
   contact: SpecialistContact;
   status: SpecialistStatus;
   pricingNote?: LocalizedText;
@@ -75,9 +76,11 @@ export type LocalizedSpecialist = Omit<
   | "shortDescription"
   | "services"
   | "pricingNote"
+  | "serviceArea"
 > & {
   profession: string;
   shortDescription: string;
   services: ReadonlyArray<string>;
   pricingNote?: string;
+  serviceArea?: string;
 };

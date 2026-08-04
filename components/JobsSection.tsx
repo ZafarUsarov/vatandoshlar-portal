@@ -1,11 +1,15 @@
-import Link from "next/link";
+import { getLocale } from "next-intl/server";
 
 import JobGuideCard from "@/components/cards/JobGuideCard";
-import { jobGuides } from "@/data/jobs";
+import {
+  getJobGuides,
+  type SupportedJobLocale,
+} from "@/data/jobs";
+import { Link } from "@/i18n/navigation";
 
-interface IconProps {
+type IconProps = Readonly<{
   className?: string;
-}
+}>;
 
 function BriefcaseIcon({ className }: IconProps) {
   return (
@@ -58,129 +62,111 @@ function ArrowUpRightIcon({ className }: IconProps) {
   );
 }
 
-const homepageGuides = jobGuides.slice(0, 3);
+export default async function JobsSection() {
+  const locale = (await getLocale()) as SupportedJobLocale;
+  const homepageGuides = getJobGuides(locale).slice(0, 3);
 
-const stats = [
-  {
-    value: `${homepageGuides.length}+`,
-    label: "qo'llanma",
-  },
-  {
-    value: "100%",
-    label: "tekshirilgan",
-  },
-  {
-    value: "DE",
-    label: "mehnat bozori",
-  },
-];
+  const copy =
+    locale === "uz"
+      ? {
+          badge: "Ish va karyera",
+          title:
+            "Germaniyada ish topish bo‘yicha bosqichma-bosqich qo‘llanmalar",
+          description:
+            "Ausbildung, Minijob, Werkstudent, Praktikum va malakali ish o‘rinlari bo‘yicha eng muhim yo‘riqnomalarni bir joyda jamladik.",
+          allGuides: "Barcha qo‘llanmalar",
+          stats: [
+            {
+              value: `${homepageGuides.length}+`,
+              label: "qo‘llanma",
+            },
+            {
+              value: "100%",
+              label: "tekshirilgan",
+            },
+            {
+              value: "DE",
+              label: "mehnat bozori",
+            },
+          ],
+          card: {
+            highlightsAria:
+              "Qo‘llanmaning asosiy mavzulari",
+            guide: "Qo‘llanma",
+            explained:
+              "Bosqichma-bosqich tushuntirilgan",
+            open: "Qo‘llanmani ochish",
+            openShort: "Ochish",
+          },
+        }
+      : {
+          badge: "Arbeit und Karriere",
+          title:
+            "Schritt-für-Schritt-Leitfäden für die Jobsuche in Deutschland",
+          description:
+            "Die wichtigsten Hinweise zu Ausbildung, Minijob, Werkstudent, Praktikum und qualifizierten Stellen an einem Ort.",
+          allGuides: "Alle Leitfäden",
+          stats: [
+            {
+              value: `${homepageGuides.length}+`,
+              label: "Leitfäden",
+            },
+            {
+              value: "100%",
+              label: "geprüft",
+            },
+            {
+              value: "DE",
+              label: "Arbeitsmarkt",
+            },
+          ],
+          card: {
+            highlightsAria:
+              "Wichtige Themen des Leitfadens",
+            guide: "Leitfaden",
+            explained: "Schritt für Schritt erklärt",
+            open: "Leitfaden öffnen",
+            openShort: "Öffnen",
+          },
+        };
 
-export default function JobsSection() {
   return (
     <section
       id="jobs"
       aria-labelledby="jobs-heading"
-      className="
-        relative isolate overflow-hidden
-        bg-slate-950
-        py-20 sm:py-24 lg:py-32
-      "
+      className="relative isolate overflow-hidden bg-slate-950 py-20 sm:py-24 lg:py-32"
     >
       <div
         aria-hidden="true"
-        className="
-          absolute inset-0
-          bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.12),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.12),transparent_30%)]
-        "
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          absolute inset-0
-          bg-[linear-gradient(to_bottom,transparent,rgba(255,255,255,0.02),transparent)]
-        "
+        className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.12),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.12),transparent_30%)]"
       />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
           <div className="max-w-3xl">
-            <div
-              className="
-                inline-flex items-center gap-2
-                rounded-full
-                border border-emerald-500/20
-                bg-emerald-500/10
-                px-3 py-1.5
-                text-xs font-semibold
-                uppercase tracking-[0.16em]
-                text-emerald-300
-              "
-            >
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-300">
               <BriefcaseIcon className="size-4" />
-              Ish va karyera
+              {copy.badge}
             </div>
 
             <h2
               id="jobs-heading"
-              className="
-                mt-6
-                text-3xl
-                font-semibold
-                tracking-[-0.04em]
-                text-white
-                sm:text-4xl
-                lg:text-5xl
-              "
+              className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl"
             >
-              Germaniyada ish topish bo'yicha
-              bosqichma-bosqich qo'llanmalar
+              {copy.title}
             </h2>
 
-            <p
-              className="
-                mt-5
-                max-w-2xl
-                text-base
-                leading-8
-                text-slate-300
-                sm:text-lg
-              "
-            >
-              Ausbildung, Minijob, Werkstudent,
-              Praktikum va malakali ish o'rinlari
-              bo'yicha eng muhim yo'riqnomalarni
-              bir joyda jamladik.
+            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+              {copy.description}
             </p>
           </div>
 
           <Link
             href="/jobs"
-            className="
-              group hidden lg:inline-flex
-              items-center gap-2
-              rounded-full
-              border border-white/10
-              bg-white/5
-              px-5 py-3
-              text-sm font-semibold
-              text-white
-              backdrop-blur
-              transition
-              hover:-translate-y-0.5
-              hover:bg-white/10
-            "
+            className="group hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/10 lg:inline-flex"
           >
-            Barcha qo'llanmalar
-
-            <ArrowUpRightIcon
-              className="
-                size-4
-                transition
-                group-hover:translate-x-0.5
-                group-hover:-translate-y-0.5
-              "
-            />
+            {copy.allGuides}
+            <ArrowUpRightIcon className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
 
@@ -190,40 +176,22 @@ export default function JobsSection() {
               key={guide.id}
               guide={guide}
               index={index}
+              labels={copy.card}
             />
           ))}
-        </div>        <div
-          className="
-            mt-10 overflow-hidden
-            rounded-[2rem]
-            border border-white/10
-            bg-white/[0.04]
-            backdrop-blur-xl
-          "
-        >
+        </div>
+
+        <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] backdrop-blur-xl">
           <div className="grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-            {stats.map((stat) => (
+            {copy.stats.map((stat) => (
               <div
                 key={stat.label}
                 className="px-8 py-7"
               >
-                <div
-                  className="
-                    text-3xl font-semibold
-                    tracking-[-0.04em]
-                    text-white
-                  "
-                >
+                <div className="text-3xl font-semibold tracking-[-0.04em] text-white">
                   {stat.value}
                 </div>
-
-                <p
-                  className="
-                    mt-2
-                    text-sm
-                    text-slate-400
-                  "
-                >
+                <p className="mt-2 text-sm text-slate-400">
                   {stat.label}
                 </p>
               </div>
@@ -234,31 +202,10 @@ export default function JobsSection() {
         <div className="mt-8 flex justify-center lg:hidden">
           <Link
             href="/jobs"
-            className="
-              group inline-flex
-              items-center gap-2
-              rounded-full
-              border border-white/10
-              bg-white/5
-              px-5 py-3
-              text-sm font-semibold
-              text-white
-              backdrop-blur
-              transition
-              hover:-translate-y-0.5
-              hover:bg-white/10
-            "
+            className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/10"
           >
-            Barcha qo&apos;llanmalar
-
-            <ArrowUpRightIcon
-              className="
-                size-4
-                transition
-                group-hover:translate-x-0.5
-                group-hover:-translate-y-0.5
-              "
-            />
+            {copy.allGuides}
+            <ArrowUpRightIcon className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
       </div>

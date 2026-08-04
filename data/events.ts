@@ -1,32 +1,79 @@
-export type EventCategory =
-  | "Madaniyat"
-  | "Ta’lim"
-  | "Karyera"
-  | "Biznes"
-  | "Jamiyat"
-  | "Sport"
-  | "Bolalar uchun"
-  | "Konsullik";
+export type SupportedEventLocale = "uz" | "de";
 
-export type EventFormat =
-  | "Oflayn"
-  | "Onlayn"
-  | "Gibrid";
+export type LocalizedText = Readonly<
+  Record<SupportedEventLocale, string>
+>;
 
-export type RegistrationStatus =
-  | "Ro‘yxatdan o‘tish ochiq"
-  | "Ro‘yxatdan o‘tish shart emas"
-  | "Joylar tugagan"
-  | "Ro‘yxatdan o‘tish yopilgan";
+export type EventCategoryKey =
+  | "culture"
+  | "education"
+  | "career"
+  | "business"
+  | "community"
+  | "sport"
+  | "children"
+  | "consular";
 
-export type EventItem = {
+export type EventFormatKey =
+  | "offline"
+  | "online"
+  | "hybrid";
+
+export type RegistrationStatusKey =
+  | "open"
+  | "not-required"
+  | "sold-out"
+  | "closed";
+
+export type LocalizedEventItem = Readonly<{
+  id: number;
+  slug: string;
+  title: LocalizedText;
+  excerpt: LocalizedText;
+  description: ReadonlyArray<LocalizedText>;
+  category: EventCategoryKey;
+  format: EventFormatKey;
+
+  startDate: string;
+  endDate?: string;
+  startTime?: string;
+  endTime?: string;
+  timezone: string;
+
+  city?: string;
+  bundesland?: string;
+  venueName?: LocalizedText;
+  address?: string;
+  onlineUrl?: string;
+
+  organizerName: string;
+  organizerUrl?: string;
+
+  registrationStatus: RegistrationStatusKey;
+  registrationUrl?: string;
+  registrationDeadline?: string;
+
+  language: ReadonlyArray<LocalizedText>;
+  priceLabel: LocalizedText;
+
+  officialSourceName: string;
+  officialSourceUrl: string;
+  verifiedAt: string;
+
+  importantNotes: ReadonlyArray<LocalizedText>;
+  featured?: boolean;
+}>;
+
+export type EventItem = Readonly<{
   id: number;
   slug: string;
   title: string;
   excerpt: string;
-  description: string[];
-  category: EventCategory;
-  format: EventFormat;
+  description: ReadonlyArray<string>;
+  category: string;
+  categoryKey: EventCategoryKey;
+  format: string;
+  formatKey: EventFormatKey;
 
   startDate: string;
   endDate?: string;
@@ -43,84 +90,168 @@ export type EventItem = {
   organizerName: string;
   organizerUrl?: string;
 
-  registrationStatus: RegistrationStatus;
+  registrationStatus: string;
+  registrationStatusKey: RegistrationStatusKey;
   registrationUrl?: string;
   registrationDeadline?: string;
 
-  language: string[];
+  language: ReadonlyArray<string>;
   priceLabel: string;
 
   officialSourceName: string;
   officialSourceUrl: string;
   verifiedAt: string;
 
-  importantNotes: string[];
+  importantNotes: ReadonlyArray<string>;
   featured?: boolean;
+}>;
+
+const categoryLabels: Readonly<
+  Record<
+    SupportedEventLocale,
+    Record<EventCategoryKey, string>
+  >
+> = {
+  uz: {
+    culture: "Madaniyat",
+    education: "Ta’lim",
+    career: "Karyera",
+    business: "Biznes",
+    community: "Jamiyat",
+    sport: "Sport",
+    children: "Bolalar uchun",
+    consular: "Konsullik",
+  },
+  de: {
+    culture: "Kultur",
+    education: "Bildung",
+    career: "Karriere",
+    business: "Wirtschaft",
+    community: "Gemeinschaft",
+    sport: "Sport",
+    children: "Für Kinder",
+    consular: "Konsularisches",
+  },
+};
+
+const formatLabels: Readonly<
+  Record<
+    SupportedEventLocale,
+    Record<EventFormatKey, string>
+  >
+> = {
+  uz: {
+    offline: "Oflayn",
+    online: "Onlayn",
+    hybrid: "Gibrid",
+  },
+  de: {
+    offline: "Vor Ort",
+    online: "Online",
+    hybrid: "Hybrid",
+  },
+};
+
+const registrationStatusLabels: Readonly<
+  Record<
+    SupportedEventLocale,
+    Record<RegistrationStatusKey, string>
+  >
+> = {
+  uz: {
+    open: "Ro‘yxatdan o‘tish ochiq",
+    "not-required": "Ro‘yxatdan o‘tish shart emas",
+    "sold-out": "Joylar tugagan",
+    closed: "Ro‘yxatdan o‘tish yopilgan",
+  },
+  de: {
+    open: "Anmeldung geöffnet",
+    "not-required": "Keine Anmeldung erforderlich",
+    "sold-out": "Ausgebucht",
+    closed: "Anmeldung geschlossen",
+  },
 };
 
 /**
  * Bu ro‘yxatga faqat rasmiy manbasi tekshirilgan tadbirlarni qo‘shing.
+ * Fügen Sie hier nur Veranstaltungen mit geprüfter offizieller Quelle ein.
  *
- * Uydirma yoki tasdiqlanmagan tadbir qo‘shmang.
- *
- * Yangi tadbir qo‘shish namunasi:
- *
- * {
- *   id: 1,
- *   slug: "tadbir-nomi-berlin-2026",
- *   title: "Tadbir nomi",
- *   excerpt: "Tadbirning qisqa tavsifi.",
- *   description: [
- *     "Tadbir haqida birinchi paragraf.",
- *     "Tadbir haqida ikkinchi paragraf.",
- *   ],
- *   category: "Madaniyat",
- *   format: "Oflayn",
- *   startDate: "2026-09-20",
- *   startTime: "15:00",
- *   endTime: "19:00",
- *   timezone: "Europe/Berlin",
- *   city: "Berlin",
- *   bundesland: "Berlin",
- *   venueName: "Tadbir o‘tkaziladigan joy",
- *   address: "Ko‘cha 1, 10115 Berlin",
- *   organizerName: "Tashkilotchi nomi",
- *   organizerUrl: "https://example.org",
- *   registrationStatus: "Ro‘yxatdan o‘tish ochiq",
- *   registrationUrl: "https://example.org/register",
- *   registrationDeadline: "2026-09-18",
- *   language: ["O‘zbek tili", "Nemis tili"],
- *   priceLabel: "Bepul",
- *   officialSourceName: "Rasmiy tashkilotchi sahifasi",
- *   officialSourceUrl: "https://example.org/event",
- *   verifiedAt: "2026-07-30",
- *   importantNotes: [
- *     "Joylar soni cheklangan.",
- *     "Ro‘yxatdan o‘tish talab qilinadi.",
- *   ],
- *   featured: true,
- * }
+ * Hozircha tasdiqlangan tadbir mavjud emas.
  */
+export const localizedEvents: ReadonlyArray<LocalizedEventItem> = [];
 
-export const events: EventItem[] = [];
+export function localizeEvent(
+  event: LocalizedEventItem,
+  locale: SupportedEventLocale,
+): EventItem {
+  return {
+    ...event,
+    title: event.title[locale],
+    excerpt: event.excerpt[locale],
+    description: event.description.map(
+      (paragraph) => paragraph[locale],
+    ),
+    category: categoryLabels[locale][event.category],
+    categoryKey: event.category,
+    format: formatLabels[locale][event.format],
+    formatKey: event.format,
+    venueName: event.venueName?.[locale],
+    registrationStatus:
+      registrationStatusLabels[locale][
+        event.registrationStatus
+      ],
+    registrationStatusKey: event.registrationStatus,
+    language: event.language.map(
+      (language) => language[locale],
+    ),
+    priceLabel: event.priceLabel[locale],
+    importantNotes: event.importantNotes.map(
+      (note) => note[locale],
+    ),
+  };
+}
+
+export function getEvents(
+  locale: SupportedEventLocale,
+): ReadonlyArray<EventItem> {
+  return localizedEvents.map((event) =>
+    localizeEvent(event, locale),
+  );
+}
 
 export function getEventBySlug(
   slug: string,
+  locale: SupportedEventLocale,
 ): EventItem | undefined {
-  return events.find((event) => event.slug === slug);
+  const event = localizedEvents.find(
+    (item) => item.slug === slug,
+  );
+
+  return event ? localizeEvent(event, locale) : undefined;
 }
 
-export function getFeaturedEvent(): EventItem | undefined {
-  return events.find((event) => event.featured);
+export function getFeaturedEvent(
+  locale: SupportedEventLocale,
+): EventItem | undefined {
+  const event = localizedEvents.find(
+    (item) => item.featured,
+  );
+
+  return event ? localizeEvent(event, locale) : undefined;
 }
 
-export function getUpcomingEvents(): EventItem[] {
+export function getUpcomingEvents(
+  locale: SupportedEventLocale,
+): ReadonlyArray<EventItem> {
   const now = new Date();
 
-  return [...events]
+  return getEvents(locale)
     .filter((event) => {
-      const eventEndDate = event.endDate ?? event.startDate;
-      const endOfEvent = new Date(`${eventEndDate}T23:59:59`);
+      const eventEndDate =
+        event.endDate ?? event.startDate;
+      const endOfEvent = new Date(
+        `${eventEndDate}T23:59:59`,
+      );
 
       return endOfEvent >= now;
     })
@@ -131,13 +262,18 @@ export function getUpcomingEvents(): EventItem[] {
     );
 }
 
-export function getPastEvents(): EventItem[] {
+export function getPastEvents(
+  locale: SupportedEventLocale,
+): ReadonlyArray<EventItem> {
   const now = new Date();
 
-  return [...events]
+  return getEvents(locale)
     .filter((event) => {
-      const eventEndDate = event.endDate ?? event.startDate;
-      const endOfEvent = new Date(`${eventEndDate}T23:59:59`);
+      const eventEndDate =
+        event.endDate ?? event.startDate;
+      const endOfEvent = new Date(
+        `${eventEndDate}T23:59:59`,
+      );
 
       return endOfEvent < now;
     })
@@ -150,52 +286,71 @@ export function getPastEvents(): EventItem[] {
 
 export function getRelatedEvents(
   currentEvent: EventItem,
+  locale: SupportedEventLocale,
   limit = 3,
-): EventItem[] {
-  return events
+): ReadonlyArray<EventItem> {
+  return getEvents(locale)
     .filter(
       (event) =>
         event.slug !== currentEvent.slug &&
-        (event.category === currentEvent.category ||
+        (event.categoryKey ===
+          currentEvent.categoryKey ||
           event.city === currentEvent.city),
     )
     .slice(0, limit);
 }
 
-export function formatEventDate(date: string): string {
-  return new Intl.DateTimeFormat("uz-UZ", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(`${date}T12:00:00`));
+export function formatEventDate(
+  date: string,
+  locale: SupportedEventLocale,
+): string {
+  return new Intl.DateTimeFormat(
+    locale === "uz" ? "uz-UZ" : "de-DE",
+    {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    },
+  ).format(new Date(`${date}T12:00:00`));
 }
 
-export function formatEventDateShort(date: string): string {
-  return new Intl.DateTimeFormat("uz-UZ", {
-    day: "2-digit",
-    month: "short",
-  }).format(new Date(`${date}T12:00:00`));
+export function formatEventDateShort(
+  date: string,
+  locale: SupportedEventLocale,
+): string {
+  return new Intl.DateTimeFormat(
+    locale === "uz" ? "uz-UZ" : "de-DE",
+    {
+      day: "2-digit",
+      month: "short",
+    },
+  ).format(new Date(`${date}T12:00:00`));
 }
 
 export function formatEventDateRange(
   startDate: string,
+  locale: SupportedEventLocale,
   endDate?: string,
 ): string {
   if (!endDate || startDate === endDate) {
-    return formatEventDate(startDate);
+    return formatEventDate(startDate, locale);
   }
 
-  return `${formatEventDate(startDate)} — ${formatEventDate(
-    endDate,
-  )}`;
+  return `${formatEventDate(
+    startDate,
+    locale,
+  )} — ${formatEventDate(endDate, locale)}`;
 }
 
 export function formatEventTime(
+  locale: SupportedEventLocale,
   startTime?: string,
   endTime?: string,
 ): string {
   if (!startTime) {
-    return "Vaqt tashkilotchi tomonidan ko‘rsatilmagan";
+    return locale === "uz"
+      ? "Vaqt tashkilotchi tomonidan ko‘rsatilmagan"
+      : "Keine Uhrzeit angegeben";
   }
 
   if (!endTime) {
@@ -205,9 +360,14 @@ export function formatEventTime(
   return `${startTime} — ${endTime}`;
 }
 
-export function getEventLocation(event: EventItem): string {
-  if (event.format === "Onlayn") {
-    return "Onlayn tadbir";
+export function getEventLocation(
+  event: EventItem,
+  locale: SupportedEventLocale,
+): string {
+  if (event.formatKey === "online") {
+    return locale === "uz"
+      ? "Onlayn tadbir"
+      : "Online-Veranstaltung";
   }
 
   const locationParts = [
@@ -216,5 +376,9 @@ export function getEventLocation(event: EventItem): string {
     event.bundesland,
   ].filter(Boolean);
 
-  return locationParts.join(", ");
+  return locationParts.length > 0
+    ? locationParts.join(", ")
+    : locale === "uz"
+      ? "Manzil ko‘rsatilmagan"
+      : "Ort nicht angegeben";
 }

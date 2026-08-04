@@ -1,5 +1,8 @@
 import { Link } from "@/i18n/navigation";
-import type { LocalizedSpecialist } from "@/types/specialist";
+import type {
+  LocalizedSpecialist,
+  SpecialistCategory,
+} from "@/types/specialist";
 
 type SpecialistCardProps = Readonly<{
   specialist: LocalizedSpecialist;
@@ -10,6 +13,10 @@ type SpecialistCardProps = Readonly<{
     details: string;
     detailsSoon: string;
     languages: string;
+    serviceArea: string;
+    categories: Readonly<
+      Record<SpecialistCategory, string>
+    >;
   }>;
 }>;
 
@@ -91,10 +98,16 @@ function getInitials(name: string) {
 function getLocationLabel(
   specialist: LocalizedSpecialist,
 ) {
-  const city = specialist.location?.city;
-  const bundesland = specialist.location?.bundesland;
+  if (specialist.serviceArea) {
+    return specialist.serviceArea;
+  }
 
-  return [city, bundesland].filter(Boolean).join(", ");
+  return [
+    specialist.location?.city,
+    specialist.location?.bundesland,
+  ]
+    .filter(Boolean)
+    .join(", ");
 }
 
 export default function SpecialistCard({
@@ -104,7 +117,7 @@ export default function SpecialistCard({
   const locationLabel = getLocationLabel(specialist);
 
   return (
-    <article className="group relative isolate flex min-h-[390px] overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-emerald-200 hover:shadow-xl hover:shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500/30 dark:hover:shadow-black/20 sm:p-7">
+    <article className="group relative isolate flex min-h-[420px] overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-emerald-200 hover:shadow-xl hover:shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500/30 dark:hover:shadow-black/20 sm:p-7">
       {specialist.status.sponsored && (
         <span className="absolute right-5 top-5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-300">
           {labels.sponsored}
@@ -142,7 +155,7 @@ export default function SpecialistCard({
               )}
             </div>
 
-            <p className="mt-1 truncate text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+            <p className="mt-1 line-clamp-2 text-sm font-semibold leading-5 text-emerald-700 dark:text-emerald-400">
               {specialist.profession}
             </p>
           </div>
@@ -153,19 +166,34 @@ export default function SpecialistCard({
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
+          {specialist.categories.slice(0, 2).map((category) => (
+            <span
+              key={category}
+              className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+            >
+              {labels.categories?.[category] ?? category}
+            </span>
+          ))}
+
           {specialist.status.premium && (
             <span className="rounded-full bg-violet-50 px-3 py-1.5 text-xs font-bold text-violet-700 dark:bg-violet-500/10 dark:text-violet-300">
               {labels.premium}
             </span>
           )}
-
-          {locationLabel && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-              <LocationIcon className="size-3.5" />
-              {locationLabel}
-            </span>
-          )}
         </div>
+
+        {locationLabel && (
+          <div className="mt-5">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
+              {labels.serviceArea}
+            </p>
+
+            <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
+              <LocationIcon className="size-4 text-emerald-600 dark:text-emerald-400" />
+              {locationLabel}
+            </p>
+          </div>
+        )}
 
         {specialist.languages.length > 0 && (
           <div className="mt-5">

@@ -164,6 +164,14 @@ export default async function Footer() {
           label: t("columns.portal.links.events"),
           href: "/events",
         },
+        {
+          label: t("columns.portal.links.specialists"),
+          href: "/specialists",
+        },
+        {
+          label: t("columns.portal.links.founder"),
+          href: "/about/founder",
+        },
       ],
     },
     {

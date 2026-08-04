@@ -1,17 +1,23 @@
-import Link from "next/link";
-
 import type { JobGuide } from "@/data/jobs";
+import { Link } from "@/i18n/navigation";
 
 import { Badge, Card } from "../ui";
 
-type JobGuideCardProps = {
+type JobGuideCardProps = Readonly<{
   guide: JobGuide;
+  labels: Readonly<{
+    highlightsAria: string;
+    guide: string;
+    explained: string;
+    open: string;
+    openShort: string;
+  }>;
   index?: number;
-};
+}>;
 
-type IconProps = {
+type IconProps = Readonly<{
   className?: string;
-};
+}>;
 
 function ArrowUpRightIcon({ className }: IconProps) {
   return (
@@ -53,6 +59,7 @@ function CheckIcon({ className }: IconProps) {
 
 export default function JobGuideCard({
   guide,
+  labels,
   index = 0,
 }: JobGuideCardProps) {
   const href = `/jobs/${guide.slug}`;
@@ -64,66 +71,21 @@ export default function JobGuideCard({
       variant="interactive"
       padding="none"
       aria-labelledby={titleId}
-      className="
-        group relative isolate flex min-h-[430px]
-        overflow-hidden rounded-[2rem]
-        bg-surface
-        animate-fade-in-up
-      "
+      className="group relative isolate flex min-h-[430px] overflow-hidden rounded-[2rem] bg-surface animate-fade-in-up"
       style={{
         animationDelay: `${index * 70}ms`,
       }}
     >
       <div
         aria-hidden="true"
-        className="
-          pointer-events-none absolute inset-x-0 top-0 h-40
-          bg-gradient-to-b
-          from-brand/15
-          via-brand/5
-          to-transparent
-          opacity-80
-          transition-opacity duration-500
-          group-hover:opacity-100
-        "
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none absolute -right-20 -top-20
-          size-56 rounded-full
-          border border-brand/10
-          transition-transform duration-700
-          group-hover:scale-125
-        "
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none absolute -bottom-20 -left-20
-          size-56 rounded-full
-          bg-brand/5 blur-3xl
-          transition-transform duration-700
-          group-hover:scale-125
-        "
+        className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-brand/15 via-brand/5 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100"
       />
 
       <div className="relative z-10 flex w-full flex-col p-6 sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div
             aria-hidden="true"
-            className="
-              flex size-16 shrink-0 items-center justify-center
-              rounded-2xl border border-brand/15
-              bg-gradient-to-br
-              from-brand/10
-              to-accent/10
-              text-2xl shadow-sm
-              transition-transform duration-300
-              group-hover:scale-110
-            "
+            className="flex size-16 shrink-0 items-center justify-center rounded-2xl border border-brand/15 bg-gradient-to-br from-brand/10 to-accent/10 text-2xl shadow-sm transition-transform duration-300 group-hover:scale-110"
           >
             {guide.icon}
           </div>
@@ -139,31 +101,16 @@ export default function JobGuideCard({
         <div className="mt-7">
           <h3
             id={titleId}
-            className="
-              text-xl font-bold
-              leading-8 tracking-[-0.02em]
-              text-text-primary
-              sm:text-2xl
-            "
+            className="text-xl font-bold leading-8 tracking-[-0.02em] text-text-primary sm:text-2xl"
           >
             <Link
               href={href}
-              className="
-                outline-none
-                transition-colors duration-200
-                group-hover:text-brand
-                focus-visible:rounded-md
-                focus-visible:ring-2
-                focus-visible:ring-brand
-                focus-visible:ring-offset-4
-                focus-visible:ring-offset-surface
-              "
+              className="outline-none transition-colors duration-200 group-hover:text-brand focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-surface"
             >
               <span
                 aria-hidden="true"
                 className="absolute inset-0 z-20"
               />
-
               {guide.shortTitle}
             </Link>
           </h3>
@@ -175,7 +122,7 @@ export default function JobGuideCard({
 
         {guide.highlights.length > 0 && (
           <ul
-            aria-label="Qo‘llanmaning asosiy mavzulari"
+            aria-label={labels.highlightsAria}
             className="mt-7 space-y-3"
           >
             {guide.highlights.slice(0, 3).map((highlight) => (
@@ -185,16 +132,10 @@ export default function JobGuideCard({
               >
                 <span
                   aria-hidden="true"
-                  className="
-                    mt-0.5 flex size-6 shrink-0
-                    items-center justify-center
-                    rounded-full
-                    bg-accent/10 text-accent
-                  "
+                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent"
                 >
                   <CheckIcon className="size-3.5" />
                 </span>
-
                 <span>{highlight}</span>
               </li>
             ))}
@@ -205,39 +146,24 @@ export default function JobGuideCard({
           <div className="flex items-end justify-between gap-5 border-t border-border-default pt-5">
             <div className="min-w-0">
               <p className="text-xs font-medium uppercase tracking-[0.12em] text-text-muted">
-                Qo‘llanma
+                {labels.guide}
               </p>
-
               <p className="mt-1 text-sm font-semibold text-text-secondary">
-                Bosqichma-bosqich tushuntirilgan
+                {labels.explained}
               </p>
             </div>
 
             <span
               aria-hidden="true"
-              className="
-                flex shrink-0 items-center gap-2
-                text-sm font-semibold text-brand
-                transition-all duration-300
-                group-hover:gap-3
-              "
+              className="flex shrink-0 items-center gap-2 text-sm font-semibold text-brand transition-all duration-300 group-hover:gap-3"
             >
               <span className="hidden sm:inline">
-                Qo‘llanmani ochish
+                {labels.open}
               </span>
-
               <span className="sm:hidden">
-                Ochish
+                {labels.openShort}
               </span>
-
-              <ArrowUpRightIcon
-                className="
-                  size-4
-                  transition-transform duration-300
-                  group-hover:translate-x-0.5
-                  group-hover:-translate-y-0.5
-                "
-              />
+              <ArrowUpRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>
           </div>
         </div>

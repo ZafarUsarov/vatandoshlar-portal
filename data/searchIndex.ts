@@ -1,4 +1,9 @@
-import { jobGuides } from "./jobs";
+import {
+  getJobGuides,
+  type SupportedJobLocale,
+} from "./jobs";
+
+export type SearchLocale = SupportedJobLocale;
 
 export type SearchCategory =
   | "Sahifa"
@@ -9,170 +14,357 @@ export type SearchCategory =
   | "Telegram"
   | "Tadbir";
 
-export type GlobalSearchItem = {
+export type GlobalSearchItem = Readonly<{
   id: string;
   title: string;
   description: string;
   href: string;
   category: SearchCategory;
-  keywords: string[];
+  keywords: ReadonlyArray<string>;
   badge?: string;
-};
+}>;
 
-/*
- * Portalning doimiy asosiy sahifalari.
- */
-const staticSearchItems: GlobalSearchItem[] = [
+type LocalizedSearchCopy = Readonly<{
+  title: string;
+  description: string;
+  badge: string;
+  keywords: ReadonlyArray<string>;
+}>;
+
+type StaticSearchDefinition = Readonly<{
+  id: string;
+  path: string;
+  category: SearchCategory;
+  content: Readonly<Record<SearchLocale, LocalizedSearchCopy>>;
+}>;
+
+const staticSearchDefinitions: ReadonlyArray<StaticSearchDefinition> = [
   {
     id: "page-home",
-    title: "Bosh sahifa",
-    description:
-      "Vatandoshlar.de portalining asosiy sahifasi.",
-    href: "/",
+    path: "",
     category: "Sahifa",
-    keywords: [
-      "bosh sahifa",
-      "asosiy sahifa",
-      "home",
-      "portal",
-      "vatandoshlar",
-      "germaniya",
-      "o‘zbeklar",
-    ],
+    content: {
+      uz: {
+        title: "Bosh sahifa",
+        description:
+          "Vatandoshlar.de portalining asosiy sahifasi.",
+        badge: "Sahifa",
+        keywords: [
+          "bosh sahifa",
+          "asosiy sahifa",
+          "home",
+          "portal",
+          "vatandoshlar",
+          "germaniya",
+          "o‘zbeklar",
+        ],
+      },
+      de: {
+        title: "Startseite",
+        description:
+          "Die zentrale Startseite des Portals Vatandoshlar.de.",
+        badge: "Seite",
+        keywords: [
+          "startseite",
+          "home",
+          "portal",
+          "vatandoshlar",
+          "deutschland",
+          "usbeken",
+        ],
+      },
+    },
   },
   {
     id: "page-news",
-    title: "Yangiliklar",
-    description:
-      "Germaniyada yashash, o‘qish va ishlash bo‘yicha rasmiy hamda tekshirilgan ma’lumotlar.",
-    href: "/news",
+    path: "/news",
     category: "Yangilik",
-    keywords: [
-      "yangilik",
-      "xabar",
-      "rasmiy",
-      "bamf",
-      "daad",
-      "elchixona",
-      "germaniya",
-      "ma’lumot",
-    ],
+    content: {
+      uz: {
+        title: "Yangiliklar",
+        description:
+          "Germaniyada yashash, o‘qish va ishlash bo‘yicha rasmiy hamda tekshirilgan ma’lumotlar.",
+        badge: "Yangilik",
+        keywords: [
+          "yangilik",
+          "xabar",
+          "rasmiy",
+          "bamf",
+          "daad",
+          "elchixona",
+          "germaniya",
+          "ma’lumot",
+        ],
+      },
+      de: {
+        title: "Nachrichten",
+        description:
+          "Offizielle und geprüfte Informationen zum Leben, Studieren und Arbeiten in Deutschland.",
+        badge: "Nachricht",
+        keywords: [
+          "nachrichten",
+          "neuigkeiten",
+          "offiziell",
+          "bamf",
+          "daad",
+          "botschaft",
+          "deutschland",
+          "informationen",
+        ],
+      },
+    },
   },
   {
     id: "page-services",
-    title: "Xizmatlar",
-    description:
-      "Tarjimonlar, huquqiy xizmatlar, soliq maslahatchilari, shifokorlar va boshqa mutaxassislar.",
-    href: "/services",
+    path: "/services",
     category: "Xizmat",
-    keywords: [
-      "xizmat",
-      "tarjimon",
-      "advokat",
-      "huquqshunos",
-      "soliq",
-      "steuerberater",
-      "shifokor",
-      "doktor",
-      "usta",
-      "mutaxassis",
-    ],
+    content: {
+      uz: {
+        title: "Xizmatlar",
+        description:
+          "Tarjimonlar, huquqiy xizmatlar, soliq maslahatchilari, shifokorlar va boshqa mutaxassislar.",
+        badge: "Xizmat",
+        keywords: [
+          "xizmat",
+          "tarjimon",
+          "advokat",
+          "huquqshunos",
+          "soliq",
+          "steuerberater",
+          "shifokor",
+          "doktor",
+          "usta",
+          "mutaxassis",
+        ],
+      },
+      de: {
+        title: "Dienstleistungen",
+        description:
+          "Übersetzer, rechtliche Unterstützung, Steuerberater, Ärzte und weitere Fachkräfte.",
+        badge: "Dienstleistung",
+        keywords: [
+          "dienstleistung",
+          "übersetzer",
+          "anwalt",
+          "recht",
+          "steuer",
+          "steuerberater",
+          "arzt",
+          "handwerker",
+          "fachkraft",
+        ],
+      },
+    },
   },
   {
     id: "page-jobs",
-    title: "Ish va karyera",
-    description:
-      "Ish qidirish, Minijob, Werkstudent, Praktikum, Ausbildung va professional karyera qo‘llanmalari.",
-    href: "/jobs",
+    path: "/jobs",
     category: "Ish",
-    keywords: [
-      "ish",
-      "job",
-      "karyera",
-      "vakansiya",
-      "minijob",
-      "werkstudent",
-      "praktikum",
-      "ausbildung",
-      "nebenjob",
-      "aushilfe",
-    ],
+    content: {
+      uz: {
+        title: "Ish va karyera",
+        description:
+          "Ish qidirish, Minijob, Werkstudent, Praktikum, Ausbildung va professional karyera qo‘llanmalari.",
+        badge: "Ish",
+        keywords: [
+          "ish",
+          "job",
+          "karyera",
+          "vakansiya",
+          "minijob",
+          "werkstudent",
+          "praktikum",
+          "ausbildung",
+          "nebenjob",
+          "aushilfe",
+        ],
+      },
+      de: {
+        title: "Arbeit und Karriere",
+        description:
+          "Leitfäden zu Jobsuche, Minijob, Werkstudent, Praktikum, Ausbildung und beruflicher Karriere.",
+        badge: "Arbeit",
+        keywords: [
+          "arbeit",
+          "job",
+          "karriere",
+          "stelle",
+          "minijob",
+          "werkstudent",
+          "praktikum",
+          "ausbildung",
+          "nebenjob",
+          "aushilfe",
+        ],
+      },
+    },
   },
   {
     id: "page-job-platforms",
-    title: "Ish qidirish platformalari",
-    description:
-      "Rasmiy va xususiy ish portallarini kasb, til va ish turi bo‘yicha toping.",
-    href: "/jobs#job-platforms",
+    path: "/jobs#job-platforms",
     category: "Ish platformasi",
-    keywords: [
-      "ish sayti",
-      "job portal",
-      "jobsuche",
-      "arbeitsagentur",
-      "bundesagentur",
-      "make it in germany",
-      "eures",
-      "stepstone",
-      "linkedin",
-      "xing",
-      "jobmensa",
-      "ausbildung.de",
-    ],
+    content: {
+      uz: {
+        title: "Ish qidirish platformalari",
+        description:
+          "Rasmiy va xususiy ish portallarini kasb, til va ish turi bo‘yicha toping.",
+        badge: "Ish platformasi",
+        keywords: [
+          "ish sayti",
+          "job portal",
+          "jobsuche",
+          "arbeitsagentur",
+          "bundesagentur",
+          "make it in germany",
+          "eures",
+          "stepstone",
+          "linkedin",
+          "xing",
+          "jobmensa",
+          "ausbildung.de",
+        ],
+      },
+      de: {
+        title: "Jobportale",
+        description:
+          "Offizielle und private Jobportale nach Beruf, Sprache und Beschäftigungsart finden.",
+        badge: "Jobportal",
+        keywords: [
+          "jobportal",
+          "jobsuche",
+          "arbeitsagentur",
+          "bundesagentur",
+          "make it in germany",
+          "eures",
+          "stepstone",
+          "linkedin",
+          "xing",
+          "jobmensa",
+          "ausbildung.de",
+        ],
+      },
+    },
   },
   {
     id: "page-telegram",
-    title: "Telegram guruhlari",
-    description:
-      "Germaniya Bundeslandlari bo‘yicha o‘zbek Telegram guruhlari.",
-    href: "/telegram",
+    path: "/telegram",
     category: "Telegram",
-    keywords: [
-      "telegram",
-      "guruh",
-      "hamjamiyat",
-      "bundesland",
-      "nrw",
-      "nordrhein westfalen",
-      "baden württemberg",
-      "schleswig holstein",
-      "o‘zbeklar",
-    ],
+    content: {
+      uz: {
+        title: "Telegram guruhlari",
+        description:
+          "Germaniya federal yerlari bo‘yicha o‘zbek Telegram guruhlari.",
+        badge: "Telegram",
+        keywords: [
+          "telegram",
+          "guruh",
+          "hamjamiyat",
+          "bundesland",
+          "nrw",
+          "nordrhein westfalen",
+          "baden württemberg",
+          "schleswig holstein",
+          "o‘zbeklar",
+        ],
+      },
+      de: {
+        title: "Telegram-Gruppen",
+        description:
+          "Usbekische Telegram-Gruppen nach deutschen Bundesländern.",
+        badge: "Telegram",
+        keywords: [
+          "telegram",
+          "gruppe",
+          "community",
+          "bundesland",
+          "nrw",
+          "nordrhein westfalen",
+          "baden württemberg",
+          "schleswig holstein",
+          "usbeken",
+        ],
+      },
+    },
   },
   {
     id: "page-events",
-    title: "Tadbirlar",
-    description:
-      "Madaniy, ta’limiy, professional va jamoat tadbirlari.",
-    href: "/events",
+    path: "/events",
     category: "Tadbir",
-    keywords: [
-      "tadbir",
-      "event",
-      "uchrashuv",
-      "seminar",
-      "konsert",
-      "networking",
-      "madaniyat",
-      "ta’lim",
-      "karyera",
-    ],
+    content: {
+      uz: {
+        title: "Tadbirlar",
+        description:
+          "Madaniy, ta’limiy, professional va jamoat tadbirlari.",
+        badge: "Tadbir",
+        keywords: [
+          "tadbir",
+          "event",
+          "uchrashuv",
+          "seminar",
+          "konsert",
+          "networking",
+          "madaniyat",
+          "ta’lim",
+          "karyera",
+        ],
+      },
+      de: {
+        title: "Veranstaltungen",
+        description:
+          "Kulturelle, bildungsbezogene, berufliche und gemeinschaftliche Veranstaltungen.",
+        badge: "Veranstaltung",
+        keywords: [
+          "veranstaltung",
+          "event",
+          "treffen",
+          "seminar",
+          "konzert",
+          "networking",
+          "kultur",
+          "bildung",
+          "karriere",
+        ],
+      },
+    },
   },
 ];
 
-/*
- * data/jobs.ts ichidagi barcha qo‘llanmalarni avtomatik
- * qidiruv elementlariga aylantiradi.
- *
- * Yangi JobGuide qo‘shilganda qidiruv indeksiga ham
- * avtomatik qo‘shiladi.
- */
-const jobGuideSearchItems: GlobalSearchItem[] =
-  jobGuides.map((guide) => ({
+function createLocalizedHref(
+  locale: SearchLocale,
+  path: string,
+): string {
+  return `/${locale}${path}`;
+}
+
+function getStaticSearchItems(
+  locale: SearchLocale,
+): ReadonlyArray<GlobalSearchItem> {
+  return staticSearchDefinitions.map((definition) => {
+    const content = definition.content[locale];
+
+    return {
+      id: definition.id,
+      title: content.title,
+      description: content.description,
+      href: createLocalizedHref(locale, definition.path),
+      category: definition.category,
+      badge: content.badge,
+      keywords: content.keywords,
+    };
+  });
+}
+
+function getJobGuideSearchItems(
+  locale: SearchLocale,
+): ReadonlyArray<GlobalSearchItem> {
+  return getJobGuides(locale).map((guide) => ({
     id: `job-guide-${guide.id}`,
     title: guide.title,
     description: guide.description,
-    href: `/jobs/${guide.slug}`,
+    href: createLocalizedHref(
+      locale,
+      `/jobs/${guide.slug}`,
+    ),
     category: "Ish",
     badge: guide.category,
     keywords: [
@@ -186,25 +378,60 @@ const jobGuideSearchItems: GlobalSearchItem[] =
       ...guide.highlights,
     ],
   }));
+}
 
-export const globalSearchItems: GlobalSearchItem[] = [
-  ...staticSearchItems,
-  ...jobGuideSearchItems,
-];
+export function getGlobalSearchItems(
+  locale: SearchLocale,
+): ReadonlyArray<GlobalSearchItem> {
+  return [
+    ...getStaticSearchItems(locale),
+    ...getJobGuideSearchItems(locale),
+  ];
+}
 
-/*
- * O‘zbek tilidagi ayrim harflar turlicha yozilishi mumkin:
- *
- * o‘ / o' / oʻ
- * g‘ / g' / gʻ
- *
- * Ushbu funksiya ularni bir xil shaklga keltiradi.
+/**
+ * Backward-compatible Uzbek index.
+ * New code should use getGlobalSearchItems(locale).
  */
+export const globalSearchItems: ReadonlyArray<GlobalSearchItem> =
+  getGlobalSearchItems("uz");
+
+export function getSearchCategoryLabel(
+  category: SearchCategory,
+  locale: SearchLocale,
+): string {
+  const labels: Readonly<
+    Record<SearchLocale, Record<SearchCategory, string>>
+  > = {
+    uz: {
+      Sahifa: "Sahifa",
+      Yangilik: "Yangilik",
+      Xizmat: "Xizmat",
+      Ish: "Ish",
+      "Ish platformasi": "Ish platformasi",
+      Telegram: "Telegram",
+      Tadbir: "Tadbir",
+    },
+    de: {
+      Sahifa: "Seite",
+      Yangilik: "Nachricht",
+      Xizmat: "Dienstleistung",
+      Ish: "Arbeit",
+      "Ish platformasi": "Jobportal",
+      Telegram: "Telegram",
+      Tadbir: "Veranstaltung",
+    },
+  };
+
+  return labels[locale][category];
+}
+
 export function normalizeSearchText(
   value: string,
+  locale: SearchLocale = "uz",
 ): string {
   return value
-    .toLocaleLowerCase("uz")
+    .toLocaleLowerCase(locale === "uz" ? "uz" : "de")
     .replace(/[ʻ’‘`]/g, "'")
     .replace(/\s+/g, " ")
     .trim();
@@ -212,11 +439,15 @@ export function normalizeSearchText(
 
 export function searchGlobalItems(
   query: string,
+  locale: SearchLocale = "uz",
   category?: SearchCategory,
 ): GlobalSearchItem[] {
-  const normalizedQuery = normalizeSearchText(query);
+  const normalizedQuery = normalizeSearchText(
+    query,
+    locale,
+  );
 
-  return globalSearchItems
+  return getGlobalSearchItems(locale)
     .filter((item) => {
       if (
         category &&
@@ -237,33 +468,30 @@ export function searchGlobalItems(
           item.badge ?? "",
           ...item.keywords,
         ].join(" "),
+        locale,
       );
 
-      return searchableText.includes(
-        normalizedQuery,
-      );
+      return searchableText.includes(normalizedQuery);
     })
     .sort((firstItem, secondItem) => {
       if (!normalizedQuery) {
         return firstItem.title.localeCompare(
           secondItem.title,
-          "uz",
+          locale === "uz" ? "uz" : "de",
         );
       }
 
       const firstTitle = normalizeSearchText(
         firstItem.title,
+        locale,
       );
-
       const secondTitle = normalizeSearchText(
         secondItem.title,
+        locale,
       );
 
-      const firstExact =
-        firstTitle === normalizedQuery;
-
-      const secondExact =
-        secondTitle === normalizedQuery;
+      const firstExact = firstTitle === normalizedQuery;
+      const secondExact = secondTitle === normalizedQuery;
 
       if (firstExact && !secondExact) {
         return -1;
@@ -275,7 +503,6 @@ export function searchGlobalItems(
 
       const firstStarts =
         firstTitle.startsWith(normalizedQuery);
-
       const secondStarts =
         secondTitle.startsWith(normalizedQuery);
 
@@ -289,7 +516,7 @@ export function searchGlobalItems(
 
       return firstItem.title.localeCompare(
         secondItem.title,
-        "uz",
+        locale === "uz" ? "uz" : "de",
       );
     });
 }

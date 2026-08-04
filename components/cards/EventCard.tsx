@@ -1,22 +1,34 @@
-import Link from "next/link";
-
 import {
   formatEventDateShort,
   formatEventTime,
   getEventLocation,
   type EventItem,
+  type RegistrationStatusKey,
+  type SupportedEventLocale,
 } from "@/data/events";
+import { Link } from "@/i18n/navigation";
 
 import { Badge, Card } from "../ui";
 
-type EventCardProps = {
-  event: EventItem;
-  index?: number;
-};
+type EventCardLabels = Readonly<{
+  time: string;
+  location: string;
+  price: string;
+  event: string;
+  detailsDescription: string;
+  details: string;
+}>;
 
-type IconProps = {
+type EventCardProps = Readonly<{
+  event: EventItem;
+  locale: SupportedEventLocale;
+  labels: EventCardLabels;
+  index?: number;
+}>;
+
+type IconProps = Readonly<{
   className?: string;
-};
+}>;
 
 function ArrowUpRightIcon({ className }: IconProps) {
   return (
@@ -52,7 +64,6 @@ function ClockIcon({ className }: IconProps) {
         stroke="currentColor"
         strokeWidth="1.7"
       />
-
       <path
         d="M12 7.8V12l3 1.8"
         stroke="currentColor"
@@ -78,7 +89,6 @@ function LocationIcon({ className }: IconProps) {
         strokeLinejoin="round"
         strokeWidth="1.7"
       />
-
       <circle
         cx="12"
         cy="10"
@@ -110,31 +120,26 @@ function PriceIcon({ className }: IconProps) {
 }
 
 function getStatusStyles(
-  status: EventItem["registrationStatus"],
-) {
+  status: RegistrationStatusKey,
+): string {
   switch (status) {
-    case "Ro‘yxatdan o‘tish ochiq":
+    case "open":
       return "border-emerald-500/20 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300";
-
-    case "Ro‘yxatdan o‘tish shart emas":
+    case "not-required":
       return "border-brand/20 bg-brand/10 text-brand";
-
-    case "Joylar tugagan":
+    case "sold-out":
       return "border-amber-500/20 bg-amber-500/10 text-amber-700 dark:text-amber-300";
-
-    case "Ro‘yxatdan o‘tish yopilgan":
-      return "border-border-default bg-surface-muted text-text-muted";
-
+    case "closed":
     default:
       return "border-border-default bg-surface-muted text-text-muted";
   }
 }
 
-type EventDetailProps = {
+type EventDetailProps = Readonly<{
   label: string;
   icon: React.ReactNode;
   children: React.ReactNode;
-};
+}>;
 
 function EventDetail({
   label,
@@ -145,15 +150,10 @@ function EventDetail({
     <div className="flex items-start gap-3">
       <dt
         aria-label={label}
-        className="
-          flex size-9 shrink-0 items-center justify-center
-          rounded-xl border border-border-default
-          bg-surface-muted text-brand
-        "
+        className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-border-default bg-surface-muted text-brand"
       >
         {icon}
       </dt>
-
       <dd className="pt-1.5 text-sm leading-6 text-text-secondary">
         {children}
       </dd>
@@ -163,11 +163,16 @@ function EventDetail({
 
 export default function EventCard({
   event,
+  locale,
+  labels,
   index = 0,
 }: EventCardProps) {
   const href = `/events/${event.slug}`;
   const titleId = `event-${event.id}-title`;
-  const formattedDate = formatEventDateShort(event.startDate);
+  const formattedDate = formatEventDateShort(
+    event.startDate,
+    locale,
+  );
   const [day, ...monthParts] = formattedDate.split(" ");
   const month = monthParts.join(" ");
 
@@ -177,74 +182,33 @@ export default function EventCard({
       variant="interactive"
       padding="none"
       aria-labelledby={titleId}
-      className="
-        group relative isolate flex min-h-[520px]
-        flex-col overflow-hidden rounded-[2rem]
-        bg-surface animate-fade-in-up
-      "
+      className="group relative isolate flex min-h-[520px] flex-col overflow-hidden rounded-[2rem] bg-surface animate-fade-in-up"
       style={{
         animationDelay: `${index * 70}ms`,
       }}
     >
-      <div
-        className="
-          relative overflow-hidden
-          border-b border-white/10
-          bg-gradient-to-br
-          from-brand
-          via-indigo-700
-          to-slate-950
-          p-6 text-white sm:p-7
-        "
-      >
+      <div className="relative overflow-hidden border-b border-white/10 bg-gradient-to-br from-brand via-indigo-700 to-slate-950 p-6 text-white sm:p-7">
         <div
           aria-hidden="true"
-          className="
-            pointer-events-none absolute inset-0
-            bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.20),transparent_30%)]
-          "
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.20),transparent_30%)]"
         />
-
         <div
           aria-hidden="true"
-          className="
-            pointer-events-none absolute
-            -right-16 -top-20 size-52
-            rounded-full border border-white/10
-            transition-transform duration-700
-            group-hover:scale-125
-          "
+          className="pointer-events-none absolute -right-16 -top-20 size-52 rounded-full border border-white/10 transition-transform duration-700 group-hover:scale-125"
         />
-
         <div
           aria-hidden="true"
-          className="
-            pointer-events-none absolute
-            -bottom-24 -left-20 size-52
-            rounded-full bg-white/10 blur-3xl
-            transition-transform duration-700
-            group-hover:scale-125
-          "
+          className="pointer-events-none absolute -bottom-24 -left-20 size-52 rounded-full bg-white/10 blur-3xl transition-transform duration-700 group-hover:scale-125"
         />
 
         <div className="relative flex items-start justify-between gap-4">
           <time
             dateTime={event.startDate}
-            className="
-              flex min-h-16 min-w-16 flex-col
-              items-center justify-center
-              rounded-2xl border border-white/60
-              bg-white px-3 py-2
-              text-center text-slate-950
-              shadow-lg shadow-slate-950/15
-              transition-transform duration-300
-              group-hover:scale-105
-            "
+            className="flex min-h-16 min-w-16 flex-col items-center justify-center rounded-2xl border border-white/60 bg-white px-3 py-2 text-center text-slate-950 shadow-lg shadow-slate-950/15 transition-transform duration-300 group-hover:scale-105"
           >
             <span className="text-2xl font-bold leading-none">
               {day}
             </span>
-
             {month && (
               <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
                 {month}
@@ -254,10 +218,7 @@ export default function EventCard({
 
           <Badge
             variant="neutral"
-            className="
-              border-white/15 bg-white/10
-              text-white backdrop-blur-md
-            "
+            className="border-white/15 bg-white/10 text-white backdrop-blur-md"
           >
             {event.format}
           </Badge>
@@ -270,30 +231,16 @@ export default function EventCard({
 
           <h3
             id={titleId}
-            className="
-              mt-3 text-2xl font-bold
-              leading-tight tracking-[-0.025em]
-              text-white
-            "
+            className="mt-3 text-2xl font-bold leading-tight tracking-[-0.025em] text-white"
           >
             <Link
               href={href}
-              className="
-                outline-none
-                transition-opacity duration-200
-                hover:opacity-90
-                focus-visible:rounded-md
-                focus-visible:ring-2
-                focus-visible:ring-white
-                focus-visible:ring-offset-4
-                focus-visible:ring-offset-brand
-              "
+              className="outline-none transition-opacity duration-200 hover:opacity-90 focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-brand"
             >
               <span
                 aria-hidden="true"
                 className="absolute inset-0 z-20"
               />
-
               {event.title}
             </Link>
           </h3>
@@ -307,24 +254,25 @@ export default function EventCard({
 
         <dl className="mt-7 space-y-4">
           <EventDetail
-            label="Vaqt"
+            label={labels.time}
             icon={<ClockIcon className="size-[18px]" />}
           >
             {formatEventTime(
+              locale,
               event.startTime,
               event.endTime,
             )}
           </EventDetail>
 
           <EventDetail
-            label="Manzil"
+            label={labels.location}
             icon={<LocationIcon className="size-[18px]" />}
           >
-            {getEventLocation(event)}
+            {getEventLocation(event, locale)}
           </EventDetail>
 
           <EventDetail
-            label="Narx"
+            label={labels.price}
             icon={<PriceIcon className="size-[18px]" />}
           >
             {event.priceLabel}
@@ -333,11 +281,9 @@ export default function EventCard({
 
         <div className="mt-7">
           <span
-            className={`
-              inline-flex rounded-full border
-              px-3 py-1.5 text-xs font-semibold
-              ${getStatusStyles(event.registrationStatus)}
-            `}
+            className={`inline-flex rounded-full border px-3 py-1.5 text-xs font-semibold ${getStatusStyles(
+              event.registrationStatusKey,
+            )}`}
           >
             {event.registrationStatus}
           </span>
@@ -347,33 +293,19 @@ export default function EventCard({
           <div className="flex items-end justify-between gap-5 border-t border-border-default pt-5">
             <div className="min-w-0">
               <p className="text-xs font-medium uppercase tracking-[0.12em] text-text-muted">
-                Tadbir
+                {labels.event}
               </p>
-
               <p className="mt-1 text-sm font-semibold text-text-secondary">
-                Batafsil dastur va manzil
+                {labels.detailsDescription}
               </p>
             </div>
 
             <span
               aria-hidden="true"
-              className="
-                flex shrink-0 items-center gap-2
-                text-sm font-semibold text-brand
-                transition-all duration-300
-                group-hover:gap-3
-              "
+              className="flex shrink-0 items-center gap-2 text-sm font-semibold text-brand transition-all duration-300 group-hover:gap-3"
             >
-              Batafsil
-
-              <ArrowUpRightIcon
-                className="
-                  size-4
-                  transition-transform duration-300
-                  group-hover:translate-x-0.5
-                  group-hover:-translate-y-0.5
-                "
-              />
+              {labels.details}
+              <ArrowUpRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>
           </div>
         </div>
