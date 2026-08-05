@@ -14,8 +14,8 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
       uz: "Au Pair, FSJ, BFD, Ausbildung, Chancenkarte va boshqa qonuniy kelish yo‘llari.",
       de: "Au-pair, FSJ, BFD, Ausbildung, Chancenkarte und weitere legale Einreisewege.",
     },
-    articleCount: 0,
-    status: "coming-soon",
+    articleCount: 1,
+    status: "available",
     featured: true,
   },
   {

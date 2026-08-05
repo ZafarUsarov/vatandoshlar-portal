@@ -118,13 +118,25 @@ export default function GuideCategoryPage({
               {articles.map((article) => (
                 <article
                   key={article.id}
-                  className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+                  className="group relative isolate flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500/30"
                 >
                   <h2 className="text-xl font-bold">
-                    {article.title}
+                    <Link
+                      href={`/guide/${category.slug}/${article.slug}`}
+                      className="outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-0 z-10 rounded-3xl"
+                      />
+                      {article.title}
+                    </Link>
                   </h2>
-                  <p className="mt-3 leading-7 text-slate-600 dark:text-slate-400">
+                  <p className="mt-3 flex-1 leading-7 text-slate-600 dark:text-slate-400">
                     {article.excerpt}
+                  </p>
+                  <p className="mt-6 border-t border-slate-200 pt-5 text-sm font-semibold text-emerald-700 dark:border-slate-800 dark:text-emerald-300">
+                    {locale === "uz" ? "Maqolani ochish" : "Artikel öffnen"} →
                   </p>
                 </article>
               ))}
@@ -198,7 +210,7 @@ export default function GuideCategoryPage({
           <div className="mt-10">
             <Link
               href="/guide"
-              className="inline-flex min-h-12 items-center justify-center rounded-full bg-slate-950 px-6 py-3 font-semibold !text-white no-underline visited:!text-white hover:!text-white active:!text-white transition hover:-translate-y-0.5 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:bg-white dark:!text-slate-950 dark:visited:!text-slate-950 dark:hover:!text-slate-950 dark:active:!text-slate-950 dark:hover:bg-slate-100 dark:focus-visible:ring-offset-slate-950"
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-slate-950 px-6 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 dark:focus-visible:ring-offset-slate-950"
             >
               {copy.guideHome}
             </Link>
