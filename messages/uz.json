@@ -71,7 +71,8 @@
       "services": "Xizmatlar",
       "jobs": "Ish",
       "telegram": "Telegram",
-      "events": "Tadbirlar"
+      "events": "Tadbirlar",
+      "guide": "Qo‘llanma"
     },
     "navigationDescriptions": {
       "home": "Portalning asosiy sahifasi",
@@ -79,7 +80,8 @@
       "services": "Mutaxassis va xizmatlar katalogi",
       "jobs": "Ish qidirish va karyera qo‘llanmalari",
       "telegram": "Bundeslandlar bo‘yicha guruhlar",
-      "events": "Tekshirilgan uchrashuv va tadbirlar"
+      "events": "Tekshirilgan uchrashuv va tadbirlar",
+      "guide": "Germaniya bo‘yicha qo‘llanmalar"
     },
     "brand": {
       "subtitle": "Germaniyadagi o‘zbekistonliklar portali"

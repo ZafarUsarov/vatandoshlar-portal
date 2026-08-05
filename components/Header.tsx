@@ -148,6 +148,23 @@ function EventsIcon() {
   );
 }
 
+function GuideIcon() {
+  return (
+    <Icon>
+      <path
+        d="M5.25 4.75h5A2.75 2.75 0 0 1 13 7.5v11.75h-5A2.75 2.75 0 0 1 5.25 16.5V4.75Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M18.75 4.75h-3A2.75 2.75 0 0 0 13 7.5v11.75h3A2.75 2.75 0 0 0 18.75 16.5V4.75Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+}
+
 function SearchIcon() {
   return (
     <Icon>
@@ -277,6 +294,12 @@ export default function Header() {
       href: "/events",
       description: t("navigationDescriptions.events"),
       icon: <EventsIcon />,
+    },
+    {
+      name: t("navigation.guide"),
+      href: "/guide",
+      description: t("navigationDescriptions.guide"),
+      icon: <GuideIcon />,
     },
   ];
 
@@ -429,7 +452,7 @@ export default function Header() {
         <div
           className={`
             mx-auto flex max-w-[1380px]
-            items-center gap-5 px-4
+            items-center gap-3 px-4
             transition-[height] duration-300
             sm:px-6 lg:px-8
             ${isScrolled ? "h-16" : "h-20"}
@@ -485,8 +508,9 @@ export default function Header() {
 
               <span
                 className={`
-                  block overflow-hidden
+                  hidden overflow-hidden
                   text-[10px] font-semibold
+                  2xl:block
                   uppercase tracking-[0.16em]
                   text-slate-400
                   transition-all duration-300
@@ -504,7 +528,7 @@ export default function Header() {
 
           <nav
             aria-label={t("accessibility.mainNavigation")}
-            className="mx-auto hidden min-w-0 items-center gap-0.5 xl:flex"
+            className="mx-auto hidden min-w-0 items-center gap-0 xl:flex"
           >
             {navigation.map((item) => {
               const isActive = isActiveRoute(
@@ -519,13 +543,13 @@ export default function Header() {
                     isActive ? "page" : undefined
                   }
                   className={`
-                    relative rounded-xl
+                    relative shrink-0 whitespace-nowrap rounded-xl
                     text-sm font-semibold
                     transition-all duration-300
                     ${
                       isScrolled
-                        ? "px-3 py-2"
-                        : "px-3.5 py-2.5"
+                        ? "px-2.5 py-2"
+                        : "px-2.5 py-2.5"
                     }
                     ${
                       isActive

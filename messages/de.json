@@ -71,7 +71,8 @@
       "services": "Dienstleistungen",
       "jobs": "Arbeit",
       "telegram": "Telegram",
-      "events": "Veranstaltungen"
+      "events": "Veranstaltungen",
+      "guide": "Guide"
     },
     "navigationDescriptions": {
       "home": "Startseite des Portals",
@@ -79,7 +80,8 @@
       "services": "Verzeichnis von Fachkräften und Dienstleistungen",
       "jobs": "Jobsuche und Karriereinformationen",
       "telegram": "Gruppen nach Bundesland",
-      "events": "Geprüfte Treffen und Veranstaltungen"
+      "events": "Geprüfte Treffen und Veranstaltungen",
+      "guide": "Leitfäden für Deutschland"
     },
     "brand": {
       "subtitle": "Portal für Usbeken in Deutschland"
