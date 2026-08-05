@@ -169,3 +169,33 @@ export function getGuideCategories(
     featured: category.featured,
   }));
 }
+
+export function getGuideCategoryBySlug(
+  slug: string,
+  locale: SupportedGuideLocale,
+): GuideCategory | undefined {
+  const category = localizedGuideCategories.find(
+    (item) => item.slug === slug,
+  );
+
+  if (!category) {
+    return undefined;
+  }
+
+  return {
+    id: category.id,
+    slug: category.slug,
+    icon: category.icon,
+    title: category.title[locale],
+    description: category.description[locale],
+    articleCount: category.articleCount,
+    status: category.status,
+    featured: category.featured,
+  };
+}
+
+export function getGuideCategorySlugs(): ReadonlyArray<string> {
+  return localizedGuideCategories.map(
+    (category) => category.slug,
+  );
+}

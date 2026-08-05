@@ -39,3 +39,29 @@ export type LocalizedGuideCategory = Readonly<{
   status: GuideCategoryStatus;
   featured?: boolean;
 }>;
+
+export type GuideArticleStatus =
+  | "published"
+  | "draft";
+
+export type LocalizedGuideArticle = Readonly<{
+  id: string;
+  slug: string;
+  categorySlug: string;
+  title: Readonly<Record<SupportedGuideLocale, string>>;
+  excerpt: Readonly<Record<SupportedGuideLocale, string>>;
+  status: GuideArticleStatus;
+  featured?: boolean;
+  lastReviewedAt?: string;
+}>;
+
+export type GuideArticle = Readonly<{
+  id: string;
+  slug: string;
+  categorySlug: string;
+  title: string;
+  excerpt: string;
+  status: GuideArticleStatus;
+  featured?: boolean;
+  lastReviewedAt?: string;
+}>;

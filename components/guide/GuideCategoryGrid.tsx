@@ -5,12 +5,14 @@ type GuideCategoryGridProps = Readonly<{
   categories: ReadonlyArray<GuideCategory>;
   comingSoonLabel: string;
   articlesLabel: string;
+  openLabel: string;
 }>;
 
 export default function GuideCategoryGrid({
   categories,
   comingSoonLabel,
   articlesLabel,
+  openLabel,
 }: GuideCategoryGridProps) {
   return (
     <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
@@ -20,6 +22,7 @@ export default function GuideCategoryGrid({
           category={category}
           comingSoonLabel={comingSoonLabel}
           articlesLabel={articlesLabel}
+          openLabel={openLabel}
         />
       ))}
     </div>

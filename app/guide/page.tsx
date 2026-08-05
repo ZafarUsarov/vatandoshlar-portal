@@ -52,6 +52,7 @@ export default async function GuidePage() {
               "Har bir bo‘lim bosqichma-bosqich rasmiy manbalar asosidagi maqolalar bilan to‘ldiriladi.",
             comingSoon: "Tez orada",
             articles: "ta maqola",
+            open: "Ochish",
           },
           principles: {
             eyebrow: "Ishonchlilik",
@@ -98,6 +99,7 @@ export default async function GuidePage() {
               "Jeder Bereich wird schrittweise mit Artikeln auf Grundlage offizieller Quellen ergänzt.",
             comingSoon: "Demnächst",
             articles: "Artikel",
+            open: "Öffnen",
           },
           principles: {
             eyebrow: "Verlässlichkeit",
@@ -165,6 +167,7 @@ export default async function GuidePage() {
                 categories={categories}
                 comingSoonLabel={copy.categories.comingSoon}
                 articlesLabel={copy.categories.articles}
+                openLabel={copy.categories.open}
               />
             </div>
 
