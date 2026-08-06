@@ -125,7 +125,7 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
       uz: "Anmeldung, bank, Krankenkasse, Steuer-ID va Aufenthaltstitel bo‘yicha qadamlar.",
       de: "Schritte zu Anmeldung, Bankkonto, Krankenversicherung, Steuer-ID und Aufenthaltstitel.",
     },
-    articleCount: 1,
+    articleCount: 5,
     status: "available",
     featured: true,
   },

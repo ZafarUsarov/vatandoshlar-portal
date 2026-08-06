@@ -5532,6 +5532,1150 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
       "child-family-reunification",
     ],
   },
+
+  {
+    id: "anmeldung-guide",
+    slug: "anmeldung-guide",
+    categorySlug: "after-arrival",
+    title: {
+      uz: "Anmeldung: yashash manzilini ro‘yxatdan o‘tkazish",
+      de: "Anmeldung des Wohnsitzes in Deutschland",
+    },
+    excerpt: {
+      uz: "Germaniyada yashash manzilini ro‘yxatdan o‘tkazish: ikki haftalik muddat, Wohnungsgeberbestätigung, Bürgeramt, kerakli hujjatlar, Meldebescheinigung, Ummeldung, Abmeldung va keng tarqalgan xatolar.",
+      de: "Leitfaden zur Wohnsitzanmeldung: Zweiwochenfrist, Wohnungsgeberbestätigung, Bürgeramt, erforderliche Unterlagen, Meldebescheinigung, Ummeldung, Abmeldung und häufige Fehler.",
+    },
+    intro: {
+      uz: "Anmeldung — Germaniyada haqiqatan yashayotgan manzilingizni mas’ul Meldebehördeda rasmiy ro‘yxatdan o‘tkazish jarayoni. U Steuer-ID, bank, sug‘urta, Ausländerbehörde, telefon shartnomasi va ko‘plab boshqa xizmatlar uchun asosiy hujjatlardan biri bo‘lgan Meldebescheinigungni olishga xizmat qiladi.",
+      de: "Die Anmeldung ist die offizielle Registrierung der tatsächlich bewohnten Adresse bei der zuständigen Meldebehörde. Sie führt zur Meldebescheinigung, die häufig für Steuer-ID, Bank, Krankenversicherung, Ausländerbehörde, Mobilfunkvertrag und weitere Verfahren benötigt wird.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: { uz: "10 daqiqa", de: "10 Minuten" },
+    facts: [
+      {
+        label: { uz: "Muddat", de: "Frist" },
+        value: {
+          uz: "Odatda ko‘chib kirgandan keyin ikki hafta ichida",
+          de: "Grundsätzlich innerhalb von zwei Wochen nach Einzug",
+        },
+      },
+      {
+        label: { uz: "Asosiy hujjat", de: "Zentrales Dokument" },
+        value: {
+          uz: "Wohnungsgeberbestätigung",
+          de: "Wohnungsgeberbestätigung",
+        },
+      },
+      {
+        label: { uz: "Natija", de: "Ergebnis" },
+        value: {
+          uz: "Meldebescheinigung",
+          de: "Meldebescheinigung",
+        },
+      },
+      {
+        label: { uz: "Ko‘chish", de: "Umzug" },
+        value: {
+          uz: "Yangi manzilda qayta Anmeldung/Ummeldung qilinadi",
+          de: "Am neuen Wohnort erfolgt eine erneute Anmeldung/Ummeldung",
+        },
+      },
+      {
+        label: { uz: "Chet elga ketish", de: "Wegzug ins Ausland" },
+        value: {
+          uz: "Germaniyadan doimiy chiqishda Abmeldung kerak bo‘lishi mumkin",
+          de: "Bei dauerhaftem Wegzug ins Ausland kann eine Abmeldung erforderlich sein",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Anmeldung nima uchun kerak?",
+          de: "Wofür wird die Anmeldung benötigt?",
+        },
+        paragraphs: [
+          {
+            uz: "Anmeldung sizning Germaniyadagi rasmiy yashash manzilingizni davlat reyestriga kiritadi. Ro‘yxatdan keyin Meldebescheinigung beriladi va soliq identifikatsiya raqami odatda pochta orqali yuboriladi.",
+            de: "Mit der Anmeldung wird Ihre tatsächliche Wohnadresse im Melderegister erfasst. Anschließend erhalten Sie eine Meldebescheinigung; die Steuer-ID wird grundsätzlich automatisch postalisch mitgeteilt.",
+          },
+          {
+            uz: "Anmeldung faqat real yashayotgan manzilda amalga oshiriladi. Faqat xat olish yoki hujjat rasmiylashtirish uchun boshqa manzildan foydalanish Scheinanmeldung hisoblanishi mumkin.",
+            de: "Die Anmeldung erfolgt nur an der tatsächlich bewohnten Adresse. Eine Anmeldung lediglich für Postempfang oder Behördengänge kann eine unzulässige Scheinanmeldung darstellen.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Kim Anmeldung qilishi kerak?",
+          de: "Wer muss sich anmelden?",
+        },
+        items: [
+          {
+            uz: "Germaniyada yangi uy yoki xona egallagan shaxs",
+            de: "Personen, die in Deutschland eine Wohnung oder ein Zimmer beziehen",
+          },
+          {
+            uz: "Shu shahar ichida yoki boshqa shaharga ko‘chgan shaxs",
+            de: "Personen, die innerhalb derselben Stadt oder in eine andere Gemeinde umziehen",
+          },
+          {
+            uz: "WG yoki subarendaga ko‘chib kirgan shaxs",
+            de: "Personen, die in eine WG oder Untermiete einziehen",
+          },
+          {
+            uz: "Oila bilan kelgan har bir ro‘yxatdan o‘tuvchi shaxs",
+            de: "Jede meldepflichtige Person einer gemeinsam einreisenden Familie",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Wohnungsgeberbestätigung",
+          de: "Wohnungsgeberbestätigung",
+        },
+        paragraphs: [
+          {
+            uz: "Wohnungsgeberbestätigungni uy egasi yoki vakolatli Wohnungsgeber beradi. Unda manzil, ko‘chib kirish sanasi, ro‘yxatdan o‘tuvchi shaxslar va Wohnungsgeber ma’lumotlari bo‘ladi.",
+            de: "Die Wohnungsgeberbestätigung wird vom Vermieter oder berechtigten Wohnungsgeber ausgestellt. Sie enthält Anschrift, Einzugsdatum, meldepflichtige Personen und Angaben zum Wohnungsgeber.",
+          },
+          {
+            uz: "Ijara shartnomasi ushbu tasdiqning o‘rnini bosmaydi. Wohnungsgeber hujjatni bermasa, Meldebehördega darhol xabar berish tavsiya etiladi.",
+            de: "Der Mietvertrag ersetzt diese Bestätigung nicht. Verweigert der Wohnungsgeber die Ausstellung, sollte die Meldebehörde unverzüglich informiert werden.",
+          },
+        ],
+        items: [
+          {
+            uz: "Subarendada asosiy ijarachi vakolatli bo‘lsa Wohnungsgeber bo‘lishi mumkin.",
+            de: "Bei Untermiete kann der Hauptmieter als Wohnungsgeber handeln, wenn er dazu berechtigt ist.",
+          },
+          {
+            uz: "Ko‘chib kirish sanasi shartnoma sanasi bilan har doim bir xil bo‘lavermaydi.",
+            de: "Das Einzugsdatum ist nicht zwingend identisch mit dem Vertragsdatum.",
+          },
+          {
+            uz: "Soxta Wohnungsgeberbestätigungdan foydalanmang.",
+            de: "Verwenden Sie keine gefälschte Wohnungsgeberbestätigung.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Kerakli hujjatlar",
+          de: "Erforderliche Unterlagen",
+        },
+        items: [
+          {
+            uz: "Pasport yoki tan olinadigan shaxsni tasdiqlovchi hujjat",
+            de: "Reisepass oder anerkanntes Identitätsdokument",
+          },
+          {
+            uz: "Viza yoki Aufenthaltstitel — mavjud bo‘lsa",
+            de: "Visum oder Aufenthaltstitel, soweit vorhanden",
+          },
+          {
+            uz: "Wohnungsgeberbestätigung",
+            de: "Wohnungsgeberbestätigung",
+          },
+          {
+            uz: "Shahar talab qilsa Anmeldung formasi",
+            de: "Anmeldeformular, sofern von der Kommune verlangt",
+          },
+          {
+            uz: "Oila uchun nikoh va tug‘ilganlik hujjatlari — zarur holatlarda",
+            de: "Für Familien gegebenenfalls Ehe- und Geburtsurkunden",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Ummeldung va Abmeldung",
+          de: "Ummeldung und Abmeldung",
+        },
+        paragraphs: [
+          {
+            uz: "Germaniya ichida yangi manzilga ko‘chganda odatda yangi manzilda Anmeldung qilinadi; eski manzil alohida bekor qilinmaydi. Mahalliy xizmat nomi ko‘pincha Ummeldung deb ataladi.",
+            de: "Bei einem Umzug innerhalb Deutschlands erfolgt grundsätzlich die Anmeldung am neuen Wohnort; die bisherige Adresse wird regelmäßig automatisch abgemeldet. Lokal wird dies oft als Ummeldung bezeichnet.",
+          },
+          {
+            uz: "Germaniyadan doimiy ravishda chet elga ko‘chib ketganda va Germaniyada boshqa uy qolmasa, Abmeldung talab qilinadi.",
+            de: "Bei dauerhaftem Wegzug ins Ausland ohne weitere Wohnung in Deutschland ist eine Abmeldung erforderlich.",
+          },
+        ],
+        items: [
+          {
+            uz: "Termin kech bo‘lsa bron tasdig‘ini saqlang.",
+            de: "Bewahren Sie bei spätem Termin die Buchungsbestätigung auf.",
+          },
+          {
+            uz: "Meldebescheinigung nusxalarini xavfsiz saqlang.",
+            de: "Bewahren Sie Kopien der Meldebescheinigung sicher auf.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Ko‘p uchraydigan xatolar",
+          de: "Häufige Fehler",
+        },
+        items: [
+          {
+            uz: "Ijara shartnomasini Wohnungsgeberbestätigung deb o‘ylash",
+            de: "Den Mietvertrag mit der Wohnungsgeberbestätigung verwechseln",
+          },
+          {
+            uz: "Real yashamaydigan manzilga Anmeldung qilish",
+            de: "Anmeldung an einer tatsächlich nicht bewohnten Adresse",
+          },
+          {
+            uz: "Pasportdagi ism-familiyani noto‘g‘ri kiritish",
+            de: "Fehlerhafte Übernahme von Namen aus dem Reisepass",
+          },
+          {
+            uz: "Ko‘chib o‘tgach eski manzil ma’lumotidan foydalanishda davom etish",
+            de: "Nach Umzug weiterhin die alte Adresse verwenden",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: { uz: "Manzilni tasdiqlang", de: "Adresse klären" },
+        description: {
+          uz: "Uyda Anmeldung mumkinligini va Wohnungsgeberbestätigung berilishini oldindan tekshiring.",
+          de: "Prüfen Sie vorab, ob eine Anmeldung möglich ist und die Wohnungsgeberbestätigung ausgestellt wird.",
+        },
+      },
+      {
+        title: { uz: "Termin oling", de: "Termin buchen" },
+        description: {
+          uz: "Bürgeramt yoki Meldebehörde rasmiy tizimidan termin oling.",
+          de: "Buchen Sie einen Termin über das offizielle System von Bürgeramt oder Meldebehörde.",
+        },
+      },
+      {
+        title: { uz: "Hujjatlarni tayyorlang", de: "Unterlagen vorbereiten" },
+        description: {
+          uz: "Pasport, Wohnungsgeberbestätigung va mahalliy formani tayyorlang.",
+          de: "Bereiten Sie Pass, Wohnungsgeberbestätigung und lokales Formular vor.",
+        },
+      },
+      {
+        title: { uz: "Ro‘yxatdan o‘ting", de: "Anmeldung durchführen" },
+        description: {
+          uz: "Ma’lumotlarni tekshirib, Meldebescheinigungni oling.",
+          de: "Prüfen Sie die Daten und nehmen Sie die Meldebescheinigung entgegen.",
+        },
+      },
+      {
+        title: { uz: "Keyingi jarayonlarni boshlang", de: "Folgeverfahren starten" },
+        description: {
+          uz: "Steuer-ID, bank, sug‘urta va Ausländerbehörde ishlarini davom ettiring.",
+          de: "Führen Sie Steuer-ID-, Bank-, Versicherungs- und Ausländerbehördenverfahren fort.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Anmeldungni ikki haftadan kech qilsam nima bo‘ladi?",
+          de: "Was passiert bei verspäteter Anmeldung?",
+        },
+        answer: {
+          uz: "Meldepflicht buzilishi jarima yoki boshqa ma’muriy muammolarga olib kelishi mumkin. Termin kech bo‘lsa, o‘z vaqtida bron qilganingizni saqlang.",
+          de: "Ein Verstoß gegen die Meldepflicht kann zu Bußgeld oder Verwaltungsproblemen führen. Bewahren Sie bei später Terminvergabe den rechtzeitigen Buchungsnachweis auf.",
+        },
+      },
+      {
+        question: {
+          uz: "Mehmonxonada Anmeldung mumkinmi?",
+          de: "Ist eine Anmeldung im Hotel möglich?",
+        },
+        answer: {
+          uz: "Faqat turar joy rasmiy Wohnungsgeberbestätigung bera olsa va manzil ro‘yxatdan o‘tishga mos bo‘lsa.",
+          de: "Nur wenn die Unterkunft eine Wohnungsgeberbestätigung ausstellen kann und als Meldeadresse geeignet ist.",
+        },
+      },
+      {
+        question: {
+          uz: "Germaniya ichida ko‘chganda Abmeldung kerakmi?",
+          de: "Brauche ich bei Umzug innerhalb Deutschlands eine Abmeldung?",
+        },
+        answer: {
+          uz: "Odatda yo‘q. Yangi manzilda Anmeldung/Ummeldung qilinadi va eski manzil avtomatik yangilanadi.",
+          de: "Grundsätzlich nein. Sie melden sich am neuen Wohnort an; die alte Adresse wird regelmäßig automatisch aktualisiert.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Wohnsitz anmelden",
+        organization: "Bundesportal",
+        url: "https://verwaltung.bund.de/leistungsverzeichnis/de/leistung/99115005104001",
+        language: "de",
+      },
+      {
+        title: "Umzug: neue Wohnung online anmelden",
+        organization: "Bundesportal",
+        url: "https://verwaltung.bund.de/portal/DE/info-pages/umzug",
+        language: "de",
+      },
+      {
+        title: "Housing and registration",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/living-in-germany/housing-mobility/housing-registration",
+        language: "en",
+      },
+    ],
+    relatedArticleSlugs: ["first-steps-after-arrival"],
+  },
+  {
+    id: "health-insurance-guide",
+    slug: "health-insurance-guide",
+    categorySlug: "after-arrival",
+    title: {
+      uz: "Germaniyada tibbiy sug‘urta",
+      de: "Krankenversicherung in Deutschland",
+    },
+    excerpt: {
+      uz: "Germaniyadagi majburiy tibbiy sug‘urta: gesetzlich va privat tizimlari, ishchilar, talabalar, oila a’zolari, Chancenkarte egalari, Familienversicherung, Krankenkasse tanlash va keng tarqalgan xatolar.",
+      de: "Leitfaden zur Krankenversicherungspflicht: gesetzliche und private Versicherung, Beschäftigte, Studierende, Familienangehörige, Chancenkarte, Familienversicherung, Kassenwahl und häufige Fehler.",
+    },
+    intro: {
+      uz: "Germaniyada tibbiy sug‘urta majburiy. Qaysi tizimga kirishingiz — gesetzliche Krankenversicherung yoki private Krankenversicherung — ish, daromad, talabalik, oilaviy holat va yashash maqomiga bog‘liq. Viza uchun ishlatilgan vaqtinchalik sug‘urta Germaniyadagi uzoq muddatli sug‘urta o‘rnini har doim bosa olmaydi.",
+      de: "In Deutschland besteht Krankenversicherungspflicht. Ob gesetzliche oder private Krankenversicherung in Betracht kommt, hängt von Beschäftigung, Einkommen, Studium, Familiensituation und Aufenthaltsstatus ab. Eine für das Visum verwendete Übergangsversicherung ersetzt nicht immer den langfristig erforderlichen Schutz.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: { uz: "11 daqiqa", de: "11 Minuten" },
+    facts: [
+      {
+        label: { uz: "Majburiyat", de: "Pflicht" },
+        value: {
+          uz: "Germaniyada yashovchilar uchun tibbiy sug‘urta majburiy",
+          de: "Für Personen mit Wohnsitz in Deutschland besteht Krankenversicherungspflicht",
+        },
+      },
+      {
+        label: { uz: "Asosiy tizimlar", de: "Systeme" },
+        value: {
+          uz: "Gesetzliche va private Krankenversicherung",
+          de: "Gesetzliche und private Krankenversicherung",
+        },
+      },
+      {
+        label: { uz: "Ishchilar", de: "Beschäftigte" },
+        value: {
+          uz: "Ko‘pchilik ijtimoiy sug‘urtali xodimlar GKVga kiradi",
+          de: "Die meisten sozialversicherungspflichtig Beschäftigten sind in der GKV",
+        },
+      },
+      {
+        label: { uz: "Oila", de: "Familie" },
+        value: {
+          uz: "Shartlar bajarilsa GKVda beitragsfreie Familienversicherung mumkin",
+          de: "Unter Voraussetzungen ist beitragsfreie Familienversicherung in der GKV möglich",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "GKV va PKV farqi",
+          de: "Unterschied zwischen GKV und PKV",
+        },
+        paragraphs: [
+          {
+            uz: "Gesetzliche Krankenversicherung badali odatda daromadga bog‘liq va xizmatlar qonuniy minimumga asoslanadi. Private Krankenversicherung badali esa tarif, yosh, sog‘liq va tanlangan xizmatlarga bog‘liq.",
+            de: "Beiträge der gesetzlichen Krankenversicherung richten sich grundsätzlich nach dem Einkommen; Leistungen basieren auf gesetzlichen Vorgaben. In der privaten Krankenversicherung hängen Beiträge von Tarif, Alter, Gesundheit und Leistungsumfang ab.",
+          },
+          {
+            uz: "PKV har doim «yaxshiroq» yoki «arzonroq» degani emas. Keyinchalik GKVga qaytish qiyin bo‘lishi mumkin, ayniqsa yoshi katta yoki mustaqil shaxslar uchun.",
+            de: "PKV ist nicht automatisch besser oder günstiger. Eine spätere Rückkehr in die GKV kann schwierig sein, besonders bei höherem Alter oder Selbstständigkeit.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Turli guruhlar uchun holat",
+          de: "Situation verschiedener Gruppen",
+        },
+        items: [
+          {
+            uz: "Ijtimoiy sug‘urtali xodimlar odatda Krankenkasseni o‘zlari tanlaydi va ish beruvchi ro‘yxatdan o‘tkazadi",
+            de: "Sozialversicherungspflichtig Beschäftigte wählen grundsätzlich ihre Krankenkasse; der Arbeitgeber meldet sie an",
+          },
+          {
+            uz: "Talabalar studentische Krankenversicherung yoki tegishli boshqa qoidaga tushadi",
+            de: "Studierende fallen regelmäßig unter die studentische Krankenversicherung oder passende Sonderregelungen",
+          },
+          {
+            uz: "Oila birlashtirish bilan kelganlar Familienversicherungga mos kelishi mumkin",
+            de: "Nachgezogene Familienangehörige können die Voraussetzungen der Familienversicherung erfüllen",
+          },
+          {
+            uz: "Chancenkarte yoki ish qidirish davrida yetarli mustaqil sug‘urta talab qilinadi",
+            de: "Während Chancenkarte oder Arbeitssuche ist eigenständiger ausreichender Versicherungsschutz erforderlich",
+          },
+          {
+            uz: "Mustaqil ishlovchilar GKV yoki PKV variantlarini individual tekshiradi",
+            de: "Selbstständige prüfen GKV- und PKV-Möglichkeiten individuell",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Krankenkasse tanlash",
+          de: "Krankenkasse auswählen",
+        },
+        paragraphs: [
+          {
+            uz: "GKV kassalarining asosiy qonuniy xizmatlari o‘xshash, lekin Zusatzbeitrag, qo‘shimcha bonuslar, servis tili, ilova va filiallar farq qiladi.",
+            de: "Die gesetzlichen Grundleistungen ähneln sich, Unterschiede bestehen bei Zusatzbeitrag, Bonusprogrammen, Service, App und Filialnetz.",
+          },
+          {
+            uz: "Faqat reklama yoki vositachi tavsiyasiga emas, rasmiy tarif, xizmat va bekor qilish shartlariga qarang.",
+            de: "Entscheiden Sie nicht allein nach Werbung oder Vermittlerempfehlung, sondern anhand offizieller Beiträge, Leistungen und Wechselbedingungen.",
+          },
+        ],
+        items: [
+          {
+            uz: "Sug‘urta boshlanish sanasi ish yoki o‘qish boshlanishiga mos bo‘lsin.",
+            de: "Der Versicherungsbeginn muss zu Beschäftigungs- oder Studienbeginn passen.",
+          },
+          {
+            uz: "Ism, manzil va tug‘ilgan sana hujjatlar bilan mos bo‘lsin.",
+            de: "Name, Adresse und Geburtsdatum müssen mit den Unterlagen übereinstimmen.",
+          },
+          {
+            uz: "Elektron Gesundheitskarte kelguncha vaqtinchalik tasdiqni saqlang.",
+            de: "Bewahren Sie bis zur Gesundheitskarte eine vorläufige Mitgliedsbestätigung auf.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Odatda kerak bo‘ladigan ma’lumotlar",
+          de: "Üblicherweise erforderliche Angaben",
+        },
+        items: [
+          {
+            uz: "Pasport va Aufenthaltstitel yoki viza",
+            de: "Reisepass und Aufenthaltstitel oder Visum",
+          },
+          {
+            uz: "Meldebescheinigung yoki Germaniyadagi manzil",
+            de: "Meldebescheinigung oder deutsche Anschrift",
+          },
+          {
+            uz: "Ish yoki Ausbildung shartnomasi",
+            de: "Arbeits- oder Ausbildungsvertrag",
+          },
+          {
+            uz: "Talabalar uchun Immatrikulationsbescheinigung",
+            de: "Für Studierende Immatrikulationsbescheinigung",
+          },
+          {
+            uz: "Oila sug‘urtasi uchun nikoh va tug‘ilganlik hujjatlari",
+            de: "Für Familienversicherung Ehe- und Geburtsurkunden",
+          },
+          {
+            uz: "Oldingi sug‘urta haqida ma’lumot — mavjud bo‘lsa",
+            de: "Angaben zur bisherigen Versicherung, soweit vorhanden",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Familienversicherung va ish boshlash",
+          de: "Familienversicherung und Arbeitsbeginn",
+        },
+        paragraphs: [
+          {
+            uz: "GKVda turmush o‘rtog‘i va farzandlar shartlar bajarilganda qo‘shimcha badalsiz Familienversicherungga qo‘shilishi mumkin. Daromad, boshqa sug‘urta va oilaviy munosabatlar tekshiriladi.",
+            de: "In der GKV können Ehegatten und Kinder unter Voraussetzungen beitragsfrei familienversichert werden. Einkommen, anderweitige Versicherung und Familienverhältnis werden geprüft.",
+          },
+          {
+            uz: "Ish beruvchi sizni ijtimoiy sug‘urta tizimiga ro‘yxatdan o‘tkazishi uchun tanlangan Krankenkasse ma’lumotini o‘z vaqtida yuboring.",
+            de: "Übermitteln Sie dem Arbeitgeber rechtzeitig die gewählte Krankenkasse, damit die Sozialversicherungsmeldung erfolgen kann.",
+          },
+        ],
+        items: [
+          {
+            uz: "Sug‘urta bo‘shlig‘iga yo‘l qo‘ymang.",
+            de: "Vermeiden Sie Versicherungslücken.",
+          },
+          {
+            uz: "Viza sug‘urtasi qachon tugashini tekshiring.",
+            de: "Prüfen Sie das Ende der Visum- oder Übergangsversicherung.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Ko‘p uchraydigan xatolar",
+          de: "Häufige Fehler",
+        },
+        items: [
+          {
+            uz: "Sayohat sug‘urtasini doimiy Krankenkasse deb qabul qilish",
+            de: "Reisekrankenversicherung mit dauerhaftem Krankenversicherungsschutz verwechseln",
+          },
+          {
+            uz: "PKVga uzoq muddatli oqibatlarni tushunmasdan kirish",
+            de: "PKV ohne Verständnis langfristiger Folgen wählen",
+          },
+          {
+            uz: "Ish beruvchiga Krankenkasse ma’lumotini kech yuborish",
+            de: "Krankenkassendaten verspätet an den Arbeitgeber senden",
+          },
+          {
+            uz: "Sug‘urta xatlarini e’tiborsiz qoldirish",
+            de: "Schreiben der Krankenversicherung ignorieren",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: { uz: "Maqomingizni aniqlang", de: "Status klären" },
+        description: {
+          uz: "Ishchi, talaba, oila a’zosi yoki ish qidiruvchi sifatida qaysi qoida tegishli ekanini aniqlang.",
+          de: "Klären Sie, welche Regeln als Beschäftigter, Studierender, Familienangehöriger oder Arbeitssuchender gelten.",
+        },
+      },
+      {
+        title: { uz: "Variantlarni solishtiring", de: "Optionen vergleichen" },
+        description: {
+          uz: "GKV kassalari yoki zarur bo‘lsa PKV tariflarini rasmiy ma’lumot bilan solishtiring.",
+          de: "Vergleichen Sie GKV-Kassen oder erforderlichenfalls PKV-Tarife anhand offizieller Angaben.",
+        },
+      },
+      {
+        title: { uz: "Ro‘yxatdan o‘ting", de: "Mitgliedschaft beantragen" },
+        description: {
+          uz: "Hujjatlarni yuboring va yozma Mitgliedsbescheinigung oling.",
+          de: "Reichen Sie Unterlagen ein und lassen Sie sich die Mitgliedschaft schriftlich bestätigen.",
+        },
+      },
+      {
+        title: { uz: "Ish beruvchi yoki universitetga yuboring", de: "Nachweis übermitteln" },
+        description: {
+          uz: "Sug‘urta ma’lumotini ish beruvchi yoki universitetga taqdim eting.",
+          de: "Übermitteln Sie den Versicherungsnachweis an Arbeitgeber oder Hochschule.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Germaniyada tibbiy sug‘urta majburiymi?",
+          de: "Ist Krankenversicherung in Deutschland Pflicht?",
+        },
+        answer: {
+          uz: "Ha. Germaniyada yashovchilar uchun yetarli tibbiy sug‘urta talab qilinadi.",
+          de: "Ja. Für Personen mit Wohnsitz in Deutschland ist ausreichender Krankenversicherungsschutz erforderlich.",
+        },
+      },
+      {
+        question: {
+          uz: "Qaysi Krankenkasseni tanlashim kerak?",
+          de: "Welche Krankenkasse soll ich wählen?",
+        },
+        answer: {
+          uz: "Bu xizmat, Zusatzbeitrag, til, ilova va shaxsiy ehtiyojga bog‘liq. Rasmiy shartlarni solishtiring.",
+          de: "Das hängt von Zusatzbeitrag, Service, Sprache, App und persönlichem Bedarf ab. Vergleichen Sie offizielle Konditionen.",
+        },
+      },
+      {
+        question: {
+          uz: "Turmush o‘rtog‘im Familienversicherungga kira oladimi?",
+          de: "Kann mein Ehegatte familienversichert werden?",
+        },
+        answer: {
+          uz: "GKVda daromad va boshqa shartlar bajarilsa mumkin.",
+          de: "In der GKV ist dies möglich, wenn Einkommens- und weitere Voraussetzungen erfüllt sind.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Health insurance",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/living-in-germany/money-insurance/health-insurance",
+        language: "en",
+      },
+      {
+        title: "Social security",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/living-in-germany/money-insurance/social-security",
+        language: "en",
+      },
+    ],
+    relatedArticleSlugs: [
+      "first-steps-after-arrival",
+      "anmeldung-guide",
+    ],
+  },
+  {
+    id: "bank-account-guide",
+    slug: "bank-account-guide",
+    categorySlug: "after-arrival",
+    title: {
+      uz: "Germaniyada bank hisobi ochish",
+      de: "Bankkonto in Deutschland eröffnen",
+    },
+    excerpt: {
+      uz: "Germaniyada Girokonto yoki Basiskonto ochish: kerakli hujjatlar, IBAN, kartalar, to‘lovlar, onlayn va an’anaviy banklar, Basiskontoga bo‘lgan huquq, firibgarlikdan himoyalanish va bank tanlash mezonlari.",
+      de: "Leitfaden zur Eröffnung von Girokonto oder Basiskonto: Unterlagen, IBAN, Karten, Gebühren, Direkt- und Filialbanken, Recht auf ein Basiskonto, Betrugsschutz und Auswahlkriterien.",
+    },
+    intro: {
+      uz: "Germaniyada ish haqi, ijara, sug‘urta, telefon va kundalik to‘lovlar uchun Girokonto deyarli zarur. Odatdagi bank hisobi ochilmasa, qonuniy shartlarga mos shaxslar asosiy funksiyalarga ega Basiskontoni so‘rashi mumkin.",
+      de: "Ein Girokonto ist für Gehalt, Miete, Versicherungen, Mobilfunk und alltägliche Zahlungen praktisch unverzichtbar. Wird ein gewöhnliches Konto nicht eröffnet, können berechtigte Personen ein Basiskonto mit grundlegenden Zahlungsfunktionen beantragen.",
+    },
+    status: "published",
+    featured: false,
+    lastReviewedAt: "2026-08-06",
+    readingTime: { uz: "10 daqiqa", de: "10 Minuten" },
+    facts: [
+      {
+        label: { uz: "Asosiy hisob", de: "Standardkonto" },
+        value: { uz: "Girokonto", de: "Girokonto" },
+      },
+      {
+        label: { uz: "Minimal imkoniyat", de: "Grundversorgung" },
+        value: {
+          uz: "Shartlar bajarilsa Basiskontoga qonuniy huquq",
+          de: "Unter Voraussetzungen gesetzlicher Anspruch auf ein Basiskonto",
+        },
+      },
+      {
+        label: { uz: "Asosiy raqam", de: "Kontokennung" },
+        value: { uz: "IBAN", de: "IBAN" },
+      },
+      {
+        label: { uz: "Xavfsizlik", de: "Sicherheit" },
+        value: {
+          uz: "PIN, TAN va login ma’lumotlarini hech kimga bermang",
+          de: "PIN, TAN und Zugangsdaten niemals weitergeben",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Girokonto va Basiskonto",
+          de: "Girokonto und Basiskonto",
+        },
+        paragraphs: [
+          {
+            uz: "Girokonto bankning odatiy kundalik hisobidir. Basiskonto esa naqd pul kiritish va yechish, Überweisung, Lastschrift va karta orqali to‘lov kabi asosiy funksiyalarni ta’minlashi kerak.",
+            de: "Das Girokonto ist das übliche Zahlungskonto. Ein Basiskonto muss grundlegende Funktionen wie Ein- und Auszahlungen, Überweisungen, Lastschriften und Kartenzahlungen ermöglichen.",
+          },
+          {
+            uz: "Basiskonto har doim bepul emas; bank maqbul hisob yuritish to‘lovi olishi mumkin.",
+            de: "Ein Basiskonto ist nicht zwingend kostenlos; die Bank darf ein angemessenes Kontoführungsentgelt verlangen.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Qaysi hisob sizga mos?",
+          de: "Welches Konto passt?",
+        },
+        items: [
+          {
+            uz: "Filial banki — yuzma-yuz xizmat va naqd pul operatsiyalari muhim bo‘lsa",
+            de: "Filialbank – wenn persönliche Beratung und Bargeldservice wichtig sind",
+          },
+          {
+            uz: "Onlayn bank — mobil boshqaruv va pastroq to‘lov muhim bo‘lsa",
+            de: "Direktbank – wenn digitale Nutzung und niedrige Gebühren wichtig sind",
+          },
+          {
+            uz: "Basiskonto — oddiy Girokonto ochilishi rad etilsa va qonuniy shartlar bajarilsa",
+            de: "Basiskonto – wenn ein gewöhnliches Girokonto abgelehnt wird und die gesetzlichen Voraussetzungen erfüllt sind",
+          },
+          {
+            uz: "Student yoki Azubi hisobi — yosh va maqomga oid imtiyozlar bo‘lsa",
+            de: "Studierenden- oder Azubi-Konto – bei alters- oder statusbezogenen Vergünstigungen",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Bank tanlash mezonlari",
+          de: "Kriterien bei der Bankwahl",
+        },
+        items: [
+          {
+            uz: "Hisob yuritish oylik to‘lovi",
+            de: "Monatliches Kontoführungsentgelt",
+          },
+          {
+            uz: "Debit, Girocard yoki kredit karta narxi",
+            de: "Kosten für Debitkarte, Girocard oder Kreditkarte",
+          },
+          {
+            uz: "Naqd pul yechish tarmog‘i va to‘lovlari",
+            de: "Geldautomatennetz und Abhebegebühren",
+          },
+          {
+            uz: "Xorijga va O‘zbekistonga pul o‘tkazish xarajatlari",
+            de: "Kosten für Auslandsüberweisungen",
+          },
+          {
+            uz: "Ilova, ikki bosqichli himoya va mijozlarga xizmat",
+            de: "App, Zwei-Faktor-Schutz und Kundenservice",
+          },
+          {
+            uz: "Dispozredit va overdraft foizi",
+            de: "Dispozins und Überziehungskosten",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Odatda kerak bo‘ladigan hujjatlar",
+          de: "Üblicherweise erforderliche Unterlagen",
+        },
+        items: [
+          {
+            uz: "Pasport",
+            de: "Reisepass",
+          },
+          {
+            uz: "Viza yoki Aufenthaltstitel",
+            de: "Visum oder Aufenthaltstitel",
+          },
+          {
+            uz: "Meldebescheinigung — bank talabiga qarab",
+            de: "Meldebescheinigung – abhängig von der Bank",
+          },
+          {
+            uz: "Steuer-ID — mavjud bo‘lsa yoki keyinroq taqdim etish uchun",
+            de: "Steuer-ID – soweit vorhanden oder später nachzureichen",
+          },
+          {
+            uz: "VideoIdent yoki PostIdent uchun mos hujjat",
+            de: "Geeignetes Dokument für VideoIdent oder PostIdent",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "IBAN, karta va Lastschrift",
+          de: "IBAN, Karte und Lastschrift",
+        },
+        paragraphs: [
+          {
+            uz: "IBAN ish beruvchi, ijara, sug‘urta va boshqa to‘lovlar uchun ishlatiladi. Lastschrift tashkilotga hisobdan avtomatik yechib olishga ruxsat beradi; noto‘g‘ri yechimlarni muntazam tekshiring.",
+            de: "Die IBAN wird für Gehalt, Miete, Versicherungen und weitere Zahlungen genutzt. Eine Lastschrift erlaubt den automatischen Einzug; kontrollieren Sie Kontobewegungen regelmäßig.",
+          },
+          {
+            uz: "Debit karta to‘lovni odatda hisobdan tez yechadi. Kredit kartada esa alohida hisob-kitob va qarz shartlari bo‘lishi mumkin.",
+            de: "Bei Debitkarten erfolgt die Belastung grundsätzlich zeitnah vom Konto. Kreditkarten können eigene Abrechnungs- und Kreditbedingungen haben.",
+          },
+        ],
+        items: [
+          {
+            uz: "Hisobdan yechilgan to‘lovlarni muntazam tekshiring.",
+            de: "Kontrollieren Sie Abbuchungen regelmäßig.",
+          },
+          {
+            uz: "Keraksiz Dispokreditni faollashtirmang.",
+            de: "Aktivieren Sie keinen unnötigen Dispositionskredit.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Firibgarlikdan himoyalanish",
+          de: "Schutz vor Betrug",
+        },
+        items: [
+          {
+            uz: "Bank hech qachon PIN yoki to‘liq TANni telefon orqali so‘ramaydi.",
+            de: "Eine Bank verlangt telefonisch niemals PIN oder vollständige TAN.",
+          },
+          {
+            uz: "Phishing emaildagi link orqali bankka kirmang.",
+            de: "Öffnen Sie Onlinebanking nicht über Links aus Phishing-E-Mails.",
+          },
+          {
+            uz: "Noma’lum ish beruvchiga bank loginini bermang.",
+            de: "Geben Sie unbekannten Arbeitgebern keine Onlinebanking-Zugangsdaten.",
+          },
+          {
+            uz: "Hisobingizni boshqa shaxsga pul aylantirish uchun bermang.",
+            de: "Stellen Sie Ihr Konto nicht für Geldtransfers fremder Personen zur Verfügung.",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: { uz: "Banklarni solishtiring", de: "Banken vergleichen" },
+        description: {
+          uz: "To‘lov, karta, naqd pul va xalqaro transfer shartlarini solishtiring.",
+          de: "Vergleichen Sie Gebühren, Karten, Bargeldservice und Auslandsüberweisungen.",
+        },
+      },
+      {
+        title: { uz: "Hujjatlarni tayyorlang", de: "Unterlagen vorbereiten" },
+        description: {
+          uz: "Pasport, Aufenthaltstitel va manzil hujjatini tayyorlang.",
+          de: "Bereiten Sie Pass, Aufenthaltstitel und Adressnachweis vor.",
+        },
+      },
+      {
+        title: { uz: "Identifikatsiyadan o‘ting", de: "Identität bestätigen" },
+        description: {
+          uz: "Filial, VideoIdent yoki PostIdent orqali shaxsingizni tasdiqlang.",
+          de: "Bestätigen Sie Ihre Identität in Filiale, per VideoIdent oder PostIdent.",
+        },
+      },
+      {
+        title: { uz: "Xavfsizlikni sozlang", de: "Sicherheit einrichten" },
+        description: {
+          uz: "Kuchli parol va ikki bosqichli himoyani yoqing.",
+          de: "Aktivieren Sie starkes Passwort und Zwei-Faktor-Authentifizierung.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Meldebescheinigungsiz bank hisobi ochsa bo‘ladimi?",
+          de: "Kann ich ohne Meldebescheinigung ein Konto eröffnen?",
+        },
+        answer: {
+          uz: "Ba’zi banklarda mumkin, boshqalarida esa talab qilinadi. Bankning rasmiy hujjatlar ro‘yxatini tekshiring.",
+          de: "Bei einigen Banken ist dies möglich, andere verlangen sie. Prüfen Sie die offizielle Unterlagenliste der Bank.",
+        },
+      },
+      {
+        question: {
+          uz: "Basiskonto bepulmi?",
+          de: "Ist ein Basiskonto kostenlos?",
+        },
+        answer: {
+          uz: "Majburiy ravishda bepul emas. Bank maqbul hisob yuritish to‘lovi olishi mumkin.",
+          de: "Nicht zwingend. Die Bank darf ein angemessenes Kontoführungsentgelt verlangen.",
+        },
+      },
+      {
+        question: {
+          uz: "Bank Basiskontoni rad etsa nima qilaman?",
+          de: "Was tun bei Ablehnung eines Basiskontos?",
+        },
+        answer: {
+          uz: "Yozma rad javobini so‘rang va BaFin yoki iste’molchilar maslahat markaziga murojaat qilish imkoniyatini tekshiring.",
+          de: "Verlangen Sie eine schriftliche Ablehnung und prüfen Sie eine Beschwerde bei BaFin oder Verbraucherzentrale.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Girokonto: Was Sie wissen sollten",
+        organization: "Verbraucherzentrale",
+        url: "https://www.verbraucherzentrale.de/wissen/geld-versicherungen/sparen-und-anlegen/girokonto-was-sie-darueber-wissen-sollten-4990",
+        language: "de",
+      },
+      {
+        title: "Das Recht auf ein Basiskonto",
+        organization: "Verbraucherzentrale",
+        url: "https://www.verbraucherzentrale.de/wissen/geld-versicherungen/sparen-und-anlegen/das-recht-auf-ein-basiskonto-fuer-neu-in-deutschland-angekommene-12224",
+        language: "de",
+      },
+    ],
+    relatedArticleSlugs: [
+      "first-steps-after-arrival",
+      "anmeldung-guide",
+      "health-insurance-guide",
+    ],
+  },
+  {
+    id: "tax-id-guide",
+    slug: "tax-id-guide",
+    categorySlug: "after-arrival",
+    title: {
+      uz: "Steuer-ID va Steuernummer",
+      de: "Steuer-ID und Steuernummer",
+    },
+    excerpt: {
+      uz: "Germaniyadagi soliq raqamlari: 11 xonali Steuer-ID, Steuernummer va Umsatzsteuer-ID farqi, Anmeldungdan keyin raqamni olish, yo‘qolsa qayta so‘rash, ish beruvchiga yuborish va firibgarlikdan himoyalanish.",
+      de: "Leitfaden zu deutschen Steuernummern: elfstellige Steuer-ID, Steuernummer und Umsatzsteuer-ID, automatische Vergabe nach Anmeldung, erneute Mitteilung, Übermittlung an Arbeitgeber und Betrugsschutz.",
+    },
+    intro: {
+      uz: "Steuer-ID, Steuernummer va Umsatzsteuer-ID bir xil narsa emas. Yangi kelgan xodim uchun eng muhim raqam — 11 xonali, umrbod amal qiladigan Steuer-ID. U odatda Anmeldungdan keyin avtomatik pochta orqali yuboriladi va ish beruvchi tomonidan ish haqi solig‘ini to‘g‘ri hisoblashda ishlatiladi.",
+      de: "Steuer-ID, Steuernummer und Umsatzsteuer-ID sind unterschiedliche Nummern. Für neu eingereiste Beschäftigte ist vor allem die elfstellige, dauerhaft gültige Steuer-ID wichtig. Sie wird nach der Anmeldung grundsätzlich automatisch postalisch mitgeteilt und vom Arbeitgeber für den Lohnsteuerabzug verwendet.",
+    },
+    status: "published",
+    featured: false,
+    lastReviewedAt: "2026-08-06",
+    readingTime: { uz: "9 daqiqa", de: "9 Minuten" },
+    facts: [
+      {
+        label: { uz: "Steuer-ID", de: "Steuer-ID" },
+        value: {
+          uz: "11 xonali va umrbod amal qiladi",
+          de: "Elfstellige und dauerhaft gültige Nummer",
+        },
+      },
+      {
+        label: { uz: "Olish tartibi", de: "Vergabe" },
+        value: {
+          uz: "Anmeldungdan keyin odatda avtomatik",
+          de: "Nach Anmeldung grundsätzlich automatisch",
+        },
+      },
+      {
+        label: { uz: "Steuernummer", de: "Steuernummer" },
+        value: {
+          uz: "Finanzamt va soliq ishiga bog‘liq raqam",
+          de: "Vom Finanzamt und Steuerfall abhängige Nummer",
+        },
+      },
+      {
+        label: { uz: "USt-IdNr.", de: "USt-IdNr." },
+        value: {
+          uz: "Asosan biznes va EU ichidagi QQS jarayonlari uchun",
+          de: "Vor allem für Unternehmen und innergemeinschaftliche Umsatzsteuerfälle",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Uchta raqamning farqi",
+          de: "Unterschied der drei Nummern",
+        },
+        paragraphs: [
+          {
+            uz: "Steuer-ID shaxsga bir marta beriladi, ko‘chish yoki Finanzamt almashishi bilan o‘zgarmaydi. U shaxs haqidagi ma’lumotni raqamning o‘zida saqlamaydi.",
+            de: "Die Steuer-ID wird einer Person einmalig zugeteilt und ändert sich weder bei Umzug noch bei Wechsel des Finanzamts. Die Nummer selbst enthält keine persönlichen Informationen.",
+          },
+          {
+            uz: "Steuernummer soliq deklaratsiyasi, mustaqil faoliyat yoki Finanzamt jarayonida beriladi va holatga qarab o‘zgarishi mumkin. Umsatzsteuer-ID esa alohida biznes raqamidir.",
+            de: "Die Steuernummer wird im Rahmen von Steuererklärung, Selbstständigkeit oder Finanzamtsverfahren vergeben und kann sich ändern. Die Umsatzsteuer-ID ist eine gesonderte Unternehmensnummer.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Kimga qaysi raqam kerak?",
+          de: "Wer benötigt welche Nummer?",
+        },
+        items: [
+          {
+            uz: "Xodimlar: Steuer-ID",
+            de: "Beschäftigte: Steuer-ID",
+          },
+          {
+            uz: "Soliq deklaratsiyasi topshiruvchilar: Steuer-ID va berilgan bo‘lsa Steuernummer",
+            de: "Steuererklärende: Steuer-ID und gegebenenfalls Steuernummer",
+          },
+          {
+            uz: "Freelancer yoki Selbstständig: odatda Steuernummer",
+            de: "Freelancer oder Selbstständige: regelmäßig Steuernummer",
+          },
+          {
+            uz: "EU ichidagi ayrim biznes operatsiyalari: Umsatzsteuer-ID",
+            de: "Bestimmte Geschäfte innerhalb der EU: Umsatzsteuer-ID",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Steuer-ID qanday olinadi?",
+          de: "Wie erhält man die Steuer-ID?",
+        },
+        paragraphs: [
+          {
+            uz: "Germaniyada Anmeldung qilingandan keyin BZSt Steuer-IDni odatda ro‘yxatdan o‘tgan manzilga avtomatik yuboradi. Yetib kelish vaqti pochta hamda ma’lumot uzatilishiga bog‘liq.",
+            de: "Nach der Anmeldung übermittelt das BZSt die Steuer-ID grundsätzlich automatisch an die registrierte Anschrift. Die Zustellung hängt von Datenübermittlung und Postlaufzeit ab.",
+          },
+          {
+            uz: "Raqam kelmasa yoki yo‘qolsa BZSt onlayn xizmati orqali qayta yuborishni so‘rash mumkin. Maxfiylik sabab u odatda email yoki telefon orqali aytilmaydi.",
+            de: "Kommt die Nummer nicht an oder geht sie verloren, kann beim BZSt online eine erneute Mitteilung beantragt werden. Aus Datenschutzgründen erfolgt die Mitteilung grundsätzlich nicht per E-Mail oder Telefon.",
+          },
+        ],
+        items: [
+          {
+            uz: "Steuer-IDni Lohnsteuerbescheinigung yoki oldingi Steuerbescheiddan ham topish mumkin.",
+            de: "Die Steuer-ID steht häufig auf Lohnsteuerbescheinigung oder früherem Steuerbescheid.",
+          },
+          {
+            uz: "Yangi Steuer-ID olish uchun pul to‘lash shart emas.",
+            de: "Für die erneute Mitteilung der Steuer-ID ist kein privater Vermittler erforderlich.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Ish beruvchiga nima yuboriladi?",
+          de: "Was erhält der Arbeitgeber?",
+        },
+        items: [
+          {
+            uz: "Steuer-ID",
+            de: "Steuer-ID",
+          },
+          {
+            uz: "Tug‘ilgan sana",
+            de: "Geburtsdatum",
+          },
+          {
+            uz: "Krankenkasse ma’lumoti",
+            de: "Angaben zur Krankenkasse",
+          },
+          {
+            uz: "Bank IBANi",
+            de: "IBAN des Bankkontos",
+          },
+          {
+            uz: "Oilaviy holat yoki farzandlar haqida zarur ma’lumot",
+            de: "Erforderliche Angaben zu Familienstand oder Kindern",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Steuer-ID kelmasdan ish boshlash",
+          de: "Arbeitsbeginn ohne vorliegende Steuer-ID",
+        },
+        paragraphs: [
+          {
+            uz: "Steuer-ID hali kelmagan bo‘lsa ham ish beruvchi bilan darhol gaplashing. Ish haqi solig‘i vaqtincha noqulay usulda hisoblanishi mumkin; raqam kelgach ma’lumot yangilanadi.",
+            de: "Liegt die Steuer-ID noch nicht vor, informieren Sie den Arbeitgeber unverzüglich. Der Lohnsteuerabzug kann vorläufig ungünstiger erfolgen; nach Mitteilung wird der Datensatz aktualisiert.",
+          },
+          {
+            uz: "Steuer-IDni davlat idoralari va ish beruvchiga faqat zarur rasmiy kanal orqali yuboring.",
+            de: "Übermitteln Sie die Steuer-ID an Behörden und Arbeitgeber nur über erforderliche offizielle Kanäle.",
+          },
+        ],
+        items: [
+          {
+            uz: "Raqamni ochiq guruhga joylamang.",
+            de: "Veröffentlichen Sie die Nummer nicht in offenen Gruppen.",
+          },
+          {
+            uz: "Steuer-IDni bank paroli yoki PIN bilan birga saqlamang.",
+            de: "Speichern Sie die Steuer-ID nicht gemeinsam mit PIN oder Bankpasswort.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Firibgarlik va chalkashliklar",
+          de: "Betrug und Verwechslungen",
+        },
+        items: [
+          {
+            uz: "Steuer-IDni «tez olib berish» uchun noma’lum shaxsga pul bermang.",
+            de: "Zahlen Sie niemandem für eine angeblich beschleunigte Steuer-ID.",
+          },
+          {
+            uz: "Steuernummerni Steuer-ID deb ish beruvchiga yubormang.",
+            de: "Übermitteln Sie dem Arbeitgeber nicht versehentlich die Steuernummer statt der Steuer-ID.",
+          },
+          {
+            uz: "Umsatzsteuer-ID oddiy xodim uchun odatda kerak emas.",
+            de: "Eine Umsatzsteuer-ID ist für gewöhnliche Beschäftigte grundsätzlich nicht erforderlich.",
+          },
+          {
+            uz: "Phishing xatlarida ko‘rsatilgan noma’lum saytlarga Steuer-IDni kiritmang.",
+            de: "Geben Sie die Steuer-ID nicht auf unbekannten Websites aus Phishing-Nachrichten ein.",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: { uz: "Anmeldung qiling", de: "Wohnsitz anmelden" },
+        description: {
+          uz: "Steuer-ID avtomatik berilishi uchun manzilni ro‘yxatdan o‘tkazing.",
+          de: "Melden Sie den Wohnsitz an, damit die Steuer-ID automatisch mitgeteilt werden kann.",
+        },
+      },
+      {
+        title: { uz: "Pochta qutisini tekshiring", de: "Post prüfen" },
+        description: {
+          uz: "Ismingiz pochta qutisida to‘g‘ri yozilgan bo‘lsin.",
+          de: "Achten Sie darauf, dass Ihr Name korrekt am Briefkasten steht.",
+        },
+      },
+      {
+        title: { uz: "Raqamni xavfsiz saqlang", de: "Nummer sicher speichern" },
+        description: {
+          uz: "Xatning raqamli va qog‘oz nusxasini xavfsiz joyda saqlang.",
+          de: "Bewahren Sie digitale und gedruckte Kopien sicher auf.",
+        },
+      },
+      {
+        title: { uz: "Ish beruvchiga yuboring", de: "Arbeitgeber informieren" },
+        description: {
+          uz: "Faqat rasmiy va xavfsiz kanal orqali yuboring.",
+          de: "Übermitteln Sie die Nummer ausschließlich über einen sicheren offiziellen Kanal.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Steuer-ID o‘zgaradimi?",
+          de: "Ändert sich die Steuer-ID?",
+        },
+        answer: {
+          uz: "Yo‘q. U odatda umrbod amal qiladi va ko‘chish bilan o‘zgarmaydi.",
+          de: "Nein. Sie gilt grundsätzlich lebenslang und ändert sich bei Umzug nicht.",
+        },
+      },
+      {
+        question: {
+          uz: "Steuer-ID kelmasa nima qilaman?",
+          de: "Was tun, wenn die Steuer-ID nicht kommt?",
+        },
+        answer: {
+          uz: "BZSt onlayn xizmatidan qayta yuborishni so‘rang va Anmeldung ma’lumotlaringizni tekshiring.",
+          de: "Beantragen Sie beim BZSt online eine erneute Mitteilung und prüfen Sie Ihre Meldedaten.",
+        },
+      },
+      {
+        question: {
+          uz: "Steuer-IDni telefon orqali olish mumkinmi?",
+          de: "Kann ich die Steuer-ID telefonisch erhalten?",
+        },
+        answer: {
+          uz: "Maxfiylik sabab odatda yo‘q; raqam ro‘yxatdan o‘tgan manzilga yuboriladi.",
+          de: "Aus Datenschutzgründen grundsätzlich nein; die Mitteilung erfolgt an die registrierte Anschrift.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Steuerliche Identifikationsnummer",
+        organization: "Bundeszentralamt für Steuern",
+        url: "https://www.bzst.de/DE/Privatpersonen/SteuerlicheIdentifikationsnummer/steuerlicheidentifikationsnummer_node.html",
+        language: "de",
+      },
+      {
+        title: "Erneute Mitteilung der Steuer-ID",
+        organization: "BZSt online.portal",
+        url: "https://online.portal.bzst.de/SharedDocs/Leistungsbeschreibung/DE/erneute_mitteilung_der_ID-Nr.html",
+        language: "de",
+      },
+    ],
+    relatedArticleSlugs: [
+      "first-steps-after-arrival",
+      "anmeldung-guide",
+      "bank-account-guide",
+    ],
+  },
 ];
 
 function localizeArticle(
