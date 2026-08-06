@@ -3477,6 +3477,515 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
       "german-citizen-spouse-reunification",
     ],
   },
+  {
+    id: "child-family-reunification",
+    slug: "child-family-reunification",
+    categorySlug: "family",
+    title: {
+      uz: "Farzand orqali oila birlashtirish",
+      de: "Kindernachzug nach Deutschland",
+    },
+    excerpt: {
+      uz: "Voyaga yetmagan va nikohda bo‘lmagan farzandning Germaniyadagi ota-onasi yoniga ko‘chib kelishi: §32 AufenthG, vasiylik, ikkinchi ota-onaning roziligi, tug‘ilganlik hujjatlari, viza, sug‘urta va amaliy jarayon bo‘yicha batafsil qo‘llanma.",
+      de: "Ausführlicher Leitfaden zum Nachzug minderjähriger lediger Kinder nach Deutschland: § 32 AufenthG, Sorgerecht, Zustimmung des anderen Elternteils, Geburtsurkunden, Visum, Versicherung und praktischer Ablauf.",
+    },
+    intro: {
+      uz: "Kindernachzug — 18 yoshga to‘lmagan va nikohda bo‘lmagan farzandning Germaniyada qonuniy yashayotgan ota-onasi yoki yolg‘iz vasiylik huquqiga ega ota-onasi yoniga ko‘chib kelishidir. Asosiy huquqiy norma §32 Aufenthaltsgesetz hisoblanadi. Arizaning muvaffaqiyati faqat qarindoshlikni isbotlashga emas, balki vasiylik, ikkinchi ota-onaning roziligi, ota-onaning Germaniyadagi maqomi, hujjatlar uyg‘unligi va milliy viza tartibiga ham bog‘liq.",
+      de: "Der Kindernachzug ermöglicht minderjährigen ledigen Kindern, zu ihren rechtmäßig in Deutschland lebenden Eltern oder zum allein personensorgeberechtigten Elternteil zu ziehen. Zentrale Rechtsgrundlage ist § 32 Aufenthaltsgesetz. Entscheidend sind nicht nur Abstammungsnachweise, sondern auch Sorgerecht, Zustimmung des anderen Elternteils, Aufenthaltsstatus der Eltern, widerspruchsfreie Urkunden und das nationale Visumverfahren.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: {
+      uz: "12 daqiqa",
+      de: "12 Minuten",
+    },
+    facts: [
+      {
+        label: { uz: "Yosh", de: "Alter" },
+        value: {
+          uz: "Ariza qilayotgan farzand 18 yoshga to‘lmagan bo‘lishi kerak",
+          de: "Das nachziehende Kind muss unter 18 Jahre alt sein",
+        },
+      },
+      {
+        label: { uz: "Oilaviy holat", de: "Familienstand" },
+        value: {
+          uz: "Farzand nikohda bo‘lmagan bo‘lishi kerak",
+          de: "Das Kind muss ledig sein",
+        },
+      },
+      {
+        label: { uz: "Huquqiy asos", de: "Rechtsgrundlage" },
+        value: {
+          uz: "Asosan §32 AufenthG; nemis farzand yoki nemis ota-ona holatida §28 ham muhim",
+          de: "Grundsätzlich § 32 AufenthG; bei deutschen Kindern oder Eltern ist zusätzlich § 28 relevant",
+        },
+      },
+      {
+        label: { uz: "Vasiylik", de: "Sorgerecht" },
+        value: {
+          uz: "Ikkala ota-ona yoki yolg‘iz vasiylik huquqiga ega ota-ona holati hujjat bilan isbotlanadi",
+          de: "Gemeinsames oder alleiniges Sorgerecht muss durch geeignete Unterlagen nachgewiesen werden",
+        },
+      },
+      {
+        label: { uz: "Viza", de: "Visum" },
+        value: {
+          uz: "O‘zbekiston fuqarolari odatda kirishdan oldin Kindernachzug uchun milliy viza oladi",
+          de: "Staatsangehörige Usbekistans beantragen grundsätzlich vor der Einreise ein nationales Visum zum Kindernachzug",
+        },
+      },
+      {
+        label: { uz: "Voyaga yetgan farzand", de: "Volljähriges Kind" },
+        value: {
+          uz: "18 yoshdan keyin oddiy Kindernachzug odatda mumkin emas; faqat alohida Härtefall holatlari tekshiriladi",
+          de: "Nach Volljährigkeit ist regulärer Kindernachzug grundsätzlich ausgeschlossen; möglich sind nur besondere Härtefälle",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Kindernachzug nima?",
+          de: "Was ist der Kindernachzug?",
+        },
+        paragraphs: [
+          {
+            uz: "§32 AufenthG bo‘yicha voyaga yetmagan va nikohda bo‘lmagan farzand ota-onasi yoki yolg‘iz vasiylik huquqiga ega ota-onasi yoniga Germaniyaga ko‘chib kelishi mumkin. Ota-onaning Germaniyadagi Aufenthaltstiteli oila birlashtirishga ruxsat beradigan maqom bo‘lishi kerak.",
+            de: "Nach § 32 AufenthG kann ein minderjähriges lediges Kind zu seinen Eltern oder zum allein personensorgeberechtigten Elternteil nach Deutschland ziehen. Der Aufenthaltstitel der Eltern muss den Familiennachzug ermöglichen.",
+          },
+          {
+            uz: "Agar faqat bitta ota-ona Germaniyada bo‘lsa, ikkinchi ota-onaning vasiylik huquqi va roziligi markaziy masalaga aylanadi. Faqat og‘zaki rozilik yetarli emas; notarial rozilik, sud qarori yoki yolg‘iz vasiylik hujjati talab qilinishi mumkin.",
+            de: "Lebt nur ein Elternteil in Deutschland, werden Sorgerecht und Zustimmung des anderen Elternteils besonders wichtig. Eine mündliche Zustimmung reicht nicht aus; erforderlich sein können notarielle Zustimmung, gerichtliche Entscheidung oder Nachweis des alleinigen Sorgerechts.",
+          },
+          {
+            uz: "18 yoshga to‘lgan farzandlar uchun §32dagi oddiy yo‘l tugaydi. Bunday holatda faqat §36 bo‘yicha favqulodda og‘irlik holati yoki boshqa mustaqil viza turi ko‘rib chiqilishi mumkin.",
+            de: "Mit Vollendung des 18. Lebensjahres endet der reguläre Weg nach § 32. Danach kommen nur ein außergewöhnlicher Härtefall nach § 36 oder ein eigener Aufenthaltstitel in Betracht.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Kimlar murojaat qila oladi?",
+          de: "Wer kann den Kindernachzug beantragen?",
+        },
+        items: [
+          {
+            uz: "18 yoshga to‘lmagan va nikohda bo‘lmagan biologik farzandlar",
+            de: "Minderjährige ledige leibliche Kinder",
+          },
+          {
+            uz: "Germaniya huquqi bo‘yicha tan olinadigan asrab olingan farzandlar",
+            de: "Adoptierte Kinder, deren Adoption nach deutschem Recht wirksam oder anerkennungsfähig ist",
+          },
+          {
+            uz: "Ikkala ota-ona Germaniyada yashayotgan yoki birga ko‘chib kelayotgan farzandlar",
+            de: "Kinder, deren beide Eltern in Deutschland leben oder gemeinsam einreisen",
+          },
+          {
+            uz: "Yolg‘iz vasiylik huquqiga ega ota-ona Germaniyada yashayotgan farzandlar",
+            de: "Kinder, deren allein personensorgeberechtigter Elternteil in Deutschland lebt",
+          },
+          {
+            uz: "Boshqa ota-ona vasiylikka ega bo‘lsa, uning qonuniy roziligi yoki tegishli sud qarori mavjud farzandlar",
+            de: "Kinder mit rechtswirksamer Zustimmung des mitsorgeberechtigten anderen Elternteils oder entsprechender gerichtlicher Entscheidung",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Vasiylik va ikkinchi ota-onaning roziligi",
+          de: "Sorgerecht und Zustimmung des anderen Elternteils",
+        },
+        paragraphs: [
+          {
+            uz: "Agar ota-onalar birgalikda vasiylik huquqiga ega bo‘lsa va faqat bittasi Germaniyada yashasa, bolaning doimiy ko‘chib ketishiga ikkinchi ota-onaning roziligi odatda talab qilinadi. Bu rozilik aniq, yozma va ko‘pincha notarial tasdiqlangan bo‘lishi kerak.",
+            de: "Haben beide Eltern gemeinsames Sorgerecht und lebt nur ein Elternteil in Deutschland, ist für den dauerhaften Umzug des Kindes grundsätzlich die Zustimmung des anderen Elternteils erforderlich. Sie muss eindeutig, schriftlich und häufig notariell beglaubigt sein.",
+          },
+          {
+            uz: "Agar Germaniyadagi ota-ona yolg‘iz vasiylik huquqiga ega bo‘lsa, buni sud qarori, tug‘ilganlik hujjati, vasiylik reyestri ma’lumoti yoki tegishli davlat hujjati bilan isbotlash kerak.",
+            de: "Besteht alleiniges Sorgerecht beim in Deutschland lebenden Elternteil, muss dies durch gerichtliche Entscheidung, Personenstandsurkunde, Sorgeregisterauskunft oder vergleichbaren staatlichen Nachweis belegt werden.",
+          },
+          {
+            uz: "Ikkinchi ota-ona rozilik bermasa, bolaning ko‘chishi bo‘yicha vakolatli sud qarori talab qilinishi mumkin. Viza idorasi ota-onalar o‘rtasidagi xususiy nizoni hal qilmaydi.",
+            de: "Verweigert der andere Elternteil die Zustimmung, kann eine gerichtliche Entscheidung zur Ausreise oder Aufenthaltsbestimmung erforderlich sein. Das Visumverfahren ersetzt keine familiengerichtliche Klärung.",
+          },
+          {
+            uz: "Vatandoshlar.de tavsiyasi: viza terminini olishdan oldin vasiylik hujjatlarini to‘liq tekshiring. Ayniqsa nikohsiz tug‘ilgan bola, ajrashgan ota-ona yoki turli davlatlarda rasmiylashtirilgan hujjatlarda xato xavfi yuqori.",
+            de: "Praktische Empfehlung von Vatandoshlar.de: Prüfen Sie sämtliche Sorgerechtsunterlagen vor dem Visumtermin. Besonders bei nichtehelich geborenen Kindern, geschiedenen Eltern oder Urkunden aus verschiedenen Staaten bestehen erhöhte Fehlerrisiken.",
+          },
+        ],
+        items: [
+          {
+            uz: "Rozilikda bolaning Germaniyada doimiy yashashi aniq ko‘rsatilishi kerak.",
+            de: "Die Zustimmung sollte den dauerhaften Aufenthalt des Kindes in Deutschland eindeutig erfassen.",
+          },
+          {
+            uz: "Oddiy qo‘lda yozilgan xat vakolatxona uchun yetarli bo‘lmasligi mumkin.",
+            de: "Ein einfaches handschriftliches Schreiben kann für die Auslandsvertretung unzureichend sein.",
+          },
+          {
+            uz: "Sud qarori kuchga kirgan va kerak bo‘lsa apostil hamda tarjima bilan taqdim etilishi kerak.",
+            de: "Gerichtliche Entscheidungen müssen rechtskräftig und erforderlichenfalls mit Apostille und Übersetzung vorgelegt werden.",
+          },
+          {
+            uz: "Farzandning manfaatlari barcha qarorlarda markaziy mezon hisoblanadi.",
+            de: "Das Kindeswohl ist bei allen Entscheidungen ein zentrales Kriterium.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Odatda kerak bo‘ladigan hujjatlar",
+          de: "Üblicherweise erforderliche Unterlagen",
+        },
+        items: [
+          {
+            uz: "Farzandning amaldagi pasporti, milliy viza arizasi va biometrik fotosurati",
+            de: "Gültiger Reisepass des Kindes, Antrag auf ein nationales Visum und biometrisches Passfoto",
+          },
+          {
+            uz: "Tug‘ilganlik guvohnomasi va zarur bo‘lsa apostil, legalizatsiya yoki rasmiy tarjima",
+            de: "Geburtsurkunde und erforderlichenfalls Apostille, Legalisation oder beglaubigte Übersetzung",
+          },
+          {
+            uz: "Germaniyada yashayotgan ota-onaning pasporti va Aufenthaltstiteli nusxasi",
+            de: "Kopie von Reisepass und Aufenthaltstitel des in Deutschland lebenden Elternteils",
+          },
+          {
+            uz: "Ota-onaning Meldebescheinigung va Germaniyadagi manzil dalili",
+            de: "Meldebescheinigung und Wohnsitznachweis des Elternteils in Deutschland",
+          },
+          {
+            uz: "Nikoh guvohnomasi, ajrim qarori yoki ota-onaning oilaviy holatini ko‘rsatuvchi boshqa hujjatlar",
+            de: "Heiratsurkunde, Scheidungsentscheidung oder weitere Nachweise zum Familienstand der Eltern",
+          },
+          {
+            uz: "Yolg‘iz vasiylik huquqi dalili yoki ikkinchi ota-onaning notarial roziligi",
+            de: "Nachweis des alleinigen Sorgerechts oder notarielle Zustimmung des anderen Elternteils",
+          },
+          {
+            uz: "Zarur bo‘lsa ikkinchi ota-onaning pasport nusxasi va imzo tasdig‘i",
+            de: "Erforderlichenfalls Passkopie und Unterschriftsbeglaubigung des anderen Elternteils",
+          },
+          {
+            uz: "Farzand uchun tibbiy sug‘urta yoki Familienversicherung imkoniyati",
+            de: "Nachweis des Krankenversicherungsschutzes oder der möglichen Familienversicherung des Kindes",
+          },
+          {
+            uz: "Ota-onaning maqomiga qarab daromad va uy-joy hujjatlari",
+            de: "Je nach Aufenthaltsstatus der Eltern Nachweise zu Einkommen und Wohnraum",
+          },
+          {
+            uz: "Vakolatxona yoki Ausländerbehörde so‘ragan qo‘shimcha hujjatlar",
+            de: "Weitere Unterlagen nach Anforderung der Auslandsvertretung oder Ausländerbehörde",
+          },
+        ],
+        paragraphs: [
+          {
+            uz: "Toshkentdagi Germaniya vakolatxonasi hujjatlar ro‘yxati ishning holatiga qarab qo‘shimcha dalillarni so‘rashi mumkin. Tug‘ilganlik, vasiylik va familiya yozilishidagi har qanday farqni arizadan oldin aniqlashtiring.",
+            de: "Die deutsche Auslandsvertretung in Taschkent kann je nach Einzelfall zusätzliche Nachweise verlangen. Klären Sie Abweichungen bei Geburt, Sorgerecht oder Namensschreibweise vor Antragstellung.",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Daromad, uy-joy, sug‘urta va yosh masalasi",
+          de: "Lebensunterhalt, Wohnraum, Versicherung und Altersgrenze",
+        },
+        paragraphs: [
+          {
+            uz: "Uchinchi davlat fuqarosi bo‘lgan ota-ona yoniga Kindernachzugda umumiy holatda yashash xarajatlari va yetarli uy-joy tekshirilishi mumkin. Malakali mutaxassislar, EU Blue Card egalari va ayrim boshqa maqomlarda uy-joy bo‘yicha yengilliklar mavjud.",
+            de: "Beim Kindernachzug zu drittstaatsangehörigen Eltern können grundsätzlich Lebensunterhalt und ausreichender Wohnraum geprüft werden. Für Fachkräfte, Inhaber einer Blauen Karte EU und bestimmte weitere Status bestehen Erleichterungen beim Wohnraum.",
+          },
+          {
+            uz: "Farzand 18 yoshga to‘lmasdan turib ariza berilishi juda muhim. Voyaga yetganidan keyin oddiy §32 talabi odatda yo‘qoladi. Shu sabab hujjatlarni kechiktirmaslik kerak.",
+            de: "Die Antragstellung vor Vollendung des 18. Lebensjahres ist besonders wichtig. Nach Eintritt der Volljährigkeit entfällt der reguläre Anspruch nach § 32 grundsätzlich. Unterlagen sollten daher nicht unnötig verzögert werden.",
+          },
+          {
+            uz: "Farzand Germaniyaga kelgach tibbiy sug‘urtaga ega bo‘lishi kerak. Ko‘p oilalarda qonuniy sug‘urtadagi Familienversicherung mumkin, ammo bu ota-onaning sug‘urta turi va holatiga bog‘liq.",
+            de: "Nach der Einreise benötigt das Kind Krankenversicherungsschutz. Häufig ist eine beitragsfreie Familienversicherung möglich, abhängig von Versicherungsart und Situation der Eltern.",
+          },
+        ],
+        items: [
+          {
+            uz: "Voyaga yetmagan farzand maktab yoshida bo‘lsa, Germaniyada Schulpflicht qoidalari qo‘llanadi.",
+            de: "Für schulpflichtige minderjährige Kinder gelten nach Einreise die jeweiligen landesrechtlichen Schulpflichtregeln.",
+          },
+          {
+            uz: "Viza chiqmaguncha maktabni yakuniy bekor qilish yoki qaytarilmaydigan safar xarajatlarini qilishga shoshilmang.",
+            de: "Beenden Sie Schule oder tätigen Sie nicht erstattbare Reisekosten nicht vorschnell vor Visumerteilung.",
+          },
+          {
+            uz: "Farzandning yoshi, ota-onaning maqomi va vasiylik holati birgalikda baholanadi.",
+            de: "Alter des Kindes, Aufenthaltsstatus der Eltern und Sorgerechtslage werden gemeinsam bewertet.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Muhim ogohlantirishlar va real amaliyot",
+          de: "Wichtige Hinweise und praktische Realität",
+        },
+        items: [
+          {
+            uz: "«Tug‘ilganlik guvohnomasi bo‘lsa yetarli» degan fikr noto‘g‘ri. Vasiylik va boshqa ota-onaning roziligi ko‘pincha alohida tekshiriladi.",
+            de: "Die Annahme, eine Geburtsurkunde allein reiche aus, ist falsch. Sorgerecht und Zustimmung des anderen Elternteils werden häufig gesondert geprüft.",
+          },
+          {
+            uz: "17 yoshdan katta farzand uchun jarayonni oxirgi oyga qoldirmang. 18 yoshga to‘lish huquqiy yo‘lni keskin o‘zgartiradi.",
+            de: "Warten Sie bei Kindern über 17 Jahren nicht bis zum letzten Monat. Die Volljährigkeit verändert die rechtliche Ausgangslage erheblich.",
+          },
+          {
+            uz: "Nikohsiz tug‘ilgan bola bo‘yicha otalik va vasiylik alohida huquqiy masalalar bo‘lishi mumkin.",
+            de: "Bei nichtehelich geborenen Kindern können Vaterschaft und Sorgerecht rechtlich getrennte Fragen sein.",
+          },
+          {
+            uz: "DNA tekshiruvi oddiy standart talab emas, lekin hujjatlar bilan qarindoshlikni ishonchli aniqlab bo‘lmasa, vakolatli idora qo‘shimcha dalil so‘rashi mumkin.",
+            de: "Ein DNA-Test ist keine reguläre Standardanforderung. Kann die Abstammung durch Urkunden nicht zuverlässig geklärt werden, können zuständige Stellen zusätzliche Nachweise verlangen.",
+          },
+          {
+            uz: "Soxta vasiylik, rozilik yoki tug‘ilganlik hujjati viza radiga va huquqiy oqibatlarga olib kelishi mumkin.",
+            de: "Gefälschte Sorgerechts-, Zustimmungs- oder Geburtsunterlagen können zur Ablehnung und zu rechtlichen Folgen führen.",
+          },
+          {
+            uz: "Rasmiy termin tizimi bepul. Maxsus termin yoki viza kafolati uchun pul so‘raydigan vositachilarga ishonmang.",
+            de: "Das offizielle Terminbuchungssystem ist kostenlos. Misstrauen Sie Vermittlern, die besondere Termine oder ein Visum garantieren.",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: {
+          uz: "Ota-onaning Germaniyadagi maqomini tekshiring",
+          de: "Aufenthaltsstatus der Eltern prüfen",
+        },
+        description: {
+          uz: "Fuqarolik, Aufenthaltstitel paragrafi, amal qilish muddati va oila birlashtirish huquqini aniqlang.",
+          de: "Prüfen Sie Staatsangehörigkeit, Rechtsgrundlage, Gültigkeit des Aufenthaltstitels und Berechtigung zum Familiennachzug.",
+        },
+      },
+      {
+        title: {
+          uz: "Farzandning yosh va oilaviy holatini tekshiring",
+          de: "Alter und Familienstand des Kindes prüfen",
+        },
+        description: {
+          uz: "Farzand 18 yoshga to‘lmagan va nikohda bo‘lmagan bo‘lishi kerak. Vaqt tor bo‘lsa hujjatlarni darhol boshlang.",
+          de: "Das Kind muss minderjährig und ledig sein. Bei knapper Zeit sollten Unterlagen unverzüglich vorbereitet werden.",
+        },
+      },
+      {
+        title: {
+          uz: "Vasiylik holatini aniqlang",
+          de: "Sorgerechtslage klären",
+        },
+        description: {
+          uz: "Birgalikdagi yoki yolg‘iz vasiylikni rasmiy hujjatlar bilan aniqlang.",
+          de: "Klären Sie gemeinsames oder alleiniges Sorgerecht anhand offizieller Unterlagen.",
+        },
+      },
+      {
+        title: {
+          uz: "Ikkinchi ota-onaning roziligini tayyorlang",
+          de: "Zustimmung des anderen Elternteils vorbereiten",
+        },
+        description: {
+          uz: "Zarur bo‘lsa Germaniyada doimiy yashashga aniq rozilikni notarial shaklda oling.",
+          de: "Lassen Sie erforderlichenfalls eine eindeutige notarielle Zustimmung zum dauerhaften Aufenthalt in Deutschland erstellen.",
+        },
+      },
+      {
+        title: {
+          uz: "Tug‘ilganlik va oilaviy hujjatlarni tekshiring",
+          de: "Geburts- und Familienurkunden prüfen",
+        },
+        description: {
+          uz: "Ism, familiya, sana, otalik, apostil va tarjimalardagi ma’lumotlar bir-biriga mos bo‘lsin.",
+          de: "Achten Sie auf übereinstimmende Namen, Daten, Vaterschaftsangaben, Apostillen und Übersetzungen.",
+        },
+      },
+      {
+        title: {
+          uz: "Milliy viza arizasini yuboring",
+          de: "Nationales Visum beantragen",
+        },
+        description: {
+          uz: "Mavjud bo‘lsa Auslandsportal orqali ariza bering yoki Toshkentdagi Germaniya vakolatxonasining joriy tartibiga amal qiling.",
+          de: "Stellen Sie den Antrag, sofern verfügbar, über das Auslandsportal oder folgen Sie dem aktuellen Verfahren der deutschen Auslandsvertretung in Taschkent.",
+        },
+      },
+      {
+        title: {
+          uz: "Shaxsiy terminga boring",
+          de: "Persönlichen Termin wahrnehmen",
+        },
+        description: {
+          uz: "Farzand va zarur bo‘lsa vasiy ota-ona asl hujjatlar bilan biometrika hamda suhbat uchun qatnashadi.",
+          de: "Das Kind und erforderlichenfalls der sorgeberechtigte Elternteil erscheinen mit Originalunterlagen zu Biometrie und Gespräch.",
+        },
+      },
+      {
+        title: {
+          uz: "Ausländerbehörde so‘rovlariga javob bering",
+          de: "Rückfragen der Ausländerbehörde beantworten",
+        },
+        description: {
+          uz: "Germaniyadagi ota-ona daromad, uy-joy, sug‘urta yoki vasiylik bo‘yicha qo‘shimcha hujjatlarni o‘z vaqtida yuborsin.",
+          de: "Der Elternteil in Deutschland sollte zusätzliche Nachweise zu Einkommen, Wohnraum, Versicherung oder Sorgerecht fristgerecht einreichen.",
+        },
+      },
+      {
+        title: {
+          uz: "Kelgach Anmeldung, sug‘urta va maktabni rasmiylashtiring",
+          de: "Nach Einreise Anmeldung, Versicherung und Schule erledigen",
+        },
+        description: {
+          uz: "Farzandni manzilga ro‘yxatdan o‘tkazing, sug‘urtaga qo‘shing, Aufenthaltstitel va maktab masalalarini yakunlang.",
+          de: "Melden Sie das Kind an, sichern Sie Krankenversicherung, Aufenthaltstitel und gegebenenfalls Schulaufnahme.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "17 yosh 11 oylik farzand ham Kindernachzugga topshira oladimi?",
+          de: "Kann ein 17 Jahre und 11 Monate altes Kind noch den Kindernachzug beantragen?",
+        },
+        answer: {
+          uz: "Nazariy jihatdan ha, chunki farzand hali voyaga yetmagan. Biroq vaqt juda muhim: hujjatlar va ariza jarayonini zudlik bilan boshlash kerak. 18 yoshga to‘lish huquqiy baholashni o‘zgartirishi mumkin.",
+          de: "Grundsätzlich ja, solange das Kind noch minderjährig ist. Zeit ist jedoch entscheidend; Unterlagen und Antrag sollten unverzüglich eingeleitet werden. Die Volljährigkeit kann die rechtliche Bewertung verändern.",
+        },
+      },
+      {
+        question: {
+          uz: "Nikohsiz tug‘ilgan farzand ham kelishi mumkinmi?",
+          de: "Kann auch ein nichtehelich geborenes Kind nachziehen?",
+        },
+        answer: {
+          uz: "Ha. Lekin otalik, vasiylik va ikkinchi ota-onaning roziligi alohida hujjatlar bilan aniqlanishi mumkin.",
+          de: "Ja. Vaterschaft, Sorgerecht und gegebenenfalls Zustimmung des anderen Elternteils müssen jedoch gesondert nachgewiesen werden.",
+        },
+      },
+      {
+        question: {
+          uz: "Ikkinchi ota-onaning roziligi qachon kerak?",
+          de: "Wann ist die Zustimmung des anderen Elternteils erforderlich?",
+        },
+        answer: {
+          uz: "Agar ikkinchi ota-ona ham vasiylik huquqiga ega bo‘lsa va Germaniyaga ko‘chib kelmasa, bolaning doimiy ko‘chishiga uning qonuniy roziligi odatda talab qilinadi.",
+          de: "Ist der andere Elternteil mitsorgeberechtigt und zieht nicht mit nach Deutschland, ist seine rechtswirksame Zustimmung zum dauerhaften Umzug grundsätzlich erforderlich.",
+        },
+      },
+      {
+        question: {
+          uz: "Yolg‘iz vasiylik bo‘lsa ham rozilik kerakmi?",
+          de: "Ist bei alleinigem Sorgerecht dennoch eine Zustimmung erforderlich?",
+        },
+        answer: {
+          uz: "Odatda yo‘q, agar yolg‘iz vasiylik ishonchli rasmiy hujjat bilan tasdiqlansa. Vakolatxona hujjatning haqiqiyligi va ko‘lamini tekshiradi.",
+          de: "Grundsätzlich nein, wenn das alleinige Sorgerecht zuverlässig amtlich nachgewiesen wird. Die Auslandsvertretung prüft Wirksamkeit und Umfang des Nachweises.",
+        },
+      },
+      {
+        question: {
+          uz: "DNA testi majburiymi?",
+          de: "Ist ein DNA-Test verpflichtend?",
+        },
+        answer: {
+          uz: "Yo‘q, standart talab emas. Faqat hujjatlar qarindoshlikni ishonchli isbotlamasa, qo‘shimcha dalil sifatida ko‘rib chiqilishi mumkin.",
+          de: "Nein, er ist keine Standardvoraussetzung. Er kann nur erwogen werden, wenn die Abstammung durch Urkunden nicht zuverlässig nachgewiesen werden kann.",
+        },
+      },
+      {
+        question: {
+          uz: "Voyaga yetgan farzand oddiy oila birlashtirish bilan kela oladimi?",
+          de: "Kann ein volljähriges Kind regulär im Familiennachzug einreisen?",
+        },
+        answer: {
+          uz: "Odatda yo‘q. 18 yoshdan keyin oddiy §32 yo‘li tugaydi. Faqat §36dagi alohida og‘irlik holati yoki mustaqil o‘qish, Ausbildung yoki ish vizasi tekshiriladi.",
+          de: "Grundsätzlich nein. Nach Volljährigkeit endet der reguläre Weg nach § 32. In Betracht kommen nur ein außergewöhnlicher Härtefall nach § 36 oder ein eigener Titel für Studium, Ausbildung oder Beschäftigung.",
+        },
+      },
+      {
+        question: {
+          uz: "Farzand Germaniyada maktabga bora oladimi?",
+          de: "Darf das Kind in Deutschland zur Schule gehen?",
+        },
+        answer: {
+          uz: "Ha. Germaniyaga ko‘chib kelgan maktab yoshidagi farzandga Bundeslandning Schulpflicht va maktabga qabul qoidalari qo‘llanadi.",
+          de: "Ja. Für schulpflichtige Kinder gelten nach der Einreise die Schulpflicht- und Aufnahmevorschriften des jeweiligen Bundeslandes.",
+        },
+      },
+      {
+        question: {
+          uz: "Germaniyada tug‘ilgan farzandga ham viza kerakmi?",
+          de: "Braucht ein in Deutschland geborenes Kind ein Visum?",
+        },
+        answer: {
+          uz: "Germaniyada tug‘ilgan bola chetdan kirayotgan farzand emas. Uning yashash huquqi §33 va fuqarolik holatiga qarab alohida rasmiylashtiriladi.",
+          de: "Ein in Deutschland geborenes Kind zieht nicht aus dem Ausland nach. Sein Aufenthaltsrecht richtet sich gesondert nach § 33 und gegebenenfalls nach seiner Staatsangehörigkeit.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "§ 32 AufenthG — Kindernachzug",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__32.html",
+        language: "de",
+      },
+      {
+        title: "§ 28 AufenthG — Familiennachzug zu Deutschen",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__28.html",
+        language: "de",
+      },
+      {
+        title: "§ 33 AufenthG — Geburt eines Kindes im Bundesgebiet",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__33.html",
+        language: "de",
+      },
+      {
+        title: "Familiennachzug",
+        organization: "Bundesamt für Migration und Flüchtlinge",
+        url: "https://www.bamf.de/DE/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Familie/familie-node.html",
+        language: "de",
+      },
+      {
+        title: "Nachzug zu ausländischen Familienangehörigen",
+        organization: "Bundesamt für Migration und Flüchtlinge",
+        url: "https://www.bamf.de/DE/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Familie/NachzugZuDrittstaatlern/nachzug-zu-drittstaatlern-node.html",
+        language: "de",
+      },
+      {
+        title: "Family reunification for children",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/visa-residence/family-reunification/children-join",
+        language: "en",
+      },
+      {
+        title: "Visum zum Kindernachzug",
+        organization: "Auswärtiges Amt — Deutsche Botschaft Taschkent",
+        url: "https://taschkent.diplo.de/uz-de/service/05-visaeinreise/2446686-2446686",
+        language: "de",
+      },
+      {
+        title: "Visum zum Kindernachzug",
+        organization: "Auslandsportal",
+        url: "https://digital.diplo.de/navigator/de/visa/overview/ergebnis-familiennachzug-kind",
+        language: "de",
+      },
+    ],
+    relatedArticleSlugs: [
+      "spouse-reunification",
+      "german-citizen-spouse-reunification",
+      "eu-blue-card-family-reunification",
+    ],
+  },
 ];
 
 function localizeArticle(
