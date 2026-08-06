@@ -1053,6 +1053,467 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
     ],
     relatedArticleSlugs: ["au-pair", "fsj"],
   },
+  {
+    id: "ausbildung",
+    slug: "ausbildung",
+    categorySlug: "coming-to-germany",
+    title: {
+      uz: "Germaniyada Ausbildung",
+      de: "Ausbildung in Deutschland",
+    },
+    excerpt: {
+      uz: "Dual va schulische Ausbildung, chet eldan ariza topshirish, real til talablari, IT va boshqa yo‘nalishlardagi raqobat, Ausbildungsvergütung, hujjatlar, viza va bosqichma-bosqich ariza jarayoni bo‘yicha batafsil qo‘llanma.",
+      de: "Ausführlicher Leitfaden zu dualer und schulischer Ausbildung, Bewerbung aus dem Ausland, realistischen Sprachanforderungen, Wettbewerb in IT und anderen Bereichen, Ausbildungsvergütung, Unterlagen, Visum und Bewerbungsablauf.",
+    },
+    intro: {
+      uz: "Ausbildung — Germaniyada tan olingan kasbni amaliy va nazariy tarzda o‘rganish yo‘lidir. Dual Ausbildungda ishtirokchi korxonada ishlaydi va Berufsschulega qatnaydi; schulische Ausbildung esa asosan kasb maktabida olib boriladi va amaliyotlar bilan to‘ldiriladi. O‘zbekiston kabi uchinchi davlatlardan topshirayotgan nomzod uchun faqat rasmiy minimumni bajarish yetarli bo‘lmasligi mumkin: ish beruvchi, Berufsschule, suhbat, viza va kundalik ishdagi til talablari birgalikda baholanadi.",
+      de: "Eine Ausbildung vermittelt einen anerkannten Beruf in Deutschland praktisch und theoretisch. In der dualen Ausbildung arbeiten Auszubildende im Betrieb und besuchen die Berufsschule; eine schulische Ausbildung findet überwiegend an einer Berufsfachschule statt und wird durch Praxisphasen ergänzt. Für Bewerbende aus Drittstaaten wie Usbekistan reicht es häufig nicht, nur formale Mindestvoraussetzungen zu erfüllen: Betrieb, Berufsschule, Vorstellungsgespräch, Visum und sprachliche Anforderungen im Arbeitsalltag wirken zusammen.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: {
+      uz: "14 daqiqa",
+      de: "14 Minuten",
+    },
+    facts: [
+      {
+        label: { uz: "Asosiy shakllar", de: "Hauptformen" },
+        value: {
+          uz: "Dual Ausbildung va schulische Ausbildung",
+          de: "Duale Ausbildung und schulische Ausbildung",
+        },
+      },
+      {
+        label: { uz: "Til — rasmiy qoida", de: "Sprache — formale Regel" },
+        value: {
+          uz: "Malakali Ausbildung vizasida odatda B1; Ausbildung joyi tilni o‘zi tekshirgan bo‘lsa istisno bo‘lishi mumkin",
+          de: "Für das Visum zur qualifizierten Berufsausbildung in der Regel B1; Ausnahmen sind möglich, wenn die Ausbildungsstelle die Kenntnisse selbst geprüft hat",
+        },
+      },
+      {
+        label: { uz: "Til — amaliy tavsiya", de: "Sprache — praktische Empfehlung" },
+        value: {
+          uz: "Chet eldan topshirishda ko‘pchilik yo‘nalishlar uchun B2; IT, Pflege, Büro va mijoz bilan ishlanadigan kasblarda B2ni maqsad qilish kerak",
+          de: "Bei Bewerbung aus dem Ausland für viele Berufe B2; besonders für IT, Pflege, Büro und kundennahe Berufe sollte B2 angestrebt werden",
+        },
+      },
+      {
+        label: { uz: "2026 minimum to‘lov", de: "Mindestvergütung 2026" },
+        value: {
+          uz: "Dual Ausbildung boshlanishida: 1-yil 724 €, 2-yil 854 €, 3-yil 977 €, 4-yil 1 014 € brutto",
+          de: "Bei Ausbildungsbeginn 2026: 724 €, 854 €, 977 € und 1.014 € brutto in den Ausbildungsjahren 1 bis 4",
+        },
+      },
+      {
+        label: { uz: "Qo‘shimcha ish", de: "Nebenbeschäftigung" },
+        value: {
+          uz: "§16a bo‘yicha Ausbildungdan tashqari haftasiga 20 soatgacha ishlash mumkin",
+          de: "Nach § 16a AufenthG ist eine unabhängige Nebenbeschäftigung bis zu 20 Stunden wöchentlich möglich",
+        },
+      },
+      {
+        label: { uz: "Ausbildungsplatz qidirish vizasi", de: "Visum zur Ausbildungsplatzsuche" },
+        value: {
+          uz: "Alohida yo‘l: 35 yoshdan kichik, odatda B1 va moliyaviy ta’minot talab qilinadi",
+          de: "Eigener Aufenthaltstitel: unter 35 Jahre, grundsätzlich B1 und gesicherter Lebensunterhalt",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Ausbildung nima va uning turlari",
+          de: "Was ist eine Ausbildung und welche Formen gibt es?",
+        },
+        paragraphs: [
+          {
+            uz: "Dual Ausbildungda odatda haftaning bir qismi korxonada amaliy ishga, qolgan qismi Berufsschuledagi nazariy ta’limga ajratiladi. Auszubildende korxona bilan Ausbildungsvertrag tuzadi va oyma-oy Ausbildungsvergütung oladi.",
+            de: "In der dualen Ausbildung findet ein Teil der Woche praktisch im Betrieb und der andere Teil theoretisch in der Berufsschule statt. Auszubildende schließen einen Ausbildungsvertrag mit dem Betrieb und erhalten eine monatliche Ausbildungsvergütung.",
+          },
+          {
+            uz: "Schulische Ausbildung asosan Berufsfachschule yoki Fachschule orqali amalga oshiriladi. Pflege kabi ayrim yo‘nalishlarda haq to‘lanishi mumkin, boshqa maktab yo‘nalishlarida esa to‘lov bo‘lmasligi yoki maktab xarajatlari yuzaga kelishi mumkin. Har bir kasb uchun moliyaviy shartlarni alohida tekshirish kerak.",
+            de: "Eine schulische Ausbildung findet überwiegend an einer Berufsfachschule oder Fachschule statt. In Bereichen wie Pflege kann eine Vergütung gezahlt werden; in anderen schulischen Berufen kann sie fehlen oder es können Schulkosten entstehen. Die finanziellen Bedingungen müssen für jeden Beruf einzeln geprüft werden.",
+          },
+          {
+            uz: "Ausbildung oddiy til kursi yoki Germaniyaga kirishning oson yo‘li emas. Korxona haqiqiy xodim sifatida rivojlana oladigan, Berufsschule darslari va imtihonlarini bajara oladigan nomzodni tanlaydi.",
+            de: "Eine Ausbildung ist weder ein Sprachkurs noch ein einfacher Einreiseweg. Betriebe wählen Personen aus, die sich als zukünftige Fachkräfte entwickeln und Unterricht sowie Prüfungen der Berufsschule bewältigen können.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Kimlar topshira oladi?",
+          de: "Wer kann sich bewerben?",
+        },
+        items: [
+          {
+            uz: "Tanlangan kasb uchun yetarli maktab yoki ta’lim hujjatiga ega bo‘lganlar",
+            de: "Personen mit einem für den gewählten Beruf ausreichenden Schul- oder Bildungsabschluss",
+          },
+          {
+            uz: "Korxona va Berufsschule talab qiladigan nemis tilida o‘qish, yozish va muloqot qila oladiganlar",
+            de: "Personen, die auf dem vom Betrieb und der Berufsschule verlangten Niveau Deutsch sprechen, lesen und schreiben können",
+          },
+          {
+            uz: "Ausbildungsvertrag yoki schulische Ausbildung uchun qabul xatini olganlar",
+            de: "Personen mit Ausbildungsvertrag oder Zulassung zu einer schulischen Ausbildung",
+          },
+          {
+            uz: "Chet eldan topshirishda viza, yashash xarajatlari va hujjatlarni o‘z vaqtida tayyorlay oladiganlar",
+            de: "Bewerbende aus dem Ausland, die Visum, Lebensunterhalt und Unterlagen rechtzeitig sichern können",
+          },
+          {
+            uz: "Kasbga qiziqishi va motivatsiyasini suhbat hamda ariza hujjatlarida ishonchli ko‘rsata oladiganlar",
+            de: "Personen, die Interesse und Motivation für den Beruf in Bewerbung und Gespräch überzeugend darstellen können",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Nemis tili: rasmiy minimum va Germaniyadagi real holat",
+          de: "Deutschkenntnisse: formales Minimum und praktische Realität",
+        },
+        paragraphs: [
+          {
+            uz: "Malakali Berufsausbildung uchun yashash ruxsatida odatda yetarli nemis tili talab qilinadi. Aufenthaltsgesetzda «ausreichende Deutschkenntnisse» B1 darajaga tenglashtiriladi. Agar korxona yoki ta’lim muassasasi tilni o‘zi tekshirgan bo‘lsa yoki tayyorlov til kursi rejalashtirilgan bo‘lsa, alohida B1 dalili har doim ham bir xil shaklda talab qilinmasligi mumkin.",
+            de: "Für die Aufenthaltserlaubnis zur qualifizierten Berufsausbildung werden grundsätzlich ausreichende Deutschkenntnisse verlangt. Im Aufenthaltsgesetz entsprechen ausreichende Kenntnisse dem Niveau B1. Hat der Betrieb oder die Bildungseinrichtung die Sprachkenntnisse selbst geprüft oder ist ein vorbereitender Sprachkurs vorgesehen, kann ein gesonderter B1-Nachweis anders behandelt werden.",
+          },
+          {
+            uz: "Bu rasmiy minimum ish beruvchi sizni B1 bilan qabul qilishi shart degani emas. Ausbildung joyini berish qarorini korxona qabul qiladi, Berufsschule darslari va imtihonlari esa nemis tilida bo‘ladi.",
+            de: "Dieses formale Minimum verpflichtet keinen Betrieb, Bewerbende mit B1 einzustellen. Über den Ausbildungsplatz entscheidet der Betrieb; Unterricht und Prüfungen in der Berufsschule finden auf Deutsch statt.",
+          },
+          {
+            uz: "Vatandoshlar.de amaliy tavsiyasi: O‘zbekistondan turib hujjat topshirayotgan nomzod uchun B2ni maqsad qilish kerak. A2 bilan malakali Ausbildung vizasi va real o‘qish jarayoni uchun imkoniyat juda past. B1 bilan qonuniy yo‘l mavjud bo‘lishi mumkin, ammo chet eldan turib raqobatli sohalarda joy topish, nemischa suhbatdan o‘tish va Berufsschuleni muvaffaqiyatli tugatish juda qiyin.",
+            de: "Praktische Empfehlung von Vatandoshlar.de: Wer sich aus Usbekistan bewirbt, sollte B2 anstreben. Mit A2 sind die Chancen auf eine qualifizierte Ausbildung samt Visum und erfolgreichem Ausbildungsalltag sehr gering. B1 kann formal ausreichen, ist bei einer Bewerbung aus dem Ausland in umkämpften Bereichen, im deutschsprachigen Vorstellungsgespräch und in der Berufsschule jedoch häufig nicht ausreichend.",
+          },
+        ],
+        items: [
+          {
+            uz: "A2: ayrim e’lon yoki tayyorlov holatida uchrashi mumkin, ammo chet eldan malakali Ausbildung boshlash uchun real va xavfsiz daraja emas.",
+            de: "A2: kann in einzelnen Anzeigen oder Vorbereitungskonzepten vorkommen, ist für den direkten Beginn einer qualifizierten Ausbildung aus dem Ausland aber kein realistisches und sicheres Niveau.",
+          },
+          {
+            uz: "B1: viza uchun odatiy rasmiy daraja; oddiyroq muloqotli ayrim kasblarda imkon bo‘lishi mumkin, lekin chet eldan topshirishda ko‘pincha zaif.",
+            de: "B1: übliches formales Niveau für das Visum; in einzelnen Berufen mit geringeren Kommunikationsanforderungen möglich, bei Bewerbung aus dem Ausland jedoch oft zu schwach.",
+          },
+          {
+            uz: "B2: ko‘pchilik chet ellik nomzodlar uchun eng real boshlang‘ich maqsad; suhbat, ish va Berufsschule uchun ancha barqaror.",
+            de: "B2: für viele internationale Bewerbende das realistischste Einstiegsziel; deutlich stabiler für Gespräch, Betrieb und Berufsschule.",
+          },
+          {
+            uz: "IT Ausbildung: B1 qonuniy jihatdan mutlaq taqiqlanmagan, lekin O‘zbekistondan turib faqat B1 bilan Fachinformatiker kabi raqobatli joyni olish amalda juda past ehtimolli. B2, kuchli texnik portfolio va yaxshi nemischa suhbat tayyorgarligi kerak.",
+            de: "IT-Ausbildung: B1 ist rechtlich nicht grundsätzlich ausgeschlossen, doch die Chance, sich aus Usbekistan mit ausschließlich B1 in umkämpften Berufen wie Fachinformatiker durchzusetzen, ist praktisch sehr gering. Empfehlenswert sind B2, ein starkes technisches Portfolio und gute Vorbereitung auf ein deutschsprachiges Gespräch.",
+          },
+          {
+            uz: "Pflege va sog‘liq yo‘nalishlari: bemorlar bilan xavfsiz muloqot, tibbiy hujjatlar va maktab sababli odatda B2ni rejalashtirish kerak.",
+            de: "Pflege und Gesundheit: Wegen sicherer Kommunikation mit Patientinnen und Patienten, Dokumentation und Schule sollte grundsätzlich B2 eingeplant werden.",
+          },
+          {
+            uz: "Büro, savdo va mijoz bilan ishlash: telefon, xat, hujjat va mijoz muloqoti sababli B2 katta amaliy ustunlik beradi.",
+            de: "Büro, Handel und kundennahe Berufe: Telefonate, Schriftverkehr, Dokumente und Kundenkontakt machen B2 zu einem deutlichen praktischen Vorteil.",
+          },
+          {
+            uz: "Handwerk va gastronomiya: ayrim ish beruvchilar B1 bilan qabul qilishi mumkin, ammo xavfsizlik ko‘rsatmalari va Berufsschule uchun mustahkam B1 yoki B2 maqsad qilinishi kerak.",
+            de: "Handwerk und Gastronomie: Einzelne Betriebe können B1 akzeptieren; für Sicherheitsanweisungen und Berufsschule sollte jedoch ein stabiles B1 oder B2 angestrebt werden.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Ariza va viza uchun odatda kerak bo‘ladigan hujjatlar",
+          de: "Üblicherweise erforderliche Bewerbungs- und Visumunterlagen",
+        },
+        items: [
+          {
+            uz: "Nemis standartiga mos, aniq va xatosiz Lebenslauf",
+            de: "Übersichtlicher und fehlerfreier Lebenslauf nach deutschem Standard",
+          },
+          {
+            uz: "Har bir kompaniya va kasbga moslashtirilgan Anschreiben yoki motivatsion xat",
+            de: "An Betrieb und Beruf angepasstes Anschreiben beziehungsweise Motivationsschreiben",
+          },
+          {
+            uz: "Maktab, kollej, universitet yoki kasbiy hujjatlar va talab qilinsa ularning tarjimasi",
+            de: "Schul-, Hochschul- oder Berufsunterlagen und erforderlichenfalls deren Übersetzungen",
+          },
+          {
+            uz: "Nemis tili sertifikati yoki korxona tomonidan til tekshirilganini tasdiqlovchi dalil",
+            de: "Deutschzertifikat oder Nachweis, dass der Betrieb die Sprachkenntnisse geprüft hat",
+          },
+          {
+            uz: "Imzolangan Ausbildungsvertrag yoki schulische Ausbildung uchun qabul xati",
+            de: "Unterzeichneter Ausbildungsvertrag oder Zulassung zu einer schulischen Ausbildung",
+          },
+          {
+            uz: "Pasport, milliy viza arizasi, biometrik surat va mas’ul vakolatxona checklistidagi boshqa hujjatlar",
+            de: "Pass, nationaler Visumantrag, biometrisches Foto und weitere Unterlagen nach Checkliste der zuständigen Auslandsvertretung",
+          },
+          {
+            uz: "Ausbildungsvergütung yetarli bo‘lmasa, qo‘shimcha moliyaviy ta’minot dalili",
+            de: "Zusätzlicher Finanzierungsnachweis, wenn die Ausbildungsvergütung den Lebensunterhalt nicht vollständig sichert",
+          },
+        ],
+        paragraphs: [
+          {
+            uz: "Aniq hujjatlar kasb, Bundesland, korxona, maktab va mas’ul Germaniya vakolatxonasiga qarab farq qiladi. Ayniqsa Anerkennung, sog‘liq ma’lumotnomasi yoki Führungszeugnis talab qilinadigan kasblarni alohida tekshiring.",
+            de: "Die genaue Unterlagenliste unterscheidet sich nach Beruf, Bundesland, Betrieb, Schule und zuständiger deutscher Auslandsvertretung. Prüfen Sie besonders Berufe mit Anforderungen an Anerkennung, Gesundheitsnachweis oder Führungszeugnis.",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Ausbildungsvergütung va moliyaviy reja",
+          de: "Ausbildungsvergütung und Finanzplanung",
+        },
+        paragraphs: [
+          {
+            uz: "2026-yilda boshlanadigan, Berufsbildungsgesetz yoki Handwerksordnung doirasidagi dual Ausbildung uchun qonuniy minimum brutto miqdorlar 1-yilda 724 yevro, 2-yilda 854 yevro, 3-yilda 977 yevro va 4-yilda 1 014 yevroni tashkil qiladi. Tarif shartnomasi yoki kasb bo‘yicha amaldagi to‘lovlar bundan ancha yuqori bo‘lishi mumkin.",
+            de: "Für duale Ausbildungen nach Berufsbildungsgesetz oder Handwerksordnung, die 2026 beginnen, gelten monatliche Brutto-Mindestvergütungen von 724 Euro im ersten, 854 Euro im zweiten, 977 Euro im dritten und 1.014 Euro im vierten Ausbildungsjahr. Tarifliche oder berufsspezifische Vergütungen können deutlich höher liegen.",
+          },
+          {
+            uz: "Brutto summa qo‘lga tushadigan Netto summa emas. Sog‘liq sug‘urtasi va boshqa ijtimoiy badallar ushlab qolinadi. Netto miqdor shaxsiy holat, sug‘urta va soliq omillariga bog‘liq.",
+            de: "Die Bruttovergütung entspricht nicht dem ausgezahlten Nettobetrag. Beiträge zur Krankenversicherung und weiteren Sozialversicherungen werden abgezogen. Der Nettobetrag hängt von der persönlichen Situation, Versicherung und steuerlichen Faktoren ab.",
+          },
+        ],
+        items: [
+          {
+            uz: "Shahar bo‘yicha ijara, transport, ovqat va sug‘urta xarajatlarini oldindan hisoblang.",
+            de: "Berechnen Sie Miete, Verkehr, Verpflegung und Versicherung für den konkreten Wohnort.",
+          },
+          {
+            uz: "Viza uchun Ausbildung daromadi yashash xarajatlarini to‘liq qoplamasa, blocked account yoki Verpflichtungserklärung kabi qo‘shimcha dalil talab qilinishi mumkin.",
+            de: "Deckt die Ausbildungsvergütung den Lebensunterhalt für das Visum nicht vollständig, kann ein zusätzlicher Nachweis wie Sperrkonto oder Verpflichtungserklärung erforderlich sein.",
+          },
+          {
+            uz: "Schulische Ausbildungda har doim ham Ausbildungsvergütung mavjud emas; ayrim maktablarda qo‘shimcha xarajatlar bo‘lishi mumkin.",
+            de: "Bei schulischen Ausbildungen besteht nicht immer Anspruch auf Ausbildungsvergütung; bei einzelnen Schulen können zusätzliche Kosten entstehen.",
+          },
+          {
+            uz: "Ausbildung uchun yashash ruxsati asosiy ta’limdan tashqari haftasiga 20 soatgacha qo‘shimcha ishga ruxsat beradi.",
+            de: "Die Aufenthaltserlaubnis zur Ausbildung erlaubt neben der Ausbildung eine unabhängige Beschäftigung bis zu 20 Stunden wöchentlich.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Muhim ogohlantirishlar va noto‘g‘ri tushunchalar",
+          de: "Wichtige Hinweise und häufige Missverständnisse",
+        },
+        items: [
+          {
+            uz: "«A2 bilan bemalol Ausbildung topiladi» degan umumiy va’da ishonchli emas. A2 ayrim alohida vaziyatlarda uchrashi mumkin, ammo O‘zbekistondan bevosita topshirayotgan nomzod uchun real imkoniyat juda past.",
+            de: "Die pauschale Aussage, mit A2 problemlos einen Ausbildungsplatz zu finden, ist nicht verlässlich. A2 kann in Einzelfällen vorkommen, die realistischen Chancen bei direkter Bewerbung aus Usbekistan sind jedoch sehr gering.",
+          },
+          {
+            uz: "«Viza uchun B1 yetarli» va «ish beruvchi B1 bilan qabul qiladi» bir xil narsa emas. Birinchisi huquqiy minimum bo‘lishi mumkin, ikkinchisi esa korxonaning raqobatli tanlovidir.",
+            de: "„B1 reicht für das Visum“ und „ein Betrieb stellt mit B1 ein“ sind nicht dasselbe. Das eine kann ein formales Minimum sein, das andere ist eine wettbewerbliche Auswahlentscheidung des Betriebs.",
+          },
+          {
+            uz: "ITda ingliz tilini bilish nemis tilini avtomatik almashtirmaydi. Berufsschule, imtihonlar, Ausbildung hujjatlari, jamoa va ko‘plab mijozlar bilan muloqot nemis tilida bo‘ladi.",
+            de: "Englischkenntnisse ersetzen in der IT nicht automatisch Deutsch. Berufsschule, Prüfungen, Ausbildungsdokumentation, Teamkommunikation und viele Kundenkontakte finden auf Deutsch statt.",
+          },
+          {
+            uz: "Ausbildungsplatz yoki viza kafolati uchun katta oldindan to‘lov talab qiladigan vositachilarni tekshirmasdan pul yubormang.",
+            de: "Zahlen Sie keine hohen Vorausgebühren an Vermittler, die einen Ausbildungsplatz oder ein Visum garantieren.",
+          },
+          {
+            uz: "Shartnoma, korxona, kasbning tan olinganligi va vakolatxona talablarini rasmiy manbalarda mustaqil tekshiring.",
+            de: "Prüfen Sie Vertrag, Betrieb, Anerkennung des Ausbildungsberufs und Vorgaben der Auslandsvertretung selbstständig anhand offizieller Quellen.",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: {
+          uz: "Kasbni real tanlang",
+          de: "Beruf realistisch auswählen",
+        },
+        description: {
+          uz: "Qiziqishdan tashqari maktab darajasi, til, jismoniy talab, mijoz muloqoti, Berufsschule va mehnat bozorini ham baholang.",
+          de: "Bewerten Sie neben Interesse auch Schulniveau, Sprache, körperliche Anforderungen, Kundenkontakt, Berufsschule und Arbeitsmarkt.",
+        },
+      },
+      {
+        title: {
+          uz: "Tilni B2gacha rivojlantiring",
+          de: "Deutsch möglichst bis B2 ausbauen",
+        },
+        description: {
+          uz: "B1 sertifikat bilan ariza berish qonuniy mumkin bo‘lishi mumkin, lekin chet eldan muvaffaqiyatli tanlov va o‘qish uchun B2ni maqsad qiling.",
+          de: "Eine Bewerbung mit B1 kann formal möglich sein; für eine erfolgreiche Auswahl und Ausbildung aus dem Ausland sollte jedoch B2 angestrebt werden.",
+        },
+      },
+      {
+        title: {
+          uz: "Hujjatlarni nemis standartida tayyorlang",
+          de: "Unterlagen nach deutschem Standard erstellen",
+        },
+        description: {
+          uz: "Lebenslauf, Anschreiben, diplomlar, tarjimalar, sertifikat va portfolio xatosiz, aniq va har bir joyga mos bo‘lsin.",
+          de: "Lebenslauf, Anschreiben, Zeugnisse, Übersetzungen, Zertifikate und Portfolio müssen fehlerfrei, klar und auf jede Stelle angepasst sein.",
+        },
+      },
+      {
+        title: {
+          uz: "Ko‘p va sifatli ariza yuboring",
+          de: "Breit und hochwertig bewerben",
+        },
+        description: {
+          uz: "Faqat yirik shaharlarga emas, kichik shahar va hududlardagi korxonalarga ham erta ariza yuboring. IT kabi raqobatli sohada ko‘p rad javobi normal.",
+          de: "Bewerben Sie sich frühzeitig nicht nur in Großstädten, sondern auch bei Betrieben in kleineren Städten und Regionen. Viele Absagen sind in umkämpften Bereichen wie IT normal.",
+        },
+      },
+      {
+        title: {
+          uz: "Nemischa suhbatga tayyorlaning",
+          de: "Auf das deutschsprachige Gespräch vorbereiten",
+        },
+        description: {
+          uz: "Kasb motivatsiyasi, kompaniya, kuchli va zaif tomonlar, texnik yoki amaliy savollar hamda Germaniyaga kelish rejasini ravon tushuntira oling.",
+          de: "Erklären Sie Berufsmotivation, Betrieb, Stärken und Schwächen, technische oder praktische Fragen sowie Ihren Einreiseplan sicher auf Deutsch.",
+        },
+      },
+      {
+        title: {
+          uz: "Shartnoma va moliyani tekshiring",
+          de: "Vertrag und Finanzierung prüfen",
+        },
+        description: {
+          uz: "Vergütung, Ausbildung muddati, sinov davri, ish joyi, Berufsschule, ta’til, uy-joy va yashash xarajatlarini tekshiring.",
+          de: "Prüfen Sie Vergütung, Ausbildungsdauer, Probezeit, Einsatzort, Berufsschule, Urlaub, Unterkunft und Lebenshaltungskosten.",
+        },
+      },
+      {
+        title: {
+          uz: "Milliy vizaga to‘g‘ri hujjat topshiring",
+          de: "Nationales Visum korrekt beantragen",
+        },
+        description: {
+          uz: "Imzolangan shartnoma bilan mas’ul Germaniya vakolatxonasining amaldagi checklistiga amal qiling. Moliyaviy ta’minot va til dalilini oldindan tayyorlang.",
+          de: "Folgen Sie mit dem unterzeichneten Vertrag der aktuellen Checkliste der zuständigen deutschen Auslandsvertretung. Bereiten Sie Finanzierung und Sprachnachweis rechtzeitig vor.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Ausbildung uchun A2 yetarlimi?",
+          de: "Reicht A2 für eine Ausbildung?",
+        },
+        answer: {
+          uz: "Umumiy javob — ishonchli ravishda yo‘q. Ayrim e’lon yoki tayyorlov holatida A2 uchrashi mumkin, ammo malakali Ausbildung vizasida odatda B1 kutiladi. O‘zbekistondan bevosita topshirishda A2 bilan ish beruvchi topish, suhbat va Berufsschuleni bajarish imkoniyati juda past.",
+          de: "Als allgemeine Antwort: nicht verlässlich. A2 kann in einzelnen Anzeigen oder Vorbereitungskonzepten vorkommen, für das Visum zur qualifizierten Ausbildung wird grundsätzlich B1 erwartet. Bei direkter Bewerbung aus Usbekistan sind die Chancen mit A2 auf Betrieb, Gespräch und erfolgreiche Berufsschule sehr gering.",
+        },
+      },
+      {
+        question: {
+          uz: "B1 bilan IT Ausbildung qilish mumkinmi?",
+          de: "Ist eine IT-Ausbildung mit B1 möglich?",
+        },
+        answer: {
+          uz: "Qonuniy jihatdan mutlaq taqiq yo‘q va ayrim istisnolar bo‘lishi mumkin. Lekin O‘zbekistondan turib faqat B1 bilan Fachinformatiker kabi raqobatli IT joyini olish amalda juda qiyin. B2, texnik portfolio, yaxshi baholar va kuchli nemischa suhbat tayyorgarligi real imkoniyatni oshiradi.",
+          de: "Rechtlich besteht kein generelles Verbot und Einzelfälle sind möglich. Praktisch ist es jedoch sehr schwierig, sich aus Usbekistan mit ausschließlich B1 in einem umkämpften IT-Beruf wie Fachinformatiker durchzusetzen. B2, ein technisches Portfolio, gute Leistungen und ein starkes deutschsprachiges Gespräch erhöhen die Chancen.",
+        },
+      },
+      {
+        question: {
+          uz: "Qaysi til darajasini maqsad qilish kerak?",
+          de: "Welches Sprachniveau sollte angestrebt werden?",
+        },
+        answer: {
+          uz: "Chet eldan topshirayotgan ko‘pchilik nomzod uchun B2 eng real maqsad. Pflege, sog‘liq, Erzieher, Büro, savdo va IT kabi kuchli muloqotli yoki raqobatli sohalarda B2ni minimum amaliy maqsad sifatida ko‘rish kerak.",
+          de: "Für viele Bewerbende aus dem Ausland ist B2 das realistischste Ziel. In kommunikationsintensiven oder umkämpften Bereichen wie Pflege, Gesundheit, Erziehung, Büro, Handel und IT sollte B2 als praktisches Mindestziel betrachtet werden.",
+        },
+      },
+      {
+        question: {
+          uz: "Ausbildung uchun yosh chegarasi bormi?",
+          de: "Gibt es eine Altersgrenze für eine Ausbildung?",
+        },
+        answer: {
+          uz: "Ausbildungning o‘zi uchun umumiy yuqori yosh chegarasi yo‘q. Ammo Ausbildungsplatz qidirish vizasi uchun alohida shart sifatida 35 yoshdan kichik bo‘lish talab qilinadi. Tayyor shartnoma bilan Ausbildung vizasi boshqa qoidalarga ega.",
+          de: "Für die Ausbildung selbst gibt es keine allgemeine obere Altersgrenze. Beim Visum zur Suche nach einem Ausbildungsplatz gilt jedoch die besondere Voraussetzung, unter 35 Jahre alt zu sein. Das Visum mit bereits vorhandenem Ausbildungsvertrag folgt anderen Regeln.",
+        },
+      },
+      {
+        question: {
+          uz: "Ausbildung maoshi yashash uchun yetadimi?",
+          de: "Reicht die Ausbildungsvergütung zum Leben?",
+        },
+        answer: {
+          uz: "Kasb, yil va shaharga bog‘liq. Katta shaharda qonuniy minimum ko‘pincha ijara va barcha xarajatlar uchun yetmasligi mumkin. Viza uchun ham qo‘shimcha moliyaviy ta’minot talab qilinishi ehtimoli bor.",
+          de: "Das hängt von Beruf, Ausbildungsjahr und Wohnort ab. In Großstädten reicht die gesetzliche Mindestvergütung häufig nicht für Miete und alle Kosten. Auch für das Visum kann ein zusätzlicher Finanzierungsnachweis erforderlich sein.",
+        },
+      },
+      {
+        question: {
+          uz: "Dual va schulische Ausbildungning farqi nima?",
+          de: "Was ist der Unterschied zwischen dualer und schulischer Ausbildung?",
+        },
+        answer: {
+          uz: "Dual Ausbildung korxona va Berufsschuleni birlashtiradi hamda odatda haq to‘lanadi. Schulische Ausbildung asosan kasb maktabida bo‘ladi; to‘lov mavjudligi kasbga bog‘liq va ayrim hollarda maktab xarajatlari ham bo‘lishi mumkin.",
+          de: "Die duale Ausbildung verbindet Betrieb und Berufsschule und wird grundsätzlich vergütet. Die schulische Ausbildung findet überwiegend an einer Berufsfachschule statt; eine Vergütung hängt vom Beruf ab und teilweise können Schulkosten entstehen.",
+        },
+      },
+      {
+        question: {
+          uz: "Ausbildung paytida qo‘shimcha ishlash mumkinmi?",
+          de: "Darf man während der Ausbildung zusätzlich arbeiten?",
+        },
+        answer: {
+          uz: "§16a bo‘yicha Ausbildung maqsadidagi yashash ruxsati asosiy Ausbildungdan mustaqil ravishda haftasiga 20 soatgacha qo‘shimcha ishlashga ruxsat beradi. Shartnoma, ish va dam olish qoidalariga ham rioya qilish kerak.",
+          de: "Die Aufenthaltserlaubnis nach § 16a erlaubt unabhängig von der Ausbildung eine Nebenbeschäftigung bis zu 20 Stunden pro Woche. Zusätzlich sind Vertrag sowie Arbeits- und Ruhezeitvorschriften zu beachten.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Visa for vocational training",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/visa-residence/types/training",
+        language: "en",
+      },
+      {
+        title: "Requirements for vocational training",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/study-vocational-training/training-in-germany/requirements-for-vocational-training",
+        language: "en",
+      },
+      {
+        title: "§ 16a AufenthG — Berufsausbildung",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__16a.html",
+        language: "de",
+      },
+      {
+        title: "§ 2 AufenthG — Definition der Sprachkenntnisse",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__2.html",
+        language: "de",
+      },
+      {
+        title: "Mindestausbildungsvergütung 2026",
+        organization: "Bundesinstitut für Berufsbildung",
+        url: "https://www.bibb.de/de/199658.php",
+        language: "de",
+      },
+      {
+        title: "Ausbildungsplatzsuche",
+        organization: "Bundesagentur für Arbeit",
+        url: "https://www.arbeitsagentur.de/bildung/ausbildung",
+        language: "de",
+      },
+      {
+        title: "Visa requirements overview",
+        organization: "Federal Foreign Office",
+        url: "https://www.auswaertiges-amt.de/en/visa-service/231148-231148",
+        language: "en",
+      },
+    ],
+    relatedArticleSlugs: ["au-pair", "fsj", "bfd"],
+  },
 ];
 
 function localizeArticle(
