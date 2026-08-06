@@ -93,7 +93,7 @@ export default function GuideCategoryCard({
 
       <h2
         id={titleId}
-        className="relative mt-6 text-xl font-bold tracking-[-0.025em] text-slate-950 dark:text-white"
+        className="mt-6 text-xl font-bold tracking-[-0.025em] text-slate-950 dark:text-white"
       >
         <Link
           href={href}
