@@ -1514,6 +1514,491 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
     ],
     relatedArticleSlugs: ["au-pair", "fsj", "bfd"],
   },
+  {
+    id: "chancenkarte",
+    slug: "chancenkarte",
+    categorySlug: "coming-to-germany",
+    title: {
+      uz: "Germaniya Chancenkarte",
+      de: "Chancenkarte für Deutschland",
+    },
+    excerpt: {
+      uz: "Chancenkarte orqali Germaniyada ish qidirish: tan olingan mutaxassis yo‘li, 6 ballik tizim, diplom va kasbiy malaka, til, tajriba, yosh, moliyaviy ta’minot, 20 soatlik ish va Probearbeit bo‘yicha rasmiy va amaliy qo‘llanma.",
+      de: "Offizieller und praktischer Leitfaden zur Chancenkarte: anerkannte Fachkraft oder Punktesystem, Qualifikation, Sprache, Berufserfahrung, Alter, Finanzierung, 20-Stunden-Beschäftigung und Probearbeit.",
+    },
+    intro: {
+      uz: "Chancenkarte — Germaniyada malakali ish yoki xorijiy kasbiy malakani tan oldirishga olib boradigan choralarni qidirish uchun beriladigan yashash ruxsatidir. Uni olishning ikki asosiy yo‘li mavjud: Germaniyada to‘liq tan olingan malakaga ega Fachkraft sifatida yoki davlat tan olgan xorijiy malaka, boshlang‘ich til talabi va kamida 6 ball asosidagi ball tizimi orqali. Chancenkarte ishni kafolatlamaydi; u Germaniyada cheklangan muddat davomida ish qidirish imkonini beradi.",
+      de: "Die Chancenkarte ist ein Aufenthaltstitel zur Suche nach einer qualifizierten Beschäftigung oder nach Maßnahmen zur Anerkennung ausländischer Berufsqualifikationen. Es gibt zwei Hauptwege: als Fachkraft mit einer in Deutschland voll anerkannten Qualifikation oder über das Punktesystem mit staatlich anerkannter ausländischer Qualifikation, grundlegenden Sprachkenntnissen und mindestens sechs Punkten. Die Chancenkarte garantiert keinen Arbeitsplatz; sie ermöglicht eine zeitlich begrenzte Arbeitssuche in Deutschland.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: {
+      uz: "12 daqiqa",
+      de: "12 Minuten",
+    },
+    facts: [
+      {
+        label: { uz: "Ikki yo‘l", de: "Zwei Wege" },
+        value: {
+          uz: "Germaniyada to‘liq tan olingan Fachkraft yoki kamida 6 ballik tizim",
+          de: "Voll anerkannte Fachkraft oder mindestens 6 Punkte im Punktesystem",
+        },
+      },
+      {
+        label: { uz: "Til — ball yo‘li", de: "Sprache — Punkteweg" },
+        value: {
+          uz: "Kamida nemis tili A1 yoki ingliz tili B2; yuqoriroq nemis tili qo‘shimcha ball beradi",
+          de: "Mindestens Deutsch A1 oder Englisch B2; bessere Deutschkenntnisse bringen zusätzliche Punkte",
+        },
+      },
+      {
+        label: { uz: "Davomiylik", de: "Dauer" },
+        value: {
+          uz: "Dastlab ish qidirish uchun ko‘pi bilan 12 oy",
+          de: "Zunächst höchstens 12 Monate zur Arbeitssuche",
+        },
+      },
+      {
+        label: { uz: "Qo‘shimcha ish", de: "Nebenbeschäftigung" },
+        value: {
+          uz: "Haftasiga o‘rtacha jami 20 soatgacha",
+          de: "Durchschnittlich insgesamt höchstens 20 Stunden pro Woche",
+        },
+      },
+      {
+        label: { uz: "Probearbeit", de: "Probebeschäftigung" },
+        value: {
+          uz: "Har bir ish beruvchida ko‘pi bilan 2 hafta, maqsadli malakali ish yoki Ausbildung uchun",
+          de: "Je Arbeitgeber höchstens 2 Wochen für qualifizierte Beschäftigung, Ausbildung oder Anerkennungsmaßnahme",
+        },
+      },
+      {
+        label: { uz: "Moliyaviy ta’minot 2026", de: "Finanzierung 2026" },
+        value: {
+          uz: "Oyiga kamida 1 091 yevro netto: Sperrkonto, Verpflichtungserklärung yoki mos Teilzeit daromadi orqali",
+          de: "Mindestens 1.091 Euro netto pro Monat über Sperrkonto, Verpflichtungserklärung oder ausreichendes Teilzeiteinkommen",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Chancenkarte nima va kim uchun?",
+          de: "Was ist die Chancenkarte und für wen ist sie gedacht?",
+        },
+        paragraphs: [
+          {
+            uz: "Chancenkarte ish taklifi bo‘lmagan malakali nomzodlarga Germaniyaga kelib, joyida ish qidirish imkonini beradi. U malakali Beschäftigung, Ausbildung yoki xorijiy malakani tan oldirish choralariga olib boradigan imkoniyatlarni izlash uchun ishlatiladi.",
+            de: "Die Chancenkarte ermöglicht qualifizierten Personen ohne konkretes Vollzeitjobangebot, nach Deutschland einzureisen und vor Ort nach Arbeit zu suchen. Gesucht werden kann nach qualifizierter Beschäftigung, Ausbildung oder geeigneten Maßnahmen zur Anerkennung einer ausländischen Qualifikation.",
+          },
+          {
+            uz: "Bu karta oddiy turistik viza yoki istalgan ishni cheklanmasdan bajarish ruxsati emas. Ish qidirish davrida faqat qonunda belgilangan 20 soatlik Nebenjob va cheklangan Probearbeit imkoniyatlari mavjud.",
+            de: "Die Karte ist weder ein Touristenvisum noch eine uneingeschränkte Arbeitserlaubnis. Während der Suche sind nur die gesetzlich erlaubte Nebenbeschäftigung bis 20 Stunden und begrenzte Probebeschäftigungen möglich.",
+          },
+          {
+            uz: "Agar sizda allaqachon haftasiga 20 soatdan ko‘p malakali ish taklifi bo‘lsa, ko‘pincha Chancenkarte emas, to‘g‘ridan-to‘g‘ri mos ish vizasi yoki boshqa yashash ruxsati maqsadga muvofiq bo‘ladi.",
+            de: "Liegt bereits ein qualifiziertes Jobangebot mit mehr als 20 Wochenstunden vor, ist häufig nicht die Chancenkarte, sondern direkt ein passender Beschäftigungstitel sinnvoll.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Ikki asosiy yo‘l: Fachkraft yoki ball tizimi",
+          de: "Zwei Hauptwege: Fachkraft oder Punktesystem",
+        },
+        items: [
+          {
+            uz: "1-yo‘l — Fachkraft: xorijiy oliy yoki kasbiy malakangiz Germaniyada to‘liq tan olingan bo‘lsa, ball to‘plash shart emas.",
+            de: "Weg 1 — Fachkraft: Ist Ihr ausländischer Hochschul- oder Berufsabschluss in Deutschland voll anerkannt, müssen Sie keine Punkte sammeln.",
+          },
+          {
+            uz: "Fachkraft yo‘lida Chancenkarte uchun alohida til sertifikati qonuniy shart emas, lekin ish topish uchun nemis tili amalda juda muhim.",
+            de: "Auf dem Fachkraft-Weg ist für die Chancenkarte kein gesonderter Sprachnachweis gesetzlich erforderlich; für die Arbeitssuche sind Deutschkenntnisse praktisch dennoch sehr wichtig.",
+          },
+          {
+            uz: "2-yo‘l — ball tizimi: xorijda davlat tan olgan oliy ma’lumot yoki kamida 2 yillik kasbiy malaka talab qilinadi.",
+            de: "Weg 2 — Punktesystem: Erforderlich ist ein im Ausbildungsstaat staatlich anerkannter Hochschulabschluss oder eine mindestens zweijährige Berufsqualifikation.",
+          },
+          {
+            uz: "Ball yo‘lida oliy diplom uchun anabin ijobiy natijasi yoki ZAB Zeugnisbewertung, kasbiy malaka uchun esa ZAB Digitale Auskunft zur Berufsqualifikation talab qilinishi mumkin.",
+            de: "Beim Punkteweg kann für Hochschulabschlüsse ein positives anabin-Ergebnis oder eine ZAB-Zeugnisbewertung und für Berufsqualifikationen eine Digitale Auskunft zur Berufsqualifikation erforderlich sein.",
+          },
+          {
+            uz: "Ball yo‘lida kamida nemis tili A1 yoki ingliz tili B2 hamda jami kamida 6 ball talab qilinadi.",
+            de: "Beim Punkteweg sind mindestens Deutsch A1 oder Englisch B2 sowie insgesamt mindestens sechs Punkte erforderlich.",
+          },
+          {
+            uz: "Har ikki yo‘lda ham Germaniyada yashash xarajatlarini mustaqil qoplash isbotlanishi kerak.",
+            de: "Auf beiden Wegen muss der Lebensunterhalt in Deutschland gesichert sein.",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Ball tizimi qanday ishlaydi?",
+          de: "Wie funktioniert das Punktesystem?",
+        },
+        paragraphs: [
+          {
+            uz: "Ball tizimi faqat Germaniyada to‘liq tan olingan Fachkraft bo‘lmagan nomzodlar uchun qo‘llanadi. Asosiy malaka va til sharti ballardan alohida bajarilishi kerak; keyin quyidagi mezonlardan jami kamida 6 ball to‘planadi.",
+            de: "Das Punktesystem gilt nur für Personen, die nicht bereits als voll anerkannte Fachkraft gelten. Grundqualifikation und sprachliche Basisanforderung müssen zusätzlich erfüllt sein; anschließend sind mindestens sechs Punkte aus den folgenden Kriterien erforderlich.",
+          },
+        ],
+        items: [
+          {
+            uz: "Qisman tan olingan malaka yoki reglementierte kasbda kompensatsiya chorasi talab qilinishi: 4 ball.",
+            de: "Teilweise anerkannte Qualifikation oder erforderliche Ausgleichsmaßnahme in einem reglementierten Beruf: 4 Punkte.",
+          },
+          {
+            uz: "Malaka Germaniyadagi Engpassberuf ro‘yxatiga kirsa: 1 ball.",
+            de: "Qualifikation in einem Engpassberuf: 1 Punkt.",
+          },
+          {
+            uz: "So‘nggi 5 yilda malakaga bog‘liq kamida 2 yil tajriba: 2 ball; so‘nggi 7 yilda kamida 5 yil tajriba: 3 ball.",
+            de: "Mindestens 2 Jahre einschlägige Berufserfahrung in den letzten 5 Jahren: 2 Punkte; mindestens 5 Jahre in den letzten 7 Jahren: 3 Punkte.",
+          },
+          {
+            uz: "Nemis tili A2: 1 ball; B1: 2 ball; B2 yoki yuqori: 3 ball.",
+            de: "Deutsch A2: 1 Punkt; B1: 2 Punkte; B2 oder höher: 3 Punkte.",
+          },
+          {
+            uz: "Ingliz tili C1 yoki undan yuqori: qo‘shimcha 1 ball.",
+            de: "Englisch C1 oder höher: zusätzlich 1 Punkt.",
+          },
+          {
+            uz: "Ariza vaqtida 35 yoshdan katta bo‘lmaganlar: 2 ball; 35 yoshdan katta va 40 yoshdan katta bo‘lmaganlar: 1 ball.",
+            de: "Bei Antragstellung höchstens 35 Jahre alt: 2 Punkte; älter als 35 und höchstens 40 Jahre alt: 1 Punkt.",
+          },
+          {
+            uz: "So‘nggi 5 yilda Germaniyada uzluksiz kamida 6 oy qonuniy yashaganlik: 1 ball; turistik yoki mehmon tashrifi hisoblanmaydi.",
+            de: "In den letzten 5 Jahren mindestens 6 Monate ununterbrochener rechtmäßiger Aufenthalt in Deutschland: 1 Punkt; touristische oder Besuchsaufenthalte zählen nicht.",
+          },
+          {
+            uz: "Turmush o‘rtog‘i yoki ro‘yxatdan o‘tgan hamkor ham Chancenkarte talablariga javob berib, birga ariza va kirishni rejalashtirsa: 1 ball.",
+            de: "Ehe- oder eingetragener Lebenspartner erfüllt ebenfalls die Voraussetzungen, beantragt gemeinsam und plant die gemeinsame Einreise: 1 Punkt.",
+          },
+          {
+            uz: "Barcha ballar hujjatlar, sertifikatlar va tajriba dalillari bilan isbotlanishi kerak.",
+            de: "Alle Punkte müssen durch geeignete Unterlagen, Zertifikate und Erfahrungsnachweise belegt werden.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Odatda kerak bo‘ladigan hujjatlar",
+          de: "Üblicherweise erforderliche Unterlagen",
+        },
+        items: [
+          {
+            uz: "Amaldagi pasport va milliy viza arizasi",
+            de: "Gültiger Reisepass und Antrag auf ein nationales Visum",
+          },
+          {
+            uz: "Oliy yoki kasbiy malaka hujjatlari va talab qilinsa nemis yoki ingliz tilidagi tarjimalar",
+            de: "Hochschul- oder Berufsqualifikationsnachweise und erforderlichenfalls Übersetzungen ins Deutsche oder Englische",
+          },
+          {
+            uz: "Yo‘lga qarab Germaniyada to‘liq Anerkennung, anabin/ZAB Zeugnisbewertung yoki Digitale Auskunft zur Berufsqualifikation",
+            de: "Je nach Weg vollständige Anerkennung in Deutschland, anabin/ZAB-Zeugnisbewertung oder Digitale Auskunft zur Berufsqualifikation",
+          },
+          {
+            uz: "Ball yo‘lida nemis A1 yoki ingliz B2 til dalili; qo‘shimcha ball talab qilinsa yuqoriroq darajadagi sertifikat",
+            de: "Beim Punkteweg Nachweis Deutsch A1 oder Englisch B2; für weitere Sprachpunkte ein höheres Zertifikat",
+          },
+          {
+            uz: "Ish tajribasi uchun vazifalar va mas’uliyatlar batafsil yozilgan Arbeitszeugnis yoki ish beruvchi ma’lumotnomalari",
+            de: "Für Berufserfahrung Arbeitszeugnisse oder Arbeitgeberbescheinigungen mit detaillierten Aufgaben und Verantwortungsbereichen",
+          },
+          {
+            uz: "Sperrkonto, Verpflichtungserklärung yoki yetarli Teilzeit shartnomasi orqali moliyaviy ta’minot",
+            de: "Finanzierungsnachweis über Sperrkonto, Verpflichtungserklärung oder ausreichenden Teilzeitvertrag",
+          },
+          {
+            uz: "Viza davri uchun mos kirish tibbiy sug‘urtasi",
+            de: "Geeignete Incoming-Krankenversicherung für den Visumzeitraum",
+          },
+          {
+            uz: "Mas’ul Germaniya vakolatxonasi talab qilgan qo‘shimcha hujjatlar",
+            de: "Weitere Unterlagen nach Vorgabe der zuständigen deutschen Auslandsvertretung",
+          },
+        ],
+        paragraphs: [
+          {
+            uz: "Til sertifikatlari odatda ALTE sertifikatiga ega yoki tan olingan imtihon tashkiloti tomonidan berilgan bo‘lishi kerak. Rasmiy FAQga ko‘ra, til sertifikati odatda imtihon sanasidan bir yildan oshmagan bo‘lsa qabul qilinadi. Yakuniy talabni mas’ul elchixona yoki konsullikdan tekshiring.",
+            de: "Sprachzertifikate müssen grundsätzlich von einer ALTE-zertifizierten oder sonst anerkannten Prüfungsinstitution stammen. Laut offizieller FAQ werden Sprachzertifikate in der Regel akzeptiert, wenn die Prüfung nicht länger als ein Jahr zurückliegt. Die endgültigen Anforderungen sind bei der zuständigen Auslandsvertretung zu prüfen.",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Moliyaviy ta’minot, ishlash va Germaniyadagi real holat",
+          de: "Finanzierung, Beschäftigung und praktische Realität in Deutschland",
+        },
+        paragraphs: [
+          {
+            uz: "2026-yilda Chancenkarte uchun yashash xarajatlarini qoplash maqsadida oyiga kamida 1 091 yevro netto moliyaviy ta’minot ko‘rsatiladi. Buni Sperrkonto, Verpflichtungserklärung yoki haftasiga 20 soatgacha bo‘lgan ish shartnomasi orqali to‘liq yoki qisman isbotlash mumkin.",
+            de: "Für 2026 sind zur Sicherung des Lebensunterhalts mindestens 1.091 Euro netto pro Monat nachzuweisen. Dies kann vollständig oder teilweise über Sperrkonto, Verpflichtungserklärung oder einen Arbeitsvertrag bis 20 Wochenstunden erfolgen.",
+          },
+          {
+            uz: "Vatandoshlar.de amaliy tavsiyasi: A1 nemis tili yoki faqat B2 ingliz tili Chancenkarte olishning qonuniy boshlang‘ich sharti bo‘lishi mumkin, lekin Germaniyada ish topish uchun ko‘pincha yetarli emas. ITdagi ayrim xalqaro lavozimlar bundan mustasno bo‘lishi mumkin, biroq ko‘pchilik kasblarda va kundalik hayotda kamida mustahkam B1, yaxshisi B2 nemis tili real imkoniyatni ancha oshiradi.",
+            de: "Praktische Empfehlung von Vatandoshlar.de: Deutsch A1 oder ausschließlich Englisch B2 kann eine formale Zugangsvoraussetzung sein, reicht für die tatsächliche Arbeitssuche in Deutschland aber häufig nicht aus. Einzelne internationale IT-Stellen können Ausnahmen bilden; in den meisten Berufen und im Alltag erhöhen ein stabiles B1, besser B2 Deutsch, die realistischen Chancen deutlich.",
+          },
+          {
+            uz: "Chancenkarte bilan kelish ish beruvchi topilishini kafolatlamaydi. Turar joy, transport, sug‘urta, kundalik xarajatlar, ariza hujjatlari va ehtimol bir necha oylik ish qidirish davrini oldindan rejalashtirish kerak.",
+            de: "Die Einreise mit Chancenkarte garantiert keinen Arbeitgeber. Unterkunft, Verkehr, Versicherung, Alltag, Bewerbungsunterlagen und eine möglicherweise mehrmonatige Suchphase müssen realistisch vorfinanziert und geplant werden.",
+          },
+        ],
+        items: [
+          {
+            uz: "Bir yoki bir nechta Nebenjobda haftasiga o‘rtacha jami 20 soatgacha ishlash mumkin.",
+            de: "Eine oder mehrere Nebenbeschäftigungen sind durchschnittlich insgesamt bis zu 20 Stunden pro Woche erlaubt.",
+          },
+          {
+            uz: "Har bir ish beruvchida ko‘pi bilan 2 haftalik Probearbeit mumkin; u malakali ish, Ausbildung yoki Anerkennung chorasi bilan bog‘liq bo‘lishi kerak.",
+            de: "Je Arbeitgeber ist eine Probebeschäftigung von höchstens zwei Wochen möglich; sie muss auf qualifizierte Beschäftigung, Ausbildung oder eine Anerkennungsmaßnahme abzielen.",
+          },
+          {
+            uz: "To‘liq yoki 20 soatdan ko‘p muntazam ish topilgach, odatda mos ish yashash ruxsatiga o‘tish kerak.",
+            de: "Nach Aufnahme einer regulären Beschäftigung mit mehr als 20 Stunden ist grundsätzlich in einen passenden Beschäftigungstitel zu wechseln.",
+          },
+          {
+            uz: "Dastlabki Such-Chancenkarte ko‘pi bilan 12 oy beriladi; to‘liq davr uchun moliya isbotlanmasa qisqaroq muddat berilishi mumkin.",
+            de: "Die erste Such-Chancenkarte wird für höchstens zwölf Monate erteilt; bei kürzer nachgewiesener Finanzierung kann sie entsprechend kürzer ausgestellt werden.",
+          },
+          {
+            uz: "Nemis tilini Germaniyaga kelishdan oldin rivojlantirish, CV va Anschreibenni nemis bozoriga moslash, hamda ish beruvchilar bilan oldindan aloqa boshlash tavsiya etiladi.",
+            de: "Empfehlenswert sind Deutschlernen vor der Einreise, Anpassung von Lebenslauf und Anschreiben an den deutschen Markt sowie frühzeitiger Kontakt zu Arbeitgebern.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Muhim ogohlantirishlar va noto‘g‘ri tushunchalar",
+          de: "Wichtige Hinweise und häufige Missverständnisse",
+        },
+        items: [
+          {
+            uz: "Chancenkarte «malakasiz istalgan odam uchun ish vizasi» emas. Rasmiy malaka va moliyaviy ta’minot har doim asosiy shartlar qatorida qoladi.",
+            de: "Die Chancenkarte ist kein Arbeitsvisum für beliebige Personen ohne Qualifikation. Formale Qualifikation und gesicherter Lebensunterhalt bleiben zentrale Voraussetzungen.",
+          },
+          {
+            uz: "6 ballning o‘zi yetmaydi: davlat tan olgan malaka, tilning boshlang‘ich sharti va moliyaviy ta’minot ham alohida bajarilishi kerak.",
+            de: "Sechs Punkte allein reichen nicht: Grundqualifikation, sprachliche Basisanforderung und Finanzierung müssen zusätzlich erfüllt sein.",
+          },
+          {
+            uz: "A1 nemis tili qonuniy kirish sharti bo‘lishi mumkin, lekin ko‘pchilik nemis ish beruvchilari uchun amaliy ish darajasi emas.",
+            de: "Deutsch A1 kann eine formale Zugangsvoraussetzung sein, ist für die meisten deutschen Arbeitgeber aber kein praktisch ausreichendes Arbeitsniveau.",
+          },
+          {
+            uz: "Chancenkarte bilan kelib istalgan Vollzeit ishni darhol boshlash mumkin emas; avval mos yashash ruxsatiga o‘tish talab qilinadi.",
+            de: "Mit der Chancenkarte darf nicht sofort jede beliebige Vollzeitbeschäftigung aufgenommen werden; zunächst ist ein passender Aufenthaltstitel erforderlich.",
+          },
+          {
+            uz: "Ish yoki vizani kafolatlaydigan vositachilarga katta oldindan to‘lov yubormang. Rasmiy onlayn termin tizimida maxsus yoki imtiyozli kirish mavjud emas.",
+            de: "Zahlen Sie keine hohen Vorausgebühren an Vermittler, die Arbeit oder Visum garantieren. Im offiziellen Terminbuchungssystem gibt es keinen besonderen oder bevorzugten Zugang.",
+          },
+          {
+            uz: "Chancenkarte Ausbildung yoki universitet joyini qidirish uchun asosiy maxsus viza o‘rnini bosmaydi; bu maqsadlar uchun alohida viza yo‘llari mavjud.",
+            de: "Die Chancenkarte ersetzt nicht die besonderen Visa zur Suche nach einem Ausbildungs- oder Studienplatz; dafür bestehen eigene Aufenthaltstitel.",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: {
+          uz: "Qaysi yo‘lga kirishingizni aniqlang",
+          de: "Passenden Zugangsweg bestimmen",
+        },
+        description: {
+          uz: "Malakangiz Germaniyada to‘liq tan olingan Fachkraftmi yoki 6 ballik tizim orqali topshirasizmi — avval shuni aniq tekshiring.",
+          de: "Prüfen Sie zuerst, ob Sie als voll anerkannte Fachkraft gelten oder über das Punktesystem mit mindestens sechs Punkten gehen.",
+        },
+      },
+      {
+        title: {
+          uz: "Diplom va malakani tekshirtiring",
+          de: "Qualifikation prüfen lassen",
+        },
+        description: {
+          uz: "Oliy ma’lumot uchun anabin yoki ZAB Zeugnisbewertungni, kasbiy malaka uchun Anerkennung yoki Digitale Auskunft talablarini tekshiring.",
+          de: "Prüfen Sie für Hochschulabschlüsse anabin oder ZAB-Zeugnisbewertung und für Berufsqualifikationen Anerkennung oder Digitale Auskunft.",
+        },
+      },
+      {
+        title: {
+          uz: "Ballarni faqat dalillar bilan hisoblang",
+          de: "Punkte nur mit Nachweisen berechnen",
+        },
+        description: {
+          uz: "Til, tajriba, yosh, Germaniyadagi oldingi yashash va boshqa mezonlarni rasmiy hujjatlar bilan isbotlay olishingizni tekshiring.",
+          de: "Berechnen Sie Sprache, Erfahrung, Alter, frühere Deutschlandaufenthalte und weitere Kriterien nur, wenn Sie diese offiziell belegen können.",
+        },
+      },
+      {
+        title: {
+          uz: "Moliyaviy ta’minotni tayyorlang",
+          de: "Finanzierung vorbereiten",
+        },
+        description: {
+          uz: "2026 uchun oyiga 1 091 yevro netto mezonini Sperrkonto, Verpflichtungserklärung yoki mos Teilzeit shartnomasi bilan qoplash rejasini tuzing.",
+          de: "Planen Sie für 2026 den Nachweis von 1.091 Euro netto monatlich über Sperrkonto, Verpflichtungserklärung oder passenden Teilzeitvertrag.",
+        },
+      },
+      {
+        title: {
+          uz: "Ish qidirishni vizadan oldin boshlang",
+          de: "Arbeitssuche vor dem Visum beginnen",
+        },
+        description: {
+          uz: "Nemis standartidagi CV, Anschreiben va professional profillarni tayyorlang; ish bozori, shahar va kasb talablarini oldindan o‘rganing.",
+          de: "Erstellen Sie Lebenslauf, Anschreiben und professionelle Profile nach deutschem Standard und recherchieren Sie Arbeitsmarkt, Regionen und Berufsanforderungen frühzeitig.",
+        },
+      },
+      {
+        title: {
+          uz: "Konsullik xizmatlari portali orqali ariza bering",
+          de: "Über das Auslandsportal beantragen",
+        },
+        description: {
+          uz: "Mavjud bo‘lsa onlayn ariza yuboring, hujjatlarni oldindan tekshirtiring va keyin biometrika hamda asl hujjatlar uchun shaxsiy termin talablariga amal qiling.",
+          de: "Reichen Sie den Antrag, sofern verfügbar, online ein, lassen Sie Unterlagen vorprüfen und folgen Sie anschließend den Vorgaben für Biometrie und Originaldokumente beim persönlichen Termin.",
+        },
+      },
+      {
+        title: {
+          uz: "Germaniyada vaqtni aniq reja bilan ishlating",
+          de: "Suchzeit in Deutschland strukturiert nutzen",
+        },
+        description: {
+          uz: "Nebenjobni asosiy maqsadga aylantirmang: malakali ish arizalari, tarmoq yaratish, til, Jobmesse, Probearbeit va Anerkennung jarayoniga ustuvorlik bering.",
+          de: "Machen Sie den Nebenjob nicht zum Hauptziel: Priorisieren Sie qualifizierte Bewerbungen, Netzwerk, Deutsch, Jobmessen, Probearbeit und gegebenenfalls Anerkennung.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Chancenkarte uchun albatta 6 ball kerakmi?",
+          de: "Braucht man für die Chancenkarte immer sechs Punkte?",
+        },
+        answer: {
+          uz: "Yo‘q. Agar xorijiy oliy yoki kasbiy malakangiz Germaniyada to‘liq tan olingan va siz Fachkraft hisoblasangiz, ball tizimi qo‘llanmaydi. To‘liq tan olinmagan yo‘lda esa asosiy shartlar bilan birga kamida 6 ball kerak.",
+          de: "Nein. Wenn Ihre ausländische Hochschul- oder Berufsqualifikation in Deutschland voll anerkannt ist und Sie als Fachkraft gelten, findet das Punktesystem keine Anwendung. Auf dem anderen Weg sind zusätzlich zu den Grundvoraussetzungen mindestens sechs Punkte erforderlich.",
+        },
+      },
+      {
+        question: {
+          uz: "A1 nemis tili bilan Chancenkarte olish mumkinmi?",
+          de: "Kann man die Chancenkarte mit Deutsch A1 erhalten?",
+        },
+        answer: {
+          uz: "Ball tizimi yo‘lida nemis A1 yoki ingliz B2 boshlang‘ich til shartini bajaradi. Ammo A1 qo‘shimcha ball bermaydi va Germaniyada malakali ish topish uchun amalda ko‘pincha yetarli emas. B1 yoki B2 nemis tili ish imkoniyatini sezilarli oshiradi.",
+          de: "Beim Punkteweg erfüllt Deutsch A1 oder Englisch B2 die sprachliche Grundvoraussetzung. A1 bringt jedoch keinen zusätzlichen Punkt und reicht für die qualifizierte Arbeitssuche praktisch häufig nicht aus. Deutsch B1 oder B2 verbessert die Chancen deutlich.",
+        },
+      },
+      {
+        question: {
+          uz: "Faqat ingliz tili B2 bilan borish realmi?",
+          de: "Ist die Einreise nur mit Englisch B2 realistisch?",
+        },
+        answer: {
+          uz: "Qonuniy jihatdan ball yo‘lining boshlang‘ich til sharti bajarilishi mumkin. Amalda faqat ingliz tilida ish topish kasb va shaharga juda bog‘liq; xalqaro IT, ilmiy yoki ayrim mutaxassisliklarda imkon ko‘proq, ko‘pchilik nemis korxonalarida esa nemis tili talab qilinadi.",
+          de: "Rechtlich kann damit die sprachliche Grundvoraussetzung des Punktewegs erfüllt sein. Praktisch hängt eine rein englischsprachige Arbeitssuche stark von Beruf und Region ab; Chancen bestehen eher in internationaler IT, Forschung oder bestimmten Fachgebieten, während viele deutsche Betriebe Deutsch erwarten.",
+        },
+      },
+      {
+        question: {
+          uz: "Chancenkarte bilan Vollzeit ishlash mumkinmi?",
+          de: "Darf man mit der Chancenkarte Vollzeit arbeiten?",
+        },
+        answer: {
+          uz: "Ish qidirish Chancenkarte bilan muntazam Nebenjob o‘rtacha haftasiga jami 20 soat bilan cheklangan. To‘liq ish topilgach, ishni boshlash uchun odatda mos mehnat yashash ruxsatiga o‘tish kerak.",
+          de: "Mit der Such-Chancenkarte ist reguläre Nebenbeschäftigung durchschnittlich auf insgesamt 20 Wochenstunden begrenzt. Nach einem Vollzeitjobangebot ist grundsätzlich in einen passenden Beschäftigungstitel zu wechseln.",
+        },
+      },
+      {
+        question: {
+          uz: "Probearbeit qancha davom etishi mumkin?",
+          de: "Wie lange darf eine Probebeschäftigung dauern?",
+        },
+        answer: {
+          uz: "Har bir ish beruvchida ko‘pi bilan 2 hafta. Probearbeit malakali ish, Ausbildung yoki malakani tan oldirish chorasi bilan bog‘liq bo‘lishi kerak.",
+          de: "Je Arbeitgeber höchstens zwei Wochen. Die Probebeschäftigung muss auf qualifizierte Beschäftigung, Ausbildung oder eine Anerkennungsmaßnahme abzielen.",
+        },
+      },
+      {
+        question: {
+          uz: "2026-yilda qancha mablag‘ ko‘rsatish kerak?",
+          de: "Wie viel Finanzierung muss 2026 nachgewiesen werden?",
+        },
+        answer: {
+          uz: "Rasmiy ma’lumotga ko‘ra oyiga kamida 1 091 yevro netto. Yetarli Teilzeit daromadi bu summani to‘liq yoki qisman qoplashi, qolgan qismi esa Sperrkonto bilan to‘ldirilishi mumkin. Verpflichtungserklärung ham muqobil yo‘l hisoblanadi.",
+          de: "Nach offizieller Information mindestens 1.091 Euro netto pro Monat. Ausreichendes Teilzeiteinkommen kann den Betrag ganz oder teilweise decken; eine Differenz kann über ein Sperrkonto ausgeglichen werden. Alternativ ist eine Verpflichtungserklärung möglich.",
+        },
+      },
+      {
+        question: {
+          uz: "Chancenkarte bilan Ausbildung joyini qidirish mumkinmi?",
+          de: "Kann man mit der Chancenkarte einen Ausbildungsplatz suchen?",
+        },
+        answer: {
+          uz: "Chancenkarte doirasidagi Probearbeit Ausbildungga qaratilgan bo‘lishi mumkin, ammo faqat Ausbildung joyini qidirish uchun alohida viza yo‘li mavjud. Asosiy maqsad Ausbildung bo‘lsa, aynan shu maxsus vizani tekshirish kerak.",
+          de: "Eine Probebeschäftigung im Rahmen der Chancenkarte kann auf eine Ausbildung abzielen. Für die gezielte Suche nach einem Ausbildungsplatz existiert jedoch ein eigener Aufenthaltstitel, der bei entsprechendem Hauptzweck geprüft werden sollte.",
+        },
+      },
+      {
+        question: {
+          uz: "Chancenkarte bilan oila birlashtirish mumkinmi?",
+          de: "Ist Familiennachzug mit der Chancenkarte möglich?",
+        },
+        answer: {
+          uz: "Turmush o‘rtog‘i o‘zining Chancenkarte talablariga javob bersa, birga ariza berib kirishi mumkin. Aks holda vaqtinchalik Such-Chancenkarte asosida oddiy turmush o‘rtog‘i qo‘shilishi odatda mumkin emas; malakali ish topib, barqaror yashash maqomiga o‘tgach oila birlashtirish yo‘li tekshiriladi.",
+          de: "Erfüllt der Ehepartner selbst die Voraussetzungen der Chancenkarte, kann gemeinsam beantragt und eingereist werden. Andernfalls ist ein gewöhnlicher Ehegattennachzug zur befristeten Such-Chancenkarte grundsätzlich nicht vorgesehen; nach Aufnahme qualifizierter Beschäftigung und Wechsel des Aufenthaltstitels kann Familiennachzug geprüft werden.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Job search opportunity card",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/visa-residence/opportunity-card/job-search",
+        language: "en",
+      },
+      {
+        title: "Questions and answers regarding the opportunity card",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/visa-residence/opportunity-card/questions-answers",
+        language: "en",
+      },
+      {
+        title: "§ 20a AufenthG — Chancenkarte",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__20a.html",
+        language: "de",
+      },
+      {
+        title: "§ 20b AufenthG — Punktevergabe",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__20b.html",
+        language: "de",
+      },
+      {
+        title: "Consular Services Portal",
+        organization: "Federal Foreign Office",
+        url: "https://www.auswaertiges-amt.de/en/visa-service/consular-services-portal",
+        language: "en",
+      },
+      {
+        title: "Opening and closing a blocked bank account",
+        organization: "Federal Foreign Office",
+        url: "https://www.auswaertiges-amt.de/en/sperrkonto-388600",
+        language: "en",
+      },
+    ],
+    relatedArticleSlugs: ["ausbildung", "fsj", "bfd", "au-pair"],
+  },
 ];
 
 function localizeArticle(
