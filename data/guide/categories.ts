@@ -64,8 +64,8 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
       uz: "Termin olish, ariza topshirish, suhbat va konsullik jarayonlari.",
       de: "Terminbuchung, Antragstellung, Interview und konsularische Abläufe.",
     },
-    articleCount: 0,
-    status: "coming-soon",
+    articleCount: 1,
+    status: "available",
   },
   {
     id: "documents",
