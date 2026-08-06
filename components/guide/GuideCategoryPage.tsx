@@ -39,7 +39,7 @@ export default function GuideCategoryPage({
           reliabilityTitle: "Ishonchli ma’lumot tamoyili",
           reliabilityDescription:
             "Har bir maqola e’lon qilinishidan oldin birlamchi rasmiy manbalar bilan tekshiriladi. Qonun va jarayonlar o‘zgarishi mumkinligi sababli, har bir materialda oxirgi tekshiruv sanasi va rasmiy manbalar ko‘rsatiladi.",
-          guideHome: "Guide bosh sahifasiga qaytish",
+          guideHome: "Qo‘llanma sahifasiga qaytish",
         }
       : {
           back: "Alle Bereiche",
@@ -210,8 +210,9 @@ export default function GuideCategoryPage({
           <div className="mt-10">
             <Link
               href="/guide"
-              className="inline-flex min-h-12 items-center justify-center rounded-full bg-slate-950 px-6 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 dark:focus-visible:ring-offset-slate-950"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3 font-semibold !text-white no-underline visited:!text-white hover:!text-white active:!text-white transition hover:-translate-y-0.5 hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:bg-emerald-500 dark:!text-slate-950 dark:visited:!text-slate-950 dark:hover:!text-slate-950 dark:active:!text-slate-950 dark:hover:bg-emerald-400 dark:focus-visible:ring-offset-slate-950"
             >
+              <span aria-hidden="true">←</span>
               {copy.guideHome}
             </Link>
           </div>
