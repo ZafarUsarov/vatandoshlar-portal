@@ -2504,6 +2504,493 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
     ],
     relatedArticleSlugs: [],
   },
+  {
+    id: "german-citizen-spouse-reunification",
+    slug: "german-citizen-spouse-reunification",
+    categorySlug: "family",
+    title: {
+      uz: "Nemis fuqarosi bilan oila birlashtirish",
+      de: "Ehegattennachzug zu deutschen Staatsangehörigen",
+    },
+    excerpt: {
+      uz: "Nemis fuqarosi bo‘lgan turmush o‘rtog‘i yoniga Germaniyaga ko‘chib kelish: §28 AufenthG, A1 talabi va istisnolar, daromad va uy-joyning amaliy baholanishi, bepul milliy viza, ishlash huquqi, hujjatlar va bosqichma-bosqich jarayon.",
+      de: "Leitfaden zum Nachzug zu einem deutschen Ehegatten: § 28 AufenthG, A1-Anforderung und Ausnahmen, praktische Prüfung von Lebensunterhalt und Wohnsituation, gebührenfreies nationales Visum, Erwerbstätigkeit, Unterlagen und Ablauf.",
+    },
+    intro: {
+      uz: "Agar turmush o‘rtog‘ingiz Germaniya fuqarosi bo‘lib, uning odatiy yashash joyi Germaniyada bo‘lsa, oila birlashtirish odatda §28 Aufenthaltsgesetz asosida amalga oshiriladi. Bu yo‘l uchinchi davlat fuqarosi yoniga umumiy oila birlashtirishdan kuchliroq oilaviy himoyaga ega. Shunga qaramay, nikohning haqiqiyligi, Germaniyada birga oilaviy hayot olib borish niyati, shaxsiy hujjatlar, odatda A1 darajadagi boshlang‘ich nemis tili va umumiy viza talablari tekshiriladi.",
+      de: "Ist Ihr Ehegatte deutscher Staatsangehöriger und hat seinen gewöhnlichen Aufenthalt in Deutschland, richtet sich der Familiennachzug grundsätzlich nach § 28 Aufenthaltsgesetz. Dieser Weg genießt einen stärkeren familiären Schutz als der allgemeine Nachzug zu Drittstaatsangehörigen. Dennoch werden die Wirksamkeit der Ehe, die beabsichtigte familiäre Lebensgemeinschaft in Deutschland, Personenstandsurkunden, grundsätzlich einfache Deutschkenntnisse auf Niveau A1 und die allgemeinen Visumvoraussetzungen geprüft.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: {
+      uz: "11 daqiqa",
+      de: "11 Minuten",
+    },
+    facts: [
+      {
+        label: { uz: "Huquqiy asos", de: "Rechtsgrundlage" },
+        value: {
+          uz: "Asosan §28 AufenthG; A1 bo‘yicha §30ning tegishli qoidalari qo‘llanadi",
+          de: "Grundsätzlich § 28 AufenthG; für A1 gelten die entsprechenden Regeln des § 30",
+        },
+      },
+      {
+        label: { uz: "Asosiy shart", de: "Zentrale Voraussetzung" },
+        value: {
+          uz: "Nemis turmush o‘rtog‘ining odatiy yashash joyi Germaniyada va oilaviy hayot birga olib borilishi kerak",
+          de: "Der deutsche Ehegatte hat seinen gewöhnlichen Aufenthalt in Deutschland und die familiäre Lebensgemeinschaft soll dort geführt werden",
+        },
+      },
+      {
+        label: { uz: "Nemis tili", de: "Deutschkenntnisse" },
+        value: {
+          uz: "Odatda kirishdan oldin A1; qonuniy istisnolar mavjud",
+          de: "Grundsätzlich A1 vor der Einreise; gesetzliche Ausnahmen sind möglich",
+        },
+      },
+      {
+        label: { uz: "Daromad", de: "Lebensunterhalt" },
+        value: {
+          uz: "Odatda oddiy uchinchi davlat oilaviy qoidasidagidek qat’iy shart emas; §28 bo‘yicha individual baholanadi",
+          de: "Grundsätzlich nicht in gleicher Strenge wie beim allgemeinen Drittstaatsnachzug; individuelle Prüfung nach § 28",
+        },
+      },
+      {
+        label: { uz: "Viza to‘lovi", de: "Visumgebühr" },
+        value: {
+          uz: "Nemis fuqarosining turmush o‘rtog‘i uchun milliy viza odatda bepul",
+          de: "Das nationale Visum ist für Ehegatten deutscher Staatsangehöriger grundsätzlich gebührenfrei",
+        },
+      },
+      {
+        label: { uz: "Ishlash", de: "Erwerbstätigkeit" },
+        value: {
+          uz: "Oilaviy yashash ruxsati Germaniyada ishlash huquqini beradi",
+          de: "Der familienbezogene Aufenthaltstitel berechtigt zur Erwerbstätigkeit",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Nemis fuqarosi yoniga oila birlashtirish nima?",
+          de: "Was ist der Ehegattennachzug zu Deutschen?",
+        },
+        paragraphs: [
+          {
+            uz: "§28 AufenthG bo‘yicha chet ellik turmush o‘rtog‘iga yashash ruxsati berilishi kerak, agar nemis fuqarosining odatiy yashash joyi Germaniyada bo‘lsa va er-xotin Germaniyada haqiqiy oilaviy hayot olib borishni istasa.",
+            de: "Nach § 28 AufenthG ist dem ausländischen Ehegatten grundsätzlich eine Aufenthaltserlaubnis zu erteilen, wenn der deutsche Ehegatte seinen gewöhnlichen Aufenthalt in Deutschland hat und die Eheleute dort eine tatsächliche familiäre Lebensgemeinschaft führen wollen.",
+          },
+          {
+            uz: "Nikohning xorijda tuzilgani o‘z-o‘zidan muammo emas. Muhimi, nikoh tuzilgan davlat huquqiga ko‘ra haqiqiy bo‘lishi va Germaniya huquq tartibiga zid bo‘lmasligi kerak. Germaniyada xorijiy nikohni tan olish uchun odatda bitta alohida universal «tan olish jarayoni» mavjud emas; hujjat viza jarayonida tekshiriladi.",
+            de: "Eine im Ausland geschlossene Ehe ist nicht allein deshalb problematisch. Entscheidend ist, dass sie nach dem Recht des Eheschließungsstaates wirksam ist und nicht gegen wesentliche Grundsätze der deutschen Rechtsordnung verstößt. Ein einheitliches gesondertes Anerkennungsverfahren für ausländische Ehen existiert grundsätzlich nicht; die Urkunde wird im jeweiligen Verwaltungsverfahren geprüft.",
+          },
+          {
+            uz: "Bu maqola faqat turmush o‘rtog‘i nemis fuqarosi bo‘lgan holatga tegishli. EU fuqarosi, Blue Card egasi yoki boshqa xorijiy Aufenthaltstitel egasi bilan oila birlashtirish qoidalari alohida.",
+            de: "Dieser Artikel betrifft ausschließlich den Nachzug zu einem deutschen Ehegatten. Für EU-Bürger, Inhaber einer Blauen Karte EU oder andere ausländische Aufenthaltstitel gelten gesonderte Regeln.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Kimlar murojaat qila oladi?",
+          de: "Wer kann den Nachzug beantragen?",
+        },
+        items: [
+          {
+            uz: "Germaniya fuqarosi bilan qonuniy nikohda bo‘lgan uchinchi davlat fuqarosi",
+            de: "Drittstaatsangehörige, die wirksam mit einer deutschen Person verheiratet sind",
+          },
+          {
+            uz: "Nemis turmush o‘rtog‘ining odatiy yashash joyi Germaniyada bo‘lishi yoki ko‘chib keluvchi turmush o‘rtog‘i bilan birga Germaniyada yashashni boshlashi",
+            de: "Der deutsche Ehegatte hat seinen gewöhnlichen Aufenthalt in Deutschland oder begründet ihn gemeinsam mit dem nachziehenden Ehegatten",
+          },
+          {
+            uz: "Er-xotin Germaniyada haqiqiy oilaviy hayot olib borishni rejalashtirishi",
+            de: "Die Eheleute beabsichtigen, in Deutschland eine tatsächliche eheliche Lebensgemeinschaft zu führen",
+          },
+          {
+            uz: "Nikoh faqat viza yoki yashash huquqi olish uchun soxta tuzilmagan bo‘lishi",
+            de: "Die Ehe darf nicht ausschließlich zum Zweck der Visum- oder Aufenthaltserlangung geschlossen worden sein",
+          },
+          {
+            uz: "Shaxs, fuqarolik va nikoh holati ishonchli hujjatlar bilan tasdiqlanishi",
+            de: "Identität, Staatsangehörigkeit und Familienstand müssen durch verlässliche Unterlagen nachgewiesen werden",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "A1 talabi va istisnolar",
+          de: "A1-Anforderung und Ausnahmen",
+        },
+        paragraphs: [
+          {
+            uz: "Nemis fuqarosi bilan nikohda bo‘lish A1 talabini avtomatik bekor qilmaydi. §28 AufenthG §30ning tegishli til qoidalariga murojaat qiladi. Shu sabab ko‘p holatda viza topshirayotgan turmush o‘rtog‘i oddiy nemis tilida muloqot qila olishini — odatda A1 sertifikati orqali — ko‘rsatadi.",
+            de: "Die Ehe mit einer deutschen Person hebt die A1-Anforderung nicht automatisch auf. § 28 AufenthG verweist auf die entsprechenden Sprachregelungen des § 30. Daher muss der nachziehende Ehegatte in vielen Fällen einfache Deutschkenntnisse nachweisen, üblicherweise durch ein A1-Zertifikat.",
+          },
+          {
+            uz: "Qonunda sog‘liq sababli til o‘rganish imkonsizligi, individual asossiz qiyinchilik yoki boshqa maxsus holatlar uchun istisnolar mavjud. Istisno faqat og‘zaki da’vo bilan emas, tibbiy hujjat, o‘qishga urinishlar yoki boshqa ishonchli dalillar bilan asoslanishi kerak.",
+            de: "Das Gesetz sieht Ausnahmen vor, etwa bei krankheitsbedingter Unmöglichkeit des Spracherwerbs, individueller Unzumutbarkeit oder weiteren besonderen Konstellationen. Eine Ausnahme muss durch ärztliche Unterlagen, dokumentierte Lernbemühungen oder andere belastbare Nachweise begründet werden.",
+          },
+          {
+            uz: "Vatandoshlar.de amaliy tavsiyasi: istisno haqidagi Telegram yoki YouTube maslahatiga tayanib A1siz ariza bermang. Avval mas’ul Germaniya vakolatxonasidan yozma ma’lumot oling va istisno dalillarini to‘liq tayyorlang.",
+            de: "Praktische Empfehlung von Vatandoshlar.de: Stellen Sie nicht allein aufgrund von Telegram- oder YouTube-Aussagen ohne A1 einen Antrag. Klären Sie die mögliche Ausnahme vorab schriftlich mit der zuständigen deutschen Auslandsvertretung und bereiten Sie sämtliche Nachweise vollständig vor.",
+          },
+        ],
+        items: [
+          {
+            uz: "A1 sertifikati tan olingan imtihon tashkilotidan bo‘lishi kerak.",
+            de: "Das A1-Zertifikat sollte von einer anerkannten Prüfungsorganisation stammen.",
+          },
+          {
+            uz: "Vakolatxona sertifikatdan tashqari suhbatda oddiy savol-javobni ham baholashi mumkin.",
+            de: "Die Auslandsvertretung kann neben dem Zertifikat auch einfache Kommunikation im Gespräch berücksichtigen.",
+          },
+          {
+            uz: "Tibbiy istisno uchun oddiy umumiy ma’lumotnoma emas, til o‘rganish qobiliyatiga ta’sirni tushuntiradigan batafsil hujjat kerak bo‘lishi mumkin.",
+            de: "Für eine medizinische Ausnahme kann statt einer pauschalen Bescheinigung ein detaillierter Nachweis über die Auswirkungen auf den Spracherwerb erforderlich sein.",
+          },
+          {
+            uz: "A1 talab qilinmasa ham, Germaniyadagi kundalik hayot, Anmeldung, sug‘urta va idoralar uchun til o‘rganish tavsiya etiladi.",
+            de: "Auch wenn A1 im Einzelfall entfällt, sind Deutschkenntnisse für Alltag, Anmeldung, Versicherung und Behörden dringend empfehlenswert.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Odatda kerak bo‘ladigan hujjatlar",
+          de: "Üblicherweise erforderliche Unterlagen",
+        },
+        items: [
+          {
+            uz: "Amaldagi pasport, milliy viza arizasi va biometrik fotosurat",
+            de: "Gültiger Reisepass, Antrag auf ein nationales Visum und biometrisches Passfoto",
+          },
+          {
+            uz: "Nikoh guvohnomasi va talab qilinsa apostil, legalizatsiya yoki nemischa rasmiy tarjima",
+            de: "Heiratsurkunde und erforderlichenfalls Apostille, Legalisation oder beglaubigte deutsche Übersetzung",
+          },
+          {
+            uz: "Nemis turmush o‘rtog‘ining Reisepass yoki Personalausweis nusxasi",
+            de: "Kopie des Reisepasses oder Personalausweises des deutschen Ehegatten",
+          },
+          {
+            uz: "Nemis turmush o‘rtog‘ining Germaniyadagi Meldebescheinigung yoki rejalashtirilgan yashash joyi dalili",
+            de: "Meldebescheinigung oder Nachweis des geplanten Wohnsitzes des deutschen Ehegatten in Deutschland",
+          },
+          {
+            uz: "Talab qilinadigan holatda A1 sertifikati yoki istisnoni isbotlovchi hujjatlar",
+            de: "Wenn erforderlich A1-Zertifikat oder Unterlagen zum Nachweis einer Ausnahme",
+          },
+          {
+            uz: "Oldingi nikoh bo‘lgan bo‘lsa ajrim qarori, vafot guvohnomasi yoki nikoh tugaganini tasdiqlovchi hujjat",
+            de: "Bei früheren Ehen Scheidungsurteil, Sterbeurkunde oder anderer Nachweis über die Beendigung",
+          },
+          {
+            uz: "Familiya yoki ism o‘zgargan bo‘lsa tegishli fuqarolik holati hujjatlari",
+            de: "Bei Namensänderungen entsprechende Personenstandsurkunden",
+          },
+          {
+            uz: "Tibbiy sug‘urta bo‘yicha dalil yoki Germaniyada Familienversicherungga qo‘shilish imkoniyati",
+            de: "Nachweis des Krankenversicherungsschutzes oder der möglichen Familienversicherung in Deutschland",
+          },
+          {
+            uz: "Vakolatxona yoki Ausländerbehörde individual holat bo‘yicha so‘ragan qo‘shimcha hujjatlar",
+            de: "Weitere Unterlagen nach individueller Anforderung der Auslandsvertretung oder Ausländerbehörde",
+          },
+        ],
+        paragraphs: [
+          {
+            uz: "Hujjatlar ro‘yxati nikoh tuzilgan davlat, oldingi nikohlar, ism-familiya yozilishi va vakolatxonaning joriy amaliyotiga qarab farq qiladi. Ariza berishdan oldin O‘zbekistondagi Germaniya vakolatxonasining aynan shu viza turi uchun amaldagi checklistini tekshiring.",
+            de: "Die Unterlagenliste hängt vom Eheschließungsstaat, früheren Ehen, Namensführung und der aktuellen Praxis der Auslandsvertretung ab. Prüfen Sie vor der Antragstellung die aktuelle Checkliste der deutschen Auslandsvertretung in Usbekistan für genau diesen Visumzweck.",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Daromad, uy-joy, to‘lov va ishlash huquqi",
+          de: "Lebensunterhalt, Wohnraum, Gebühren und Erwerbstätigkeit",
+        },
+        paragraphs: [
+          {
+            uz: "§28 bo‘yicha nemis fuqarosining turmush o‘rtog‘iga yashash ruxsati odatda §5dagi yashash xarajatlarini to‘liq ta’minlash talabidan chetga chiqib berilishi kerak. Bu «daromad hech qachon ko‘rilmaydi» degani emas: noodatiy maxsus holatlarda idora oilaviy hayotni Germaniyada yoki boshqa joyda olib borish imkoniyatini individual baholashi mumkin.",
+            de: "Nach § 28 soll die Aufenthaltserlaubnis für den Ehegatten eines Deutschen in der Regel abweichend von der vollständigen Lebensunterhaltssicherung nach § 5 erteilt werden. Das bedeutet nicht, dass Einkommen niemals betrachtet wird: In atypischen Sonderfällen kann die Behörde individuell prüfen, ob die familiäre Lebensgemeinschaft zumutbar auch außerhalb Deutschlands geführt werden könnte.",
+          },
+          {
+            uz: "Uchinchi davlat fuqarosi yoniga oila birlashtirishdagi kabi §29dagi yetarli uy-joy talabi §28 holatida oddiy asosiy shart sifatida bir xil qo‘llanmaydi. Shunga qaramay Anmeldung va haqiqiy oilaviy yashash uchun manzil dalili so‘raladi.",
+            de: "Die Wohnraumanforderung des § 29 für den allgemeinen Nachzug zu Drittstaatsangehörigen gilt im Fall des § 28 nicht als gleichartige reguläre Hauptvoraussetzung. Dennoch werden für Anmeldung und tatsächliche gemeinsame Lebensführung Nachweise zum Wohnsitz benötigt.",
+          },
+          {
+            uz: "Nemis fuqarosining turmush o‘rtog‘i va voyaga yetmagan yolg‘iz farzandlari uchun viza odatda konsullik to‘lovidan ozod qilinadi. Tarjima, apostil, sug‘urta va hujjat tayyorlash xarajatlari baribir qolishi mumkin.",
+            de: "Visa für Ehegatten sowie minderjährige ledige Kinder deutscher Staatsangehöriger sind grundsätzlich von der Konsulargebühr befreit. Kosten für Übersetzung, Apostille, Versicherung und Dokumentenbeschaffung können dennoch entstehen.",
+          },
+        ],
+        items: [
+          {
+            uz: "Oilaviy Aufenthaltstitel bilan Germaniyada mehnat faoliyatiga ruxsat beriladi.",
+            de: "Der familienbezogene Aufenthaltstitel berechtigt zur Erwerbstätigkeit in Deutschland.",
+          },
+          {
+            uz: "Nemis turmush o‘rtog‘ining Bürgergeld yoki boshqa yordam olishi arizani avtomatik rad etadi degan umumiy qoida yo‘q.",
+            de: "Der Bezug von Bürgergeld oder anderen Leistungen durch den deutschen Ehegatten führt nicht nach einer pauschalen Regel automatisch zur Ablehnung.",
+          },
+          {
+            uz: "Vakolatxona amaliy ma’lumot uchun ish, uy va sug‘urta hujjatlarini so‘rashi mumkin; hujjat so‘ralishi uning qat’iy qonuniy asosiy shart ekanini avtomatik anglatmaydi.",
+            de: "Die Auslandsvertretung kann Arbeits-, Wohnungs- oder Versicherungsunterlagen zur Sachverhaltsprüfung anfordern; die Anforderung bedeutet nicht automatisch, dass diese jeweils starre gesetzliche Hauptvoraussetzungen sind.",
+          },
+          {
+            uz: "Germaniyaga kelgach Anmeldung, Krankenversicherung va Ausländerbehördedagi Aufenthaltstitel jarayonini o‘z vaqtida bajaring.",
+            de: "Erledigen Sie nach der Einreise Anmeldung, Krankenversicherung und den Aufenthaltstitel bei der Ausländerbehörde fristgerecht.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Muhim ogohlantirishlar va real amaliyot",
+          de: "Wichtige Hinweise und praktische Realität",
+        },
+        items: [
+          {
+            uz: "«Nemis bilan nikoh bo‘lsa viza avtomatik chiqadi» degan gap noto‘g‘ri. Nikoh haqiqiyligi, shaxs, hujjatlar, A1 yoki istisno va oilaviy hayot niyati baribir tekshiriladi.",
+            de: "Die Aussage, eine Ehe mit einem Deutschen führe automatisch zum Visum, ist falsch. Wirksamkeit der Ehe, Identität, Unterlagen, A1 oder Ausnahme und die beabsichtigte Lebensgemeinschaft werden weiterhin geprüft.",
+          },
+          {
+            uz: "Nikoh guvohnomasi va pasportlarda ism, familiya, tug‘ilgan sana yoki joy bo‘yicha farq bo‘lsa, uni viza topshirishdan oldin aniqlashtiring.",
+            de: "Klären Sie Abweichungen bei Namen, Geburtsdatum oder Geburtsort zwischen Heiratsurkunde und Pässen vor der Visumbeantragung.",
+          },
+          {
+            uz: "Faqat nikoh fotosuratlari yetarli emas; vakolatxona zarur holatda munosabat tarixi va birga yashash rejasi haqida savol berishi mumkin.",
+            de: "Hochzeitsfotos allein genügen nicht; die Auslandsvertretung kann bei Bedarf Fragen zur Beziehungsgeschichte und zur geplanten gemeinsamen Lebensführung stellen.",
+          },
+          {
+            uz: "Turistik viza bilan kirib, Germaniyada albatta oila vizasiga o‘tkazaman deb reja qilmang. O‘zbekiston fuqarolari uchun standart yo‘l — kirishdan oldin milliy viza.",
+            de: "Planen Sie nicht, mit einem Besuchsvisum einzureisen und den Status in Deutschland sicher zum Familiennachzug zu wechseln. Für Staatsangehörige Usbekistans ist der reguläre Weg das nationale Visum vor der Einreise.",
+          },
+          {
+            uz: "Termin yoki viza kafolati uchun katta pul so‘raydigan vositachilardan ehtiyot bo‘ling. Rasmiy qarorni faqat Germaniya vakolatxonasi va tegishli idoralar qabul qiladi.",
+            de: "Seien Sie vorsichtig bei Vermittlern, die gegen hohe Zahlungen Termin oder Visum garantieren. Die Entscheidung treffen ausschließlich die deutsche Auslandsvertretung und zuständige Behörden.",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: {
+          uz: "Nemis fuqaroligi va yashash joyini tasdiqlang",
+          de: "Deutsche Staatsangehörigkeit und Wohnsitz klären",
+        },
+        description: {
+          uz: "Nemis turmush o‘rtog‘ining Personalausweis yoki pasporti va Germaniyadagi Meldebescheinigungini tayyorlang.",
+          de: "Bereiten Sie Personalausweis oder Reisepass des deutschen Ehegatten sowie dessen Meldebescheinigung in Deutschland vor.",
+        },
+      },
+      {
+        title: {
+          uz: "Nikoh hujjatlarini tekshiring",
+          de: "Eheurkunden prüfen",
+        },
+        description: {
+          uz: "Nikoh guvohnomasi, oldingi nikohlarning tugashi, ism-familiya va apostil yoki tarjima talablarini oldindan tekshiring.",
+          de: "Prüfen Sie Heiratsurkunde, Beendigung früherer Ehen, Namensführung sowie Anforderungen an Apostille und Übersetzung.",
+        },
+      },
+      {
+        title: {
+          uz: "A1 yoki istisno dalilini tayyorlang",
+          de: "A1 oder Ausnahme nachweisen",
+        },
+        description: {
+          uz: "A1 talab qilinsa sertifikat va suhbatga tayyorlaning. Istisnoga tayansangiz, uni ishonchli hujjatlar bilan asoslang.",
+          de: "Bereiten Sie bei A1-Pflicht Zertifikat und Gespräch vor. Stützen Sie eine Ausnahme auf belastbare Unterlagen.",
+        },
+      },
+      {
+        title: {
+          uz: "Vakolatxona checklistini tekshiring",
+          de: "Checkliste der Auslandsvertretung prüfen",
+        },
+        description: {
+          uz: "O‘zbekistondagi Germaniya vakolatxonasining aynan Ehegattennachzug zu Deutschen uchun amaldagi hujjatlar ro‘yxatiga amal qiling.",
+          de: "Folgen Sie der aktuellen Unterlagenliste der deutschen Auslandsvertretung in Usbekistan speziell für den Ehegattennachzug zu Deutschen.",
+        },
+      },
+      {
+        title: {
+          uz: "Milliy viza arizasini yuboring",
+          de: "Nationales Visum beantragen",
+        },
+        description: {
+          uz: "Mavjud bo‘lsa Konsullik xizmatlari portali orqali hujjatlarni yuboring va shaxsiy termin ko‘rsatmalariga amal qiling.",
+          de: "Reichen Sie die Unterlagen, sofern verfügbar, über das Auslandsportal ein und folgen Sie den Vorgaben für den persönlichen Termin.",
+        },
+      },
+      {
+        title: {
+          uz: "Biometrika va suhbatdan o‘ting",
+          de: "Biometrie und Gespräch absolvieren",
+        },
+        description: {
+          uz: "Asl hujjatlar bilan terminga boring. Nikoh, birga yashash manzili va kelajak rejalari bo‘yicha oddiy savollarga aniq javob bering.",
+          de: "Erscheinen Sie mit Originalunterlagen. Beantworten Sie Fragen zu Ehe, gemeinsamer Adresse und Zukunftsplanung klar und wahrheitsgemäß.",
+        },
+      },
+      {
+        title: {
+          uz: "Ausländerbehörde bilan hamkorlik qiling",
+          de: "Mit der Ausländerbehörde mitwirken",
+        },
+        description: {
+          uz: "Germaniyadagi turmush o‘rtog‘i idora xatlariga tez javob bersin va so‘ralgan qo‘shimcha hujjatlarni yuborsin.",
+          de: "Der deutsche Ehegatte sollte Schreiben der Ausländerbehörde zeitnah beantworten und angeforderte Unterlagen einreichen.",
+        },
+      },
+      {
+        title: {
+          uz: "Kelgach oilaviy Aufenthaltstitelni oling",
+          de: "Nach Einreise Aufenthaltstitel erhalten",
+        },
+        description: {
+          uz: "Anmeldung, Krankenversicherung va Ausländerbehörde terminini bajaring. Kartadagi Erwerbstätigkeit yozuvini tekshiring.",
+          de: "Erledigen Sie Anmeldung, Krankenversicherung und Termin bei der Ausländerbehörde. Prüfen Sie den Vermerk zur Erwerbstätigkeit.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Nemis fuqarosi bilan nikoh vizani avtomatik beradimi?",
+          de: "Führt die Ehe mit einem Deutschen automatisch zum Visum?",
+        },
+        answer: {
+          uz: "Yo‘q. §28 kuchli oilaviy huquq beradi, ammo nikohning haqiqiyligi, hujjatlar, shaxs, A1 yoki istisno va Germaniyada birga yashash niyati tekshiriladi.",
+          de: "Nein. § 28 vermittelt einen starken familienbezogenen Anspruch, dennoch werden Wirksamkeit der Ehe, Unterlagen, Identität, A1 oder Ausnahme und die beabsichtigte gemeinsame Lebensführung geprüft.",
+        },
+      },
+      {
+        question: {
+          uz: "Nemis turmush o‘rtog‘ining daromadi yetarli bo‘lishi shartmi?",
+          de: "Muss der deutsche Ehegatte ein ausreichendes Einkommen haben?",
+        },
+        answer: {
+          uz: "Odatda uchinchi davlat fuqarosi yoniga oila birlashtirishdagi kabi qat’iy daromad sharti qo‘llanmaydi. §28 bo‘yicha yashash ruxsati odatda yashash xarajatlari to‘liq ta’minlanmagan bo‘lsa ham berilishi kerak. Noodatiy maxsus holatlar individual baholanadi.",
+          de: "Grundsätzlich gilt nicht dieselbe strenge Einkommensvoraussetzung wie beim allgemeinen Nachzug zu Drittstaatsangehörigen. Nach § 28 soll die Aufenthaltserlaubnis in der Regel auch ohne vollständige Lebensunterhaltssicherung erteilt werden. Atypische Sonderfälle werden individuell geprüft.",
+        },
+      },
+      {
+        question: {
+          uz: "Uy maydoni bo‘yicha qat’iy talab bormi?",
+          de: "Gibt es eine starre Wohnraumanforderung?",
+        },
+        answer: {
+          uz: "§29dagi umumiy yetarli uy-joy talabi §28 holatida xuddi shu shaklda asosiy shart emas. Biroq Germaniyada haqiqiy birga yashash va Anmeldung uchun manzil dalili kerak.",
+          de: "Die allgemeine Wohnraumanforderung des § 29 ist im Fall des § 28 nicht in gleicher Weise reguläre Hauptvoraussetzung. Für tatsächliches Zusammenleben und Anmeldung wird jedoch ein Wohnsitznachweis benötigt.",
+        },
+      },
+      {
+        question: {
+          uz: "A1 har doim talab qilinadimi?",
+          de: "Ist A1 immer erforderlich?",
+        },
+        answer: {
+          uz: "Yo‘q. A1 ko‘p holatda umumiy qoida, ammo sog‘liq, asossiz qiyinchilik va boshqa qonuniy istisnolar mavjud. Istisno hujjatlar bilan asoslanishi kerak.",
+          de: "Nein. A1 ist in vielen Fällen die Grundregel, es bestehen jedoch gesetzliche Ausnahmen, etwa aus gesundheitlichen Gründen oder bei Unzumutbarkeit. Die Ausnahme muss belegt werden.",
+        },
+      },
+      {
+        question: {
+          uz: "Nemis fuqarosining turmush o‘rtog‘i uchun viza to‘lovi bormi?",
+          de: "Fällt für den Ehegatten eines Deutschen eine Visumgebühr an?",
+        },
+        answer: {
+          uz: "Odatda yo‘q. Nemis fuqarosining turmush o‘rtog‘i uchun viza konsullik to‘lovidan ozod qilinadi. Tarjima, apostil va boshqa tashqi xarajatlar qolishi mumkin.",
+          de: "Grundsätzlich nein. Visa für Ehegatten deutscher Staatsangehöriger sind von der Konsulargebühr befreit. Übersetzung, Apostille und andere externe Kosten können dennoch anfallen.",
+        },
+      },
+      {
+        question: {
+          uz: "Germaniyaga kelgach ishlash mumkinmi?",
+          de: "Darf man nach der Einreise arbeiten?",
+        },
+        answer: {
+          uz: "Ha. §28 bo‘yicha oilaviy Aufenthaltstitel ishlash huquqini beradi. Kartadagi yoki Zusatzblattdagi «Erwerbstätigkeit gestattet» yozuvini tekshiring.",
+          de: "Ja. Der Aufenthaltstitel nach § 28 berechtigt zur Erwerbstätigkeit. Prüfen Sie den Eintrag „Erwerbstätigkeit gestattet“ auf Karte oder Zusatzblatt.",
+        },
+      },
+      {
+        question: {
+          uz: "Viza jarayoni qancha davom etadi?",
+          de: "Wie lange dauert das Visumverfahren?",
+        },
+        answer: {
+          uz: "Kafolatlangan yagona muddat yo‘q. Ausländerbehörde ishtiroki, nikoh hujjatlari tekshiruvi va qo‘shimcha so‘rovlar sabab bir necha oy yoki ayrim holatda uzoqroq davom etishi mumkin.",
+          de: "Eine garantierte einheitliche Frist gibt es nicht. Beteiligung der Ausländerbehörde, Prüfung von Personenstandsurkunden und Nachforderungen können mehrere Monate oder im Einzelfall länger dauern.",
+        },
+      },
+      {
+        question: {
+          uz: "Xorijda tuzilgan nikohni Germaniyada alohida tan oldirish kerakmi?",
+          de: "Muss eine im Ausland geschlossene Ehe gesondert anerkannt werden?",
+        },
+        answer: {
+          uz: "Odatda xorijiy nikohlar uchun bitta umumiy alohida tan olish jarayoni yo‘q. Nikohning haqiqiyligi viza yoki boshqa idoraviy jarayonda tekshiriladi. Ajrim qarorlari uchun esa alohida tan olish talabi yuzaga kelishi mumkin.",
+          de: "Für ausländische Ehen besteht grundsätzlich kein einheitliches gesondertes Anerkennungsverfahren. Die Wirksamkeit wird im jeweiligen Verwaltungsverfahren geprüft. Für ausländische Scheidungsentscheidungen kann dagegen ein eigenes Anerkennungsverfahren erforderlich sein.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "§ 28 AufenthG — Familiennachzug zu Deutschen",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__28.html",
+        language: "de",
+      },
+      {
+        title: "§ 30 AufenthG — Ehegattennachzug",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__30.html",
+        language: "de",
+      },
+      {
+        title: "Nachzug zu deutschen Familienangehörigen",
+        organization: "Bundesamt für Migration und Flüchtlinge",
+        url: "https://www.bamf.de/DE/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Familie/NachzugZuDeutschen/nachzug-zu-deutschen-node.html",
+        language: "de",
+      },
+      {
+        title: "Nachweis einfacher Deutschkenntnisse beim Ehegattennachzug",
+        organization: "Bundesamt für Migration und Flüchtlinge",
+        url: "https://www.bamf.de/SharedDocs/Anlagen/DE/MigrationAufenthalt/Ehegattennachzug/ehegattennachzug.pdf?__blob=publicationFile",
+        language: "de",
+      },
+      {
+        title: "FAQ zum ausländischen Ehepartner",
+        organization: "Auswärtiges Amt",
+        url: "https://www.auswaertiges-amt.de/de/service/fragenkatalog-node/04-auslehepartner/606478",
+        language: "de",
+      },
+      {
+        title: "Allgemeine Informationen zur Visumbeantragung",
+        organization: "Auswärtiges Amt",
+        url: "https://www.auswaertiges-amt.de/de/service/visa-und-aufenthalt/visabestimmungen-allgemein",
+        language: "de",
+      },
+      {
+        title: "Eheschließung im Ausland",
+        organization: "Auswärtiges Amt",
+        url: "https://www.auswaertiges-amt.de/de/service/fragenkatalog-node/606794-606794",
+        language: "de",
+      },
+      {
+        title: "Consular Services Portal",
+        organization: "Federal Foreign Office",
+        url: "https://www.auswaertiges-amt.de/en/visa-service/consular-services-portal",
+        language: "en",
+      },
+    ],
+    relatedArticleSlugs: ["spouse-reunification"],
+  },
 ];
 
 function localizeArticle(
