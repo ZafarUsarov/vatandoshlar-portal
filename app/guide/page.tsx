@@ -4,6 +4,7 @@ import { getLocale } from "next-intl/server";
 import Header from "../../components/Header";
 import GuideCategoryGrid from "../../components/guide/GuideCategoryGrid";
 import GuideHero from "../../components/guide/GuideHero";
+import SectionBackground from "../../components/ui/SectionBackground";
 import { getGuideCategories } from "../../data/guide";
 import type { SupportedGuideLocale } from "../../types/guide";
 
@@ -49,7 +50,7 @@ export default async function GuidePage() {
             eyebrow: "Asosiy yo‘nalishlar",
             title: "Kerakli mavzuni tanlang",
             description:
-              "Har bir bo‘lim bosqichma-bosqich rasmiy manbalar asosidagi maqolalar bilan to‘ldiriladi.",
+              "Mavjud maqolalar rasmiy manbalar asosida muntazam tekshiriladi, yangi yo‘nalishlar esa bosqichma-bosqich qo‘shib boriladi.",
             comingSoon: "Tez orada",
             articles: "ta maqola",
             open: "Ochish",
@@ -78,7 +79,7 @@ export default async function GuidePage() {
             ],
           },
           notice:
-            "Guide hozir infratuzilma bosqichida. Kategoriyalar tayyor, maqolalar esa keyingi bosqichlarda birma-bir qo‘shiladi.",
+            "Guide faol rivojlantirilmoqda. Tayyor maqolalar muntazam tekshiriladi, bo‘sh yo‘nalishlar esa yangi qo‘llanmalar bilan bosqichma-bosqich to‘ldiriladi.",
           footer:
             "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
         }
@@ -96,7 +97,7 @@ export default async function GuidePage() {
             eyebrow: "Hauptbereiche",
             title: "Wählen Sie das passende Thema",
             description:
-              "Jeder Bereich wird schrittweise mit Artikeln auf Grundlage offizieller Quellen ergänzt.",
+              "Bestehende Artikel werden anhand offizieller Quellen regelmäßig geprüft; weitere Themen werden schrittweise ergänzt.",
             comingSoon: "Demnächst",
             articles: "Artikel",
             open: "Öffnen",
@@ -125,7 +126,7 @@ export default async function GuidePage() {
             ],
           },
           notice:
-            "Der Guide befindet sich derzeit in der Infrastrukturphase. Die Kategorien sind vorbereitet; die Artikel werden in den nächsten Phasen schrittweise ergänzt.",
+            "Der Guide wird aktiv weiterentwickelt. Vorhandene Artikel werden regelmäßig geprüft und noch leere Bereiche schrittweise mit neuen Leitfäden ergänzt.",
           footer:
             "Digitale Plattform für Usbeken in Deutschland",
         };
@@ -145,9 +146,11 @@ export default async function GuidePage() {
 
         <section
           id="guide-categories"
-          className="py-20 sm:py-24"
+          className="relative isolate overflow-hidden py-20 sm:py-24"
         >
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <SectionBackground variant="emerald" />
+
+          <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
             <div className="max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
                 {copy.categories.eyebrow}
@@ -171,7 +174,7 @@ export default async function GuidePage() {
               />
             </div>
 
-            <div className="mt-10 rounded-3xl border border-blue-200 bg-blue-50 p-6 text-blue-950 dark:border-blue-500/20 dark:bg-blue-500/10 dark:text-blue-100">
+            <div className="mt-10 rounded-3xl border border-blue-200/80 bg-gradient-to-br from-blue-50 to-cyan-50/70 p-6 text-blue-950 shadow-sm dark:border-blue-500/20 dark:from-blue-500/10 dark:to-cyan-500/5 dark:text-blue-100">
               <p className="leading-7">{copy.notice}</p>
             </div>
           </div>
@@ -179,9 +182,11 @@ export default async function GuidePage() {
 
         <section
           id="guide-principles"
-          className="border-y border-slate-200 bg-white py-20 dark:border-slate-800 dark:bg-slate-900"
+          className="relative isolate overflow-hidden border-y border-slate-200 bg-white py-20 dark:border-slate-800 dark:bg-slate-900"
         >
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <SectionBackground variant="blue" />
+
+          <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
             <div className="max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
                 {copy.principles.eyebrow}
@@ -200,7 +205,7 @@ export default async function GuidePage() {
               {copy.principles.items.map((item, index) => (
                 <article
                   key={item.title}
-                  className="rounded-3xl border border-slate-200 bg-slate-50 p-7 dark:border-slate-800 dark:bg-slate-950"
+                  className="rounded-3xl border border-slate-200 bg-slate-50/90 p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lg dark:border-slate-800 dark:bg-slate-950/90 dark:hover:border-emerald-500/30"
                 >
                   <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
                     {String(index + 1).padStart(2, "0")}

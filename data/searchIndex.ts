@@ -2,6 +2,8 @@ import {
   getJobGuides,
   type SupportedJobLocale,
 } from "./jobs";
+import { getGuideArticlesByCategory } from "./guide/articles";
+import { getGuideCategories } from "./guide/categories";
 
 export type SearchLocale = SupportedJobLocale;
 
@@ -12,7 +14,8 @@ export type SearchCategory =
   | "Ish"
   | "Ish platformasi"
   | "Telegram"
-  | "Tadbir";
+  | "Tadbir"
+  | "Qo‘llanma";
 
 export type GlobalSearchItem = Readonly<{
   id: string;
@@ -71,6 +74,44 @@ const staticSearchDefinitions: ReadonlyArray<StaticSearchDefinition> = [
           "vatandoshlar",
           "deutschland",
           "usbeken",
+        ],
+      },
+    },
+  },
+  {
+    id: "page-guide",
+    path: "/guide",
+    category: "Qo‘llanma",
+    content: {
+      uz: {
+        title: "Germaniya qo‘llanmasi",
+        description:
+          "Vizalar, oila birlashtirish, Ausbildung va Germaniyaga kelgandan keyingi jarayonlar bo‘yicha tizimli qo‘llanmalar.",
+        badge: "Qo‘llanma",
+        keywords: [
+          "guide",
+          "qo‘llanma",
+          "germaniya qo‘llanmasi",
+          "viza",
+          "oila birlashtirish",
+          "ausbildung",
+          "anmeldung",
+          "aufenthaltstitel",
+        ],
+      },
+      de: {
+        title: "Deutschland Guide",
+        description:
+          "Strukturierte Leitfäden zu Visa, Familiennachzug, Ausbildung und den ersten Schritten nach der Ankunft.",
+        badge: "Guide",
+        keywords: [
+          "guide",
+          "deutschland guide",
+          "visum",
+          "familiennachzug",
+          "ausbildung",
+          "anmeldung",
+          "aufenthaltstitel",
         ],
       },
     },
@@ -380,12 +421,63 @@ function getJobGuideSearchItems(
   }));
 }
 
+
+function getGuideSearchItems(
+  locale: SearchLocale,
+): ReadonlyArray<GlobalSearchItem> {
+  return getGuideCategories(locale).flatMap((category) =>
+    getGuideArticlesByCategory(category.slug, locale).map(
+      (article) => ({
+        id: `guide-article-${article.id}`,
+        title: article.title,
+        description: article.excerpt,
+        href: createLocalizedHref(
+          locale,
+          `/guide/${category.slug}/${article.slug}`,
+        ),
+        category: "Qo‘llanma",
+        badge: category.title,
+        keywords: [
+          article.title,
+          article.excerpt,
+          article.intro,
+          article.readingTime,
+          category.title,
+          ...article.facts.flatMap((fact) => [
+            fact.label,
+            fact.value,
+          ]),
+          ...Object.values(article.sections).flatMap(
+            (section) =>
+              section
+                ? [
+                    section.title,
+                    ...section.paragraphs,
+                    ...section.items,
+                  ]
+                : [],
+          ),
+          ...article.steps.flatMap((step) => [
+            step.title,
+            step.description,
+          ]),
+          ...article.faq.flatMap((item) => [
+            item.question,
+            item.answer,
+          ]),
+        ],
+      }),
+    ),
+  );
+}
+
 export function getGlobalSearchItems(
   locale: SearchLocale,
 ): ReadonlyArray<GlobalSearchItem> {
   return [
     ...getStaticSearchItems(locale),
     ...getJobGuideSearchItems(locale),
+    ...getGuideSearchItems(locale),
   ];
 }
 
@@ -411,6 +503,7 @@ export function getSearchCategoryLabel(
       "Ish platformasi": "Ish platformasi",
       Telegram: "Telegram",
       Tadbir: "Tadbir",
+      "Qo‘llanma": "Qo‘llanma",
     },
     de: {
       Sahifa: "Seite",
@@ -420,6 +513,7 @@ export function getSearchCategoryLabel(
       "Ish platformasi": "Jobportal",
       Telegram: "Telegram",
       Tadbir: "Veranstaltung",
+      "Qo‘llanma": "Guide",
     },
   };
 

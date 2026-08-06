@@ -4,6 +4,8 @@ import type {
   SupportedGuideLocale,
 } from "../../types/guide";
 
+import { localizedGuideArticles } from "./articles";
+
 export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
   {
     id: "arrival",
@@ -155,19 +157,39 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
   },
 ];
 
-export function getGuideCategories(
+
+function getPublishedArticleCount(categorySlug: string): number {
+  return localizedGuideArticles.filter(
+    (article) =>
+      article.categorySlug === categorySlug &&
+      article.status === "published",
+  ).length;
+}
+
+function localizeCategory(
+  category: LocalizedGuideCategory,
   locale: SupportedGuideLocale,
-): ReadonlyArray<GuideCategory> {
-  return localizedGuideCategories.map((category) => ({
+): GuideCategory {
+  const articleCount = getPublishedArticleCount(category.slug);
+
+  return {
     id: category.id,
     slug: category.slug,
     icon: category.icon,
     title: category.title[locale],
     description: category.description[locale],
-    articleCount: category.articleCount,
-    status: category.status,
+    articleCount,
+    status: articleCount > 0 ? "available" : "coming-soon",
     featured: category.featured,
-  }));
+  };
+}
+
+export function getGuideCategories(
+  locale: SupportedGuideLocale,
+): ReadonlyArray<GuideCategory> {
+  return localizedGuideCategories.map((category) =>
+    localizeCategory(category, locale),
+  );
 }
 
 export function getGuideCategoryBySlug(
