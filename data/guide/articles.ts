@@ -3986,6 +3986,546 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
       "eu-blue-card-family-reunification",
     ],
   },
+  {
+    id: "parent-family-reunification",
+    slug: "parent-family-reunification",
+    categorySlug: "family",
+    title: {
+      uz: "Ota-ona orqali oila birlashtirish",
+      de: "Elternnachzug nach Deutschland",
+    },
+    excerpt: {
+      uz: "Ota-onaning Germaniyadagi farzandi yoniga ko‘chib kelishi: voyaga yetmagan nemis yoki himoya maqomidagi farzand, malakali mutaxassislarning ota-onasi va qaynota-qaynonasi, außergewöhnliche Härte, daromad, uy-joy, sug‘urta, hujjatlar va milliy viza jarayoni bo‘yicha batafsil qo‘llanma.",
+      de: "Ausführlicher Leitfaden zum Elternnachzug nach Deutschland: Eltern minderjähriger deutscher oder schutzberechtigter Kinder, Eltern und Schwiegereltern bestimmter Fachkräfte, außergewöhnliche Härte, Lebensunterhalt, Wohnraum, Krankenversicherung, Unterlagen und nationales Visumverfahren.",
+    },
+    intro: {
+      uz: "Ota-onani Germaniyaga doimiy oila birlashtirish orqali olib kelish barcha holatlar uchun ochiq umumiy huquq emas. Natija Germaniyada yashayotgan farzandning yoshi, fuqaroligi, Aufenthaltstiteli va ushbu maqom qachon birinchi marta berilganiga bog‘liq. Voyaga yetmagan nemis yoki ayrim himoya maqomidagi bolalarning ota-onalari, 2024-yil 1-martdan keyin birinchi marta muayyan malakali yashash ruxsatini olgan shaxslarning ota-onalari hamda außergewöhnliche Härte holatlari bir-biridan alohida huquqiy yo‘llardir.",
+      de: "Der dauerhafte Nachzug von Eltern nach Deutschland ist kein allgemein offener Anspruch für jede Familie. Entscheidend sind Alter, Staatsangehörigkeit und Aufenthaltstitel des in Deutschland lebenden Kindes sowie der Zeitpunkt der erstmaligen Erteilung bestimmter Titel. Eltern minderjähriger deutscher oder bestimmter schutzberechtigter Kinder, Eltern bestimmter Fachkräfte mit erstmaliger Titelerteilung ab dem 1. März 2024 und Fälle außergewöhnlicher Härte sind rechtlich getrennte Wege.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: {
+      uz: "14 daqiqa",
+      de: "14 Minuten",
+    },
+    facts: [
+      {
+        label: { uz: "Umumiy qoida", de: "Grundregel" },
+        value: {
+          uz: "Voyaga yetgan farzand oddiy istak bilan ota-onasini doimiy olib kela olmaydi",
+          de: "Volljährige Kinder können ihre Eltern nicht allein aufgrund des familiären Wunsches dauerhaft nachholen",
+        },
+      },
+      {
+        label: { uz: "Nemis bola", de: "Deutsches Kind" },
+        value: {
+          uz: "Voyaga yetmagan nemis bolaning vasiylik va parvarish huquqiga ega ota-onasi §28 asosida kelishi mumkin",
+          de: "Ein personensorgeberechtigter Elternteil eines minderjährigen deutschen Kindes kann nach § 28 nachziehen",
+        },
+      },
+      {
+        label: { uz: "Himoya maqomidagi bola", de: "Schutzberechtigtes Kind" },
+        value: {
+          uz: "Ayrim voyaga yetmagan himoya maqomidagi bolalarning ota-onalari §36 bo‘yicha yengillashtirilgan yo‘lga ega",
+          de: "Eltern bestimmter minderjähriger Schutzberechtigter können nach § 36 privilegiert nachziehen",
+        },
+      },
+      {
+        label: { uz: "Malakali mutaxassislar", de: "Fachkräfte" },
+        value: {
+          uz: "Muayyan ish yashash ruxsati 2024-yil 1-martdan boshlab birinchi marta berilgan bo‘lsa, ota-ona uchun §36 bo‘yicha alohida imkoniyat mavjud",
+          de: "Bei erstmaliger Erteilung bestimmter Erwerbstitel ab dem 1. März 2024 besteht eine besondere Möglichkeit nach § 36",
+        },
+      },
+      {
+        label: { uz: "Qaynota-qaynona", de: "Schwiegereltern" },
+        value: {
+          uz: "Ayrim malakali mutaxassislarning qaynota-qaynonasi ham, turmush o‘rtog‘i Germaniyada doimiy yashasa, qamrab olinishi mumkin",
+          de: "Auch Schwiegereltern bestimmter Fachkräfte können erfasst sein, wenn der Ehegatte dauerhaft in Deutschland lebt",
+        },
+      },
+      {
+        label: { uz: "Boshqa holatlar", de: "Sonstige Fälle" },
+        value: {
+          uz: "Odatda faqat außergewöhnliche Härte isbotlansa ko‘rib chiqiladi",
+          de: "Grundsätzlich nur bei nachgewiesener außergewöhnlicher Härte",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Ota-ona uchun mavjud asosiy yo‘llar",
+          de: "Die wichtigsten Wege des Elternnachzugs",
+        },
+        paragraphs: [
+          {
+            uz: "Birinchi yo‘l — voyaga yetmagan nemis bolaning ota-onasi. Agar ota-ona bolaning vasiylik huquqiga ega bo‘lsa va Germaniyada haqiqiy parvarish hamda oilaviy hayot olib borishni istasa, §28 AufenthG asosida yashash huquqi tekshiriladi.",
+            de: "Der erste Weg betrifft Eltern minderjähriger deutscher Kinder. Ist ein Elternteil personensorgeberechtigt und soll die tatsächliche Betreuung und familiäre Lebensgemeinschaft in Deutschland ausgeübt werden, wird ein Aufenthalt nach § 28 AufenthG geprüft.",
+          },
+          {
+            uz: "Ikkinchi yo‘l — ayrim voyaga yetmagan himoya maqomidagi xorijiy bolalarning ota-onasi. §36dagi maxsus shartlarga mos kelganda va Germaniyada boshqa vasiy ota-ona bo‘lmaganda, daromad hamda uy-joy bo‘yicha yengilliklar bilan yashash ruxsati berilishi mumkin.",
+            de: "Der zweite Weg betrifft Eltern bestimmter minderjähriger ausländischer Schutzberechtigter. Sind die besonderen Voraussetzungen des § 36 erfüllt und hält sich kein personensorgeberechtigter Elternteil in Deutschland auf, kann der Nachzug mit Erleichterungen bei Lebensunterhalt und Wohnraum ermöglicht werden.",
+          },
+          {
+            uz: "Uchinchi yo‘l — 2024-yil 1-martdan boshlab birinchi marta qonunda sanalgan malakali yoki mehnat yashash ruxsatlaridan birini olgan shaxslarning ota-onasi va ayrim qaynota-qaynonalari. Bu yo‘l außergewöhnliche Härte isbotini talab qilmaydi, lekin daromad, sug‘urta va uy-joy kabi umumiy talablar muhimligicha qoladi.",
+            de: "Der dritte Weg gilt für Eltern und bestimmte Schwiegereltern von Personen, denen ab dem 1. März 2024 erstmals einer der gesetzlich genannten Fachkräfte- oder Erwerbstitel erteilt wurde. Eine außergewöhnliche Härte ist dafür nicht erforderlich; Lebensunterhalt, Krankenversicherung und Wohnraum bleiben jedoch wesentlich.",
+          },
+          {
+            uz: "Ushbu maxsus yo‘llardan hech biri mos kelmasa, ota-ona odatda «sonstige Familienangehörige» hisoblanadi va §36 bo‘yicha faqat außergewöhnliche Härteni oldini olish uchun individual ravishda qabul qilinishi mumkin.",
+            de: "Greift keiner dieser Sonderwege, gelten Eltern grundsätzlich als sonstige Familienangehörige und können nach § 36 nur zur Vermeidung einer außergewöhnlichen Härte im Einzelfall zugelassen werden.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Kimlar real murojaat qila oladi?",
+          de: "Wer kann realistisch einen Antrag stellen?",
+        },
+        items: [
+          {
+            uz: "Voyaga yetmagan nemis bolaning vasiylik va parvarish huquqiga ega chet ellik ota-onasi",
+            de: "Der ausländische personensorgeberechtigte Elternteil eines minderjährigen deutschen Kindes",
+          },
+          {
+            uz: "§36da sanalgan himoya maqomlaridan biriga ega voyaga yetmagan bola yoniga, Germaniyada boshqa vasiy ota-ona bo‘lmasa, keluvchi ota-ona",
+            de: "Eltern eines minderjährigen Kindes mit einem in § 36 genannten Schutzstatus, sofern sich kein personensorgeberechtigter Elternteil in Deutschland aufhält",
+          },
+          {
+            uz: "2024-yil 1-martdan boshlab birinchi marta EU Blue Card, §§18a, 18b, 18d, ayrim §19c yoki §21 kabi qonunda sanalgan yashash ruxsatini olgan shaxsning ota-onasi",
+            de: "Eltern einer Person, der ab dem 1. März 2024 erstmals eine Blaue Karte EU oder ein gesetzlich erfasster Titel wie §§ 18a, 18b, 18d, bestimmte Fälle des § 19c oder § 21 erteilt wurde",
+          },
+          {
+            uz: "Yuqoridagi malakali shaxsning qaynota-qaynonasi — agar uning turmush o‘rtog‘i Germaniyada doimiy yashasa",
+            de: "Schwiegereltern der begünstigten Fachkraft, wenn deren Ehegatte dauerhaft in Deutschland lebt",
+          },
+          {
+            uz: "Boshqa barcha holatlarda, faqat oilaning oddiy ajralishidan ancha og‘ir bo‘lgan außergewöhnliche Härteni hujjatlar bilan isbotlay oladigan ota-ona",
+            de: "In allen übrigen Fällen Eltern, die eine außergewöhnliche Härte nachweisen können, die deutlich über die übliche familiäre Trennung hinausgeht",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Außergewöhnliche Härte nimani anglatadi?",
+          de: "Was bedeutet außergewöhnliche Härte?",
+        },
+        paragraphs: [
+          {
+            uz: "Voyaga yetgan farzandning ota-onasini sog‘ingani, ota-onaning yoshi katta ekani yoki Germaniyada birga yashash istagi o‘z-o‘zidan außergewöhnliche Härte hisoblanmaydi. Qonun odatiy oilaviy ajralishdan ancha og‘ir, noyob va individual qaramlik holatini talab qiladi.",
+            de: "Der Wunsch eines volljährigen Kindes, mit seinen Eltern zusammenzuleben, das höhere Alter der Eltern oder allgemeine familiäre Sehnsucht begründen für sich allein keine außergewöhnliche Härte. Erforderlich ist eine seltene, individuelle Abhängigkeit, die deutlich über die gewöhnlichen Folgen familiärer Trennung hinausgeht.",
+          },
+          {
+            uz: "Og‘ir kasallik yoki parvarishga muhtojlik muhim bo‘lishi mumkin, lekin faqat tashxis yetarli emas. Nima sababdan zarur parvarish kelib chiqish davlatida qarindoshlar, professional xizmat yoki boshqa real yordam orqali ta’minlanmasligi hujjatlar bilan tushuntiriladi.",
+            de: "Schwere Krankheit oder Pflegebedürftigkeit können relevant sein, doch eine Diagnose allein genügt nicht. Es muss nachvollziehbar belegt werden, weshalb notwendige Betreuung im Herkunftsstaat weder durch Angehörige noch durch professionelle oder andere real verfügbare Hilfe gesichert werden kann.",
+          },
+          {
+            uz: "Germaniyadagi farzandning shaxsan parvarish qilishi zarurligi, boshqa yaqin insonlarning yo‘qligi, tibbiy va ijtimoiy vaziyatning birgalikdagi oqibatlari individual baholanadi. Bu istisno tartibi bo‘lib, avtomatik talab huquqi emas.",
+            de: "Die persönliche Notwendigkeit der Betreuung durch das in Deutschland lebende Kind, das Fehlen anderer naher Personen sowie die medizinische und soziale Gesamtsituation werden individuell bewertet. Es handelt sich um eine Ausnahmeentscheidung und nicht um einen automatischen Anspruch.",
+          },
+          {
+            uz: "Vatandoshlar.de tavsiyasi: Härtefall arizasini umumiy hissiy bayonot bilan emas, batafsil tibbiy xulosalar, parvarish darajasi, kundalik yordam ehtiyoji, mavjud yordam imkoniyatlari va ularning nima uchun yetarli emasligi haqidagi dalillar bilan tayyorlang.",
+            de: "Praktische Empfehlung von Vatandoshlar.de: Begründen Sie einen Härtefall nicht nur emotional, sondern mit detaillierten ärztlichen Berichten, Pflegebedarf, konkretem Unterstützungsumfang, vorhandenen Hilfsmöglichkeiten und nachvollziehbaren Gründen, weshalb diese nicht ausreichen.",
+          },
+        ],
+        items: [
+          {
+            uz: "Faqat «ota-onam yolg‘iz» yoki «ularni yonimda bo‘lishini xohlayman» degan sabab odatda yetarli emas.",
+            de: "Die bloße Aussage, die Eltern seien allein oder sollten in der Nähe leben, reicht grundsätzlich nicht aus.",
+          },
+          {
+            uz: "Kasallikning mavjudligi bilan birga qaramlikning aynan Germaniyadagi farzandga bog‘liqligi ko‘rsatiladi.",
+            de: "Neben der Erkrankung muss die konkrete Abhängigkeit gerade vom in Deutschland lebenden Kind dargelegt werden.",
+          },
+          {
+            uz: "Pul yuborish, tashrif vizasi, mahalliy qarovchi yoki boshqa qarindoshlar real muqobil bo‘lsa, Härtefall dalili zaiflashishi mumkin.",
+            de: "Sind Geldzahlungen, Besuchsaufenthalte, lokale Pflege oder andere Angehörige realistische Alternativen, kann dies gegen eine außergewöhnliche Härte sprechen.",
+          },
+          {
+            uz: "Har bir ota-ona uchun sog‘liq va oilaviy vaziyat alohida baholanishi mumkin.",
+            de: "Gesundheits- und Familiensituation können für jeden Elternteil getrennt bewertet werden.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Odatda kerak bo‘ladigan hujjatlar",
+          de: "Üblicherweise erforderliche Unterlagen",
+        },
+        items: [
+          {
+            uz: "Ota-onaning amaldagi pasporti, milliy viza arizasi va biometrik fotosurati",
+            de: "Gültiger Reisepass der Eltern, Antrag auf ein nationales Visum und biometrisches Passfoto",
+          },
+          {
+            uz: "Qarindoshlikni ko‘rsatuvchi tug‘ilganlik guvohnomalari va zarur bo‘lsa apostil yoki rasmiy tarjima",
+            de: "Geburtsurkunden zum Nachweis der Abstammung und erforderlichenfalls Apostille oder beglaubigte Übersetzung",
+          },
+          {
+            uz: "Germaniyadagi farzandning pasporti, Aufenthaltstiteli va Meldebescheinigung nusxalari",
+            de: "Kopien von Pass, Aufenthaltstitel und Meldebescheinigung des Kindes in Deutschland",
+          },
+          {
+            uz: "Malakali mutaxassis yo‘lida: Aufenthaltstitel turi va uning birinchi marta 2024-yil 1-martdan boshlab berilganini isbotlovchi hujjat",
+            de: "Beim Fachkräfteweg: Nachweis des Aufenthaltstitels und seiner erstmaligen Erteilung ab dem 1. März 2024",
+          },
+          {
+            uz: "Qaynota-qaynona uchun nikoh hujjatlari va Germaniyada doimiy yashayotgan turmush o‘rtog‘i dalili",
+            de: "Für Schwiegereltern Heiratsunterlagen und Nachweis des dauerhaften Aufenthalts des Ehegatten in Deutschland",
+          },
+          {
+            uz: "Daromad dalillari: ish shartnomasi, maosh varaqalari, bank ma’lumotlari yoki boshqa barqaror moliyaviy manbalar",
+            de: "Einkommensnachweise wie Arbeitsvertrag, Gehaltsabrechnungen, Bankunterlagen oder andere stabile Finanzierungsquellen",
+          },
+          {
+            uz: "Ijara shartnomasi va yetarli uy-joy bo‘yicha dalillar",
+            de: "Mietvertrag und Nachweise über ausreichenden Wohnraum",
+          },
+          {
+            uz: "To‘liq tibbiy sug‘urta dalili; keksa ota-onalarda amaliy va moliyaviy jihatdan eng qiyin masalalardan biri",
+            de: "Nachweis eines vollwertigen Krankenversicherungsschutzes; bei älteren Eltern häufig eine der schwierigsten praktischen und finanziellen Voraussetzungen",
+          },
+          {
+            uz: "Härtefall uchun batafsil tibbiy xulosalar, Pflegegrad yoki parvarish bahosi, yordamga qaramlik va boshqa yordam yo‘qligi dalillari",
+            de: "Für Härtefälle ausführliche ärztliche Berichte, Pflegegrad oder Pflegegutachten, Nachweise persönlicher Abhängigkeit und fehlender anderweitiger Hilfe",
+          },
+          {
+            uz: "Vakolatxona yoki Ausländerbehörde individual holat bo‘yicha so‘ragan qo‘shimcha hujjatlar",
+            de: "Weitere Unterlagen nach individueller Anforderung der Auslandsvertretung oder Ausländerbehörde",
+          },
+        ],
+        paragraphs: [
+          {
+            uz: "Aniq checklist qaysi huquqiy yo‘l tanlanganiga qarab keskin farq qiladi. Voyaga yetmagan nemis bola ota-onasi, malakali mutaxassis ota-onasi va außergewöhnliche Härte arizasi uchun bir xil hujjatlar ro‘yxatidan foydalanmang.",
+            de: "Die genaue Checkliste unterscheidet sich erheblich nach Rechtsgrundlage. Verwenden Sie nicht dieselbe Unterlagenliste für Eltern eines deutschen Kindes, Eltern einer Fachkraft und einen Antrag wegen außergewöhnlicher Härte.",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Daromad, uy-joy va tibbiy sug‘urta",
+          de: "Lebensunterhalt, Wohnraum und Krankenversicherung",
+        },
+        paragraphs: [
+          {
+            uz: "Malakali mutaxassislarning ota-onasi va qaynota-qaynonasi uchun §36 yo‘lida yashash xarajatlari odatda to‘liq ta’minlangan bo‘lishi kerak. Ota-onaning ehtiyoji, ijara, kundalik xarajatlar, sug‘urta va mavjud majburiyatlar birgalikda hisoblanadi.",
+            de: "Beim Nachzug von Eltern und Schwiegereltern bestimmter Fachkräfte muss der Lebensunterhalt grundsätzlich vollständig gesichert sein. Bedarf der Eltern, Miete, Alltag, Krankenversicherung und bestehende Verpflichtungen werden gemeinsam berücksichtigt.",
+          },
+          {
+            uz: "Yetarli uy-joy ham muhim. Ota-ona farzand bilan bir uyda yoki alohida uyda yashashi mumkin, ammo real turar joy va tegishli xarajatlar isbotlanadi.",
+            de: "Auch ausreichender Wohnraum ist wesentlich. Die Eltern können im Haushalt des Kindes oder in einer eigenen Wohnung leben; tatsächliche Unterkunft und Kosten müssen jedoch nachgewiesen werden.",
+          },
+          {
+            uz: "Keksa ota-onalar uchun Germaniyada to‘liq Krankenversicherung topish ko‘pincha eng katta to‘siq bo‘ladi. Oddiy sayohat sug‘urtasi doimiy yashash ruxsati uchun yetarli bo‘lmasligi mumkin. Ariza berishdan oldin qonuniy yoki xususiy sug‘urta imkoniyatini yozma ravishda aniqlang.",
+            de: "Für ältere Eltern ist ein vollwertiger Krankenversicherungsschutz in Deutschland häufig die größte Hürde. Eine gewöhnliche Reisekrankenversicherung reicht für einen dauerhaften Aufenthalt möglicherweise nicht aus. Klären Sie gesetzliche oder private Versicherungsoptionen vor Antragstellung schriftlich.",
+          },
+          {
+            uz: "Voyaga yetmagan nemis yoki ayrim himoya maqomidagi bola ota-onasi uchun daromad va uy-joy bo‘yicha boshqa yengilliklar qo‘llanishi mumkin. Bu imtiyozlarni malakali mutaxassislarning ota-onasi yo‘liga avtomatik ko‘chirmang.",
+            de: "Für Eltern minderjähriger deutscher oder bestimmter schutzberechtigter Kinder können andere Erleichterungen bei Lebensunterhalt und Wohnraum gelten. Diese Privilegien dürfen nicht automatisch auf Eltern von Fachkräften übertragen werden.",
+          },
+        ],
+        items: [
+          {
+            uz: "Barcha oilalar uchun yagona federal «minimal oylik» yo‘q; hisob oila soni, ijara, sug‘urta va mahalliy idora amaliyotiga bog‘liq.",
+            de: "Es gibt keinen einheitlichen bundesweiten Mindestbetrag für alle Familien; die Berechnung hängt von Haushaltsgröße, Miete, Versicherung und Behördenpraxis ab.",
+          },
+          {
+            uz: "Verpflichtungserklärung ayrim viza jarayonlarida yordam berishi mumkin, lekin har bir holatda barcha talablarni avtomatik almashtirmaydi.",
+            de: "Eine Verpflichtungserklärung kann in einzelnen Verfahren helfen, ersetzt aber nicht automatisch sämtliche Voraussetzungen.",
+          },
+          {
+            uz: "Ota-onaning o‘z pensiyasi, jamg‘armasi yoki boshqa daromadi umumiy moliyaviy hisobda muhim bo‘lishi mumkin.",
+            de: "Eigene Rente, Vermögen oder andere Einkünfte der Eltern können für die Gesamtfinanzierung relevant sein.",
+          },
+          {
+            uz: "Sug‘urta bo‘yicha faqat vositachi reklamasiga emas, sug‘urta kompaniyasi va idoraning yozma tasdig‘iga tayaning.",
+            de: "Verlassen Sie sich bei der Krankenversicherung nicht auf Vermittlerwerbung, sondern auf schriftliche Bestätigungen von Versicherer und Behörde.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Muhim ogohlantirishlar va real holat",
+          de: "Wichtige Hinweise und praktische Realität",
+        },
+        items: [
+          {
+            uz: "Niederlassungserlaubnis yoki Germaniya fuqaroligiga ega voyaga yetgan farzandning mavjudligi ota-onaga avtomatik ko‘chib kelish huquqini bermaydi.",
+            de: "Eine Niederlassungserlaubnis oder deutsche Staatsangehörigkeit des volljährigen Kindes vermittelt den Eltern nicht automatisch ein Nachzugsrecht.",
+          },
+          {
+            uz: "Malakali mutaxassislar uchun 2024-yilgi yangi imkoniyatda Aufenthaltstitelning aynan birinchi berilgan sanasi va qonunda sanalgan turi hal qiluvchi ahamiyatga ega.",
+            de: "Beim neuen Fachkräfteweg sind die erstmalige Erteilung ab dem Stichtag und die genaue gesetzlich erfasste Titelart entscheidend.",
+          },
+          {
+            uz: "EU Blue Card yoki boshqa mos Aufenthaltstitel 2024-yil 1-martdan oldin birinchi marta berilgan bo‘lsa, keyingi uzaytirish har doim yangi «birinchi berilish» hisoblanmaydi.",
+            de: "Wurde die Blaue Karte EU oder ein anderer begünstigter Titel erstmals vor dem 1. März 2024 erteilt, gilt eine spätere Verlängerung nicht ohne Weiteres als neue erstmalige Erteilung.",
+          },
+          {
+            uz: "Ota-onaning 60, 65 yoki 70 yoshda bo‘lishi o‘z-o‘zidan Härtefall yaratmaydi.",
+            de: "Ein Alter von 60, 65 oder 70 Jahren begründet für sich allein keinen Härtefall.",
+          },
+          {
+            uz: "Og‘ir kasallik bo‘lsa ham, kelib chiqish davlatida real parvarish mavjudligi yoki boshqa qarindoshlar yordam bera olishi baholanadi.",
+            de: "Auch bei schwerer Krankheit werden verfügbare Pflege im Herkunftsstaat und Unterstützung durch andere Angehörige geprüft.",
+          },
+          {
+            uz: "Turistik yoki mehmon vizasi ota-onaning Germaniyada doimiy qolish huquqini bermaydi.",
+            de: "Ein Besuchs- oder Schengenvisum berechtigt die Eltern nicht zum dauerhaften Verbleib in Deutschland.",
+          },
+          {
+            uz: "Viza kafolati, tayyor sug‘urta yoki «100 foiz Härtefall» va’da qiladigan vositachilarga katta pul yubormang.",
+            de: "Zahlen Sie keine hohen Beträge an Vermittler, die Visum, fertige Versicherung oder einen „100-prozentigen Härtefall“ garantieren.",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: {
+          uz: "To‘g‘ri huquqiy yo‘lni aniqlang",
+          de: "Passende Rechtsgrundlage bestimmen",
+        },
+        description: {
+          uz: "Nemis bola ota-onasi, himoya maqomidagi bola ota-onasi, malakali mutaxassis ota-onasi yoki außergewöhnliche Härte — qaysi holat ekanini aralashtirmang.",
+          de: "Unterscheiden Sie Eltern eines deutschen Kindes, Eltern eines schutzberechtigten Kindes, Eltern einer Fachkraft und außergewöhnliche Härte.",
+        },
+      },
+      {
+        title: {
+          uz: "Germaniyadagi farzandning maqomini tekshiring",
+          de: "Status des Kindes in Deutschland prüfen",
+        },
+        description: {
+          uz: "Fuqarolik, Aufenthaltstitel paragrafi, birinchi berilgan sana va amal qilish muddatini rasmiy hujjat bilan aniqlang.",
+          de: "Klären Sie Staatsangehörigkeit, Rechtsgrundlage, Datum der erstmaligen Erteilung und Gültigkeit des Aufenthaltstitels.",
+        },
+      },
+      {
+        title: {
+          uz: "Qarindoshlik va oilaviy hujjatlarni tayyorlang",
+          de: "Abstammungs- und Familienurkunden vorbereiten",
+        },
+        description: {
+          uz: "Tug‘ilganlik, nikoh, ism-familiya, apostil va tarjimalardagi ma’lumotlar bir-biriga mos bo‘lsin.",
+          de: "Achten Sie auf übereinstimmende Angaben in Geburts-, Heirats-, Namens-, Apostille- und Übersetzungsunterlagen.",
+        },
+      },
+      {
+        title: {
+          uz: "Moliyaviy ta’minotni real hisoblang",
+          de: "Lebensunterhalt realistisch berechnen",
+        },
+        description: {
+          uz: "Ijara, kundalik xarajatlar, ota-onaning daromadi va eng muhimi tibbiy sug‘urta xarajatini oldindan yozma hisoblang.",
+          de: "Berechnen Sie Miete, Alltag, eigene Einkünfte der Eltern und insbesondere Krankenversicherungskosten vorab schriftlich.",
+        },
+      },
+      {
+        title: {
+          uz: "Sug‘urtani viza topshirishdan oldin aniqlang",
+          de: "Krankenversicherung vor Antrag klären",
+        },
+        description: {
+          uz: "Doimiy yashash uchun qabul qilinadigan sug‘urta turi, boshlanish sanasi va badalini sug‘urta kompaniyasi hamda idora bilan tekshiring.",
+          de: "Klären Sie anerkannten Versicherungsschutz, Beginn und Beitrag für den Daueraufenthalt mit Versicherer und Behörde.",
+        },
+      },
+      {
+        title: {
+          uz: "Härtefall bo‘lsa dalillarni tizimli tayyorlang",
+          de: "Härtefall systematisch belegen",
+        },
+        description: {
+          uz: "Tibbiy holat, parvarish ehtiyoji, boshqa yordamning yo‘qligi va Germaniyadagi farzandga individual qaramlikni hujjatlar bilan ko‘rsating.",
+          de: "Belegen Sie Erkrankung, Pflegebedarf, fehlende Alternativen und individuelle Abhängigkeit vom Kind in Deutschland.",
+        },
+      },
+      {
+        title: {
+          uz: "Vakolatxonaning aniq checklistiga amal qiling",
+          de: "Genaue Checkliste der Auslandsvertretung beachten",
+        },
+        description: {
+          uz: "Mavjud bo‘lsa Auslandsportal orqali to‘g‘ri viza maqsadini tanlang va Toshkentdagi vakolatxona talablarini bajaring.",
+          de: "Wählen Sie, sofern verfügbar, im Auslandsportal den richtigen Visumzweck und folgen Sie den Vorgaben der Auslandsvertretung in Taschkent.",
+        },
+      },
+      {
+        title: {
+          uz: "Shaxsiy termin va idora tekshiruvini yakunlang",
+          de: "Termin und Behördenprüfung durchlaufen",
+        },
+        description: {
+          uz: "Asl hujjatlar, biometrika va suhbatdan keyin Germaniyadagi farzand Ausländerbehörde so‘rovlariga o‘z vaqtida javob bersin.",
+          de: "Nach Originalprüfung, Biometrie und Gespräch sollte das Kind in Deutschland Rückfragen der Ausländerbehörde fristgerecht beantworten.",
+        },
+      },
+      {
+        title: {
+          uz: "Kelgach yashash va sug‘urta jarayonlarini yakunlang",
+          de: "Nach Einreise Aufenthalt und Versicherung abschließen",
+        },
+        description: {
+          uz: "Anmeldung, Krankenversicherung va Ausländerbehördedagi Aufenthaltstitel jarayonini viza muddati ichida bajaring.",
+          de: "Erledigen Sie Anmeldung, Krankenversicherung und Aufenthaltstitel bei der Ausländerbehörde innerhalb der Visumgültigkeit.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Niederlassungserlaubnisim bo‘lsa ota-onamni olib kela olamanmi?",
+          de: "Kann ich meine Eltern mit einer Niederlassungserlaubnis nachholen?",
+        },
+        answer: {
+          uz: "Niederlassungserlaubnisning o‘zi avtomatik ota-ona nachzug huquqini bermaydi. Muayyan malakali Aufenthaltstitel 2024-yil 1-martdan boshlab birinchi marta berilganmi yoki außergewöhnliche Härte bormi — shular alohida tekshiriladi.",
+          de: "Eine Niederlassungserlaubnis allein vermittelt kein automatisches Nachzugsrecht. Zu prüfen ist insbesondere, ob zuvor ab dem 1. März 2024 erstmals ein begünstigter Fachkräftetitel erteilt wurde oder eine außergewöhnliche Härte vorliegt.",
+        },
+      },
+      {
+        question: {
+          uz: "Men Germaniya fuqarosiman. Voyaga yetgan bo‘lsam ota-onamni olib kela olamanmi?",
+          de: "Ich bin deutscher Staatsangehöriger und volljährig. Kann ich meine Eltern nachholen?",
+        },
+        answer: {
+          uz: "Avtomatik ravishda yo‘q. Voyaga yetgan nemis farzandning ota-onasi odatda faqat außergewöhnliche Härte yoki boshqa maxsus huquqiy asos mavjud bo‘lsa ko‘rib chiqiladi.",
+          de: "Nicht automatisch. Eltern volljähriger Deutscher können grundsätzlich nur bei außergewöhnlicher Härte oder einer anderen besonderen Rechtsgrundlage nachziehen.",
+        },
+      },
+      {
+        question: {
+          uz: "Voyaga yetmagan nemis bolaning ota-onasi kelishi mumkinmi?",
+          de: "Können Eltern eines minderjährigen deutschen Kindes nachziehen?",
+        },
+        answer: {
+          uz: "Ha, vasiylik huquqiga ega ota-ona bolaning parvarishi va Germaniyada oilaviy hayot olib borish uchun §28 asosida murojaat qilishi mumkin. Haqiqiy parvarish munosabati tekshiriladi.",
+          de: "Ja. Ein personensorgeberechtigter Elternteil kann zur Betreuung und familiären Lebensgemeinschaft mit dem minderjährigen deutschen Kind nach § 28 beantragen. Die tatsächliche Betreuungsbeziehung wird geprüft.",
+        },
+      },
+      {
+        question: {
+          uz: "Blue Cardni 2024-yil 1-martdan keyin olgan bo‘lsam ota-onamni olib kelish mumkinmi?",
+          de: "Kann ich meine Eltern nachholen, wenn ich die Blaue Karte EU nach dem 1. März 2024 erhalten habe?",
+        },
+        answer: {
+          uz: "Agar EU Blue Card sizga qonundagi stichtagdan boshlab birinchi marta berilgan bo‘lsa, §36 bo‘yicha maxsus imkoniyat mavjud. Daromad, uy-joy, sug‘urta va boshqa umumiy shartlar baribir tekshiriladi.",
+          de: "Wurde Ihnen die Blaue Karte EU ab dem gesetzlichen Stichtag erstmals erteilt, besteht eine besondere Möglichkeit nach § 36. Lebensunterhalt, Wohnraum, Krankenversicherung und weitere allgemeine Voraussetzungen werden dennoch geprüft.",
+        },
+      },
+      {
+        question: {
+          uz: "Blue Cardim 2024-yil 1-martdan oldin berilgan bo‘lsa-chi?",
+          de: "Was gilt, wenn meine Blaue Karte EU vor dem 1. März 2024 erteilt wurde?",
+        },
+        answer: {
+          uz: "Yangi malakali mutaxassis ota-onasi yo‘li odatda stichtagdan oldingi birinchi berilishga tatbiq etilmaydi. Oddiy uzaytirish har doim yangi birinchi berilish hisoblanmaydi; individual huquqiy tekshiruv zarur.",
+          de: "Der neue Fachkräfteweg gilt grundsätzlich nicht bei erstmaliger Erteilung vor dem Stichtag. Eine bloße Verlängerung gilt nicht automatisch als neue erstmalige Erteilung; eine individuelle rechtliche Prüfung ist erforderlich.",
+        },
+      },
+      {
+        question: {
+          uz: "Qaynota-qaynonani ham olib kelish mumkinmi?",
+          de: "Können auch Schwiegereltern nachziehen?",
+        },
+        answer: {
+          uz: "Muayyan malakali mutaxassislar yo‘lida mumkin bo‘lishi mumkin, agar turmush o‘rtog‘i Germaniyada doimiy yashasa va qolgan talablar bajarilsa.",
+          de: "Beim besonderen Fachkräfteweg kann dies möglich sein, wenn der Ehegatte dauerhaft in Deutschland lebt und die weiteren Voraussetzungen erfüllt sind.",
+        },
+      },
+      {
+        question: {
+          uz: "Onam 70 yoshda. Bu Härtefall hisoblanadimi?",
+          de: "Meine Mutter ist 70 Jahre alt. Ist das ein Härtefall?",
+        },
+        answer: {
+          uz: "Faqat yoshning o‘zi yetarli emas. Sog‘liq, parvarish ehtiyoji, boshqa yordam imkoniyatlari va Germaniyadagi farzandga individual qaramlik birgalikda baholanadi.",
+          de: "Das Alter allein reicht nicht. Gesundheit, Pflegebedarf, andere Hilfsmöglichkeiten und konkrete Abhängigkeit vom Kind in Deutschland werden gemeinsam geprüft.",
+        },
+      },
+      {
+        question: {
+          uz: "Ota-onam kasal bo‘lsa viza albatta beriladimi?",
+          de: "Wird das Visum sicher erteilt, wenn meine Eltern krank sind?",
+        },
+        answer: {
+          uz: "Yo‘q. Kasallik muhim dalil bo‘lishi mumkin, lekin davolanish va parvarish kelib chiqish davlatida mavjudmi, boshqa qarindoshlar yordam bera oladimi va aynan Germaniyadagi farzand zarurmi — bular ham tekshiriladi.",
+          de: "Nein. Krankheit kann wesentlich sein, aber es wird auch geprüft, ob Behandlung oder Pflege im Herkunftsstaat verfügbar sind, andere Angehörige helfen können und gerade das Kind in Deutschland unverzichtbar ist.",
+        },
+      },
+      {
+        question: {
+          uz: "Ota-onam uchun tibbiy sug‘urta nega muhim?",
+          de: "Warum ist die Krankenversicherung für Eltern so wichtig?",
+        },
+        answer: {
+          uz: "Doimiy yashash ruxsati uchun yetarli sug‘urta talab qilinadi. Katta yosh va oldingi kasalliklar sabab xususiy sug‘urta qimmat yoki qiyin bo‘lishi mumkin; oddiy sayohat sug‘urtasi ko‘pincha yetarli emas.",
+          de: "Für den Daueraufenthalt ist ausreichender Versicherungsschutz erforderlich. Wegen Alters und Vorerkrankungen kann private Versicherung teuer oder schwierig sein; eine einfache Reiseversicherung reicht häufig nicht aus.",
+        },
+      },
+      {
+        question: {
+          uz: "Ota-onam mehmon vizasi bilan kirib, Germaniyada qolishi mumkinmi?",
+          de: "Können meine Eltern mit Besuchsvisum einreisen und in Deutschland bleiben?",
+        },
+        answer: {
+          uz: "Umumiy qoida bo‘yicha yo‘q. Doimiy oila birlashtirish uchun O‘zbekiston fuqarolari odatda kirishdan oldin tegishli milliy viza olishi kerak.",
+          de: "Grundsätzlich nein. Für den dauerhaften Familiennachzug müssen Staatsangehörige Usbekistans in der Regel vor der Einreise das passende nationale Visum beantragen.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "§ 28 AufenthG — Familiennachzug zu Deutschen",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__28.html",
+        language: "de",
+      },
+      {
+        title: "§ 36 AufenthG — Nachzug der Eltern und sonstiger Familienangehöriger",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__36.html",
+        language: "de",
+      },
+      {
+        title: "Nachzug zu deutschen Familienangehörigen",
+        organization: "Bundesamt für Migration und Flüchtlinge",
+        url: "https://www.bamf.de/DE/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Familie/NachzugZuDeutschen/nachzug-zu-deutschen-node.html",
+        language: "de",
+      },
+      {
+        title: "Nachzug zu ausländischen Familienangehörigen",
+        organization: "Bundesamt für Migration und Flüchtlinge",
+        url: "https://www.bamf.de/DE/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Familie/NachzugZuDrittstaatlern/nachzug-zu-drittstaatlern-node.html",
+        language: "de",
+      },
+      {
+        title: "The new Skilled Immigration Act",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/visa-residence/skilled-immigration-act",
+        language: "en",
+      },
+      {
+        title: "Family reunification",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/visa-residence/family-reunification",
+        language: "en",
+      },
+      {
+        title: "Consular Services Portal",
+        organization: "Federal Foreign Office",
+        url: "https://www.auswaertiges-amt.de/en/visa-service/consular-services-portal",
+        language: "en",
+      },
+    ],
+    relatedArticleSlugs: [
+      "spouse-reunification",
+      "german-citizen-spouse-reunification",
+      "eu-blue-card-family-reunification",
+      "child-family-reunification",
+    ],
+  },
 ];
 
 function localizeArticle(
