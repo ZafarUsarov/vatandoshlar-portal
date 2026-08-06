@@ -27,8 +27,8 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
       uz: "O‘qish, ish, til kursi, oila va mehmon vizalari bo‘yicha yo‘riqnomalar.",
       de: "Leitfäden zu Studien-, Arbeits-, Sprachkurs-, Familien- und Besuchsvisa.",
     },
-    articleCount: 0,
-    status: "coming-soon",
+    articleCount: 1,
+    status: "available",
     featured: true,
   },
   {

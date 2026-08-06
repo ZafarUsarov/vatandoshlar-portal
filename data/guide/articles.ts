@@ -3987,296 +3987,284 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
     ],
   },
   {
-    id: "parent-family-reunification",
-    slug: "parent-family-reunification",
-    categorySlug: "family",
+    id: "national-visa",
+    slug: "national-visa",
+    categorySlug: "visas",
     title: {
-      uz: "Ota-ona orqali oila birlashtirish",
-      de: "Elternnachzug nach Deutschland",
+      uz: "Germaniya milliy vizasi",
+      de: "Nationales Visum für Deutschland",
     },
     excerpt: {
-      uz: "Ota-onaning Germaniyadagi farzandi yoniga ko‘chib kelishi: voyaga yetmagan nemis yoki himoya maqomidagi farzand, malakali mutaxassislarning ota-onasi va qaynota-qaynonasi, außergewöhnliche Härte, daromad, uy-joy, sug‘urta, hujjatlar va milliy viza jarayoni bo‘yicha batafsil qo‘llanma.",
-      de: "Ausführlicher Leitfaden zum Elternnachzug nach Deutschland: Eltern minderjähriger deutscher oder schutzberechtigter Kinder, Eltern und Schwiegereltern bestimmter Fachkräfte, außergewöhnliche Härte, Lebensunterhalt, Wohnraum, Krankenversicherung, Unterlagen und nationales Visumverfahren.",
+      uz: "Germaniyada 90 kundan ortiq yashash uchun D turdagi milliy viza: Schengen vizasidan farqi, viza maqsadini tanlash, Auslandsportal, VIDEX, hujjatlar, termin, biometrika, Ausländerbehörde, ko‘rib chiqish muddati, rad javobi va Germaniyaga kelgandan keyingi Aufenthaltstitel jarayoni.",
+      de: "Leitfaden zum nationalen Visum der Kategorie D für Aufenthalte über 90 Tage: Unterschied zum Schengenvisum, Aufenthaltszweck, Auslandsportal, VIDEX, Unterlagen, Termin, Biometrie, Ausländerbehörde, Bearbeitungsdauer, Ablehnung und Aufenthaltstitel nach der Einreise.",
     },
     intro: {
-      uz: "Ota-onani Germaniyaga doimiy oila birlashtirish orqali olib kelish barcha holatlar uchun ochiq umumiy huquq emas. Natija Germaniyada yashayotgan farzandning yoshi, fuqaroligi, Aufenthaltstiteli va ushbu maqom qachon birinchi marta berilganiga bog‘liq. Voyaga yetmagan nemis yoki ayrim himoya maqomidagi bolalarning ota-onalari, 2024-yil 1-martdan keyin birinchi marta muayyan malakali yashash ruxsatini olgan shaxslarning ota-onalari hamda außergewöhnliche Härte holatlari bir-biridan alohida huquqiy yo‘llardir.",
-      de: "Der dauerhafte Nachzug von Eltern nach Deutschland ist kein allgemein offener Anspruch für jede Familie. Entscheidend sind Alter, Staatsangehörigkeit und Aufenthaltstitel des in Deutschland lebenden Kindes sowie der Zeitpunkt der erstmaligen Erteilung bestimmter Titel. Eltern minderjähriger deutscher oder bestimmter schutzberechtigter Kinder, Eltern bestimmter Fachkräfte mit erstmaliger Titelerteilung ab dem 1. März 2024 und Fälle außergewöhnlicher Härte sind rechtlich getrennte Wege.",
+      uz: "Milliy viza — Germaniyada 90 kundan ortiq muddatga ma’lum bir qonuniy maqsad bilan yashash uchun kirish vizasidir. U Ausbildung, ish, Studium, Chancenkarte, Au Pair, FSJ/BFD, til kursi yoki oila birlashtirish kabi maqsadlar uchun beriladi. Milliy viza o‘zi alohida «umumiy ruxsat» emas: ariza beruvchi aynan qaysi yashash maqsadiga topshirayotganini tanlaydi va shu maqsadga tegishli barcha hujjatlarni isbotlaydi.",
+      de: "Das nationale Visum ist ein Einreisevisum für einen längerfristigen Aufenthalt von mehr als 90 Tagen zu einem bestimmten gesetzlichen Zweck. Es wird etwa für Ausbildung, Beschäftigung, Studium, Chancenkarte, Au-pair, FSJ/BFD, Sprachkurs oder Familiennachzug erteilt. Es ist keine allgemeine Aufenthaltserlaubnis: Antragstellende müssen einen konkreten Aufenthaltszweck wählen und sämtliche hierfür erforderlichen Voraussetzungen nachweisen.",
     },
     status: "published",
     featured: true,
     lastReviewedAt: "2026-08-06",
     readingTime: {
-      uz: "14 daqiqa",
-      de: "14 Minuten",
+      uz: "13 daqiqa",
+      de: "13 Minuten",
     },
     facts: [
       {
-        label: { uz: "Umumiy qoida", de: "Grundregel" },
+        label: { uz: "Viza turi", de: "Visumkategorie" },
         value: {
-          uz: "Voyaga yetgan farzand oddiy istak bilan ota-onasini doimiy olib kela olmaydi",
-          de: "Volljährige Kinder können ihre Eltern nicht allein aufgrund des familiären Wunsches dauerhaft nachholen",
+          uz: "Kategoriya D — 90 kundan ortiq uzoq muddatli yashash uchun",
+          de: "Kategorie D — für längerfristige Aufenthalte über 90 Tage",
         },
       },
       {
-        label: { uz: "Nemis bola", de: "Deutsches Kind" },
+        label: { uz: "Huquqiy asos", de: "Rechtsgrundlage" },
         value: {
-          uz: "Voyaga yetmagan nemis bolaning vasiylik va parvarish huquqiga ega ota-onasi §28 asosida kelishi mumkin",
-          de: "Ein personensorgeberechtigter Elternteil eines minderjährigen deutschen Kindes kann nach § 28 nachziehen",
+          uz: "Asosan §6 Abs. 3 AufenthG va tanlangan yashash maqsadining tegishli qoidalari",
+          de: "Grundsätzlich § 6 Abs. 3 AufenthG und die Vorschriften des gewählten Aufenthaltszwecks",
         },
       },
       {
-        label: { uz: "Himoya maqomidagi bola", de: "Schutzberechtigtes Kind" },
+        label: { uz: "Ariza berish joyi", de: "Antragstellung" },
         value: {
-          uz: "Ayrim voyaga yetmagan himoya maqomidagi bolalarning ota-onalari §36 bo‘yicha yengillashtirilgan yo‘lga ega",
-          de: "Eltern bestimmter minderjähriger Schutzberechtigter können nach § 36 privilegiert nachziehen",
+          uz: "Odatda Germaniyaga kirishdan oldin mas’ul Germaniya vakolatxonasida",
+          de: "Grundsätzlich vor der Einreise bei der zuständigen deutschen Auslandsvertretung",
         },
       },
       {
-        label: { uz: "Malakali mutaxassislar", de: "Fachkräfte" },
+        label: { uz: "O‘zbekiston bo‘yicha", de: "Für Usbekistan" },
         value: {
-          uz: "Muayyan ish yashash ruxsati 2024-yil 1-martdan boshlab birinchi marta berilgan bo‘lsa, ota-ona uchun §36 bo‘yicha alohida imkoniyat mavjud",
-          de: "Bei erstmaliger Erteilung bestimmter Erwerbstitel ab dem 1. März 2024 besteht eine besondere Möglichkeit nach § 36",
+          uz: "Milliy viza topshirish toifaga qarab elchixona yoki TLS orqali, oldindan termin bilan",
+          de: "Antragstellung je nach Kategorie bei Botschaft oder TLS und nur mit vorherigem Termin",
         },
       },
       {
-        label: { uz: "Qaynota-qaynona", de: "Schwiegereltern" },
+        label: { uz: "Ko‘rib chiqish", de: "Bearbeitung" },
         value: {
-          uz: "Ayrim malakali mutaxassislarning qaynota-qaynonasi ham, turmush o‘rtog‘i Germaniyada doimiy yashasa, qamrab olinishi mumkin",
-          de: "Auch Schwiegereltern bestimmter Fachkräfte können erfasst sein, wenn der Ehegatte dauerhaft in Deutschland lebt",
+          uz: "Ausländerbehörde yoki Bundesagentur für Arbeit ishtirok etsa bir necha oy davom etishi mumkin",
+          de: "Bei Beteiligung von Ausländerbehörde oder Bundesagentur für Arbeit kann das Verfahren mehrere Monate dauern",
         },
       },
       {
-        label: { uz: "Boshqa holatlar", de: "Sonstige Fälle" },
+        label: { uz: "Rad javobi", de: "Ablehnung" },
         value: {
-          uz: "Odatda faqat außergewöhnliche Härte isbotlansa ko‘rib chiqiladi",
-          de: "Grundsätzlich nur bei nachgewiesener außergewöhnlicher Härte",
+          uz: "2025-yil 1-iyuldan remonstratsiya bekor qilingan; odatda yangi ariza yoki sud yo‘li qoladi",
+          de: "Seit 1. Juli 2025 ist die Remonstration abgeschafft; regelmäßig bleiben Neuantrag oder gerichtliches Verfahren",
         },
       },
     ],
     sections: {
       overview: {
         title: {
-          uz: "Ota-ona uchun mavjud asosiy yo‘llar",
-          de: "Die wichtigsten Wege des Elternnachzugs",
+          uz: "Milliy viza va Schengen vizasi o‘rtasidagi farq",
+          de: "Unterschied zwischen nationalem Visum und Schengenvisum",
         },
         paragraphs: [
           {
-            uz: "Birinchi yo‘l — voyaga yetmagan nemis bolaning ota-onasi. Agar ota-ona bolaning vasiylik huquqiga ega bo‘lsa va Germaniyada haqiqiy parvarish hamda oilaviy hayot olib borishni istasa, §28 AufenthG asosida yashash huquqi tekshiriladi.",
-            de: "Der erste Weg betrifft Eltern minderjähriger deutscher Kinder. Ist ein Elternteil personensorgeberechtigt und soll die tatsächliche Betreuung und familiäre Lebensgemeinschaft in Deutschland ausgeübt werden, wird ein Aufenthalt nach § 28 AufenthG geprüft.",
+            uz: "Schengen vizasi odatda 180 kunlik davr ichida ko‘pi bilan 90 kunlik qisqa tashriflar uchun ishlatiladi. Milliy viza esa Germaniyada 90 kundan ortiq yashash va keyinchalik tegishli Aufenthaltstitel olish maqsadiga xizmat qiladi.",
+            de: "Ein Schengenvisum dient grundsätzlich Kurzaufenthalten von höchstens 90 Tagen innerhalb eines Zeitraums von 180 Tagen. Das nationale Visum ermöglicht dagegen die Einreise für einen längerfristigen Aufenthalt und den anschließenden Erhalt des passenden Aufenthaltstitels.",
           },
           {
-            uz: "Ikkinchi yo‘l — ayrim voyaga yetmagan himoya maqomidagi xorijiy bolalarning ota-onasi. §36dagi maxsus shartlarga mos kelganda va Germaniyada boshqa vasiy ota-ona bo‘lmaganda, daromad hamda uy-joy bo‘yicha yengilliklar bilan yashash ruxsati berilishi mumkin.",
-            de: "Der zweite Weg betrifft Eltern bestimmter minderjähriger ausländischer Schutzberechtigter. Sind die besonderen Voraussetzungen des § 36 erfüllt und hält sich kein personensorgeberechtigter Elternteil in Deutschland auf, kann der Nachzug mit Erleichterungen bei Lebensunterhalt und Wohnraum ermöglicht werden.",
+            uz: "Milliy viza kategoriya D sifatida beriladi. U odatda ma’lum muddatga kirish va boshlang‘ich yashash huquqini beradi. Germaniyaga kelgach, agar vizaning o‘zi butun rejalashtirilgan muddatni qamramasa, Ausländerbehörde orqali elektron Aufenthaltstitel rasmiylashtiriladi.",
+            de: "Das nationale Visum wird als Kategorie D erteilt. Es berechtigt zur Einreise und zum anfänglichen Aufenthalt für einen bestimmten Zeitraum. Nach der Einreise wird, sofern das Visum nicht bereits den gesamten Aufenthaltszeitraum abdeckt, bei der Ausländerbehörde der elektronische Aufenthaltstitel beantragt.",
           },
           {
-            uz: "Uchinchi yo‘l — 2024-yil 1-martdan boshlab birinchi marta qonunda sanalgan malakali yoki mehnat yashash ruxsatlaridan birini olgan shaxslarning ota-onasi va ayrim qaynota-qaynonalari. Bu yo‘l außergewöhnliche Härte isbotini talab qilmaydi, lekin daromad, sug‘urta va uy-joy kabi umumiy talablar muhimligicha qoladi.",
-            de: "Der dritte Weg gilt für Eltern und bestimmte Schwiegereltern von Personen, denen ab dem 1. März 2024 erstmals einer der gesetzlich genannten Fachkräfte- oder Erwerbstitel erteilt wurde. Eine außergewöhnliche Härte ist dafür nicht erforderlich; Lebensunterhalt, Krankenversicherung und Wohnraum bleiben jedoch wesentlich.",
-          },
-          {
-            uz: "Ushbu maxsus yo‘llardan hech biri mos kelmasa, ota-ona odatda «sonstige Familienangehörige» hisoblanadi va §36 bo‘yicha faqat außergewöhnliche Härteni oldini olish uchun individual ravishda qabul qilinishi mumkin.",
-            de: "Greift keiner dieser Sonderwege, gelten Eltern grundsätzlich als sonstige Familienangehörige und können nach § 36 nur zur Vermeidung einer außergewöhnlichen Härte im Einzelfall zugelassen werden.",
+            uz: "D vizasi bilan, viza amal qilish shartlariga rioya qilgan holda, boshqa Schengen davlatlarida ham 180 kun ichida 90 kungacha qisqa safar qilish mumkin. Bu boshqa davlatda ishlash yoki yashash huquqini bermaydi.",
+            de: "Mit einem gültigen D-Visum sind innerhalb der Gültigkeit grundsätzlich auch Kurzreisen in andere Schengen-Staaten bis zu 90 Tagen je 180-Tage-Zeitraum möglich. Daraus entsteht kein Recht, dort zu arbeiten oder dauerhaft zu leben.",
           },
         ],
       },
       eligibility: {
         title: {
-          uz: "Kimlar real murojaat qila oladi?",
-          de: "Wer kann realistisch einen Antrag stellen?",
+          uz: "Qaysi maqsadlar uchun milliy viza olinadi?",
+          de: "Für welche Zwecke wird ein nationales Visum beantragt?",
         },
         items: [
           {
-            uz: "Voyaga yetmagan nemis bolaning vasiylik va parvarish huquqiga ega chet ellik ota-onasi",
-            de: "Der ausländische personensorgeberechtigte Elternteil eines minderjährigen deutschen Kindes",
+            uz: "Ausbildung yoki Ausbildung joyini qidirish",
+            de: "Berufsausbildung oder Suche nach einem Ausbildungsplatz",
           },
           {
-            uz: "§36da sanalgan himoya maqomlaridan biriga ega voyaga yetmagan bola yoniga, Germaniyada boshqa vasiy ota-ona bo‘lmasa, keluvchi ota-ona",
-            de: "Eltern eines minderjährigen Kindes mit einem in § 36 genannten Schutzstatus, sofern sich kein personensorgeberechtigter Elternteil in Deutschland aufhält",
+            uz: "Malakali ish, EU Blue Card, ilmiy faoliyat yoki mustaqil tadbirkorlik",
+            de: "Qualifizierte Beschäftigung, Blaue Karte EU, Forschung oder selbstständige Tätigkeit",
           },
           {
-            uz: "2024-yil 1-martdan boshlab birinchi marta EU Blue Card, §§18a, 18b, 18d, ayrim §19c yoki §21 kabi qonunda sanalgan yashash ruxsatini olgan shaxsning ota-onasi",
-            de: "Eltern einer Person, der ab dem 1. März 2024 erstmals eine Blaue Karte EU oder ein gesetzlich erfasster Titel wie §§ 18a, 18b, 18d, bestimmte Fälle des § 19c oder § 21 erteilt wurde",
+            uz: "Studium, Studienkolleg, Studienbewerbung yoki ilmiy tayyorgarlik",
+            de: "Studium, Studienkolleg, Studienbewerbung oder wissenschaftliche Vorbereitung",
           },
           {
-            uz: "Yuqoridagi malakali shaxsning qaynota-qaynonasi — agar uning turmush o‘rtog‘i Germaniyada doimiy yashasa",
-            de: "Schwiegereltern der begünstigten Fachkraft, wenn deren Ehegatte dauerhaft in Deutschland lebt",
+            uz: "Chancenkarte yoki ish qidirishning boshqa qonuniy yo‘llari",
+            de: "Chancenkarte oder andere gesetzliche Wege der Arbeitssuche",
           },
           {
-            uz: "Boshqa barcha holatlarda, faqat oilaning oddiy ajralishidan ancha og‘ir bo‘lgan außergewöhnliche Härteni hujjatlar bilan isbotlay oladigan ota-ona",
-            de: "In allen übrigen Fällen Eltern, die eine außergewöhnliche Härte nachweisen können, die deutlich über die übliche familiäre Trennung hinausgeht",
+            uz: "Au Pair, FSJ, BFD yoki boshqa tan olingan ixtiyoriy xizmat",
+            de: "Au-pair, FSJ, BFD oder ein anderer anerkannter Freiwilligendienst",
+          },
+          {
+            uz: "Oila birlashtirish: turmush o‘rtog‘i, farzand, ota-ona yoki maxsus oilaviy holatlar",
+            de: "Familiennachzug zu Ehegatten, Kindern, Eltern oder in besonderen Familienkonstellationen",
+          },
+          {
+            uz: "Intensiv til kursi yoki malakani tan oldirish chorasi",
+            de: "Intensivsprachkurs oder Maßnahme zur Anerkennung einer Qualifikation",
           },
         ],
       },
       requirements: {
         title: {
-          uz: "Außergewöhnliche Härte nimani anglatadi?",
-          de: "Was bedeutet außergewöhnliche Härte?",
+          uz: "To‘g‘ri viza maqsadini tanlash",
+          de: "Den richtigen Visumzweck wählen",
         },
         paragraphs: [
           {
-            uz: "Voyaga yetgan farzandning ota-onasini sog‘ingani, ota-onaning yoshi katta ekani yoki Germaniyada birga yashash istagi o‘z-o‘zidan außergewöhnliche Härte hisoblanmaydi. Qonun odatiy oilaviy ajralishdan ancha og‘ir, noyob va individual qaramlik holatini talab qiladi.",
-            de: "Der Wunsch eines volljährigen Kindes, mit seinen Eltern zusammenzuleben, das höhere Alter der Eltern oder allgemeine familiäre Sehnsucht begründen für sich allein keine außergewöhnliche Härte. Erforderlich ist eine seltene, individuelle Abhängigkeit, die deutlich über die gewöhnlichen Folgen familiärer Trennung hinausgeht.",
+            uz: "Eng muhim qadam — «milliy viza»ni umumiy nom sifatida emas, aniq yashash maqsadi sifatida tanlash. Masalan, Ausbildung, Chancenkarte va Familiennachzug bir xil D vizasi doirasida bo‘lsa ham, ularning qonuniy talablari va hujjatlari butunlay boshqacha.",
+            de: "Der wichtigste Schritt ist, das nationale Visum nicht nur als Oberbegriff, sondern mit dem konkreten Aufenthaltszweck zu beantragen. Ausbildung, Chancenkarte und Familiennachzug gehören zwar zur Kategorie D, haben jedoch völlig unterschiedliche gesetzliche Voraussetzungen und Unterlagen.",
           },
           {
-            uz: "Og‘ir kasallik yoki parvarishga muhtojlik muhim bo‘lishi mumkin, lekin faqat tashxis yetarli emas. Nima sababdan zarur parvarish kelib chiqish davlatida qarindoshlar, professional xizmat yoki boshqa real yordam orqali ta’minlanmasligi hujjatlar bilan tushuntiriladi.",
-            de: "Schwere Krankheit oder Pflegebedürftigkeit können relevant sein, doch eine Diagnose allein genügt nicht. Es muss nachvollziehbar belegt werden, weshalb notwendige Betreuung im Herkunftsstaat weder durch Angehörige noch durch professionelle oder andere real verfügbare Hilfe gesichert werden kann.",
+            uz: "Noto‘g‘ri kategoriya tanlansa, hujjatlar to‘liq bo‘lsa ham ariza kechikishi yoki rad etilishi mumkin. Ariza berishdan oldin Germaniya vakolatxonasining aynan shu maqsad uchun yozilgan sahifasi va checklistini tekshiring.",
+            de: "Wird die falsche Kategorie gewählt, kann der Antrag trotz vollständiger Unterlagen verzögert oder abgelehnt werden. Prüfen Sie vor Antragstellung die spezielle Informationsseite und Checkliste der Auslandsvertretung für genau diesen Zweck.",
           },
           {
-            uz: "Germaniyadagi farzandning shaxsan parvarish qilishi zarurligi, boshqa yaqin insonlarning yo‘qligi, tibbiy va ijtimoiy vaziyatning birgalikdagi oqibatlari individual baholanadi. Bu istisno tartibi bo‘lib, avtomatik talab huquqi emas.",
-            de: "Die persönliche Notwendigkeit der Betreuung durch das in Deutschland lebende Kind, das Fehlen anderer naher Personen sowie die medizinische und soziale Gesamtsituation werden individuell bewertet. Es handelt sich um eine Ausnahmeentscheidung und nicht um einen automatischen Anspruch.",
-          },
-          {
-            uz: "Vatandoshlar.de tavsiyasi: Härtefall arizasini umumiy hissiy bayonot bilan emas, batafsil tibbiy xulosalar, parvarish darajasi, kundalik yordam ehtiyoji, mavjud yordam imkoniyatlari va ularning nima uchun yetarli emasligi haqidagi dalillar bilan tayyorlang.",
-            de: "Praktische Empfehlung von Vatandoshlar.de: Begründen Sie einen Härtefall nicht nur emotional, sondern mit detaillierten ärztlichen Berichten, Pflegebedarf, konkretem Unterstützungsumfang, vorhandenen Hilfsmöglichkeiten und nachvollziehbaren Gründen, weshalb diese nicht ausreichen.",
+            uz: "Vatandoshlar.de tavsiyasi: avval huquqiy maqsadni aniqlang, keyin termin yoki portalni tanlang. Termin mavjudligi qaysi vizaga haqingiz borligini belgilamaydi.",
+            de: "Praktische Empfehlung von Vatandoshlar.de: Bestimmen Sie zuerst die richtige Rechtsgrundlage und wählen Sie erst danach Portal oder Terminweg. Die Verfügbarkeit eines Termins entscheidet nicht darüber, ob die Voraussetzungen für ein Visum erfüllt sind.",
           },
         ],
         items: [
           {
-            uz: "Faqat «ota-onam yolg‘iz» yoki «ularni yonimda bo‘lishini xohlayman» degan sabab odatda yetarli emas.",
-            de: "Die bloße Aussage, die Eltern seien allein oder sollten in der Nähe leben, reicht grundsätzlich nicht aus.",
+            uz: "Ish shartnomasi bo‘lsa, Chancenkarte o‘rniga to‘g‘ridan-to‘g‘ri ish vizasi mos bo‘lishi mumkin.",
+            de: "Liegt bereits ein Arbeitsvertrag vor, kann statt der Chancenkarte direkt ein Beschäftigungsvisum passend sein.",
           },
           {
-            uz: "Kasallikning mavjudligi bilan birga qaramlikning aynan Germaniyadagi farzandga bog‘liqligi ko‘rsatiladi.",
-            de: "Neben der Erkrankung muss die konkrete Abhängigkeit gerade vom in Deutschland lebenden Kind dargelegt werden.",
+            uz: "Faqat til o‘rganish maqsadi bilan Ausbildung yoki Studium vizasiga topshirib bo‘lmaydi.",
+            de: "Ein reiner Sprachlernzweck kann nicht als Ausbildungs- oder Studienvisum beantragt werden.",
           },
           {
-            uz: "Pul yuborish, tashrif vizasi, mahalliy qarovchi yoki boshqa qarindoshlar real muqobil bo‘lsa, Härtefall dalili zaiflashishi mumkin.",
-            de: "Sind Geldzahlungen, Besuchsaufenthalte, lokale Pflege oder andere Angehörige realistische Alternativen, kann dies gegen eine außergewöhnliche Härte sprechen.",
+            uz: "Mehmon tashrifi uchun milliy viza emas, odatda Schengen vizasi kerak.",
+            de: "Für einen bloßen Besuch ist grundsätzlich kein nationales, sondern ein Schengenvisum erforderlich.",
           },
           {
-            uz: "Har bir ota-ona uchun sog‘liq va oilaviy vaziyat alohida baholanishi mumkin.",
-            de: "Gesundheits- und Familiensituation können für jeden Elternteil getrennt bewertet werden.",
+            uz: "Turistik viza orqali kirib, Germaniyada albatta uzoq muddatli vizaga o‘tish rejasiga tayanmang.",
+            de: "Verlassen Sie sich nicht auf den Plan, mit einem Besuchsvisum einzureisen und den Aufenthaltszweck in Deutschland sicher zu wechseln.",
           },
         ],
       },
       documents: {
         title: {
-          uz: "Odatda kerak bo‘ladigan hujjatlar",
-          de: "Üblicherweise erforderliche Unterlagen",
+          uz: "Umumiy hujjatlar va maqsadga xos dalillar",
+          de: "Allgemeine und zweckspezifische Unterlagen",
         },
         items: [
           {
-            uz: "Ota-onaning amaldagi pasporti, milliy viza arizasi va biometrik fotosurati",
-            de: "Gültiger Reisepass der Eltern, Antrag auf ein nationales Visum und biometrisches Passfoto",
+            uz: "Amaldagi pasport va to‘liq to‘ldirilgan milliy viza arizasi",
+            de: "Gültiger Reisepass und vollständig ausgefüllter Antrag auf ein nationales Visum",
           },
           {
-            uz: "Qarindoshlikni ko‘rsatuvchi tug‘ilganlik guvohnomalari va zarur bo‘lsa apostil yoki rasmiy tarjima",
-            de: "Geburtsurkunden zum Nachweis der Abstammung und erforderlichenfalls Apostille oder beglaubigte Übersetzung",
+            uz: "Biometrik fotosurat va vakolatxona talab qilgan nusxalar",
+            de: "Biometrisches Passfoto und die von der Auslandsvertretung verlangten Kopien",
           },
           {
-            uz: "Germaniyadagi farzandning pasporti, Aufenthaltstiteli va Meldebescheinigung nusxalari",
-            de: "Kopien von Pass, Aufenthaltstitel und Meldebescheinigung des Kindes in Deutschland",
+            uz: "Yashash maqsadini isbotlovchi asosiy hujjat: ish yoki Ausbildung shartnomasi, universitet qabul xati, nikoh guvohnomasi va hokazo",
+            de: "Zentraler Nachweis des Aufenthaltszwecks, etwa Arbeits- oder Ausbildungsvertrag, Hochschulzulassung oder Heiratsurkunde",
           },
           {
-            uz: "Malakali mutaxassis yo‘lida: Aufenthaltstitel turi va uning birinchi marta 2024-yil 1-martdan boshlab berilganini isbotlovchi hujjat",
-            de: "Beim Fachkräfteweg: Nachweis des Aufenthaltstitels und seiner erstmaligen Erteilung ab dem 1. März 2024",
+            uz: "Til darajasi talab qilinsa tan olingan sertifikat yoki qonuniy istisno dalili",
+            de: "Soweit erforderlich anerkannter Sprachnachweis oder Nachweis einer gesetzlichen Ausnahme",
           },
           {
-            uz: "Qaynota-qaynona uchun nikoh hujjatlari va Germaniyada doimiy yashayotgan turmush o‘rtog‘i dalili",
-            de: "Für Schwiegereltern Heiratsunterlagen und Nachweis des dauerhaften Aufenthalts des Ehegatten in Deutschland",
+            uz: "Moliyaviy ta’minot: maosh, Sperrkonto, Verpflichtungserklärung, stipendiya yoki maqsadga mos boshqa dalil",
+            de: "Finanzierungsnachweis durch Einkommen, Sperrkonto, Verpflichtungserklärung, Stipendium oder einen anderen zweckgeeigneten Nachweis",
           },
           {
-            uz: "Daromad dalillari: ish shartnomasi, maosh varaqalari, bank ma’lumotlari yoki boshqa barqaror moliyaviy manbalar",
-            de: "Einkommensnachweise wie Arbeitsvertrag, Gehaltsabrechnungen, Bankunterlagen oder andere stabile Finanzierungsquellen",
+            uz: "Tibbiy sug‘urta bo‘yicha viza turiga mos dalil",
+            de: "Zum Visumzweck passender Nachweis des Krankenversicherungsschutzes",
           },
           {
-            uz: "Ijara shartnomasi va yetarli uy-joy bo‘yicha dalillar",
-            de: "Mietvertrag und Nachweise über ausreichenden Wohnraum",
+            uz: "Diplom, kasbiy malaka, Anerkennung, ZAB yoki Bundesagentur für Arbeit bilan bog‘liq hujjatlar — talab qilinadigan holatlarda",
+            de: "Unterlagen zu Abschluss, Berufsqualifikation, Anerkennung, ZAB oder Bundesagentur für Arbeit — soweit erforderlich",
           },
           {
-            uz: "To‘liq tibbiy sug‘urta dalili; keksa ota-onalarda amaliy va moliyaviy jihatdan eng qiyin masalalardan biri",
-            de: "Nachweis eines vollwertigen Krankenversicherungsschutzes; bei älteren Eltern häufig eine der schwierigsten praktischen und finanziellen Voraussetzungen",
+            uz: "Fuqarolik holati hujjatlari uchun apostil, legalizatsiya yoki rasmiy tarjima — checklistga qarab",
+            de: "Apostille, Legalisation oder beglaubigte Übersetzung von Personenstandsurkunden — nach Checkliste",
           },
           {
-            uz: "Härtefall uchun batafsil tibbiy xulosalar, Pflegegrad yoki parvarish bahosi, yordamga qaramlik va boshqa yordam yo‘qligi dalillari",
-            de: "Für Härtefälle ausführliche ärztliche Berichte, Pflegegrad oder Pflegegutachten, Nachweise persönlicher Abhängigkeit und fehlender anderweitiger Hilfe",
-          },
-          {
-            uz: "Vakolatxona yoki Ausländerbehörde individual holat bo‘yicha so‘ragan qo‘shimcha hujjatlar",
-            de: "Weitere Unterlagen nach individueller Anforderung der Auslandsvertretung oder Ausländerbehörde",
+            uz: "Mas’ul vakolatxona individual holat bo‘yicha talab qilgan qo‘shimcha hujjatlar",
+            de: "Weitere Unterlagen nach individueller Anforderung der zuständigen Auslandsvertretung",
           },
         ],
         paragraphs: [
           {
-            uz: "Aniq checklist qaysi huquqiy yo‘l tanlanganiga qarab keskin farq qiladi. Voyaga yetmagan nemis bola ota-onasi, malakali mutaxassis ota-onasi va außergewöhnliche Härte arizasi uchun bir xil hujjatlar ro‘yxatidan foydalanmang.",
-            de: "Die genaue Checkliste unterscheidet sich erheblich nach Rechtsgrundlage. Verwenden Sie nicht dieselbe Unterlagenliste für Eltern eines deutschen Kindes, Eltern einer Fachkraft und einen Antrag wegen außergewöhnlicher Härte.",
+            uz: "Bitta umumiy «D viza hujjatlari ro‘yxati» barcha kategoriyalar uchun yetarli emas. Har bir viza maqsadining alohida checklisti asosiy manba hisoblanadi.",
+            de: "Eine einzige allgemeine Unterlagenliste für alle D-Visa reicht nicht aus. Maßgeblich ist die spezielle Checkliste des jeweiligen Aufenthaltszwecks.",
           },
         ],
       },
       conditions: {
         title: {
-          uz: "Daromad, uy-joy va tibbiy sug‘urta",
-          de: "Lebensunterhalt, Wohnraum und Krankenversicherung",
+          uz: "Auslandsportal, VIDEX, termin va ko‘rib chiqish",
+          de: "Auslandsportal, VIDEX, Termin und Bearbeitung",
         },
         paragraphs: [
           {
-            uz: "Malakali mutaxassislarning ota-onasi va qaynota-qaynonasi uchun §36 yo‘lida yashash xarajatlari odatda to‘liq ta’minlangan bo‘lishi kerak. Ota-onaning ehtiyoji, ijara, kundalik xarajatlar, sug‘urta va mavjud majburiyatlar birgalikda hisoblanadi.",
-            de: "Beim Nachzug von Eltern und Schwiegereltern bestimmter Fachkräfte muss der Lebensunterhalt grundsätzlich vollständig gesichert sein. Bedarf der Eltern, Miete, Alltag, Krankenversicherung und bestehende Verpflichtungen werden gemeinsam berücksichtigt.",
+            uz: "Ko‘plab milliy viza turlari bo‘yicha arizani Konsullik xizmatlari portali orqali onlayn boshlash mumkin. Portal hujjatlarni oldindan yuklash va ayrim hollarda dastlabki tekshiruv imkonini beradi, lekin biometrika va asl hujjatlar uchun shaxsiy termin baribir talab qilinadi.",
+            de: "Viele nationale Visaverfahren können über das Auslandsportal online begonnen werden. Dort lassen sich Unterlagen hochladen und teilweise vorprüfen; für Biometrie und Originaldokumente bleibt jedoch ein persönlicher Termin erforderlich.",
           },
           {
-            uz: "Yetarli uy-joy ham muhim. Ota-ona farzand bilan bir uyda yoki alohida uyda yashashi mumkin, ammo real turar joy va tegishli xarajatlar isbotlanadi.",
-            de: "Auch ausreichender Wohnraum ist wesentlich. Die Eltern können im Haushalt des Kindes oder in einer eigenen Wohnung leben; tatsächliche Unterkunft und Kosten müssen jedoch nachgewiesen werden.",
+            uz: "Ba’zi kategoriyalar yoki vakolatxona tartibida VIDEX arizasi, elchixona termin tizimi yoki TLS xizmatidan foydalanilishi mumkin. Toshkentda milliy vizaga hujjat topshirish viza kategoriyasiga qarab elchixona yoki TLS orqali amalga oshiriladi.",
+            de: "Je nach Kategorie und Verfahren können VIDEX, das Terminvergabesystem der Botschaft oder der Dienstleister TLS genutzt werden. In Taschkent erfolgt die Abgabe nationaler Visumanträge abhängig von der Kategorie bei der Botschaft oder über TLS.",
           },
           {
-            uz: "Keksa ota-onalar uchun Germaniyada to‘liq Krankenversicherung topish ko‘pincha eng katta to‘siq bo‘ladi. Oddiy sayohat sug‘urtasi doimiy yashash ruxsati uchun yetarli bo‘lmasligi mumkin. Ariza berishdan oldin qonuniy yoki xususiy sug‘urta imkoniyatini yozma ravishda aniqlang.",
-            de: "Für ältere Eltern ist ein vollwertiger Krankenversicherungsschutz in Deutschland häufig die größte Hürde. Eine gewöhnliche Reisekrankenversicherung reicht für einen dauerhaften Aufenthalt möglicherweise nicht aus. Klären Sie gesetzliche oder private Versicherungsoptionen vor Antragstellung schriftlich.",
-          },
-          {
-            uz: "Voyaga yetmagan nemis yoki ayrim himoya maqomidagi bola ota-onasi uchun daromad va uy-joy bo‘yicha boshqa yengilliklar qo‘llanishi mumkin. Bu imtiyozlarni malakali mutaxassislarning ota-onasi yo‘liga avtomatik ko‘chirmang.",
-            de: "Für Eltern minderjähriger deutscher oder bestimmter schutzberechtigter Kinder können andere Erleichterungen bei Lebensunterhalt und Wohnraum gelten. Diese Privilegien dürfen nicht automatisch auf Eltern von Fachkräften übertragen werden.",
+            uz: "Ausländerbehörde roziligi talab qilinadigan jarayonlarda ish uch oygacha, ayrim hollarda undan ham uzoq davom etishi mumkin. Bundesagentur für Arbeit, Urkundenprüfung yoki qo‘shimcha tekshiruvlar ham muddatni uzaytiradi.",
+            de: "Ist die Zustimmung der Ausländerbehörde erforderlich, kann das Verfahren bis zu drei Monate und gelegentlich länger dauern. Beteiligung der Bundesagentur für Arbeit, Urkundenprüfung oder weitere Prüfungen können die Bearbeitung verlängern.",
           },
         ],
         items: [
           {
-            uz: "Barcha oilalar uchun yagona federal «minimal oylik» yo‘q; hisob oila soni, ijara, sug‘urta va mahalliy idora amaliyotiga bog‘liq.",
-            de: "Es gibt keinen einheitlichen bundesweiten Mindestbetrag für alle Familien; die Berechnung hängt von Haushaltsgröße, Miete, Versicherung und Behördenpraxis ab.",
+            uz: "Termin olishning o‘zi viza talablari bajarilganini anglatmaydi.",
+            de: "Ein Termin bedeutet nicht, dass die Visumvoraussetzungen erfüllt sind.",
           },
           {
-            uz: "Verpflichtungserklärung ayrim viza jarayonlarida yordam berishi mumkin, lekin har bir holatda barcha talablarni avtomatik almashtirmaydi.",
-            de: "Eine Verpflichtungserklärung kann in einzelnen Verfahren helfen, ersetzt aber nicht automatisch sämtliche Voraussetzungen.",
+            uz: "Portalga hujjat yuklash shaxsiy terminni to‘liq bekor qilmaydi.",
+            de: "Das Hochladen im Portal ersetzt den persönlichen Termin nicht vollständig.",
           },
           {
-            uz: "Ota-onaning o‘z pensiyasi, jamg‘armasi yoki boshqa daromadi umumiy moliyaviy hisobda muhim bo‘lishi mumkin.",
-            de: "Eigene Rente, Vermögen oder andere Einkünfte der Eltern können für die Gesamtfinanzierung relevant sein.",
+            uz: "Ko‘rib chiqish muddati barcha arizalar uchun bir xil emas.",
+            de: "Die Bearbeitungsdauer ist nicht für alle Anträge gleich.",
           },
           {
-            uz: "Sug‘urta bo‘yicha faqat vositachi reklamasiga emas, sug‘urta kompaniyasi va idoraning yozma tasdig‘iga tayaning.",
-            de: "Verlassen Sie sich bei der Krankenversicherung nicht auf Vermittlerwerbung, sondern auf schriftliche Bestätigungen von Versicherer und Behörde.",
+            uz: "Qo‘shimcha hujjat so‘ralsa, belgilangan muddatda aniq va to‘liq javob bering.",
+            de: "Reagieren Sie auf Nachforderungen vollständig und innerhalb der gesetzten Frist.",
           },
         ],
       },
       warnings: {
         title: {
-          uz: "Muhim ogohlantirishlar va real holat",
-          de: "Wichtige Hinweise und praktische Realität",
+          uz: "Rad javobi, firibgarlik va muhim xatolar",
+          de: "Ablehnung, Betrug und wichtige Fehler",
         },
         items: [
           {
-            uz: "Niederlassungserlaubnis yoki Germaniya fuqaroligiga ega voyaga yetgan farzandning mavjudligi ota-onaga avtomatik ko‘chib kelish huquqini bermaydi.",
-            de: "Eine Niederlassungserlaubnis oder deutsche Staatsangehörigkeit des volljährigen Kindes vermittelt den Eltern nicht automatisch ein Nachzugsrecht.",
+            uz: "2025-yil 1-iyuldan Germaniya vizalari bo‘yicha remonstratsiya jarayoni butun dunyo bo‘ylab bekor qilingan. Rad javobidan keyin odatda kamchiliklarni tuzatib yangi ariza berish yoki qonuniy muddat ichida sud yo‘lini tekshirish mumkin.",
+            de: "Seit dem 1. Juli 2025 ist das Remonstrationsverfahren für deutsche Visumentscheidungen weltweit abgeschafft. Nach einer Ablehnung kommen grundsätzlich ein verbesserter Neuantrag oder die Prüfung gerichtlichen Rechtsschutzes innerhalb der Rechtsbehelfsfrist in Betracht.",
           },
           {
-            uz: "Malakali mutaxassislar uchun 2024-yilgi yangi imkoniyatda Aufenthaltstitelning aynan birinchi berilgan sanasi va qonunda sanalgan turi hal qiluvchi ahamiyatga ega.",
-            de: "Beim neuen Fachkräfteweg sind die erstmalige Erteilung ab dem Stichtag und die genaue gesetzlich erfasste Titelart entscheidend.",
+            uz: "Rad javobidagi sababni tushunmasdan xuddi shu hujjatlar bilan qayta topshirmang.",
+            de: "Stellen Sie nicht unverändert erneut denselben Antrag, ohne die Ablehnungsgründe zu verstehen.",
           },
           {
-            uz: "EU Blue Card yoki boshqa mos Aufenthaltstitel 2024-yil 1-martdan oldin birinchi marta berilgan bo‘lsa, keyingi uzaytirish har doim yangi «birinchi berilish» hisoblanmaydi.",
-            de: "Wurde die Blaue Karte EU oder ein anderer begünstigter Titel erstmals vor dem 1. März 2024 erteilt, gilt eine spätere Verlängerung nicht ohne Weiteres als neue erstmalige Erteilung.",
+            uz: "Rasmiy termin tizimi uchun «maxsus kirish», «ichki tanish» yoki kafolatlangan tez viza va’da qiladigan vositachilarga ishonmang.",
+            de: "Misstrauen Sie Vermittlern, die besonderen Terminzugang, interne Kontakte oder ein garantiert schnelles Visum versprechen.",
           },
           {
-            uz: "Ota-onaning 60, 65 yoki 70 yoshda bo‘lishi o‘z-o‘zidan Härtefall yaratmaydi.",
-            de: "Ein Alter von 60, 65 oder 70 Jahren begründet für sich allein keinen Härtefall.",
+            uz: "Soxta bank hujjati, shartnoma, til sertifikati yoki oilaviy hujjat viza radiga va huquqiy oqibatlarga olib kelishi mumkin.",
+            de: "Gefälschte Bankunterlagen, Verträge, Sprachzertifikate oder Familienurkunden können zur Ablehnung und zu rechtlichen Folgen führen.",
           },
           {
-            uz: "Og‘ir kasallik bo‘lsa ham, kelib chiqish davlatida real parvarish mavjudligi yoki boshqa qarindoshlar yordam bera olishi baholanadi.",
-            de: "Auch bei schwerer Krankheit werden verfügbare Pflege im Herkunftsstaat und Unterstützung durch andere Angehörige geprüft.",
+            uz: "Viza chiqmasdan ishni, uyni yoki o‘qishni qaytarib bo‘lmaydigan tarzda bekor qilishga shoshilmang.",
+            de: "Kündigen Sie Arbeit, Wohnung oder Ausbildung nicht vorschnell und unwiderruflich vor Erteilung des Visums.",
           },
           {
-            uz: "Turistik yoki mehmon vizasi ota-onaning Germaniyada doimiy qolish huquqini bermaydi.",
-            de: "Ein Besuchs- oder Schengenvisum berechtigt die Eltern nicht zum dauerhaften Verbleib in Deutschland.",
-          },
-          {
-            uz: "Viza kafolati, tayyor sug‘urta yoki «100 foiz Härtefall» va’da qiladigan vositachilarga katta pul yubormang.",
-            de: "Zahlen Sie keine hohen Beträge an Vermittler, die Visum, fertige Versicherung oder einen „100-prozentigen Härtefall“ garantieren.",
+            uz: "Viza yorlig‘idagi ism, pasport raqami, amal qilish muddati va ruxsat etilgan maqsadni safardan oldin tekshiring.",
+            de: "Prüfen Sie vor der Reise Name, Passnummer, Gültigkeitszeitraum und Zweckangaben auf dem Visumetikett.",
           },
         ],
       },
@@ -4284,233 +4272,223 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
     steps: [
       {
         title: {
-          uz: "To‘g‘ri huquqiy yo‘lni aniqlang",
-          de: "Passende Rechtsgrundlage bestimmen",
+          uz: "Aniq yashash maqsadini tanlang",
+          de: "Konkreten Aufenthaltszweck bestimmen",
         },
         description: {
-          uz: "Nemis bola ota-onasi, himoya maqomidagi bola ota-onasi, malakali mutaxassis ota-onasi yoki außergewöhnliche Härte — qaysi holat ekanini aralashtirmang.",
-          de: "Unterscheiden Sie Eltern eines deutschen Kindes, Eltern eines schutzberechtigten Kindes, Eltern einer Fachkraft und außergewöhnliche Härte.",
+          uz: "Ausbildung, ish, Studium, Chancenkarte, oila yoki boshqa maqsadlardan qaysi biri qonuniy holatingizga mosligini aniqlang.",
+          de: "Klären Sie, ob Ausbildung, Beschäftigung, Studium, Chancenkarte, Familie oder ein anderer Zweck rechtlich zu Ihrer Situation passt.",
         },
       },
       {
         title: {
-          uz: "Germaniyadagi farzandning maqomini tekshiring",
-          de: "Status des Kindes in Deutschland prüfen",
+          uz: "Rasmiy checklistni toping",
+          de: "Offizielle Checkliste aufrufen",
         },
         description: {
-          uz: "Fuqarolik, Aufenthaltstitel paragrafi, birinchi berilgan sana va amal qilish muddatini rasmiy hujjat bilan aniqlang.",
-          de: "Klären Sie Staatsangehörigkeit, Rechtsgrundlage, Datum der erstmaligen Erteilung und Gültigkeit des Aufenthaltstitels.",
+          uz: "Toshkentdagi Germaniya vakolatxonasining aynan tanlangan kategoriya uchun joriy sahifasi va hujjatlar ro‘yxatini tekshiring.",
+          de: "Prüfen Sie die aktuelle Informationsseite und Unterlagenliste der deutschen Auslandsvertretung in Taschkent für die gewählte Kategorie.",
         },
       },
       {
         title: {
-          uz: "Qarindoshlik va oilaviy hujjatlarni tayyorlang",
-          de: "Abstammungs- und Familienurkunden vorbereiten",
+          uz: "Hujjatlarni mazmunan tayyorlang",
+          de: "Unterlagen inhaltlich vorbereiten",
         },
         description: {
-          uz: "Tug‘ilganlik, nikoh, ism-familiya, apostil va tarjimalardagi ma’lumotlar bir-biriga mos bo‘lsin.",
-          de: "Achten Sie auf übereinstimmende Angaben in Geburts-, Heirats-, Namens-, Apostille- und Übersetzungsunterlagen.",
+          uz: "Shartnoma, qabul xati, malaka, til, moliya, sug‘urta va fuqarolik hujjatlarini bir-biriga mos holda tayyorlang.",
+          de: "Bereiten Sie Vertrag, Zulassung, Qualifikation, Sprache, Finanzierung, Versicherung und Personenstandsurkunden widerspruchsfrei vor.",
         },
       },
       {
         title: {
-          uz: "Moliyaviy ta’minotni real hisoblang",
-          de: "Lebensunterhalt realistisch berechnen",
+          uz: "To‘g‘ri portal yoki termin yo‘lini tanlang",
+          de: "Richtigen Portal- oder Terminweg wählen",
         },
         description: {
-          uz: "Ijara, kundalik xarajatlar, ota-onaning daromadi va eng muhimi tibbiy sug‘urta xarajatini oldindan yozma hisoblang.",
-          de: "Berechnen Sie Miete, Alltag, eigene Einkünfte der Eltern und insbesondere Krankenversicherungskosten vorab schriftlich.",
+          uz: "Kategoriya bo‘yicha Auslandsportal, elchixona yoki TLS ko‘rsatmasiga amal qiling.",
+          de: "Folgen Sie je nach Kategorie dem Auslandsportal, der Botschaft oder den Vorgaben von TLS.",
         },
       },
       {
         title: {
-          uz: "Sug‘urtani viza topshirishdan oldin aniqlang",
-          de: "Krankenversicherung vor Antrag klären",
+          uz: "Onlayn arizani to‘liq yuboring",
+          de: "Online-Antrag vollständig einreichen",
         },
         description: {
-          uz: "Doimiy yashash uchun qabul qilinadigan sug‘urta turi, boshlanish sanasi va badalini sug‘urta kompaniyasi hamda idora bilan tekshiring.",
-          de: "Klären Sie anerkannten Versicherungsschutz, Beginn und Beitrag für den Daueraufenthalt mit Versicherer und Behörde.",
+          uz: "Portal yoki VIDEXdagi barcha ma’lumotlarni hujjatlar bilan aynan mos kiriting.",
+          de: "Tragen Sie im Portal oder in VIDEX sämtliche Angaben exakt entsprechend den Unterlagen ein.",
         },
       },
       {
         title: {
-          uz: "Härtefall bo‘lsa dalillarni tizimli tayyorlang",
-          de: "Härtefall systematisch belegen",
+          uz: "Shaxsiy terminga boring",
+          de: "Persönlichen Termin wahrnehmen",
         },
         description: {
-          uz: "Tibbiy holat, parvarish ehtiyoji, boshqa yordamning yo‘qligi va Germaniyadagi farzandga individual qaramlikni hujjatlar bilan ko‘rsating.",
-          de: "Belegen Sie Erkrankung, Pflegebedarf, fehlende Alternativen und individuelle Abhängigkeit vom Kind in Deutschland.",
+          uz: "Asl hujjatlar, biometrika, kerakli nusxalar va tegishli to‘lov bilan belgilangan vaqtda qatnashing.",
+          de: "Erscheinen Sie pünktlich mit Originalunterlagen, Biometrie, erforderlichen Kopien und gegebenenfalls der Gebühr.",
         },
       },
       {
         title: {
-          uz: "Vakolatxonaning aniq checklistiga amal qiling",
-          de: "Genaue Checkliste der Auslandsvertretung beachten",
+          uz: "Qo‘shimcha so‘rovlarga javob bering",
+          de: "Nachforderungen beantworten",
         },
         description: {
-          uz: "Mavjud bo‘lsa Auslandsportal orqali to‘g‘ri viza maqsadini tanlang va Toshkentdagi vakolatxona talablarini bajaring.",
-          de: "Wählen Sie, sofern verfügbar, im Auslandsportal den richtigen Visumzweck und folgen Sie den Vorgaben der Auslandsvertretung in Taschkent.",
+          uz: "Vakolatxona, Ausländerbehörde yoki boshqa idora so‘ragan hujjatlarni muddatida yuboring.",
+          de: "Reichen Sie angeforderte Unterlagen von Auslandsvertretung, Ausländerbehörde oder anderen Stellen fristgerecht ein.",
         },
       },
       {
         title: {
-          uz: "Shaxsiy termin va idora tekshiruvini yakunlang",
-          de: "Termin und Behördenprüfung durchlaufen",
+          uz: "Viza qarorini tekshiring",
+          de: "Visumentscheidung prüfen",
         },
         description: {
-          uz: "Asl hujjatlar, biometrika va suhbatdan keyin Germaniyadagi farzand Ausländerbehörde so‘rovlariga o‘z vaqtida javob bersin.",
-          de: "Nach Originalprüfung, Biometrie und Gespräch sollte das Kind in Deutschland Rückfragen der Ausländerbehörde fristgerecht beantworten.",
+          uz: "Viza berilsa yorliq ma’lumotlarini tekshiring; rad etilsa yozma sabab va huquqiy yo‘llarni tahlil qiling.",
+          de: "Prüfen Sie bei Erteilung das Visumetikett; analysieren Sie bei Ablehnung die schriftlichen Gründe und möglichen Rechtswege.",
         },
       },
       {
         title: {
-          uz: "Kelgach yashash va sug‘urta jarayonlarini yakunlang",
-          de: "Nach Einreise Aufenthalt und Versicherung abschließen",
+          uz: "Germaniyaga kelgach Aufenthaltstitelni oling",
+          de: "Nach Einreise Aufenthaltstitel beantragen",
         },
         description: {
-          uz: "Anmeldung, Krankenversicherung va Ausländerbehördedagi Aufenthaltstitel jarayonini viza muddati ichida bajaring.",
-          de: "Erledigen Sie Anmeldung, Krankenversicherung und Aufenthaltstitel bei der Ausländerbehörde innerhalb der Visumgültigkeit.",
+          uz: "Anmeldung, Krankenversicherung va Ausländerbehörde terminini viza muddati tugashidan oldin yakunlang.",
+          de: "Erledigen Sie Anmeldung, Krankenversicherung und Antrag bei der Ausländerbehörde vor Ablauf des Visums.",
         },
       },
     ],
     faq: [
       {
         question: {
-          uz: "Niederlassungserlaubnisim bo‘lsa ota-onamni olib kela olamanmi?",
-          de: "Kann ich meine Eltern mit einer Niederlassungserlaubnis nachholen?",
+          uz: "Milliy viza va D viza bir xilmi?",
+          de: "Sind nationales Visum und D-Visum dasselbe?",
         },
         answer: {
-          uz: "Niederlassungserlaubnisning o‘zi avtomatik ota-ona nachzug huquqini bermaydi. Muayyan malakali Aufenthaltstitel 2024-yil 1-martdan boshlab birinchi marta berilganmi yoki außergewöhnliche Härte bormi — shular alohida tekshiriladi.",
-          de: "Eine Niederlassungserlaubnis allein vermittelt kein automatisches Nachzugsrecht. Zu prüfen ist insbesondere, ob zuvor ab dem 1. März 2024 erstmals ein begünstigter Fachkräftetitel erteilt wurde oder eine außergewöhnliche Härte vorliegt.",
+          uz: "Ha. Germaniyada uzoq muddatli yashash uchun beriladigan milliy viza odatda kategoriya D sifatida belgilanadi.",
+          de: "Ja. Das nationale Visum für längerfristige Aufenthalte wird grundsätzlich als Kategorie D bezeichnet.",
         },
       },
       {
         question: {
-          uz: "Men Germaniya fuqarosiman. Voyaga yetgan bo‘lsam ota-onamni olib kela olamanmi?",
-          de: "Ich bin deutscher Staatsangehöriger und volljährig. Kann ich meine Eltern nachholen?",
+          uz: "90 kundan kam qolish uchun milliy viza kerakmi?",
+          de: "Braucht man für weniger als 90 Tage ein nationales Visum?",
         },
         answer: {
-          uz: "Avtomatik ravishda yo‘q. Voyaga yetgan nemis farzandning ota-onasi odatda faqat außergewöhnliche Härte yoki boshqa maxsus huquqiy asos mavjud bo‘lsa ko‘rib chiqiladi.",
-          de: "Nicht automatisch. Eltern volljähriger Deutscher können grundsätzlich nur bei außergewöhnlicher Härte oder einer anderen besonderen Rechtsgrundlage nachziehen.",
+          uz: "Odatda yo‘q. Qisqa tashriflar uchun Schengen viza qoidalari qo‘llanadi. Biroq maqsad va faoliyat turiga qarab alohida talablar bo‘lishi mumkin.",
+          de: "Grundsätzlich nein. Für Kurzaufenthalte gelten die Schengenvisumregeln. Je nach Zweck und Tätigkeit können jedoch besondere Vorgaben bestehen.",
         },
       },
       {
         question: {
-          uz: "Voyaga yetmagan nemis bolaning ota-onasi kelishi mumkinmi?",
-          de: "Können Eltern eines minderjährigen deutschen Kindes nachziehen?",
+          uz: "Milliy viza arizasini to‘liq onlayn yakunlash mumkinmi?",
+          de: "Kann das nationale Visum vollständig online abgeschlossen werden?",
         },
         answer: {
-          uz: "Ha, vasiylik huquqiga ega ota-ona bolaning parvarishi va Germaniyada oilaviy hayot olib borish uchun §28 asosida murojaat qilishi mumkin. Haqiqiy parvarish munosabati tekshiriladi.",
-          de: "Ja. Ein personensorgeberechtigter Elternteil kann zur Betreuung und familiären Lebensgemeinschaft mit dem minderjährigen deutschen Kind nach § 28 beantragen. Die tatsächliche Betreuungsbeziehung wird geprüft.",
+          uz: "Ko‘p kategoriyada arizani onlayn boshlash mumkin, lekin biometrika va asl hujjatlar uchun shaxsiy termin odatda baribir kerak.",
+          de: "Bei vielen Kategorien kann der Antrag online begonnen werden; für Biometrie und Originalunterlagen ist grundsätzlich weiterhin ein persönlicher Termin erforderlich.",
         },
       },
       {
         question: {
-          uz: "Blue Cardni 2024-yil 1-martdan keyin olgan bo‘lsam ota-onamni olib kelish mumkinmi?",
-          de: "Kann ich meine Eltern nachholen, wenn ich die Blaue Karte EU nach dem 1. März 2024 erhalten habe?",
+          uz: "VIDEX va Auslandsportal o‘rtasidagi farq nima?",
+          de: "Was ist der Unterschied zwischen VIDEX und Auslandsportal?",
         },
         answer: {
-          uz: "Agar EU Blue Card sizga qonundagi stichtagdan boshlab birinchi marta berilgan bo‘lsa, §36 bo‘yicha maxsus imkoniyat mavjud. Daromad, uy-joy, sug‘urta va boshqa umumiy shartlar baribir tekshiriladi.",
-          de: "Wurde Ihnen die Blaue Karte EU ab dem gesetzlichen Stichtag erstmals erteilt, besteht eine besondere Möglichkeit nach § 36. Lebensunterhalt, Wohnraum, Krankenversicherung und weitere allgemeine Voraussetzungen werden dennoch geprüft.",
+          uz: "VIDEX elektron ariza formasini tayyorlash vositasi. Auslandsportal esa ayrim kategoriyalarda ariza va hujjatlarni onlayn topshirish hamda dastlabki tekshiruv uchun kengroq jarayonni beradi. Qaysi biri ishlatilishi vakolatxona va viza turiga bog‘liq.",
+          de: "VIDEX dient der elektronischen Erstellung des Antragsformulars. Das Auslandsportal ermöglicht bei bestimmten Kategorien zusätzlich die Online-Einreichung und Vorprüfung von Unterlagen. Welcher Weg gilt, hängt von Auslandsvertretung und Visumkategorie ab.",
         },
       },
       {
         question: {
-          uz: "Blue Cardim 2024-yil 1-martdan oldin berilgan bo‘lsa-chi?",
-          de: "Was gilt, wenn meine Blaue Karte EU vor dem 1. März 2024 erteilt wurde?",
+          uz: "Milliy viza qancha vaqtda chiqadi?",
+          de: "Wie lange dauert ein nationales Visum?",
         },
         answer: {
-          uz: "Yangi malakali mutaxassis ota-onasi yo‘li odatda stichtagdan oldingi birinchi berilishga tatbiq etilmaydi. Oddiy uzaytirish har doim yangi birinchi berilish hisoblanmaydi; individual huquqiy tekshiruv zarur.",
-          de: "Der neue Fachkräfteweg gilt grundsätzlich nicht bei erstmaliger Erteilung vor dem Stichtag. Eine bloße Verlängerung gilt nicht automatisch als neue erstmalige Erteilung; eine individuelle rechtliche Prüfung ist erforderlich.",
+          uz: "Yagona kafolatlangan muddat yo‘q. Ausländerbehörde ishtirok etsa jarayon uch oygacha, ayrim holatda undan ham uzoq davom etishi mumkin.",
+          de: "Eine einheitlich garantierte Dauer gibt es nicht. Bei Beteiligung der Ausländerbehörde kann das Verfahren bis zu drei Monate und gelegentlich länger dauern.",
         },
       },
       {
         question: {
-          uz: "Qaynota-qaynonani ham olib kelish mumkinmi?",
-          de: "Können auch Schwiegereltern nachziehen?",
+          uz: "D viza bilan boshqa Schengen davlatlariga borish mumkinmi?",
+          de: "Darf man mit einem D-Visum andere Schengen-Staaten besuchen?",
         },
         answer: {
-          uz: "Muayyan malakali mutaxassislar yo‘lida mumkin bo‘lishi mumkin, agar turmush o‘rtog‘i Germaniyada doimiy yashasa va qolgan talablar bajarilsa.",
-          de: "Beim besonderen Fachkräfteweg kann dies möglich sein, wenn der Ehegatte dauerhaft in Deutschland lebt und die weiteren Voraussetzungen erfüllt sind.",
+          uz: "Ha, viza shartlariga rioya qilgan holda 180 kun ichida 90 kungacha qisqa safar qilish mumkin. Bu boshqa davlatda ishlash yoki ko‘chib yashash huquqini bermaydi.",
+          de: "Ja, grundsätzlich für Kurzreisen bis zu 90 Tagen innerhalb von 180 Tagen. Ein Arbeits- oder Daueraufenthaltsrecht in anderen Staaten entsteht dadurch nicht.",
         },
       },
       {
         question: {
-          uz: "Onam 70 yoshda. Bu Härtefall hisoblanadimi?",
-          de: "Meine Mutter ist 70 Jahre alt. Ist das ein Härtefall?",
+          uz: "Viza rad etilsa remonstratsiya qilish mumkinmi?",
+          de: "Kann man nach einer Ablehnung remonstrieren?",
         },
         answer: {
-          uz: "Faqat yoshning o‘zi yetarli emas. Sog‘liq, parvarish ehtiyoji, boshqa yordam imkoniyatlari va Germaniyadagi farzandga individual qaramlik birgalikda baholanadi.",
-          de: "Das Alter allein reicht nicht. Gesundheit, Pflegebedarf, andere Hilfsmöglichkeiten und konkrete Abhängigkeit vom Kind in Deutschland werden gemeinsam geprüft.",
+          uz: "Yo‘q. 2025-yil 1-iyuldan remonstratsiya jarayoni bekor qilingan. Rad sababini tuzatib yangi ariza berish yoki ko‘rsatilgan muddatda sud yo‘lini tekshirish mumkin.",
+          de: "Nein. Seit dem 1. Juli 2025 ist das Remonstrationsverfahren abgeschafft. Möglich sind ein verbesserter Neuantrag oder die Prüfung gerichtlichen Rechtsschutzes innerhalb der angegebenen Frist.",
         },
       },
       {
         question: {
-          uz: "Ota-onam kasal bo‘lsa viza albatta beriladimi?",
-          de: "Wird das Visum sicher erteilt, wenn meine Eltern krank sind?",
+          uz: "Turistik viza bilan Germaniyada milliy vizaga o‘tish mumkinmi?",
+          de: "Kann man mit Schengenvisum in Deutschland zum nationalen Aufenthalt wechseln?",
         },
         answer: {
-          uz: "Yo‘q. Kasallik muhim dalil bo‘lishi mumkin, lekin davolanish va parvarish kelib chiqish davlatida mavjudmi, boshqa qarindoshlar yordam bera oladimi va aynan Germaniyadagi farzand zarurmi — bular ham tekshiriladi.",
-          de: "Nein. Krankheit kann wesentlich sein, aber es wird auch geprüft, ob Behandlung oder Pflege im Herkunftsstaat verfügbar sind, andere Angehörige helfen können und gerade das Kind in Deutschland unverzichtbar ist.",
+          uz: "O‘zbekiston fuqarolari uchun umumiy xavfsiz qoida — uzoq muddatli maqsad uchun kirishdan oldin milliy viza olish. Germaniyada o‘zgartirish faqat cheklangan qonuniy istisnolarda mumkin.",
+          de: "Für Staatsangehörige Usbekistans gilt als regulärer sicherer Weg die Beantragung des nationalen Visums vor der Einreise. Ein Wechsel in Deutschland ist nur in begrenzten gesetzlichen Ausnahmefällen möglich.",
         },
       },
       {
         question: {
-          uz: "Ota-onam uchun tibbiy sug‘urta nega muhim?",
-          de: "Warum ist die Krankenversicherung für Eltern so wichtig?",
+          uz: "Viza olgach Germaniyada yana nima qilish kerak?",
+          de: "Was muss nach der Einreise noch erledigt werden?",
         },
         answer: {
-          uz: "Doimiy yashash ruxsati uchun yetarli sug‘urta talab qilinadi. Katta yosh va oldingi kasalliklar sabab xususiy sug‘urta qimmat yoki qiyin bo‘lishi mumkin; oddiy sayohat sug‘urtasi ko‘pincha yetarli emas.",
-          de: "Für den Daueraufenthalt ist ausreichender Versicherungsschutz erforderlich. Wegen Alters und Vorerkrankungen kann private Versicherung teuer oder schwierig sein; eine einfache Reiseversicherung reicht häufig nicht aus.",
-        },
-      },
-      {
-        question: {
-          uz: "Ota-onam mehmon vizasi bilan kirib, Germaniyada qolishi mumkinmi?",
-          de: "Können meine Eltern mit Besuchsvisum einreisen und in Deutschland bleiben?",
-        },
-        answer: {
-          uz: "Umumiy qoida bo‘yicha yo‘q. Doimiy oila birlashtirish uchun O‘zbekiston fuqarolari odatda kirishdan oldin tegishli milliy viza olishi kerak.",
-          de: "Grundsätzlich nein. Für den dauerhaften Familiennachzug müssen Staatsangehörige Usbekistans in der Regel vor der Einreise das passende nationale Visum beantragen.",
+          uz: "Odatda Anmeldung, tibbiy sug‘urta va Ausländerbehörde orqali Aufenthaltstitel rasmiylashtiriladi. Aniq qadamlar viza maqsadiga bog‘liq.",
+          de: "Grundsätzlich folgen Anmeldung, Krankenversicherung und Beantragung des Aufenthaltstitels bei der Ausländerbehörde. Die konkreten Schritte hängen vom Aufenthaltszweck ab.",
         },
       },
     ],
     sources: [
       {
-        title: "§ 28 AufenthG — Familiennachzug zu Deutschen",
+        title: "§ 6 AufenthG — Visum",
         organization: "Bundesministerium der Justiz",
-        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__28.html",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__6.html",
         language: "de",
       },
       {
-        title: "§ 36 AufenthG — Nachzug der Eltern und sonstiger Familienangehöriger",
-        organization: "Bundesministerium der Justiz",
-        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__36.html",
+        title: "Längerfristige Aufenthalte über 90 Tage",
+        organization: "Auswärtiges Amt",
+        url: "https://www.auswaertiges-amt.de/de/service/visa-und-aufenthalt/nationale-visa",
         language: "de",
       },
       {
-        title: "Nachzug zu deutschen Familienangehörigen",
-        organization: "Bundesamt für Migration und Flüchtlinge",
-        url: "https://www.bamf.de/DE/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Familie/NachzugZuDeutschen/nachzug-zu-deutschen-node.html",
+        title: "Allgemeine Informationen zur Visumbeantragung",
+        organization: "Auswärtiges Amt",
+        url: "https://www.auswaertiges-amt.de/de/service/visa-und-aufenthalt/visabestimmungen-allgemein",
         language: "de",
       },
       {
-        title: "Nachzug zu ausländischen Familienangehörigen",
-        organization: "Bundesamt für Migration und Flüchtlinge",
-        url: "https://www.bamf.de/DE/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Familie/NachzugZuDrittstaatlern/nachzug-zu-drittstaatlern-node.html",
-        language: "de",
-      },
-      {
-        title: "The new Skilled Immigration Act",
-        organization: "Make it in Germany",
-        url: "https://www.make-it-in-germany.com/en/visa-residence/skilled-immigration-act",
+        title: "Abolition of the remonstration procedure from 1 July 2025",
+        organization: "Federal Foreign Office",
+        url: "https://www.auswaertiges-amt.de/en/2716462-2716462",
         language: "en",
       },
       {
-        title: "Family reunification",
-        organization: "Make it in Germany",
-        url: "https://www.make-it-in-germany.com/en/visa-residence/family-reunification",
-        language: "en",
+        title: "Nationales Visum über 90 Tage",
+        organization: "Deutsche Botschaft Taschkent",
+        url: "https://taschkent.diplo.de/uz-de/service/05-visaeinreise/1604022-1604022",
+        language: "de",
+      },
+      {
+        title: "Terminvereinbarung zur Beantragung eines Visums",
+        organization: "Deutsche Botschaft Taschkent",
+        url: "https://taschkent.diplo.de/uz-de/service/1444004-1444004",
+        language: "de",
       },
       {
         title: "Consular Services Portal",
@@ -4520,10 +4498,12 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
       },
     ],
     relatedArticleSlugs: [
+      "ausbildung",
+      "chancenkarte",
+      "au-pair",
+      "fsj",
+      "bfd",
       "spouse-reunification",
-      "german-citizen-spouse-reunification",
-      "eu-blue-card-family-reunification",
-      "child-family-reunification",
     ],
   },
 ];
