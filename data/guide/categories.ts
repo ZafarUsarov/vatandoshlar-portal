@@ -40,8 +40,8 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
       uz: "Turmush o‘rtog‘i, farzandlar va boshqa oila a’zolari uchun jarayonlar.",
       de: "Verfahren für Ehepartner, Kinder und weitere Familienangehörige.",
     },
-    articleCount: 0,
-    status: "coming-soon",
+    articleCount: 1,
+    status: "available",
   },
   {
     id: "invitation",
