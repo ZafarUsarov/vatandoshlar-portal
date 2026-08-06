@@ -2991,6 +2991,492 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
     ],
     relatedArticleSlugs: ["spouse-reunification"],
   },
+  {
+    id: "eu-blue-card-family-reunification",
+    slug: "eu-blue-card-family-reunification",
+    categorySlug: "family",
+    title: {
+      uz: "EU Blue Card egasi bilan oila birlashtirish",
+      de: "Familiennachzug zu Inhabern einer Blauen Karte EU",
+    },
+    excerpt: {
+      uz: "EU Blue Card egasining turmush o‘rtog‘i va voyaga yetmagan farzandlari uchun oila birlashtirish: A1siz murojaat, uy-joy bo‘yicha yengillik, daromad va sug‘urta, ishlash huquqi, hujjatlar, viza va boshqa EU davlatidan ko‘chishdagi maxsus qoidalar.",
+      de: "Leitfaden zum Familiennachzug zu Inhabern einer Blauen Karte EU: Antrag ohne A1, Erleichterungen beim Wohnraum, Lebensunterhalt und Krankenversicherung, Erwerbstätigkeit, Unterlagen, Visum und Sonderregeln bei Mobilität aus einem anderen EU-Staat.",
+    },
+    intro: {
+      uz: "EU Blue Card — malakali mutaxassislar uchun beriladigan yashash huquqi bo‘lib, uning egalarining oilasi uchun oila birlashtirish shartlari odatdagi uchinchi davlat fuqarosi yoniga qo‘shilishdan yengilroq. Turmush o‘rtog‘idan Germaniyaga kirishdan oldin A1 nemis tili talab qilinmaydi, yetarli uy-joyni isbotlash bo‘yicha ham yengillik mavjud va oilaviy yashash ruxsati ishlash huquqini beradi. Shunga qaramay, nikohning haqiqiyligi, Blue Card maqomi, yashash xarajatlari va tibbiy sug‘urta kabi asosiy shartlar hujjatlar bilan ko‘rsatiladi.",
+      de: "Die Blaue Karte EU ist ein Aufenthaltstitel für qualifizierte Fachkräfte. Für ihre Familienangehörigen gelten erleichterte Bedingungen gegenüber dem allgemeinen Familiennachzug zu Drittstaatsangehörigen. Ehegatten müssen vor der Einreise keine Deutschkenntnisse auf Niveau A1 nachweisen, beim Nachweis ausreichenden Wohnraums bestehen Erleichterungen und der familienbezogene Aufenthaltstitel berechtigt zur Erwerbstätigkeit. Wirksamkeit der Ehe, Status der Bezugsperson, Lebensunterhalt und Krankenversicherung müssen dennoch nachvollziehbar belegt werden.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: {
+      uz: "11 daqiqa",
+      de: "11 Minuten",
+    },
+    facts: [
+      {
+        label: { uz: "Huquqiy asos", de: "Rechtsgrundlage" },
+        value: {
+          uz: "Asosan §§29–30 AufenthG; Blue Card egasi uchun maxsus yengilliklar",
+          de: "Grundsätzlich §§ 29–30 AufenthG mit besonderen Erleichterungen für die Blaue Karte EU",
+        },
+      },
+      {
+        label: { uz: "Nemis tili", de: "Deutschkenntnisse" },
+        value: {
+          uz: "Turmush o‘rtog‘idan kirishdan oldin A1 talab qilinmaydi",
+          de: "Vor der Einreise ist für den Ehegatten kein A1-Nachweis erforderlich",
+        },
+      },
+      {
+        label: { uz: "Uy-joy", de: "Wohnraum" },
+        value: {
+          uz: "Blue Card egasi oilasi uchun yetarli uy-joy dalili bo‘yicha yengillik mavjud",
+          de: "Für Familien von Inhabern einer Blauen Karte EU entfällt der Nachweis ausreichenden Wohnraums",
+        },
+      },
+      {
+        label: { uz: "Daromad va sug‘urta", de: "Lebensunterhalt und Versicherung" },
+        value: {
+          uz: "Odatda oilaning yashash xarajatlari va tibbiy sug‘urtasi ta’minlangan bo‘lishi kerak",
+          de: "Lebensunterhalt und Krankenversicherung der Familie müssen grundsätzlich gesichert sein",
+        },
+      },
+      {
+        label: { uz: "Ishlash huquqi", de: "Erwerbstätigkeit" },
+        value: {
+          uz: "Turmush o‘rtog‘i cheklovsiz ishlashi mumkin",
+          de: "Der nachziehende Ehegatte darf uneingeschränkt arbeiten",
+        },
+      },
+      {
+        label: { uz: "Viza", de: "Visum" },
+        value: {
+          uz: "O‘zbekiston fuqarolari odatda kirishdan oldin milliy oila vizasiga topshiradi",
+          de: "Staatsangehörige Usbekistans beantragen grundsätzlich vor der Einreise ein nationales Familiennachzugsvisum",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Blue Card oilasi uchun maxsus yengilliklar",
+          de: "Besondere Erleichterungen für Familien von Blue-Card-Inhabern",
+        },
+        paragraphs: [
+          {
+            uz: "EU Blue Card egasi Germaniyada §18g AufenthG asosida yashaydi va ishlaydi. Uning turmush o‘rtog‘i bilan oila birlashtirish odatda §§29–30, voyaga yetmagan farzandlari bilan qo‘shilish esa §32 asosida ko‘rib chiqiladi.",
+            de: "Inhaber einer Blauen Karte EU leben und arbeiten in Deutschland auf Grundlage des § 18g AufenthG. Der Ehegattennachzug richtet sich grundsätzlich nach §§ 29–30, der Nachzug minderjähriger Kinder nach § 32 AufenthG.",
+          },
+          {
+            uz: "Blue Card oilalari uchun eng muhim farqlar — turmush o‘rtog‘iga oldindan A1 talab qilinmasligi, yetarli uy-joyni isbotlash bo‘yicha yengillik va turmush o‘rtog‘iga darhol ishlash huquqi berilishidir.",
+            de: "Die wichtigsten Unterschiede sind der Wegfall des vorherigen A1-Nachweises für Ehegatten, die Erleichterung beim Wohnraumnachweis und der unmittelbare Zugang des Ehegatten zum Arbeitsmarkt.",
+          },
+          {
+            uz: "Blue Card barcha oilaviy talablarni bekor qilmaydi. Nikoh va qarindoshlik hujjatlari, Blue Cardning amaldaligi, Germaniyada birga yashash rejasi, daromad hamda tibbiy sug‘urta tekshirilishi mumkin.",
+            de: "Die Blaue Karte EU hebt nicht sämtliche familienrechtlichen Voraussetzungen auf. Ehe- und Abstammungsurkunden, Gültigkeit der Blauen Karte, gemeinsame Lebensplanung, Einkommen und Krankenversicherung können geprüft werden.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Kimlar murojaat qila oladi?",
+          de: "Wer kann den Familiennachzug beantragen?",
+        },
+        items: [
+          {
+            uz: "Germaniyada amaldagi EU Blue Cardga ega shaxsning qonuniy turmush o‘rtog‘i",
+            de: "Der wirksam verheiratete Ehegatte einer Person mit gültiger Blauer Karte EU in Deutschland",
+          },
+          {
+            uz: "Blue Card egasining 18 yoshga to‘lmagan va nikohda bo‘lmagan farzandlari",
+            de: "Minderjährige ledige Kinder des Inhabers einer Blauen Karte EU",
+          },
+          {
+            uz: "Blue Card egasi bilan Germaniyada haqiqiy oilaviy hayot olib borishni rejalashtirayotgan oila a’zolari",
+            de: "Familienangehörige, die mit dem Blue-Card-Inhaber eine tatsächliche familiäre Lebensgemeinschaft in Deutschland führen wollen",
+          },
+          {
+            uz: "Shaxs, nikoh yoki ota-onalik munosabatini ishonchli hujjatlar bilan isbotlay oladiganlar",
+            de: "Personen, die Identität, Ehe oder Eltern-Kind-Verhältnis zuverlässig nachweisen können",
+          },
+          {
+            uz: "O‘zbekiston fuqarolari uchun odatda Germaniyaga kirishdan oldin kerakli milliy vizani oladiganlar",
+            de: "Für Staatsangehörige Usbekistans grundsätzlich Personen mit dem erforderlichen nationalen Visum vor der Einreise",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "A1 talab qilinmaydi — lekin til baribir muhim",
+          de: "Kein A1-Nachweis — Deutsch bleibt dennoch wichtig",
+        },
+        paragraphs: [
+          {
+            uz: "§30 AufenthG bo‘yicha EU Blue Card egasining turmush o‘rtog‘idan kirishdan oldin oddiy nemis tili isboti talab qilinmaydi. Bu yengillik nikoh Blue Card berilishidan oldin yoki keyin tuzilganiga qarab umumiy tarzda bekor bo‘lib qolmaydi.",
+            de: "Nach § 30 AufenthG muss der Ehegatte eines Inhabers einer Blauen Karte EU vor der Einreise keine einfachen Deutschkenntnisse nachweisen. Diese Erleichterung entfällt nicht pauschal danach, ob die Ehe vor oder nach Erteilung der Blauen Karte geschlossen wurde.",
+          },
+          {
+            uz: "Bu faqat viza oldidan A1 sertifikati majburiy emasligini anglatadi. Germaniyada ish, shifokor, maktab, sug‘urta, Ausländerbehörde va kundalik hayot uchun nemis tili amalda juda foydali.",
+            de: "Dies bedeutet lediglich, dass vor dem Visum kein A1-Zertifikat verpflichtend ist. Für Arbeit, Arztbesuche, Schule, Versicherung, Ausländerbehörde und Alltag sind Deutschkenntnisse praktisch sehr hilfreich.",
+          },
+          {
+            uz: "Vatandoshlar.de tavsiyasi: viza A1siz mumkin bo‘lsa ham, ko‘chishdan oldin kamida A1–A2ni boshlash, Germaniyada esa imkon qadar B1 va undan yuqoriga chiqish oilaning mustaqilligi va ish imkoniyatini sezilarli yaxshilaydi.",
+            de: "Praktische Empfehlung von Vatandoshlar.de: Auch wenn das Visum ohne A1 möglich ist, sollten vor der Einreise mindestens erste A1-/A2-Kenntnisse aufgebaut und in Deutschland möglichst B1 oder höher angestrebt werden. Das verbessert Selbstständigkeit und Arbeitschancen deutlich.",
+          },
+        ],
+        items: [
+          {
+            uz: "Viza uchun A1 sertifikati odatda so‘ralmasligi kerak.",
+            de: "Ein A1-Zertifikat ist für dieses Visum grundsätzlich nicht erforderlich.",
+          },
+          {
+            uz: "Til sertifikati yo‘qligi turmush o‘rtog‘ining ishlash huquqini cheklamaydi.",
+            de: "Das Fehlen eines Sprachzertifikats beschränkt die Erwerbstätigkeit des Ehegatten nicht.",
+          },
+          {
+            uz: "Integratsiya kursi yoki nemis tili kursiga borish keyinchalik idora qarori yoki shaxsiy ehtiyojga qarab dolzarb bo‘lishi mumkin.",
+            de: "Ein Integrations- oder Deutschkurs kann später abhängig von behördlicher Entscheidung und persönlichem Bedarf relevant werden.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Odatda kerak bo‘ladigan hujjatlar",
+          de: "Üblicherweise erforderliche Unterlagen",
+        },
+        items: [
+          {
+            uz: "Amaldagi pasport, milliy viza arizasi va biometrik fotosurat",
+            de: "Gültiger Reisepass, Antrag auf ein nationales Visum und biometrisches Passfoto",
+          },
+          {
+            uz: "Nikoh guvohnomasi va zarur bo‘lsa apostil, legalizatsiya yoki rasmiy nemischa tarjima",
+            de: "Heiratsurkunde und erforderlichenfalls Apostille, Legalisation oder beglaubigte deutsche Übersetzung",
+          },
+          {
+            uz: "Blue Card egasining pasporti va amaldagi EU Blue Card nusxasi",
+            de: "Kopie von Reisepass und gültiger Blauer Karte EU der Bezugsperson",
+          },
+          {
+            uz: "Blue Card egasining Meldebescheinigung yoki Germaniyadagi rejalashtirilgan manzili",
+            de: "Meldebescheinigung oder geplanter Wohnsitz des Blue-Card-Inhabers in Deutschland",
+          },
+          {
+            uz: "Ish shartnomasi va so‘nggi maosh dalillari",
+            de: "Arbeitsvertrag und aktuelle Einkommensnachweise",
+          },
+          {
+            uz: "Oilani qamrab oladigan tibbiy sug‘urta yoki Familienversicherung imkoniyati",
+            de: "Nachweis des Krankenversicherungsschutzes oder der möglichen Familienversicherung",
+          },
+          {
+            uz: "Farzandlar uchun tug‘ilganlik guvohnomasi va zarur bo‘lsa vasiylik yoki ikkinchi ota-onaning roziligi",
+            de: "Für Kinder Geburtsurkunde und erforderlichenfalls Sorgerechtsnachweis oder Zustimmung des anderen Elternteils",
+          },
+          {
+            uz: "Oldingi nikohlar bo‘lsa, ularning tugaganini tasdiqlovchi hujjatlar",
+            de: "Bei früheren Ehen Nachweise über deren Beendigung",
+          },
+          {
+            uz: "Vakolatxona yoki Ausländerbehörde individual holat bo‘yicha so‘ragan boshqa hujjatlar",
+            de: "Weitere Unterlagen nach individueller Anforderung der Auslandsvertretung oder Ausländerbehörde",
+          },
+        ],
+        paragraphs: [
+          {
+            uz: "Aniq checklist vakolatxona, nikoh tuzilgan davlat, farzandlarning holati va Blue Card egasining Germaniyadagi vaziyatiga qarab farq qilishi mumkin. O‘zbekistondagi Germaniya vakolatxonasining amaldagi ro‘yxatini ariza berishdan oldin tekshiring.",
+            de: "Die genaue Checkliste kann je nach Auslandsvertretung, Eheschließungsstaat, Situation der Kinder und Status des Blue-Card-Inhabers variieren. Prüfen Sie vor Antragstellung die aktuelle Liste der deutschen Auslandsvertretung in Usbekistan.",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Daromad, uy-joy, sug‘urta va ishlash huquqi",
+          de: "Lebensunterhalt, Wohnraum, Versicherung und Erwerbstätigkeit",
+        },
+        paragraphs: [
+          {
+            uz: "Blue Card oilasi uchun yetarli uy-joyni alohida isbotlash talabi yengillashtirilgan. Shunga qaramay, Germaniyada haqiqiy manzil, Anmeldung va oila yashashi mumkin bo‘lgan amaliy turar joy kerak bo‘ladi.",
+            de: "Für Familien von Inhabern einer Blauen Karte EU entfällt der gesonderte Nachweis ausreichenden Wohnraums. Dennoch werden ein tatsächlicher Wohnsitz, Anmeldung und eine praktisch nutzbare Unterkunft für die Familie benötigt.",
+          },
+          {
+            uz: "Umumiy holatda oilaning yashash xarajatlari davlat yordamiga tayanmasdan qoplanishi va yetarli tibbiy sug‘urta mavjud bo‘lishi kerak. Blue Card egasining ish shartnomasi, maoshi, ijara va sug‘urta holati amaliy tekshiruvda muhim.",
+            de: "Grundsätzlich müssen der Lebensunterhalt der Familie ohne Inanspruchnahme öffentlicher Mittel und ausreichender Krankenversicherungsschutz gesichert sein. Arbeitsvertrag, Einkommen, Miete und Versicherungssituation des Blue-Card-Inhabers sind in der praktischen Prüfung relevant.",
+          },
+          {
+            uz: "Turmush o‘rtog‘iga beriladigan oilaviy yashash ruxsati cheklovsiz mehnat faoliyatiga ruxsat beradi. Alohida ish beruvchi roziligi yoki oldindan ish taklifi talab qilinmaydi.",
+            de: "Der familienbezogene Aufenthaltstitel des Ehegatten erlaubt uneingeschränkte Erwerbstätigkeit. Eine gesonderte Zustimmung eines Arbeitgebers oder ein vorheriges Arbeitsplatzangebot ist nicht erforderlich.",
+          },
+        ],
+        items: [
+          {
+            uz: "Turmush o‘rtog‘i Vollzeit, Teilzeit yoki mustaqil faoliyat bilan shug‘ullanishi mumkin — boshqa professional ruxsatlar saqlanadi.",
+            de: "Der Ehegatte kann Vollzeit, Teilzeit oder selbstständig tätig sein; berufsrechtliche Anforderungen bleiben bestehen.",
+          },
+          {
+            uz: "Reglementierte kasblarda diplomni tan oldirish yoki kasbiy ruxsat baribir kerak bo‘lishi mumkin.",
+            de: "In reglementierten Berufen können Anerkennung oder Berufserlaubnis weiterhin erforderlich sein.",
+          },
+          {
+            uz: "Viza berilguncha ishni, uyni yoki katta qaytarilmaydigan xarajatlarni bekor qilishga shoshilmang.",
+            de: "Kündigen Sie Arbeit oder Wohnung und tätigen Sie größere nicht erstattbare Ausgaben nicht vorschnell vor Visumerteilung.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Muhim farqlar va ogohlantirishlar",
+          de: "Wichtige Unterschiede und Hinweise",
+        },
+        items: [
+          {
+            uz: "Blue Card egasining turmush o‘rtog‘iga A1 kerak emas; bu umumiy Ehegattennachzug maqolasidagi A1 qoidasidan muhim istisno.",
+            de: "Für den Ehegatten eines Blue-Card-Inhabers ist A1 nicht erforderlich; dies ist eine wichtige Ausnahme von der allgemeinen Sprachregel.",
+          },
+          {
+            uz: "«A1 kerak emas» degani «hech qanday hujjat kerak emas» degani emas. Nikoh, shaxs, Blue Card, daromad va sug‘urta baribir tekshiriladi.",
+            de: "„Kein A1“ bedeutet nicht „keine Unterlagen“. Ehe, Identität, Blaue Karte, Einkommen und Versicherung werden weiterhin geprüft.",
+          },
+          {
+            uz: "Blue Card arizasi hali ko‘rib chiqilayotgan bo‘lsa, oilaviy ariza qanday bog‘lanishini vakolatxona bilan oldindan aniqlashtiring.",
+            de: "Ist der Antrag auf die Blaue Karte EU noch nicht entschieden, klären Sie mit der Auslandsvertretung, wie beide Verfahren miteinander verbunden werden.",
+          },
+          {
+            uz: "Agar Blue Card boshqa EU davlatida berilgan bo‘lsa va oila u yerda birga yashagan bo‘lsa, Germaniyaga uzoq muddatli ko‘chish uchun maxsus mobilitet qoidalari qo‘llanishi mumkin.",
+            de: "Wurde die Blaue Karte EU von einem anderen EU-Staat erteilt und lebte die Familie dort zusammen, können für den Wechsel nach Deutschland besondere Mobilitätsregeln gelten.",
+          },
+          {
+            uz: "Blue Card egasi ishini yo‘qotsa yoki maqomi o‘zgarsa, bu oila arizasiga ta’sir qilishi mumkin. Ausländerbehördega o‘zgarishni o‘z vaqtida bildiring.",
+            de: "Verliert der Blue-Card-Inhaber seine Beschäftigung oder ändert sich sein Status, kann dies das Familienverfahren beeinflussen. Informieren Sie die Ausländerbehörde rechtzeitig.",
+          },
+          {
+            uz: "Rasmiy termin tizimi bepul. Maxsus yoki tez termin va’da qiladigan vositachilarga ishonmang.",
+            de: "Das offizielle Terminbuchungssystem ist kostenlos. Misstrauen Sie Vermittlern, die besondere oder beschleunigte Termine versprechen.",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: {
+          uz: "Blue Card maqomini tekshiring",
+          de: "Blue-Card-Status prüfen",
+        },
+        description: {
+          uz: "Blue Cardning amal qilish muddati, §18g yozuvi, ish shartnomasi va Germaniyadagi manzilni tayyorlang.",
+          de: "Prüfen Sie Gültigkeit, §-18g-Vermerk, Arbeitsvertrag und Wohnsitz des Blue-Card-Inhabers.",
+        },
+      },
+      {
+        title: {
+          uz: "Oilaviy hujjatlarni tayyorlang",
+          de: "Familienurkunden vorbereiten",
+        },
+        description: {
+          uz: "Nikoh va tug‘ilganlik guvohnomalari, oldingi nikohlar, ism-familiya, apostil va tarjimalarni tekshiring.",
+          de: "Prüfen Sie Ehe- und Geburtsurkunden, frühere Ehen, Namensführung, Apostille und Übersetzungen.",
+        },
+      },
+      {
+        title: {
+          uz: "A1 sertifikati talab qilinmasligini to‘g‘ri belgilang",
+          de: "A1-Ausnahme korrekt zuordnen",
+        },
+        description: {
+          uz: "Arizada mezbon shaxs EU Blue Card egasi ekanini aniq ko‘rsating va Blue Card nusxasini ilova qiling.",
+          de: "Geben Sie im Antrag klar an, dass die Bezugsperson eine Blaue Karte EU besitzt, und fügen Sie eine Kopie bei.",
+        },
+      },
+      {
+        title: {
+          uz: "Daromad va sug‘urtani tayyorlang",
+          de: "Lebensunterhalt und Versicherung vorbereiten",
+        },
+        description: {
+          uz: "Ish shartnomasi, maosh, sug‘urta va Familienversicherung imkoniyati bo‘yicha dalillarni yig‘ing.",
+          de: "Sammeln Sie Arbeitsvertrag, Einkommensnachweise, Versicherungsunterlagen und Nachweise zur möglichen Familienversicherung.",
+        },
+      },
+      {
+        title: {
+          uz: "Milliy viza arizasini yuboring",
+          de: "Nationales Visum beantragen",
+        },
+        description: {
+          uz: "Mavjud bo‘lsa Konsullik xizmatlari portali orqali ariza bering yoki vakolatxonaning amaldagi tartibiga amal qiling.",
+          de: "Stellen Sie den Antrag, sofern verfügbar, über das Auslandsportal oder folgen Sie dem aktuellen Verfahren der Auslandsvertretung.",
+        },
+      },
+      {
+        title: {
+          uz: "Shaxsiy terminga boring",
+          de: "Persönlichen Termin wahrnehmen",
+        },
+        description: {
+          uz: "Asl hujjatlar, biometrika va suhbat uchun terminga boring. Oilaviy munosabat va Germaniyadagi reja haqida aniq javob bering.",
+          de: "Erscheinen Sie mit Originalunterlagen zu Biometrie und Gespräch. Beantworten Sie Fragen zur Familie und zum Leben in Deutschland klar.",
+        },
+      },
+      {
+        title: {
+          uz: "Ausländerbehörde so‘rovlariga javob bering",
+          de: "Auf Rückfragen der Ausländerbehörde reagieren",
+        },
+        description: {
+          uz: "Blue Card egasi Germaniyada qo‘shimcha hujjat so‘rovlariga o‘z vaqtida javob bersin.",
+          de: "Der Blue-Card-Inhaber sollte in Deutschland auf Nachforderungen der Ausländerbehörde fristgerecht reagieren.",
+        },
+      },
+      {
+        title: {
+          uz: "Kelgach Anmeldung va Aufenthaltstitelni rasmiylashtiring",
+          de: "Nach Einreise Anmeldung und Aufenthaltstitel erledigen",
+        },
+        description: {
+          uz: "Manzil ro‘yxati, sug‘urta va oilaviy Aufenthaltstitelni oling. Kartada ishlash huquqi to‘g‘ri ko‘rsatilganini tekshiring.",
+          de: "Erledigen Sie Anmeldung, Versicherung und familienbezogenen Aufenthaltstitel. Prüfen Sie den korrekten Vermerk zur Erwerbstätigkeit.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Blue Card egasining turmush o‘rtog‘iga A1 kerakmi?",
+          de: "Braucht der Ehegatte eines Blue-Card-Inhabers A1?",
+        },
+        answer: {
+          uz: "Yo‘q. EU Blue Card egasining turmush o‘rtog‘idan Germaniyaga kirishdan oldin oddiy nemis tili isboti talab qilinmaydi.",
+          de: "Nein. Der Ehegatte eines Inhabers einer Blauen Karte EU muss vor der Einreise keine einfachen Deutschkenntnisse nachweisen.",
+        },
+      },
+      {
+        question: {
+          uz: "Nikoh Blue Card berilgandan keyin tuzilgan bo‘lsa ham A1siz bo‘ladimi?",
+          de: "Entfällt A1 auch bei einer Ehe nach Erteilung der Blue Card?",
+        },
+        answer: {
+          uz: "Ha, Blue Card egasining turmush o‘rtog‘i uchun til yengilligi nikoh faqat oldindan tuzilgan holat bilan umumiy tarzda cheklanmagan. Nikoh haqiqiyligi va qolgan talablar baribir tekshiriladi.",
+          de: "Ja. Die Spracherleichterung für Ehegatten von Blue-Card-Inhabern ist nicht pauschal auf bereits vorher bestehende Ehen beschränkt. Wirksamkeit der Ehe und weitere Voraussetzungen werden dennoch geprüft.",
+        },
+      },
+      {
+        question: {
+          uz: "Blue Card oilasi uchun uy maydoni isboti kerakmi?",
+          de: "Muss ausreichender Wohnraum nachgewiesen werden?",
+        },
+        answer: {
+          uz: "Blue Card egasi oilasi uchun yetarli uy-joyni alohida isbotlash talabi bekor qilingan. Ammo haqiqiy yashash manzili, Anmeldung va amalda oilaga mos turar joy kerak.",
+          de: "Für den Familiennachzug zu Inhabern einer Blauen Karte EU entfällt der gesonderte Nachweis ausreichenden Wohnraums. Ein tatsächlicher Wohnsitz, Anmeldung und praktisch nutzbare Unterkunft bleiben erforderlich.",
+        },
+      },
+      {
+        question: {
+          uz: "Turmush o‘rtog‘i darhol ishlay oladimi?",
+          de: "Darf der Ehegatte sofort arbeiten?",
+        },
+        answer: {
+          uz: "Oilaviy yashash ruxsati cheklovsiz ishlash huquqini beradi. Amalda ishni boshlashdan oldin vizadagi yoki Aufenthaltstiteldagi ishlash yozuvini tekshiring.",
+          de: "Der familienbezogene Aufenthaltstitel erlaubt uneingeschränkte Erwerbstätigkeit. Prüfen Sie vor Arbeitsbeginn den entsprechenden Vermerk im Visum oder Aufenthaltstitel.",
+        },
+      },
+      {
+        question: {
+          uz: "Turmush o‘rtog‘i oldindan ish topishi shartmi?",
+          de: "Muss der Ehegatte vorher einen Arbeitsplatz haben?",
+        },
+        answer: {
+          uz: "Yo‘q. Oila birlashtirish vizasi uchun turmush o‘rtog‘ining oldindan ish taklifiga ega bo‘lishi shart emas.",
+          de: "Nein. Für das Familiennachzugsvisum benötigt der Ehegatte kein vorheriges Arbeitsplatzangebot.",
+        },
+      },
+      {
+        question: {
+          uz: "Daromad umuman tekshirilmaydimi?",
+          de: "Wird das Einkommen überhaupt nicht geprüft?",
+        },
+        answer: {
+          uz: "Tekshirilishi mumkin. Blue Card oila birlashtirishni yengillashtiradi, biroq yashash xarajatlari va tibbiy sug‘urta odatda ta’minlangan bo‘lishi kerak.",
+          de: "Doch, eine Prüfung ist möglich. Die Blaue Karte erleichtert den Familiennachzug, dennoch müssen Lebensunterhalt und Krankenversicherung grundsätzlich gesichert sein.",
+        },
+      },
+      {
+        question: {
+          uz: "Farzandlar ham birga kelishi mumkinmi?",
+          de: "Können Kinder ebenfalls nachziehen?",
+        },
+        answer: {
+          uz: "Ha. Blue Card egasining 18 yoshga to‘lmagan, nikohda bo‘lmagan farzandlari §32 AufenthG asosida oila birlashtirishga murojaat qilishi mumkin.",
+          de: "Ja. Minderjährige ledige Kinder können nach § 32 AufenthG zum Inhaber einer Blauen Karte EU nachziehen.",
+        },
+      },
+      {
+        question: {
+          uz: "Blue Card boshqa EU davlatida berilgan bo‘lsa nima bo‘ladi?",
+          de: "Was gilt bei einer Blue Card aus einem anderen EU-Staat?",
+        },
+        answer: {
+          uz: "Agar Blue Card egasi va oilasi boshqa EU davlatida qonuniy yashagan bo‘lsa, Germaniyaga ko‘chishda maxsus uzoq muddatli mobilitet va oilaviy yengilliklar qo‘llanishi mumkin. Bu holatni oddiy birinchi oila vizasi bilan aralashtirmasdan alohida tekshirish kerak.",
+          de: "Haben Blue-Card-Inhaber und Familie bereits rechtmäßig in einem anderen EU-Staat gelebt, können besondere Regeln der langfristigen Mobilität und des privilegierten Familiennachzugs gelten. Diese Konstellation muss gesondert geprüft werden.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "§ 29 AufenthG — Familiennachzug zu Ausländern",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__29.html",
+        language: "de",
+      },
+      {
+        title: "§ 30 AufenthG — Ehegattennachzug",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__30.html",
+        language: "de",
+      },
+      {
+        title: "§ 32 AufenthG — Kindernachzug",
+        organization: "Bundesministerium der Justiz",
+        url: "https://www.gesetze-im-internet.de/aufenthg_2004/__32.html",
+        language: "de",
+      },
+      {
+        title: "Die Blaue Karte EU",
+        organization: "Bundesamt für Migration und Flüchtlinge",
+        url: "https://www.bamf.de/DE/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Migrathek/BlaueKarteEU/blauekarteeu-node.html",
+        language: "de",
+      },
+      {
+        title: "Nachzug zu ausländischen Familienangehörigen",
+        organization: "Bundesamt für Migration und Flüchtlinge",
+        url: "https://www.bamf.de/DE/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Familie/NachzugZuDrittstaatlern/nachzug-zu-drittstaatlern-node.html",
+        language: "de",
+      },
+      {
+        title: "Spouses joining citizens of non-EU countries",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/visa-residence/family-reunification/spouses-joining-citizens-non-eu",
+        language: "en",
+      },
+      {
+        title: "The new Skilled Immigration Act",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/visa-residence/skilled-immigration-act",
+        language: "en",
+      },
+      {
+        title: "Consular Services Portal",
+        organization: "Federal Foreign Office",
+        url: "https://www.auswaertiges-amt.de/en/visa-service/consular-services-portal",
+        language: "en",
+      },
+    ],
+    relatedArticleSlugs: [
+      "spouse-reunification",
+      "german-citizen-spouse-reunification",
+    ],
+  },
 ];
 
 function localizeArticle(
