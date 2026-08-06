@@ -6676,6 +6676,1269 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
       "bank-account-guide",
     ],
   },
+
+  {
+    id: "residence-permit-eat-guide",
+    slug: "residence-permit-eat-guide",
+    categorySlug: "after-arrival",
+    title: {
+      uz: "Aufenthaltstitel, eAT va Ausländerbehörde",
+      de: "Aufenthaltstitel, eAT und Ausländerbehörde",
+    },
+    excerpt: {
+      uz: "Milliy vizadan Germaniyadagi yashash ruxsatiga o‘tish: Ausländerbehörde, elektron Aufenthaltstitel, biometrika, Nebenbestimmungen, Fiktionsbescheinigung, hujjatlar, muddatlar va keng tarqalgan xatolar.",
+      de: "Leitfaden vom nationalen Visum zum Aufenthaltstitel: Ausländerbehörde, elektronischer Aufenthaltstitel, Biometrie, Nebenbestimmungen, Fiktionsbescheinigung, Unterlagen, Fristen und häufige Fehler.",
+    },
+    intro: {
+      uz: "Milliy viza Germaniyaga kirish va dastlabki yashash uchun xizmat qiladi. Rejalashtirilgan yashash muddati vizadan uzoq bo‘lsa, viza tugashidan oldin mas’ul Ausländerbehördega Aufenthaltstitel uchun murojaat qilinadi. Ko‘pchilik uchinchi davlat fuqarolariga ruxsat elektron Aufenthaltstitel — eAT karta shaklida beriladi.",
+      de: "Das nationale Visum dient der Einreise und dem anfänglichen Aufenthalt. Dauert der geplante Aufenthalt länger als das Visum, muss vor dessen Ablauf bei der zuständigen Ausländerbehörde ein Aufenthaltstitel beantragt werden. Für die meisten Drittstaatsangehörigen wird er als elektronischer Aufenthaltstitel – eAT – ausgegeben.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: { uz: "12 daqiqa", de: "12 Minuten" },
+    facts: [
+      {
+        label: { uz: "Vakolatli idora", de: "Zuständige Behörde" },
+        value: {
+          uz: "Ro‘yxatdan o‘tgan manzil bo‘yicha Ausländerbehörde",
+          de: "Ausländerbehörde am gemeldeten Wohnort",
+        },
+      },
+      {
+        label: { uz: "Karta turi", de: "Dokument" },
+        value: {
+          uz: "Chipli elektron Aufenthaltstitel — eAT",
+          de: "Elektronischer Aufenthaltstitel mit Chip – eAT",
+        },
+      },
+      {
+        label: { uz: "Muhim muddat", de: "Wichtige Frist" },
+        value: {
+          uz: "Arizani viza yoki amaldagi ruxsat tugashidan oldin yuborish",
+          de: "Antrag vor Ablauf von Visum oder bestehendem Titel stellen",
+        },
+      },
+      {
+        label: { uz: "Vaqtinchalik hujjat", de: "Vorläufiger Nachweis" },
+        value: {
+          uz: "Shartlar bajarilsa Fiktionsbescheinigung berilishi mumkin",
+          de: "Unter Voraussetzungen kann eine Fiktionsbescheinigung ausgestellt werden",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Aufenthaltstitel va eAT nima?",
+          de: "Was sind Aufenthaltstitel und eAT?",
+        },
+        paragraphs: [
+          {
+            uz: "Aufenthaltstitel Germaniyada ma’lum maqsad bilan yashash huquqini beradi. Masalan, Ausbildung, ish, EU Blue Card, Studium yoki oila birlashtirish uchun alohida huquqiy asos mavjud.",
+            de: "Ein Aufenthaltstitel erlaubt den Aufenthalt in Deutschland zu einem bestimmten Zweck, etwa Ausbildung, Beschäftigung, Blaue Karte EU, Studium oder Familiennachzug.",
+          },
+          {
+            uz: "eAT plastik karta bo‘lib, unda shaxsiy ma’lumotlar, biometrik foto, barmoq izlari va qo‘shimcha shartlar saqlanadi. Ishlash huquqi yoki cheklovlar karta va Zusatzblattda ko‘rsatilishi mumkin.",
+            de: "Der eAT ist eine Plastikkarte mit persönlichen Daten, biometrischem Foto, Fingerabdrücken und Nebenbestimmungen. Erwerbsrechte oder Beschränkungen können auf Karte und Zusatzblatt vermerkt sein.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Kim murojaat qiladi?",
+          de: "Wer muss einen Antrag stellen?",
+        },
+        items: [
+          {
+            uz: "Milliy vizasi yashash muddatini to‘liq qamramaydigan shaxslar",
+            de: "Personen, deren nationales Visum den geplanten Aufenthalt nicht vollständig abdeckt",
+          },
+          {
+            uz: "Amaldagi Aufenthaltstitelini uzaytirayotgan shaxslar",
+            de: "Personen, die ihren bestehenden Aufenthaltstitel verlängern",
+          },
+          {
+            uz: "Yashash maqsadini qonuniy ravishda o‘zgartirayotgan shaxslar",
+            de: "Personen, die den Aufenthaltszweck rechtmäßig wechseln",
+          },
+          {
+            uz: "Yo‘qolgan yoki buzilgan eAT o‘rniga yangi karta oluvchilar",
+            de: "Personen, die einen verlorenen oder beschädigten eAT ersetzen müssen",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Ariza va muddatlar",
+          de: "Antrag und Fristen",
+        },
+        paragraphs: [
+          {
+            uz: "Ausländerbehörde jarayonini viza tugashiga yaqin qoldirmang. Ko‘plab shaharlarda termin uzoq kutiladi. Rasmiy portal, forma yoki email orqali ariza yuborish imkoniyatini oldindan tekshiring.",
+            de: "Warten Sie mit dem Verfahren nicht bis kurz vor Visumablauf. In vielen Städten bestehen lange Wartezeiten. Prüfen Sie frühzeitig Portal, Formular oder offiziellen E-Mail-Antragsweg.",
+          },
+          {
+            uz: "Fiktionsbescheinigung faqat Aufenthaltstitel arizasi mavjud bo‘lsa va qaror hali chiqarilmagan bo‘lsa berilishi mumkin. Uning ishlash va safar huquqiga ta’siri qaysi huquqiy asosda berilganiga bog‘liq.",
+            de: "Eine Fiktionsbescheinigung setzt einen gestellten Aufenthaltstitelantrag und eine noch ausstehende Entscheidung voraus. Auswirkungen auf Erwerbstätigkeit und Reisen hängen von der konkreten Rechtsgrundlage ab.",
+          },
+        ],
+        items: [
+          {
+            uz: "Ariza yuborilgan sana va tasdiqni saqlang.",
+            de: "Bewahren Sie Versanddatum und Eingangsbestätigung auf.",
+          },
+          {
+            uz: "Viza tugashidan oldin rasmiy murojaat qiling.",
+            de: "Stellen Sie den Antrag vor Ablauf des Visums.",
+          },
+          {
+            uz: "Fiktionsbescheinigung bilan xorijga chiqishdan oldin uning qayta kirish huquqini tekshiring.",
+            de: "Prüfen Sie vor Auslandsreisen, ob die Fiktionsbescheinigung zur Wiedereinreise berechtigt.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Odatda kerak bo‘ladigan hujjatlar",
+          de: "Üblicherweise erforderliche Unterlagen",
+        },
+        items: [
+          { uz: "Pasport va amaldagi viza", de: "Reisepass und gültiges Visum" },
+          { uz: "Biometrik fotosurat", de: "Biometrisches Passfoto" },
+          { uz: "Meldebescheinigung", de: "Meldebescheinigung" },
+          {
+            uz: "Yashash maqsadi dalili: ish, Ausbildung, universitet yoki oilaviy hujjat",
+            de: "Nachweis des Aufenthaltszwecks: Arbeit, Ausbildung, Hochschule oder Familienunterlagen",
+          },
+          {
+            uz: "Tibbiy sug‘urta dalili",
+            de: "Nachweis des Krankenversicherungsschutzes",
+          },
+          {
+            uz: "Daromad yoki moliyaviy ta’minot dalili",
+            de: "Einkommens- oder Finanzierungsnachweis",
+          },
+          {
+            uz: "Idora so‘ragan qo‘shimcha hujjatlar",
+            de: "Weitere von der Behörde verlangte Unterlagen",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "eAT kartani olish va tekshirish",
+          de: "eAT abholen und prüfen",
+        },
+        paragraphs: [
+          {
+            uz: "Biometrika topshirilgach eAT Bundesdruckereida tayyorlanadi. Tayyor bo‘lish muddati shahar va ish holatiga qarab farq qiladi.",
+            de: "Nach der Biometrie wird der eAT bei der Bundesdruckerei hergestellt. Die Bearbeitungszeit unterscheidet sich nach Behörde und Einzelfall.",
+          },
+          {
+            uz: "Kartani olganda ism, amal qilish muddati, Aufenthaltstitel paragrafi va Erwerbstätigkeit haqidagi yozuvni tekshiring.",
+            de: "Prüfen Sie bei Abholung Name, Gültigkeit, Rechtsgrundlage und Vermerk zur Erwerbstätigkeit.",
+          },
+        ],
+        items: [
+          {
+            uz: "Zusatzblattni yo‘qotmang.",
+            de: "Bewahren Sie das Zusatzblatt sorgfältig auf.",
+          },
+          {
+            uz: "Manzil o‘zgarsa idora va Melderegister ma’lumotlarini yangilang.",
+            de: "Aktualisieren Sie bei Umzug Melderegister und erforderliche Behördenangaben.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Ko‘p uchraydigan xatolar",
+          de: "Häufige Fehler",
+        },
+        items: [
+          {
+            uz: "Viza tugagandan keyin ariza topshirish",
+            de: "Antrag erst nach Visumablauf stellen",
+          },
+          {
+            uz: "Termin so‘rovini Aufenthaltstitel arizasi deb hisoblash",
+            de: "Eine bloße Terminanfrage mit einem Aufenthaltstitelantrag verwechseln",
+          },
+          {
+            uz: "Fiktionsbescheinigung bilan safar huquqini tekshirmaslik",
+            de: "Reisewirkung der Fiktionsbescheinigung nicht prüfen",
+          },
+          {
+            uz: "Kartadagi ishlash cheklovlarini e’tiborsiz qoldirish",
+            de: "Erwerbsbeschränkungen auf Karte oder Zusatzblatt ignorieren",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: { uz: "Mas’ul idorani toping", de: "Zuständige Behörde finden" },
+        description: {
+          uz: "Anmeldung manzilingiz bo‘yicha Ausländerbehördeni aniqlang.",
+          de: "Ermitteln Sie die Ausländerbehörde am gemeldeten Wohnort.",
+        },
+      },
+      {
+        title: { uz: "Arizani erta yuboring", de: "Antrag früh stellen" },
+        description: {
+          uz: "Viza tugashidan oldin rasmiy kanal orqali ariza yuboring.",
+          de: "Reichen Sie den Antrag vor Visumablauf über den offiziellen Weg ein.",
+        },
+      },
+      {
+        title: { uz: "Biometrik terminga boring", de: "Biometrietermin wahrnehmen" },
+        description: {
+          uz: "Asl hujjatlar bilan shaxsan qatnashing.",
+          de: "Erscheinen Sie persönlich mit Originalunterlagen.",
+        },
+      },
+      {
+        title: { uz: "Kartani tekshirib oling", de: "eAT prüfen und abholen" },
+        description: {
+          uz: "Karta va Zusatzblattdagi barcha ma’lumotlarni tekshiring.",
+          de: "Prüfen Sie alle Angaben auf Karte und Zusatzblatt.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Termin topilmasa viza avtomatik uzayadimi?",
+          de: "Verlängert sich das Visum automatisch, wenn kein Termin verfügbar ist?",
+        },
+        answer: {
+          uz: "Yo‘q. Viza tugashidan oldin rasmiy Aufenthaltstitel arizasi yuborilishi kerak. Faqat termin so‘rashning huquqiy ta’siri har doim yetarli emas.",
+          de: "Nein. Vor Ablauf muss ein offizieller Aufenthaltstitelantrag gestellt werden. Eine reine Terminanfrage genügt rechtlich nicht immer.",
+        },
+      },
+      {
+        question: {
+          uz: "Fiktionsbescheinigung bilan ishlash mumkinmi?",
+          de: "Darf ich mit einer Fiktionsbescheinigung arbeiten?",
+        },
+        answer: {
+          uz: "Bu oldingi ruxsat va Fiktionsbescheinigung turiga bog‘liq. Hujjatdagi Erwerbstätigkeit yozuvini tekshiring.",
+          de: "Das hängt vom bisherigen Titel und der Art der Fiktionswirkung ab. Prüfen Sie den Vermerk zur Erwerbstätigkeit.",
+        },
+      },
+      {
+        question: {
+          uz: "eAT tayyor bo‘lguncha nima ishlataman?",
+          de: "Was gilt bis zur Fertigstellung des eAT?",
+        },
+        answer: {
+          uz: "Amaldagi viza, eski Aufenthaltstitel yoki idora bergan tegishli vaqtinchalik hujjat ishlatiladi.",
+          de: "Es gelten gültiges Visum, bisheriger Aufenthaltstitel oder ein von der Behörde ausgestellter vorläufiger Nachweis.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Elektronischer Aufenthaltstitel",
+        organization: "Bundesamt für Migration und Flüchtlinge",
+        url: "https://www.bamf.de/DE/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Migrathek/eAufenthaltstitel/eaufenthaltstitel-node.html",
+        language: "de",
+      },
+      {
+        title: "Fiktionsbescheinigung",
+        organization: "Service Berlin",
+        url: "https://service.berlin.de/dienstleistung/326233/",
+        language: "de",
+      },
+    ],
+    relatedArticleSlugs: [
+      "first-steps-after-arrival",
+      "anmeldung-guide",
+      "national-visa",
+    ],
+  },
+  {
+    id: "deutschlandticket-transport-guide",
+    slug: "deutschlandticket-transport-guide",
+    categorySlug: "after-arrival",
+    title: {
+      uz: "Deutschlandticket va jamoat transporti",
+      de: "Deutschlandticket und öffentlicher Nahverkehr",
+    },
+    excerpt: {
+      uz: "Germaniyada avtobus, tramvay, U-Bahn, S-Bahn, RB va REdan foydalanish, Deutschlandticketning 2026-yildagi narxi, amal qilish hududi, ICE/IC cheklovi, obuna, bekor qilish va chipta nazorati.",
+      de: "Leitfaden zu Bus, Straßenbahn, U-Bahn, S-Bahn, RB und RE, Preis des Deutschlandtickets 2026, Geltungsbereich, Ausschluss von ICE/IC, Abonnement, Kündigung und Ticketkontrolle.",
+    },
+    intro: {
+      uz: "Deutschlandticket Germaniya bo‘ylab mahalliy va regional jamoat transportidan foydalanish uchun shaxsiy obuna chiptasidir. 2026-yilda uning narxi oyiga 63 yevro. U avtobus, tramvay, U-Bahn, S-Bahn, RB va REda amal qiladi, lekin odatda ICE, IC va EC kabi uzoq masofali poyezdlarda ishlamaydi.",
+      de: "Das Deutschlandticket ist ein persönliches Abonnement für den bundesweiten öffentlichen Nah- und Regionalverkehr. Im Jahr 2026 kostet es 63 Euro monatlich. Es gilt in Bus, Straßenbahn, U-Bahn, S-Bahn, RB und RE, grundsätzlich jedoch nicht in ICE, IC oder EC.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: { uz: "10 daqiqa", de: "10 Minuten" },
+    facts: [
+      {
+        label: { uz: "Narx 2026", de: "Preis 2026" },
+        value: { uz: "Oyiga 63 yevro", de: "63 Euro pro Monat" },
+      },
+      {
+        label: { uz: "Amal qiladi", de: "Gültig" },
+        value: {
+          uz: "Bus, tramvay, U-Bahn, S-Bahn, RB va RE",
+          de: "Bus, Straßenbahn, U-Bahn, S-Bahn, RB und RE",
+        },
+      },
+      {
+        label: { uz: "Amal qilmaydi", de: "Nicht gültig" },
+        value: {
+          uz: "Odatda ICE, IC va EC",
+          de: "Grundsätzlich ICE, IC und EC",
+        },
+      },
+      {
+        label: { uz: "Shartnoma", de: "Vertrag" },
+        value: {
+          uz: "Avtomatik uzayadigan oylik obuna",
+          de: "Monatlich fortlaufendes Abonnement",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Transport turlari",
+          de: "Verkehrsmittel verstehen",
+        },
+        items: [
+          { uz: "Bus va tramvay — shahar transporti", de: "Bus und Straßenbahn – Stadtverkehr" },
+          { uz: "U-Bahn — metro", de: "U-Bahn – städtische Schnellbahn" },
+          { uz: "S-Bahn — shahar va atrof hudud", de: "S-Bahn – Stadt und Umland" },
+          { uz: "RB va RE — regional poyezdlar", de: "RB und RE – Regionalzüge" },
+          { uz: "ICE, IC va EC — uzoq masofali transport", de: "ICE, IC und EC – Fernverkehr" },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Deutschlandticket kimga mos?",
+          de: "Für wen eignet sich das Deutschlandticket?",
+        },
+        items: [
+          {
+            uz: "Har kuni ish yoki o‘qishga jamoat transportida boruvchilar",
+            de: "Pendler zu Arbeit, Ausbildung oder Hochschule",
+          },
+          {
+            uz: "Turli shaharlarda regional transportdan foydalanadiganlar",
+            de: "Personen mit regelmäßigen Regionalfahrten",
+          },
+          {
+            uz: "Bir nechta Verkehrsverbund hududida qatnaydiganlar",
+            de: "Fahrgäste in mehreren Verkehrsverbünden",
+          },
+          {
+            uz: "Mahalliy oylik chipta narxi 63 yevroga yaqin yoki undan yuqori bo‘lganlar",
+            de: "Personen, deren lokales Monatsticket ähnlich viel oder mehr kostet",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Sotib olish va bekor qilish",
+          de: "Kauf und Kündigung",
+        },
+        paragraphs: [
+          {
+            uz: "Deutschlandticket DB Navigator, DB savdo kanallari va ko‘plab mahalliy transport kompaniyalarida sotiladi. U shaxsiy chipta bo‘lib, boshqa odamga berilmaydi.",
+            de: "Das Deutschlandticket ist über DB Navigator, DB-Vertrieb und viele lokale Verkehrsunternehmen erhältlich. Es ist personengebunden und nicht übertragbar.",
+          },
+          {
+            uz: "DBda obuna odatda oyning 10-kunigacha bekor qilinsa shu oy oxirida tugaydi; boshqa provayderlarda qoidalar farq qilishi mumkin.",
+            de: "Bei der DB endet das Abo bei Kündigung bis zum 10. grundsätzlich zum Monatsende; bei anderen Anbietern können abweichende Regeln gelten.",
+          },
+        ],
+        items: [
+          {
+            uz: "Chipta kalendar oyiga amal qiladi.",
+            de: "Das Ticket gilt für Kalendermonate.",
+          },
+          {
+            uz: "Bekor qilish muddatini provayderdan tekshiring.",
+            de: "Prüfen Sie die Kündigungsfrist beim Anbieter.",
+          },
+          {
+            uz: "Telefon almashtirilsa chipta akkauntini oldindan tiklang.",
+            de: "Sichern Sie bei Gerätewechsel den Zugriff auf das Kundenkonto.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Chipta nazoratida nima kerak?",
+          de: "Was wird bei der Kontrolle benötigt?",
+        },
+        items: [
+          {
+            uz: "Amaldagi Deutschlandticket yoki QR-kod",
+            de: "Gültiges Deutschlandticket oder QR-Code",
+          },
+          {
+            uz: "Pasport, Aufenthaltstitel yoki boshqa rasmiy foto hujjat",
+            de: "Reisepass, Aufenthaltstitel oder anderer amtlicher Lichtbildausweis",
+          },
+          {
+            uz: "Telefon chiptasi bo‘lsa yetarli batareya va ilovaga kirish",
+            de: "Bei Handyticket ausreichender Akku und App-Zugang",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Regional va uzoq masofali transport farqi",
+          de: "Nahverkehr und Fernverkehr unterscheiden",
+        },
+        paragraphs: [
+          {
+            uz: "RE yoki RB belgisi bo‘lgan poyezdlar odatda Deutschlandticketga kiradi. ICE, IC va EC odatda kirmaydi, hatto bir xil yo‘nalishda yursa ham.",
+            de: "Züge mit RE- oder RB-Kennung sind grundsätzlich enthalten. ICE, IC und EC sind regelmäßig ausgeschlossen, auch wenn sie auf derselben Strecke fahren.",
+          },
+          {
+            uz: "Ayrim maxsus regional yo‘nalishlarda istisnolar bo‘lishi mumkin. Safardan oldin DB Navigator yoki transport kompaniyasida chipta amal qilishini tekshiring.",
+            de: "Auf einzelnen besonderen Strecken können Ausnahmen bestehen. Prüfen Sie vor Fahrt in DB Navigator oder beim Verkehrsunternehmen die Gültigkeit.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Jarima va keng tarqalgan xatolar",
+          de: "Kontrolle und häufige Fehler",
+        },
+        items: [
+          {
+            uz: "ICEga faqat Deutschlandticket bilan chiqish",
+            de: "Mit Deutschlandticket allein in ICE einsteigen",
+          },
+          {
+            uz: "Obunani bekor qilmasdan ilovani o‘chirish",
+            de: "App löschen, ohne das Abonnement zu kündigen",
+          },
+          {
+            uz: "Telefon o‘chib qolishi sabab chiptani ko‘rsata olmaslik",
+            de: "Ticket wegen leerem Akku nicht vorzeigen können",
+          },
+          {
+            uz: "Chipta boshqa odamga berilishi mumkin deb o‘ylash",
+            de: "Annehmen, das Ticket sei übertragbar",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: { uz: "Ehtiyojingizni hisoblang", de: "Bedarf prüfen" },
+        description: {
+          uz: "Mahalliy tarif va Deutschlandticket narxini solishtiring.",
+          de: "Vergleichen Sie lokale Tarife mit dem Deutschlandticket.",
+        },
+      },
+      {
+        title: { uz: "Provayderni tanlang", de: "Anbieter wählen" },
+        description: {
+          uz: "DB yoki mahalliy Verkehrsverbund shartlarini solishtiring.",
+          de: "Vergleichen Sie DB und lokale Verkehrsverbünde.",
+        },
+      },
+      {
+        title: { uz: "Obunani faollashtiring", de: "Abo aktivieren" },
+        description: {
+          uz: "Shaxsiy ma’lumot va to‘lov usulini kiriting.",
+          de: "Hinterlegen Sie persönliche Daten und Zahlungsmethode.",
+        },
+      },
+      {
+        title: { uz: "Safardan oldin yo‘nalishni tekshiring", de: "Verbindung prüfen" },
+        description: {
+          uz: "Poyezd turi va chipta amal qilishini ilovada tekshiring.",
+          de: "Prüfen Sie Zugart und Gültigkeit in der App.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Deutschlandticket ICEda ishlaydimi?",
+          de: "Gilt das Deutschlandticket im ICE?",
+        },
+        answer: {
+          uz: "Odatda yo‘q. U mahalliy va regional transport uchun mo‘ljallangan.",
+          de: "Grundsätzlich nein. Es gilt im öffentlichen Nah- und Regionalverkehr.",
+        },
+      },
+      {
+        question: {
+          uz: "Deutschlandticket avtomatik uzayadimi?",
+          de: "Verlängert sich das Deutschlandticket automatisch?",
+        },
+        answer: {
+          uz: "Ha. U obuna hisoblanadi va o‘z vaqtida bekor qilinmasa davom etadi.",
+          de: "Ja. Es handelt sich um ein Abonnement, das ohne fristgerechte Kündigung weiterläuft.",
+        },
+      },
+      {
+        question: {
+          uz: "Chipta boshqa odamga beriladimi?",
+          de: "Ist das Ticket übertragbar?",
+        },
+        answer: {
+          uz: "Yo‘q. U shaxsiy va nazoratda foto hujjat talab qilinishi mumkin.",
+          de: "Nein. Es ist personengebunden; bei Kontrolle kann ein Lichtbildausweis verlangt werden.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Deutschlandticket kaufen",
+        organization: "Deutsche Bahn",
+        url: "https://www.bahn.de/angebot/regio/deutschland-ticket",
+        language: "de",
+      },
+      {
+        title: "Deutschland-Ticket for 63 euros",
+        organization: "Deutsche Bahn",
+        url: "https://int.bahn.de/en/offers/regional/deutschland-ticket",
+        language: "en",
+      },
+    ],
+    relatedArticleSlugs: [
+      "first-steps-after-arrival",
+      "bank-account-guide",
+    ],
+  },
+  {
+    id: "rundfunkbeitrag-guide",
+    slug: "rundfunkbeitrag-guide",
+    categorySlug: "after-arrival",
+    title: {
+      uz: "Rundfunkbeitrag: GEZ to‘lovi",
+      de: "Rundfunkbeitrag: Anmeldung, Zahlung und Befreiung",
+    },
+    excerpt: {
+      uz: "Germaniyadagi Rundfunkbeitrag: bir xonadon uchun 18,36 yevro, WG va oilalar, Beitragsnummer, ro‘yxatdan o‘tish, ko‘chish, ozod qilish, kamaytirish va soxta xatlardan himoyalanish.",
+      de: "Leitfaden zum Rundfunkbeitrag: 18,36 Euro pro Wohnung, WG und Familien, Beitragsnummer, Anmeldung, Umzug, Befreiung, Ermäßigung und Schutz vor gefälschten Schreiben.",
+    },
+    intro: {
+      uz: "Rundfunkbeitrag — Germaniyada jamoat teleradio xizmatlarini moliyalashtirish uchun har bir xonadon bo‘yicha olinadigan badal. Hozirgi miqdor oyiga 18,36 yevro. Uyda nechta odam yoki qurilma borligi muhim emas: bir xonadon uchun bitta badal to‘lanadi.",
+      de: "Der Rundfunkbeitrag finanziert den öffentlich-rechtlichen Rundfunk und wird grundsätzlich pro Wohnung erhoben. Derzeit beträgt er 18,36 Euro monatlich. Zahl der Bewohner oder Geräte spielt keine Rolle: Pro Wohnung fällt ein Beitrag an.",
+    },
+    status: "published",
+    featured: false,
+    lastReviewedAt: "2026-08-06",
+    readingTime: { uz: "9 daqiqa", de: "9 Minuten" },
+    facts: [
+      {
+        label: { uz: "Miqdor", de: "Höhe" },
+        value: { uz: "Oyiga 18,36 yevro", de: "18,36 Euro monatlich" },
+      },
+      {
+        label: { uz: "Hisoblash", de: "Grundsatz" },
+        value: { uz: "Bir xonadon — bir badal", de: "Eine Wohnung – ein Beitrag" },
+      },
+      {
+        label: { uz: "WG", de: "WG" },
+        value: {
+          uz: "Bir kishi to‘laydi, qolganlar uning Beitragsnummeridan foydalanadi",
+          de: "Eine Person zahlt, andere nutzen deren Beitragsnummer",
+        },
+      },
+      {
+        label: { uz: "Ozod qilish", de: "Befreiung" },
+        value: {
+          uz: "Faqat qonunda belgilangan holatlarda va ariza bilan",
+          de: "Nur in gesetzlich geregelten Fällen und auf Antrag",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Kim to‘laydi?",
+          de: "Wer zahlt?",
+        },
+        paragraphs: [
+          {
+            uz: "Xonadon egasi, ijarachi yoki WGdagi bir shaxs Beitragskonto ochadi. Boshqa yashovchilar alohida to‘lamaydi, lekin ularga kelgan xatga mavjud Beitragsnummer bilan javob berishi kerak bo‘lishi mumkin.",
+            de: "Eine Person der Wohnung führt das Beitragskonto. Weitere Bewohner zahlen nicht zusätzlich, müssen aber auf Anschreiben gegebenenfalls mit der bestehenden Beitragsnummer reagieren.",
+          },
+          {
+            uz: "Televizor, radio yoki internetdan foydalanmaslik to‘lovni avtomatik bekor qilmaydi.",
+            de: "Der Verzicht auf Fernseher, Radio oder Internet befreit nicht automatisch von der Zahlung.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Ozod qilish yoki kamaytirish",
+          de: "Befreiung oder Ermäßigung",
+        },
+        items: [
+          {
+            uz: "Ayrim ijtimoiy nafaqa oluvchilar",
+            de: "Empfänger bestimmter Sozialleistungen",
+          },
+          {
+            uz: "Qonunda belgilangan ayrim nogironlik holatlari",
+            de: "Bestimmte gesetzlich geregelte Behinderungsfälle",
+          },
+          {
+            uz: "Maxsus Härtefall holatlari",
+            de: "Besondere Härtefälle",
+          },
+          {
+            uz: "Ozod qilish uchun rasmiy ariza va dalil talab qilinadi",
+            de: "Befreiung erfordert offiziellen Antrag und Nachweise",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Ro‘yxatdan o‘tish va Beitragsnummer",
+          de: "Anmeldung und Beitragsnummer",
+        },
+        paragraphs: [
+          {
+            uz: "Yangi xonadon uchun rasmiy onlayn forma orqali Anmeldung qilinadi. Agar xonadonda boshqa shaxs allaqachon to‘layotgan bo‘lsa, uning Beitragsnummeri ko‘rsatiladi.",
+            de: "Eine neue Wohnung wird über das offizielle Onlineformular angemeldet. Zahlt bereits eine andere Person, wird deren Beitragsnummer angegeben.",
+          },
+          {
+            uz: "Beitragsnummerni xavfsiz saqlang. Ko‘chish, ma’lumotni o‘zgartirish yoki xonadonni bekor qilishda kerak bo‘ladi.",
+            de: "Bewahren Sie die Beitragsnummer sicher auf. Sie wird bei Umzug, Datenänderung oder Abmeldung benötigt.",
+          },
+        ],
+        items: [
+          {
+            uz: "Rasmiy domenni tekshiring.",
+            de: "Prüfen Sie die offizielle Domain.",
+          },
+          {
+            uz: "Bir xonadon uchun ikki marta to‘lovni oldini oling.",
+            de: "Vermeiden Sie doppelte Zahlung für dieselbe Wohnung.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Kerak bo‘ladigan ma’lumotlar",
+          de: "Benötigte Angaben",
+        },
+        items: [
+          { uz: "Ism va manzil", de: "Name und Anschrift" },
+          { uz: "Ko‘chib kirish sanasi", de: "Einzugsdatum" },
+          {
+            uz: "Mavjud bo‘lsa boshqa to‘lovchining Beitragsnummeri",
+            de: "Gegebenenfalls Beitragsnummer einer bereits zahlenden Person",
+          },
+          {
+            uz: "Ozod qilish uchun tegishli Bescheid yoki dalil",
+            de: "Für Befreiung entsprechender Bescheid oder Nachweis",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Ko‘chish va xonadonni bekor qilish",
+          de: "Umzug und Abmeldung",
+        },
+        paragraphs: [
+          {
+            uz: "Ko‘chganda yangi manzilni rasmiy forma orqali yangilang. Xonadon faqat ma’lum qonuniy holatlarda, masalan Germaniyadan chiqish yoki boshqa to‘lovchi bilan bir xonadonga ko‘chishda bekor qilinadi.",
+            de: "Bei Umzug wird die Anschrift offiziell geändert. Eine Wohnung kann nur unter bestimmten Voraussetzungen abgemeldet werden, etwa bei Wegzug ins Ausland oder Einzug zu einer bereits zahlenden Person.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Soxta xatlar va xatolar",
+          de: "Gefälschte Schreiben und Fehler",
+        },
+        items: [
+          {
+            uz: "Noma’lum IBANga to‘lov yuborish",
+            de: "Zahlung an unbekannte IBAN",
+          },
+          {
+            uz: "WGda boshqa odam to‘layotgan bo‘lsa ham alohida konto ochish",
+            de: "Eigenes Konto eröffnen, obwohl in der WG bereits gezahlt wird",
+          },
+          {
+            uz: "Ozod qilish avtomatik deb o‘ylash",
+            de: "Annehmen, eine Befreiung erfolge automatisch",
+          },
+          {
+            uz: "Rasmiy xatlarni e’tiborsiz qoldirish",
+            de: "Offizielle Schreiben ignorieren",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: { uz: "Xonadon holatini tekshiring", de: "Wohnungssituation prüfen" },
+        description: {
+          uz: "Kimdir allaqachon to‘layotganini aniqlang.",
+          de: "Klären Sie, ob bereits jemand für die Wohnung zahlt.",
+        },
+      },
+      {
+        title: { uz: "Rasmiy formani yuboring", de: "Offizielles Formular nutzen" },
+        description: {
+          uz: "Yangi Anmeldung yoki mavjud Beitragsnummer orqali javob bering.",
+          de: "Melden Sie neu an oder reagieren Sie mit bestehender Beitragsnummer.",
+        },
+      },
+      {
+        title: { uz: "Hujjatlarni saqlang", de: "Unterlagen sichern" },
+        description: {
+          uz: "Tasdiq, Beitragsnummer va to‘lovlarni saqlang.",
+          de: "Bewahren Sie Bestätigung, Beitragsnummer und Zahlungen auf.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "WGdagi har bir odam to‘laydimi?",
+          de: "Zahlt in einer WG jede Person?",
+        },
+        answer: {
+          uz: "Yo‘q. Bir xonadon uchun bir marta to‘lanadi.",
+          de: "Nein. Pro Wohnung fällt nur ein Beitrag an.",
+        },
+      },
+      {
+        question: {
+          uz: "Televizorim bo‘lmasa ham to‘laymanmi?",
+          de: "Muss ich ohne Fernseher zahlen?",
+        },
+        answer: {
+          uz: "Ha. To‘lov qurilmalar soniga bog‘liq emas.",
+          de: "Ja. Der Beitrag hängt nicht von vorhandenen Geräten ab.",
+        },
+      },
+      {
+        question: {
+          uz: "Talaba avtomatik ozod qilinadimi?",
+          de: "Sind Studierende automatisch befreit?",
+        },
+        answer: {
+          uz: "Yo‘q. Faqat tegishli qonuniy asos bo‘lsa va ariza berilsa.",
+          de: "Nein. Nur bei passender gesetzlicher Voraussetzung und Antrag.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Informationen für Bürgerinnen und Bürger",
+        organization: "ARD ZDF Deutschlandradio Beitragsservice",
+        url: "https://www.rundfunkbeitrag.de/informationen",
+        language: "de",
+      },
+      {
+        title: "Wohnung anmelden",
+        organization: "ARD ZDF Deutschlandradio Beitragsservice",
+        url: "https://www.rundfunkbeitrag.de/buergerinnen-und-buerger/formulare/anmelden",
+        language: "de",
+      },
+    ],
+    relatedArticleSlugs: [
+      "first-steps-after-arrival",
+      "anmeldung-guide",
+      "bank-account-guide",
+    ],
+  },
+  {
+    id: "mobile-internet-guide",
+    slug: "mobile-internet-guide",
+    categorySlug: "after-arrival",
+    title: {
+      uz: "Germaniyada telefon va internet",
+      de: "Mobilfunk und Internet in Deutschland",
+    },
+    excerpt: {
+      uz: "Prepaid, mobil shartnoma, eSIM, uy interneti, Mindestlaufzeit, Kündigungsfrist, roaming, SIM aktivlashtirish, tarif tanlash va telefon firibgarligidan himoyalanish.",
+      de: "Leitfaden zu Prepaid, Mobilfunkvertrag, eSIM, Festnetz-Internet, Mindestlaufzeit, Kündigungsfrist, Roaming, SIM-Aktivierung, Tarifwahl und Betrugsschutz.",
+    },
+    intro: {
+      uz: "Germaniyada aloqa uchun Prepaid, muddatli mobil shartnoma, eSIM va uy interneti variantlari mavjud. Eng arzon reklama narxiga emas, shartnoma muddati, Kündigungsfrist, aktivlashtirish to‘lovi, internet hajmi va tarmoq qamroviga qarab tanlang.",
+      de: "In Deutschland stehen Prepaid, Laufzeitvertrag, eSIM und Festnetz-Internet zur Verfügung. Entscheidend sind nicht nur Werbepreis, sondern Mindestlaufzeit, Kündigungsfrist, Aktivierungsentgelt, Datenvolumen und Netzabdeckung.",
+    },
+    status: "published",
+    featured: false,
+    lastReviewedAt: "2026-08-06",
+    readingTime: { uz: "9 daqiqa", de: "9 Minuten" },
+    facts: [
+      {
+        label: { uz: "Moslashuvchan variant", de: "Flexible Option" },
+        value: { uz: "Prepaid", de: "Prepaid" },
+      },
+      {
+        label: { uz: "Uzoq shartnoma", de: "Laufzeitvertrag" },
+        value: {
+          uz: "Ko‘pincha 24 oygacha Mindestlaufzeit",
+          de: "Häufig bis zu 24 Monate Mindestlaufzeit",
+        },
+      },
+      {
+        label: { uz: "Identifikatsiya", de: "Identifizierung" },
+        value: {
+          uz: "SIM aktivlashtirishda shaxsni tasdiqlash talab qilinadi",
+          de: "Für SIM-Aktivierung ist Identitätsprüfung erforderlich",
+        },
+      },
+      {
+        label: { uz: "Raqamni saqlash", de: "Rufnummernmitnahme" },
+        value: {
+          uz: "Provayder almashtirilganda raqamni ko‘chirish mumkin",
+          de: "Rufnummer kann beim Anbieterwechsel mitgenommen werden",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Prepaid, Vertrag va eSIM",
+          de: "Prepaid, Vertrag und eSIM",
+        },
+        paragraphs: [
+          {
+            uz: "Prepaid yangi kelganlar uchun moslashuvchan: uzoq muddatli majburiyat kam, lekin tarifni muntazam to‘ldirish kerak. Vertrag ko‘proq internet yoki telefon qurilmasi bilan paket berishi mumkin, lekin uzoq muddatli majburiyat tug‘diradi.",
+            de: "Prepaid ist für Neuankömmlinge flexibel und bindet weniger langfristig, muss aber regelmäßig aufgeladen werden. Laufzeitverträge bieten oft mehr Daten oder Gerätepakete, schaffen jedoch längerfristige Verpflichtungen.",
+          },
+          {
+            uz: "eSIM fizik karta o‘rniga qurilmaga raqamli profil o‘rnatadi. Telefon va provayder eSIMni qo‘llashini tekshiring.",
+            de: "Bei eSIM wird statt einer physischen Karte ein digitales Profil installiert. Gerät und Anbieter müssen eSIM unterstützen.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Qaysi variant kimga mos?",
+          de: "Welche Option passt?",
+        },
+        items: [
+          {
+            uz: "Prepaid — yangi kelgan va qisqa muddatli moslashuvchanlik istaganlar uchun",
+            de: "Prepaid – für Neuankömmlinge und flexible Nutzung",
+          },
+          {
+            uz: "Oylik bekor qilinadigan tarif — barqarorlik va moslashuvchanlik o‘rtasida",
+            de: "Monatlich kündbarer Tarif – zwischen Flexibilität und Komfort",
+          },
+          {
+            uz: "24 oylik Vertrag — uzoq muddat qoladigan va shartlarni tushunadiganlar uchun",
+            de: "24-Monats-Vertrag – für langfristigen Aufenthalt bei verstandenen Konditionen",
+          },
+          {
+            uz: "Uy interneti — doimiy manzil va yetarli texnik ulanish mavjud bo‘lsa",
+            de: "Festnetz – bei dauerhaftem Wohnsitz und verfügbarer technischer Leitung",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Tarif tanlash mezonlari",
+          de: "Kriterien bei der Tarifwahl",
+        },
+        items: [
+          { uz: "Oylik umumiy narx", de: "Monatlicher Gesamtpreis" },
+          { uz: "Mindestlaufzeit", de: "Mindestlaufzeit" },
+          { uz: "Kündigungsfrist", de: "Kündigungsfrist" },
+          { uz: "Internet hajmi va tezligi", de: "Datenvolumen und Geschwindigkeit" },
+          { uz: "EU roaming shartlari", de: "EU-Roaming-Bedingungen" },
+          { uz: "Aktivlashtirish va router to‘lovi", de: "Aktivierungs- und Routerkosten" },
+          { uz: "Manzildagi tarmoq qamrovi", de: "Netzabdeckung am Wohnort" },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Odatda kerak bo‘ladigan ma’lumotlar",
+          de: "Üblicherweise erforderliche Angaben",
+        },
+        items: [
+          { uz: "Pasport yoki Aufenthaltstitel", de: "Reisepass oder Aufenthaltstitel" },
+          { uz: "Germaniyadagi manzil", de: "Deutsche Anschrift" },
+          { uz: "Bank IBANi — Vertrag uchun", de: "IBAN – bei Laufzeitvertrag" },
+          { uz: "Email va telefon", de: "E-Mail-Adresse und Telefonnummer" },
+          { uz: "SIM aktivlashtirish uchun identifikatsiya", de: "Identitätsprüfung für SIM-Aktivierung" },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Uy interneti va bekor qilish",
+          de: "Festnetz und Kündigung",
+        },
+        paragraphs: [
+          {
+            uz: "Uy internetida ulanish mavjudligini manzil bo‘yicha tekshiring. DSL, kabel yoki optik tolali tarmoq mavjudligi binoga qarab farq qiladi.",
+            de: "Prüfen Sie die Verfügbarkeit an der Adresse. DSL, Kabel oder Glasfaser unterscheiden sich je nach Gebäude.",
+          },
+          {
+            uz: "Ko‘chish Vertragni har doim avtomatik bekor qilmaydi. Provayder yangi manzilda xizmat bera olishi va qonuniy bekor qilish shartlari tekshiriladi.",
+            de: "Ein Umzug beendet den Vertrag nicht automatisch. Entscheidend sind Versorgung am neuen Wohnort und gesetzliche Kündigungsregeln.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Firibgarlik va yashirin xarajatlar",
+          de: "Betrug und versteckte Kosten",
+        },
+        items: [
+          {
+            uz: "Telefon orqali aytilgan shartnomani tushunmasdan tasdiqlash",
+            de: "Telefonisch angebotenen Vertrag ungeprüft bestätigen",
+          },
+          {
+            uz: "Birinchi oy arzon narxdan keyingi haqiqiy narxni tekshirmaslik",
+            de: "Nach Aktionspreis den späteren Normalpreis übersehen",
+          },
+          {
+            uz: "Noma’lum link orqali SIM yoki bank ma’lumotini kiritish",
+            de: "SIM- oder Bankdaten über unbekannte Links eingeben",
+          },
+          {
+            uz: "Kündigungni faqat telefon orqali qilgan deb o‘ylash",
+            de: "Annehmen, eine telefonische Kündigung sei ausreichend dokumentiert",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: { uz: "Qamrovni tekshiring", de: "Netz prüfen" },
+        description: {
+          uz: "Uy va ish joyida tarmoq qamrovini tekshiring.",
+          de: "Prüfen Sie Netzabdeckung an Wohn- und Arbeitsort.",
+        },
+      },
+      {
+        title: { uz: "Tariflarni solishtiring", de: "Tarife vergleichen" },
+        description: {
+          uz: "Faqat promo narxni emas, butun shartnomani solishtiring.",
+          de: "Vergleichen Sie den gesamten Vertrag, nicht nur Aktionspreise.",
+        },
+      },
+      {
+        title: { uz: "Shaxsni tasdiqlang", de: "Identität bestätigen" },
+        description: {
+          uz: "Rasmiy VideoIdent, PostIdent yoki filial orqali.",
+          de: "Über offiziellen VideoIdent-, PostIdent- oder Filialweg.",
+        },
+      },
+      {
+        title: { uz: "Bekor qilish muddatini saqlang", de: "Kündigungsfrist notieren" },
+        description: {
+          uz: "Kalendarga shartnoma tugashi va Kündigungsfristni yozing.",
+          de: "Notieren Sie Vertragsende und Kündigungsfrist im Kalender.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Prepaid uchun Anmeldung kerakmi?",
+          de: "Brauche ich für Prepaid eine Anmeldung?",
+        },
+        answer: {
+          uz: "Har doim emas, lekin shaxsni rasmiy tasdiqlash majburiy. Provayder hujjat talablari farq qiladi.",
+          de: "Nicht immer, aber eine offizielle Identitätsprüfung ist erforderlich. Unterlagen unterscheiden sich je Anbieter.",
+        },
+      },
+      {
+        question: {
+          uz: "EU roaming cheksizmi?",
+          de: "Ist EU-Roaming unbegrenzt?",
+        },
+        answer: {
+          uz: "Yo‘q. Fair-Use va tarif shartlari mavjud bo‘lishi mumkin.",
+          de: "Nein. Fair-Use- und Tarifbedingungen können gelten.",
+        },
+      },
+      {
+        question: {
+          uz: "Raqamimni boshqa provayderga olib o‘ta olamanmi?",
+          de: "Kann ich meine Rufnummer mitnehmen?",
+        },
+        answer: {
+          uz: "Ha, shartlarga rioya qilinganda Rufnummernmitnahme mumkin.",
+          de: "Ja, unter Einhaltung der Portierungsbedingungen ist eine Rufnummernmitnahme möglich.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Telekommunikation: Verträge und Verbraucherrechte",
+        organization: "Bundesnetzagentur",
+        url: "https://www.bundesnetzagentur.de/DE/Vportal/TK/InternetTelefon/start.html",
+        language: "de",
+      },
+      {
+        title: "Mobilfunkvertrag: Darauf sollten Sie achten",
+        organization: "Verbraucherzentrale",
+        url: "https://www.verbraucherzentrale.de/wissen/digitale-welt/mobilfunk-und-festnetz",
+        language: "de",
+      },
+    ],
+    relatedArticleSlugs: [
+      "first-steps-after-arrival",
+      "bank-account-guide",
+    ],
+  },
+  {
+    id: "emergency-public-services-guide",
+    slug: "emergency-public-services-guide",
+    categorySlug: "after-arrival",
+    title: {
+      uz: "Favqulodda raqamlar va foydali davlat xizmatlari",
+      de: "Notrufnummern und wichtige öffentliche Dienste",
+    },
+    excerpt: {
+      uz: "Germaniyada 112, 110 va 116117 raqamlari, zaharlanish holati, navbatchi dorixona, Bürgeramt, Ausländerbehörde, Bundesportal, Deutsche Post, DHL va DB Navigator xizmatlaridan to‘g‘ri foydalanish.",
+      de: "Leitfaden zu 112, 110 und 116117, Giftnotruf, Apothekennotdienst, Bürgeramt, Ausländerbehörde, Bundesportal, Deutsche Post, DHL und DB Navigator.",
+    },
+    intro: {
+      uz: "Germaniyada favqulodda vaziyatda to‘g‘ri raqamga qo‘ng‘iroq qilish hayotiy ahamiyatga ega. 112 tez yordam va yong‘in uchun, 110 politsiya favqulodda holati uchun, 116117 esa shoshilinch, lekin hayot uchun xavfli bo‘lmagan tibbiy yordam uchun ishlatiladi.",
+      de: "Im Notfall ist die richtige Rufnummer entscheidend. 112 gilt für Rettungsdienst und Feuerwehr, 110 für Polizeinotfälle und 116117 für dringende, aber nicht lebensbedrohliche medizinische Beschwerden.",
+    },
+    status: "published",
+    featured: false,
+    lastReviewedAt: "2026-08-06",
+    readingTime: { uz: "9 daqiqa", de: "9 Minuten" },
+    facts: [
+      {
+        label: { uz: "112", de: "112" },
+        value: { uz: "Tez yordam va yong‘in", de: "Rettungsdienst und Feuerwehr" },
+      },
+      {
+        label: { uz: "110", de: "110" },
+        value: { uz: "Politsiya favqulodda holati", de: "Polizeinotfall" },
+      },
+      {
+        label: { uz: "116117", de: "116117" },
+        value: {
+          uz: "Hayot uchun xavfli bo‘lmagan shoshilinch tibbiy yordam",
+          de: "Dringende, nicht lebensbedrohliche medizinische Hilfe",
+        },
+      },
+      {
+        label: { uz: "Davlat xizmatlari", de: "Verwaltung" },
+        value: {
+          uz: "Bundesportal va mahalliy xizmat portallari",
+          de: "Bundesportal und lokale Serviceportale",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Qaysi raqam qachon ishlatiladi?",
+          de: "Welche Nummer in welcher Situation?",
+        },
+        items: [
+          {
+            uz: "112 — hushdan ketish, og‘ir nafas qisilishi, kuchli qon ketish, yong‘in yoki hayot uchun xavf",
+            de: "112 – Bewusstlosigkeit, schwere Atemnot, starke Blutung, Feuer oder Lebensgefahr",
+          },
+          {
+            uz: "110 — jinoyat davom etayotgan bo‘lsa, zo‘ravonlik yoki politsiya tez yetib kelishi zarur bo‘lsa",
+            de: "110 – laufende Straftat, Gewalt oder dringender Polizeieinsatz",
+          },
+          {
+            uz: "116117 — kechasi yoki dam olish kuni shifokor kerak, lekin hayot uchun bevosita xavf yo‘q",
+            de: "116117 – ärztliche Hilfe außerhalb der Sprechzeiten ohne akute Lebensgefahr",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Yana qaysi xizmatlar foydali?",
+          de: "Weitere wichtige Dienste",
+        },
+        items: [
+          { uz: "Apothekennotdienst — navbatchi dorixona", de: "Apothekennotdienst – dienstbereite Apotheke" },
+          { uz: "Giftnotruf — zaharlanish markazi", de: "Giftnotruf – Beratung bei Vergiftungen" },
+          { uz: "Bürgeramt — Anmeldung va shaxsiy ma’muriy xizmatlar", de: "Bürgeramt – Anmeldung und kommunale Verwaltungsleistungen" },
+          { uz: "Ausländerbehörde — yashash huquqi masalalari", de: "Ausländerbehörde – aufenthaltsrechtliche Angelegenheiten" },
+          { uz: "Bundesportal — davlat xizmatlarini topish", de: "Bundesportal – Verwaltungsleistungen finden" },
+          { uz: "Deutsche Post va DHL — xat va jo‘natmalar", de: "Deutsche Post und DHL – Briefe und Sendungen" },
+          { uz: "DB Navigator — poyezd va jamoat transporti yo‘nalishlari", de: "DB Navigator – Bahn- und Nahverkehrsverbindungen" },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Favqulodda qo‘ng‘iroqda nima aytiladi?",
+          de: "Was sagt man beim Notruf?",
+        },
+        items: [
+          { uz: "Qayerda sodir bo‘ldi?", de: "Wo ist es passiert?" },
+          { uz: "Nima sodir bo‘ldi?", de: "Was ist passiert?" },
+          { uz: "Nechta odam zararlangan?", de: "Wie viele Personen sind betroffen?" },
+          { uz: "Qanday jarohat yoki xavf bor?", de: "Welche Verletzung oder Gefahr besteht?" },
+          { uz: "Operator savollarini kuting va telefonni erta uzmang", de: "Rückfragen abwarten und nicht vorschnell auflegen" },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Telefoningizda saqlab qo‘ying",
+          de: "Im Telefon speichern",
+        },
+        items: [
+          { uz: "112", de: "112" },
+          { uz: "110", de: "110" },
+          { uz: "116117", de: "116117" },
+          {
+            uz: "Shaharingizdagi Giftnotruf raqami",
+            de: "Giftnotruf Ihrer Region",
+          },
+          {
+            uz: "Krankenkasse va Hausarzt raqami",
+            de: "Krankenkasse und Hausarzt",
+          },
+          {
+            uz: "Elchixona va yaqin inson kontakti",
+            de: "Botschaft und Notfallkontakt",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Davlat xizmatlarini to‘g‘ri topish",
+          de: "Behördendienste richtig finden",
+        },
+        paragraphs: [
+          {
+            uz: "Bundesportal orqali xizmat nomi va manzil bo‘yicha mas’ul idorani topish mumkin. Ko‘plab xizmatlar Bundesland yoki shahar darajasida bo‘lgani sabab aniq mahalliy portal ustuvor bo‘ladi.",
+            de: "Über das Bundesportal lassen sich Leistungen und zuständige Stellen nach Wohnort finden. Da viele Verfahren landes- oder kommunal geregelt sind, ist das konkrete lokale Portal maßgeblich.",
+          },
+          {
+            uz: "Google reklamasidagi birinchi link har doim rasmiy emas. `.bund.de`, `.de` rasmiy shahar domenlari va tashkilotning to‘g‘ri domenini tekshiring.",
+            de: "Der erste Werbelink in Suchmaschinen ist nicht automatisch offiziell. Prüfen Sie `.bund.de`, offizielle Stadt-Domains und die korrekte Organisationsdomain.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Favqulodda raqamlardan noto‘g‘ri foydalanmang",
+          de: "Notrufnummern nicht missbrauchen",
+        },
+        items: [
+          {
+            uz: "Oddiy termin yoki hujjat savoli uchun 112 yoki 110ga qo‘ng‘iroq qilmang",
+            de: "112 oder 110 nicht für gewöhnliche Termin- oder Behördenfragen nutzen",
+          },
+          {
+            uz: "Hayot uchun xavf bo‘lsa 116117 bilan vaqt yo‘qotmang — 112ga qo‘ng‘iroq qiling",
+            de: "Bei Lebensgefahr nicht über 116117 verzögern – 112 wählen",
+          },
+          {
+            uz: "Soxta DHL yoki davlat xizmati SMS linklariga kirmang",
+            de: "Keine Links aus gefälschten DHL- oder Behörden-SMS öffnen",
+          },
+          {
+            uz: "Davlat xizmati uchun noma’lum vositachiga pasport yubormang",
+            de: "Passdaten nicht an unbekannte Vermittler für Behördenleistungen senden",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: { uz: "Vaziyatni baholang", de: "Situation einschätzen" },
+        description: {
+          uz: "Hayot uchun xavf bormi yoki oddiy tibbiy yordam kerakmi aniqlang.",
+          de: "Klären Sie, ob Lebensgefahr oder nicht lebensbedrohliche Hilfe vorliegt.",
+        },
+      },
+      {
+        title: { uz: "To‘g‘ri raqamni tering", de: "Richtige Nummer wählen" },
+        description: {
+          uz: "112, 110 yoki 116117dan mosini tanlang.",
+          de: "Wählen Sie passend 112, 110 oder 116117.",
+        },
+      },
+      {
+        title: { uz: "Aniq ma’lumot bering", de: "Klare Angaben machen" },
+        description: {
+          uz: "Manzil va vaziyatni qisqa va aniq tushuntiring.",
+          de: "Nennen Sie Ort und Situation kurz und eindeutig.",
+        },
+      },
+      {
+        title: { uz: "Operator ko‘rsatmasiga amal qiling", de: "Anweisungen befolgen" },
+        description: {
+          uz: "Telefonni uzmang va xavfsiz bo‘lsa yordam ko‘rsating.",
+          de: "Nicht auflegen und, soweit sicher, Erste Hilfe leisten.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "116117 tez yordammi?",
+          de: "Ist 116117 der Rettungsdienst?",
+        },
+        answer: {
+          uz: "Yo‘q. U hayot uchun xavfli bo‘lmagan shoshilinch tibbiy yordam uchun. Hayot uchun xavf bo‘lsa 112.",
+          de: "Nein. Sie ist für dringende, nicht lebensbedrohliche Beschwerden. Bei Lebensgefahr gilt 112.",
+        },
+      },
+      {
+        question: {
+          uz: "112 bepulmi?",
+          de: "Ist 112 kostenlos?",
+        },
+        answer: {
+          uz: "Ha. Germaniyada mobil va stasionar telefondan bepul teriladi.",
+          de: "Ja. Die Nummer ist in Deutschland kostenlos erreichbar.",
+        },
+      },
+      {
+        question: {
+          uz: "Zaharlanishda nima qilaman?",
+          de: "Was tun bei Vergiftung?",
+        },
+        answer: {
+          uz: "Og‘ir alomat yoki hayot uchun xavf bo‘lsa 112. Boshqa holatda hududingizdagi Giftnotruf bilan bog‘laning va modda qadoqini saqlang.",
+          de: "Bei schweren Symptomen oder Lebensgefahr 112 wählen. Sonst regionalen Giftnotruf kontaktieren und Verpackung des Stoffes bereithalten.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Healthcare numbers to call in an emergency",
+        organization: "gesund.bund.de",
+        url: "https://gesund.bund.de/en/notfallnummern",
+        language: "en",
+      },
+      {
+        title: "Ärztlicher Bereitschaftsdienst",
+        organization: "116117",
+        url: "https://www.116117.de/de/aerztlicher-bereitschaftsdienst.php",
+        language: "de",
+      },
+      {
+        title: "Bundesportal",
+        organization: "Bundesrepublik Deutschland",
+        url: "https://verwaltung.bund.de/",
+        language: "de",
+      },
+    ],
+    relatedArticleSlugs: [
+      "first-steps-after-arrival",
+      "health-insurance-guide",
+      "deutschlandticket-transport-guide",
+    ],
+  },
 ];
 
 function localizeArticle(
