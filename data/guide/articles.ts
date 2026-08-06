@@ -5011,6 +5011,527 @@ export const localizedGuideArticles: ReadonlyArray<LocalizedGuideArticle> = [
     ],
     relatedArticleSlugs: ["national-visa"],
   },
+  {
+    id: "first-steps-after-arrival",
+    slug: "first-steps-after-arrival",
+    categorySlug: "after-arrival",
+    title: {
+      uz: "Germaniyaga kelgandan keyingi birinchi qadamlar",
+      de: "Erste Schritte nach der Einreise nach Deutschland",
+    },
+    excerpt: {
+      uz: "Germaniyaga kelgach bajariladigan asosiy ishlar: vizani tekshirish, yashash joyini ro‘yxatdan o‘tkazish, Wohnungsgeberbestätigung, Steuer-ID, tibbiy sug‘urta, bank hisobi, Aufenthaltstitel, telefon, transport, Rundfunkbeitrag, favqulodda raqamlar va dastlabki haftalar uchun amaliy checklist.",
+      de: "Praxisleitfaden für die ersten Wochen nach der Einreise: Visum prüfen, Wohnsitz anmelden, Wohnungsgeberbestätigung, Steuer-ID, Krankenversicherung, Bankkonto, Aufenthaltstitel, Mobilfunk, öffentlicher Verkehr, Rundfunkbeitrag, Notrufnummern und Checkliste.",
+    },
+    intro: {
+      uz: "Germaniyaga kirish bilan viza jarayoni tugamaydi. Yangi kelgan shaxs yashash manzilini ro‘yxatdan o‘tkazishi, tibbiy sug‘urtani faollashtirishi, ish beruvchi yoki ta’lim muassasasiga kerakli ma’lumotlarni yuborishi va zarur bo‘lsa milliy viza tugashidan oldin Aufenthaltstitelga murojaat qilishi kerak. Quyidagi tartib ko‘pchilik uchun xavfsiz asos bo‘lib xizmat qiladi, lekin aniq vazifalar viza maqsadi, shahar, ish va oilaviy holatga qarab farq qiladi.",
+      de: "Mit der Einreise ist das Visumverfahren nicht abgeschlossen. Neu Eingereiste müssen ihren Wohnsitz anmelden, Krankenversicherung aktivieren, erforderliche Daten an Arbeitgeber oder Bildungseinrichtung übermitteln und gegebenenfalls vor Ablauf des nationalen Visums einen Aufenthaltstitel beantragen. Die folgende Reihenfolge ist für viele Fälle eine sichere Grundlage; konkrete Pflichten unterscheiden sich jedoch nach Visumzweck, Wohnort, Beschäftigung und Familiensituation.",
+    },
+    status: "published",
+    featured: true,
+    lastReviewedAt: "2026-08-06",
+    readingTime: {
+      uz: "14 daqiqa",
+      de: "14 Minuten",
+    },
+    facts: [
+      {
+        label: { uz: "Anmeldung", de: "Wohnsitzanmeldung" },
+        value: {
+          uz: "Yangi uyga ko‘chib kirgandan keyin odatda ikki hafta ichida",
+          de: "Grundsätzlich innerhalb von zwei Wochen nach Einzug",
+        },
+      },
+      {
+        label: { uz: "Asosiy hujjat", de: "Wichtiges Dokument" },
+        value: {
+          uz: "Wohnungsgeberbestätigung; ijara shartnomasi uning o‘rnini bosmaydi",
+          de: "Wohnungsgeberbestätigung; der Mietvertrag ersetzt sie nicht",
+        },
+      },
+      {
+        label: { uz: "Steuer-ID", de: "Steuer-ID" },
+        value: {
+          uz: "11 xonali, umrbod amal qiladigan identifikatsiya raqami",
+          de: "Elfstellige, dauerhaft gültige Identifikationsnummer",
+        },
+      },
+      {
+        label: { uz: "Sug‘urta", de: "Krankenversicherung" },
+        value: {
+          uz: "Germaniyada yashovchilar uchun tibbiy sug‘urta majburiy",
+          de: "Für Personen mit Wohnsitz in Deutschland besteht Krankenversicherungspflicht",
+        },
+      },
+      {
+        label: { uz: "Rundfunkbeitrag", de: "Rundfunkbeitrag" },
+        value: {
+          uz: "Bir xonadon uchun bir marta; hozirda oyiga 18,36 yevro",
+          de: "Einmal pro Wohnung; derzeit 18,36 Euro monatlich",
+        },
+      },
+      {
+        label: { uz: "Favqulodda raqamlar", de: "Notrufnummern" },
+        value: {
+          uz: "112 — tez yordam/yong‘in, 110 — politsiya, 116117 — shoshilinch bo‘lmagan tibbiy navbatchilik",
+          de: "112 – Rettung/Feuerwehr, 110 – Polizei, 116117 – ärztlicher Bereitschaftsdienst",
+        },
+      },
+    ],
+    sections: {
+      overview: {
+        title: {
+          uz: "Birinchi 24–48 soatda nima qilish kerak?",
+          de: "Was ist in den ersten 24–48 Stunden wichtig?",
+        },
+        paragraphs: [
+          {
+            uz: "Pasport, viza yorlig‘i va kirish ma’lumotlarini tekshiring. Ism, pasport raqami, viza muddati, kirishlar soni va qo‘shimcha yozuvlarda xato bo‘lsa, darhol tegishli vakolatxona yoki Ausländerbehörde bilan bog‘laning.",
+            de: "Prüfen Sie Reisepass, Visumetikett und Einreisedaten. Bei Fehlern in Name, Passnummer, Gültigkeit, Einreiseanzahl oder Zusatzvermerken wenden Sie sich unverzüglich an Auslandsvertretung oder Ausländerbehörde.",
+          },
+          {
+            uz: "Muhim hujjatlarning raqamli va qog‘oz nusxalarini alohida saqlang: pasport, viza, ijara, Wohnungsgeberbestätigung, ish yoki Ausbildung shartnomasi, sug‘urta tasdig‘i, nikoh va tug‘ilganlik hujjatlari.",
+            de: "Bewahren Sie digitale und gedruckte Kopien wichtiger Unterlagen getrennt auf: Pass, Visum, Mietunterlagen, Wohnungsgeberbestätigung, Arbeits- oder Ausbildungsvertrag, Versicherungsnachweis sowie Familienurkunden.",
+          },
+          {
+            uz: "Yashayotgan manzilingizda Anmeldung qilish mumkinligini tekshiring. Mehmonxona, hostel yoki qisqa muddatli turar joy har doim ro‘yxatdan o‘tish manzili bo‘lavermaydi.",
+            de: "Prüfen Sie, ob an Ihrer Unterkunft eine Anmeldung möglich ist. Hotel, Hostel oder kurzfristige Unterkunft sind nicht automatisch als Meldeadresse geeignet.",
+          },
+        ],
+      },
+      eligibility: {
+        title: {
+          uz: "Birinchi haftalar uchun ustuvor vazifalar",
+          de: "Prioritäten für die ersten Wochen",
+        },
+        items: [
+          {
+            uz: "Yashash joyini Bürgeramt yoki Meldebehördeda ro‘yxatdan o‘tkazish",
+            de: "Wohnsitz beim Bürgeramt oder der Meldebehörde anmelden",
+          },
+          {
+            uz: "Tibbiy sug‘urtani faollashtirish va sug‘urta raqamini olish",
+            de: "Krankenversicherung aktivieren und Versicherungsdaten erhalten",
+          },
+          {
+            uz: "Steuer-ID kelishini kuzatish yoki zarur bo‘lsa qayta so‘rash",
+            de: "Zugang der Steuer-ID abwarten oder erforderlichenfalls erneut anfordern",
+          },
+          {
+            uz: "Ish haqi, ijara va kundalik to‘lovlar uchun bank hisobini tashkil qilish",
+            de: "Bankkonto für Gehalt, Miete und laufende Zahlungen einrichten",
+          },
+          {
+            uz: "Milliy viza tugashidan oldin Ausländerbehörde jarayonini boshlash",
+            de: "Verfahren bei der Ausländerbehörde vor Ablauf des nationalen Visums beginnen",
+          },
+          {
+            uz: "Ish beruvchi, Ausbildung joyi yoki universitetga kerakli ma’lumotlarni yuborish",
+            de: "Erforderliche Daten an Arbeitgeber, Ausbildungsbetrieb oder Hochschule übermitteln",
+          },
+          {
+            uz: "Rundfunkbeitrag bo‘yicha xonadon allaqachon ro‘yxatdan o‘tganini tekshirish",
+            de: "Prüfen, ob die Wohnung bereits zum Rundfunkbeitrag angemeldet ist",
+          },
+        ],
+      },
+      requirements: {
+        title: {
+          uz: "Anmeldung va Wohnungsgeberbestätigung",
+          de: "Anmeldung und Wohnungsgeberbestätigung",
+        },
+        paragraphs: [
+          {
+            uz: "Yangi uyga ko‘chib kirgan shaxs odatda ikki hafta ichida mas’ul Meldebehördeda ro‘yxatdan o‘tishi kerak. Ko‘plab shaharlarda termin talab qilinadi; ayrim joylarda esa elektron Anmeldung mavjud.",
+            de: "Wer eine Wohnung bezieht, muss sich grundsätzlich innerhalb von zwei Wochen bei der zuständigen Meldebehörde anmelden. In vielen Städten ist ein Termin erforderlich; teilweise steht eine elektronische Anmeldung zur Verfügung.",
+          },
+          {
+            uz: "Anmeldung uchun pasport, viza yoki Aufenthaltstitel, to‘ldirilgan forma va Wohnungsgeberbestätigung talab qilinadi. Oddiy ijara shartnomasi Wohnungsgeberbestätigung o‘rnini bosmaydi.",
+            de: "Für die Anmeldung werden regelmäßig Pass, Visum oder Aufenthaltstitel, Anmeldeformular und Wohnungsgeberbestätigung benötigt. Ein Mietvertrag ersetzt die Wohnungsgeberbestätigung nicht.",
+          },
+          {
+            uz: "Ro‘yxatdan o‘tgach Meldebescheinigungni xavfsiz saqlang. U bank, Ausländerbehörde, sug‘urta, telefon shartnomasi va boshqa ko‘plab jarayonlarda kerak bo‘lishi mumkin.",
+            de: "Bewahren Sie die Meldebescheinigung nach der Anmeldung sicher auf. Sie kann bei Bank, Ausländerbehörde, Versicherung, Mobilfunkvertrag und weiteren Verfahren benötigt werden.",
+          },
+        ],
+        items: [
+          {
+            uz: "Wohnungsgeberbestätigungda uy egasi yoki vakolatli shaxs, manzil, ko‘chib kirish sanasi va ro‘yxatdan o‘tuvchilar ko‘rsatiladi.",
+            de: "Die Wohnungsgeberbestätigung enthält Wohnungsgeber, Anschrift, Einzugsdatum und meldepflichtige Personen.",
+          },
+          {
+            uz: "Subarenda bo‘lsa, asosiy ijarachi Wohnungsgeber bo‘lishi mumkin, lekin bunga huquqi bo‘lishi kerak.",
+            de: "Bei Untermiete kann der Hauptmieter Wohnungsgeber sein, muss hierzu jedoch berechtigt sein.",
+          },
+          {
+            uz: "Soxta Anmeldung yoki real yashamaydigan manzildan foydalanish huquqiy muammolarga olib keladi.",
+            de: "Eine Scheinanmeldung oder Anmeldung an einer tatsächlich nicht bewohnten Adresse kann rechtliche Folgen haben.",
+          },
+          {
+            uz: "Termin kech bo‘lsa, o‘z vaqtida bron qilganingizni tasdiqlovchi hujjatni saqlang.",
+            de: "Liegt der Termin später, bewahren Sie den Nachweis der rechtzeitigen Terminbuchung auf.",
+          },
+        ],
+      },
+      documents: {
+        title: {
+          uz: "Steuer-ID, bank va ish beruvchiga kerakli ma’lumotlar",
+          de: "Steuer-ID, Bankkonto und Angaben für den Arbeitgeber",
+        },
+        paragraphs: [
+          {
+            uz: "Steuer-ID — 11 xonali va umrbod amal qiladigan shaxsiy soliq identifikatsiya raqami. Germaniyada ro‘yxatdan o‘tgandan keyin u odatda avtomatik ravishda pochta orqali yuboriladi. Agar yo‘qolsa yoki kelmasa, BZSt orqali qayta so‘rash mumkin.",
+            de: "Die Steuer-ID ist eine elfstellige und dauerhaft gültige persönliche Identifikationsnummer. Nach der Anmeldung wird sie grundsätzlich automatisch per Post mitgeteilt. Bei Verlust oder ausbleibender Mitteilung kann sie beim BZSt erneut angefordert werden.",
+          },
+          {
+            uz: "Bank hisobini ochishda pasport, viza yoki Aufenthaltstitel, Meldebescheinigung va ba’zan Steuer-ID so‘raladi. Shartlar bankka qarab farq qiladi. Hisob narxi, naqd pul yechish, karta turi va xorijga pul o‘tkazish xarajatlarini solishtiring.",
+            de: "Für die Kontoeröffnung werden häufig Pass, Visum oder Aufenthaltstitel, Meldebescheinigung und teilweise Steuer-ID verlangt. Konditionen unterscheiden sich je nach Bank. Vergleichen Sie Kontoführung, Bargeldabhebung, Kartenart und Auslandsüberweisungen.",
+          },
+          {
+            uz: "Ish beruvchiga odatda Steuer-ID, bank IBANi, Krankenkasse ma’lumoti, Sozialversicherungsnummer va oilaviy holatga oid ayrim ma’lumotlar kerak bo‘ladi. Noma’lum shaxsga bu ma’lumotlarni messenjer orqali yubormang.",
+            de: "Arbeitgeber benötigen regelmäßig Steuer-ID, IBAN, Krankenkasse, Sozialversicherungsnummer und bestimmte Angaben zum Familienstand. Senden Sie solche Daten nicht über Messenger an unbekannte Personen.",
+          },
+        ],
+        items: [
+          {
+            uz: "Steuer-ID va Steuernummer bir xil emas.",
+            de: "Steuer-ID und Steuernummer sind nicht dasselbe.",
+          },
+          {
+            uz: "IBANni yuborishdan oldin ish beruvchining rasmiy kontaktini tekshiring.",
+            de: "Prüfen Sie vor Übermittlung der IBAN den offiziellen Kontakt des Arbeitgebers.",
+          },
+          {
+            uz: "Bank akkaunti uchun ikki bosqichli himoyani yoqing.",
+            de: "Aktivieren Sie für das Bankkonto eine Zwei-Faktor-Authentifizierung.",
+          },
+          {
+            uz: "PIN, TAN va internet-bank parolini hech kimga bermang.",
+            de: "Geben Sie PIN, TAN und Onlinebanking-Passwort niemals weiter.",
+          },
+        ],
+      },
+      conditions: {
+        title: {
+          uz: "Sug‘urta, Aufenthaltstitel va kundalik xizmatlar",
+          de: "Krankenversicherung, Aufenthaltstitel und Alltag",
+        },
+        paragraphs: [
+          {
+            uz: "Germaniyada tibbiy sug‘urta majburiy. Ish bilan kelganlarda ish beruvchi tanlangan Krankenkassega ro‘yxatdan o‘tkazish ma’lumotlarini yuboradi; talabalar, oila a’zolari, Chancenkarte egalari va mustaqil shaxslar uchun jarayon boshqacha bo‘lishi mumkin.",
+            de: "In Deutschland besteht Krankenversicherungspflicht. Bei Beschäftigten meldet der Arbeitgeber die Daten an die gewählte Krankenkasse; für Studierende, Familienangehörige, Inhaber einer Chancenkarte und Selbstständige kann das Verfahren anders aussehen.",
+          },
+          {
+            uz: "Milliy vizangiz butun rejalashtirilgan muddatni qamramasa, viza tugashidan oldin Ausländerbehördeda Aufenthaltstitelga murojaat qiling. Termin topilmasa, muddat tugashidan oldin ariza yoki rasmiy murojaat yuborganingizni isbotlay oladigan usuldan foydalaning.",
+            de: "Deckt das nationale Visum nicht den gesamten geplanten Aufenthalt ab, beantragen Sie vor Ablauf bei der Ausländerbehörde den Aufenthaltstitel. Ist kein Termin verfügbar, nutzen Sie vor Fristablauf einen nachweisbaren offiziellen Antrags- oder Kontaktweg.",
+          },
+          {
+            uz: "Telefon uchun Prepaid, oylik shartnoma yoki eSIM tanlash mumkin. Uzoq shartnoma tuzishdan oldin muddat, Kündigungsfrist, internet hajmi, roaming va aktivlashtirish to‘lovini tekshiring.",
+            de: "Für Mobilfunk stehen Prepaid, Laufzeitvertrag oder eSIM zur Verfügung. Prüfen Sie vor Vertragsabschluss Laufzeit, Kündigungsfrist, Datenvolumen, Roaming und Aktivierungsgebühren.",
+          },
+          {
+            uz: "Jamoat transporti uchun mahalliy tarif yoki Deutschlandticket mos kelishi mumkin. Deutschlandticket shaxsiy va odatda obuna shaklida bo‘lgani sabab bekor qilish sanasi hamda foydalanish shartlarini tekshiring.",
+            de: "Für den Nahverkehr können lokale Tarife oder das Deutschlandticket geeignet sein. Da das Deutschlandticket personengebunden und grundsätzlich ein Abonnement ist, sollten Kündigungsfrist und Nutzungsbedingungen geprüft werden.",
+          },
+        ],
+        items: [
+          {
+            uz: "Ausländerbehördega yuborgan email, portal arizasi va avtomatik tasdiqlarni saqlang.",
+            de: "Bewahren Sie E-Mails, Portalanträge und automatische Bestätigungen der Ausländerbehörde auf.",
+          },
+          {
+            uz: "Fiktionsbescheinigung avtomatik berilmaydi; uning kerakligi va huquqiy ta’siri individual holatga bog‘liq.",
+            de: "Eine Fiktionsbescheinigung wird nicht automatisch erteilt; Erforderlichkeit und Wirkung hängen vom Einzelfall ab.",
+          },
+          {
+            uz: "eAT karta kelguncha pasport va amaldagi viza yoki vaqtinchalik hujjatni xavfsiz saqlang.",
+            de: "Bewahren Sie bis zum Erhalt des eAT Pass und gültiges Visum oder vorläufigen Nachweis sicher auf.",
+          },
+          {
+            uz: "Reglementierte kasblarda ishlash uchun alohida Anerkennung yoki Berufserlaubnis kerak bo‘lishi mumkin.",
+            de: "Für reglementierte Berufe können zusätzlich Anerkennung oder Berufserlaubnis erforderlich sein.",
+          },
+        ],
+      },
+      warnings: {
+        title: {
+          uz: "Rundfunkbeitrag, firibgarlik va ko‘p uchraydigan xatolar",
+          de: "Rundfunkbeitrag, Betrug und häufige Fehler",
+        },
+        paragraphs: [
+          {
+            uz: "Rundfunkbeitrag har bir xonadon uchun bir marta to‘lanadi — uyda nechta kishi yashashidan qat’i nazar. Hozirgi miqdor oyiga 18,36 yevro. WG yoki oilada boshqa shaxs allaqachon to‘layotgan bo‘lsa, uning Beitragsnummeri orqali o‘zingizni shu xonadonga biriktirish kerak.",
+            de: "Der Rundfunkbeitrag fällt einmal pro Wohnung an, unabhängig von der Zahl der Bewohner. Derzeit beträgt er 18,36 Euro monatlich. Zahlt in WG oder Familie bereits eine Person, muss die Zuordnung über deren Beitragsnummer erfolgen.",
+          },
+          {
+            uz: "Anmeldungdan keyin bank, sug‘urta, Rundfunkbeitrag yoki boshqa tashkilot nomidan soxta xatlar va phishing xabarlari kelishi mumkin. To‘lovdan oldin jo‘natuvchi, IBAN, domen va rasmiy akkauntni tekshiring.",
+            de: "Nach der Anmeldung können gefälschte Schreiben oder Phishing-Nachrichten im Namen von Banken, Versicherungen, Rundfunkbeitrag oder anderen Stellen auftreten. Prüfen Sie vor Zahlung Absender, IBAN, Domain und offizielles Konto.",
+          },
+        ],
+        items: [
+          {
+            uz: "Anmeldungni kechiktirmang va Wohnungsgeberbestätigungni oldindan so‘rang.",
+            de: "Verzögern Sie die Anmeldung nicht und fordern Sie die Wohnungsgeberbestätigung rechtzeitig an.",
+          },
+          {
+            uz: "Viza tugash sanasini kalendarga yozing va Ausländerbehörde jarayonini erta boshlang.",
+            de: "Notieren Sie das Visumablaufdatum und beginnen Sie das Verfahren bei der Ausländerbehörde frühzeitig.",
+          },
+          {
+            uz: "Sug‘urtadagi bo‘shliq katta tibbiy va moliyaviy xavf tug‘diradi.",
+            de: "Eine Versicherungslücke verursacht erhebliche medizinische und finanzielle Risiken.",
+          },
+          {
+            uz: "Uy yoki ish topish uchun oldindan noma’lum shaxsga katta depozit yubormang.",
+            de: "Überweisen Sie unbekannten Personen nicht vorschnell hohe Kautionen für Wohnung oder Arbeit.",
+          },
+          {
+            uz: "Pasport, Aufenthaltstitel, Steuer-ID va bank ma’lumotlarini ochiq guruhda ulashmang.",
+            de: "Teilen Sie Pass, Aufenthaltstitel, Steuer-ID und Bankdaten nicht in offenen Gruppen.",
+          },
+          {
+            uz: "Rasmiy xatlarni e’tiborsiz qoldirmang; javob muddati bo‘lsa kalendarga kiriting.",
+            de: "Ignorieren Sie behördliche Schreiben nicht; tragen Sie Antwortfristen in den Kalender ein.",
+          },
+        ],
+      },
+    },
+    steps: [
+      {
+        title: {
+          uz: "Viza va hujjatlarni tekshiring",
+          de: "Visum und Unterlagen prüfen",
+        },
+        description: {
+          uz: "Viza muddati, maqsadi va shaxsiy ma’lumotlarni tekshirib, muhim hujjatlarning nusxalarini yarating.",
+          de: "Prüfen Sie Gültigkeit, Zweck und Personendaten des Visums und erstellen Sie Kopien wichtiger Unterlagen.",
+        },
+      },
+      {
+        title: {
+          uz: "Anmeldung terminini oling",
+          de: "Termin zur Anmeldung buchen",
+        },
+        description: {
+          uz: "Ko‘chib kirgandan keyin ikki haftalik muddatni hisobga olib Bürgeramt yoki onlayn xizmat orqali ro‘yxatdan o‘tishni boshlang.",
+          de: "Beginnen Sie unter Beachtung der Zweiwochenfrist die Anmeldung beim Bürgeramt oder über den verfügbaren Onlinedienst.",
+        },
+      },
+      {
+        title: {
+          uz: "Wohnungsgeberbestätigungni oling",
+          de: "Wohnungsgeberbestätigung erhalten",
+        },
+        description: {
+          uz: "Uy egasi yoki vakolatli Wohnungsgeberdan to‘g‘ri to‘ldirilgan tasdiqni so‘rang.",
+          de: "Fordern Sie vom Vermieter oder berechtigten Wohnungsgeber eine korrekt ausgefüllte Bestätigung an.",
+        },
+      },
+      {
+        title: {
+          uz: "Sug‘urtani faollashtiring",
+          de: "Krankenversicherung aktivieren",
+        },
+        description: {
+          uz: "Viza va ish/o‘qish holatingizga mos Krankenkasse yoki xususiy sug‘urta jarayonini yakunlang.",
+          de: "Schließen Sie entsprechend Visum, Beschäftigung oder Studium die gesetzliche oder private Krankenversicherung ab.",
+        },
+      },
+      {
+        title: {
+          uz: "Bank hisobi va aloqa vositasini tashkil qiling",
+          de: "Bankkonto und Mobilfunk einrichten",
+        },
+        description: {
+          uz: "Shartlarni solishtirib bank hisobi oching va ehtiyojga mos Prepaid yoki shartnoma tanlang.",
+          de: "Vergleichen Sie Konditionen, eröffnen Sie ein Bankkonto und wählen Sie Prepaid oder Vertrag passend zum Bedarf.",
+        },
+      },
+      {
+        title: {
+          uz: "Steuer-ID va ish hujjatlarini kuzating",
+          de: "Steuer-ID und Beschäftigungsdaten verfolgen",
+        },
+        description: {
+          uz: "Steuer-ID kelishini kuting va ish beruvchiga kerakli ma’lumotlarni xavfsiz yuboring.",
+          de: "Warten Sie die Steuer-ID ab und übermitteln Sie erforderliche Daten sicher an den Arbeitgeber.",
+        },
+      },
+      {
+        title: {
+          uz: "Aufenthaltstitelga erta murojaat qiling",
+          de: "Aufenthaltstitel frühzeitig beantragen",
+        },
+        description: {
+          uz: "Milliy viza tugashidan oldin mas’ul Ausländerbehörde tartibini aniqlang va arizani hujjatlashtirilgan tarzda yuboring.",
+          de: "Klären Sie vor Ablauf des nationalen Visums das Verfahren der zuständigen Ausländerbehörde und reichen Sie den Antrag nachweisbar ein.",
+        },
+      },
+      {
+        title: {
+          uz: "Rundfunkbeitrag holatini tekshiring",
+          de: "Rundfunkbeitrag klären",
+        },
+        description: {
+          uz: "Xonadon allaqachon ro‘yxatdan o‘tgan bo‘lsa Beitragsnummerni oling; aks holda rasmiy saytda ro‘yxatdan o‘ting.",
+          de: "Ist die Wohnung bereits angemeldet, nutzen Sie die Beitragsnummer; andernfalls melden Sie sie offiziell an.",
+        },
+      },
+      {
+        title: {
+          uz: "Favqulodda raqamlarni saqlang",
+          de: "Notrufnummern speichern",
+        },
+        description: {
+          uz: "112, 110 va 116117 raqamlarini telefoningizga saqlang va qaysi vaziyatda ishlatilishini biling.",
+          de: "Speichern Sie 112, 110 und 116117 und kennen Sie den jeweiligen Verwendungszweck.",
+        },
+      },
+    ],
+    faq: [
+      {
+        question: {
+          uz: "Anmeldungni qachon qilish kerak?",
+          de: "Wann muss ich meinen Wohnsitz anmelden?",
+        },
+        answer: {
+          uz: "Yangi uyga ko‘chib kirgandan keyin odatda ikki hafta ichida. Aniq termin va onlayn imkoniyat shahar yoki Gemeinde bo‘yicha farq qiladi.",
+          de: "Grundsätzlich innerhalb von zwei Wochen nach Einzug. Termin- und Onlineverfahren unterscheiden sich je nach Stadt oder Gemeinde.",
+        },
+      },
+      {
+        question: {
+          uz: "Ijara shartnomasi Wohnungsgeberbestätigung o‘rnini bosadimi?",
+          de: "Ersetzt der Mietvertrag die Wohnungsgeberbestätigung?",
+        },
+        answer: {
+          uz: "Yo‘q. Rasmiy Anmeldung uchun odatda alohida Wohnungsgeberbestätigung kerak.",
+          de: "Nein. Für die Anmeldung wird grundsätzlich eine gesonderte Wohnungsgeberbestätigung benötigt.",
+        },
+      },
+      {
+        question: {
+          uz: "Steuer-IDni qayerdan olaman?",
+          de: "Woher bekomme ich die Steuer-ID?",
+        },
+        answer: {
+          uz: "Anmeldungdan keyin u odatda avtomatik ravishda pochta orqali yuboriladi. Kelmasa yoki yo‘qolsa BZSt orqali qayta so‘rash mumkin.",
+          de: "Nach der Anmeldung wird sie grundsätzlich automatisch per Post mitgeteilt. Bei Verlust oder ausbleibender Mitteilung kann sie beim BZSt erneut angefordert werden.",
+        },
+      },
+      {
+        question: {
+          uz: "Steuer-ID va Steuernummer bir xilmi?",
+          de: "Sind Steuer-ID und Steuernummer dasselbe?",
+        },
+        answer: {
+          uz: "Yo‘q. Steuer-ID shaxsga umrbod biriktirilgan 11 xonali raqam; Steuernummer esa Finanzamt va soliq holatiga bog‘liq.",
+          de: "Nein. Die Steuer-ID ist eine dauerhaft persönliche elfstellige Nummer; die Steuernummer hängt von Finanzamt und steuerlichem Vorgang ab.",
+        },
+      },
+      {
+        question: {
+          uz: "Mehmonxonada Anmeldung qilish mumkinmi?",
+          de: "Kann ich mich in einem Hotel anmelden?",
+        },
+        answer: {
+          uz: "Har doim emas. Turar joy ro‘yxatdan o‘tishga ruxsat berishi va Wohnungsgeberbestätigung taqdim etishi kerak.",
+          de: "Nicht immer. Die Unterkunft muss eine Anmeldung ermöglichen und eine Wohnungsgeberbestätigung ausstellen können.",
+        },
+      },
+      {
+        question: {
+          uz: "Vizam tugashidan oldin Ausländerbehörde termini topilmasa nima qilaman?",
+          de: "Was tun, wenn vor Visumablauf kein Termin verfügbar ist?",
+        },
+        answer: {
+          uz: "Viza tugashidan oldin idoraning rasmiy portal, forma, email yoki boshqa ko‘rsatgan yo‘li orqali arizani yuboring va yuborilganini isbotlovchi tasdiqni saqlang.",
+          de: "Reichen Sie vor Visumablauf über Portal, Formular, E-Mail oder den offiziell vorgegebenen Weg einen nachweisbaren Antrag ein und bewahren Sie die Bestätigung auf.",
+        },
+      },
+      {
+        question: {
+          uz: "Rundfunkbeitragni WGdagi har bir odam to‘laydimi?",
+          de: "Zahlt in einer WG jede Person den Rundfunkbeitrag?",
+        },
+        answer: {
+          uz: "Yo‘q. Bir xonadon uchun bir marta to‘lanadi. Boshqa yashovchi to‘layotgan bo‘lsa, uning Beitragsnummeri bilan xonadonga bog‘lanasiz.",
+          de: "Nein. Der Beitrag fällt einmal pro Wohnung an. Zahlt bereits ein Mitbewohner, erfolgt die Zuordnung über dessen Beitragsnummer.",
+        },
+      },
+      {
+        question: {
+          uz: "Qaysi favqulodda raqamga qo‘ng‘iroq qilaman?",
+          de: "Welche Notrufnummer nutze ich?",
+        },
+        answer: {
+          uz: "Hayot uchun xavf, tez yordam yoki yong‘in uchun 112; politsiya favqulodda holati uchun 110; shoshilinch, lekin hayot uchun xavfli bo‘lmagan tibbiy yordam uchun 116117.",
+          de: "112 bei Lebensgefahr, Rettungsdienst oder Feuerwehr; 110 bei Polizeinotfällen; 116117 bei dringenden, aber nicht lebensbedrohlichen medizinischen Beschwerden.",
+        },
+      },
+      {
+        question: {
+          uz: "Deutschlandticket avtomatik bekor bo‘ladimi?",
+          de: "Endet das Deutschlandticket automatisch?",
+        },
+        answer: {
+          uz: "Odatda yo‘q, u obuna hisoblanadi. Sotuvchi tashkilotning Kündigungsfrist va bekor qilish qoidalarini tekshiring.",
+          de: "Grundsätzlich nein, da es sich um ein Abonnement handelt. Prüfen Sie Kündigungsfrist und Stornierungsregeln des jeweiligen Anbieters.",
+        },
+      },
+    ],
+    sources: [
+      {
+        title: "Wohnsitz anmelden",
+        organization: "Bundesportal",
+        url: "https://verwaltung.bund.de/leistungsverzeichnis/de/leistung/99115005104000",
+        language: "de",
+      },
+      {
+        title: "Housing and registration",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/living-in-germany/housing-mobility/housing-registration",
+        language: "en",
+      },
+      {
+        title: "Steuerliche Identifikationsnummer",
+        organization: "Bundeszentralamt für Steuern",
+        url: "https://www.bzst.de/DE/Privatpersonen/SteuerlicheIdentifikationsnummer/steuerlicheidentifikationsnummer_node.html",
+        language: "de",
+      },
+      {
+        title: "Health insurance",
+        organization: "Make it in Germany",
+        url: "https://www.make-it-in-germany.com/en/living-in-germany/money-insurance/health-insurance",
+        language: "en",
+      },
+      {
+        title: "Der Rundfunkbeitrag",
+        organization: "ARD ZDF Deutschlandradio Beitragsservice",
+        url: "https://www.rundfunkbeitrag.de/",
+        language: "de",
+      },
+      {
+        title: "Ärztlicher Bereitschaftsdienst",
+        organization: "116117",
+        url: "https://www.116117.de/de/aerztlicher-bereitschaftsdienst.php",
+        language: "de",
+      },
+      {
+        title: "Deutschlandticket",
+        organization: "Deutsche Bahn",
+        url: "https://www.bahn.de/angebot/regio/deutschland-ticket",
+        language: "de",
+      },
+    ],
+    relatedArticleSlugs: [
+      "national-visa",
+      "visa-appointment",
+      "spouse-reunification",
+      "eu-blue-card-family-reunification",
+      "child-family-reunification",
+    ],
+  },
 ];
 
 function localizeArticle(
