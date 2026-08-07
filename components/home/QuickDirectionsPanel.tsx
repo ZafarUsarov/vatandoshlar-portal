@@ -86,10 +86,8 @@ export default function QuickDirectionsPanel({
               <span className="flex items-start justify-between gap-3">
                 <span
                   className={[
-                    "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition",
-                    item.featured
-                      ? "bg-emerald-500 text-white"
-                      : "bg-emerald-400/10 text-emerald-300 group-hover:bg-emerald-500 group-hover:text-white",
+                    "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-emerald-400/15 bg-emerald-400/10 text-emerald-300 transition-colors duration-300",
+                    "group-hover:border-emerald-500 group-hover:bg-emerald-500 group-hover:text-white",
                   ].join(" ")}
                 >
                   {item.icon}
