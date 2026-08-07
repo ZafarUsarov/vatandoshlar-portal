@@ -580,7 +580,8 @@
     "bottom": {
       "copyright": "© {year} Vatandoshlar.de. Alle Rechte vorbehalten.",
       "disclaimer": "Das Portal ersetzt keine Rechts-, Steuer- oder Migrationsberatung.",
-      "backToTop": "Nach oben"
+      "backToTop": "Nach oben",
+      "support": "Projekt unterstützen"
     },
     "accessibility": {
       "homeLink": "Zur Startseite von Vatandoshlar.de",
@@ -834,5 +835,51 @@
         "facebook": "Facebook"
       }
     }
+  },
+  "SupportPage": {
+    "metadata": {
+      "title": "Zum Projekt beitragen | Vatandoshlar.de",
+      "description": "Möglichkeiten, freiwillig zu Hosting, Domain und Weiterentwicklung von Vatandoshlar.de beizutragen."
+    },
+    "hero": {
+      "badge": "Zum Projekt beitragen",
+      "title": "Sie können freiwillig zur Weiterentwicklung von Vatandoshlar.de beitragen",
+      "description": "Wenn Sie Vatandoshlar.de hilfreich finden, können Sie sich freiwillig an den Kosten für Hosting, Domain und die Weiterentwicklung der Plattform beteiligen.",
+      "voluntary": "Jeder Beitrag ist freiwillig. Ein Beitrag ist keine Voraussetzung für die Nutzung der Informationen und grundlegenden Funktionen der Plattform."
+    },
+    "costs": {
+      "title": "Wofür werden Beiträge verwendet?",
+      "items": {
+        "hosting": {
+          "title": "Hosting",
+          "description": "Kosten für den stabilen Betrieb der Website und ihrer Dienste."
+        },
+        "domain": {
+          "title": "Domain",
+          "description": "Kosten für die Domain Vatandoshlar.de und die dazugehörige technische Infrastruktur."
+        },
+        "development": {
+          "title": "Weiterentwicklung",
+          "description": "Neue Funktionen, nützliche Inhalte und technische Verbesserungen der Plattform."
+        }
+      }
+    },
+    "options": {
+      "title": "Möglichkeiten beizutragen",
+      "description": "Wählen Sie einfach die für Sie passende Möglichkeit.",
+      "paypal": {
+        "name": "PayPal",
+        "description": "Freiwilliger Beitrag über PayPal aus Deutschland und anderen Ländern.",
+        "action": "Über PayPal beitragen",
+        "noteTitle": "Zahlungsnotiz",
+        "note": "Wenn Sie möchten, können Sie bei einer PayPal-Zahlung als Notiz „Für das Projekt Vatandoshlar.de“ angeben."
+      },
+      "taps": {
+        "name": "Taps",
+        "description": "Freiwilliger Beitrag aus Usbekistan über Taps.",
+        "action": "Aus Usbekistan über Taps beitragen"
+      }
+    },
+    "privacy": "Die Zahlung erfolgt direkt über PayPal oder Taps. Vatandoshlar.de erhält und speichert keine Karten- oder Bankdaten."
   }
 }

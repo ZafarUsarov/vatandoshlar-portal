@@ -212,6 +212,52 @@ function FacebookIcon({ className }: IconProps) {
   );
 }
 
+
+function HeartIcon({ className }: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M20.8 5.8a5 5 0 0 0-7.1 0L12 7.5l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21l8.8-8.1a5 5 0 0 0 0-7.1Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+    </svg>
+  );
+}
+
+function UserIcon({ className }: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        cx="12"
+        cy="8"
+        r="3.25"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <path
+        d="M5.5 19.5v-1.25A5.75 5.75 0 0 1 11.25 12.5h1.5a5.75 5.75 0 0 1 5.75 5.75v1.25"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+    </svg>
+  );
+}
+
 export default async function Footer() {
   const t = await getTranslations("Footer");
   const locale = (await getLocale()) as SupportedFooterLocale;
@@ -234,6 +280,16 @@ export default async function Footer() {
           telegramLabel: "Vatandoshlar.de Telegram sahifasi",
           instagramLabel: "Vatandoshlar.de Instagram sahifasi",
           facebookLabel: "Vatandoshlar.de Facebook sahifasi",
+          supportEyebrow: "Loyihaga hissa qo‘shish",
+          supportTitle: "Vatandoshlar.de siz uchun foydalimi?",
+          supportDescription:
+            "Agar loyihani foydali deb bilsangiz, hosting, domen va platformani rivojlantirish xarajatlariga ixtiyoriy hissa qo‘shishingiz mumkin.",
+          supportAction: "Hissa qo‘shish",
+          founderEyebrow: "Loyiha ortidagi inson",
+          founderTitle: "Loyiha asoschisi",
+          founderDescription:
+            "Vatandoshlar.de asoschisi va dasturchisi Zafar Usarov haqida batafsil ma’lumot oling.",
+          founderAction: "Zafar Usarov haqida",
         }
       : {
           founder: "Projektgründer",
@@ -250,6 +306,16 @@ export default async function Footer() {
           telegramLabel: "Vatandoshlar.de auf Telegram",
           instagramLabel: "Vatandoshlar.de auf Instagram",
           facebookLabel: "Vatandoshlar.de auf Facebook",
+          supportEyebrow: "Zum Projekt beitragen",
+          supportTitle: "Ist Vatandoshlar.de für Sie hilfreich?",
+          supportDescription:
+            "Wenn Sie das Projekt hilfreich finden, können Sie freiwillig zu den Kosten für Hosting, Domain und die Weiterentwicklung der Plattform beitragen.",
+          supportAction: "Beitrag leisten",
+          founderEyebrow: "Die Person hinter dem Projekt",
+          founderTitle: "Projektgründer",
+          founderDescription:
+            "Erfahren Sie mehr über Zafar Usarov, Gründer und Entwickler von Vatandoshlar.de.",
+          founderAction: "Über Zafar Usarov",
         };
 
   return (
@@ -453,6 +519,86 @@ export default async function Footer() {
           </div>
         </div>
 
+        <div className="mt-12 grid gap-5 sm:mt-16 lg:grid-cols-2">
+          <div className="group relative overflow-hidden rounded-[2rem] border border-emerald-200/80 bg-gradient-to-br from-emerald-50 via-white to-cyan-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/10 dark:border-emerald-400/15 dark:from-emerald-500/[0.09] dark:via-slate-900 dark:to-cyan-500/[0.06] sm:p-7 lg:p-8">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-16 -top-16 size-44 rounded-full bg-emerald-400/15 blur-3xl transition-transform duration-500 group-hover:scale-125"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-20 left-1/3 size-40 rounded-full bg-cyan-400/10 blur-3xl"
+            />
+
+            <div className="relative flex h-full flex-col">
+              <div className="flex items-center gap-3">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-600/20">
+                  <HeartIcon className="size-5" />
+                </span>
+
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">
+                  {localCopy.supportEyebrow}
+                </p>
+              </div>
+
+              <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
+                {localCopy.supportTitle}
+              </h3>
+
+              <p className="mt-3 flex-1 text-sm leading-7 text-slate-600 dark:text-slate-400">
+                {localCopy.supportDescription}
+              </p>
+
+              <Link
+                href="/support"
+                className="group/link mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950"
+              >
+                {localCopy.supportAction}
+                <ArrowUpRightIcon className="size-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="group relative overflow-hidden rounded-[2rem] border border-violet-200/80 bg-gradient-to-br from-violet-50 via-white to-sky-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 dark:border-violet-400/15 dark:from-violet-500/[0.08] dark:via-slate-900 dark:to-sky-500/[0.05] sm:p-7 lg:p-8">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-16 -top-16 size-44 rounded-full bg-violet-400/15 blur-3xl transition-transform duration-500 group-hover:scale-125"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-20 left-1/3 size-40 rounded-full bg-sky-400/10 blur-3xl"
+            />
+
+            <div className="relative flex h-full flex-col">
+              <div className="flex items-center gap-3">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-violet-600 text-white shadow-lg shadow-violet-600/20">
+                  <UserIcon className="size-5" />
+                </span>
+
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-700 dark:text-violet-300">
+                  {localCopy.founderEyebrow}
+                </p>
+              </div>
+
+              <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
+                {localCopy.founderTitle}
+              </h3>
+
+              <p className="mt-3 flex-1 text-sm leading-7 text-slate-600 dark:text-slate-400">
+                {localCopy.founderDescription}
+              </p>
+
+              <Link
+                href="/about/founder"
+                className="group/link mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-violet-200 bg-white/90 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-violet-300 hover:text-violet-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-violet-400/20 dark:bg-white/[0.06] dark:text-white dark:hover:border-violet-400/30 dark:hover:text-violet-300 dark:focus-visible:ring-offset-slate-950"
+              >
+                {localCopy.founderAction}
+                <ArrowUpRightIcon className="size-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
         <div className="mt-12 flex flex-col gap-5 border-t border-slate-200 pt-8 dark:border-white/[0.08] sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-500">
             {t("bottom.copyright", {
@@ -461,13 +607,6 @@ export default async function Footer() {
           </p>
 
           <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:gap-x-5">
-            <Link
-              href="/about/founder"
-              className="text-xs font-semibold text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:text-emerald-700 dark:text-slate-300 dark:hover:text-emerald-300 dark:focus-visible:text-emerald-300"
-            >
-              {localCopy.founder}
-            </Link>
-
             <p className="max-w-xl text-xs leading-5 text-slate-500">
               {t("bottom.disclaimer")}
             </p>

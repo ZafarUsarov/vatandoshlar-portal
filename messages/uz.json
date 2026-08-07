@@ -580,7 +580,8 @@
     "bottom": {
       "copyright": "© {year} Vatandoshlar.de. Barcha huquqlar himoyalangan.",
       "disclaimer": "Portal yuridik, soliq yoki migratsion maslahat o‘rnini bosmaydi.",
-      "backToTop": "Yuqoriga"
+      "backToTop": "Yuqoriga",
+      "support": "Loyihaga hissa qo‘shish"
     },
     "accessibility": {
       "homeLink": "Vatandoshlar.de bosh sahifasi",
@@ -834,5 +835,51 @@
         "facebook": "Facebook"
       }
     }
+  },
+  "SupportPage": {
+    "metadata": {
+      "title": "Loyihaga hissa qo‘shish | Vatandoshlar.de",
+      "description": "Vatandoshlar.de hosting, domen va platformani rivojlantirish xarajatlariga ixtiyoriy hissa qo‘shish usullari."
+    },
+    "hero": {
+      "badge": "Loyihaga hissa qo‘shish",
+      "title": "Vatandoshlar.de rivojiga ixtiyoriy hissa qo‘shishingiz mumkin",
+      "description": "Agar Vatandoshlar.de loyihasini foydali deb bilsangiz, hosting, domen va platformani rivojlantirish xarajatlariga donat orqali o‘z hissangizni qo‘shishingiz mumkin.",
+      "voluntary": "Qo‘llab-quvvatlash to‘liq ixtiyoriy. Platformadagi ma’lumotlar va asosiy imkoniyatlardan foydalanish uchun hissa qo‘shish talab etilmaydi."
+    },
+    "costs": {
+      "title": "Hissa nimalarga yo‘naltiriladi?",
+      "items": {
+        "hosting": {
+          "title": "Hosting",
+          "description": "Sayt va uning xizmatlarini barqaror ishlatish xarajatlari."
+        },
+        "domain": {
+          "title": "Domen",
+          "description": "Vatandoshlar.de domeni va unga bog‘liq texnik xarajatlar."
+        },
+        "development": {
+          "title": "Platformani rivojlantirish",
+          "description": "Yangi funksiyalar, foydali kontent va texnik takomillashtirish ishlari."
+        }
+      }
+    },
+    "options": {
+      "title": "Hissa qo‘shish usullari",
+      "description": "O‘zingiz uchun qulay bo‘lgan usulni tanlashingiz mumkin.",
+      "paypal": {
+        "name": "PayPal",
+        "description": "Germaniya va boshqa davlatlardan PayPal orqali ixtiyoriy hissa qo‘shish.",
+        "action": "PayPal orqali hissa qo‘shish",
+        "noteTitle": "To‘lov izohi",
+        "note": "Agar xohlasangiz, PayPal orqali yuborayotganda izohga “Vatandoshlar.de loyihasi uchun” deb yozishingiz mumkin."
+      },
+      "taps": {
+        "name": "Taps",
+        "description": "O‘zbekistondan Taps orqali loyihaga ixtiyoriy hissa qo‘shish.",
+        "action": "O‘zbekistondan hissa qo‘shish"
+      }
+    },
+    "privacy": "To‘lov bevosita PayPal yoki Taps platformasida amalga oshiriladi. Vatandoshlar.de karta yoki bank ma’lumotlaringizni qabul qilmaydi va saqlamaydi."
   }
 }
