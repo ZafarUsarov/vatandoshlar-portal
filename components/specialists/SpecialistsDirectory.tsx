@@ -82,27 +82,15 @@ export default function SpecialistsDirectory({
   const [bundesland, setBundesland] = useState("all");
   const [verifiedOnly, setVerifiedOnly] =
     useState(false);
-  const [premiumOnly, setPremiumOnly] =
-    useState(false);
+  const [premiumOnly, setPremiumOnly] = useState(false);
 
   const bundeslandKeys = useMemo(
     () =>
-      Array.from(
-        new Set(
-          specialists
-            .map(
-              (specialist) =>
-                specialist.location?.bundesland,
-            )
-            .filter(
-              (value): value is string =>
-                Boolean(value),
-            ),
-        ),
-      ).sort((first, second) =>
-        first.localeCompare(second),
+      Object.keys(labels.bundeslaender).sort(
+        (first, second) =>
+          first.localeCompare(second, "de"),
       ),
-    [specialists],
+    [labels.bundeslaender],
   );
 
   const filteredSpecialists = useMemo(() => {
@@ -131,16 +119,13 @@ export default function SpecialistsDirectory({
 
       const matchesBundesland =
         bundesland === "all" ||
-        specialist.location?.bundesland ===
-          bundesland;
+        specialist.location?.bundesland === bundesland;
 
       const matchesVerified =
-        !verifiedOnly ||
-        specialist.status.verified;
+        !verifiedOnly || specialist.status.verified;
 
       const matchesPremium =
-        !premiumOnly ||
-        specialist.status.premium;
+        !premiumOnly || specialist.status.premium;
 
       return (
         matchesQuery &&
@@ -186,8 +171,7 @@ export default function SpecialistsDirectory({
           role="group"
         >
           {categories.map((option) => {
-            const isActive =
-              category === option.value;
+            const isActive = category === option.value;
 
             return (
               <button
@@ -240,9 +224,7 @@ export default function SpecialistsDirectory({
             >
               {labels.results.count.replace(
                 "{count}",
-                String(
-                  filteredSpecialists.length,
-                ),
+                String(filteredSpecialists.length),
               )}
             </p>
           </div>
@@ -250,19 +232,16 @@ export default function SpecialistsDirectory({
 
         {filteredSpecialists.length > 0 ? (
           <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {filteredSpecialists.map(
-              (specialist) => (
-                <SpecialistCard
-                  key={specialist.id}
-                  specialist={specialist}
-                  labels={{
-                    ...labels.card,
-                    categories:
-                      labels.categories,
-                  }}
-                />
-              ),
-            )}
+            {filteredSpecialists.map((specialist) => (
+              <SpecialistCard
+                key={specialist.id}
+                specialist={specialist}
+                labels={{
+                  ...labels.card,
+                  categories: labels.categories,
+                }}
+              />
+            ))}
           </div>
         ) : (
           <div className="mt-8 rounded-[2rem] border border-dashed border-slate-300 bg-slate-50 px-6 py-16 text-center dark:border-slate-700 dark:bg-slate-900/60 sm:px-10">
