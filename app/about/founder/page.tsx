@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import {
+  getLocale,
+  getTranslations,
+} from "next-intl/server";
 
 import Footer from "@/components/Footer";
 import FounderContent from "@/components/founder/FounderContent";
 import FounderHero from "@/components/founder/FounderHero";
 import Header from "@/components/Header";
 import { founderProfile } from "@/data/founder";
+
+type SupportedFounderLocale = "uz" | "de";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations(
@@ -21,6 +26,8 @@ export async function generateMetadata(): Promise<Metadata> {
       "Uzbekistan",
       "Deutschland",
       "Softwareentwickler",
+      "Software Engineer",
+      "Wirtschaftsinformatik",
       "Next.js",
     ],
     openGraph: {
@@ -33,9 +40,27 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function FounderPage() {
   const t = await getTranslations("FounderPage");
+  const locale =
+    (await getLocale()) as SupportedFounderLocale;
+
+  const professionalCopy =
+    locale === "uz"
+      ? {
+          storyParagraph:
+            "Hozirda Landesverband Bibliotheken SH e.V. tashkilotida Software Engineer sifatida faoliyat yuritaman. Shu bilan birga Wirtschaftsinformatik yo‘nalishida magistratura bosqichida tahsil olyapman. Amaliy dasturiy ta’minot ishlab chiqish tajribasi bilan biznes va axborot texnologiyalarini birlashtiruvchi akademik bilimlarni parallel rivojlantirib boraman.",
+          workDescription:
+            "Asosiy faoliyatim professional dasturiy mahsulotlar yaratish, raqamli jarayonlarni tushunarli yechimlarga aylantirish va foydalanuvchilarga amaliy yo‘naltirish berishga qaratilgan.",
+        }
+      : {
+          storyParagraph:
+            "Aktuell arbeite ich als Software Engineer beim Landesverband Bibliotheken SH e.V. und studiere parallel im Masterstudiengang Wirtschaftsinformatik. Dabei verbinde ich praktische Erfahrung in der Softwareentwicklung mit akademischem Wissen an der Schnittstelle von Wirtschaft und Informationstechnologie.",
+          workDescription:
+            "Meine Tätigkeit verbindet professionelle Softwareentwicklung, die Umsetzung verständlicher digitaler Lösungen und praktische Orientierung für Nutzerinnen und Nutzer.",
+        };
 
   const storyParagraphs = [
     t("story.paragraphs.0"),
+    professionalCopy.storyParagraph,
     t("story.paragraphs.1"),
   ];
 
@@ -92,9 +117,8 @@ export default async function FounderPage() {
             ),
             missionItems,
             workTitle: t("work.title"),
-            workDescription: t(
-              "work.description",
-            ),
+            workDescription:
+              professionalCopy.workDescription,
             workItems,
             technologiesTitle: t(
               "technologies.title",
