@@ -3,56 +3,58 @@ import { getLocale } from "next-intl/server";
 
 import Header from "../../components/Header";
 import ServiceCard from "../../components/cards/ServiceCard";
-import FeaturedSpecialistsSection from "../../components/home/FeaturedSpecialistsSection";
-import {
-  Card,
-  Container,
-  PageHero,
-  Section,
-  StatCard,
-} from "../../components/ui";
+import Card from "../../components/ui/Card";
+import Container from "../../components/ui/Container";
+import PageHero from "../../components/ui/PageHero";
+import Section from "../../components/ui/Section";
 import { getServices } from "../../data/services";
+import { Link } from "../../i18n/navigation";
 import type { SupportedContentLocale } from "../../types/service";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale =
     (await getLocale()) as SupportedContentLocale;
 
-  if (locale === "uz") {
-    return {
-      title: "Xizmatlar | Vatandoshlar.de",
-      description:
-        "Germaniyada tarjimon, soliq maslahatchisi, huquqiy yordam, shifokor va hunarmandlarni rasmiy manbalar orqali topish bo‘yicha yo‘riqnomalar.",
-    };
-  }
-
-  return {
-    title: "Dienstleistungen | Vatandoshlar.de",
-    description:
-      "Orientierung zur Suche nach Übersetzern, Steuerberatern, rechtlicher Hilfe, Ärzten und Handwerksbetrieben über offizielle Quellen in Deutschland.",
-  };
+  return locale === "uz"
+    ? {
+        title: "Xizmatlar | Vatandoshlar.de",
+        description:
+          "Germaniyada tarjima, huquq, soliq, tibbiyot, hunarmandchilik va boshqa xizmat yo‘nalishlarini topish hamda rasmiy manbalar orqali tekshirish bo‘yicha qo‘llanmalar.",
+      }
+    : {
+        title: "Dienstleistungen | Vatandoshlar.de",
+        description:
+          "Leitfäden zu Dienstleistungen in Deutschland: Übersetzung, Recht, Steuern, Medizin, Handwerk und weitere Bereiche finden und über offizielle Quellen prüfen.",
+      };
 }
 
 export default async function ServicesPage() {
   const locale =
     (await getLocale()) as SupportedContentLocale;
-
   const services = getServices(locale);
 
   const copy =
     locale === "uz"
       ? {
-          eyebrow: "Tekshirilgan yo‘nalishlar",
+          eyebrow: "Xizmatlar katalogi",
           title:
-            "Germaniyada ishonchli xizmatlarni rasmiy manbalar orqali toping",
+            "Germaniyada kerakli xizmat turini toping va rasmiy manbalar orqali tekshiring",
           description:
-            "Har bir yo‘nalishda xizmat ko‘rsatuvchini qayerdan qidirish, vakolatini qanday tekshirish va nimalarga e’tibor berish kerakligi tushuntiriladi.",
+            "Bu bo‘lim xizmat ko‘rsatuvchi odamlar katalogi emas. Bu yerda tarjima, huquq, soliq, tibbiyot, hunarmandchilik va boshqa xizmat yo‘nalishlari bo‘yicha qayerdan izlash, qanday tekshirish va nimalarga e’tibor berish kerakligi tushuntiriladi.",
           servicesCount: "Xizmat yo‘nalishi",
-          officialSources: "Rasmiy manba",
-          germanyWide: "Germaniya bo‘ylab",
-          listEyebrow: "Xizmatlar katalogi",
-          listTitle: "Kerakli yo‘nalishni tanlang",
+          officialSources: "Rasmiy tekshiruv",
+          germanyWide: "Bundesland",
+          listEyebrow: "Yo‘nalishlar",
+          listTitle: "Kerakli xizmat turini tanlang",
+          listDescription:
+            "Har bir karta alohida xizmat yo‘nalishiga olib boradi. U yerda xizmat tarkibi, rasmiy tekshirish usullari va muhim ogohlantirishlar beriladi.",
           details: "Batafsil",
+          distinctionEyebrow: "Muhim farq",
+          distinctionTitle:
+            "Xizmat va mutaxassis — ikki xil tushuncha",
+          distinctionDescription:
+            "Xizmat — siz izlayotgan yordam turi. Mutaxassis esa shu xizmatni ko‘rsatadigan shaxs yoki tashkilot. Mutaxassislarni alohida katalog orqali topishingiz mumkin.",
+          specialistsAction: "Mutaxassislar katalogini ochish",
           safetyEyebrow: "Xavfsiz foydalanish",
           safetyTitle:
             "Xizmat buyurtma qilishdan oldin tekshiring",
@@ -60,7 +62,7 @@ export default async function ServicesPage() {
             {
               title: "Vakolatni tekshiring",
               description:
-                "Mutaxassisning rasmiy ro‘yxatda borligini, litsenziyasi, manzili va aloqa ma’lumotlarini tekshiring.",
+                "Xizmat ko‘rsatuvchining rasmiy ro‘yxatda borligini, litsenziyasi, manzili va aloqa ma’lumotlarini tekshiring.",
             },
             {
               title: "Yozma narx oling",
@@ -80,17 +82,25 @@ export default async function ServicesPage() {
           ],
         }
       : {
-          eyebrow: "Geprüfte Orientierung",
+          eyebrow: "Dienstleistungsverzeichnis",
           title:
-            "Verlässliche Dienstleistungen in Deutschland über offizielle Quellen finden",
+            "Passende Dienstleistungen in Deutschland finden und über offizielle Quellen prüfen",
           description:
-            "Für jeden Bereich wird erklärt, wo Sie Anbieter suchen, Befugnisse prüfen und welche Sicherheitsaspekte Sie beachten sollten.",
+            "Dieser Bereich ist kein Personenverzeichnis. Hier erfahren Sie für Übersetzung, Recht, Steuern, Medizin, Handwerk und weitere Leistungsbereiche, wo Sie suchen, wie Sie Anbieter prüfen und worauf Sie achten sollten.",
           servicesCount: "Leistungsbereiche",
-          officialSources: "Offizielle Quellen",
-          germanyWide: "Deutschlandweit",
-          listEyebrow: "Dienstleistungsverzeichnis",
-          listTitle: "Wählen Sie den passenden Bereich",
+          officialSources: "Offizielle Prüfung",
+          germanyWide: "Bundesländer",
+          listEyebrow: "Bereiche",
+          listTitle: "Wählen Sie die passende Dienstleistung",
+          listDescription:
+            "Jede Karte führt zu einem eigenen Leistungsbereich mit Leistungsumfang, offiziellen Prüfmöglichkeiten und wichtigen Hinweisen.",
           details: "Details",
+          distinctionEyebrow: "Wichtiger Unterschied",
+          distinctionTitle:
+            "Dienstleistung und Fachkraft sind zwei verschiedene Dinge",
+          distinctionDescription:
+            "Eine Dienstleistung beschreibt die gesuchte Hilfe. Eine Fachkraft ist die Person oder Organisation, die diese Leistung anbietet. Fachkräfte finden Sie im separaten Verzeichnis.",
+          specialistsAction: "Fachkräfteverzeichnis öffnen",
           safetyEyebrow: "Sichere Nutzung",
           safetyTitle:
             "Vor der Beauftragung sorgfältig prüfen",
@@ -118,36 +128,50 @@ export default async function ServicesPage() {
           ],
         };
 
+  const heroStats = (
+    <>
+      <div className="rounded-3xl border border-border-default bg-surface-soft p-5 text-center">
+        <strong className="block text-3xl font-bold text-text-primary">
+          {services.length}
+        </strong>
+        <span className="mt-1 block text-sm text-text-muted">
+          {copy.servicesCount}
+        </span>
+      </div>
+
+      <div className="rounded-3xl border border-border-default bg-surface-soft p-5 text-center">
+        <strong className="block text-3xl font-bold text-text-primary">
+          ✓
+        </strong>
+        <span className="mt-1 block text-sm text-text-muted">
+          {copy.officialSources}
+        </span>
+      </div>
+
+      <div className="rounded-3xl border border-border-default bg-surface-soft p-5 text-center">
+        <strong className="block text-3xl font-bold text-text-primary">
+          16
+        </strong>
+        <span className="mt-1 block text-sm text-text-muted">
+          {copy.germanyWide}
+        </span>
+      </div>
+    </>
+  );
+
   return (
     <>
       <Header />
 
-      <main className="min-h-screen bg-white pt-24 text-slate-950 transition-colors lg:pt-28 dark:bg-slate-950 dark:text-white">
+      <main className="min-h-screen bg-page pt-20 text-foreground">
         <PageHero
           eyebrow={copy.eyebrow}
           title={copy.title}
           description={copy.description}
-          stats={
-            <>
-              <StatCard
-                value={String(services.length)}
-                label={copy.servicesCount}
-              />
-
-              <StatCard
-                value={String(services.length)}
-                label={copy.officialSources}
-              />
-
-              <StatCard
-                value="16"
-                label={copy.germanyWide}
-              />
-            </>
-          }
+          stats={heroStats}
         />
 
-        <Section>
+        <Section tone="page" spacing="xl">
           <Container>
             <div className="max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
@@ -157,6 +181,10 @@ export default async function ServicesPage() {
               <h2 className="mt-4 text-3xl font-bold tracking-[-0.04em] text-text-primary sm:text-4xl">
                 {copy.listTitle}
               </h2>
+
+              <p className="mt-5 text-base leading-8 text-text-secondary sm:text-lg">
+                {copy.listDescription}
+              </p>
             </div>
 
             <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
@@ -172,9 +200,36 @@ export default async function ServicesPage() {
           </Container>
         </Section>
 
-        <FeaturedSpecialistsSection />
+        <Section tone="muted" spacing="lg">
+          <Container>
+            <Card padding="lg">
+              <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+                <div className="max-w-3xl">
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                    {copy.distinctionEyebrow}
+                  </p>
 
-        <Section className="bg-surface-muted">
+                  <h2 className="mt-4 text-2xl font-bold tracking-[-0.035em] text-text-primary sm:text-3xl">
+                    {copy.distinctionTitle}
+                  </h2>
+
+                  <p className="mt-4 leading-7 text-text-secondary">
+                    {copy.distinctionDescription}
+                  </p>
+                </div>
+
+                <Link
+                  href="/specialists"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-brand px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-surface"
+                >
+                  {copy.specialistsAction}
+                </Link>
+              </div>
+            </Card>
+          </Container>
+        </Section>
+
+        <Section tone="muted" spacing="xl">
           <Container>
             <div className="max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
@@ -190,7 +245,8 @@ export default async function ServicesPage() {
               {copy.safetyItems.map((item, index) => (
                 <Card
                   key={item.title}
-                  className="p-6"
+                  variant="default"
+                  padding="md"
                 >
                   <span className="text-sm font-bold text-brand">
                     {String(index + 1).padStart(2, "0")}

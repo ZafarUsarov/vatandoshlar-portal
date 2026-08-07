@@ -63,20 +63,20 @@ export default async function ServicesSection() {
   const copy =
     locale === "uz"
       ? {
-          badge: "Ishonchli xizmatlar",
+          badge: "Xizmatlar katalogi",
           title:
-            "Kerakli mutaxassisni ishonchli va qulay toping",
+            "Kerakli xizmat turini tanlang va rasmiy manbalar orqali tekshiring",
           description:
-            "Tarjimon, huquqshunos, soliq maslahatchisi, shifokor yoki hunarmandni toping. Har bir xizmat sahifasida tekshirish usullari, rasmiy manbalar va foydali tavsiyalar jamlangan.",
+            "Tarjima, huquq, soliq, tibbiyot, hunarmandchilik va boshqa xizmat yo‘nalishlari bo‘yicha qayerdan izlash va qanday tekshirish kerakligini ko‘ring.",
           allServices: "Barcha xizmatlar",
           details: "Batafsil",
         }
       : {
-          badge: "Verlässliche Dienstleistungen",
+          badge: "Dienstleistungsverzeichnis",
           title:
-            "Passende Fachkräfte verlässlich und einfach finden",
+            "Passende Dienstleistung auswählen und über offizielle Quellen prüfen",
           description:
-            "Finden Sie Übersetzer, rechtliche Hilfe, Steuerberater, Ärzte oder Handwerksbetriebe. Jede Seite enthält Prüfschritte, offizielle Quellen und praktische Hinweise.",
+            "Erfahren Sie für Übersetzung, Recht, Steuern, Medizin, Handwerk und weitere Bereiche, wo Sie suchen und wie Sie Anbieter prüfen.",
           allServices: "Alle Dienstleistungen",
           details: "Details",
         };
