@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
   useState,
+  type MouseEvent,
   type ReactNode,
 } from "react";
 
@@ -361,6 +362,29 @@ export default function Header() {
     setIsMobileMenuOpen(false);
   }, []);
 
+  const isHomePage =
+    pathname === "/" ||
+    pathname === "/uz" ||
+    pathname === "/de";
+
+  const handleBrandClick = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      if (!isHomePage) {
+        return;
+      }
+
+      event.preventDefault();
+      setIsMobileMenuOpen(false);
+
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    },
+    [isHomePage],
+  );
+
   const openCommandPalette = useCallback(() => {
     setIsMobileMenuOpen(false);
 
@@ -494,6 +518,7 @@ export default function Header() {
         >
           <Link
             href="/"
+            onClick={handleBrandClick}
             aria-label={t("accessibility.homeLink")}
             className="group flex shrink-0 items-center gap-3"
           >
