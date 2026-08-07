@@ -102,6 +102,7 @@ export const specialists: ReadonlyArray<Specialist> = [
     code: "UZ-IT-0001",
     slug: "zafar-usarov",
     name: "Zafar Usarov",
+    avatarUrl: "/images/specialists/zafar-usarov.webp",
     profession: {
       uz: "Dasturiy ta’minot muhandisi va loyiha asoschisi",
       de: "Softwareentwickler und Projektgründer",
