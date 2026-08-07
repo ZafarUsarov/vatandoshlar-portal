@@ -1,3 +1,5 @@
+import type { SpecialistCategory } from "./specialist";
+
 export type PopularCategoryIcon =
   | "medical"
   | "legal"
@@ -8,12 +10,19 @@ export type PopularCategoryIcon =
   | "finance"
   | "creative";
 
-export type PopularCategoryMessageKey = PopularCategoryIcon;
+export type PopularCategoryMessageKey =
+  PopularCategoryIcon;
 
 export type PopularCategory = Readonly<{
-  id: string;
+  id: SpecialistCategory;
   messageKey: PopularCategoryMessageKey;
   icon: PopularCategoryIcon;
   href: string;
-  accent: "emerald" | "blue" | "violet" | "amber" | "cyan" | "rose";
+  accent:
+    | "emerald"
+    | "blue"
+    | "violet"
+    | "amber"
+    | "cyan"
+    | "rose";
 }>;

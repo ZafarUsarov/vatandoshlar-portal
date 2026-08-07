@@ -2,7 +2,9 @@ import { getTranslations } from "next-intl/server";
 
 import CategoryCard from "@/components/cards/CategoryCard";
 import { popularCategories } from "@/data/popular-categories";
+import { specialists } from "@/data/specialists";
 import { Link } from "@/i18n/navigation";
+import type { SpecialistCategory } from "@/types/specialist";
 
 type IconProps = Readonly<{
   className?: string;
@@ -46,7 +48,22 @@ function ArrowUpRightIcon({ className }: IconProps) {
 }
 
 export default async function PopularCategoriesSection() {
-  const t = await getTranslations("PopularCategoriesSection");
+  const t = await getTranslations(
+    "PopularCategoriesSection",
+  );
+
+  const activeCategoryIds =
+    new Set<SpecialistCategory>(
+      specialists
+        .filter(
+          (specialist) =>
+            specialist.profilePublished,
+        )
+        .flatMap(
+          (specialist) =>
+            specialist.categories,
+        ),
+    );
 
   return (
     <section
@@ -84,24 +101,44 @@ export default async function PopularCategoriesSection() {
             className="group hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 lg:inline-flex dark:border-white/10 dark:bg-white/[0.05] dark:text-white dark:hover:border-white/20 dark:focus-visible:ring-offset-slate-950"
           >
             {t("viewAll")}
+
             <ArrowUpRightIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
 
         <div className="mt-12 grid gap-5 sm:mt-16 md:grid-cols-2 xl:grid-cols-4">
-          {popularCategories.map((category, index) => (
-            <CategoryCard
-              key={category.id}
-              category={category}
-              title={t(`items.${category.messageKey}.title`)}
-              description={t(
-                `items.${category.messageKey}.description`,
-              )}
-              statusLabel={t("status.comingSoon")}
-              linkLabel={t("openCategory")}
-              index={index}
-            />
-          ))}
+          {popularCategories.map(
+            (category, index) => {
+              const isActive =
+                activeCategoryIds.has(
+                  category.id,
+                );
+
+              return (
+                <CategoryCard
+                  key={category.id}
+                  category={category}
+                  title={t(
+                    `items.${category.messageKey}.title`,
+                  )}
+                  description={t(
+                    `items.${category.messageKey}.description`,
+                  )}
+                  statusLabel={
+                    isActive
+                      ? undefined
+                      : t(
+                          "status.comingSoon",
+                        )
+                  }
+                  linkLabel={t(
+                    "openCategory",
+                  )}
+                  index={index}
+                />
+              );
+            },
+          )}
         </div>
 
         <div className="mt-10 flex justify-center lg:hidden">
@@ -110,6 +147,7 @@ export default async function PopularCategoriesSection() {
             className="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:border-white/10 dark:bg-white/[0.05] dark:text-white dark:hover:border-white/20 dark:focus-visible:ring-offset-slate-950"
           >
             {t("viewAll")}
+
             <ArrowUpRightIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
