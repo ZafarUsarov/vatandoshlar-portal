@@ -11,7 +11,7 @@ type CategoryCardProps = Readonly<{
   category: PopularCategory;
   title: string;
   description: string;
-  statusLabel: string;
+  statusLabel?: string;
   linkLabel: string;
   index?: number;
 }>;
@@ -217,9 +217,11 @@ export default function CategoryCard({
             <CategoryIcon icon={category.icon} />
           </span>
 
-          <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
-            {statusLabel}
-          </span>
+          {statusLabel && (
+            <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+              {statusLabel}
+            </span>
+          )}
         </div>
 
         <div className="mt-8">
