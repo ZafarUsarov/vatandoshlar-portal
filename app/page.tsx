@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import GuidePreviewSection from "../components/home/GuidePreviewSection";
 import JobsSection from "../components/JobsSection";
 import NewsSection from "../components/NewsSection";
+import PopularCategoriesSection from "../components/home/PopularCategoriesSection";
 import Reveal from "../components/Reveal";
 import SearchSection from "../components/SearchSection";
 import ServicesSection from "../components/ServicesSection";
@@ -11,7 +12,6 @@ import {
   FinalCtaSection,
   HeroSection,
   HomeFooter,
-  PopularCategoriesSection,
   StatisticsSection,
 } from "../components/home";
 
@@ -40,11 +40,11 @@ export default function HomePage() {
         </Reveal>
 
         <Reveal>
-          <NewsSection />
+          <ServicesSection />
         </Reveal>
 
         <Reveal>
-          <ServicesSection />
+          <NewsSection />
         </Reveal>
 
         <Reveal>
