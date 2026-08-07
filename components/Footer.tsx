@@ -5,16 +5,6 @@ import {
 
 import { Link } from "../i18n/navigation";
 
-type FooterLink = Readonly<{
-  label: string;
-  href: string;
-}>;
-
-type FooterColumn = Readonly<{
-  title: string;
-  links: ReadonlyArray<FooterLink>;
-}>;
-
 type SupportedFooterLocale = "uz" | "de";
 
 type IconProps = Readonly<{
@@ -167,6 +157,61 @@ function ArrowUpIcon({ className }: IconProps) {
   );
 }
 
+function TelegramIcon({ className }: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path d="M21.7 3.3a1.5 1.5 0 0 0-1.55-.23L3.2 9.6a1.55 1.55 0 0 0 .06 2.91l4.09 1.34 1.58 4.87a1.55 1.55 0 0 0 2.65.55l2.3-2.54 4.25 3.12a1.55 1.55 0 0 0 2.43-.95l2.03-14.12a1.5 1.5 0 0 0-.89-1.48ZM9.67 13.1l7.86-5.34-6.55 6.37-.73 2.78-.58-3.81Z" />
+    </svg>
+  );
+}
+
+function InstagramIcon({ className }: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <rect
+        x="3.5"
+        y="3.5"
+        width="17"
+        height="17"
+        rx="5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="4"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" />
+    </svg>
+  );
+}
+
+function FacebookIcon({ className }: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path d="M13.6 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.6 1.7-1.6H17V3.8c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V10H8v3h2.6v8h3Z" />
+    </svg>
+  );
+}
+
 export default async function Footer() {
   const t = await getTranslations("Footer");
   const locale = (await getLocale()) as SupportedFooterLocale;
@@ -175,92 +220,37 @@ export default async function Footer() {
   const localCopy =
     locale === "uz"
       ? {
-          guide: "Qo‘llanma",
-          guideResource: "Germaniya qo‘llanmasi",
           founder: "Loyiha asoschisi",
           guideCta: "Qo‘llanmani ochish",
           guideEyebrow: "Tekshirilgan ma’lumotlar",
           guideDescription:
             "Viza, hujjatlar, til, ta’lim, ish va integratsiya bo‘yicha tekshirilgan qo‘llanmalar.",
+          contactTitle: "Biz bilan bog‘lanish",
+          contactDescription:
+            "Savollaringiz, takliflaringiz yoki hamkorlik bo‘yicha biz bilan elektron pochta orqali bog‘lanishingiz mumkin.",
+          followUs: "Bizni kuzating",
+          followDescription:
+            "Vatandoshlar.de yangiliklari va foydali e’lonlarini rasmiy sahifalarimiz orqali kuzating.",
+          telegramLabel: "Vatandoshlar.de Telegram sahifasi",
+          instagramLabel: "Vatandoshlar.de Instagram sahifasi",
+          facebookLabel: "Vatandoshlar.de Facebook sahifasi",
         }
       : {
-          guide: "Ratgeber",
-          guideResource: "Deutschland-Ratgeber",
           founder: "Projektgründer",
           guideCta: "Ratgeber öffnen",
           guideEyebrow: "Geprüfte Informationen",
           guideDescription:
             "Geprüfte Leitfäden zu Visa, Dokumenten, Sprache, Bildung, Arbeit und Integration.",
+          contactTitle: "Kontakt",
+          contactDescription:
+            "Bei Fragen, Vorschlägen oder Kooperationsanfragen können Sie uns gerne per E-Mail kontaktieren.",
+          followUs: "Folgen Sie uns",
+          followDescription:
+            "Folgen Sie den offiziellen Vatandoshlar.de-Seiten für Neuigkeiten und wichtige Hinweise.",
+          telegramLabel: "Vatandoshlar.de auf Telegram",
+          instagramLabel: "Vatandoshlar.de auf Instagram",
+          facebookLabel: "Vatandoshlar.de auf Facebook",
         };
-
-  const footerColumns: ReadonlyArray<FooterColumn> = [
-    {
-      title: t("columns.portal.title"),
-      links: [
-        {
-          label: t("columns.portal.links.home"),
-          href: "/",
-        },
-        {
-          label: t("columns.portal.links.news"),
-          href: "/news",
-        },
-        {
-          label: t("columns.portal.links.services"),
-          href: "/services",
-        },
-        {
-          label: t("columns.portal.links.jobs"),
-          href: "/jobs",
-        },
-        {
-          label: t("columns.portal.links.events"),
-          href: "/events",
-        },
-        {
-          label: localCopy.guide,
-          href: "/guide",
-        },
-        {
-          label: t("columns.portal.links.specialists"),
-          href: "/specialists",
-        },
-        {
-          label: localCopy.founder,
-          href: "/about/founder",
-        },
-      ],
-    },
-    {
-      title: t("columns.resources.title"),
-      links: [
-        {
-          label: localCopy.guideResource,
-          href: "/guide",
-        },
-        {
-          label: t(
-            "columns.resources.links.officialInformation",
-          ),
-          href: "/news",
-        },
-        {
-          label: t(
-            "columns.resources.links.verifiedServices",
-          ),
-          href: "/services",
-        },
-        {
-          label: t("columns.resources.links.career"),
-          href: "/jobs",
-        },
-        {
-          label: t("columns.resources.links.events"),
-          href: "/events",
-        },
-      ],
-    },
-  ];
 
   return (
     <footer className="relative isolate overflow-hidden border-t border-slate-200 bg-white text-slate-950 transition-colors dark:border-white/[0.08] dark:bg-slate-950 dark:text-white">
@@ -313,99 +303,154 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-10 sm:mt-14 lg:grid-cols-[1.05fr_1.35fr] lg:gap-16">
-          <div className="max-w-md">
-            <Link
-              href="/"
-              aria-label={t("accessibility.homeLink")}
-              className="inline-flex items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 focus-visible:ring-offset-white dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
-            >
-              <span className="flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-lg font-bold text-white shadow-lg shadow-emerald-500/20">
-                V
-              </span>
+        <div className="mt-12 sm:mt-14">
+          <div className="grid gap-5 lg:grid-cols-[1.15fr_1fr_0.9fr]">
+            <div className="group relative overflow-hidden rounded-[2rem] border border-emerald-200/80 bg-gradient-to-br from-emerald-50 via-white to-cyan-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/10 dark:border-emerald-400/15 dark:from-emerald-500/[0.08] dark:via-slate-900 dark:to-cyan-500/[0.06] sm:p-7 lg:p-8">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-emerald-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125 dark:bg-emerald-400/10"
+              />
 
-              <span>
-                <span className="block text-lg font-semibold tracking-[-0.025em] text-slate-950 dark:text-white">
-                  Vatandoshlar.de
-                </span>
+              <div className="relative">
+                <Link
+                  href="/"
+                  aria-label={t("accessibility.homeLink")}
+                  className="inline-flex items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 focus-visible:ring-offset-white dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
+                >
+                  <span className="flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-lg font-bold text-white shadow-lg shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105">
+                    V
+                  </span>
 
-                <span className="block text-xs text-slate-500 dark:text-slate-400">
-                  {t("brand.subtitle")}
-                </span>
-              </span>
-            </Link>
+                  <span>
+                    <span className="block text-lg font-semibold tracking-[-0.025em] text-slate-950 dark:text-white">
+                      Vatandoshlar.de
+                    </span>
 
-            <p className="mt-6 text-sm leading-7 text-slate-600 dark:text-slate-400">
-              {t("brand.description")}
-            </p>
+                    <span className="block text-xs text-slate-500 dark:text-slate-400">
+                      {t("brand.subtitle")}
+                    </span>
+                  </span>
+                </Link>
 
-            <div className="mt-6 space-y-4">
-              <div className="flex items-start gap-3">
-                <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
-                  <ShieldCheckIcon className="size-4" />
-                </span>
-
-                <p className="text-sm leading-6 text-slate-600 dark:text-slate-400">
-                  {t("brand.trust")}
+                <p className="mt-5 max-w-md text-sm leading-7 text-slate-600 dark:text-slate-400">
+                  {t("brand.description")}
                 </p>
-              </div>
 
-              <div className="-mx-2 flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 px-2 py-3 dark:border-white/[0.08] dark:bg-white/[0.035]">
-                <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
-                  <BookOpenIcon className="size-4" />
-                </span>
+                <div className="mt-5 flex items-start gap-3">
+                  <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
+                    <ShieldCheckIcon className="size-4" />
+                  </span>
 
-                <div className="min-w-0 pt-0.5">
-                  <p className="text-xs font-bold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">
-                    {localCopy.guideEyebrow}
-                  </p>
-
-                  <p className="mt-1 max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
-                    {localCopy.guideDescription}
+                  <p className="max-w-md text-sm leading-6 text-slate-600 dark:text-slate-400">
+                    {t("brand.trust")}
                   </p>
                 </div>
               </div>
+            </div>
 
-              <div className="flex items-center gap-3">
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-sky-100 text-sky-700 dark:bg-sky-400/10 dark:text-sky-300">
-                  <MailIcon className="size-4" />
-                </span>
+            <div className="group relative overflow-hidden rounded-[2rem] border border-sky-200/80 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-xl hover:shadow-sky-500/10 dark:border-sky-400/15 dark:from-sky-500/[0.07] dark:via-slate-900 dark:to-cyan-500/[0.05] sm:p-7 lg:p-8">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-sky-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125 dark:bg-sky-400/10"
+              />
 
-                <a
-                  href="mailto:info.vatandoshlar@gmx.de"
-                  className="break-all text-sm text-slate-600 transition hover:text-slate-950 focus-visible:outline-none focus-visible:text-slate-950 dark:text-slate-400 dark:hover:text-white dark:focus-visible:text-white"
-                >
-                  info.vatandoshlar@gmx.de
-                </a>
+              <div className="relative">
+                <div className="flex items-start gap-3">
+                  <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
+                    <BookOpenIcon className="size-4" />
+                  </span>
+
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">
+                      {localCopy.guideEyebrow}
+                    </p>
+
+                    <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
+                      {localCopy.guideDescription}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 border-t border-sky-200/70 pt-6 dark:border-sky-400/10">
+                  <h3 className="text-base font-semibold text-slate-950 dark:text-white">
+                    {localCopy.contactTitle}
+                  </h3>
+
+                  <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
+                    {localCopy.contactDescription}
+                  </p>
+
+                  <a
+                    href="mailto:info.vatandoshlar@gmx.de"
+                    className="mt-5 inline-flex items-center gap-3 rounded-2xl border border-sky-200 bg-white/80 px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-white hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-200 dark:hover:border-sky-400/25 dark:hover:bg-white/[0.08] dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                  >
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-sky-100 text-sky-700 dark:bg-sky-400/10 dark:text-sky-300">
+                      <MailIcon className="size-4" />
+                    </span>
+
+                    <span className="break-all">
+                      info.vatandoshlar@gmx.de
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="group relative overflow-hidden rounded-[2rem] border border-violet-200/80 bg-gradient-to-br from-violet-50 via-white to-emerald-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 dark:border-violet-400/15 dark:from-violet-500/[0.07] dark:via-slate-900 dark:to-emerald-500/[0.05] sm:p-7 lg:p-8">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-violet-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125 dark:bg-violet-400/10"
+              />
+
+              <div className="relative">
+                <h3 className="text-base font-semibold text-slate-950 dark:text-white">
+                  {localCopy.followUs}
+                </h3>
+
+                <p className="mt-2 max-w-sm text-sm leading-6 text-slate-500 dark:text-slate-400">
+                  {localCopy.followDescription}
+                </p>
+
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <a
+                    href="https://t.me/Vatandoshlar_de"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={localCopy.telegramLabel}
+                    title="Telegram"
+                    className="group/social flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                  >
+                    <TelegramIcon className="size-5 transition-transform duration-300 group-hover/social:scale-110" />
+                    <span className="sr-only">Telegram</span>
+                  </a>
+
+                  <a
+                    href="https://www.instagram.com/vatandoshlar.de"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={localCopy.instagramLabel}
+                    title="Instagram"
+                    className="group/social flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                  >
+                    <InstagramIcon className="size-5 transition-transform duration-300 group-hover/social:scale-110" />
+                    <span className="sr-only">Instagram</span>
+                  </a>
+
+                  <a
+                    href="https://facebook.com/Vatandoshlar.de"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={localCopy.facebookLabel}
+                    title="Facebook"
+                    className="group/social flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                  >
+                    <FacebookIcon className="size-5 transition-transform duration-300 group-hover/social:scale-110" />
+                    <span className="sr-only">Facebook</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-
-          <nav
-            aria-label={t("accessibility.navigation")}
-            className="grid grid-cols-1 gap-10 min-[390px]:grid-cols-2 sm:gap-x-10"
-          >
-            {footerColumns.map((column) => (
-              <div key={column.title}>
-                <h3 className="text-sm font-semibold text-slate-950 dark:text-white">
-                  {column.title}
-                </h3>
-
-                <ul className="mt-5 space-y-3">
-                  {column.links.map((link) => (
-                    <li key={`${column.title}-${link.href}`}>
-                      <Link
-                        href={link.href}
-                        className="inline-flex min-h-8 items-center text-sm leading-6 text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:text-emerald-700 dark:text-slate-400 dark:hover:text-emerald-300 dark:focus-visible:text-emerald-300"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
         </div>
 
         <div className="mt-12 flex flex-col gap-5 border-t border-slate-200 pt-8 dark:border-white/[0.08] sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
@@ -416,6 +461,13 @@ export default async function Footer() {
           </p>
 
           <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:gap-x-5">
+            <Link
+              href="/about/founder"
+              className="text-xs font-semibold text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:text-emerald-700 dark:text-slate-300 dark:hover:text-emerald-300 dark:focus-visible:text-emerald-300"
+            >
+              {localCopy.founder}
+            </Link>
+
             <p className="max-w-xl text-xs leading-5 text-slate-500">
               {t("bottom.disclaimer")}
             </p>
