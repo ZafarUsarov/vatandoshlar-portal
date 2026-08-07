@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
         },
       }
     : {
-        title: "Deutschland Guide | Vatandoshlar.de",
+        title: "Deutschland-Ratgeber | Vatandoshlar.de",
         description:
           "Strukturierte Leitfäden zu Einreise, Visa, Bildung, Arbeit, Familie, Dokumenten und den ersten Schritten nach der Ankunft.",
         alternates: {
@@ -59,7 +59,7 @@ export default async function GuidePage() {
             eyebrow: "Ishonchlilik",
             title: "Ma’lumotlar qanday tayyorlanadi?",
             description:
-              "Guide’dagi materiallar foydalanuvchini rasmiy manbaga yo‘naltirish va murakkab jarayonlarni tushunarli tarzda izohlash uchun tayyorlanadi.",
+              "Qo‘llanmadagi materiallar foydalanuvchini rasmiy manbaga yo‘naltirish va murakkab jarayonlarni tushunarli tarzda izohlash uchun tayyorlanadi.",
             items: [
               {
                 title: "Rasmiy manbalar",
@@ -79,7 +79,7 @@ export default async function GuidePage() {
             ],
           },
           notice:
-            "Guide faol rivojlantirilmoqda. Tayyor maqolalar muntazam tekshiriladi, bo‘sh yo‘nalishlar esa yangi qo‘llanmalar bilan bosqichma-bosqich to‘ldiriladi.",
+            "Qo‘llanma muntazam rivojlantirilmoqda. Tayyor maqolalar muntazam tekshiriladi, bo‘sh yo‘nalishlar esa yangi qo‘llanmalar bilan bosqichma-bosqich to‘ldiriladi.",
           footer:
             "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
         }
@@ -87,7 +87,7 @@ export default async function GuidePage() {
           hero: {
             eyebrow: "Wissenszentrum von Vatandoshlar.de",
             title:
-              "Der zentrale Leitfaden für Einreise und den Start in Deutschland",
+              "Der zentrale Ratgeber für Einreise und den Start in Deutschland",
             description:
               "Von Au-pair über Familiennachzug, Visa und Terminbuchung bis zu Bildung, Arbeit, Dokumenten und den ersten Schritten nach der Ankunft werden wichtige Informationen strukturiert an einem Ort gebündelt.",
             primary: "Bereiche ansehen",
@@ -106,7 +106,7 @@ export default async function GuidePage() {
             eyebrow: "Verlässlichkeit",
             title: "Wie werden die Informationen erstellt?",
             description:
-              "Die Inhalte führen zu offiziellen Quellen und erklären komplexe Abläufe verständlich und strukturiert.",
+              "Die Inhalte des Ratgebers führen zu offiziellen Quellen und erklären komplexe Abläufe verständlich und strukturiert.",
             items: [
               {
                 title: "Offizielle Quellen",
@@ -126,7 +126,7 @@ export default async function GuidePage() {
             ],
           },
           notice:
-            "Der Guide wird aktiv weiterentwickelt. Vorhandene Artikel werden regelmäßig geprüft und noch leere Bereiche schrittweise mit neuen Leitfäden ergänzt.",
+            "Der Ratgeber wird laufend weiterentwickelt. Vorhandene Artikel werden regelmäßig geprüft und noch leere Bereiche schrittweise mit neuen Leitfäden ergänzt.",
           footer:
             "Digitale Plattform für Usbeken in Deutschland",
         };

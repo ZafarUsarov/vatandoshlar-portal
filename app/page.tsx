@@ -1,6 +1,7 @@
 import EventsSection from "../components/EventsSection";
 import Features from "../components/Features";
 import Header from "../components/Header";
+import GuidePreviewSection from "../components/home/GuidePreviewSection";
 import JobsSection from "../components/JobsSection";
 import NewsSection from "../components/NewsSection";
 import Reveal from "../components/Reveal";
@@ -27,6 +28,8 @@ export default function HomePage() {
         <Reveal>
           <SearchSection />
         </Reveal>
+
+        <GuidePreviewSection />
 
         <Reveal>
           <PopularCategoriesSection />

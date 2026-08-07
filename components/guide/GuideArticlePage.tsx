@@ -8,12 +8,21 @@ import { Link } from "../../i18n/navigation";
 import GuideArticleSection from "./GuideArticleSection";
 import GuideFAQ from "./GuideFAQ";
 import GuideInfoBox from "./GuideInfoBox";
+import GuideReadingProgress from "./GuideReadingProgress";
+import GuideArticleNavigation from "./GuideArticleNavigation";
+import RelatedGuideArticles from "./RelatedGuideArticles";
 import GuideSourceList from "./GuideSourceList";
 import GuideStepList from "./GuideStepList";
+import GuideTableOfContents, {
+  type GuideTableOfContentsItem,
+} from "./GuideTableOfContents";
 
 type GuideArticlePageProps = Readonly<{
   article: GuideArticle;
   category: GuideCategory;
+  relatedArticles: ReadonlyArray<GuideArticle>;
+  previousArticle?: GuideArticle;
+  nextArticle?: GuideArticle;
   locale: SupportedGuideLocale;
 }>;
 
@@ -34,6 +43,9 @@ function formatReviewDate(
 export default function GuideArticlePage({
   article,
   category,
+  relatedArticles,
+  previousArticle,
+  nextArticle,
   locale,
 }: GuideArticlePageProps) {
   const copy =
@@ -44,15 +56,17 @@ export default function GuideArticlePage({
           readingTime: "O‘qish vaqti",
           keyFacts: "Asosiy ma’lumotlar",
           steps: "Bosqichma-bosqich jarayon",
+          faqSection: "Ko‘p so‘raladigan savollar",
+          sourcesSection: "Rasmiy manbalar",
           faq: "Ko‘p so‘raladigan savollar",
           sources: "Rasmiy manbalar",
           sourceDescription:
             "Ushbu qo‘llanma quyidagi birlamchi rasmiy manbalar asosida tayyorlandi. Ariza topshirishdan oldin amaldagi talablarni rasmiy sahifalarda qayta tekshiring.",
           openSource: "Manbani ochish",
+          readingProgress: "Maqola o‘qildi",
           disclaimerTitle: "Muhim huquqiy eslatma",
           disclaimer:
             "Bu maqola umumiy axborot beradi va individual yuridik yoki migratsion maslahat o‘rnini bosmaydi. Viza talablari, hujjatlar va idora jarayonlari shaxsiy holat hamda mas’ul vakolatxonaga qarab farq qilishi va o‘zgarishi mumkin.",
-          backToCategory: `${category.title} bo‘limiga qaytish`,
         }
       : {
           guide: "Guide",
@@ -60,15 +74,17 @@ export default function GuideArticlePage({
           readingTime: "Lesezeit",
           keyFacts: "Wichtige Eckdaten",
           steps: "Schrittweiser Ablauf",
+          faqSection: "Häufig gestellte Fragen",
+          sourcesSection: "Offizielle Quellen",
           faq: "Häufig gestellte Fragen",
           sources: "Offizielle Quellen",
           sourceDescription:
             "Dieser Leitfaden wurde anhand der folgenden offiziellen Primärquellen erstellt. Prüfen Sie die aktuellen Anforderungen vor einer Antragstellung erneut auf den offiziellen Seiten.",
           openSource: "Quelle öffnen",
+          readingProgress: "Artikel gelesen",
           disclaimerTitle: "Wichtiger rechtlicher Hinweis",
           disclaimer:
             "Dieser Artikel bietet allgemeine Informationen und ersetzt keine individuelle Rechts- oder Migrationsberatung. Visumvoraussetzungen, Unterlagen und behördliche Abläufe können je nach persönlicher Situation und zuständiger Stelle abweichen und sich ändern.",
-          backToCategory: `Zurück zu ${category.title}`,
         };
 
   const sectionOrder: ReadonlyArray<GuideArticleSectionKey> = [
@@ -80,9 +96,53 @@ export default function GuideArticlePage({
     "warnings",
   ];
 
+  const tocItems: ReadonlyArray<GuideTableOfContentsItem> = [
+    ...sectionOrder.flatMap((key) => {
+      const section = article.sections[key];
+
+      return section
+        ? [
+            {
+              id: `guide-section-${key}`,
+              label: section.title,
+            },
+          ]
+        : [];
+    }),
+    ...(article.steps.length > 0
+      ? [
+          {
+            id: "guide-section-steps",
+            label: copy.steps,
+          },
+        ]
+      : []),
+    ...(article.faq.length > 0
+      ? [
+          {
+            id: "guide-section-faq",
+            label: copy.faqSection,
+          },
+        ]
+      : []),
+    ...(article.sources.length > 0
+      ? [
+          {
+            id: "guide-section-sources",
+            label: copy.sourcesSection,
+          },
+        ]
+      : []),
+  ];
+
   return (
     <main className="min-h-screen bg-slate-50 pt-20 text-slate-950 dark:bg-slate-950 dark:text-white">
-      <article>
+      <GuideReadingProgress
+        targetId="guide-article-content"
+        label={copy.readingProgress}
+      />
+
+      <article id="guide-article-content">
         <header className="relative overflow-hidden border-b border-slate-800 bg-slate-950 text-white">
           <div
             aria-hidden="true"
@@ -141,10 +201,17 @@ export default function GuideArticlePage({
           </div>
         </header>
 
-        <div className="mx-auto max-w-5xl px-6 py-16 lg:px-8">
-          <p className="text-xl leading-9 text-slate-700 dark:text-slate-300">
-            {article.intro}
-          </p>
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[17rem_minmax(0,1fr)]">
+            <GuideTableOfContents
+              items={tocItems}
+              locale={locale}
+            />
+
+            <div className="min-w-0">
+              <p className="text-xl leading-9 text-slate-700 dark:text-slate-300">
+                {article.intro}
+              </p>
 
           <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-7 sm:p-9 dark:border-slate-800 dark:bg-slate-900">
             <h2 className="text-2xl font-bold">
@@ -178,11 +245,15 @@ export default function GuideArticlePage({
 
               if (key === "warnings") {
                 return (
-                  <GuideInfoBox
+                  <div
                     key={key}
-                    title={section.title}
-                    variant="warning"
+                    id={`guide-section-${key}`}
+                    className="scroll-mt-32"
                   >
+                    <GuideInfoBox
+                      title={section.title}
+                      variant="warning"
+                    >
                     <ul className="space-y-3">
                       {section.items.map((item) => (
                         <li
@@ -193,36 +264,68 @@ export default function GuideArticlePage({
                           <span>{item}</span>
                         </li>
                       ))}
-                    </ul>
-                  </GuideInfoBox>
+                      </ul>
+                    </GuideInfoBox>
+                  </div>
                 );
               }
 
               return (
-                <GuideArticleSection
+                <div
                   key={key}
-                  title={section.title}
-                  paragraphs={section.paragraphs}
-                  items={section.items}
-                />
+                  id={`guide-section-${key}`}
+                  className="scroll-mt-32"
+                >
+                  <GuideArticleSection
+                    title={section.title}
+                    paragraphs={section.paragraphs}
+                    items={section.items}
+                  />
+                </div>
               );
             })}
 
-            <GuideStepList
-              title={copy.steps}
-              steps={article.steps}
-            />
+            {article.steps.length > 0 && (
+              <div
+                id="guide-section-steps"
+                className="scroll-mt-32"
+              >
+                <GuideStepList
+                  title={copy.steps}
+                  steps={article.steps}
+                />
+              </div>
+            )}
 
-            <GuideFAQ
-              title={copy.faq}
-              items={article.faq}
-            />
+            {article.faq.length > 0 && (
+              <div
+                id="guide-section-faq"
+                className="scroll-mt-32"
+              >
+                <GuideFAQ
+                  title={copy.faq}
+                  items={article.faq}
+                />
+              </div>
+            )}
 
-            <GuideSourceList
-              title={copy.sources}
-              description={copy.sourceDescription}
-              sources={article.sources}
-              openLabel={copy.openSource}
+            {article.sources.length > 0 && (
+              <div
+                id="guide-section-sources"
+                className="scroll-mt-32"
+              >
+                <GuideSourceList
+                  title={copy.sources}
+                  description={copy.sourceDescription}
+                  sources={article.sources}
+                  openLabel={copy.openSource}
+                />
+              </div>
+            )}
+
+            <RelatedGuideArticles
+              articles={relatedArticles}
+              locale={locale}
             />
 
             <GuideInfoBox
@@ -231,15 +334,15 @@ export default function GuideArticlePage({
             >
               <p>{copy.disclaimer}</p>
             </GuideInfoBox>
-          </div>
 
-          <div className="mt-10">
-            <Link
-              href={`/guide/${category.slug}`}
-              className="inline-flex min-h-12 items-center justify-center rounded-full bg-slate-950 px-6 py-3 font-semibold !text-white no-underline visited:!text-white hover:!text-white transition hover:-translate-y-0.5 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:bg-white dark:!text-slate-950 dark:visited:!text-slate-950 dark:hover:!text-slate-950 dark:hover:bg-slate-100 dark:focus-visible:ring-offset-slate-950"
-            >
-              {copy.backToCategory}
-            </Link>
+            <GuideArticleNavigation
+              category={category}
+              previous={previousArticle}
+              next={nextArticle}
+              locale={locale}
+            />
+              </div>
+            </div>
           </div>
         </div>
       </article>

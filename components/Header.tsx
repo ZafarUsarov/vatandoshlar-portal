@@ -97,6 +97,33 @@ function ServicesIcon() {
   );
 }
 
+function SpecialistsIcon() {
+  return (
+    <Icon>
+      <path
+        d="M8.25 11.25a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M2.75 19.25v-1.5A4.75 4.75 0 0 1 7.5 13h1.5a4.75 4.75 0 0 1 4.75 4.75v1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15.5 7a2.75 2.75 0 1 1 0 5.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M16 14h.5a4.75 4.75 0 0 1 4.75 4.75v.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+}
+
 function JobsIcon() {
   return (
     <Icon>
@@ -256,6 +283,7 @@ function getInitialDarkMode(): boolean {
 
 export default function Header() {
   const t = useTranslations("Header");
+  const specialistsT = useTranslations("SpecialistsPage");
   const pathname = usePathname();
 
   const navigation: NavigationItem[] = [
@@ -276,6 +304,12 @@ export default function Header() {
       href: "/services",
       description: t("navigationDescriptions.services"),
       icon: <ServicesIcon />,
+    },
+    {
+      name: specialistsT("results.title"),
+      href: "/specialists",
+      description: specialistsT("hero.description"),
+      icon: <SpecialistsIcon />,
     },
     {
       name: t("navigation.jobs"),
@@ -495,8 +529,8 @@ export default function Header() {
                   dark:text-white
                   ${
                     isScrolled
-                      ? "text-base sm:text-lg"
-                      : "text-lg sm:text-xl"
+                      ? "text-base xl:text-lg"
+                      : "text-base xl:text-xl"
                   }
                 `}
               >
@@ -528,7 +562,7 @@ export default function Header() {
 
           <nav
             aria-label={t("accessibility.mainNavigation")}
-            className="mx-auto hidden min-w-0 items-center gap-0 xl:flex"
+            className="mx-auto hidden min-w-0 items-center gap-0 min-[1160px]:flex"
           >
             {navigation.map((item) => {
               const isActive = isActiveRoute(
@@ -544,12 +578,13 @@ export default function Header() {
                   }
                   className={`
                     relative shrink-0 whitespace-nowrap rounded-xl
-                    text-sm font-semibold
+                    text-[11px] font-semibold
                     transition-all duration-300
+                    xl:text-sm
                     ${
                       isScrolled
-                        ? "px-2.5 py-2"
-                        : "px-2.5 py-2.5"
+                        ? "px-1 py-2 xl:px-2.5"
+                        : "px-1 py-2.5 xl:px-2.5"
                     }
                     ${
                       isActive
@@ -580,7 +615,7 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="ml-auto hidden items-center gap-2 md:flex">
+          <div className="ml-auto hidden items-center gap-1 min-[1160px]:flex xl:gap-2">
             <button
               type="button"
               onClick={openCommandPalette}
@@ -717,14 +752,14 @@ export default function Header() {
                 dark:focus-visible:ring-offset-slate-950
                 ${
                   isScrolled
-                    ? "h-10 min-w-[108px] px-4"
-                    : "h-11 min-w-[116px] px-5"
+                    ? "h-10 min-w-[92px] px-3 xl:min-w-[108px] xl:px-4"
+                    : "h-11 min-w-[96px] px-3 xl:min-w-[116px] xl:px-5"
                 }
               `}
             >{t("actions.login")}</Link>
           </div>
 
-          <div className="ml-auto flex items-center gap-2 md:hidden">
+          <div className="ml-auto flex items-center gap-2 min-[1160px]:hidden">
             <button
               type="button"
               onClick={openCommandPalette}
@@ -796,7 +831,7 @@ export default function Header() {
       </header>
 
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-40 md:hidden">
+        <div className="fixed inset-0 z-40 min-[1160px]:hidden">
           <button
             type="button"
             onClick={closeMobileMenu}
@@ -816,8 +851,8 @@ export default function Header() {
               dark:bg-slate-950
               ${
                 isScrolled
-                  ? "top-16 max-h-[calc(100vh-4rem)]"
-                  : "top-20 max-h-[calc(100vh-5rem)]"
+                  ? "top-16 max-h-[calc(100dvh-4rem)]"
+                  : "top-20 max-h-[calc(100dvh-5rem)]"
               }
             `}
           >

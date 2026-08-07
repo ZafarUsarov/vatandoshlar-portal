@@ -5,9 +5,11 @@ import { notFound } from "next/navigation";
 import Header from "../../../../components/Header";
 import GuideArticlePage from "../../../../components/guide/GuideArticlePage";
 import {
+  getAdjacentGuideArticles,
   getGuideArticleBySlug,
   getGuideArticleStaticParams,
   getGuideCategoryBySlug,
+  getRelatedGuideArticles,
 } from "../../../../data/guide";
 import type { SupportedGuideLocale } from "../../../../types/guide";
 
@@ -81,6 +83,16 @@ export default async function GuideArticleRoute({
     notFound();
   }
 
+  const relatedArticles = getRelatedGuideArticles(
+    article,
+    locale,
+  );
+  const { previous, next } = getAdjacentGuideArticles(
+    categorySlug,
+    articleSlug,
+    locale,
+  );
+
   const footer =
     locale === "uz"
       ? "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma"
@@ -119,6 +131,9 @@ export default async function GuideArticleRoute({
       <GuideArticlePage
         article={article}
         category={category}
+        relatedArticles={relatedArticles}
+        previousArticle={previous}
+        nextArticle={next}
         locale={locale}
       />
 

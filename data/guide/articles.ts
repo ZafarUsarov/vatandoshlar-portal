@@ -122,6 +122,76 @@ export function getGuideArticleBySlug(
     : undefined;
 }
 
+
+export function getRelatedGuideArticles(
+  article: GuideArticle,
+  locale: SupportedGuideLocale,
+  limit = 3,
+): ReadonlyArray<GuideArticle> {
+  if (limit <= 0 || article.relatedArticleSlugs.length === 0) {
+    return [];
+  }
+
+  const relatedSlugOrder = new Map(
+    article.relatedArticleSlugs.map((slug, index) => [
+      slug,
+      index,
+    ]),
+  );
+
+  return localizedGuideArticles
+    .filter(
+      (item) =>
+        item.status === "published" &&
+        item.slug !== article.slug &&
+        relatedSlugOrder.has(item.slug),
+    )
+    .sort(
+      (firstArticle, secondArticle) =>
+        (relatedSlugOrder.get(firstArticle.slug) ?? 0) -
+        (relatedSlugOrder.get(secondArticle.slug) ?? 0),
+    )
+    .slice(0, limit)
+    .map((item) => localizeArticle(item, locale));
+}
+
+export type AdjacentGuideArticles = Readonly<{
+  previous?: GuideArticle;
+  next?: GuideArticle;
+}>;
+
+export function getAdjacentGuideArticles(
+  categorySlug: string,
+  articleSlug: string,
+  locale: SupportedGuideLocale,
+): AdjacentGuideArticles {
+  const categoryArticles = localizedGuideArticles.filter(
+    (article) =>
+      article.categorySlug === categorySlug &&
+      article.status === "published",
+  );
+
+  const currentIndex = categoryArticles.findIndex(
+    (article) => article.slug === articleSlug,
+  );
+
+  if (currentIndex === -1) {
+    return {};
+  }
+
+  const previousArticle = categoryArticles[currentIndex - 1];
+  const nextArticle = categoryArticles[currentIndex + 1];
+
+  return {
+    previous: previousArticle
+      ? localizeArticle(previousArticle, locale)
+      : undefined,
+    next: nextArticle
+      ? localizeArticle(nextArticle, locale)
+      : undefined,
+  };
+}
+
 export function getGuideArticleStaticParams(): Array<{
   category: string;
   article: string;
