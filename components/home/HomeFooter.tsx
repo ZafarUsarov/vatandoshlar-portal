@@ -1,1 +1,10 @@
-export { default } from "../Footer";
+import Footer from "../Footer";
+
+export default function HomeFooter() {
+  return (
+    <Footer
+      showSupportCta
+      showFounderCta
+    />
+  );
+}

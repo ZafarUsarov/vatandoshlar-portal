@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
+import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import JobGuideCard from "../../components/cards/JobGuideCard";
 import JobPlatformsDirectory from "../../components/JobPlatformsDirectory";
@@ -391,12 +392,7 @@ export default async function JobsPage() {
         </Section>
       </main>
 
-      <footer className="border-t border-border-default bg-surface py-10 text-text-muted transition-colors duration-300">
-        <Container className="flex flex-col gap-4 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Vatandoshlar.de</p>
-          <p>{copy.footer}</p>
-        </Container>
-      </footer>
+      <Footer />
     </>
   );
 }
