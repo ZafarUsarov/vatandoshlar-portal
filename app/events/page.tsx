@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
 import EventCard from "../../components/cards/EventCard";
+import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import {
   getPastEvents,
@@ -528,12 +529,7 @@ export default async function EventsPage() {
         </section>
       </main>
 
-      <footer className="border-t border-slate-200 bg-white py-10 dark:border-slate-800 dark:bg-slate-950">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between lg:px-8 dark:text-slate-400">
-          <p>© 2026 Vatandoshlar.de</p>
-          <p>{copy.footer}</p>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

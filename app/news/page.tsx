@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 
+import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import NewsCard from "../../components/cards/NewsCard";
 import {
@@ -181,12 +182,7 @@ export default async function NewsPage() {
         </Section>
       </main>
 
-      <footer className="border-t border-border-default bg-surface py-10 text-text-muted transition-colors duration-300">
-        <Container className="flex flex-col gap-4 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Vatandoshlar.de</p>
-          <p>{t("footer")}</p>
-        </Container>
-      </footer>
+      <Footer />
     </>
   );
 }

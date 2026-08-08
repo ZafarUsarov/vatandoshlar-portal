@@ -258,10 +258,21 @@ function UserIcon({ className }: IconProps) {
   );
 }
 
-export default async function Footer() {
+type FooterProps = Readonly<{
+  showSupportCta?: boolean;
+  showFounderCta?: boolean;
+}>;
+
+export default async function Footer({
+  showSupportCta = false,
+  showFounderCta = false,
+}: FooterProps = {}) {
   const t = await getTranslations("Footer");
   const locale = (await getLocale()) as SupportedFooterLocale;
   const currentYear = new Date().getFullYear();
+
+  const showProjectCtas = showSupportCta || showFounderCta;
+  const showCompactSupportLink = !showSupportCta;
 
   const localCopy =
     locale === "uz"
@@ -285,6 +296,7 @@ export default async function Footer() {
           supportDescription:
             "Agar loyihani foydali deb bilsangiz, hosting, domen va platformani rivojlantirish xarajatlariga ixtiyoriy hissa qo‘shishingiz mumkin.",
           supportAction: "Hissa qo‘shish",
+          compactSupportLink: "Loyihaga hissa qo‘shish",
           founderEyebrow: "Loyiha ortidagi inson",
           founderTitle: "Loyiha asoschisi",
           founderDescription:
@@ -311,6 +323,7 @@ export default async function Footer() {
           supportDescription:
             "Wenn Sie das Projekt hilfreich finden, können Sie freiwillig zu den Kosten für Hosting, Domain und die Weiterentwicklung der Plattform beitragen.",
           supportAction: "Beitrag leisten",
+          compactSupportLink: "Projekt unterstützen",
           founderEyebrow: "Die Person hinter dem Projekt",
           founderTitle: "Projektgründer",
           founderDescription:
@@ -319,15 +332,15 @@ export default async function Footer() {
         };
 
   return (
-    <footer className="relative isolate overflow-hidden border-t border-slate-200 bg-white text-slate-950 transition-colors dark:border-white/[0.08] dark:bg-slate-950 dark:text-white">
+    <footer className="relative isolate overflow-hidden border-t border-slate-200/80 bg-gradient-to-b from-white via-slate-50/45 to-white text-slate-950 shadow-[0_-1px_0_rgba(15,23,42,0.02)] transition-colors dark:border-white/[0.08] dark:from-slate-950 dark:via-slate-950 dark:to-slate-950 dark:text-white dark:shadow-none">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(16,185,129,0.10),transparent_30%),radial-gradient(circle_at_85%_15%,rgba(14,165,233,0.08),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(37,99,235,0.06),transparent_32%)] dark:bg-[radial-gradient(circle_at_15%_0%,rgba(16,185,129,0.16),transparent_30%),radial-gradient(circle_at_85%_15%,rgba(14,165,233,0.10),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(37,99,235,0.08),transparent_32%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(16,185,129,0.12),transparent_28%),radial-gradient(circle_at_88%_8%,rgba(14,165,233,0.09),transparent_26%),linear-gradient(135deg,rgba(16,185,129,0.025),transparent_35%,rgba(14,165,233,0.025))] dark:bg-[radial-gradient(circle_at_12%_0%,rgba(16,185,129,0.15),transparent_30%),radial-gradient(circle_at_88%_8%,rgba(14,165,233,0.10),transparent_28%),linear-gradient(135deg,rgba(16,185,129,0.035),transparent_38%,rgba(14,165,233,0.03))]"
       />
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(52,211,153,0.7),rgba(34,211,238,0.5),transparent)]"
       />
 
       <div className="relative mx-auto max-w-7xl px-6 py-14 sm:py-18 lg:px-8 lg:py-20">
@@ -519,85 +532,97 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:mt-16 lg:grid-cols-2">
-          <div className="group relative overflow-hidden rounded-[2rem] border border-emerald-200/80 bg-gradient-to-br from-emerald-50 via-white to-cyan-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/10 dark:border-emerald-400/15 dark:from-emerald-500/[0.09] dark:via-slate-900 dark:to-cyan-500/[0.06] sm:p-7 lg:p-8">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-16 -top-16 size-44 rounded-full bg-emerald-400/15 blur-3xl transition-transform duration-500 group-hover:scale-125"
-            />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -bottom-20 left-1/3 size-40 rounded-full bg-cyan-400/10 blur-3xl"
-            />
+        {showProjectCtas && (
+          <div
+            className={`mt-12 grid gap-5 sm:mt-16 ${
+              showSupportCta && showFounderCta
+                ? "lg:grid-cols-2"
+                : "max-w-3xl"
+            }`}
+          >
+            {showSupportCta && (
+              <div className="group relative overflow-hidden rounded-[2rem] border border-emerald-200/80 bg-gradient-to-br from-emerald-50 via-white to-cyan-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/10 dark:border-emerald-400/15 dark:from-emerald-500/[0.09] dark:via-slate-900 dark:to-cyan-500/[0.06] sm:p-7 lg:p-8">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-16 -top-16 size-44 rounded-full bg-emerald-400/15 blur-3xl transition-transform duration-500 group-hover:scale-125"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -bottom-20 left-1/3 size-40 rounded-full bg-cyan-400/10 blur-3xl"
+                />
 
-            <div className="relative flex h-full flex-col">
-              <div className="flex items-center gap-3">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-600/20">
-                  <HeartIcon className="size-5" />
-                </span>
+                <div className="relative flex h-full flex-col">
+                  <div className="flex items-center gap-3">
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-600/20">
+                      <HeartIcon className="size-5" />
+                    </span>
 
-                <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">
-                  {localCopy.supportEyebrow}
-                </p>
+                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">
+                      {localCopy.supportEyebrow}
+                    </p>
+                  </div>
+
+                  <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
+                    {localCopy.supportTitle}
+                  </h3>
+
+                  <p className="mt-3 flex-1 text-sm leading-7 text-slate-600 dark:text-slate-400">
+                    {localCopy.supportDescription}
+                  </p>
+
+                  <Link
+                    href="/support"
+                    className="group/link mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950"
+                  >
+                    {localCopy.supportAction}
+                    <ArrowUpRightIcon className="size-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                  </Link>
+                </div>
               </div>
+            )}
 
-              <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
-                {localCopy.supportTitle}
-              </h3>
+            {showFounderCta && (
+              <div className="group relative overflow-hidden rounded-[2rem] border border-violet-200/80 bg-gradient-to-br from-violet-50 via-white to-sky-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 dark:border-violet-400/15 dark:from-violet-500/[0.08] dark:via-slate-900 dark:to-sky-500/[0.05] sm:p-7 lg:p-8">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-16 -top-16 size-44 rounded-full bg-violet-400/15 blur-3xl transition-transform duration-500 group-hover:scale-125"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -bottom-20 left-1/3 size-40 rounded-full bg-sky-400/10 blur-3xl"
+                />
 
-              <p className="mt-3 flex-1 text-sm leading-7 text-slate-600 dark:text-slate-400">
-                {localCopy.supportDescription}
-              </p>
+                <div className="relative flex h-full flex-col">
+                  <div className="flex items-center gap-3">
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-violet-600 text-white shadow-lg shadow-violet-600/20">
+                      <UserIcon className="size-5" />
+                    </span>
 
-              <Link
-                href="/support"
-                className="group/link mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950"
-              >
-                {localCopy.supportAction}
-                <ArrowUpRightIcon className="size-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-              </Link>
-            </div>
-          </div>
+                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-700 dark:text-violet-300">
+                      {localCopy.founderEyebrow}
+                    </p>
+                  </div>
 
-          <div className="group relative overflow-hidden rounded-[2rem] border border-violet-200/80 bg-gradient-to-br from-violet-50 via-white to-sky-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 dark:border-violet-400/15 dark:from-violet-500/[0.08] dark:via-slate-900 dark:to-sky-500/[0.05] sm:p-7 lg:p-8">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-16 -top-16 size-44 rounded-full bg-violet-400/15 blur-3xl transition-transform duration-500 group-hover:scale-125"
-            />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -bottom-20 left-1/3 size-40 rounded-full bg-sky-400/10 blur-3xl"
-            />
+                  <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
+                    {localCopy.founderTitle}
+                  </h3>
 
-            <div className="relative flex h-full flex-col">
-              <div className="flex items-center gap-3">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-violet-600 text-white shadow-lg shadow-violet-600/20">
-                  <UserIcon className="size-5" />
-                </span>
+                  <p className="mt-3 flex-1 text-sm leading-7 text-slate-600 dark:text-slate-400">
+                    {localCopy.founderDescription}
+                  </p>
 
-                <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-700 dark:text-violet-300">
-                  {localCopy.founderEyebrow}
-                </p>
+                  <Link
+                    href="/about/founder"
+                    className="group/link mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-violet-200 bg-white/90 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-violet-300 hover:text-violet-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-violet-400/20 dark:bg-white/[0.06] dark:text-white dark:hover:border-violet-400/30 dark:hover:text-violet-300 dark:focus-visible:ring-offset-slate-950"
+                  >
+                    {localCopy.founderAction}
+                    <ArrowUpRightIcon className="size-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                  </Link>
+                </div>
               </div>
-
-              <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
-                {localCopy.founderTitle}
-              </h3>
-
-              <p className="mt-3 flex-1 text-sm leading-7 text-slate-600 dark:text-slate-400">
-                {localCopy.founderDescription}
-              </p>
-
-              <Link
-                href="/about/founder"
-                className="group/link mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-violet-200 bg-white/90 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-violet-300 hover:text-violet-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-violet-400/20 dark:bg-white/[0.06] dark:text-white dark:hover:border-violet-400/30 dark:hover:text-violet-300 dark:focus-visible:ring-offset-slate-950"
-              >
-                {localCopy.founderAction}
-                <ArrowUpRightIcon className="size-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-              </Link>
-            </div>
+            )}
           </div>
-        </div>
+        )}
 
         <div className="mt-12 flex flex-col gap-5 border-t border-slate-200 pt-8 dark:border-white/[0.08] sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-500">
@@ -607,6 +632,21 @@ export default async function Footer() {
           </p>
 
           <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:gap-x-5">
+            {showCompactSupportLink && (
+              <Link
+                href="/support"
+                className="group inline-flex min-h-10 items-center gap-2 rounded-full border border-emerald-200/80 bg-white/80 px-3.5 py-1.5 text-sm font-semibold text-slate-800 shadow-sm backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-emerald-400/20 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+              >
+                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 transition-colors duration-200 group-hover:bg-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-300 dark:group-hover:bg-emerald-400/15">
+                  <HeartIcon className="size-3.5" />
+                </span>
+
+                <span>{localCopy.compactSupportLink}</span>
+
+                <ArrowUpRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            )}
+
             <p className="max-w-xl text-xs leading-5 text-slate-500">
               {t("bottom.disclaimer")}
             </p>

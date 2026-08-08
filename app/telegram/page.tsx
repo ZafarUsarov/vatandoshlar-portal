@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
+import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import TelegramSection from "../../components/TelegramSection";
 import { Link } from "../../i18n/navigation";
@@ -81,6 +82,8 @@ export default async function TelegramPage() {
 
         <TelegramSection />
       </main>
+
+      <Footer />
     </>
   );
 }
