@@ -18,6 +18,7 @@ const categories: ReadonlyArray<SearchFilter> = [
   "Barchasi",
   "Yangilik",
   "Xizmat",
+  "Mutaxassis",
   "Ish",
   "Telegram",
   "Tadbir",
@@ -69,6 +70,9 @@ function getCategoryStyles(category: SearchCategory) {
 
     case "Xizmat":
       return "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300";
+
+    case "Mutaxassis":
+      return "bg-fuchsia-50 text-fuchsia-700 dark:bg-fuchsia-500/10 dark:text-fuchsia-300";
 
     case "Ish":
       return "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300";
@@ -143,8 +147,8 @@ export default function SearchSection() {
 
           <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-400">
             {locale === "de"
-              ? "Finden Sie Guide-Artikel, Jobs, Dienstleistungen, Nachrichten, Telegram-Gruppen und Veranstaltungen über eine Suche."
-              : "Qo‘llanma maqolalari, ish, xizmat, yangilik, Telegram guruhi va tadbirlarni bitta qidiruv orqali toping."}
+              ? "Finden Sie Guide-Artikel, Fachkräfte, Jobs, Dienstleistungen, Nachrichten, Telegram-Gruppen und Veranstaltungen über eine Suche."
+              : "Qo‘llanma maqolalari, mutaxassislar, ish, xizmat, yangilik, Telegram guruhi va tadbirlarni bitta qidiruv orqali toping."}
           </p>
         </div>
 
@@ -307,7 +311,7 @@ export default function SearchSection() {
                 },
                 {
                   title: "Xizmat topish",
-                  description: "Tarjimon, yurist, shifokor va mutaxassislar",
+                  description: "Tarjima, huquq, tibbiyot va boshqa xizmatlar",
                   href: `/${locale}/services`,
                 },
                 {

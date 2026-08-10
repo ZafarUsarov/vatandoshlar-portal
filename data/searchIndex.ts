@@ -4,6 +4,10 @@ import {
 } from "./jobs";
 import { getGuideArticlesByCategory } from "./guide/articles";
 import { getGuideCategories } from "./guide/categories";
+import {
+  localizeSpecialist,
+  specialists,
+} from "./specialists";
 
 export type SearchLocale = SupportedJobLocale;
 
@@ -11,6 +15,7 @@ export type SearchCategory =
   | "Sahifa"
   | "Yangilik"
   | "Xizmat"
+  | "Mutaxassis"
   | "Ish"
   | "Ish platformasi"
   | "Telegram"
@@ -395,6 +400,45 @@ function getStaticSearchItems(
   });
 }
 
+function getSpecialistSearchItems(
+  locale: SearchLocale,
+): ReadonlyArray<GlobalSearchItem> {
+  return specialists
+    .filter((specialist) => specialist.profilePublished)
+    .map((specialist) => {
+      const localizedSpecialist = localizeSpecialist(
+        specialist,
+        locale,
+      );
+
+      return {
+        id: `specialist-${specialist.id}`,
+        title: specialist.name,
+        description: localizedSpecialist.shortDescription,
+        href: createLocalizedHref(
+          locale,
+          `/specialists/${specialist.slug}`,
+        ),
+        category: "Mutaxassis",
+        badge: localizedSpecialist.profession,
+        keywords: [
+          specialist.name,
+          specialist.code,
+          localizedSpecialist.profession,
+          localizedSpecialist.shortDescription,
+          ...localizedSpecialist.services,
+          ...specialist.categories,
+          ...specialist.languages,
+          specialist.location?.city ?? "",
+          specialist.location?.bundesland ?? "",
+          localizedSpecialist.serviceArea ?? "",
+          localizedSpecialist.pricingNote ?? "",
+        ],
+      };
+    });
+}
+
+
 function getJobGuideSearchItems(
   locale: SearchLocale,
 ): ReadonlyArray<GlobalSearchItem> {
@@ -476,6 +520,7 @@ export function getGlobalSearchItems(
 ): ReadonlyArray<GlobalSearchItem> {
   return [
     ...getStaticSearchItems(locale),
+    ...getSpecialistSearchItems(locale),
     ...getJobGuideSearchItems(locale),
     ...getGuideSearchItems(locale),
   ];
@@ -499,6 +544,7 @@ export function getSearchCategoryLabel(
       Sahifa: "Sahifa",
       Yangilik: "Yangilik",
       Xizmat: "Xizmat",
+      Mutaxassis: "Mutaxassis",
       Ish: "Ish",
       "Ish platformasi": "Ish platformasi",
       Telegram: "Telegram",
@@ -509,6 +555,7 @@ export function getSearchCategoryLabel(
       Sahifa: "Seite",
       Yangilik: "Nachricht",
       Xizmat: "Dienstleistung",
+      Mutaxassis: "Fachkraft",
       Ish: "Arbeit",
       "Ish platformasi": "Jobportal",
       Telegram: "Telegram",
