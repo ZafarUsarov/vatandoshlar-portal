@@ -3,6 +3,7 @@ import { getLocale } from "next-intl/server";
 
 import EventCard from "../../components/cards/EventCard";
 import Footer from "../../components/Footer";
+import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import {
   getPastEvents,
@@ -528,6 +529,8 @@ export default async function EventsPage() {
           </div>
         </section>
       </main>
+
+      <SectionPromo target="guide" />
 
       <Footer />
     </>

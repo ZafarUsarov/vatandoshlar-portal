@@ -5,6 +5,7 @@ import {
 } from "next-intl/server";
 
 import Footer from "@/components/Footer";
+import SectionPromo from "@/components/SectionPromo";
 import Header from "@/components/Header";
 import DirectoryHeader from "@/components/specialists/DirectoryHeader";
 import SpecialistsDirectory from "@/components/specialists/SpecialistsDirectory";
@@ -224,6 +225,8 @@ export default async function SpecialistsPage({
           </div>
         </section>
       </main>
+
+      <SectionPromo target="jobs" />
 
       <Footer />
     </div>

@@ -261,11 +261,13 @@ function UserIcon({ className }: IconProps) {
 type FooterProps = Readonly<{
   showSupportCta?: boolean;
   showFounderCta?: boolean;
+  showHomeDetails?: boolean;
 }>;
 
 export default async function Footer({
   showSupportCta = false,
   showFounderCta = false,
+  showHomeDetails = false,
 }: FooterProps = {}) {
   const t = await getTranslations("Footer");
   const locale = (await getLocale()) as SupportedFooterLocale;
@@ -344,193 +346,197 @@ export default async function Footer({
       />
 
       <div className="relative mx-auto max-w-7xl px-6 py-14 sm:py-18 lg:px-8 lg:py-20">
-        <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50/90 p-6 shadow-sm backdrop-blur-xl transition-colors dark:border-white/[0.1] dark:bg-white/[0.045] dark:shadow-none sm:p-8 lg:p-10">
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
-                <GlobeIcon className="size-4" />
-                Vatandoshlar.de
+        {showHomeDetails && (
+          <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50/90 p-6 shadow-sm backdrop-blur-xl transition-colors dark:border-white/[0.1] dark:bg-white/[0.045] dark:shadow-none sm:p-8 lg:p-10">
+            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+                  <GlobeIcon className="size-4" />
+                  Vatandoshlar.de
+                </div>
+
+                <h2 className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-4xl">
+                  {t("cta.title")}
+                </h2>
+
+                <p className="mt-5 max-w-xl text-base leading-8 text-slate-600 dark:text-slate-300">
+                  {t("cta.description")}
+                </p>
               </div>
 
-              <h2 className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-4xl">
-                {t("cta.title")}
-              </h2>
-
-              <p className="mt-5 max-w-xl text-base leading-8 text-slate-600 dark:text-slate-300">
-                {t("cta.description")}
-              </p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:justify-items-end">
-              <Link
-                href="/services"
-                className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto lg:min-w-56 dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
-              >
-                {t("cta.servicesButton")}
-
-                <ArrowUpRightIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
-
-              <Link
-                href="/guide"
-                className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-300 hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto lg:min-w-56 dark:border-white/10 dark:bg-white/[0.06] dark:text-white dark:hover:border-emerald-400/30 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
-              >
-                <BookOpenIcon className="size-4" />
-                {localCopy.guideCta}
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 sm:mt-14">
-          <div className="grid gap-5 lg:grid-cols-[1.15fr_1fr_0.9fr]">
-            <div className="group relative overflow-hidden rounded-[2rem] border border-emerald-200/80 bg-gradient-to-br from-emerald-50 via-white to-cyan-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/10 dark:border-emerald-400/15 dark:from-emerald-500/[0.08] dark:via-slate-900 dark:to-cyan-500/[0.06] sm:p-7 lg:p-8">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-emerald-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125 dark:bg-emerald-400/10"
-              />
-
-              <div className="relative">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:justify-items-end">
                 <Link
-                  href="/"
-                  aria-label={t("accessibility.homeLink")}
-                  className="inline-flex items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 focus-visible:ring-offset-white dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
+                  href="/services"
+                  className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto lg:min-w-56 dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
                 >
-                  <span className="flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-lg font-bold text-white shadow-lg shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105">
-                    V
-                  </span>
+                  {t("cta.servicesButton")}
 
-                  <span>
-                    <span className="block text-lg font-semibold tracking-[-0.025em] text-slate-950 dark:text-white">
-                      Vatandoshlar.de
-                    </span>
-
-                    <span className="block text-xs text-slate-500 dark:text-slate-400">
-                      {t("brand.subtitle")}
-                    </span>
-                  </span>
+                  <ArrowUpRightIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
 
-                <p className="mt-5 max-w-md text-sm leading-7 text-slate-600 dark:text-slate-400">
-                  {t("brand.description")}
-                </p>
-
-                <div className="mt-5 flex items-start gap-3">
-                  <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
-                    <ShieldCheckIcon className="size-4" />
-                  </span>
-
-                  <p className="max-w-md text-sm leading-6 text-slate-600 dark:text-slate-400">
-                    {t("brand.trust")}
-                  </p>
-                </div>
+                <Link
+                  href="/guide"
+                  className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-300 hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto lg:min-w-56 dark:border-white/10 dark:bg-white/[0.06] dark:text-white dark:hover:border-emerald-400/30 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                >
+                  <BookOpenIcon className="size-4" />
+                  {localCopy.guideCta}
+                </Link>
               </div>
             </div>
+          </div>
+        )}
 
-            <div className="group relative overflow-hidden rounded-[2rem] border border-sky-200/80 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-xl hover:shadow-sky-500/10 dark:border-sky-400/15 dark:from-sky-500/[0.07] dark:via-slate-900 dark:to-cyan-500/[0.05] sm:p-7 lg:p-8">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-sky-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125 dark:bg-sky-400/10"
-              />
+        {showHomeDetails && (
+          <div className="mt-12 sm:mt-14">
+            <div className="grid gap-5 lg:grid-cols-[1.15fr_1fr_0.9fr]">
+              <div className="group relative overflow-hidden rounded-[2rem] border border-emerald-200/80 bg-gradient-to-br from-emerald-50 via-white to-cyan-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/10 dark:border-emerald-400/15 dark:from-emerald-500/[0.08] dark:via-slate-900 dark:to-cyan-500/[0.06] sm:p-7 lg:p-8">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-emerald-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125 dark:bg-emerald-400/10"
+                />
 
-              <div className="relative">
-                <div className="flex items-start gap-3">
-                  <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
-                    <BookOpenIcon className="size-4" />
-                  </span>
+                <div className="relative">
+                  <Link
+                    href="/"
+                    aria-label={t("accessibility.homeLink")}
+                    className="inline-flex items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 focus-visible:ring-offset-white dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
+                  >
+                    <span className="flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-lg font-bold text-white shadow-lg shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105">
+                      V
+                    </span>
 
-                  <div className="min-w-0">
-                    <p className="text-xs font-bold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">
-                      {localCopy.guideEyebrow}
-                    </p>
+                    <span>
+                      <span className="block text-lg font-semibold tracking-[-0.025em] text-slate-950 dark:text-white">
+                        Vatandoshlar.de
+                      </span>
 
-                    <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
-                      {localCopy.guideDescription}
+                      <span className="block text-xs text-slate-500 dark:text-slate-400">
+                        {t("brand.subtitle")}
+                      </span>
+                    </span>
+                  </Link>
+
+                  <p className="mt-5 max-w-md text-sm leading-7 text-slate-600 dark:text-slate-400">
+                    {t("brand.description")}
+                  </p>
+
+                  <div className="mt-5 flex items-start gap-3">
+                    <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
+                      <ShieldCheckIcon className="size-4" />
+                    </span>
+
+                    <p className="max-w-md text-sm leading-6 text-slate-600 dark:text-slate-400">
+                      {t("brand.trust")}
                     </p>
                   </div>
                 </div>
+              </div>
 
-                <div className="mt-6 border-t border-sky-200/70 pt-6 dark:border-sky-400/10">
-                  <h3 className="text-base font-semibold text-slate-950 dark:text-white">
-                    {localCopy.contactTitle}
-                  </h3>
+              <div className="group relative overflow-hidden rounded-[2rem] border border-sky-200/80 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-sky-300 hover:shadow-xl hover:shadow-sky-500/10 dark:border-sky-400/15 dark:from-sky-500/[0.07] dark:via-slate-900 dark:to-cyan-500/[0.05] sm:p-7 lg:p-8">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-sky-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125 dark:bg-sky-400/10"
+                />
 
-                  <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
-                    {localCopy.contactDescription}
-                  </p>
-
-                  <a
-                    href="mailto:info.vatandoshlar@gmx.de"
-                    className="mt-5 inline-flex items-center gap-3 rounded-2xl border border-sky-200 bg-white/80 px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-white hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-200 dark:hover:border-sky-400/25 dark:hover:bg-white/[0.08] dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
-                  >
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-sky-100 text-sky-700 dark:bg-sky-400/10 dark:text-sky-300">
-                      <MailIcon className="size-4" />
+                <div className="relative">
+                  <div className="flex items-start gap-3">
+                    <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
+                      <BookOpenIcon className="size-4" />
                     </span>
 
-                    <span className="break-all">
-                      info.vatandoshlar@gmx.de
-                    </span>
-                  </a>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">
+                        {localCopy.guideEyebrow}
+                      </p>
+
+                      <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
+                        {localCopy.guideDescription}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 border-t border-sky-200/70 pt-6 dark:border-sky-400/10">
+                    <h3 className="text-base font-semibold text-slate-950 dark:text-white">
+                      {localCopy.contactTitle}
+                    </h3>
+
+                    <p className="mt-2 max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400">
+                      {localCopy.contactDescription}
+                    </p>
+
+                    <a
+                      href="mailto:info.vatandoshlar@gmx.de"
+                      className="mt-5 inline-flex items-center gap-3 rounded-2xl border border-sky-200 bg-white/80 px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-white hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-200 dark:hover:border-sky-400/25 dark:hover:bg-white/[0.08] dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                    >
+                      <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-sky-100 text-sky-700 dark:bg-sky-400/10 dark:text-sky-300">
+                        <MailIcon className="size-4" />
+                      </span>
+
+                      <span className="break-all">
+                        info.vatandoshlar@gmx.de
+                      </span>
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="group relative overflow-hidden rounded-[2rem] border border-violet-200/80 bg-gradient-to-br from-violet-50 via-white to-emerald-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 dark:border-violet-400/15 dark:from-violet-500/[0.07] dark:via-slate-900 dark:to-emerald-500/[0.05] sm:p-7 lg:p-8">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-violet-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125 dark:bg-violet-400/10"
-              />
+              <div className="group relative overflow-hidden rounded-[2rem] border border-violet-200/80 bg-gradient-to-br from-violet-50 via-white to-emerald-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 dark:border-violet-400/15 dark:from-violet-500/[0.07] dark:via-slate-900 dark:to-emerald-500/[0.05] sm:p-7 lg:p-8">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-violet-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125 dark:bg-violet-400/10"
+                />
 
-              <div className="relative">
-                <h3 className="text-base font-semibold text-slate-950 dark:text-white">
-                  {localCopy.followUs}
-                </h3>
+                <div className="relative">
+                  <h3 className="text-base font-semibold text-slate-950 dark:text-white">
+                    {localCopy.followUs}
+                  </h3>
 
-                <p className="mt-2 max-w-sm text-sm leading-6 text-slate-500 dark:text-slate-400">
-                  {localCopy.followDescription}
-                </p>
+                  <p className="mt-2 max-w-sm text-sm leading-6 text-slate-500 dark:text-slate-400">
+                    {localCopy.followDescription}
+                  </p>
 
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <a
-                    href="https://t.me/Vatandoshlar_de"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={localCopy.telegramLabel}
-                    title="Telegram"
-                    className="group/social flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
-                  >
-                    <TelegramIcon className="size-5 transition-transform duration-300 group-hover/social:scale-110" />
-                    <span className="sr-only">Telegram</span>
-                  </a>
+                  <div className="mt-5 flex flex-wrap gap-3">
+                    <a
+                      href="https://t.me/Vatandoshlar_de"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={localCopy.telegramLabel}
+                      title="Telegram"
+                      className="group/social flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                    >
+                      <TelegramIcon className="size-5 transition-transform duration-300 group-hover/social:scale-110" />
+                      <span className="sr-only">Telegram</span>
+                    </a>
 
-                  <a
-                    href="https://www.instagram.com/vatandoshlar.de"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={localCopy.instagramLabel}
-                    title="Instagram"
-                    className="group/social flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
-                  >
-                    <InstagramIcon className="size-5 transition-transform duration-300 group-hover/social:scale-110" />
-                    <span className="sr-only">Instagram</span>
-                  </a>
+                    <a
+                      href="https://www.instagram.com/vatandoshlar.de"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={localCopy.instagramLabel}
+                      title="Instagram"
+                      className="group/social flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                    >
+                      <InstagramIcon className="size-5 transition-transform duration-300 group-hover/social:scale-110" />
+                      <span className="sr-only">Instagram</span>
+                    </a>
 
-                  <a
-                    href="https://facebook.com/Vatandoshlar.de"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={localCopy.facebookLabel}
-                    title="Facebook"
-                    className="group/social flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
-                  >
-                    <FacebookIcon className="size-5 transition-transform duration-300 group-hover/social:scale-110" />
-                    <span className="sr-only">Facebook</span>
-                  </a>
+                    <a
+                      href="https://facebook.com/Vatandoshlar.de"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={localCopy.facebookLabel}
+                      title="Facebook"
+                      className="group/social flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-3 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                    >
+                      <FacebookIcon className="size-5 transition-transform duration-300 group-hover/social:scale-110" />
+                      <span className="sr-only">Facebook</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {showProjectCtas && (
           <div

@@ -5,6 +5,7 @@ export default function HomeFooter() {
     <Footer
       showSupportCta
       showFounderCta
+      showHomeDetails
     />
   );
 }

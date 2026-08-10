@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
 import Footer from "../../components/Footer";
+import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import JobGuideCard from "../../components/cards/JobGuideCard";
 import JobPlatformsDirectory from "../../components/JobPlatformsDirectory";
@@ -391,6 +392,8 @@ export default async function JobsPage() {
           </Container>
         </Section>
       </main>
+
+      <SectionPromo target="telegram" />
 
       <Footer />
     </>

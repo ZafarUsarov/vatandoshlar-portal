@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
 import Footer from "../../components/Footer";
+import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import GuideCategoryGrid from "../../components/guide/GuideCategoryGrid";
 import GuideHero from "../../components/guide/GuideHero";
@@ -225,6 +226,8 @@ export default async function GuidePage() {
           </div>
         </section>
       </main>
+
+      <SectionPromo target="news" />
 
       <Footer />
     </>

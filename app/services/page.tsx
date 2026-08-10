@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
 import Footer from "../../components/Footer";
+import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import ServiceCard from "../../components/cards/ServiceCard";
 import Card from "../../components/ui/Card";
@@ -266,6 +267,8 @@ export default async function ServicesPage() {
           </Container>
         </Section>
       </main>
+
+      <SectionPromo target="specialists" />
 
       <Footer />
     </>
