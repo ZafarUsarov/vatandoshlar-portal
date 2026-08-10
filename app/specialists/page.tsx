@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import SectionPromo from "@/components/SectionPromo";
 import Header from "@/components/Header";
 import DirectoryHeader from "@/components/specialists/DirectoryHeader";
+import SectionHeroBackground from "@/components/ui/SectionHeroBackground";
 import SpecialistsDirectory from "@/components/specialists/SpecialistsDirectory";
 import {
   localizeSpecialist,
@@ -126,27 +127,29 @@ export default async function SpecialistsPage({
       <Header />
 
       <main>
-        <DirectoryHeader
-          labels={{
-            badge: t("hero.badge"),
-            title: t("hero.title"),
-            description: t("hero.description"),
-            profilesLabel: t(
-              "hero.statistics.profiles",
-            ),
-            categoriesLabel: t(
-              "hero.statistics.categories",
-            ),
-            verifiedLabel: t(
-              "hero.statistics.verified",
-            ),
-          }}
-          statistics={{
-            profiles: localizedSpecialists.length,
-            categories: uniqueCategories,
-            verified: verifiedProfiles,
-          }}
-        />
+        <SectionHeroBackground tone="specialists">
+          <DirectoryHeader
+            labels={{
+              badge: t("hero.badge"),
+              title: t("hero.title"),
+              description: t("hero.description"),
+              profilesLabel: t(
+                "hero.statistics.profiles",
+              ),
+              categoriesLabel: t(
+                "hero.statistics.categories",
+              ),
+              verifiedLabel: t(
+                "hero.statistics.verified",
+              ),
+            }}
+            statistics={{
+              profiles: localizedSpecialists.length,
+              categories: uniqueCategories,
+              verified: verifiedProfiles,
+            }}
+          />
+        </SectionHeroBackground>
 
         <section className="bg-white py-16 dark:bg-slate-950 sm:py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">

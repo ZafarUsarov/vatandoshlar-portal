@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   getLocale,
   getTranslations,
@@ -346,45 +347,43 @@ export default async function Footer({
       />
 
       <div className="relative mx-auto max-w-7xl px-6 py-14 sm:py-18 lg:px-8 lg:py-20">
-        {showHomeDetails && (
-          <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50/90 p-6 shadow-sm backdrop-blur-xl transition-colors dark:border-white/[0.1] dark:bg-white/[0.045] dark:shadow-none sm:p-8 lg:p-10">
-            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-              <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
-                  <GlobeIcon className="size-4" />
-                  Vatandoshlar.de
-                </div>
-
-                <h2 className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-4xl">
-                  {t("cta.title")}
-                </h2>
-
-                <p className="mt-5 max-w-xl text-base leading-8 text-slate-600 dark:text-slate-300">
-                  {t("cta.description")}
-                </p>
+        <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50/90 p-6 shadow-sm backdrop-blur-xl transition-colors dark:border-white/[0.1] dark:bg-white/[0.045] dark:shadow-none sm:p-8 lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+                <GlobeIcon className="size-4" />
+                Vatandoshlar.de
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:justify-items-end">
-                <Link
-                  href="/services"
-                  className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto lg:min-w-56 dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
-                >
-                  {t("cta.servicesButton")}
+              <h2 className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-4xl">
+                {t("cta.title")}
+              </h2>
 
-                  <ArrowUpRightIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Link>
+              <p className="mt-5 max-w-xl text-base leading-8 text-slate-600 dark:text-slate-300">
+                {t("cta.description")}
+              </p>
+            </div>
 
-                <Link
-                  href="/guide"
-                  className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-300 hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto lg:min-w-56 dark:border-white/10 dark:bg-white/[0.06] dark:text-white dark:hover:border-emerald-400/30 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
-                >
-                  <BookOpenIcon className="size-4" />
-                  {localCopy.guideCta}
-                </Link>
-              </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:justify-items-end">
+              <Link
+                href="/services"
+                className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto lg:min-w-56 dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
+              >
+                {t("cta.servicesButton")}
+
+                <ArrowUpRightIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+
+              <Link
+                href="/guide"
+                className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-300 hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto lg:min-w-56 dark:border-white/10 dark:bg-white/[0.06] dark:text-white dark:hover:border-emerald-400/30 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+              >
+                <BookOpenIcon className="size-4" />
+                {localCopy.guideCta}
+              </Link>
             </div>
           </div>
-        )}
+        </div>
 
         {showHomeDetails && (
           <div className="mt-12 sm:mt-14">
@@ -401,8 +400,15 @@ export default async function Footer({
                     aria-label={t("accessibility.homeLink")}
                     className="inline-flex items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 focus-visible:ring-offset-white dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-slate-950"
                   >
-                    <span className="flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-lg font-bold text-white shadow-lg shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105">
-                      V
+                    <span className="flex size-11 shrink-0 items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                      <Image
+                        src="/images/brand/vatandoshlar-icon.png"
+                        alt=""
+                        aria-hidden="true"
+                        width={44}
+                        height={44}
+                        className="h-10 w-10 object-contain"
+                      />
                     </span>
 
                     <span>

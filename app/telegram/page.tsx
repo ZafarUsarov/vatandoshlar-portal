@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import TelegramSection from "../../components/TelegramSection";
+import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
 import { Link } from "../../i18n/navigation";
 
 type Locale = "uz" | "de";
@@ -50,36 +51,38 @@ export default async function TelegramPage() {
       <Header />
 
       <main className="min-h-screen bg-white pt-24 text-slate-950 lg:pt-28 dark:bg-slate-950 dark:text-white">
-        <section className="border-b border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900">
-          <div className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8">
-            <Link
-              href="/"
-              className="inline-flex items-center text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              <span
-                aria-hidden="true"
-                className="mr-2"
+        <SectionHeroBackground tone="telegram">
+          <section className="border-b border-slate-200/80 bg-transparent dark:border-slate-800/80">
+            <div className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8">
+              <Link
+                href="/"
+                className="inline-flex items-center text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
               >
-                ←
-              </span>
-              {copy.backHome}
-            </Link>
+                <span
+                  aria-hidden="true"
+                  className="mr-2"
+                >
+                  ←
+                </span>
+                {copy.backHome}
+              </Link>
 
-            <div className="mt-10 max-w-3xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">
-                {copy.eyebrow}
-              </p>
+              <div className="mt-10 max-w-3xl">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">
+                  {copy.eyebrow}
+                </p>
 
-              <h1 className="mt-5 text-4xl font-bold tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl dark:text-white">
-                {copy.title}
-              </h1>
+                <h1 className="mt-5 text-4xl font-bold tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl dark:text-white">
+                  {copy.title}
+                </h1>
 
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">
-                {copy.description}
-              </p>
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">
+                  {copy.description}
+                </p>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </SectionHeroBackground>
 
         <TelegramSection />
       </main>

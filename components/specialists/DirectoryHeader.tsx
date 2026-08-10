@@ -57,12 +57,7 @@ export default function DirectoryHeader({
   ];
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-50 py-20 dark:border-slate-800 dark:bg-slate-950 sm:py-24 lg:py-28">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(16,185,129,0.14),transparent_28%),radial-gradient(circle_at_88%_16%,rgba(59,130,246,0.11),transparent_26%),radial-gradient(circle_at_55%_100%,rgba(139,92,246,0.08),transparent_30%)]"
-      />
-
+    <section className="border-b border-slate-200/80 bg-transparent py-20 dark:border-slate-800/80 sm:py-24 lg:py-28">
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1fr_auto] lg:items-end">
           <div className="max-w-4xl">

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
@@ -14,6 +15,7 @@ import {
   Section,
   StatCard,
 } from "../../components/ui";
+import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
 import { Link } from "../../i18n/navigation";
 import {
   formatJobDate,
@@ -178,27 +180,30 @@ export default async function JobsPage() {
       <Header />
 
       <main className="page-main">
-        <PageHero
-          eyebrow={copy.eyebrow}
-          title={copy.title}
-          description={copy.description}
-          stats={
-            <>
-              <StatCard
-                value={jobGuides.length}
-                label={copy.stats.guides}
-              />
-              <StatCard
-                value="100%"
-                label={copy.stats.official}
-              />
-              <StatCard
-                value="16"
-                label={copy.stats.states}
-              />
-            </>
-          }
-        />
+        <SectionHeroBackground tone="jobs">
+          <PageHero
+            eyebrow={copy.eyebrow}
+            title={copy.title}
+            description={copy.description}
+            stats={
+              <>
+                <StatCard
+                  value={jobGuides.length}
+                  label={copy.stats.guides}
+                />
+                <StatCard
+                  value="100%"
+                  label={copy.stats.official}
+                />
+                <StatCard
+                  value="16"
+                  label={copy.stats.states}
+                />
+              </>
+            }
+            className="!bg-transparent"
+          />
+        </SectionHeroBackground>
 
         <Section
           tone="page"
@@ -249,38 +254,42 @@ export default async function JobsPage() {
             aria-labelledby="featured-job-guide-heading"
           >
             <Container>
-              <article className="overflow-hidden rounded-[2rem] border border-border-default bg-surface shadow-md transition-colors duration-300">
-                <div className="grid lg:grid-cols-[0.85fr_1.15fr]">
-                  <div className="flex min-h-80 flex-col justify-between bg-slate-950 p-8 text-white sm:p-12 lg:min-h-[460px] dark:bg-black">
-                    <div>
-                      <Badge
-                        variant="neutral"
-                        className="border-white/10 bg-white/10 text-white"
-                      >
-                        {copy.featured}
-                      </Badge>
+              <article className="group overflow-hidden rounded-[2rem] border border-border-default bg-surface shadow-md transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-blue-200/80 hover:shadow-xl hover:shadow-slate-900/[0.06] dark:hover:border-blue-400/20 dark:hover:shadow-black/20">
+                <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
+                  <div className="relative min-h-[320px] overflow-hidden sm:min-h-[380px] lg:min-h-[460px]">
+                    <Image
+                      src="/images/jobs/international-students-work.webp"
+                      alt={featuredGuide.title}
+                      fill
+                      sizes="(max-width: 1023px) 100vw, 42vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                    />
 
-                      <div
-                        aria-hidden="true"
-                        className="mt-10 flex size-20 items-center justify-center rounded-3xl border border-white/10 bg-white/10 text-4xl shadow-sm backdrop-blur"
-                      >
-                        {featuredGuide.icon}
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-b from-slate-950/42 via-slate-950/12 to-slate-950/88"
+                    />
+
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-r from-slate-950/22 via-transparent to-transparent"
+                    />
+
+                    <div className="relative z-10 h-full min-h-[320px] text-white sm:min-h-[380px] lg:min-h-[460px]">
+                      <div className="absolute bottom-10 left-8 max-w-sm border-t border-white/15 pt-5 sm:bottom-11 sm:left-10 lg:bottom-12 lg:left-12">
+                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-200 drop-shadow-sm">
+                          {copy.lastVerified}
+                        </p>
+                        <time
+                          dateTime={featuredGuide.verifiedAt}
+                          className="mt-2 block font-semibold text-white drop-shadow-sm"
+                        >
+                          {formatJobDate(
+                            featuredGuide.verifiedAt,
+                            locale,
+                          )}
+                        </time>
                       </div>
-                    </div>
-
-                    <div className="mt-12">
-                      <p className="text-sm text-slate-400">
-                        {copy.lastVerified}
-                      </p>
-                      <time
-                        dateTime={featuredGuide.verifiedAt}
-                        className="mt-2 block font-semibold text-white"
-                      >
-                        {formatJobDate(
-                          featuredGuide.verifiedAt,
-                          locale,
-                        )}
-                      </time>
                     </div>
                   </div>
 

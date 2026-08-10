@@ -36,6 +36,15 @@ export const metadata: Metadata = {
   creator: "Vatandoshlar.de",
   publisher: "Vatandoshlar.de",
 
+  icons: {
+    icon: [
+      {
+        url: "/images/brand/favicon-vatandoshlar.png",
+        type: "image/png",
+      },
+    ],
+  },
+
   openGraph: {
     type: "website",
     locale: "uz_UZ",

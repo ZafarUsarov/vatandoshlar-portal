@@ -5,6 +5,7 @@ import EventCard from "../../components/cards/EventCard";
 import Footer from "../../components/Footer";
 import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
+import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
 import {
   getPastEvents,
   getUpcomingEvents,
@@ -34,6 +35,17 @@ export default async function EventsPage() {
     (await getLocale()) as SupportedEventLocale;
   const upcomingEvents = getUpcomingEvents(locale);
   const pastEvents = getPastEvents(locale);
+
+  const calendarImage =
+    locale === "uz"
+      ? {
+          src: "/images/events/calendar-uz.webp",
+          alt: "Vatandoshlar.de tadbirlar kalendari",
+        }
+      : {
+          src: "/images/events/calendar-de.webp",
+          alt: "Vatandoshlar.de Veranstaltungskalender",
+        };
 
   const copy =
     locale === "uz"
@@ -268,18 +280,11 @@ export default async function EventsPage() {
       <Header />
 
       <main className="min-h-screen bg-slate-50 pt-20 text-slate-950 transition-colors dark:bg-slate-950 dark:text-white">
-        <section className="relative overflow-hidden border-b border-slate-800 bg-slate-950 text-white">
-          <div
-            className="absolute inset-0 opacity-20"
-            aria-hidden="true"
-          >
-            <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-blue-500 blur-3xl" />
-            <div className="absolute -bottom-40 left-10 h-96 w-96 rounded-full bg-emerald-500 blur-3xl" />
-          </div>
-
-          <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8">
+        <SectionHeroBackground tone="events">
+          <section className="border-b border-slate-200/80 bg-transparent text-slate-950 dark:border-slate-800/80 dark:text-white">
+            <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8">
             <div className="max-w-4xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-300">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-violet-700 dark:text-violet-300">
                 {copy.heroEyebrow}
               </p>
 
@@ -287,21 +292,21 @@ export default async function EventsPage() {
                 {copy.heroTitle}
               </h1>
 
-              <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-300">
+              <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-400">
                 {copy.heroDescription}
               </p>
 
               <div className="mt-10 flex flex-wrap gap-3">
                 <a
                   href="#upcoming-events"
-                  className="rounded-full bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-500"
+                  className="rounded-full bg-violet-600 px-6 py-3 font-semibold text-white shadow-lg shadow-violet-600/15 transition hover:-translate-y-0.5 hover:bg-violet-500"
                 >
                   {copy.upcomingButton}
                 </a>
 
                 <a
                   href="#event-policy"
-                  className="rounded-full border border-white/20 bg-white/5 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
+                  className="rounded-full border border-slate-300/80 bg-white/70 px-6 py-3 font-semibold text-slate-900 shadow-sm backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
                 >
                   {copy.policyButton}
                 </a>
@@ -309,35 +314,36 @@ export default async function EventsPage() {
             </div>
 
             <div className="mt-16 grid gap-4 sm:grid-cols-3">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+              <div className="rounded-2xl border border-slate-200/80 bg-white/75 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
                 <p className="text-3xl font-bold">
                   {upcomingEvents.length}
                 </p>
-                <p className="mt-2 text-sm text-slate-300">
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                   {copy.stats.upcoming}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+              <div className="rounded-2xl border border-slate-200/80 bg-white/75 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
                 <p className="text-3xl font-bold">
                   {copy.categories.length}
                 </p>
-                <p className="mt-2 text-sm text-slate-300">
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                   {copy.stats.categories}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+              <div className="rounded-2xl border border-slate-200/80 bg-white/75 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
                 <p className="text-3xl font-bold">
                   100%
                 </p>
-                <p className="mt-2 text-sm text-slate-300">
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                   {copy.stats.verified}
                 </p>
               </div>
             </div>
-          </div>
-        </section>
+            </div>
+          </section>
+        </SectionHeroBackground>
 
         <section className="border-b border-slate-200 bg-white py-16 dark:border-slate-800 dark:bg-slate-900">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -394,16 +400,23 @@ export default async function EventsPage() {
             ) : (
               <div className="mt-12 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
                 <div className="grid lg:grid-cols-[0.8fr_1.2fr]">
-                  <div className="flex min-h-80 items-center justify-center bg-gradient-to-br from-blue-700 to-slate-950 p-10 text-white">
-                    <div className="text-center">
-                      <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-[2rem] bg-white/10 text-5xl">
-                        ◷
-                      </div>
-                      <p className="mt-7 text-sm font-semibold uppercase tracking-[0.18em] text-blue-200">
-                        {copy.heroEyebrow}
-                      </p>
-                    </div>
-                  </div>
+                  <div
+                    role="img"
+                    aria-label={calendarImage.alt}
+                    style={{
+                      backgroundImage: `url(${calendarImage.src})`,
+                    }}
+                    className="
+                      min-h-80
+                      bg-slate-200
+                      bg-cover
+                      bg-center
+                      bg-no-repeat
+                      dark:bg-slate-800
+                      sm:min-h-[420px]
+                      lg:min-h-[560px]
+                    "
+                  />
 
                   <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-14">
                     <span className="w-fit rounded-full bg-amber-100 px-4 py-2 text-sm font-semibold text-amber-700 dark:bg-amber-500/10 dark:text-amber-300">

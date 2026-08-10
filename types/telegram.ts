@@ -1,10 +1,8 @@
 export type SupportedTelegramLocale = "uz" | "de";
 
-export type TelegramGroupStatus =
-  | "active"
-  | "coming-soon";
+export type TelegramGroupStatus = "active" | "coming-soon";
 
-export type TelegramGroup = Readonly<{
+export type TelegramGroup = {
   state: string;
   shortName: string;
   description: string;
@@ -12,4 +10,4 @@ export type TelegramGroup = Readonly<{
   button: string;
   status: TelegramGroupStatus;
   statusLabel: string;
-}>;
+};

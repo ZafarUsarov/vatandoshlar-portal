@@ -9,6 +9,7 @@ import Card from "../../components/ui/Card";
 import Container from "../../components/ui/Container";
 import PageHero from "../../components/ui/PageHero";
 import Section from "../../components/ui/Section";
+import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
 import { getServices } from "../../data/services";
 import { Link } from "../../i18n/navigation";
 import type { SupportedContentLocale } from "../../types/service";
@@ -166,12 +167,15 @@ export default async function ServicesPage() {
       <Header />
 
       <main className="min-h-screen bg-page pt-20 text-foreground">
-        <PageHero
-          eyebrow={copy.eyebrow}
-          title={copy.title}
-          description={copy.description}
-          stats={heroStats}
-        />
+        <SectionHeroBackground tone="services">
+          <PageHero
+            eyebrow={copy.eyebrow}
+            title={copy.title}
+            description={copy.description}
+            stats={heroStats}
+            className="!bg-transparent"
+          />
+        </SectionHeroBackground>
 
         <Section tone="page" spacing="xl">
           <Container>

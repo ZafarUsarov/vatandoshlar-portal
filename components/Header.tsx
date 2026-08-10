@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import {
   useCallback,
@@ -520,29 +521,29 @@ export default function Header() {
             href="/"
             onClick={handleBrandClick}
             aria-label={t("accessibility.homeLink")}
-            className="group flex shrink-0 items-center gap-3"
+            className="group flex shrink-0 items-center gap-2"
           >
             <span
               className={`
-                relative flex items-center justify-center
-                overflow-hidden
-                bg-gradient-to-br
-                from-emerald-500 via-emerald-600 to-teal-700
-                font-black text-white
-                shadow-lg shadow-emerald-600/20
+                relative flex shrink-0 items-center justify-center
                 transition-all duration-300
                 group-hover:-translate-y-0.5
-                group-hover:shadow-xl
-                group-hover:shadow-emerald-600/25
                 ${
                   isScrolled
-                    ? "h-9 w-9 rounded-xl text-base"
-                    : "h-11 w-11 rounded-2xl text-lg"
+                    ? "h-10 w-10 xl:h-[42px] xl:w-[42px]"
+                    : "h-11 w-11 xl:h-[52px] xl:w-[52px]"
                 }
               `}
             >
-              <span className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
-              <span className="relative">V</span>
+              <Image
+                src="/images/brand/vatandoshlar-icon.png"
+                alt=""
+                aria-hidden="true"
+                width={44}
+                height={44}
+                priority
+                className="h-full w-full object-contain"
+              />
             </span>
 
             <span className="hidden min-[390px]:block">

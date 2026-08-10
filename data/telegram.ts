@@ -1,27 +1,35 @@
 import type {
   SupportedTelegramLocale,
   TelegramGroup,
+  TelegramGroupStatus,
 } from "@/types/telegram";
 
 type TelegramGroupSource = Readonly<{
   state: string;
   shortName: string;
   href: string | null;
-  status: "active" | "coming-soon";
-  description: Readonly<
-    Record<SupportedTelegramLocale, string>
-  >;
+  status: TelegramGroupStatus;
+  customName?: Readonly<{
+    uz: string;
+    de: string;
+  }>;
+  customDescription?: Readonly<{
+    uz: string;
+    de: string;
+  }>;
+  buttonType?: "bot" | "group";
 }>;
 
-const sources: ReadonlyArray<TelegramGroupSource> = [
+const telegramGroupSources: ReadonlyArray<TelegramGroupSource> = [
   {
     state: "Nordrhein-Westfalen",
     shortName: "NRW",
     href: "https://t.me/NRW_Vatandoshlar_bot",
     status: "active",
-    description: {
+    buttonType: "bot",
+    customDescription: {
       uz: "NRW vatandoshlari Telegram hamjamiyatiga qo‘shilish uchun rasmiy botdan foydalaning.",
-      de: "Nutzen Sie den offiziellen Bot, um der Telegram-Community für Landsleute in Nordrhein-Westfalen beizutreten.",
+      de: "Nutzen Sie den offiziellen Bot, um der usbekischen Telegram-Community in Nordrhein-Westfalen beizutreten.",
     },
   },
   {
@@ -29,75 +37,151 @@ const sources: ReadonlyArray<TelegramGroupSource> = [
     shortName: "BW",
     href: "https://t.me/baden_wurttemberg_vatandoshlar",
     status: "active",
-    description: {
-      uz: "Baden-Württemberg hududidagi vatandoshlar uchun Telegram guruhi.",
-      de: "Telegram-Gruppe für usbekische Landsleute in Baden-Württemberg.",
-    },
   },
   {
     state: "Schleswig-Holstein",
     shortName: "SH",
     href: "https://t.me/SH_Vatandoshlar",
     status: "active",
-    description: {
-      uz: "Schleswig-Holstein hududidagi vatandoshlar uchun Telegram guruhi.",
-      de: "Telegram-Gruppe für usbekische Landsleute in Schleswig-Holstein.",
+  },
+  {
+    state: "Berlin",
+    shortName: "BE",
+    href: null,
+    status: "coming-soon",
+  },
+  {
+    state: "Bayern",
+    shortName: "BY",
+    href: null,
+    status: "coming-soon",
+  },
+  {
+    state: "Brandenburg",
+    shortName: "BB",
+    href: null,
+    status: "coming-soon",
+  },
+  {
+    state: "Bremen",
+    shortName: "HB",
+    href: null,
+    status: "coming-soon",
+  },
+  {
+    state: "Hamburg",
+    shortName: "HH",
+    href: "https://t.me/+1qwEUmNLr-NiMTRi",
+    status: "active",
+    customName: {
+      uz: "Hamburgdagi O‘zbeklar",
+      de: "Usbeken in Hamburg",
+    },
+    customDescription: {
+      uz: "Hamburg va atrofida yashayotgan o‘zbekistonliklar uchun Telegram hamjamiyati.",
+      de: "Telegram-Community für Usbeken, die in Hamburg und Umgebung leben.",
     },
   },
-  ...[
-    ["Berlin", "BE"],
-    ["Bayern", "BY"],
-    ["Brandenburg", "BB"],
-    ["Bremen", "HB"],
-    ["Hamburg", "HH"],
-    ["Hessen", "HE"],
-    ["Mecklenburg-Vorpommern", "MV"],
-    ["Niedersachsen", "NI"],
-    ["Rheinland-Pfalz", "RP"],
-    ["Saarland", "SL"],
-    ["Sachsen", "SN"],
-    ["Sachsen-Anhalt", "ST"],
-    ["Thüringen", "TH"],
-  ].map(([state, shortName]) => ({
-    state,
-    shortName,
+  {
+    state: "Hessen",
+    shortName: "HE",
     href: null,
-    status: "coming-soon" as const,
-    description: {
-      uz: `${state} uchun Telegram guruhi tez orada qo‘shiladi.`,
-      de: `Die Telegram-Gruppe für ${state} wird in Kürze ergänzt.`,
-    },
-  })),
+    status: "coming-soon",
+  },
+  {
+    state: "Mecklenburg-Vorpommern",
+    shortName: "MV",
+    href: null,
+    status: "coming-soon",
+  },
+  {
+    state: "Niedersachsen",
+    shortName: "NI",
+    href: null,
+    status: "coming-soon",
+  },
+  {
+    state: "Rheinland-Pfalz",
+    shortName: "RP",
+    href: null,
+    status: "coming-soon",
+  },
+  {
+    state: "Saarland",
+    shortName: "SL",
+    href: null,
+    status: "coming-soon",
+  },
+  {
+    state: "Sachsen",
+    shortName: "SN",
+    href: null,
+    status: "coming-soon",
+  },
+  {
+    state: "Sachsen-Anhalt",
+    shortName: "ST",
+    href: null,
+    status: "coming-soon",
+  },
+  {
+    state: "Thüringen",
+    shortName: "TH",
+    href: null,
+    status: "coming-soon",
+  },
 ];
+
+function getDefaultDescription(
+  state: string,
+  status: TelegramGroupStatus,
+  locale: SupportedTelegramLocale,
+) {
+  if (status === "active") {
+    return locale === "uz"
+      ? `${state} hududidagi vatandoshlar uchun Telegram guruhi.`
+      : `Telegram-Gruppe für die usbekische Community in ${state}.`;
+  }
+
+  return locale === "uz"
+    ? `${state} uchun Telegram guruhi tez orada qo‘shiladi.`
+    : `Eine Telegram-Gruppe für ${state} wird demnächst ergänzt.`;
+}
 
 export function getTelegramGroups(
   locale: SupportedTelegramLocale,
-): ReadonlyArray<TelegramGroup> {
-  return sources.map((group) => ({
-    state: group.state,
-    shortName: group.shortName,
-    href: group.href,
-    status: group.status,
-    description: group.description[locale],
-    button:
-      group.status === "active"
-        ? locale === "uz"
-          ? group.shortName === "NRW"
-            ? "Bot orqali qo‘shilish"
-            : "Telegramga qo‘shilish"
-          : group.shortName === "NRW"
-            ? "Über den Bot beitreten"
-            : "Telegram beitreten"
-        : locale === "uz"
-          ? "Tez orada"
-          : "Demnächst",
-    statusLabel:
-      group.status === "active"
-        ? locale === "uz"
-          ? "Faol"
-          : "Aktiv"
-        : locale === "uz"
-          ? "Tez orada"
-          : "Demnächst",
-  }));
+): TelegramGroup[] {
+  return telegramGroupSources.map((group) => {
+    const isActive = group.status === "active";
+
+    return {
+      state: group.customName?.[locale] ?? group.state,
+      shortName: group.shortName,
+      description:
+        group.customDescription?.[locale] ??
+        getDefaultDescription(group.state, group.status, locale),
+      href: group.href,
+      button:
+        locale === "uz"
+          ? isActive
+            ? group.buttonType === "bot"
+              ? "Bot orqali qo‘shilish"
+              : "Telegramga qo‘shilish"
+            : "Tez orada"
+          : isActive
+            ? group.buttonType === "bot"
+              ? "Über den Bot beitreten"
+              : "Telegram-Gruppe öffnen"
+            : "Demnächst",
+      status: group.status,
+      statusLabel:
+        locale === "uz"
+          ? isActive
+            ? "Faol"
+            : "Tez orada"
+          : isActive
+            ? "Aktiv"
+            : "Demnächst",
+    };
+  });
 }

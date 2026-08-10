@@ -6,6 +6,7 @@ import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import GuideCategoryGrid from "../../components/guide/GuideCategoryGrid";
 import GuideHero from "../../components/guide/GuideHero";
+import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
 import SectionBackground from "../../components/ui/SectionBackground";
 import { getGuideCategories } from "../../data/guide";
 import type { SupportedGuideLocale } from "../../types/guide";
@@ -138,13 +139,15 @@ export default async function GuidePage() {
       <Header />
 
       <main className="min-h-screen bg-slate-50 pt-20 text-slate-950 transition-colors dark:bg-slate-950 dark:text-white">
-        <GuideHero
-          eyebrow={copy.hero.eyebrow}
-          title={copy.hero.title}
-          description={copy.hero.description}
-          primaryLabel={copy.hero.primary}
-          secondaryLabel={copy.hero.secondary}
-        />
+        <SectionHeroBackground tone="guide">
+          <GuideHero
+            eyebrow={copy.hero.eyebrow}
+            title={copy.hero.title}
+            description={copy.hero.description}
+            primaryLabel={copy.hero.primary}
+            secondaryLabel={copy.hero.secondary}
+          />
+        </SectionHeroBackground>
 
         <section
           id="guide-categories"

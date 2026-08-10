@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { Link } from "../../i18n/navigation";
@@ -62,9 +63,15 @@ export default function QuickDirectionsPanel({
 
           <div
             aria-hidden="true"
-            className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500 text-xl font-black text-white"
+            className="flex h-12 w-12 shrink-0 items-center justify-center"
           >
-            V
+            <Image
+              src="/images/brand/vatandoshlar-icon.png"
+              alt=""
+              width={48}
+              height={48}
+              className="h-11 w-11 object-contain"
+            />
           </div>
         </div>
 
