@@ -311,28 +311,28 @@ export default async function HeroSection() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:56px_56px]" />
       </div>
 
-      <div className="mx-auto grid max-w-7xl gap-14 px-6 py-20 sm:py-28 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:px-8 lg:py-32 xl:grid-cols-[1.05fr_0.95fr]">
-        <div className="lg:sticky lg:top-28">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-300 backdrop-blur">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 sm:py-20 lg:px-8 lg:py-24 xl:grid-cols-[1.02fr_0.98fr] xl:items-center xl:gap-14 xl:py-28 2xl:gap-16">
+        <div className="max-w-3xl xl:max-w-none">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-xs font-semibold text-emerald-300 backdrop-blur sm:text-sm">
             <span className="h-2 w-2 rounded-full bg-emerald-400" />
             {t("hero.badge")}
           </div>
 
-          <h1 className="mt-7 max-w-4xl text-balance text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-6xl lg:leading-[1.05] xl:text-7xl">
+          <h1 className="mt-6 max-w-4xl text-balance text-4xl font-extrabold tracking-tight leading-[1.03] sm:text-5xl md:text-6xl xl:text-[3.7rem] 2xl:text-7xl">
             {t("hero.title")}
             <span className="block bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
               {t("hero.highlight")}
             </span>
           </h1>
 
-          <p className="mt-7 max-w-3xl text-pretty text-lg leading-8 text-slate-300 sm:text-xl">
+          <p className="mt-6 max-w-2xl text-pretty text-base leading-7 text-slate-300 sm:text-lg sm:leading-8 xl:text-xl">
             {t("hero.description")}
           </p>
 
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap xl:mt-9">
             <Link
               href="/services"
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-7 py-4 font-bold text-white shadow-xl shadow-emerald-950/30 transition duration-300 hover:-translate-y-0.5 hover:from-emerald-400 hover:to-teal-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-3.5 font-bold sm:px-7 sm:py-4 text-white shadow-xl shadow-emerald-950/30 transition duration-300 hover:-translate-y-0.5 hover:from-emerald-400 hover:to-teal-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               {t("hero.servicesCta")}
               <ArrowIcon />
@@ -340,13 +340,13 @@ export default async function HeroSection() {
 
             <Link
               href="/specialists"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-7 py-4 font-bold text-white backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur sm:px-7 sm:py-4 transition duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               {quickCopy.specialists.title}
             </Link>
           </div>
 
-          <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm text-slate-300">
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/10 pt-6 text-sm text-slate-300 sm:gap-x-7 xl:mt-9 xl:pt-7">
             <span className="flex items-center gap-2">
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-300">
                 ✓

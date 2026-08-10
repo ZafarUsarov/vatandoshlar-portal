@@ -47,11 +47,11 @@ export default function QuickDirectionsPanel({
     <div className="relative">
       <div
         aria-hidden="true"
-        className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-br from-emerald-500/20 to-cyan-500/10 blur-2xl"
+        className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-emerald-500/20 to-cyan-500/10 blur-2xl sm:-inset-5"
       />
 
-      <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.07] p-5 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-7">
-        <div className="flex items-center justify-between border-b border-white/10 pb-5">
+      <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.07] p-5 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-6 xl:p-7">
+        <div className="flex items-center justify-between border-b border-white/10 pb-4 sm:pb-5">
           <div>
             <p className="text-sm font-semibold text-emerald-300">
               Vatandoshlar.de
@@ -68,14 +68,14 @@ export default function QuickDirectionsPanel({
           </div>
         </div>
 
-        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-2">
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 sm:mt-5">
           {items.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               aria-label={item.label}
               className={[
-                "group flex min-h-32 flex-col rounded-2xl border p-4 transition duration-300",
+                "group flex min-h-[7rem] flex-col rounded-2xl border p-4 transition duration-300 sm:min-h-[7.25rem] xl:min-h-[7rem]",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400",
                 "focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
                 item.featured
@@ -98,18 +98,18 @@ export default function QuickDirectionsPanel({
                 </span>
               </span>
 
-              <span className="mt-4 block font-bold text-white">
+              <span className="mt-3 block font-bold text-white sm:mt-4">
                 {item.title}
               </span>
 
-              <span className="mt-1 block text-sm leading-6 text-slate-400">
+              <span className="mt-1 block text-sm leading-5.5 text-slate-400">
                 {item.description}
               </span>
             </Link>
           ))}
         </div>
 
-        <div className="mt-5 rounded-2xl border border-amber-300/15 bg-amber-300/10 p-4">
+        <div className="mt-4 rounded-2xl border border-amber-300/15 bg-amber-300/10 p-4 sm:mt-5">
           <p className="text-sm font-semibold text-amber-200">
             {policyTitle}
           </p>
