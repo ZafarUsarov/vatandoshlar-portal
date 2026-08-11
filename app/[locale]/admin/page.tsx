@@ -19,7 +19,14 @@ const copy = {
     title: "Boshqaruv paneli",
     welcome: "Xush kelibsiz",
     description:
-      "Authentication foundation ishlayapti. Keyingi bosqichda bu yerga News, Events va boshqa boshqaruv modullari qo‘shiladi.",
+      "Vatandoshlar.de boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
+    modulesTitle: "Boshqaruv modullari",
+    modulesDescription:
+      "Birinchi modul sifatida Yangiliklar uchun PostgreSQL asosidagi boshqaruv foundation qo‘shildi.",
+    newsTitle: "Yangiliklar",
+    newsDescription:
+      "Admin database’dagi yangiliklar ro‘yxatini ko‘ring. Yaratish va tahrirlash funksiyalari keyingi bosqichda qo‘shiladi.",
+    newsAction: "Yangiliklarni boshqarish",
     account: "Admin account",
     role: "Rol",
     status: "Holat",
@@ -32,7 +39,14 @@ const copy = {
     title: "Verwaltungsbereich",
     welcome: "Willkommen",
     description:
-      "Die Authentifizierungsgrundlage ist aktiv. Im nächsten Schritt werden hier Verwaltungsbereiche für Nachrichten, Veranstaltungen und weitere Inhalte ergänzt.",
+      "Von hier aus können Sie die Verwaltungsbereiche von Vatandoshlar.de aufrufen.",
+    modulesTitle: "Verwaltungsmodule",
+    modulesDescription:
+      "Als erstes Modul wurde die PostgreSQL-Grundlage für die Nachrichtenverwaltung hinzugefügt.",
+    newsTitle: "Nachrichten",
+    newsDescription:
+      "Zeigen Sie die Nachrichten in der Admin-Datenbank an. Funktionen zum Erstellen und Bearbeiten folgen im nächsten Schritt.",
+    newsAction: "Nachrichten verwalten",
     account: "Admin-Konto",
     role: "Rolle",
     status: "Status",
@@ -98,10 +112,42 @@ export default async function AdminPage() {
               {currentCopy.description}
             </p>
 
-            <div className="mt-8 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center dark:border-slate-700 dark:bg-slate-950/50">
-              <p className="text-sm font-bold text-slate-700 dark:text-slate-300">
-                Admin modules → next milestone
+            <div className="mt-8">
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">
+                {currentCopy.modulesTitle}
               </p>
+
+              <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">
+                {currentCopy.modulesDescription}
+              </p>
+
+              <Link
+                href="/admin/news"
+                className="group mt-6 block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50/60 hover:shadow-lg hover:shadow-emerald-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-emerald-500/25 dark:hover:bg-emerald-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6"
+              >
+                <div className="flex items-start justify-between gap-5">
+                  <div>
+                    <h2 className="text-xl font-black text-slate-950 transition-colors group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300">
+                      {currentCopy.newsTitle}
+                    </h2>
+
+                    <p className="mt-3 max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-400">
+                      {currentCopy.newsDescription}
+                    </p>
+                  </div>
+
+                  <span
+                    aria-hidden="true"
+                    className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 font-black text-emerald-700 transition group-hover:bg-emerald-600 group-hover:text-white dark:bg-emerald-500/10 dark:text-emerald-300 dark:group-hover:bg-emerald-500 dark:group-hover:text-white"
+                  >
+                    →
+                  </span>
+                </div>
+
+                <p className="mt-5 text-sm font-bold text-emerald-700 dark:text-emerald-400">
+                  {currentCopy.newsAction} →
+                </p>
+              </Link>
             </div>
           </div>
 
