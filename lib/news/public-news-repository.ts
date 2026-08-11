@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { getDb } from "@/lib/db";
 import type {
   ContentType,
@@ -8,15 +10,13 @@ export type PublicNewsLocale =
   | "uz"
   | "de";
 
-type PublishedNewsRow = {
+type PublishedNewsSummaryRow = {
   id: string;
   slug: string;
   title_uz: string;
   title_de: string;
   excerpt_uz: string;
   excerpt_de: string;
-  content_uz: string[];
-  content_de: string[];
   category_uz: string;
   category_de: string;
   content_type: string;
@@ -31,6 +31,12 @@ type PublishedNewsRow = {
   verified_at: string | Date;
   featured: boolean;
 };
+
+type PublishedNewsDetailRow =
+  PublishedNewsSummaryRow & {
+    content_uz: string[];
+    content_de: string[];
+  };
 
 const contentTypeLabels = {
   official_info: {
@@ -53,20 +59,27 @@ const contentTypeLabels = {
     uz: "Konsullik",
     de: "Konsularisches",
   },
-} as const;
+} as const satisfies Record<
+  string,
+  Record<PublicNewsLocale, ContentType>
+>;
 
 function getLocalizedContentType(
   contentType: string,
   locale: PublicNewsLocale,
 ): ContentType {
-  const key =
+  if (
     contentType in contentTypeLabels
-      ? (contentType as keyof typeof contentTypeLabels)
-      : "official_info";
+  ) {
+    const key =
+      contentType as keyof typeof contentTypeLabels;
 
-  return contentTypeLabels[key][
+    return contentTypeLabels[key][locale];
+  }
+
+  return contentTypeLabels.official_info[
     locale
-  ] as ContentType;
+  ];
 }
 
 function toDateOnlyString(
@@ -80,23 +93,30 @@ function toDateOnlyString(
   return date.slice(0, 10);
 }
 
-function toPublicNewsItem(
-  row: PublishedNewsRow,
-  locale: PublicNewsLocale,
-): NewsItem {
+function toSafeNumericId(
+  value: string,
+): number {
   const databaseId =
     Number.parseInt(
-      row.id,
+      value,
       10,
     );
 
+  return Number.isSafeInteger(
+    databaseId,
+  )
+    ? databaseId
+    : 0;
+}
+
+function toPublicNewsSummary(
+  row: PublishedNewsSummaryRow,
+  locale: PublicNewsLocale,
+): NewsItem {
   return {
-    id:
-      Number.isSafeInteger(
-        databaseId,
-      )
-        ? databaseId
-        : 0,
+    id: toSafeNumericId(
+      row.id,
+    ),
     slug: row.slug,
     title:
       locale === "de"
@@ -106,10 +126,7 @@ function toPublicNewsItem(
       locale === "de"
         ? row.excerpt_de
         : row.excerpt_uz,
-    content:
-      locale === "de"
-        ? row.content_de
-        : row.content_uz,
+    content: [],
     category:
       locale === "de"
         ? row.category_de
@@ -141,7 +158,24 @@ function toPublicNewsItem(
           undefined
         : row.location_uz ??
           undefined,
-    featured: row.featured,
+    featured:
+      row.featured,
+  };
+}
+
+function toPublicNewsDetail(
+  row: PublishedNewsDetailRow,
+  locale: PublicNewsLocale,
+): NewsItem {
+  return {
+    ...toPublicNewsSummary(
+      row,
+      locale,
+    ),
+    content:
+      locale === "de"
+        ? row.content_de
+        : row.content_uz,
   };
 }
 
@@ -151,78 +185,289 @@ function hasDatabaseConfiguration(): boolean {
   );
 }
 
-async function queryPublishedNews(
-  whereClause = "",
-  values: unknown[] = [],
-): Promise<PublishedNewsRow[]> {
-  if (
-    !hasDatabaseConfiguration()
-  ) {
-    return [];
-  }
-
-  try {
-    const result =
-      await getDb().query<PublishedNewsRow>(
-        `
-          SELECT
-            id::text,
-            slug,
-            title_uz,
-            title_de,
-            excerpt_uz,
-            excerpt_de,
-            content_uz,
-            content_de,
-            category_uz,
-            category_de,
-            content_type,
-            reading_time_uz,
-            reading_time_de,
-            source_name,
-            source_url,
-            source_language_uz,
-            source_language_de,
-            location_uz,
-            location_de,
-            verified_at,
-            featured
-          FROM news_articles
-          WHERE
-            status = 'published'
-            ${whereClause}
-          ORDER BY
-            featured DESC,
-            verified_at DESC,
-            updated_at DESC,
-            id DESC
-        `,
-        values,
-      );
-
-    return result.rows;
-  } catch (error) {
-    console.error(
-      "Failed to load published news from database:",
-      error,
-    );
-
-    return [];
-  }
+function canSkipDatabaseDuringBuild(): boolean {
+  return (
+    !hasDatabaseConfiguration() &&
+    process.env.CI === "true"
+  );
 }
+
+function assertDatabaseAvailable(): void {
+  if (
+    hasDatabaseConfiguration() ||
+    canSkipDatabaseDuringBuild()
+  ) {
+    return;
+  }
+
+  throw new Error(
+    "DATABASE_URL is not configured for public News runtime.",
+  );
+}
+
+const loadPublishedNews =
+  cache(
+    async (
+      locale: PublicNewsLocale,
+      limit: number | null,
+    ): Promise<NewsItem[]> => {
+      assertDatabaseAvailable();
+
+      if (
+        canSkipDatabaseDuringBuild()
+      ) {
+        return [];
+      }
+
+      const result =
+        await getDb().query<PublishedNewsSummaryRow>(
+          `
+            SELECT
+              id::text,
+              slug,
+              title_uz,
+              title_de,
+              excerpt_uz,
+              excerpt_de,
+              category_uz,
+              category_de,
+              content_type,
+              reading_time_uz,
+              reading_time_de,
+              source_name,
+              source_url,
+              source_language_uz,
+              source_language_de,
+              location_uz,
+              location_de,
+              verified_at,
+              featured
+            FROM news_articles
+            WHERE status = 'published'
+            ORDER BY
+              featured DESC,
+              verified_at DESC,
+              updated_at DESC,
+              id DESC
+            ${
+              limit === null
+                ? ""
+                : "LIMIT $1"
+            }
+          `,
+          limit === null
+            ? []
+            : [limit],
+        );
+
+      return result.rows.map(
+        (row) =>
+          toPublicNewsSummary(
+            row,
+            locale,
+          ),
+      );
+    },
+  );
+
+const loadPublishedNewsBySlug =
+  cache(
+    async (
+      slug: string,
+      locale: PublicNewsLocale,
+    ): Promise<NewsItem | null> => {
+      assertDatabaseAvailable();
+
+      if (
+        canSkipDatabaseDuringBuild()
+      ) {
+        return null;
+      }
+
+      const result =
+        await getDb().query<PublishedNewsDetailRow>(
+          `
+            SELECT
+              id::text,
+              slug,
+              title_uz,
+              title_de,
+              excerpt_uz,
+              excerpt_de,
+              content_uz,
+              content_de,
+              category_uz,
+              category_de,
+              content_type,
+              reading_time_uz,
+              reading_time_de,
+              source_name,
+              source_url,
+              source_language_uz,
+              source_language_de,
+              location_uz,
+              location_de,
+              verified_at,
+              featured
+            FROM news_articles
+            WHERE
+              status = 'published'
+              AND slug = $1
+            LIMIT 1
+          `,
+          [slug],
+        );
+
+      const row =
+        result.rows[0];
+
+      return row
+        ? toPublicNewsDetail(
+            row,
+            locale,
+          )
+        : null;
+    },
+  );
+
+const loadRelatedPublishedNews =
+  cache(
+    async (
+      slug: string,
+      locale: PublicNewsLocale,
+      limit: number,
+    ): Promise<NewsItem[]> => {
+      assertDatabaseAvailable();
+
+      if (
+        canSkipDatabaseDuringBuild()
+      ) {
+        return [];
+      }
+
+      const result =
+        await getDb().query<PublishedNewsSummaryRow>(
+          `
+            SELECT
+              id::text,
+              slug,
+              title_uz,
+              title_de,
+              excerpt_uz,
+              excerpt_de,
+              category_uz,
+              category_de,
+              content_type,
+              reading_time_uz,
+              reading_time_de,
+              source_name,
+              source_url,
+              source_language_uz,
+              source_language_de,
+              location_uz,
+              location_de,
+              verified_at,
+              featured
+            FROM news_articles
+            WHERE
+              status = 'published'
+              AND slug <> $1
+            ORDER BY
+              featured DESC,
+              verified_at DESC,
+              updated_at DESC,
+              id DESC
+            LIMIT $2
+          `,
+          [
+            slug,
+            limit,
+          ],
+        );
+
+      return result.rows.map(
+        (row) =>
+          toPublicNewsSummary(
+            row,
+            locale,
+          ),
+      );
+    },
+  );
+
+const loadFeaturedPublishedNews =
+  cache(
+    async (
+      locale: PublicNewsLocale,
+    ): Promise<NewsItem | null> => {
+      assertDatabaseAvailable();
+
+      if (
+        canSkipDatabaseDuringBuild()
+      ) {
+        return null;
+      }
+
+      const result =
+        await getDb().query<PublishedNewsSummaryRow>(
+          `
+            SELECT
+              id::text,
+              slug,
+              title_uz,
+              title_de,
+              excerpt_uz,
+              excerpt_de,
+              category_uz,
+              category_de,
+              content_type,
+              reading_time_uz,
+              reading_time_de,
+              source_name,
+              source_url,
+              source_language_uz,
+              source_language_de,
+              location_uz,
+              location_de,
+              verified_at,
+              featured
+            FROM news_articles
+            WHERE
+              status = 'published'
+              AND featured = TRUE
+            ORDER BY
+              updated_at DESC,
+              id DESC
+            LIMIT 1
+          `,
+        );
+
+      const row =
+        result.rows[0];
+
+      return row
+        ? toPublicNewsSummary(
+            row,
+            locale,
+          )
+        : null;
+    },
+  );
 
 export async function getPublishedNews(
   locale: PublicNewsLocale,
+  limit?: number,
 ): Promise<NewsItem[]> {
-  const rows =
-    await queryPublishedNews();
+  const normalizedLimit =
+    typeof limit === "number" &&
+    Number.isInteger(limit) &&
+    limit > 0
+      ? limit
+      : null;
 
-  return rows.map(
-    (row) =>
-      toPublicNewsItem(
-        row,
-        locale,
-      ),
+  return loadPublishedNews(
+    locale,
+    normalizedLimit,
   );
 }
 
@@ -230,36 +475,34 @@ export async function getPublishedNewsBySlug(
   slug: string,
   locale: PublicNewsLocale,
 ): Promise<NewsItem | null> {
-  const rows =
-    await queryPublishedNews(
-      "AND slug = $1",
-      [slug],
-    );
+  return loadPublishedNewsBySlug(
+    slug,
+    locale,
+  );
+}
 
-  const row = rows[0];
+export async function getRelatedPublishedNews(
+  slug: string,
+  locale: PublicNewsLocale,
+  limit = 3,
+): Promise<NewsItem[]> {
+  const normalizedLimit =
+    Number.isInteger(limit) &&
+    limit > 0
+      ? limit
+      : 3;
 
-  return row
-    ? toPublicNewsItem(
-        row,
-        locale,
-      )
-    : null;
+  return loadRelatedPublishedNews(
+    slug,
+    locale,
+    normalizedLimit,
+  );
 }
 
 export async function getFeaturedPublishedNews(
   locale: PublicNewsLocale,
 ): Promise<NewsItem | null> {
-  const rows =
-    await queryPublishedNews(
-      "AND featured = TRUE",
-    );
-
-  const row = rows[0];
-
-  return row
-    ? toPublicNewsItem(
-        row,
-        locale,
-      )
-    : null;
+  return loadFeaturedPublishedNews(
+    locale,
+  );
 }

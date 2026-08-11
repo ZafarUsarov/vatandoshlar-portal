@@ -3,7 +3,12 @@ export type ContentType =
   | "Foydali qo‘llanma"
   | "Ta’lim"
   | "Ish va migratsiya"
-  | "Konsullik";
+  | "Konsullik"
+  | "Offizielle Information"
+  | "Praktischer Ratgeber"
+  | "Bildung"
+  | "Arbeit und Migration"
+  | "Konsularisches";
 
 export type NewsItem = {
   id: number;

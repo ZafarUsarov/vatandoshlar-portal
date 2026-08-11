@@ -7,8 +7,8 @@ import NewsCard from "../../../components/cards/NewsCard";
 import { Link } from "../../../i18n/navigation";
 import { formatNewsDate } from "../../../lib/news/format-news-date";
 import {
-  getPublishedNews,
   getPublishedNewsBySlug,
+  getRelatedPublishedNews,
   type PublicNewsLocale,
 } from "../../../lib/news/public-news-repository";
 
@@ -102,29 +102,22 @@ export default async function NewsDetailPage({
 
   const [
     article,
-    publicNews,
+    relatedNews,
   ] = await Promise.all([
     getPublishedNewsBySlug(
       slug,
       appLocale,
     ),
-    getPublishedNews(
+    getRelatedPublishedNews(
+      slug,
       appLocale,
+      3,
     ),
   ]);
 
   if (!article) {
     notFound();
   }
-
-  const relatedNews =
-    publicNews
-      .filter(
-        (item) =>
-          item.slug !==
-          article.slug,
-      )
-      .slice(0, 3);
 
   return (
     <>
