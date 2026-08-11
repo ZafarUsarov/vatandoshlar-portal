@@ -6,6 +6,9 @@ declare global {
     | undefined;
 }
 
+let pool: Pool | undefined =
+  globalThis.__vatandoshlarPgPool;
+
 function createPool(): Pool {
   const connectionString =
     process.env.DATABASE_URL;
@@ -24,10 +27,16 @@ function createPool(): Pool {
   });
 }
 
-export const db =
-  globalThis.__vatandoshlarPgPool ??
-  createPool();
+export function getDb(): Pool {
+  if (pool) {
+    return pool;
+  }
 
-if (process.env.NODE_ENV !== "production") {
-  globalThis.__vatandoshlarPgPool = db;
+  pool = createPool();
+
+  if (process.env.NODE_ENV !== "production") {
+    globalThis.__vatandoshlarPgPool = pool;
+  }
+
+  return pool;
 }

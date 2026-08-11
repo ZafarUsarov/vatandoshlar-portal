@@ -1,6 +1,6 @@
 import { compare } from "bcryptjs";
 
-import { db } from "@/lib/db";
+import { getDb } from "@/lib/db";
 
 export type AdminRole = "admin";
 
@@ -41,21 +41,22 @@ function toAdminAccount(
 export async function findActiveAdminById(
   id: string,
 ): Promise<AdminAccount | null> {
-  const result = await db.query<AdminRow>(
-    `
-      SELECT
-        id::text,
-        email,
-        display_name,
-        password_hash,
-        role,
-        is_active
-      FROM admin_users
-      WHERE id = $1
-      LIMIT 1
-    `,
-    [id],
-  );
+  const result =
+    await getDb().query<AdminRow>(
+      `
+        SELECT
+          id::text,
+          email,
+          display_name,
+          password_hash,
+          role,
+          is_active
+        FROM admin_users
+        WHERE id = $1
+        LIMIT 1
+      `,
+      [id],
+    );
 
   const row = result.rows[0];
 
@@ -71,21 +72,22 @@ export async function verifyAdminCredentials(
   const normalizedEmail =
     email.trim().toLowerCase();
 
-  const result = await db.query<AdminRow>(
-    `
-      SELECT
-        id::text,
-        email,
-        display_name,
-        password_hash,
-        role,
-        is_active
-      FROM admin_users
-      WHERE LOWER(email) = $1
-      LIMIT 1
-    `,
-    [normalizedEmail],
-  );
+  const result =
+    await getDb().query<AdminRow>(
+      `
+        SELECT
+          id::text,
+          email,
+          display_name,
+          password_hash,
+          role,
+          is_active
+        FROM admin_users
+        WHERE LOWER(email) = $1
+        LIMIT 1
+      `,
+      [normalizedEmail],
+    );
 
   const row = result.rows[0];
 
