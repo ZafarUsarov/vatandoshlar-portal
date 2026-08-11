@@ -33,6 +33,7 @@ const copy = {
       "Bu sahifa PostgreSQL’dagi admin yangiliklari uchun boshqaruv ro‘yxatidir. Public Yangiliklar bo‘limi hozircha mavjud static data orqali ishlashda davom etadi.",
     back: "Boshqaruv paneliga qaytish",
     create: "Yangi maqola yaratish",
+    edit: "Tahrirlash",
     total: "Jami",
     emptyTitle: "Hozircha admin yangiliklari yo‘q",
     emptyDescription:
@@ -55,6 +56,7 @@ const copy = {
       "Diese Seite ist die Verwaltungsliste für Nachrichten in PostgreSQL. Der öffentliche Nachrichtenbereich verwendet vorerst weiterhin die bestehende statische Datenquelle.",
     back: "Zurück zum Verwaltungsbereich",
     create: "Neue Nachricht erstellen",
+    edit: "Bearbeiten",
     total: "Gesamt",
     emptyTitle: "Noch keine Admin-Nachrichten vorhanden",
     emptyDescription:
@@ -235,6 +237,13 @@ export default async function AdminNewsPage() {
                           {article.slug}
                         </span>
                       </p>
+
+                      <Link
+                        href={`/admin/news/${article.id}/edit`}
+                        className="mt-4 inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-800 transition hover:border-emerald-200 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-emerald-500/30 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-900"
+                      >
+                        {currentCopy.edit}
+                      </Link>
                     </div>
 
                     <dl className="grid shrink-0 gap-4 text-sm sm:grid-cols-2 lg:min-w-[22rem]">
@@ -243,10 +252,7 @@ export default async function AdminNewsPage() {
                           {currentCopy.verified}
                         </dt>
                         <dd className="mt-1 font-bold text-slate-900 dark:text-white">
-                          {formatDate(
-                            article.verifiedAt,
-                            appLocale,
-                          )}
+                          {formatDate(article.verifiedAt, appLocale)}
                         </dd>
                       </div>
 
@@ -255,10 +261,7 @@ export default async function AdminNewsPage() {
                           {currentCopy.updated}
                         </dt>
                         <dd className="mt-1 font-bold text-slate-900 dark:text-white">
-                          {formatDate(
-                            article.updatedAt,
-                            appLocale,
-                          )}
+                          {formatDate(article.updatedAt, appLocale)}
                         </dd>
                       </div>
                     </dl>

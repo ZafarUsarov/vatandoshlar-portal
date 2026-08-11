@@ -23,7 +23,34 @@ export type AdminNewsArticleSummary = {
   updatedAt: string;
 };
 
-export type CreateAdminNewsArticleInput = {
+export type AdminNewsArticle = {
+  id: string;
+  slug: string;
+  titleUz: string;
+  titleDe: string;
+  excerptUz: string;
+  excerptDe: string;
+  contentUz: string[];
+  contentDe: string[];
+  categoryUz: string;
+  categoryDe: string;
+  contentType: AdminNewsContentType;
+  readingTimeUz: string;
+  readingTimeDe: string;
+  sourceName: string;
+  sourceUrl: string;
+  sourceLanguageUz: string;
+  sourceLanguageDe: string;
+  locationUz: string | null;
+  locationDe: string | null;
+  verifiedAt: string;
+  status: AdminNewsStatus;
+  featured: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type AdminNewsArticleInput = {
   slug: string;
   titleUz: string;
   titleDe: string;
@@ -45,7 +72,10 @@ export type CreateAdminNewsArticleInput = {
   verifiedAt: string;
 };
 
-type AdminNewsArticleRow = {
+export type CreateAdminNewsArticleInput =
+  AdminNewsArticleInput;
+
+type AdminNewsArticleSummaryRow = {
   id: string;
   slug: string;
   title_uz: string;
@@ -53,6 +83,33 @@ type AdminNewsArticleRow = {
   status: string;
   featured: boolean;
   verified_at: string | Date;
+  updated_at: string | Date;
+};
+
+type AdminNewsArticleRow = {
+  id: string;
+  slug: string;
+  title_uz: string;
+  title_de: string;
+  excerpt_uz: string;
+  excerpt_de: string;
+  content_uz: string[];
+  content_de: string[];
+  category_uz: string;
+  category_de: string;
+  content_type: string;
+  reading_time_uz: string;
+  reading_time_de: string;
+  source_name: string;
+  source_url: string;
+  source_language_uz: string;
+  source_language_de: string;
+  location_uz: string | null;
+  location_de: string | null;
+  verified_at: string | Date;
+  status: string;
+  featured: boolean;
+  created_at: string | Date;
   updated_at: string | Date;
 };
 
@@ -69,7 +126,22 @@ function normalizeStatus(
   return "draft";
 }
 
-function toDateString(
+function normalizeContentType(
+  contentType: string,
+): AdminNewsContentType {
+  if (
+    contentType === "guide" ||
+    contentType === "education" ||
+    contentType === "work_migration" ||
+    contentType === "consular"
+  ) {
+    return contentType;
+  }
+
+  return "official_info";
+}
+
+function toDateTimeString(
   value: string | Date,
 ): string {
   if (value instanceof Date) {
@@ -79,8 +151,14 @@ function toDateString(
   return value;
 }
 
+function toDateOnlyString(
+  value: string | Date,
+): string {
+  return toDateTimeString(value).slice(0, 10);
+}
+
 function toAdminNewsArticleSummary(
-  row: AdminNewsArticleRow,
+  row: AdminNewsArticleSummaryRow,
 ): AdminNewsArticleSummary {
   return {
     id: row.id,
@@ -89,10 +167,51 @@ function toAdminNewsArticleSummary(
     titleDe: row.title_de,
     status: normalizeStatus(row.status),
     featured: row.featured,
-    verifiedAt: toDateString(
+    verifiedAt: toDateOnlyString(
       row.verified_at,
     ),
-    updatedAt: toDateString(
+    updatedAt: toDateTimeString(
+      row.updated_at,
+    ),
+  };
+}
+
+function toAdminNewsArticle(
+  row: AdminNewsArticleRow,
+): AdminNewsArticle {
+  return {
+    id: row.id,
+    slug: row.slug,
+    titleUz: row.title_uz,
+    titleDe: row.title_de,
+    excerptUz: row.excerpt_uz,
+    excerptDe: row.excerpt_de,
+    contentUz: row.content_uz,
+    contentDe: row.content_de,
+    categoryUz: row.category_uz,
+    categoryDe: row.category_de,
+    contentType: normalizeContentType(
+      row.content_type,
+    ),
+    readingTimeUz: row.reading_time_uz,
+    readingTimeDe: row.reading_time_de,
+    sourceName: row.source_name,
+    sourceUrl: row.source_url,
+    sourceLanguageUz:
+      row.source_language_uz,
+    sourceLanguageDe:
+      row.source_language_de,
+    locationUz: row.location_uz,
+    locationDe: row.location_de,
+    verifiedAt: toDateOnlyString(
+      row.verified_at,
+    ),
+    status: normalizeStatus(row.status),
+    featured: row.featured,
+    createdAt: toDateTimeString(
+      row.created_at,
+    ),
+    updatedAt: toDateTimeString(
       row.updated_at,
     ),
   };
@@ -102,7 +221,7 @@ export async function getAdminNewsArticles(): Promise<
   AdminNewsArticleSummary[]
 > {
   const result =
-    await getDb().query<AdminNewsArticleRow>(
+    await getDb().query<AdminNewsArticleSummaryRow>(
       `
         SELECT
           id::text,
@@ -123,6 +242,51 @@ export async function getAdminNewsArticles(): Promise<
   return result.rows.map(
     toAdminNewsArticleSummary,
   );
+}
+
+export async function getAdminNewsArticleById(
+  id: string,
+): Promise<AdminNewsArticle | null> {
+  const result =
+    await getDb().query<AdminNewsArticleRow>(
+      `
+        SELECT
+          id::text,
+          slug,
+          title_uz,
+          title_de,
+          excerpt_uz,
+          excerpt_de,
+          content_uz,
+          content_de,
+          category_uz,
+          category_de,
+          content_type,
+          reading_time_uz,
+          reading_time_de,
+          source_name,
+          source_url,
+          source_language_uz,
+          source_language_de,
+          location_uz,
+          location_de,
+          verified_at,
+          status,
+          featured,
+          created_at,
+          updated_at
+        FROM news_articles
+        WHERE id = $1
+        LIMIT 1
+      `,
+      [id],
+    );
+
+  const row = result.rows[0];
+
+  return row
+    ? toAdminNewsArticle(row)
+    : null;
 }
 
 export async function createAdminNewsArticle(
@@ -203,5 +367,70 @@ export async function createAdminNewsArticle(
     ],
   );
 
-  return result.rows[0].id;
+  const row = result.rows[0];
+
+  if (!row) {
+    throw new Error(
+      "News article was not created.",
+    );
+  }
+
+  return row.id;
+}
+
+export async function updateAdminNewsArticle(
+  id: string,
+  input: AdminNewsArticleInput,
+): Promise<boolean> {
+  const result = await getDb().query(
+    `
+      UPDATE news_articles
+      SET
+        slug = $1,
+        title_uz = $2,
+        title_de = $3,
+        excerpt_uz = $4,
+        excerpt_de = $5,
+        content_uz = $6,
+        content_de = $7,
+        category_uz = $8,
+        category_de = $9,
+        content_type = $10,
+        reading_time_uz = $11,
+        reading_time_de = $12,
+        source_name = $13,
+        source_url = $14,
+        source_language_uz = $15,
+        source_language_de = $16,
+        location_uz = $17,
+        location_de = $18,
+        verified_at = $19,
+        updated_at = NOW()
+      WHERE id = $20
+    `,
+    [
+      input.slug,
+      input.titleUz,
+      input.titleDe,
+      input.excerptUz,
+      input.excerptDe,
+      input.contentUz,
+      input.contentDe,
+      input.categoryUz,
+      input.categoryDe,
+      input.contentType,
+      input.readingTimeUz,
+      input.readingTimeDe,
+      input.sourceName,
+      input.sourceUrl,
+      input.sourceLanguageUz,
+      input.sourceLanguageDe,
+      input.locationUz ?? null,
+      input.locationDe ?? null,
+      input.verifiedAt,
+      id,
+    ],
+  );
+
+  return (result.rowCount ?? 0) > 0;
 }
