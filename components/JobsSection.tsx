@@ -1,17 +1,23 @@
-import { getLocale } from "next-intl/server";
+import {
+  getLocale,
+} from "next-intl/server";
 
 import JobGuideCard from "@/components/cards/JobGuideCard";
-import {
-  getJobGuides,
-  type SupportedJobLocale,
-} from "@/data/jobs";
 import { Link } from "@/i18n/navigation";
+import {
+  getPublishedJobGuides,
+} from "@/lib/jobs/public-jobs-repository";
+import type {
+  SupportedJobLocale,
+} from "@/types/jobs";
 
 type IconProps = Readonly<{
   className?: string;
 }>;
 
-function BriefcaseIcon({ className }: IconProps) {
+function BriefcaseIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -43,7 +49,9 @@ function BriefcaseIcon({ className }: IconProps) {
   );
 }
 
-function ArrowUpRightIcon({ className }: IconProps) {
+function ArrowUpRightIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -63,70 +71,103 @@ function ArrowUpRightIcon({ className }: IconProps) {
 }
 
 export default async function JobsSection() {
-  const locale = (await getLocale()) as SupportedJobLocale;
-  const homepageGuides = getJobGuides(locale).slice(0, 3);
+  const locale =
+    (await getLocale()) as SupportedJobLocale;
+
+  const homepageGuides =
+    await getPublishedJobGuides(
+      locale,
+      3,
+    );
 
   const copy =
     locale === "uz"
       ? {
-          badge: "Ish va karyera",
+          badge:
+            "Ish va karyera",
           title:
             "Germaniyada ish topish bo‘yicha bosqichma-bosqich qo‘llanmalar",
           description:
             "Ausbildung, Minijob, Werkstudent, Praktikum va malakali ish o‘rinlari bo‘yicha eng muhim yo‘riqnomalarni bir joyda jamladik.",
-          allGuides: "Barcha qo‘llanmalar",
+          allGuides:
+            "Barcha qo‘llanmalar",
+          empty:
+            "Hozircha e’lon qilingan ish qo‘llanmalari mavjud emas.",
           stats: [
             {
-              value: `${homepageGuides.length}+`,
-              label: "qo‘llanma",
+              value:
+                `${homepageGuides.length}+`,
+              label:
+                "qo‘llanma",
             },
             {
-              value: "100%",
-              label: "tekshirilgan",
+              value:
+                "100%",
+              label:
+                "tekshirilgan",
             },
             {
-              value: "DE",
-              label: "mehnat bozori",
+              value:
+                "DE",
+              label:
+                "mehnat bozori",
             },
           ],
           card: {
             highlightsAria:
               "Qo‘llanmaning asosiy mavzulari",
-            guide: "Qo‘llanma",
+            guide:
+              "Qo‘llanma",
             explained:
               "Bosqichma-bosqich tushuntirilgan",
-            open: "Qo‘llanmani ochish",
-            openShort: "Ochish",
+            open:
+              "Qo‘llanmani ochish",
+            openShort:
+              "Ochish",
           },
         }
       : {
-          badge: "Arbeit und Karriere",
+          badge:
+            "Arbeit und Karriere",
           title:
             "Schritt-für-Schritt-Leitfäden für die Jobsuche in Deutschland",
           description:
             "Die wichtigsten Hinweise zu Ausbildung, Minijob, Werkstudent, Praktikum und qualifizierten Stellen an einem Ort.",
-          allGuides: "Alle Leitfäden",
+          allGuides:
+            "Alle Leitfäden",
+          empty:
+            "Derzeit sind keine veröffentlichten Jobleitfäden vorhanden.",
           stats: [
             {
-              value: `${homepageGuides.length}+`,
-              label: "Leitfäden",
+              value:
+                `${homepageGuides.length}+`,
+              label:
+                "Leitfäden",
             },
             {
-              value: "100%",
-              label: "geprüft",
+              value:
+                "100%",
+              label:
+                "geprüft",
             },
             {
-              value: "DE",
-              label: "Arbeitsmarkt",
+              value:
+                "DE",
+              label:
+                "Arbeitsmarkt",
             },
           ],
           card: {
             highlightsAria:
               "Wichtige Themen des Leitfadens",
-            guide: "Leitfaden",
-            explained: "Schritt für Schritt erklärt",
-            open: "Leitfaden öffnen",
-            openShort: "Öffnen",
+            guide:
+              "Leitfaden",
+            explained:
+              "Schritt für Schritt erklärt",
+            open:
+              "Leitfaden öffnen",
+            openShort:
+              "Öffnen",
           },
         };
 
@@ -146,18 +187,24 @@ export default async function JobsSection() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-300">
               <BriefcaseIcon className="size-4" />
-              {copy.badge}
+              {
+                copy.badge
+              }
             </div>
 
             <h2
               id="jobs-heading"
               className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl"
             >
-              {copy.title}
+              {
+                copy.title
+              }
             </h2>
 
             <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
-              {copy.description}
+              {
+                copy.description
+              }
             </p>
           </div>
 
@@ -165,37 +212,73 @@ export default async function JobsSection() {
             href="/jobs"
             className="group hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/10 lg:inline-flex"
           >
-            {copy.allGuides}
+            {
+              copy.allGuides
+            }
+
             <ArrowUpRightIcon className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
 
-        <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-          {homepageGuides.map((guide, index) => (
-            <JobGuideCard
-              key={guide.id}
-              guide={guide}
-              index={index}
-              labels={copy.card}
-            />
-          ))}
-        </div>
+        {homepageGuides.length >
+        0 ? (
+          <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+            {homepageGuides.map(
+              (
+                guide,
+                index,
+              ) => (
+                <JobGuideCard
+                  key={
+                    guide.id
+                  }
+                  guide={
+                    guide
+                  }
+                  index={
+                    index
+                  }
+                  labels={
+                    copy.card
+                  }
+                />
+              ),
+            )}
+          </div>
+        ) : (
+          <div className="mt-14 rounded-[2rem] border border-dashed border-white/15 bg-white/[0.04] p-8 text-center backdrop-blur">
+            <p className="text-sm font-semibold text-slate-300">
+              {
+                copy.empty
+              }
+            </p>
+          </div>
+        )}
 
         <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] backdrop-blur-xl">
           <div className="grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-            {copy.stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="px-8 py-7"
-              >
-                <div className="text-3xl font-semibold tracking-[-0.04em] text-white">
-                  {stat.value}
+            {copy.stats.map(
+              (stat) => (
+                <div
+                  key={
+                    stat.label
+                  }
+                  className="px-8 py-7"
+                >
+                  <div className="text-3xl font-semibold tracking-[-0.04em] text-white">
+                    {
+                      stat.value
+                    }
+                  </div>
+
+                  <p className="mt-2 text-sm text-slate-400">
+                    {
+                      stat.label
+                    }
+                  </p>
                 </div>
-                <p className="mt-2 text-sm text-slate-400">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
+              ),
+            )}
           </div>
         </div>
 
@@ -204,7 +287,10 @@ export default async function JobsSection() {
             href="/jobs"
             className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/10"
           >
-            {copy.allGuides}
+            {
+              copy.allGuides
+            }
+
             <ArrowUpRightIcon className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
