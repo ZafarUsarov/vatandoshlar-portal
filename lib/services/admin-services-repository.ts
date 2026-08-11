@@ -55,6 +55,30 @@ export type AdminService = {
   updatedAt: string;
 };
 
+export type AdminServiceInput = {
+  slug: string;
+  titleUz: string;
+  titleDe: string;
+  shortTitleUz: string;
+  shortTitleDe: string;
+  descriptionUz: string;
+  descriptionDe: string;
+  category: AdminServiceCategory;
+  icon: string;
+  servicesUz: string[];
+  servicesDe: string[];
+  verificationStepsUz: string[];
+  verificationStepsDe: string[];
+  importantNotesUz: string[];
+  importantNotesDe: string[];
+  officialSourceName: string;
+  officialSourceUrl: string;
+  sourceDescriptionUz: string;
+  sourceDescriptionDe: string;
+  locationUz: string;
+  locationDe: string;
+};
+
 type AdminServiceSummaryRow = {
   id: string;
   slug: string;
@@ -258,4 +282,100 @@ export async function getAdminServiceById(
   return row
     ? toAdminService(row)
     : null;
+}
+
+export async function createAdminService(
+  input: AdminServiceInput,
+): Promise<string> {
+  const result =
+    await getDb().query<{
+      id: string;
+    }>(
+      `
+        INSERT INTO services (
+          slug,
+          title_uz,
+          title_de,
+          short_title_uz,
+          short_title_de,
+          description_uz,
+          description_de,
+          category,
+          icon,
+          services_uz,
+          services_de,
+          verification_steps_uz,
+          verification_steps_de,
+          important_notes_uz,
+          important_notes_de,
+          official_source_name,
+          official_source_url,
+          source_description_uz,
+          source_description_de,
+          location_uz,
+          location_de,
+          status,
+          featured
+        )
+        VALUES (
+          $1,
+          $2,
+          $3,
+          $4,
+          $5,
+          $6,
+          $7,
+          $8,
+          $9,
+          $10,
+          $11,
+          $12,
+          $13,
+          $14,
+          $15,
+          $16,
+          $17,
+          $18,
+          $19,
+          $20,
+          $21,
+          'draft',
+          FALSE
+        )
+        RETURNING id::text
+      `,
+      [
+        input.slug,
+        input.titleUz,
+        input.titleDe,
+        input.shortTitleUz,
+        input.shortTitleDe,
+        input.descriptionUz,
+        input.descriptionDe,
+        input.category,
+        input.icon,
+        input.servicesUz,
+        input.servicesDe,
+        input.verificationStepsUz,
+        input.verificationStepsDe,
+        input.importantNotesUz,
+        input.importantNotesDe,
+        input.officialSourceName,
+        input.officialSourceUrl,
+        input.sourceDescriptionUz,
+        input.sourceDescriptionDe,
+        input.locationUz,
+        input.locationDe,
+      ],
+    );
+
+  const row = result.rows[0];
+
+  if (!row) {
+    throw new Error(
+      "Service was not created.",
+    );
+  }
+
+  return row.id;
 }

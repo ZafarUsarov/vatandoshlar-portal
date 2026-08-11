@@ -23,9 +23,10 @@ const copy = {
     eyebrow: "VATANDOSHLAR.DE · ADMIN · XIZMATLAR",
     title: "Xizmatlarni boshqarish",
     description:
-      "Services PostgreSQL foundation tayyor. Hozir bu sahifa ma’lumotlar bazasidagi xizmat yozuvlarini ko‘rsatadi.",
+      "PostgreSQL’dagi xizmat yozuvlarini boshqaring. Hozirgi bosqichda yangi xizmat yaratish va qoralama sifatida saqlash ishlaydi.",
     back: "Admin panelga qaytish",
     publicPage: "Public xizmatlar",
+    create: "Yangi xizmat yaratish",
     total: "Jami",
     drafts: "Qoralama",
     published: "E’lon qilingan",
@@ -34,10 +35,12 @@ const copy = {
     emptyTitle:
       "PostgreSQL’da xizmatlar hali mavjud emas",
     emptyDescription:
-      "Bu normal holat. Keyingi bosqichda yangi xizmat yaratish formasi va static Services ma’lumotlarini PostgreSQL’ga ko‘chirish jarayonini qo‘shamiz.",
+      "Yangi xizmat yaratib, uni qoralama sifatida PostgreSQL’ga saqlashingiz mumkin.",
     slug: "Slug",
     updated: "Yangilangan",
     status: "Holat",
+    publicStatic:
+      "Public Xizmatlar bo‘limi hozircha static data’dan foydalanadi. Admin’dagi yangi draft public sahifada ko‘rinmaydi.",
     categories: {
       translation: "Tarjima",
       legal: "Huquq",
@@ -57,10 +60,12 @@ const copy = {
       "VATANDOSHLAR.DE · ADMIN · DIENSTLEISTUNGEN",
     title: "Dienstleistungen verwalten",
     description:
-      "Die PostgreSQL-Grundlage für Dienstleistungen ist eingerichtet. Diese Seite zeigt derzeit die Einträge aus der Datenbank.",
+      "Verwalten Sie Dienstleistungseinträge in PostgreSQL. In diesem Schritt können neue Einträge erstellt und als Entwurf gespeichert werden.",
     back: "Zur Admin-Übersicht",
     publicPage:
       "Öffentliche Dienstleistungen",
+    create:
+      "Neue Dienstleistung erstellen",
     total: "Gesamt",
     drafts: "Entwürfe",
     published: "Veröffentlicht",
@@ -69,10 +74,12 @@ const copy = {
     emptyTitle:
       "Noch keine Dienstleistungen in PostgreSQL",
     emptyDescription:
-      "Das ist derzeit erwartbar. Im nächsten Schritt ergänzen wir das Erstellungsformular und die Migration der statischen Services-Daten nach PostgreSQL.",
+      "Erstellen Sie eine neue Dienstleistung und speichern Sie sie als Entwurf in PostgreSQL.",
     slug: "Slug",
     updated: "Aktualisiert",
     status: "Status",
+    publicStatic:
+      "Der öffentliche Bereich Dienstleistungen verwendet vorerst weiterhin statische Daten. Neue Admin-Entwürfe erscheinen dort nicht.",
     categories: {
       translation: "Übersetzung",
       legal: "Recht",
@@ -130,7 +137,8 @@ function getStatusClasses(
 }
 
 export default async function AdminServicesPage() {
-  const locale = await getLocale();
+  const locale =
+    await getLocale();
 
   const appLocale: AppLocale =
     locale === "de"
@@ -152,19 +160,22 @@ export default async function AdminServicesPage() {
   const draftCount =
     services.filter(
       (service) =>
-        service.status === "draft",
+        service.status ===
+        "draft",
     ).length;
 
   const publishedCount =
     services.filter(
       (service) =>
-        service.status === "published",
+        service.status ===
+        "published",
     ).length;
 
   const archivedCount =
     services.filter(
       (service) =>
-        service.status === "archived",
+        service.status ===
+        "archived",
     ).length;
 
   const featuredCount =
@@ -190,6 +201,10 @@ export default async function AdminServicesPage() {
               <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
                 {currentCopy.description}
               </p>
+
+              <p className="mt-4 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm leading-6 text-sky-800 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-200">
+                {currentCopy.publicStatic}
+              </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
@@ -202,18 +217,23 @@ export default async function AdminServicesPage() {
 
               <Link
                 href="/services"
-                className="inline-flex min-h-10 items-center justify-center rounded-xl bg-violet-600 px-4 text-sm font-bold text-white transition hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+                className="inline-flex min-h-10 items-center justify-center rounded-xl border border-violet-200 bg-violet-50 px-4 text-sm font-bold text-violet-700 transition hover:bg-violet-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:border-violet-500/20 dark:bg-violet-500/10 dark:text-violet-300 dark:hover:bg-violet-500/15 dark:focus-visible:ring-offset-slate-900"
               >
                 {currentCopy.publicPage}
+              </Link>
+
+              <Link
+                href="/admin/services/new"
+                className="inline-flex min-h-10 items-center justify-center rounded-xl bg-violet-600 px-4 text-sm font-bold text-white transition hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+              >
+                {currentCopy.create}
               </Link>
             </div>
           </div>
         </header>
 
         <section
-          aria-label={
-            currentCopy.status
-          }
+          aria-label={currentCopy.status}
           className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5"
         >
           {[
@@ -263,6 +283,13 @@ export default async function AdminServicesPage() {
               <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-400">
                 {currentCopy.emptyDescription}
               </p>
+
+              <Link
+                href="/admin/services/new"
+                className="mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-violet-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+              >
+                {currentCopy.create}
+              </Link>
             </div>
           ) : (
             <div className="grid gap-4">
@@ -271,73 +298,71 @@ export default async function AdminServicesPage() {
                   key={service.id}
                   className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6"
                 >
-                  <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span
-                          className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold ${getStatusClasses(
-                            service.status,
-                          )}`}
-                        >
-                          {
-                            currentCopy.statuses[
-                              service.status
-                            ]
-                          }
-                        </span>
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span
+                        className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold ${getStatusClasses(
+                          service.status,
+                        )}`}
+                      >
+                        {
+                          currentCopy.statuses[
+                            service.status
+                          ]
+                        }
+                      </span>
 
-                        <span className="inline-flex rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700 dark:border-violet-500/20 dark:bg-violet-500/10 dark:text-violet-300">
-                          {
-                            currentCopy.categories[
-                              service.category
-                            ]
-                          }
-                        </span>
+                      <span className="inline-flex rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700 dark:border-violet-500/20 dark:bg-violet-500/10 dark:text-violet-300">
+                        {
+                          currentCopy.categories[
+                            service.category
+                          ]
+                        }
+                      </span>
 
-                        {service.featured && (
-                          <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 dark:border-blue-500/20 dark:bg-blue-500/10 dark:text-blue-300">
-                            Featured
-                          </span>
-                        )}
+                      {service.featured && (
+                        <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 dark:border-blue-500/20 dark:bg-blue-500/10 dark:text-blue-300">
+                          Featured
+                        </span>
+                      )}
+                    </div>
+
+                    <h2 className="mt-4 text-xl font-black text-slate-950 dark:text-white">
+                      {appLocale === "de"
+                        ? service.titleDe
+                        : service.titleUz}
+                    </h2>
+
+                    <p className="mt-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
+                      {appLocale === "de"
+                        ? service.shortTitleDe
+                        : service.shortTitleUz}
+                    </p>
+
+                    <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
+                      <div>
+                        <dt className="font-medium text-slate-500 dark:text-slate-400">
+                          {currentCopy.slug}
+                        </dt>
+
+                        <dd className="mt-1 break-all font-mono text-xs text-slate-700 dark:text-slate-300">
+                          {service.slug}
+                        </dd>
                       </div>
 
-                      <h2 className="mt-4 text-xl font-black text-slate-950 dark:text-white">
-                        {appLocale === "de"
-                          ? service.titleDe
-                          : service.titleUz}
-                      </h2>
+                      <div>
+                        <dt className="font-medium text-slate-500 dark:text-slate-400">
+                          {currentCopy.updated}
+                        </dt>
 
-                      <p className="mt-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
-                        {appLocale === "de"
-                          ? service.shortTitleDe
-                          : service.shortTitleUz}
-                      </p>
-
-                      <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
-                        <div>
-                          <dt className="font-medium text-slate-500 dark:text-slate-400">
-                            {currentCopy.slug}
-                          </dt>
-
-                          <dd className="mt-1 break-all font-mono text-xs text-slate-700 dark:text-slate-300">
-                            {service.slug}
-                          </dd>
-                        </div>
-
-                        <div>
-                          <dt className="font-medium text-slate-500 dark:text-slate-400">
-                            {currentCopy.updated}
-                          </dt>
-
-                          <dd className="mt-1 font-semibold text-slate-700 dark:text-slate-300">
-                            {formatDate(
-                              service.updatedAt,
-                              appLocale,
-                            )}
-                          </dd>
-                        </div>
-                      </dl>
-                    </div>
+                        <dd className="mt-1 font-semibold text-slate-700 dark:text-slate-300">
+                          {formatDate(
+                            service.updatedAt,
+                            appLocale,
+                          )}
+                        </dd>
+                      </div>
+                    </dl>
                   </div>
                 </article>
               ))}
