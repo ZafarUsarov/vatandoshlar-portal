@@ -1,8 +1,10 @@
 import { getLocale } from "next-intl/server";
 
 import ServiceCard from "@/components/cards/ServiceCard";
-import { getServices } from "@/data/services";
 import { Link } from "@/i18n/navigation";
+import {
+  getPublishedServices,
+} from "@/lib/services/public-services-repository";
 import type { SupportedContentLocale } from "@/types/service";
 
 type IconProps = Readonly<{
@@ -58,7 +60,11 @@ export default async function ServicesSection() {
   const locale =
     (await getLocale()) as SupportedContentLocale;
 
-  const homepageServices = getServices(locale).slice(0, 6);
+  const homepageServices =
+    await getPublishedServices(
+      locale,
+      6,
+    );
 
   const copy =
     locale === "uz"
@@ -70,6 +76,8 @@ export default async function ServicesSection() {
             "Tarjima, huquq, soliq, tibbiyot, hunarmandchilik va boshqa xizmat yo‘nalishlari bo‘yicha qayerdan izlash va qanday tekshirish kerakligini ko‘ring.",
           allServices: "Barcha xizmatlar",
           details: "Batafsil",
+          empty:
+            "Hozircha e’lon qilingan xizmat yo‘nalishlari mavjud emas.",
         }
       : {
           badge: "Dienstleistungsverzeichnis",
@@ -79,6 +87,8 @@ export default async function ServicesSection() {
             "Erfahren Sie für Übersetzung, Recht, Steuern, Medizin, Handwerk und weitere Bereiche, wo Sie suchen und wie Sie Anbieter prüfen.",
           allServices: "Alle Dienstleistungen",
           details: "Details",
+          empty:
+            "Derzeit sind keine veröffentlichten Dienstleistungsbereiche vorhanden.",
         };
 
   return (
@@ -127,16 +137,24 @@ export default async function ServicesSection() {
           </Link>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2 lg:grid-cols-3">
-          {homepageServices.map((service, index) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              index={index}
-              detailsLabel={copy.details}
-            />
-          ))}
-        </div>
+        {homepageServices.length > 0 ? (
+          <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2 lg:grid-cols-3">
+            {homepageServices.map((service, index) => (
+              <ServiceCard
+                key={service.id}
+                service={service}
+                index={index}
+                detailsLabel={copy.details}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-12 rounded-[2rem] border border-dashed border-slate-200 bg-white/70 p-8 text-center shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/[0.03]">
+            <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">
+              {copy.empty}
+            </p>
+          </div>
+        )}
 
         <div className="mt-10 flex justify-center lg:hidden">
           <Link

@@ -10,9 +10,14 @@ import Container from "../../components/ui/Container";
 import PageHero from "../../components/ui/PageHero";
 import Section from "../../components/ui/Section";
 import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
-import { getServices } from "../../data/services";
 import { Link } from "../../i18n/navigation";
+import {
+  getPublishedServices,
+} from "../../lib/services/public-services-repository";
 import type { SupportedContentLocale } from "../../types/service";
+
+export const dynamic =
+  "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale =
@@ -23,18 +28,36 @@ export async function generateMetadata(): Promise<Metadata> {
         title: "Xizmatlar | Vatandoshlar.de",
         description:
           "Germaniyada tarjima, huquq, soliq, tibbiyot, hunarmandchilik va boshqa xizmat yo‘nalishlarini topish hamda rasmiy manbalar orqali tekshirish bo‘yicha qo‘llanmalar.",
+        alternates: {
+          canonical: "/uz/services",
+          languages: {
+            uz: "/uz/services",
+            de: "/de/services",
+          },
+        },
       }
     : {
         title: "Dienstleistungen | Vatandoshlar.de",
         description:
           "Leitfäden zu Dienstleistungen in Deutschland: Übersetzung, Recht, Steuern, Medizin, Handwerk und weitere Bereiche finden und über offizielle Quellen prüfen.",
+        alternates: {
+          canonical: "/de/services",
+          languages: {
+            uz: "/uz/services",
+            de: "/de/services",
+          },
+        },
       };
 }
 
 export default async function ServicesPage() {
   const locale =
     (await getLocale()) as SupportedContentLocale;
-  const services = getServices(locale);
+
+  const services =
+    await getPublishedServices(
+      locale,
+    );
 
   const copy =
     locale === "uz"
@@ -52,6 +75,8 @@ export default async function ServicesPage() {
           listDescription:
             "Har bir karta alohida xizmat yo‘nalishiga olib boradi. U yerda xizmat tarkibi, rasmiy tekshirish usullari va muhim ogohlantirishlar beriladi.",
           details: "Batafsil",
+          empty:
+            "Hozircha e’lon qilingan xizmat yo‘nalishlari mavjud emas.",
           distinctionEyebrow: "Muhim farq",
           distinctionTitle:
             "Xizmat va mutaxassis — ikki xil tushuncha",
@@ -98,6 +123,8 @@ export default async function ServicesPage() {
           listDescription:
             "Jede Karte führt zu einem eigenen Leistungsbereich mit Leistungsumfang, offiziellen Prüfmöglichkeiten und wichtigen Hinweisen.",
           details: "Details",
+          empty:
+            "Derzeit sind keine veröffentlichten Dienstleistungsbereiche vorhanden.",
           distinctionEyebrow: "Wichtiger Unterschied",
           distinctionTitle:
             "Dienstleistung und Fachkraft sind zwei verschiedene Dinge",
@@ -193,16 +220,24 @@ export default async function ServicesPage() {
               </p>
             </div>
 
-            <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-              {services.map((service, index) => (
-                <ServiceCard
-                  key={service.id}
-                  service={service}
-                  index={index}
-                  detailsLabel={copy.details}
-                />
-              ))}
-            </div>
+            {services.length > 0 ? (
+              <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+                {services.map((service, index) => (
+                  <ServiceCard
+                    key={service.id}
+                    service={service}
+                    index={index}
+                    detailsLabel={copy.details}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="mt-10 rounded-3xl border border-dashed border-border-default bg-surface p-8 text-center sm:p-10">
+                <p className="text-base font-semibold text-text-primary">
+                  {copy.empty}
+                </p>
+              </div>
+            )}
           </Container>
         </Section>
 

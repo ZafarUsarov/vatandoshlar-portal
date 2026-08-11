@@ -4,12 +4,11 @@ import { notFound } from "next/navigation";
 
 import Header from "../../../components/Header";
 import ServiceCard from "../../../components/cards/ServiceCard";
-import {
-  getServiceBySlug,
-  getServices,
-  localizedServices,
-} from "../../../data/services";
 import { Link } from "../../../i18n/navigation";
+import {
+  getPublishedServiceBySlug,
+  getRelatedPublishedServices,
+} from "../../../lib/services/public-services-repository";
 import type { SupportedContentLocale } from "../../../types/service";
 
 type ServiceDetailPageProps = Readonly<{
@@ -18,19 +17,23 @@ type ServiceDetailPageProps = Readonly<{
   }>;
 }>;
 
-export function generateStaticParams() {
-  return localizedServices.map((service) => ({
-    slug: service.slug,
-  }));
-}
+export const dynamic =
+  "force-dynamic";
 
 export async function generateMetadata({
   params,
 }: ServiceDetailPageProps): Promise<Metadata> {
   const locale =
     (await getLocale()) as SupportedContentLocale;
-  const { slug } = await params;
-  const service = getServiceBySlug(slug, locale);
+
+  const { slug } =
+    await params;
+
+  const service =
+    await getPublishedServiceBySlug(
+      slug,
+      locale,
+    );
 
   if (!service) {
     return {
@@ -38,14 +41,27 @@ export async function generateMetadata({
         locale === "uz"
           ? "Xizmat topilmadi | Vatandoshlar.de"
           : "Dienstleistung nicht gefunden | Vatandoshlar.de",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
   return {
-    title: `${service.title} | Vatandoshlar.de`,
-    description: service.description,
+    title:
+      `${service.title} | Vatandoshlar.de`,
+    description:
+      service.description,
     alternates: {
-      canonical: `/services/${service.slug}`,
+      canonical:
+        `/${locale}/services/${service.slug}`,
+      languages: {
+        uz:
+          `/uz/services/${service.slug}`,
+        de:
+          `/de/services/${service.slug}`,
+      },
     },
   };
 }
@@ -55,16 +71,28 @@ export default async function ServiceDetailPage({
 }: ServiceDetailPageProps) {
   const locale =
     (await getLocale()) as SupportedContentLocale;
-  const { slug } = await params;
-  const service = getServiceBySlug(slug, locale);
+
+  const { slug } =
+    await params;
+
+  const [
+    service,
+    relatedServices,
+  ] = await Promise.all([
+    getPublishedServiceBySlug(
+      slug,
+      locale,
+    ),
+    getRelatedPublishedServices(
+      slug,
+      locale,
+      3,
+    ),
+  ]);
 
   if (!service) {
     notFound();
   }
-
-  const relatedServices = getServices(locale)
-    .filter((item) => item.slug !== service.slug)
-    .slice(0, 3);
 
   const copy =
     locale === "uz"
