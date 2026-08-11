@@ -16,6 +16,7 @@ export default function ServiceCreateForm({
   return (
     <ServiceForm
       locale={locale}
+      mode="create"
       formAction={
         createServiceAction
       }

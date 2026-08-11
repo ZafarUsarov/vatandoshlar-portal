@@ -318,27 +318,8 @@ export async function createAdminService(
           featured
         )
         VALUES (
-          $1,
-          $2,
-          $3,
-          $4,
-          $5,
-          $6,
-          $7,
-          $8,
-          $9,
-          $10,
-          $11,
-          $12,
-          $13,
-          $14,
-          $15,
-          $16,
-          $17,
-          $18,
-          $19,
-          $20,
-          $21,
+          $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,
+          $12,$13,$14,$15,$16,$17,$18,$19,$20,$21,
           'draft',
           FALSE
         )
@@ -378,4 +359,186 @@ export async function createAdminService(
   }
 
   return row.id;
+}
+
+export async function updateAdminService(
+  id: string,
+  input: AdminServiceInput,
+): Promise<boolean> {
+  const result =
+    await getDb().query(
+      `
+        UPDATE services
+        SET
+          slug = $1,
+          title_uz = $2,
+          title_de = $3,
+          short_title_uz = $4,
+          short_title_de = $5,
+          description_uz = $6,
+          description_de = $7,
+          category = $8,
+          icon = $9,
+          services_uz = $10,
+          services_de = $11,
+          verification_steps_uz = $12,
+          verification_steps_de = $13,
+          important_notes_uz = $14,
+          important_notes_de = $15,
+          official_source_name = $16,
+          official_source_url = $17,
+          source_description_uz = $18,
+          source_description_de = $19,
+          location_uz = $20,
+          location_de = $21,
+          updated_at = NOW()
+        WHERE id = $22
+      `,
+      [
+        input.slug,
+        input.titleUz,
+        input.titleDe,
+        input.shortTitleUz,
+        input.shortTitleDe,
+        input.descriptionUz,
+        input.descriptionDe,
+        input.category,
+        input.icon,
+        input.servicesUz,
+        input.servicesDe,
+        input.verificationStepsUz,
+        input.verificationStepsDe,
+        input.importantNotesUz,
+        input.importantNotesDe,
+        input.officialSourceName,
+        input.officialSourceUrl,
+        input.sourceDescriptionUz,
+        input.sourceDescriptionDe,
+        input.locationUz,
+        input.locationDe,
+        id,
+      ],
+    );
+
+  return (
+    result.rowCount ?? 0
+  ) > 0;
+}
+
+export async function updateAdminServiceStatus(
+  id: string,
+  status: AdminServiceStatus,
+): Promise<boolean> {
+  const result =
+    await getDb().query(
+      `
+        UPDATE services
+        SET
+          status = $1,
+          featured =
+            CASE
+              WHEN $1 = 'published'
+                THEN featured
+              ELSE FALSE
+            END,
+          updated_at = NOW()
+        WHERE id = $2
+      `,
+      [status, id],
+    );
+
+  return (
+    result.rowCount ?? 0
+  ) > 0;
+}
+
+export async function setAdminServiceFeatured(
+  id: string,
+  featured: boolean,
+): Promise<
+  "updated" | "not_found" | "not_published"
+> {
+  const client =
+    await getDb().connect();
+
+  try {
+    await client.query(
+      "BEGIN",
+    );
+
+    const targetResult =
+      await client.query<{
+        status: string;
+      }>(
+        `
+          SELECT status
+          FROM services
+          WHERE id = $1
+          FOR UPDATE
+        `,
+        [id],
+      );
+
+    const target =
+      targetResult.rows[0];
+
+    if (!target) {
+      await client.query(
+        "ROLLBACK",
+      );
+
+      return "not_found";
+    }
+
+    if (
+      featured &&
+      target.status !== "published"
+    ) {
+      await client.query(
+        "ROLLBACK",
+      );
+
+      return "not_published";
+    }
+
+    if (featured) {
+      await client.query(
+        `
+          UPDATE services
+          SET
+            featured = FALSE,
+            updated_at = NOW()
+          WHERE
+            featured = TRUE
+            AND id <> $1
+        `,
+        [id],
+      );
+    }
+
+    await client.query(
+      `
+        UPDATE services
+        SET
+          featured = $1,
+          updated_at = NOW()
+        WHERE id = $2
+      `,
+      [featured, id],
+    );
+
+    await client.query(
+      "COMMIT",
+    );
+
+    return "updated";
+  } catch (error) {
+    await client.query(
+      "ROLLBACK",
+    );
+
+    throw error;
+  } finally {
+    client.release();
+  }
 }

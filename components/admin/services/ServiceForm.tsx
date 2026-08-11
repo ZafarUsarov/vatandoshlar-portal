@@ -6,6 +6,7 @@ import {
 } from "react";
 
 import type {
+  AdminService,
   AdminServiceCategory,
 } from "@/lib/services/admin-services-repository";
 
@@ -21,6 +22,8 @@ type ServiceFormAction = (
 type ServiceFormProps = {
   locale: "uz" | "de";
   formAction: ServiceFormAction;
+  mode: "create" | "edit";
+  service?: AdminService;
 };
 
 const initialState: ServiceFormState = {
@@ -66,7 +69,8 @@ const categoryOptions: ReadonlyArray<{
 
 const copy = {
   uz: {
-    save: "Qoralama sifatida saqlash",
+    saveCreate: "Qoralama sifatida saqlash",
+    saveEdit: "O‘zgarishlarni saqlash",
     saving: "Saqlanmoqda…",
     required: "Majburiy",
     commonSection: "Umumiy ma’lumotlar",
@@ -97,11 +101,14 @@ const copy = {
     sourceDescription:
       "Manba tavsifi",
     location: "Hudud / qamrov",
-    note:
+    createNote:
       "Yangi xizmat avtomatik ravishda qoralama holatida PostgreSQL’ga saqlanadi. Public Xizmatlar bo‘limi hozircha static data bilan ishlaydi.",
+    editNote:
+      "Tahrirlash admin PostgreSQL yozuvini o‘zgartiradi. Public Xizmatlar bo‘limi hozircha static data bilan ishlaydi.",
   },
   de: {
-    save: "Als Entwurf speichern",
+    saveCreate: "Als Entwurf speichern",
+    saveEdit: "Änderungen speichern",
     saving: "Wird gespeichert…",
     required: "Pflichtfeld",
     commonSection: "Gemeinsame Angaben",
@@ -135,8 +142,10 @@ const copy = {
       "Beschreibung der Quelle",
     location:
       "Gebiet / Geltungsbereich",
-    note:
+    createNote:
       "Neue Dienstleistungen werden automatisch als Entwurf in PostgreSQL gespeichert. Der öffentliche Bereich Dienstleistungen verwendet vorerst weiterhin statische Daten.",
+    editNote:
+      "Die Bearbeitung ändert den PostgreSQL-Eintrag im Admin-Bereich. Der öffentliche Bereich Dienstleistungen verwendet vorerst weiterhin statische Daten.",
   },
 } as const;
 
@@ -169,6 +178,8 @@ function FieldLabel({
 export default function ServiceForm({
   locale,
   formAction,
+  mode,
+  service,
 }: ServiceFormProps) {
   const [
     state,
@@ -184,11 +195,23 @@ export default function ServiceForm({
       ? copy.de
       : copy.uz;
 
+  const listValue = (
+    values?: string[],
+  ) => values?.join("\n") ?? "";
+
   return (
     <form
       action={action}
       className="space-y-6"
     >
+      {mode === "edit" && service && (
+        <input
+          type="hidden"
+          name="serviceId"
+          value={service.id}
+        />
+      )}
+
       <section className="rounded-[2rem] border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900 sm:p-8">
         <h2 className="text-xl font-black text-slate-950 dark:text-white">
           {currentCopy.commonSection}
@@ -205,6 +228,7 @@ export default function ServiceForm({
               type="text"
               required
               disabled={pending}
+              defaultValue={service?.slug}
               placeholder="yangi-xizmat-qollanmasi"
               className={inputClassName}
             />
@@ -223,7 +247,10 @@ export default function ServiceForm({
               name="category"
               required
               disabled={pending}
-              defaultValue="translation"
+              defaultValue={
+                service?.category ??
+                "translation"
+              }
               className={inputClassName}
             >
               {categoryOptions.map(
@@ -251,6 +278,7 @@ export default function ServiceForm({
               type="text"
               required
               disabled={pending}
+              defaultValue={service?.icon}
               placeholder="TR"
               className={inputClassName}
             />
@@ -270,6 +298,9 @@ export default function ServiceForm({
               type="text"
               required
               disabled={pending}
+              defaultValue={
+                service?.officialSourceName
+              }
               className={inputClassName}
             />
           </label>
@@ -284,6 +315,9 @@ export default function ServiceForm({
               type="url"
               required
               disabled={pending}
+              defaultValue={
+                service?.officialSourceUrl
+              }
               placeholder="https://..."
               className={inputClassName}
             />
@@ -291,7 +325,9 @@ export default function ServiceForm({
         </div>
 
         <p className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200">
-          {currentCopy.note}
+          {mode === "edit"
+            ? currentCopy.editNote
+            : currentCopy.createNote}
         </p>
       </section>
 
@@ -305,28 +341,28 @@ export default function ServiceForm({
             <FieldLabel locale={locale}>
               {currentCopy.title}
             </FieldLabel>
-            <input name="titleUz" type="text" required disabled={pending} className={inputClassName} />
+            <input name="titleUz" type="text" required disabled={pending} defaultValue={service?.titleUz} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>
               {currentCopy.shortTitle}
             </FieldLabel>
-            <input name="shortTitleUz" type="text" required disabled={pending} className={inputClassName} />
+            <input name="shortTitleUz" type="text" required disabled={pending} defaultValue={service?.shortTitleUz} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>
               {currentCopy.description}
             </FieldLabel>
-            <textarea name="descriptionUz" rows={4} required disabled={pending} className={inputClassName} />
+            <textarea name="descriptionUz" rows={4} required disabled={pending} defaultValue={service?.descriptionUz} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>
               {currentCopy.services}
             </FieldLabel>
-            <textarea name="servicesUz" rows={7} required disabled={pending} className={inputClassName} />
+            <textarea name="servicesUz" rows={7} required disabled={pending} defaultValue={listValue(service?.servicesUz)} className={inputClassName} />
             <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
               {currentCopy.servicesHint}
             </span>
@@ -336,7 +372,7 @@ export default function ServiceForm({
             <FieldLabel locale={locale}>
               {currentCopy.verificationSteps}
             </FieldLabel>
-            <textarea name="verificationStepsUz" rows={9} required disabled={pending} className={inputClassName} />
+            <textarea name="verificationStepsUz" rows={9} required disabled={pending} defaultValue={listValue(service?.verificationStepsUz)} className={inputClassName} />
             <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
               {currentCopy.verificationStepsHint}
             </span>
@@ -346,7 +382,7 @@ export default function ServiceForm({
             <FieldLabel locale={locale}>
               {currentCopy.notes}
             </FieldLabel>
-            <textarea name="importantNotesUz" rows={7} required disabled={pending} className={inputClassName} />
+            <textarea name="importantNotesUz" rows={7} required disabled={pending} defaultValue={listValue(service?.importantNotesUz)} className={inputClassName} />
             <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
               {currentCopy.notesHint}
             </span>
@@ -356,14 +392,14 @@ export default function ServiceForm({
             <FieldLabel locale={locale}>
               {currentCopy.sourceDescription}
             </FieldLabel>
-            <textarea name="sourceDescriptionUz" rows={4} required disabled={pending} className={inputClassName} />
+            <textarea name="sourceDescriptionUz" rows={4} required disabled={pending} defaultValue={service?.sourceDescriptionUz} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>
               {currentCopy.location}
             </FieldLabel>
-            <input name="locationUz" type="text" required disabled={pending} className={inputClassName} />
+            <input name="locationUz" type="text" required disabled={pending} defaultValue={service?.locationUz} className={inputClassName} />
           </label>
         </div>
       </section>
@@ -378,28 +414,28 @@ export default function ServiceForm({
             <FieldLabel locale={locale}>
               {currentCopy.title}
             </FieldLabel>
-            <input name="titleDe" type="text" required disabled={pending} className={inputClassName} />
+            <input name="titleDe" type="text" required disabled={pending} defaultValue={service?.titleDe} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>
               {currentCopy.shortTitle}
             </FieldLabel>
-            <input name="shortTitleDe" type="text" required disabled={pending} className={inputClassName} />
+            <input name="shortTitleDe" type="text" required disabled={pending} defaultValue={service?.shortTitleDe} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>
               {currentCopy.description}
             </FieldLabel>
-            <textarea name="descriptionDe" rows={4} required disabled={pending} className={inputClassName} />
+            <textarea name="descriptionDe" rows={4} required disabled={pending} defaultValue={service?.descriptionDe} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>
               {currentCopy.services}
             </FieldLabel>
-            <textarea name="servicesDe" rows={7} required disabled={pending} className={inputClassName} />
+            <textarea name="servicesDe" rows={7} required disabled={pending} defaultValue={listValue(service?.servicesDe)} className={inputClassName} />
             <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
               {currentCopy.servicesHint}
             </span>
@@ -409,7 +445,7 @@ export default function ServiceForm({
             <FieldLabel locale={locale}>
               {currentCopy.verificationSteps}
             </FieldLabel>
-            <textarea name="verificationStepsDe" rows={9} required disabled={pending} className={inputClassName} />
+            <textarea name="verificationStepsDe" rows={9} required disabled={pending} defaultValue={listValue(service?.verificationStepsDe)} className={inputClassName} />
             <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
               {currentCopy.verificationStepsHint}
             </span>
@@ -419,7 +455,7 @@ export default function ServiceForm({
             <FieldLabel locale={locale}>
               {currentCopy.notes}
             </FieldLabel>
-            <textarea name="importantNotesDe" rows={7} required disabled={pending} className={inputClassName} />
+            <textarea name="importantNotesDe" rows={7} required disabled={pending} defaultValue={listValue(service?.importantNotesDe)} className={inputClassName} />
             <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
               {currentCopy.notesHint}
             </span>
@@ -429,14 +465,14 @@ export default function ServiceForm({
             <FieldLabel locale={locale}>
               {currentCopy.sourceDescription}
             </FieldLabel>
-            <textarea name="sourceDescriptionDe" rows={4} required disabled={pending} className={inputClassName} />
+            <textarea name="sourceDescriptionDe" rows={4} required disabled={pending} defaultValue={service?.sourceDescriptionDe} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>
               {currentCopy.location}
             </FieldLabel>
-            <input name="locationDe" type="text" required disabled={pending} className={inputClassName} />
+            <input name="locationDe" type="text" required disabled={pending} defaultValue={service?.locationDe} className={inputClassName} />
           </label>
         </div>
       </section>
@@ -458,7 +494,9 @@ export default function ServiceForm({
         >
           {pending
             ? currentCopy.saving
-            : currentCopy.save}
+            : mode === "edit"
+              ? currentCopy.saveEdit
+              : currentCopy.saveCreate}
         </button>
       </div>
     </form>
