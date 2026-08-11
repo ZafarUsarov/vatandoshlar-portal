@@ -7,6 +7,7 @@ import {
 
 import type {
   AdminJobCategory,
+  AdminJobGuide,
 } from "@/lib/jobs/admin-jobs-repository";
 
 type JobFormState = {
@@ -21,6 +22,8 @@ type JobFormAction = (
 type JobGuideFormProps = {
   locale: "uz" | "de";
   formAction: JobFormAction;
+  mode: "create" | "edit";
+  guide?: AdminJobGuide;
 };
 
 const initialState: JobFormState = {
@@ -66,7 +69,8 @@ const categoryOptions: ReadonlyArray<{
 
 const copy = {
   uz: {
-    save: "Qoralama sifatida saqlash",
+    saveCreate: "Qoralama sifatida saqlash",
+    saveEdit: "O‘zgarishlarni saqlash",
     saving: "Saqlanmoqda…",
     required: "Majburiy",
     commonSection: "Umumiy ma’lumotlar",
@@ -77,8 +81,7 @@ const copy = {
       "Masalan: germaniyada-yangi-ish-qollanmasi. Saqlashda avtomatik normallashtiriladi.",
     category: "Kategoriya",
     icon: "Icon / qisqa belgi",
-    iconHint:
-      "Masalan: 💼, €, EN yoki IT.",
+    iconHint: "Masalan: 💼, €, EN yoki IT.",
     verifiedAt: "Oxirgi tekshiruv sanasi",
     sourceName: "Rasmiy manba nomi",
     sourceUrl: "Rasmiy manba URL",
@@ -99,11 +102,14 @@ const copy = {
     notesHint:
       "Har bir ogohlantirishni yangi qatordan yozing. UZ va DE ro‘yxatlar soni bir xil bo‘lishi kerak.",
     sourceDescription: "Manba tavsifi",
-    note:
+    createNote:
       "Yangi Jobs qo‘llanmasi avtomatik ravishda qoralama holatida saqlanadi. Public Ish bo‘limi hozircha static data bilan ishlaydi.",
+    editNote:
+      "Tahrirlash admin PostgreSQL yozuvini o‘zgartiradi. Public Ish bo‘limi hozircha static data bilan ishlaydi.",
   },
   de: {
-    save: "Als Entwurf speichern",
+    saveCreate: "Als Entwurf speichern",
+    saveEdit: "Änderungen speichern",
     saving: "Wird gespeichert…",
     required: "Pflichtfeld",
     commonSection: "Gemeinsame Angaben",
@@ -114,8 +120,7 @@ const copy = {
       "Zum Beispiel: neuer-jobleitfaden-deutschland. Der Wert wird beim Speichern normalisiert.",
     category: "Kategorie",
     icon: "Icon / Kurzzeichen",
-    iconHint:
-      "Zum Beispiel: 💼, €, EN oder IT.",
+    iconHint: "Zum Beispiel: 💼, €, EN oder IT.",
     verifiedAt: "Zuletzt geprüft am",
     sourceName: "Name der offiziellen Quelle",
     sourceUrl: "URL der offiziellen Quelle",
@@ -136,8 +141,10 @@ const copy = {
     notesHint:
       "Jeden Hinweis in eine neue Zeile schreiben. Die UZ- und DE-Listen müssen gleich viele Einträge enthalten.",
     sourceDescription: "Beschreibung der Quelle",
-    note:
+    createNote:
       "Neue Jobleitfäden werden automatisch als Entwurf gespeichert. Der öffentliche Bereich Arbeit verwendet vorerst weiterhin statische Daten.",
+    editNote:
+      "Die Bearbeitung ändert den PostgreSQL-Eintrag im Admin-Bereich. Der öffentliche Bereich Arbeit verwendet vorerst weiterhin statische Daten.",
   },
 } as const;
 
@@ -167,6 +174,8 @@ function FieldLabel({
 export default function JobGuideForm({
   locale,
   formAction,
+  mode,
+  guide,
 }: JobGuideFormProps) {
   const [state, action, pending] =
     useActionState(
@@ -177,8 +186,20 @@ export default function JobGuideForm({
   const currentCopy =
     locale === "de" ? copy.de : copy.uz;
 
+  const listValue = (
+    values?: string[],
+  ) => values?.join("\n") ?? "";
+
   return (
     <form action={action} className="space-y-6">
+      {mode === "edit" && guide && (
+        <input
+          type="hidden"
+          name="guideId"
+          value={guide.id}
+        />
+      )}
+
       <section className="rounded-[2rem] border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900 sm:p-8">
         <h2 className="text-xl font-black text-slate-950 dark:text-white">
           {currentCopy.commonSection}
@@ -194,6 +215,7 @@ export default function JobGuideForm({
               type="text"
               required
               disabled={pending}
+              defaultValue={guide?.slug}
               placeholder="germaniyada-yangi-ish-qollanmasi"
               className={inputClassName}
             />
@@ -210,7 +232,7 @@ export default function JobGuideForm({
               name="category"
               required
               disabled={pending}
-              defaultValue="students"
+              defaultValue={guide?.category ?? "students"}
               className={inputClassName}
             >
               {categoryOptions.map((option) => (
@@ -235,6 +257,7 @@ export default function JobGuideForm({
               type="text"
               required
               disabled={pending}
+              defaultValue={guide?.icon}
               placeholder="💼"
               className={inputClassName}
             />
@@ -252,6 +275,7 @@ export default function JobGuideForm({
               type="date"
               required
               disabled={pending}
+              defaultValue={guide?.verifiedAt}
               className={inputClassName}
             />
           </label>
@@ -265,6 +289,7 @@ export default function JobGuideForm({
               type="text"
               required
               disabled={pending}
+              defaultValue={guide?.officialSourceName}
               className={inputClassName}
             />
           </label>
@@ -278,6 +303,7 @@ export default function JobGuideForm({
               type="url"
               required
               disabled={pending}
+              defaultValue={guide?.officialSourceUrl}
               placeholder="https://..."
               className={inputClassName}
             />
@@ -292,6 +318,9 @@ export default function JobGuideForm({
               rows={6}
               required
               disabled={pending}
+              defaultValue={listValue(
+                guide?.searchKeywords,
+              )}
               className={inputClassName}
             />
             <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
@@ -301,7 +330,9 @@ export default function JobGuideForm({
         </div>
 
         <p className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200">
-          {currentCopy.note}
+          {mode === "edit"
+            ? currentCopy.editNote
+            : currentCopy.createNote}
         </p>
       </section>
 
@@ -313,51 +344,45 @@ export default function JobGuideForm({
         <div className="mt-6 grid gap-5">
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.title}</FieldLabel>
-            <input name="titleUz" type="text" required disabled={pending} className={inputClassName} />
+            <input name="titleUz" type="text" required disabled={pending} defaultValue={guide?.titleUz} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.shortTitle}</FieldLabel>
-            <input name="shortTitleUz" type="text" required disabled={pending} className={inputClassName} />
+            <input name="shortTitleUz" type="text" required disabled={pending} defaultValue={guide?.shortTitleUz} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.description}</FieldLabel>
-            <textarea name="descriptionUz" rows={4} required disabled={pending} className={inputClassName} />
+            <textarea name="descriptionUz" rows={4} required disabled={pending} defaultValue={guide?.descriptionUz} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.audience}</FieldLabel>
-            <textarea name="audienceUz" rows={3} required disabled={pending} className={inputClassName} />
+            <textarea name="audienceUz" rows={3} required disabled={pending} defaultValue={guide?.audienceUz} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.highlights}</FieldLabel>
-            <textarea name="highlightsUz" rows={7} required disabled={pending} className={inputClassName} />
-            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
-              {currentCopy.highlightsHint}
-            </span>
+            <textarea name="highlightsUz" rows={7} required disabled={pending} defaultValue={listValue(guide?.highlightsUz)} className={inputClassName} />
+            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">{currentCopy.highlightsHint}</span>
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.steps}</FieldLabel>
-            <textarea name="stepsUz" rows={10} required disabled={pending} className={inputClassName} />
-            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
-              {currentCopy.stepsHint}
-            </span>
+            <textarea name="stepsUz" rows={10} required disabled={pending} defaultValue={listValue(guide?.stepsUz)} className={inputClassName} />
+            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">{currentCopy.stepsHint}</span>
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.notes}</FieldLabel>
-            <textarea name="importantNotesUz" rows={8} required disabled={pending} className={inputClassName} />
-            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
-              {currentCopy.notesHint}
-            </span>
+            <textarea name="importantNotesUz" rows={8} required disabled={pending} defaultValue={listValue(guide?.importantNotesUz)} className={inputClassName} />
+            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">{currentCopy.notesHint}</span>
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.sourceDescription}</FieldLabel>
-            <textarea name="sourceDescriptionUz" rows={4} required disabled={pending} className={inputClassName} />
+            <textarea name="sourceDescriptionUz" rows={4} required disabled={pending} defaultValue={guide?.sourceDescriptionUz} className={inputClassName} />
           </label>
         </div>
       </section>
@@ -370,51 +395,45 @@ export default function JobGuideForm({
         <div className="mt-6 grid gap-5">
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.title}</FieldLabel>
-            <input name="titleDe" type="text" required disabled={pending} className={inputClassName} />
+            <input name="titleDe" type="text" required disabled={pending} defaultValue={guide?.titleDe} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.shortTitle}</FieldLabel>
-            <input name="shortTitleDe" type="text" required disabled={pending} className={inputClassName} />
+            <input name="shortTitleDe" type="text" required disabled={pending} defaultValue={guide?.shortTitleDe} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.description}</FieldLabel>
-            <textarea name="descriptionDe" rows={4} required disabled={pending} className={inputClassName} />
+            <textarea name="descriptionDe" rows={4} required disabled={pending} defaultValue={guide?.descriptionDe} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.audience}</FieldLabel>
-            <textarea name="audienceDe" rows={3} required disabled={pending} className={inputClassName} />
+            <textarea name="audienceDe" rows={3} required disabled={pending} defaultValue={guide?.audienceDe} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.highlights}</FieldLabel>
-            <textarea name="highlightsDe" rows={7} required disabled={pending} className={inputClassName} />
-            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
-              {currentCopy.highlightsHint}
-            </span>
+            <textarea name="highlightsDe" rows={7} required disabled={pending} defaultValue={listValue(guide?.highlightsDe)} className={inputClassName} />
+            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">{currentCopy.highlightsHint}</span>
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.steps}</FieldLabel>
-            <textarea name="stepsDe" rows={10} required disabled={pending} className={inputClassName} />
-            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
-              {currentCopy.stepsHint}
-            </span>
+            <textarea name="stepsDe" rows={10} required disabled={pending} defaultValue={listValue(guide?.stepsDe)} className={inputClassName} />
+            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">{currentCopy.stepsHint}</span>
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.notes}</FieldLabel>
-            <textarea name="importantNotesDe" rows={8} required disabled={pending} className={inputClassName} />
-            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
-              {currentCopy.notesHint}
-            </span>
+            <textarea name="importantNotesDe" rows={8} required disabled={pending} defaultValue={listValue(guide?.importantNotesDe)} className={inputClassName} />
+            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">{currentCopy.notesHint}</span>
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.sourceDescription}</FieldLabel>
-            <textarea name="sourceDescriptionDe" rows={4} required disabled={pending} className={inputClassName} />
+            <textarea name="sourceDescriptionDe" rows={4} required disabled={pending} defaultValue={guide?.sourceDescriptionDe} className={inputClassName} />
           </label>
         </div>
       </section>
@@ -436,7 +455,9 @@ export default function JobGuideForm({
         >
           {pending
             ? currentCopy.saving
-            : currentCopy.save}
+            : mode === "edit"
+              ? currentCopy.saveEdit
+              : currentCopy.saveCreate}
         </button>
       </div>
     </form>

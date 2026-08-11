@@ -172,7 +172,9 @@ function toDateTimeString(
 function toDateOnlyString(
   value: string | Date,
 ): string {
-  return toDateTimeString(value).slice(0, 10);
+  return toDateTimeString(
+    value,
+  ).slice(0, 10);
 }
 
 function toAdminJobGuideSummary(
@@ -185,11 +187,24 @@ function toAdminJobGuideSummary(
     titleDe: row.title_de,
     shortTitleUz: row.short_title_uz,
     shortTitleDe: row.short_title_de,
-    category: normalizeCategory(row.category),
-    status: normalizeStatus(row.status),
-    featured: row.featured,
-    verifiedAt: toDateOnlyString(row.verified_at),
-    updatedAt: toDateTimeString(row.updated_at),
+    category:
+      normalizeCategory(
+        row.category,
+      ),
+    status:
+      normalizeStatus(
+        row.status,
+      ),
+    featured:
+      row.featured,
+    verifiedAt:
+      toDateOnlyString(
+        row.verified_at,
+      ),
+    updatedAt:
+      toDateTimeString(
+        row.updated_at,
+      ),
   };
 }
 
@@ -201,30 +216,63 @@ function toAdminJobGuide(
     slug: row.slug,
     titleUz: row.title_uz,
     titleDe: row.title_de,
-    shortTitleUz: row.short_title_uz,
-    shortTitleDe: row.short_title_de,
-    descriptionUz: row.description_uz,
-    descriptionDe: row.description_de,
-    category: normalizeCategory(row.category),
+    shortTitleUz:
+      row.short_title_uz,
+    shortTitleDe:
+      row.short_title_de,
+    descriptionUz:
+      row.description_uz,
+    descriptionDe:
+      row.description_de,
+    category:
+      normalizeCategory(
+        row.category,
+      ),
     icon: row.icon,
-    audienceUz: row.audience_uz,
-    audienceDe: row.audience_de,
-    highlightsUz: row.highlights_uz,
-    highlightsDe: row.highlights_de,
-    searchKeywords: row.search_keywords,
-    stepsUz: row.steps_uz,
-    stepsDe: row.steps_de,
-    importantNotesUz: row.important_notes_uz,
-    importantNotesDe: row.important_notes_de,
-    officialSourceName: row.official_source_name,
-    officialSourceUrl: row.official_source_url,
-    sourceDescriptionUz: row.source_description_uz,
-    sourceDescriptionDe: row.source_description_de,
-    verifiedAt: toDateOnlyString(row.verified_at),
-    status: normalizeStatus(row.status),
-    featured: row.featured,
-    createdAt: toDateTimeString(row.created_at),
-    updatedAt: toDateTimeString(row.updated_at),
+    audienceUz:
+      row.audience_uz,
+    audienceDe:
+      row.audience_de,
+    highlightsUz:
+      row.highlights_uz,
+    highlightsDe:
+      row.highlights_de,
+    searchKeywords:
+      row.search_keywords,
+    stepsUz:
+      row.steps_uz,
+    stepsDe:
+      row.steps_de,
+    importantNotesUz:
+      row.important_notes_uz,
+    importantNotesDe:
+      row.important_notes_de,
+    officialSourceName:
+      row.official_source_name,
+    officialSourceUrl:
+      row.official_source_url,
+    sourceDescriptionUz:
+      row.source_description_uz,
+    sourceDescriptionDe:
+      row.source_description_de,
+    verifiedAt:
+      toDateOnlyString(
+        row.verified_at,
+      ),
+    status:
+      normalizeStatus(
+        row.status,
+      ),
+    featured:
+      row.featured,
+    createdAt:
+      toDateTimeString(
+        row.created_at,
+      ),
+    updatedAt:
+      toDateTimeString(
+        row.updated_at,
+      ),
   };
 }
 
@@ -253,7 +301,9 @@ export async function getAdminJobGuides(): Promise<
       `,
     );
 
-  return result.rows.map(toAdminJobGuideSummary);
+  return result.rows.map(
+    toAdminJobGuideSummary,
+  );
 }
 
 export async function getAdminJobGuideById(
@@ -298,7 +348,8 @@ export async function getAdminJobGuideById(
       [id],
     );
 
-  const row = result.rows[0];
+  const row =
+    result.rows[0];
 
   return row
     ? toAdminJobGuide(row)
@@ -375,7 +426,8 @@ export async function createAdminJobGuide(
       ],
     );
 
-  const row = result.rows[0];
+  const row =
+    result.rows[0];
 
   if (!row) {
     throw new Error(
@@ -384,4 +436,191 @@ export async function createAdminJobGuide(
   }
 
   return row.id;
+}
+
+export async function updateAdminJobGuide(
+  id: string,
+  input: AdminJobGuideInput,
+): Promise<boolean> {
+  const result =
+    await getDb().query(
+      `
+        UPDATE job_guides
+        SET
+          slug = $1,
+          title_uz = $2,
+          title_de = $3,
+          short_title_uz = $4,
+          short_title_de = $5,
+          description_uz = $6,
+          description_de = $7,
+          category = $8,
+          icon = $9,
+          audience_uz = $10,
+          audience_de = $11,
+          highlights_uz = $12,
+          highlights_de = $13,
+          search_keywords = $14,
+          steps_uz = $15,
+          steps_de = $16,
+          important_notes_uz = $17,
+          important_notes_de = $18,
+          official_source_name = $19,
+          official_source_url = $20,
+          source_description_uz = $21,
+          source_description_de = $22,
+          verified_at = $23,
+          updated_at = NOW()
+        WHERE id = $24
+      `,
+      [
+        input.slug,
+        input.titleUz,
+        input.titleDe,
+        input.shortTitleUz,
+        input.shortTitleDe,
+        input.descriptionUz,
+        input.descriptionDe,
+        input.category,
+        input.icon,
+        input.audienceUz,
+        input.audienceDe,
+        input.highlightsUz,
+        input.highlightsDe,
+        input.searchKeywords,
+        input.stepsUz,
+        input.stepsDe,
+        input.importantNotesUz,
+        input.importantNotesDe,
+        input.officialSourceName,
+        input.officialSourceUrl,
+        input.sourceDescriptionUz,
+        input.sourceDescriptionDe,
+        input.verifiedAt,
+        id,
+      ],
+    );
+
+  return (
+    result.rowCount ?? 0
+  ) > 0;
+}
+
+export async function updateAdminJobGuideStatus(
+  id: string,
+  status: AdminJobStatus,
+): Promise<boolean> {
+  const result =
+    await getDb().query(
+      `
+        UPDATE job_guides
+        SET
+          status = $1,
+          featured =
+            CASE
+              WHEN $1 = 'published'
+                THEN featured
+              ELSE FALSE
+            END,
+          updated_at = NOW()
+        WHERE id = $2
+      `,
+      [status, id],
+    );
+
+  return (
+    result.rowCount ?? 0
+  ) > 0;
+}
+
+export async function setAdminJobGuideFeatured(
+  id: string,
+  featured: boolean,
+): Promise<
+  "updated" | "not_found" | "not_published"
+> {
+  const client =
+    await getDb().connect();
+
+  try {
+    await client.query(
+      "BEGIN",
+    );
+
+    const targetResult =
+      await client.query<{
+        status: string;
+      }>(
+        `
+          SELECT status
+          FROM job_guides
+          WHERE id = $1
+          FOR UPDATE
+        `,
+        [id],
+      );
+
+    const target =
+      targetResult.rows[0];
+
+    if (!target) {
+      await client.query(
+        "ROLLBACK",
+      );
+
+      return "not_found";
+    }
+
+    if (
+      featured &&
+      target.status !==
+        "published"
+    ) {
+      await client.query(
+        "ROLLBACK",
+      );
+
+      return "not_published";
+    }
+
+    if (featured) {
+      await client.query(
+        `
+          UPDATE job_guides
+          SET
+            featured = FALSE,
+            updated_at = NOW()
+          WHERE
+            featured = TRUE
+            AND id <> $1
+        `,
+        [id],
+      );
+    }
+
+    await client.query(
+      `
+        UPDATE job_guides
+        SET
+          featured = $1,
+          updated_at = NOW()
+        WHERE id = $2
+      `,
+      [featured, id],
+    );
+
+    await client.query(
+      "COMMIT",
+    );
+
+    return "updated";
+  } catch (error) {
+    await client.query(
+      "ROLLBACK",
+    );
+
+    throw error;
+  } finally {
+    client.release();
+  }
 }

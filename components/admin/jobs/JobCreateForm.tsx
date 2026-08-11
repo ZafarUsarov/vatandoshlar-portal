@@ -16,7 +16,10 @@ export default function JobCreateForm({
   return (
     <JobGuideForm
       locale={locale}
-      formAction={createJobAction}
+      mode="create"
+      formAction={
+        createJobAction
+      }
     />
   );
 }
