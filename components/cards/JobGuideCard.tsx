@@ -1,5 +1,7 @@
-import type { JobGuide } from "@/data/jobs";
 import { Link } from "@/i18n/navigation";
+import type {
+  JobGuide,
+} from "@/types/jobs";
 
 import { Badge, Card } from "../ui";
 
@@ -19,7 +21,9 @@ type IconProps = Readonly<{
   className?: string;
 }>;
 
-function ArrowUpRightIcon({ className }: IconProps) {
+function ArrowUpRightIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -38,7 +42,9 @@ function ArrowUpRightIcon({ className }: IconProps) {
   );
 }
 
-function CheckIcon({ className }: IconProps) {
+function CheckIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -62,18 +68,24 @@ export default function JobGuideCard({
   labels,
   index = 0,
 }: JobGuideCardProps) {
-  const href = `/jobs/${guide.slug}`;
-  const titleId = `job-guide-${guide.id}-title`;
+  const href =
+    `/jobs/${guide.slug}`;
+
+  const titleId =
+    `job-guide-${guide.id}-title`;
 
   return (
     <Card
       as="article"
       variant="interactive"
       padding="none"
-      aria-labelledby={titleId}
+      aria-labelledby={
+        titleId
+      }
       className="group relative isolate flex min-h-[430px] overflow-hidden rounded-[2rem] bg-surface animate-fade-in-up"
       style={{
-        animationDelay: `${index * 70}ms`,
+        animationDelay:
+          `${index * 70}ms`,
       }}
     >
       <div
@@ -94,7 +106,9 @@ export default function JobGuideCard({
             variant="neutral"
             className="max-w-[60%] text-center uppercase tracking-[0.12em]"
           >
-            {guide.category}
+            {
+              guide.category
+            }
           </Badge>
         </div>
 
@@ -111,34 +125,57 @@ export default function JobGuideCard({
                 aria-hidden="true"
                 className="absolute inset-0 z-20"
               />
-              {guide.shortTitle}
+              {
+                guide.shortTitle
+              }
             </Link>
           </h3>
 
           <p className="mt-4 text-[15px] leading-7 text-text-secondary">
-            {guide.description}
+            {
+              guide.description
+            }
           </p>
         </div>
 
-        {guide.highlights.length > 0 && (
+        {guide.highlights.length >
+          0 && (
           <ul
-            aria-label={labels.highlightsAria}
+            aria-label={
+              labels.highlightsAria
+            }
             className="mt-7 space-y-3"
           >
-            {guide.highlights.slice(0, 3).map((highlight) => (
-              <li
-                key={highlight}
-                className="flex items-start gap-3 text-sm leading-6 text-text-secondary"
-              >
-                <span
-                  aria-hidden="true"
-                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent"
-                >
-                  <CheckIcon className="size-3.5" />
-                </span>
-                <span>{highlight}</span>
-              </li>
-            ))}
+            {guide.highlights
+              .slice(
+                0,
+                3,
+              )
+              .map(
+                (
+                  highlight,
+                ) => (
+                  <li
+                    key={
+                      highlight
+                    }
+                    className="flex items-start gap-3 text-sm leading-6 text-text-secondary"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent"
+                    >
+                      <CheckIcon className="size-3.5" />
+                    </span>
+
+                    <span>
+                      {
+                        highlight
+                      }
+                    </span>
+                  </li>
+                ),
+              )}
           </ul>
         )}
 
@@ -146,10 +183,15 @@ export default function JobGuideCard({
           <div className="flex items-end justify-between gap-5 border-t border-border-default pt-5">
             <div className="min-w-0">
               <p className="text-xs font-medium uppercase tracking-[0.12em] text-text-muted">
-                {labels.guide}
+                {
+                  labels.guide
+                }
               </p>
+
               <p className="mt-1 text-sm font-semibold text-text-secondary">
-                {labels.explained}
+                {
+                  labels.explained
+                }
               </p>
             </div>
 
@@ -158,11 +200,17 @@ export default function JobGuideCard({
               className="flex shrink-0 items-center gap-2 text-sm font-semibold text-brand transition-all duration-300 group-hover:gap-3"
             >
               <span className="hidden sm:inline">
-                {labels.open}
+                {
+                  labels.open
+                }
               </span>
+
               <span className="sm:hidden">
-                {labels.openShort}
+                {
+                  labels.openShort
+                }
               </span>
+
               <ArrowUpRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>
           </div>
