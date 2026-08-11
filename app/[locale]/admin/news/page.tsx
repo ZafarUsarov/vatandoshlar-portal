@@ -32,15 +32,15 @@ const copy = {
     description:
       "Bu sahifa PostgreSQL’dagi admin yangiliklari uchun boshqaruv ro‘yxatidir. Public Yangiliklar bo‘limi hozircha mavjud static data orqali ishlashda davom etadi.",
     back: "Boshqaruv paneliga qaytish",
+    create: "Yangi maqola yaratish",
     total: "Jami",
     emptyTitle: "Hozircha admin yangiliklari yo‘q",
     emptyDescription:
-      "Database foundation tayyor. Keyingi bosqichda yangi maqola yaratish formasi qo‘shiladi.",
+      "Yangi maqola yaratib, uni qoralama sifatida PostgreSQL’ga saqlashingiz mumkin.",
     slug: "Slug",
     verified: "Tekshirildi",
     updated: "Yangilandi",
     featured: "Featured",
-    status: "Holat",
     statuses: {
       draft: "Qoralama",
       published: "E’lon qilingan",
@@ -54,15 +54,15 @@ const copy = {
     description:
       "Diese Seite ist die Verwaltungsliste für Nachrichten in PostgreSQL. Der öffentliche Nachrichtenbereich verwendet vorerst weiterhin die bestehende statische Datenquelle.",
     back: "Zurück zum Verwaltungsbereich",
+    create: "Neue Nachricht erstellen",
     total: "Gesamt",
     emptyTitle: "Noch keine Admin-Nachrichten vorhanden",
     emptyDescription:
-      "Die Datenbankgrundlage ist bereit. Im nächsten Schritt wird das Formular zum Erstellen neuer Beiträge ergänzt.",
+      "Erstellen Sie einen neuen Beitrag und speichern Sie ihn als Entwurf in PostgreSQL.",
     slug: "Slug",
     verified: "Geprüft",
     updated: "Aktualisiert",
     featured: "Featured",
-    status: "Status",
     statuses: {
       draft: "Entwurf",
       published: "Veröffentlicht",
@@ -130,7 +130,7 @@ export default async function AdminNewsPage() {
             ← {currentCopy.back}
           </Link>
 
-          <div className="mt-7 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mt-7 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
                 {currentCopy.eyebrow}
@@ -145,14 +145,23 @@ export default async function AdminNewsPage() {
               </p>
             </div>
 
-            <div className="shrink-0 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 dark:border-slate-700 dark:bg-slate-950/60">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
-                {currentCopy.total}
-              </p>
+            <div className="flex shrink-0 flex-wrap items-center gap-3">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3 dark:border-slate-700 dark:bg-slate-950/60">
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+                  {currentCopy.total}
+                </p>
 
-              <p className="mt-1 text-2xl font-black text-slate-950 dark:text-white">
-                {articles.length}
-              </p>
+                <p className="mt-1 text-xl font-black text-slate-950 dark:text-white">
+                  {articles.length}
+                </p>
+              </div>
+
+              <Link
+                href="/admin/news/new"
+                className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-600/15 transition hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+              >
+                {currentCopy.create}
+              </Link>
             </div>
           </div>
         </header>
@@ -177,6 +186,13 @@ export default async function AdminNewsPage() {
               <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-400">
                 {currentCopy.emptyDescription}
               </p>
+
+              <Link
+                href="/admin/news/new"
+                className="mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+              >
+                {currentCopy.create}
+              </Link>
             </div>
           ) : (
             <div className="grid gap-4">

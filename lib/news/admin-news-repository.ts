@@ -5,6 +5,13 @@ export type AdminNewsStatus =
   | "published"
   | "archived";
 
+export type AdminNewsContentType =
+  | "official_info"
+  | "guide"
+  | "education"
+  | "work_migration"
+  | "consular";
+
 export type AdminNewsArticleSummary = {
   id: string;
   slug: string;
@@ -14,6 +21,28 @@ export type AdminNewsArticleSummary = {
   featured: boolean;
   verifiedAt: string;
   updatedAt: string;
+};
+
+export type CreateAdminNewsArticleInput = {
+  slug: string;
+  titleUz: string;
+  titleDe: string;
+  excerptUz: string;
+  excerptDe: string;
+  contentUz: string[];
+  contentDe: string[];
+  categoryUz: string;
+  categoryDe: string;
+  contentType: AdminNewsContentType;
+  readingTimeUz: string;
+  readingTimeDe: string;
+  sourceName: string;
+  sourceUrl: string;
+  sourceLanguageUz: string;
+  sourceLanguageDe: string;
+  locationUz?: string;
+  locationDe?: string;
+  verifiedAt: string;
 };
 
 type AdminNewsArticleRow = {
@@ -94,4 +123,85 @@ export async function getAdminNewsArticles(): Promise<
   return result.rows.map(
     toAdminNewsArticleSummary,
   );
+}
+
+export async function createAdminNewsArticle(
+  input: CreateAdminNewsArticleInput,
+): Promise<string> {
+  const result = await getDb().query<{
+    id: string;
+  }>(
+    `
+      INSERT INTO news_articles (
+        slug,
+        title_uz,
+        title_de,
+        excerpt_uz,
+        excerpt_de,
+        content_uz,
+        content_de,
+        category_uz,
+        category_de,
+        content_type,
+        reading_time_uz,
+        reading_time_de,
+        source_name,
+        source_url,
+        source_language_uz,
+        source_language_de,
+        location_uz,
+        location_de,
+        verified_at,
+        status,
+        featured
+      )
+      VALUES (
+        $1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6,
+        $7,
+        $8,
+        $9,
+        $10,
+        $11,
+        $12,
+        $13,
+        $14,
+        $15,
+        $16,
+        $17,
+        $18,
+        $19,
+        'draft',
+        FALSE
+      )
+      RETURNING id::text
+    `,
+    [
+      input.slug,
+      input.titleUz,
+      input.titleDe,
+      input.excerptUz,
+      input.excerptDe,
+      input.contentUz,
+      input.contentDe,
+      input.categoryUz,
+      input.categoryDe,
+      input.contentType,
+      input.readingTimeUz,
+      input.readingTimeDe,
+      input.sourceName,
+      input.sourceUrl,
+      input.sourceLanguageUz,
+      input.sourceLanguageDe,
+      input.locationUz ?? null,
+      input.locationDe ?? null,
+      input.verifiedAt,
+    ],
+  );
+
+  return result.rows[0].id;
 }
