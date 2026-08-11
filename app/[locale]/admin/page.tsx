@@ -22,18 +22,21 @@ const copy = {
       "Vatandoshlar.de boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
     modulesTitle: "Boshqaruv modullari",
     modulesDescription:
-      "Birinchi modul sifatida Yangiliklar uchun PostgreSQL asosidagi boshqaruv foundation qo‘shildi.",
+      "Yangiliklar production boshqaruvi tayyor. Endi Ish va karyera bo‘limi uchun PostgreSQL asosidagi admin foundation qo‘shildi.",
     newsTitle: "Yangiliklar",
     newsDescription:
-      "Admin database’dagi yangiliklar ro‘yxatini ko‘ring. Yaratish va tahrirlash funksiyalari keyingi bosqichda qo‘shiladi.",
+      "Yangiliklarni yaratish, tahrirlash, e’lon qilish, arxivlash va featured holatini boshqaring.",
     newsAction: "Yangiliklarni boshqarish",
+    jobsTitle: "Ish va karyera",
+    jobsDescription:
+      "Jobs qo‘llanmalari uchun yangi PostgreSQL admin foundation’ini oching. Public Ish bo‘limi hozircha static data bilan ishlaydi.",
+    jobsAction: "Ish qo‘llanmalarini boshqarish",
     account: "Admin account",
     role: "Rol",
     status: "Holat",
     active: "Faol",
     back: "Saytga qaytish",
   },
-
   de: {
     eyebrow: "VATANDOSHLAR.DE · ADMIN",
     title: "Verwaltungsbereich",
@@ -42,11 +45,15 @@ const copy = {
       "Von hier aus können Sie die Verwaltungsbereiche von Vatandoshlar.de aufrufen.",
     modulesTitle: "Verwaltungsmodule",
     modulesDescription:
-      "Als erstes Modul wurde die PostgreSQL-Grundlage für die Nachrichtenverwaltung hinzugefügt.",
+      "Die Nachrichtenverwaltung ist produktionsbereit. Nun wurde die PostgreSQL-Admin-Grundlage für Arbeit und Karriere ergänzt.",
     newsTitle: "Nachrichten",
     newsDescription:
-      "Zeigen Sie die Nachrichten in der Admin-Datenbank an. Funktionen zum Erstellen und Bearbeiten folgen im nächsten Schritt.",
+      "Erstellen, bearbeiten, veröffentlichen und archivieren Sie Nachrichten und verwalten Sie den Featured-Status.",
     newsAction: "Nachrichten verwalten",
+    jobsTitle: "Arbeit und Karriere",
+    jobsDescription:
+      "Öffnen Sie die neue PostgreSQL-Admin-Grundlage für Jobleitfäden. Der öffentliche Bereich Arbeit verwendet vorerst weiterhin statische Daten.",
+    jobsAction: "Jobleitfäden verwalten",
     account: "Admin-Konto",
     role: "Rolle",
     status: "Status",
@@ -55,20 +62,82 @@ const copy = {
   },
 } as const;
 
+type AdminModuleCardProps = {
+  href: "/admin/news" | "/admin/jobs";
+  title: string;
+  description: string;
+  action: string;
+  tone: "emerald" | "blue";
+};
+
+function AdminModuleCard({
+  href,
+  title,
+  description,
+  action,
+  tone,
+}: AdminModuleCardProps) {
+  const isBlue = tone === "blue";
+
+  return (
+    <Link
+      href={href}
+      className={
+        isBlue
+          ? "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50/60 hover:shadow-lg hover:shadow-blue-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-blue-500/25 dark:hover:bg-blue-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6"
+          : "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50/60 hover:shadow-lg hover:shadow-emerald-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-emerald-500/25 dark:hover:bg-emerald-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6"
+      }
+    >
+      <div className="flex items-start justify-between gap-5">
+        <div>
+          <h2
+            className={
+              isBlue
+                ? "text-xl font-black text-slate-950 transition-colors group-hover:text-blue-700 dark:text-white dark:group-hover:text-blue-300"
+                : "text-xl font-black text-slate-950 transition-colors group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300"
+            }
+          >
+            {title}
+          </h2>
+
+          <p className="mt-3 max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-400">
+            {description}
+          </p>
+        </div>
+
+        <span
+          aria-hidden="true"
+          className={
+            isBlue
+              ? "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-blue-100 font-black text-blue-700 transition group-hover:bg-blue-600 group-hover:text-white dark:bg-blue-500/10 dark:text-blue-300 dark:group-hover:bg-blue-500 dark:group-hover:text-white"
+              : "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 font-black text-emerald-700 transition group-hover:bg-emerald-600 group-hover:text-white dark:bg-emerald-500/10 dark:text-emerald-300 dark:group-hover:bg-emerald-500 dark:group-hover:text-white"
+          }
+        >
+          →
+        </span>
+      </div>
+
+      <p
+        className={
+          isBlue
+            ? "mt-5 text-sm font-bold text-blue-700 dark:text-blue-400"
+            : "mt-5 text-sm font-bold text-emerald-700 dark:text-emerald-400"
+        }
+      >
+        {action} →
+      </p>
+    </Link>
+  );
+}
+
 export default async function AdminPage() {
   const locale = await getLocale();
-  const appLocale =
-    locale === "de"
-      ? "de"
-      : "uz";
+  const appLocale = locale === "de" ? "de" : "uz";
 
   const currentCopy =
-    appLocale === "de"
-      ? copy.de
-      : copy.uz;
+    appLocale === "de" ? copy.de : copy.uz;
 
-  const admin =
-    await requireAdmin(appLocale);
+  const admin = await requireAdmin(appLocale);
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 dark:bg-slate-950 sm:px-6 lg:px-8">
@@ -100,9 +169,7 @@ export default async function AdminPage() {
               {currentCopy.back}
             </Link>
 
-            <AdminSignOutButton
-              locale={appLocale}
-            />
+            <AdminSignOutButton locale={appLocale} />
           </div>
         </header>
 
@@ -121,33 +188,23 @@ export default async function AdminPage() {
                 {currentCopy.modulesDescription}
               </p>
 
-              <Link
-                href="/admin/news"
-                className="group mt-6 block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50/60 hover:shadow-lg hover:shadow-emerald-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-emerald-500/25 dark:hover:bg-emerald-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6"
-              >
-                <div className="flex items-start justify-between gap-5">
-                  <div>
-                    <h2 className="text-xl font-black text-slate-950 transition-colors group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300">
-                      {currentCopy.newsTitle}
-                    </h2>
+              <div className="mt-6 grid gap-4">
+                <AdminModuleCard
+                  href="/admin/news"
+                  title={currentCopy.newsTitle}
+                  description={currentCopy.newsDescription}
+                  action={currentCopy.newsAction}
+                  tone="emerald"
+                />
 
-                    <p className="mt-3 max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-400">
-                      {currentCopy.newsDescription}
-                    </p>
-                  </div>
-
-                  <span
-                    aria-hidden="true"
-                    className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 font-black text-emerald-700 transition group-hover:bg-emerald-600 group-hover:text-white dark:bg-emerald-500/10 dark:text-emerald-300 dark:group-hover:bg-emerald-500 dark:group-hover:text-white"
-                  >
-                    →
-                  </span>
-                </div>
-
-                <p className="mt-5 text-sm font-bold text-emerald-700 dark:text-emerald-400">
-                  {currentCopy.newsAction} →
-                </p>
-              </Link>
+                <AdminModuleCard
+                  href="/admin/jobs"
+                  title={currentCopy.jobsTitle}
+                  description={currentCopy.jobsDescription}
+                  action={currentCopy.jobsAction}
+                  tone="blue"
+                />
+              </div>
             </div>
           </div>
 
