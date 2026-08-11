@@ -4,16 +4,11 @@ import {
 } from "next-intl/server";
 
 import NewsCard from "@/components/cards/NewsCard";
-import { getLatestNews } from "@/data/news";
 import { Link } from "@/i18n/navigation";
 import {
-  getPublicNewsCollection,
-  limitPublicNews,
-} from "@/lib/news/public-news";
-import type {
-  PublicNewsLocale,
+  getPublishedNews,
+  type PublicNewsLocale,
 } from "@/lib/news/public-news-repository";
-import type { NewsItem } from "@/types/news";
 
 interface IconProps {
   className?: string;
@@ -81,53 +76,14 @@ export default async function NewsSection() {
       "NewsSection",
     );
 
-  const localizedStaticNews =
-    getLatestNews().map(
-      (item) => {
-        const key =
-          String(item.id);
-
-        return {
-          ...item,
-          title:
-            t(
-              `items.${key}.title`,
-            ),
-          excerpt:
-            t(
-              `items.${key}.excerpt`,
-            ),
-          category:
-            t(
-              `items.${key}.category`,
-            ),
-          contentType:
-            t(
-              `items.${key}.contentType`,
-            ) as NewsItem["contentType"],
-          readingTime:
-            t(
-              `items.${key}.readingTime`,
-            ),
-          location:
-            item.location
-              ? t(
-                  `items.${key}.location`,
-                )
-              : undefined,
-        };
-      },
-    );
-
   const publicNews =
-    await getPublicNewsCollection(
+    await getPublishedNews(
       appLocale,
-      localizedStaticNews,
     );
 
   const latestNews =
-    limitPublicNews(
-      publicNews,
+    publicNews.slice(
+      0,
       3,
     );
 
@@ -147,18 +103,24 @@ export default async function NewsSection() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-violet-200/70 bg-violet-50/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-violet-700 dark:border-violet-400/20 dark:bg-violet-400/10 dark:text-violet-300">
               <NewspaperIcon className="size-4" />
-              {t("badge")}
+              {t(
+                "badge",
+              )}
             </div>
 
             <h2
               id="news-heading"
               className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white"
             >
-              {t("title")}
+              {t(
+                "title",
+              )}
             </h2>
 
             <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
-              {t("description")}
+              {t(
+                "description",
+              )}
             </p>
           </div>
 
@@ -166,30 +128,53 @@ export default async function NewsSection() {
             href="/news"
             className="group hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-4 lg:inline-flex dark:border-white/10 dark:bg-white/[0.05] dark:text-white dark:hover:border-white/20 dark:focus-visible:ring-violet-400 dark:focus-visible:ring-offset-slate-950"
           >
-            {t("viewAll")}
+            {t(
+              "viewAll",
+            )}
 
             <ArrowUpRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
 
-        <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-          {latestNews.map(
-            (item, index) => (
-              <NewsCard
-                key={`${item.slug}-${item.id}`}
-                item={item}
-                index={index}
-              />
-            ),
-          )}
-        </div>
+        {latestNews.length > 0 ? (
+          <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+            {latestNews.map(
+              (
+                item,
+                index,
+              ) => (
+                <NewsCard
+                  key={
+                    item.slug
+                  }
+                  item={
+                    item
+                  }
+                  index={
+                    index
+                  }
+                />
+              ),
+            )}
+          </div>
+        ) : (
+          <div className="mt-14 rounded-3xl border border-dashed border-slate-300 bg-white/70 p-8 text-center dark:border-white/10 dark:bg-white/[0.03]">
+            <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">
+              {locale === "de"
+                ? "Derzeit sind keine veröffentlichten Nachrichten vorhanden."
+                : "Hozircha e’lon qilingan yangiliklar mavjud emas."}
+            </p>
+          </div>
+        )}
 
         <div className="mt-10 flex justify-center lg:hidden">
           <Link
             href="/news"
             className="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-4 dark:border-white/10 dark:bg-white/[0.05] dark:text-white dark:hover:border-white/20 dark:focus-visible:ring-violet-400 dark:focus-visible:ring-offset-slate-950"
           >
-            {t("viewAll")}
+            {t(
+              "viewAll",
+            )}
 
             <ArrowUpRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>

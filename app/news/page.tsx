@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 
@@ -12,29 +11,33 @@ import {
   PageHero,
   Section,
 } from "../../components/ui";
-import {
-  formatNewsDate,
-  getFeaturedNews,
-  getLatestNews,
-} from "../../data/news";
 import { Link } from "../../i18n/navigation";
+import { formatNewsDate } from "../../lib/news/format-news-date";
 import {
-  getPublicNewsCollection,
-} from "../../lib/news/public-news";
-import type {
-  PublicNewsLocale,
+  getFeaturedPublishedNews,
+  getPublishedNews,
+  type PublicNewsLocale,
 } from "../../lib/news/public-news-repository";
-import type { NewsItem } from "../../types/news";
+
+export const dynamic =
+  "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale();
-  const t = await getTranslations("NewsPage.metadata");
+  const locale =
+    await getLocale();
+
+  const t =
+    await getTranslations(
+      "NewsPage.metadata",
+    );
 
   return {
     title: t("title"),
-    description: t("description"),
+    description:
+      t("description"),
     alternates: {
-      canonical: `/${locale}/news`,
+      canonical:
+        `/${locale}/news`,
       languages: {
         uz: "/uz/news",
         de: "/de/news",
@@ -44,49 +47,30 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function NewsPage() {
-  const locale = await getLocale();
-  const t = await getTranslations("NewsPage");
+  const locale =
+    await getLocale();
+
+  const t =
+    await getTranslations(
+      "NewsPage",
+    );
 
   const appLocale: PublicNewsLocale =
     locale === "de"
       ? "de"
       : "uz";
 
-  const localizeItem = (item: NewsItem): NewsItem => {
-    const key = String(item.id);
-
-    return {
-      ...item,
-      title: t(`items.${key}.title`),
-      excerpt: t(`items.${key}.excerpt`),
-      category: t(`items.${key}.category`),
-      contentType: t(`items.${key}.contentType`) as NewsItem["contentType"],
-      readingTime: t(`items.${key}.readingTime`),
-      sourceLanguage: t(`items.${key}.sourceLanguage`),
-      location: item.location ? t(`items.${key}.location`) : undefined,
-    };
-  };
-
-  const localizedStaticNews =
-    getLatestNews().map(
-      localizeItem,
-    );
-
-  const allNews =
-    await getPublicNewsCollection(
+  const [
+    allNews,
+    featuredNews,
+  ] = await Promise.all([
+    getPublishedNews(
       appLocale,
-      localizedStaticNews,
-    );
-
-  const featuredBase =
-    getFeaturedNews();
-
-  const featuredNews =
-    featuredBase
-      ? localizeItem(
-          featuredBase,
-        )
-      : undefined;
+    ),
+    getFeaturedPublishedNews(
+      appLocale,
+    ),
+  ]);
 
   return (
     <>
@@ -111,8 +95,12 @@ export default async function NewsPage() {
 
           <PageHero
             eyebrow="Vatandoshlar.de"
-            title={t("hero.title")}
-            description={t("hero.description")}
+            title={t(
+              "hero.title",
+            )}
+            description={t(
+              "hero.description",
+            )}
             actions={
               <div
                 className="flex flex-wrap items-center gap-2"
@@ -127,7 +115,9 @@ export default async function NewsPage() {
                     aria-hidden="true"
                     className="size-1.5 rounded-full bg-emerald-500"
                   />
-                  {locale === "de" ? "Offizielle Quellen" : "Rasmiy manbalar"}
+                  {locale === "de"
+                    ? "Offizielle Quellen"
+                    : "Rasmiy manbalar"}
                 </span>
 
                 <span className="inline-flex items-center gap-2 rounded-full border border-border-default bg-surface/85 px-3 py-1.5 text-xs font-semibold text-text-secondary shadow-[0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-sm dark:shadow-none">
@@ -153,7 +143,9 @@ export default async function NewsPage() {
                     />
                   </svg>
 
-                  {locale === "de" ? "Geprüft" : "Tekshirilgan"}
+                  {locale === "de"
+                    ? "Geprüft"
+                    : "Tekshirilgan"}
                 </span>
 
                 <span className="inline-flex items-center gap-2 rounded-full border border-border-default bg-surface/85 px-3 py-1.5 text-xs font-semibold text-text-secondary shadow-[0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-sm dark:shadow-none">
@@ -178,7 +170,9 @@ export default async function NewsPage() {
                     />
                   </svg>
 
-                  {locale === "de" ? "Deutschland" : "Germaniya"}
+                  {locale === "de"
+                    ? "Deutschland"
+                    : "Germaniya"}
                 </span>
               </div>
             }
@@ -194,67 +188,53 @@ export default async function NewsPage() {
             aria-labelledby="featured-news-heading"
             className="relative overflow-hidden pb-16 pt-8 sm:pb-20 sm:pt-10 lg:pb-24 lg:pt-12"
           >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 -z-0 overflow-hidden"
-            >
-              <div className="absolute -left-44 -top-24 size-[30rem] rounded-full bg-cyan-200/20 blur-[120px] sm:size-[36rem] dark:bg-cyan-400/[0.03]" />
-
-              <div className="absolute -right-40 top-4 size-[32rem] rounded-full bg-emerald-200/18 blur-[130px] sm:size-[38rem] dark:bg-emerald-400/[0.028]" />
-
-              <div className="absolute left-1/2 top-28 size-[28rem] -translate-x-1/2 rounded-full bg-blue-200/12 blur-[115px] dark:bg-blue-400/[0.025]" />
-            </div>
-
             <Container className="relative z-10">
-              <article className="group overflow-hidden rounded-[2rem] border border-border-default bg-surface shadow-sm transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-emerald-200/80 hover:shadow-xl hover:shadow-slate-900/[0.06] dark:hover:border-emerald-400/20 dark:hover:shadow-black/20">
+              <article className="overflow-hidden rounded-[2rem] border border-border-default bg-surface shadow-sm">
                 <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
-                  <div className="relative min-h-[320px] overflow-hidden sm:min-h-[380px] lg:min-h-[460px]">
-                    <Image
-                      src="/images/news/integration-courses.webp"
-                      alt={featuredNews.title}
-                      fill
-                      priority
-                      sizes="(max-width: 1023px) 100vw, 42vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-                    />
+                  <div className="relative flex min-h-[280px] items-end overflow-hidden bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.34),transparent_35%),radial-gradient(circle_at_80%_30%,rgba(14,165,233,0.26),transparent_34%),linear-gradient(145deg,#0f172a,#102a2a_58%,#0f172a)] p-7 text-white sm:min-h-[340px] sm:p-10 lg:min-h-[430px] lg:p-12">
+                    <div className="relative z-10 max-w-md border-t border-white/15 pt-5 sm:pt-6">
+                      <p className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-emerald-200 sm:text-xs">
+                        {t(
+                          "featured.officialSource",
+                        )}
+                      </p>
 
-                    <div
-                      aria-hidden="true"
-                      className="absolute inset-0 bg-gradient-to-b from-slate-950/62 via-slate-950/18 to-slate-950/94"
-                    />
-
-                    <div
-                      aria-hidden="true"
-                      className="absolute inset-0 bg-gradient-to-r from-slate-950/28 via-slate-950/5 to-transparent"
-                    />
-
-                    <div className="relative z-10 flex h-full min-h-[320px] flex-col justify-end p-7 text-white sm:min-h-[380px] sm:p-10 lg:min-h-[460px] lg:p-12">
-                      <div className="max-w-md border-t border-white/15 pt-5 sm:pt-6">
-                        <p className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-slate-200 drop-shadow-sm sm:text-xs">
-                          {t("featured.officialSource")}
-                        </p>
-
-                        <p className="mt-2 text-base font-semibold leading-7 text-white drop-shadow-sm sm:text-lg">
-                          {featuredNews.sourceName}
-                        </p>
-                      </div>
+                      <p className="mt-2 text-base font-semibold leading-7 text-white sm:text-lg">
+                        {
+                          featuredNews.sourceName
+                        }
+                      </p>
                     </div>
                   </div>
 
                   <div className="flex flex-col justify-center bg-surface p-7 sm:p-10 lg:p-12 xl:p-14">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-text-muted">
                       <span className="font-semibold text-brand">
-                        {featuredNews.category}
+                        {
+                          featuredNews.category
+                        }
                       </span>
 
-                      <span aria-hidden="true">•</span>
+                      <span aria-hidden="true">
+                        •
+                      </span>
 
-                      <span>{featuredNews.readingTime}</span>
+                      <span>
+                        {
+                          featuredNews.readingTime
+                        }
+                      </span>
 
                       {featuredNews.location && (
                         <>
-                          <span aria-hidden="true">•</span>
-                          <span>{featuredNews.location}</span>
+                          <span aria-hidden="true">
+                            •
+                          </span>
+                          <span>
+                            {
+                              featuredNews.location
+                            }
+                          </span>
                         </>
                       )}
                     </div>
@@ -267,12 +247,16 @@ export default async function NewsPage() {
                         href={`/news/${featuredNews.slug}`}
                         className="rounded-sm transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4"
                       >
-                        {featuredNews.title}
+                        {
+                          featuredNews.title
+                        }
                       </Link>
                     </h2>
 
                     <p className="mt-5 max-w-2xl text-base leading-7 text-text-secondary sm:mt-6 sm:text-lg sm:leading-8">
-                      {featuredNews.excerpt}
+                      {
+                        featuredNews.excerpt
+                      }
                     </p>
 
                     <div className="mt-7 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:items-center">
@@ -280,12 +264,20 @@ export default async function NewsPage() {
                         href={`/news/${featuredNews.slug}`}
                         size="lg"
                       >
-                        {t("featured.readMore")}
+                        {t(
+                          "featured.readMore",
+                        )}
                       </ButtonLink>
 
                       <p className="text-sm text-text-muted">
-                        {t("featured.verified")}{" "}
-                        <time dateTime={featuredNews.verifiedAt}>
+                        {t(
+                          "featured.verified",
+                        )}{" "}
+                        <time
+                          dateTime={
+                            featuredNews.verifiedAt
+                          }
+                        >
                           {formatNewsDate(
                             featuredNews.verifiedAt,
                             locale,
@@ -308,34 +300,69 @@ export default async function NewsPage() {
           <Container>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="page-eyebrow">{t("all.eyebrow")}</p>
+                <p className="page-eyebrow">
+                  {t(
+                    "all.eyebrow",
+                  )}
+                </p>
 
                 <h2
                   id="all-news-heading"
                   className="section-title mt-3"
                 >
-                  {t("all.title")}
+                  {t(
+                    "all.title",
+                  )}
                 </h2>
 
                 <p className="section-description mt-4">
-                  {t("all.description")}
+                  {t(
+                    "all.description",
+                  )}
                 </p>
               </div>
 
               <p className="shrink-0 text-sm text-text-muted">
-                {t("all.count", { count: allNews.length })}
+                {t(
+                  "all.count",
+                  {
+                    count:
+                      allNews.length,
+                  },
+                )}
               </p>
             </div>
 
-            <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-              {allNews.map((item, index) => (
-                <NewsCard
-                  key={`${item.slug}-${item.id}`}
-                  item={item}
-                  index={index}
-                />
-              ))}
-            </div>
+            {allNews.length > 0 ? (
+              <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+                {allNews.map(
+                  (
+                    item,
+                    index,
+                  ) => (
+                    <NewsCard
+                      key={
+                        item.slug
+                      }
+                      item={
+                        item
+                      }
+                      index={
+                        index
+                      }
+                    />
+                  ),
+                )}
+              </div>
+            ) : (
+              <div className="mt-10 rounded-3xl border border-dashed border-border-default bg-surface p-8 text-center sm:p-10">
+                <p className="text-base font-semibold text-text-primary">
+                  {locale === "de"
+                    ? "Derzeit sind keine veröffentlichten Nachrichten vorhanden."
+                    : "Hozircha e’lon qilingan yangiliklar mavjud emas."}
+                </p>
+              </div>
+            )}
           </Container>
         </Section>
       </main>
