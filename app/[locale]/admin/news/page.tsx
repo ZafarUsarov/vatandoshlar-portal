@@ -8,6 +8,8 @@ import {
   type AdminNewsStatus,
 } from "@/lib/news/admin-news-repository";
 
+import { updateNewsStatusAction } from "./actions";
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -30,10 +32,16 @@ const copy = {
     eyebrow: "VATANDOSHLAR.DE · ADMIN · YANGILIKLAR",
     title: "Yangiliklarni boshqarish",
     description:
-      "Bu sahifa PostgreSQL’dagi admin yangiliklari uchun boshqaruv ro‘yxatidir. Public Yangiliklar bo‘limi hozircha mavjud static data orqali ishlashda davom etadi.",
+      "PostgreSQL’dagi admin yangiliklarini yarating, tahrirlang va lifecycle statusini boshqaring. Public Yangiliklar bo‘limi hozircha mavjud static data orqali ishlashda davom etadi.",
+    lifecycleNote:
+      "Muhim: “E’lon qilingan” statusi hozircha faqat admin holati. Public News sahifasiga chiqarish keyingi integratsiya bosqichida ulanadi.",
     back: "Boshqaruv paneliga qaytish",
     create: "Yangi maqola yaratish",
     edit: "Tahrirlash",
+    publish: "E’lon qilish",
+    unpublish: "Qoralamaga qaytarish",
+    archive: "Arxivlash",
+    restore: "Qoralamaga tiklash",
     total: "Jami",
     emptyTitle: "Hozircha admin yangiliklari yo‘q",
     emptyDescription:
@@ -53,10 +61,16 @@ const copy = {
     eyebrow: "VATANDOSHLAR.DE · ADMIN · NACHRICHTEN",
     title: "Nachrichten verwalten",
     description:
-      "Diese Seite ist die Verwaltungsliste für Nachrichten in PostgreSQL. Der öffentliche Nachrichtenbereich verwendet vorerst weiterhin die bestehende statische Datenquelle.",
+      "Erstellen und bearbeiten Sie Nachrichten in PostgreSQL und verwalten Sie deren Lifecycle-Status. Der öffentliche Nachrichtenbereich verwendet vorerst weiterhin die bestehende statische Datenquelle.",
+    lifecycleNote:
+      "Wichtig: Der Status „Veröffentlicht“ ist derzeit nur ein Admin-Status. Die Ausgabe im öffentlichen Nachrichtenbereich wird erst im nächsten Integrationsschritt verbunden.",
     back: "Zurück zum Verwaltungsbereich",
     create: "Neue Nachricht erstellen",
     edit: "Bearbeiten",
+    publish: "Veröffentlichen",
+    unpublish: "Als Entwurf setzen",
+    archive: "Archivieren",
+    restore: "Als Entwurf wiederherstellen",
     total: "Gesamt",
     emptyTitle: "Noch keine Admin-Nachrichten vorhanden",
     emptyDescription:
@@ -103,6 +117,48 @@ function getStatusClassName(
   return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-300";
 }
 
+function StatusButton({
+  articleId,
+  targetStatus,
+  children,
+  tone = "neutral",
+}: {
+  articleId: string;
+  targetStatus: AdminNewsStatus;
+  children: React.ReactNode;
+  tone?: "neutral" | "primary" | "danger";
+}) {
+  const className =
+    tone === "primary"
+      ? "border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300 dark:hover:bg-emerald-500/15"
+      : tone === "danger"
+        ? "border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-300 dark:hover:bg-rose-500/15"
+        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800";
+
+  return (
+    <form action={updateNewsStatusAction}>
+      <input
+        type="hidden"
+        name="articleId"
+        value={articleId}
+      />
+
+      <input
+        type="hidden"
+        name="targetStatus"
+        value={targetStatus}
+      />
+
+      <button
+        type="submit"
+        className={`inline-flex min-h-10 items-center justify-center rounded-xl border px-4 py-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 ${className}`}
+      >
+        {children}
+      </button>
+    </form>
+  );
+}
+
 export default async function AdminNewsPage() {
   const locale = await getLocale();
 
@@ -144,6 +200,10 @@ export default async function AdminNewsPage() {
 
               <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
                 {currentCopy.description}
+              </p>
+
+              <p className="mt-4 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm leading-6 text-sky-800 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-200">
+                {currentCopy.lifecycleNote}
               </p>
             </div>
 
@@ -238,12 +298,62 @@ export default async function AdminNewsPage() {
                         </span>
                       </p>
 
-                      <Link
-                        href={`/admin/news/${article.id}/edit`}
-                        className="mt-4 inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-800 transition hover:border-emerald-200 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-emerald-500/30 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-900"
-                      >
-                        {currentCopy.edit}
-                      </Link>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <Link
+                          href={`/admin/news/${article.id}/edit`}
+                          className="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-800 transition hover:border-emerald-200 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-emerald-500/30 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-900"
+                        >
+                          {currentCopy.edit}
+                        </Link>
+
+                        {article.status === "draft" && (
+                          <>
+                            <StatusButton
+                              articleId={article.id}
+                              targetStatus="published"
+                              tone="primary"
+                            >
+                              {currentCopy.publish}
+                            </StatusButton>
+
+                            <StatusButton
+                              articleId={article.id}
+                              targetStatus="archived"
+                              tone="danger"
+                            >
+                              {currentCopy.archive}
+                            </StatusButton>
+                          </>
+                        )}
+
+                        {article.status === "published" && (
+                          <>
+                            <StatusButton
+                              articleId={article.id}
+                              targetStatus="draft"
+                            >
+                              {currentCopy.unpublish}
+                            </StatusButton>
+
+                            <StatusButton
+                              articleId={article.id}
+                              targetStatus="archived"
+                              tone="danger"
+                            >
+                              {currentCopy.archive}
+                            </StatusButton>
+                          </>
+                        )}
+
+                        {article.status === "archived" && (
+                          <StatusButton
+                            articleId={article.id}
+                            targetStatus="draft"
+                          >
+                            {currentCopy.restore}
+                          </StatusButton>
+                        )}
+                      </div>
                     </div>
 
                     <dl className="grid shrink-0 gap-4 text-sm sm:grid-cols-2 lg:min-w-[22rem]">
@@ -251,8 +361,12 @@ export default async function AdminNewsPage() {
                         <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
                           {currentCopy.verified}
                         </dt>
+
                         <dd className="mt-1 font-bold text-slate-900 dark:text-white">
-                          {formatDate(article.verifiedAt, appLocale)}
+                          {formatDate(
+                            article.verifiedAt,
+                            appLocale,
+                          )}
                         </dd>
                       </div>
 
@@ -260,8 +374,12 @@ export default async function AdminNewsPage() {
                         <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
                           {currentCopy.updated}
                         </dt>
+
                         <dd className="mt-1 font-bold text-slate-900 dark:text-white">
-                          {formatDate(article.updatedAt, appLocale)}
+                          {formatDate(
+                            article.updatedAt,
+                            appLocale,
+                          )}
                         </dd>
                       </div>
                     </dl>

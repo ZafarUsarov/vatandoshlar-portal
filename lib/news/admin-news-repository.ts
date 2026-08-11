@@ -434,3 +434,21 @@ export async function updateAdminNewsArticle(
 
   return (result.rowCount ?? 0) > 0;
 }
+
+export async function updateAdminNewsArticleStatus(
+  id: string,
+  status: AdminNewsStatus,
+): Promise<boolean> {
+  const result = await getDb().query(
+    `
+      UPDATE news_articles
+      SET
+        status = $1,
+        updated_at = NOW()
+      WHERE id = $2
+    `,
+    [status, id],
+  );
+
+  return (result.rowCount ?? 0) > 0;
+}
