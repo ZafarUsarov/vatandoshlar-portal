@@ -58,6 +58,35 @@ export type AdminJobGuide = {
   updatedAt: string;
 };
 
+export type AdminJobGuideInput = {
+  slug: string;
+  titleUz: string;
+  titleDe: string;
+  shortTitleUz: string;
+  shortTitleDe: string;
+  descriptionUz: string;
+  descriptionDe: string;
+  category: AdminJobCategory;
+  icon: string;
+  audienceUz: string;
+  audienceDe: string;
+  highlightsUz: string[];
+  highlightsDe: string[];
+  searchKeywords: string[];
+  stepsUz: string[];
+  stepsDe: string[];
+  importantNotesUz: string[];
+  importantNotesDe: string[];
+  officialSourceName: string;
+  officialSourceUrl: string;
+  sourceDescriptionUz: string;
+  sourceDescriptionDe: string;
+  verifiedAt: string;
+};
+
+export type CreateAdminJobGuideInput =
+  AdminJobGuideInput;
+
 type AdminJobGuideSummaryRow = {
   id: string;
   slug: string;
@@ -103,15 +132,22 @@ type AdminJobGuideRow = {
   updated_at: string | Date;
 };
 
-function normalizeStatus(status: string): AdminJobStatus {
-  if (status === "published" || status === "archived") {
+function normalizeStatus(
+  status: string,
+): AdminJobStatus {
+  if (
+    status === "published" ||
+    status === "archived"
+  ) {
     return status;
   }
 
   return "draft";
 }
 
-function normalizeCategory(category: string): AdminJobCategory {
+function normalizeCategory(
+  category: string,
+): AdminJobCategory {
   if (
     category === "english" ||
     category === "minijob" ||
@@ -125,11 +161,17 @@ function normalizeCategory(category: string): AdminJobCategory {
   return "students";
 }
 
-function toDateTimeString(value: string | Date): string {
-  return value instanceof Date ? value.toISOString() : value;
+function toDateTimeString(
+  value: string | Date,
+): string {
+  return value instanceof Date
+    ? value.toISOString()
+    : value;
 }
 
-function toDateOnlyString(value: string | Date): string {
+function toDateOnlyString(
+  value: string | Date,
+): string {
   return toDateTimeString(value).slice(0, 10);
 }
 
@@ -258,5 +300,88 @@ export async function getAdminJobGuideById(
 
   const row = result.rows[0];
 
-  return row ? toAdminJobGuide(row) : null;
+  return row
+    ? toAdminJobGuide(row)
+    : null;
+}
+
+export async function createAdminJobGuide(
+  input: CreateAdminJobGuideInput,
+): Promise<string> {
+  const result =
+    await getDb().query<{
+      id: string;
+    }>(
+      `
+        INSERT INTO job_guides (
+          slug,
+          title_uz,
+          title_de,
+          short_title_uz,
+          short_title_de,
+          description_uz,
+          description_de,
+          category,
+          icon,
+          audience_uz,
+          audience_de,
+          highlights_uz,
+          highlights_de,
+          search_keywords,
+          steps_uz,
+          steps_de,
+          important_notes_uz,
+          important_notes_de,
+          official_source_name,
+          official_source_url,
+          source_description_uz,
+          source_description_de,
+          verified_at,
+          status,
+          featured
+        )
+        VALUES (
+          $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,
+          $14,$15,$16,$17,$18,$19,$20,$21,$22,$23,
+          'draft',
+          FALSE
+        )
+        RETURNING id::text
+      `,
+      [
+        input.slug,
+        input.titleUz,
+        input.titleDe,
+        input.shortTitleUz,
+        input.shortTitleDe,
+        input.descriptionUz,
+        input.descriptionDe,
+        input.category,
+        input.icon,
+        input.audienceUz,
+        input.audienceDe,
+        input.highlightsUz,
+        input.highlightsDe,
+        input.searchKeywords,
+        input.stepsUz,
+        input.stepsDe,
+        input.importantNotesUz,
+        input.importantNotesDe,
+        input.officialSourceName,
+        input.officialSourceUrl,
+        input.sourceDescriptionUz,
+        input.sourceDescriptionDe,
+        input.verifiedAt,
+      ],
+    );
+
+  const row = result.rows[0];
+
+  if (!row) {
+    throw new Error(
+      "Job guide was not created.",
+    );
+  }
+
+  return row.id;
 }

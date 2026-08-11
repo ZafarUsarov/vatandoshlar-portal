@@ -8,10 +8,12 @@ import {
   type AdminJobStatus,
 } from "@/lib/jobs/admin-jobs-repository";
 
-export const dynamic = "force-dynamic";
+export const dynamic =
+  "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale();
+  const locale =
+    await getLocale();
 
   return {
     title:
@@ -27,21 +29,27 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const copy = {
   uz: {
-    eyebrow: "VATANDOSHLAR.DE · ADMIN · ISH",
-    title: "Ish qo‘llanmalarini boshqarish",
+    eyebrow:
+      "VATANDOSHLAR.DE · ADMIN · ISH",
+    title:
+      "Ish qo‘llanmalarini boshqarish",
     description:
-      "PostgreSQL’dagi Jobs boshqaruv foundation’i. Hozirgi bosqichda admin bazadagi qo‘llanmalar ro‘yxati ko‘rsatiladi; public Ish bo‘limi hali mavjud static data bilan ishlashda davom etadi.",
-    back: "Boshqaruv paneliga qaytish",
+      "PostgreSQL’dagi Jobs qo‘llanmalarini boshqaring. Hozirgi bosqichda yangi qo‘llanma yaratish va qoralama sifatida saqlash ishlaydi.",
+    back:
+      "Boshqaruv paneliga qaytish",
+    create:
+      "Yangi qo‘llanma yaratish",
     total: "Jami",
-    emptyTitle: "Hozircha admin Jobs qo‘llanmalari yo‘q",
+    emptyTitle:
+      "Hozircha admin Jobs qo‘llanmalari yo‘q",
     emptyDescription:
-      "Database foundation tayyor. Keyingi bosqichda yangi qo‘llanma yaratish va tahrirlash workflow’i qo‘shiladi.",
+      "Yangi qo‘llanma yaratib, uni qoralama sifatida PostgreSQL’ga saqlashingiz mumkin.",
     slug: "Slug",
     verified: "Tekshirildi",
     updated: "Yangilandi",
     featured: "Featured",
     publicStatic:
-      "Public Ish bo‘limi hozircha static data’dan foydalanadi.",
+      "Public Ish bo‘limi hozircha static data’dan foydalanadi. Admin’dagi yangi draft public sahifaga chiqmaydi.",
     statuses: {
       draft: "Qoralama",
       published: "E’lon qilingan",
@@ -57,22 +65,27 @@ const copy = {
     },
   },
   de: {
-    eyebrow: "VATANDOSHLAR.DE · ADMIN · ARBEIT",
-    title: "Jobleitfäden verwalten",
+    eyebrow:
+      "VATANDOSHLAR.DE · ADMIN · ARBEIT",
+    title:
+      "Jobleitfäden verwalten",
     description:
-      "PostgreSQL-Grundlage für die Jobverwaltung. In diesem Schritt werden die Leitfäden aus der Admin-Datenbank angezeigt; der öffentliche Bereich Arbeit verwendet weiterhin die vorhandenen statischen Daten.",
-    back: "Zurück zum Verwaltungsbereich",
+      "Verwalten Sie Jobleitfäden in PostgreSQL. In diesem Schritt können neue Leitfäden erstellt und als Entwurf gespeichert werden.",
+    back:
+      "Zurück zum Verwaltungsbereich",
+    create:
+      "Neuen Leitfaden erstellen",
     total: "Gesamt",
     emptyTitle:
       "Noch keine Jobleitfäden in der Admin-Datenbank",
     emptyDescription:
-      "Die Datenbankgrundlage ist vorbereitet. Im nächsten Schritt folgen Erstellung und Bearbeitung von Leitfäden.",
+      "Erstellen Sie einen neuen Leitfaden und speichern Sie ihn als Entwurf in PostgreSQL.",
     slug: "Slug",
     verified: "Geprüft",
     updated: "Aktualisiert",
     featured: "Featured",
     publicStatic:
-      "Der öffentliche Bereich Arbeit verwendet vorerst weiterhin statische Daten.",
+      "Der öffentliche Bereich Arbeit verwendet vorerst weiterhin statische Daten. Neue Admin-Entwürfe erscheinen dort nicht.",
     statuses: {
       draft: "Entwurf",
       published: "Veröffentlicht",
@@ -94,7 +107,9 @@ function formatDate(
   locale: "uz" | "de",
 ): string {
   return new Intl.DateTimeFormat(
-    locale === "de" ? "de-DE" : "uz-UZ",
+    locale === "de"
+      ? "de-DE"
+      : "uz-UZ",
     {
       day: "2-digit",
       month: "2-digit",
@@ -118,16 +133,23 @@ function getStatusClassName(
 }
 
 export default async function AdminJobsPage() {
-  const locale = await getLocale();
+  const locale =
+    await getLocale();
+
   const appLocale: "uz" | "de" =
-    locale === "de" ? "de" : "uz";
+    locale === "de"
+      ? "de"
+      : "uz";
 
   const currentCopy =
-    appLocale === "de" ? copy.de : copy.uz;
+    appLocale === "de"
+      ? copy.de
+      : copy.uz;
 
   await requireAdmin(appLocale);
 
-  const guides = await getAdminJobGuides();
+  const guides =
+    await getAdminJobGuides();
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 dark:bg-slate-950 sm:px-6 lg:px-8">
@@ -142,7 +164,7 @@ export default async function AdminJobsPage() {
 
           <div className="mt-7 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">
                 {currentCopy.eyebrow}
               </p>
 
@@ -159,14 +181,23 @@ export default async function AdminJobsPage() {
               </p>
             </div>
 
-            <div className="shrink-0 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3 dark:border-slate-700 dark:bg-slate-950/60">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
-                {currentCopy.total}
-              </p>
+            <div className="flex shrink-0 flex-wrap items-center gap-3">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3 dark:border-slate-700 dark:bg-slate-950/60">
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+                  {currentCopy.total}
+                </p>
 
-              <p className="mt-1 text-xl font-black text-slate-950 dark:text-white">
-                {guides.length}
-              </p>
+                <p className="mt-1 text-xl font-black text-slate-950 dark:text-white">
+                  {guides.length}
+                </p>
+              </div>
+
+              <Link
+                href="/admin/jobs/new"
+                className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/15 transition hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+              >
+                {currentCopy.create}
+              </Link>
             </div>
           </div>
         </header>
@@ -191,6 +222,13 @@ export default async function AdminJobsPage() {
               <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-400">
                 {currentCopy.emptyDescription}
               </p>
+
+              <Link
+                href="/admin/jobs/new"
+                className="mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+              >
+                {currentCopy.create}
+              </Link>
             </div>
           ) : (
             <div className="grid gap-4">
