@@ -8,7 +8,10 @@ import {
   type AdminNewsStatus,
 } from "@/lib/news/admin-news-repository";
 
-import { updateNewsStatusAction } from "./actions";
+import {
+  updateNewsFeaturedAction,
+  updateNewsStatusAction,
+} from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -29,12 +32,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const copy = {
   uz: {
-    eyebrow: "VATANDOSHLAR.DE · ADMIN · YANGILIKLAR",
+    eyebrow:
+      "VATANDOSHLAR.DE · ADMIN · YANGILIKLAR",
     title: "Yangiliklarni boshqarish",
     description:
-      "PostgreSQL’dagi admin yangiliklarini yarating, tahrirlang va lifecycle statusini boshqaring. Public Yangiliklar bo‘limi hozircha mavjud static data orqali ishlashda davom etadi.",
-    lifecycleNote:
-      "Muhim: “E’lon qilingan” statusi hozircha faqat admin holati. Public News sahifasiga chiqarish keyingi integratsiya bosqichida ulanadi.",
+      "PostgreSQL’dagi yangiliklarni yarating, tahrirlang, e’lon holatini va featured maqolani boshqaring.",
+    featuredNote:
+      "Bir vaqtning o‘zida faqat bitta e’lon qilingan maqola featured bo‘lishi mumkin. Draft yoki archived holatiga qaytarilsa featured avtomatik o‘chadi.",
     back: "Boshqaruv paneliga qaytish",
     create: "Yangi maqola yaratish",
     edit: "Tahrirlash",
@@ -42,8 +46,11 @@ const copy = {
     unpublish: "Qoralamaga qaytarish",
     archive: "Arxivlash",
     restore: "Qoralamaga tiklash",
+    makeFeatured: "Featured qilish",
+    removeFeatured: "Featured’dan olish",
     total: "Jami",
-    emptyTitle: "Hozircha admin yangiliklari yo‘q",
+    emptyTitle:
+      "Hozircha admin yangiliklari yo‘q",
     emptyDescription:
       "Yangi maqola yaratib, uni qoralama sifatida PostgreSQL’ga saqlashingiz mumkin.",
     slug: "Slug",
@@ -58,12 +65,13 @@ const copy = {
   },
 
   de: {
-    eyebrow: "VATANDOSHLAR.DE · ADMIN · NACHRICHTEN",
+    eyebrow:
+      "VATANDOSHLAR.DE · ADMIN · NACHRICHTEN",
     title: "Nachrichten verwalten",
     description:
-      "Erstellen und bearbeiten Sie Nachrichten in PostgreSQL und verwalten Sie deren Lifecycle-Status. Der öffentliche Nachrichtenbereich verwendet vorerst weiterhin die bestehende statische Datenquelle.",
-    lifecycleNote:
-      "Wichtig: Der Status „Veröffentlicht“ ist derzeit nur ein Admin-Status. Die Ausgabe im öffentlichen Nachrichtenbereich wird erst im nächsten Integrationsschritt verbunden.",
+      "Erstellen und bearbeiten Sie Nachrichten in PostgreSQL und verwalten Sie Veröffentlichungsstatus sowie den Featured-Beitrag.",
+    featuredNote:
+      "Es kann immer nur einen veröffentlichten Featured-Beitrag geben. Beim Zurücksetzen auf Entwurf oder beim Archivieren wird Featured automatisch entfernt.",
     back: "Zurück zum Verwaltungsbereich",
     create: "Neue Nachricht erstellen",
     edit: "Bearbeiten",
@@ -71,8 +79,11 @@ const copy = {
     unpublish: "Als Entwurf setzen",
     archive: "Archivieren",
     restore: "Als Entwurf wiederherstellen",
+    makeFeatured: "Als Featured setzen",
+    removeFeatured: "Featured entfernen",
     total: "Gesamt",
-    emptyTitle: "Noch keine Admin-Nachrichten vorhanden",
+    emptyTitle:
+      "Noch keine Admin-Nachrichten vorhanden",
     emptyDescription:
       "Erstellen Sie einen neuen Beitrag und speichern Sie ihn als Entwurf in PostgreSQL.",
     slug: "Slug",
@@ -126,7 +137,10 @@ function StatusButton({
   articleId: string;
   targetStatus: AdminNewsStatus;
   children: React.ReactNode;
-  tone?: "neutral" | "primary" | "danger";
+  tone?:
+    | "neutral"
+    | "primary"
+    | "danger";
 }) {
   const className =
     tone === "primary"
@@ -152,6 +166,47 @@ function StatusButton({
       <button
         type="submit"
         className={`inline-flex min-h-10 items-center justify-center rounded-xl border px-4 py-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 ${className}`}
+      >
+        {children}
+      </button>
+    </form>
+  );
+}
+
+function FeaturedButton({
+  articleId,
+  featured,
+  children,
+}: {
+  articleId: string;
+  featured: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <form action={updateNewsFeaturedAction}>
+      <input
+        type="hidden"
+        name="articleId"
+        value={articleId}
+      />
+
+      <input
+        type="hidden"
+        name="featured"
+        value={
+          featured
+            ? "false"
+            : "true"
+        }
+      />
+
+      <button
+        type="submit"
+        className={
+          featured
+            ? "inline-flex min-h-10 items-center justify-center rounded-xl border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-bold text-sky-700 transition hover:bg-sky-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-300 dark:hover:bg-sky-500/15 dark:focus-visible:ring-offset-slate-900"
+            : "inline-flex min-h-10 items-center justify-center rounded-xl border border-violet-200 bg-violet-50 px-4 py-2 text-sm font-bold text-violet-700 transition hover:bg-violet-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:border-violet-500/20 dark:bg-violet-500/10 dark:text-violet-300 dark:hover:bg-violet-500/15 dark:focus-visible:ring-offset-slate-900"
+        }
       >
         {children}
       </button>
@@ -202,8 +257,8 @@ export default async function AdminNewsPage() {
                 {currentCopy.description}
               </p>
 
-              <p className="mt-4 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm leading-6 text-sky-800 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-200">
-                {currentCopy.lifecycleNote}
+              <p className="mt-4 rounded-2xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm leading-6 text-violet-800 dark:border-violet-500/20 dark:bg-violet-500/10 dark:text-violet-200">
+                {currentCopy.featuredNote}
               </p>
             </div>
 
@@ -328,6 +383,15 @@ export default async function AdminNewsPage() {
 
                         {article.status === "published" && (
                           <>
+                            <FeaturedButton
+                              articleId={article.id}
+                              featured={article.featured}
+                            >
+                              {article.featured
+                                ? currentCopy.removeFeatured
+                                : currentCopy.makeFeatured}
+                            </FeaturedButton>
+
                             <StatusButton
                               articleId={article.id}
                               targetStatus="draft"

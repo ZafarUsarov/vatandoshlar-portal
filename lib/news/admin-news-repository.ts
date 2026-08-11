@@ -444,6 +444,12 @@ export async function updateAdminNewsArticleStatus(
       UPDATE news_articles
       SET
         status = $1,
+        featured =
+          CASE
+            WHEN $1 = 'published'
+              THEN featured
+            ELSE FALSE
+          END,
         updated_at = NOW()
       WHERE id = $2
     `,
@@ -451,4 +457,82 @@ export async function updateAdminNewsArticleStatus(
   );
 
   return (result.rowCount ?? 0) > 0;
+}
+
+export async function setAdminNewsArticleFeatured(
+  id: string,
+  featured: boolean,
+): Promise<
+  "updated" | "not_found" | "not_published"
+> {
+  const client =
+    await getDb().connect();
+
+  try {
+    await client.query("BEGIN");
+
+    const targetResult =
+      await client.query<{
+        status: string;
+      }>(
+        `
+          SELECT status
+          FROM news_articles
+          WHERE id = $1
+          FOR UPDATE
+        `,
+        [id],
+      );
+
+    const target =
+      targetResult.rows[0];
+
+    if (!target) {
+      await client.query("ROLLBACK");
+      return "not_found";
+    }
+
+    if (
+      featured &&
+      target.status !== "published"
+    ) {
+      await client.query("ROLLBACK");
+      return "not_published";
+    }
+
+    if (featured) {
+      await client.query(
+        `
+          UPDATE news_articles
+          SET
+            featured = FALSE,
+            updated_at = NOW()
+          WHERE
+            featured = TRUE
+            AND id <> $1
+        `,
+        [id],
+      );
+    }
+
+    await client.query(
+      `
+        UPDATE news_articles
+        SET
+          featured = $1,
+          updated_at = NOW()
+        WHERE id = $2
+      `,
+      [featured, id],
+    );
+
+    await client.query("COMMIT");
+
+    return "updated";
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 }

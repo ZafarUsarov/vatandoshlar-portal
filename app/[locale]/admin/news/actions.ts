@@ -5,6 +5,7 @@ import { getLocale } from "next-intl/server";
 
 import { requireAdmin } from "@/lib/auth/admin";
 import {
+  setAdminNewsArticleFeatured,
   updateAdminNewsArticleStatus,
   type AdminNewsStatus,
 } from "@/lib/news/admin-news-repository";
@@ -30,15 +31,36 @@ function isAdminNewsStatus(
   );
 }
 
+function getAppLocale(
+  locale: string,
+): "uz" | "de" {
+  return locale === "de"
+    ? "de"
+    : "uz";
+}
+
+function revalidateAdminNews(
+  locale: "uz" | "de",
+): void {
+  revalidatePath(
+    `/${locale}/admin/news`,
+  );
+
+  revalidatePath(
+    `/${locale}/news`,
+  );
+
+  revalidatePath(
+    `/${locale}`,
+  );
+}
+
 export async function updateNewsStatusAction(
   formData: FormData,
 ): Promise<void> {
   const locale = await getLocale();
-
   const appLocale =
-    locale === "de"
-      ? "de"
-      : "uz";
+    getAppLocale(locale);
 
   await requireAdmin(appLocale);
 
@@ -65,7 +87,35 @@ export async function updateNewsStatusAction(
     return;
   }
 
-  revalidatePath(
-    `/${appLocale}/admin/news`,
+  revalidateAdminNews(appLocale);
+}
+
+export async function updateNewsFeaturedAction(
+  formData: FormData,
+): Promise<void> {
+  const locale = await getLocale();
+  const appLocale =
+    getAppLocale(locale);
+
+  await requireAdmin(appLocale);
+
+  const articleId =
+    getString(formData, "articleId");
+
+  const featuredValue =
+    getString(formData, "featured");
+
+  if (!articleId) {
+    return;
+  }
+
+  const featured =
+    featuredValue === "true";
+
+  await setAdminNewsArticleFeatured(
+    articleId,
+    featured,
   );
+
+  revalidateAdminNews(appLocale);
 }
