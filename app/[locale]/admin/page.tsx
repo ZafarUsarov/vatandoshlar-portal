@@ -22,15 +22,21 @@ const copy = {
       "Vatandoshlar.de boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
     modulesTitle: "Boshqaruv modullari",
     modulesDescription:
-      "Yangiliklar production boshqaruvi tayyor. Endi Ish va karyera bo‘limi uchun PostgreSQL asosidagi admin foundation qo‘shildi.",
+      "Yangiliklar va Ish va karyera boshqaruvi PostgreSQL asosida ishlaydi. Endi Xizmatlar bo‘limi uchun ham PostgreSQL admin foundation qo‘shildi.",
     newsTitle: "Yangiliklar",
     newsDescription:
       "Yangiliklarni yaratish, tahrirlash, e’lon qilish, arxivlash va featured holatini boshqaring.",
     newsAction: "Yangiliklarni boshqarish",
     jobsTitle: "Ish va karyera",
     jobsDescription:
-      "Jobs qo‘llanmalari uchun yangi PostgreSQL admin foundation’ini oching. Public Ish bo‘limi hozircha static data bilan ishlaydi.",
-    jobsAction: "Ish qo‘llanmalarini boshqarish",
+      "Jobs qo‘llanmalarini yaratish, tahrirlash, e’lon qilish, arxivlash va featured holatini boshqaring.",
+    jobsAction:
+      "Ish qo‘llanmalarini boshqarish",
+    servicesTitle: "Xizmatlar",
+    servicesDescription:
+      "Tarjima, huquq, soliq, tibbiyot, hunarmandchilik va iste’molchi huquqlari bo‘yicha Services PostgreSQL admin foundation’ini oching.",
+    servicesAction:
+      "Xizmatlarni boshqarish",
     account: "Admin account",
     role: "Rol",
     status: "Holat",
@@ -45,15 +51,24 @@ const copy = {
       "Von hier aus können Sie die Verwaltungsbereiche von Vatandoshlar.de aufrufen.",
     modulesTitle: "Verwaltungsmodule",
     modulesDescription:
-      "Die Nachrichtenverwaltung ist produktionsbereit. Nun wurde die PostgreSQL-Admin-Grundlage für Arbeit und Karriere ergänzt.",
+      "Nachrichten sowie Arbeit und Karriere werden PostgreSQL-basiert verwaltet. Nun wurde auch die PostgreSQL-Admin-Grundlage für Dienstleistungen ergänzt.",
     newsTitle: "Nachrichten",
     newsDescription:
       "Erstellen, bearbeiten, veröffentlichen und archivieren Sie Nachrichten und verwalten Sie den Featured-Status.",
-    newsAction: "Nachrichten verwalten",
-    jobsTitle: "Arbeit und Karriere",
+    newsAction:
+      "Nachrichten verwalten",
+    jobsTitle:
+      "Arbeit und Karriere",
     jobsDescription:
-      "Öffnen Sie die neue PostgreSQL-Admin-Grundlage für Jobleitfäden. Der öffentliche Bereich Arbeit verwendet vorerst weiterhin statische Daten.",
-    jobsAction: "Jobleitfäden verwalten",
+      "Erstellen, bearbeiten, veröffentlichen und archivieren Sie Jobleitfäden und verwalten Sie den Featured-Status.",
+    jobsAction:
+      "Jobleitfäden verwalten",
+    servicesTitle:
+      "Dienstleistungen",
+    servicesDescription:
+      "Öffnen Sie die PostgreSQL-Admin-Grundlage für Übersetzung, Recht, Steuern, Medizin, Handwerk und Verbraucherschutz.",
+    servicesAction:
+      "Dienstleistungen verwalten",
     account: "Admin-Konto",
     role: "Rolle",
     status: "Status",
@@ -62,13 +77,56 @@ const copy = {
   },
 } as const;
 
+type AdminModuleHref =
+  | "/admin/news"
+  | "/admin/jobs"
+  | "/admin/services";
+
+type AdminModuleTone =
+  | "emerald"
+  | "blue"
+  | "violet";
+
 type AdminModuleCardProps = {
-  href: "/admin/news" | "/admin/jobs";
+  href: AdminModuleHref;
   title: string;
   description: string;
   action: string;
-  tone: "emerald" | "blue";
+  tone: AdminModuleTone;
 };
+
+const moduleToneClasses = {
+  emerald: {
+    card:
+      "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50/60 hover:shadow-lg hover:shadow-emerald-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-emerald-500/25 dark:hover:bg-emerald-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6",
+    title:
+      "text-xl font-black text-slate-950 transition-colors group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300",
+    icon:
+      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 font-black text-emerald-700 transition group-hover:bg-emerald-600 group-hover:text-white dark:bg-emerald-500/10 dark:text-emerald-300 dark:group-hover:bg-emerald-500 dark:group-hover:text-white",
+    action:
+      "mt-5 text-sm font-bold text-emerald-700 dark:text-emerald-400",
+  },
+  blue: {
+    card:
+      "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50/60 hover:shadow-lg hover:shadow-blue-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-blue-500/25 dark:hover:bg-blue-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6",
+    title:
+      "text-xl font-black text-slate-950 transition-colors group-hover:text-blue-700 dark:text-white dark:group-hover:text-blue-300",
+    icon:
+      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-blue-100 font-black text-blue-700 transition group-hover:bg-blue-600 group-hover:text-white dark:bg-blue-500/10 dark:text-blue-300 dark:group-hover:bg-blue-500 dark:group-hover:text-white",
+    action:
+      "mt-5 text-sm font-bold text-blue-700 dark:text-blue-400",
+  },
+  violet: {
+    card:
+      "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-violet-200 hover:bg-violet-50/60 hover:shadow-lg hover:shadow-violet-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-violet-500/25 dark:hover:bg-violet-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6",
+    title:
+      "text-xl font-black text-slate-950 transition-colors group-hover:text-violet-700 dark:text-white dark:group-hover:text-violet-300",
+    icon:
+      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-violet-100 font-black text-violet-700 transition group-hover:bg-violet-600 group-hover:text-white dark:bg-violet-500/10 dark:text-violet-300 dark:group-hover:bg-violet-500 dark:group-hover:text-white",
+    action:
+      "mt-5 text-sm font-bold text-violet-700 dark:text-violet-400",
+  },
+} as const;
 
 function AdminModuleCard({
   href,
@@ -77,26 +135,17 @@ function AdminModuleCard({
   action,
   tone,
 }: AdminModuleCardProps) {
-  const isBlue = tone === "blue";
+  const styles =
+    moduleToneClasses[tone];
 
   return (
     <Link
       href={href}
-      className={
-        isBlue
-          ? "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50/60 hover:shadow-lg hover:shadow-blue-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-blue-500/25 dark:hover:bg-blue-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6"
-          : "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50/60 hover:shadow-lg hover:shadow-emerald-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-emerald-500/25 dark:hover:bg-emerald-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6"
-      }
+      className={styles.card}
     >
       <div className="flex items-start justify-between gap-5">
         <div>
-          <h2
-            className={
-              isBlue
-                ? "text-xl font-black text-slate-950 transition-colors group-hover:text-blue-700 dark:text-white dark:group-hover:text-blue-300"
-                : "text-xl font-black text-slate-950 transition-colors group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300"
-            }
-          >
+          <h2 className={styles.title}>
             {title}
           </h2>
 
@@ -107,23 +156,13 @@ function AdminModuleCard({
 
         <span
           aria-hidden="true"
-          className={
-            isBlue
-              ? "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-blue-100 font-black text-blue-700 transition group-hover:bg-blue-600 group-hover:text-white dark:bg-blue-500/10 dark:text-blue-300 dark:group-hover:bg-blue-500 dark:group-hover:text-white"
-              : "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 font-black text-emerald-700 transition group-hover:bg-emerald-600 group-hover:text-white dark:bg-emerald-500/10 dark:text-emerald-300 dark:group-hover:bg-emerald-500 dark:group-hover:text-white"
-          }
+          className={styles.icon}
         >
           →
         </span>
       </div>
 
-      <p
-        className={
-          isBlue
-            ? "mt-5 text-sm font-bold text-blue-700 dark:text-blue-400"
-            : "mt-5 text-sm font-bold text-emerald-700 dark:text-emerald-400"
-        }
-      >
+      <p className={styles.action}>
         {action} →
       </p>
     </Link>
@@ -131,13 +170,23 @@ function AdminModuleCard({
 }
 
 export default async function AdminPage() {
-  const locale = await getLocale();
-  const appLocale = locale === "de" ? "de" : "uz";
+  const locale =
+    await getLocale();
+
+  const appLocale =
+    locale === "de"
+      ? "de"
+      : "uz";
 
   const currentCopy =
-    appLocale === "de" ? copy.de : copy.uz;
+    appLocale === "de"
+      ? copy.de
+      : copy.uz;
 
-  const admin = await requireAdmin(appLocale);
+  const admin =
+    await requireAdmin(
+      appLocale,
+    );
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 dark:bg-slate-950 sm:px-6 lg:px-8">
@@ -169,7 +218,9 @@ export default async function AdminPage() {
               {currentCopy.back}
             </Link>
 
-            <AdminSignOutButton locale={appLocale} />
+            <AdminSignOutButton
+              locale={appLocale}
+            />
           </div>
         </header>
 
@@ -204,6 +255,14 @@ export default async function AdminPage() {
                   action={currentCopy.jobsAction}
                   tone="blue"
                 />
+
+                <AdminModuleCard
+                  href="/admin/services"
+                  title={currentCopy.servicesTitle}
+                  description={currentCopy.servicesDescription}
+                  action={currentCopy.servicesAction}
+                  tone="violet"
+                />
               </div>
             </div>
           </div>
@@ -218,6 +277,7 @@ export default async function AdminPage() {
                 <dt className="text-slate-500 dark:text-slate-400">
                   E-mail
                 </dt>
+
                 <dd className="mt-1 break-all font-bold text-slate-900 dark:text-white">
                   {admin.email}
                 </dd>
@@ -227,6 +287,7 @@ export default async function AdminPage() {
                 <dt className="text-slate-500 dark:text-slate-400">
                   {currentCopy.role}
                 </dt>
+
                 <dd className="mt-1 font-bold text-slate-900 dark:text-white">
                   Admin
                 </dd>
@@ -236,6 +297,7 @@ export default async function AdminPage() {
                 <dt className="text-slate-500 dark:text-slate-400">
                   {currentCopy.status}
                 </dt>
+
                 <dd className="mt-1 font-bold text-emerald-700 dark:text-emerald-400">
                   {currentCopy.active}
                 </dd>
