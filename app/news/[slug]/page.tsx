@@ -11,6 +11,13 @@ import {
   news,
 } from "../../../data/news";
 import { Link } from "../../../i18n/navigation";
+import {
+  getPublicNewsCollection,
+} from "../../../lib/news/public-news";
+import {
+  getPublishedNewsBySlugFromDatabase,
+  type PublicNewsLocale,
+} from "../../../lib/news/public-news-repository";
 import type { NewsItem } from "../../../types/news";
 
 type NewsDetailPageProps = {
@@ -26,19 +33,56 @@ export async function generateMetadata({
 }: NewsDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const locale = await getLocale();
-  const article = getNewsBySlug(slug);
+  const appLocale: PublicNewsLocale =
+    locale === "de"
+      ? "de"
+      : "uz";
+
   const t = await getTranslations("NewsDetailPage");
 
+  const databaseArticle =
+    await getPublishedNewsBySlugFromDatabase(
+      slug,
+      appLocale,
+    );
+
+  if (databaseArticle) {
+    return {
+      title: t("metadata.title", {
+        title: databaseArticle.title,
+      }),
+      description:
+        databaseArticle.excerpt,
+      alternates: {
+        canonical: `/${locale}/news/${databaseArticle.slug}`,
+        languages: {
+          uz: `/uz/news/${databaseArticle.slug}`,
+          de: `/de/news/${databaseArticle.slug}`,
+        },
+      },
+    };
+  }
+
+  const article =
+    getNewsBySlug(slug);
+
   if (!article) {
-    return { title: t("metadata.notFound") };
+    return {
+      title: t("metadata.notFound"),
+    };
   }
 
   const key = String(article.id);
-  const title = t(`items.${key}.title`);
-  const description = t(`items.${key}.excerpt`);
+  const title =
+    t(`items.${key}.title`);
+
+  const description =
+    t(`items.${key}.excerpt`);
 
   return {
-    title: t("metadata.title", { title }),
+    title: t("metadata.title", {
+      title,
+    }),
     description,
     alternates: {
       canonical: `/${locale}/news/${article.slug}`,
@@ -55,32 +99,85 @@ export default async function NewsDetailPage({
 }: NewsDetailPageProps) {
   const { slug } = await params;
   const locale = await getLocale();
-  const t = await getTranslations("NewsDetailPage");
-  const articleBase = getNewsBySlug(slug);
 
-  if (!articleBase) notFound();
+  const appLocale: PublicNewsLocale =
+    locale === "de"
+      ? "de"
+      : "uz";
 
-  const localizeItem = (item: NewsItem): NewsItem => {
-    const key = String(item.id);
+  const t =
+    await getTranslations(
+      "NewsDetailPage",
+    );
+
+  const localizeItem = (
+    item: NewsItem,
+  ): NewsItem => {
+    const key =
+      String(item.id);
 
     return {
       ...item,
-      title: t(`items.${key}.title`),
-      excerpt: t(`items.${key}.excerpt`),
-      content: t.raw(`items.${key}.content`) as string[],
-      category: t(`items.${key}.category`),
-      contentType: t(`items.${key}.contentType`) as NewsItem["contentType"],
-      readingTime: t(`items.${key}.readingTime`),
-      sourceLanguage: t(`items.${key}.sourceLanguage`),
-      location: item.location ? t(`items.${key}.location`) : undefined,
+      title:
+        t(`items.${key}.title`),
+      excerpt:
+        t(`items.${key}.excerpt`),
+      content:
+        t.raw(
+          `items.${key}.content`,
+        ) as string[],
+      category:
+        t(`items.${key}.category`),
+      contentType:
+        t(
+          `items.${key}.contentType`,
+        ) as NewsItem["contentType"],
+      readingTime:
+        t(
+          `items.${key}.readingTime`,
+        ),
+      sourceLanguage:
+        t(
+          `items.${key}.sourceLanguage`,
+        ),
+      location:
+        item.location
+          ? t(
+              `items.${key}.location`,
+            )
+          : undefined,
     };
   };
 
-  const article = localizeItem(articleBase);
-  const relatedNews = getLatestNews()
-    .filter((item) => item.slug !== article.slug)
-    .slice(0, 3)
-    .map(localizeItem);
+  const localizedStaticNews =
+    getLatestNews().map(
+      localizeItem,
+    );
+
+  const publicNews =
+    await getPublicNewsCollection(
+      appLocale,
+      localizedStaticNews,
+    );
+
+  const article =
+    publicNews.find(
+      (item) =>
+        item.slug === slug,
+    );
+
+  if (!article) {
+    notFound();
+  }
+
+  const relatedNews =
+    publicNews
+      .filter(
+        (item) =>
+          item.slug !==
+          article.slug,
+      )
+      .slice(0, 3);
 
   return (
     <>
@@ -101,16 +198,27 @@ export default async function NewsDetailPage({
                 <span className="rounded-full bg-blue-100 px-4 py-2 font-semibold text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">
                   {article.category}
                 </span>
+
                 <span className="rounded-full bg-emerald-100 px-4 py-2 font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
                   {article.contentType}
                 </span>
+
                 <span className="text-slate-500 dark:text-slate-400">
                   {article.readingTime}
                 </span>
+
                 {article.location && (
                   <>
-                    <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">•</span>
-                    <span className="text-slate-500 dark:text-slate-400">{article.location}</span>
+                    <span
+                      className="text-slate-300 dark:text-slate-700"
+                      aria-hidden="true"
+                    >
+                      •
+                    </span>
+
+                    <span className="text-slate-500 dark:text-slate-400">
+                      {article.location}
+                    </span>
                   </>
                 )}
               </div>
@@ -126,7 +234,10 @@ export default async function NewsDetailPage({
               <div className="mt-8 border-t border-slate-200 pt-6 dark:border-slate-800">
                 <p className="text-sm text-slate-500 dark:text-slate-400">
                   {t("lastVerified", {
-                    date: formatNewsDate(article.verifiedAt, locale),
+                    date: formatNewsDate(
+                      article.verifiedAt,
+                      locale,
+                    ),
                   })}
                 </p>
               </div>
@@ -135,34 +246,55 @@ export default async function NewsDetailPage({
 
           <div className="mx-auto max-w-3xl px-6 py-14 lg:px-8">
             <div className="space-y-7">
-              {article.content.map((paragraph, index) => (
-                <p
-                  key={`${article.slug}-${index}`}
-                  className="text-lg leading-9 text-slate-700 dark:text-slate-300"
-                >
-                  {paragraph}
-                </p>
-              ))}
+              {article.content.map(
+                (
+                  paragraph,
+                  index,
+                ) => (
+                  <p
+                    key={`${article.slug}-${index}`}
+                    className="text-lg leading-9 text-slate-700 dark:text-slate-300"
+                  >
+                    {paragraph}
+                  </p>
+                ),
+              )}
             </div>
 
             <section className="mt-12 rounded-3xl border border-emerald-200 bg-emerald-50 p-7 sm:p-8 dark:border-emerald-500/20 dark:bg-emerald-500/10">
               <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">
                 {t("source.eyebrow")}
               </p>
+
               <h2 className="mt-3 text-xl font-bold text-emerald-950 dark:text-emerald-100">
                 {article.sourceName}
               </h2>
 
               <dl className="mt-5 space-y-3 text-sm text-emerald-900 dark:text-emerald-200">
                 <div className="flex flex-col gap-1 sm:flex-row sm:gap-3">
-                  <dt className="font-semibold">{t("source.language")}</dt>
-                  <dd>{article.sourceLanguage}</dd>
-                </div>
-                <div className="flex flex-col gap-1 sm:flex-row sm:gap-3">
-                  <dt className="font-semibold">{t("source.verified")}</dt>
+                  <dt className="font-semibold">
+                    {t("source.language")}
+                  </dt>
                   <dd>
-                    <time dateTime={article.verifiedAt}>
-                      {formatNewsDate(article.verifiedAt, locale)}
+                    {article.sourceLanguage}
+                  </dd>
+                </div>
+
+                <div className="flex flex-col gap-1 sm:flex-row sm:gap-3">
+                  <dt className="font-semibold">
+                    {t("source.verified")}
+                  </dt>
+
+                  <dd>
+                    <time
+                      dateTime={
+                        article.verifiedAt
+                      }
+                    >
+                      {formatNewsDate(
+                        article.verifiedAt,
+                        locale,
+                      )}
                     </time>
                   </dd>
                 </div>
@@ -182,8 +314,11 @@ export default async function NewsDetailPage({
               <p className="font-semibold text-amber-950 dark:text-amber-100">
                 {t("disclaimer.title")}
               </p>
+
               <p className="mt-3 leading-7 text-amber-900 dark:text-amber-200">
-                {t("disclaimer.description")}
+                {t(
+                  "disclaimer.description",
+                )}
               </p>
             </aside>
 
@@ -191,6 +326,7 @@ export default async function NewsDetailPage({
               <p className="text-sm text-slate-500 dark:text-slate-400">
                 {t("preparedNote")}
               </p>
+
               <Link
                 href="/news"
                 className="shrink-0 font-semibold text-blue-600 transition hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-4 dark:text-blue-400 dark:hover:text-blue-300 dark:focus-visible:ring-offset-slate-950"
@@ -206,12 +342,21 @@ export default async function NewsDetailPage({
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">
               {t("related.eyebrow")}
             </p>
-            <h2 className="mt-3 text-3xl font-bold">{t("related.title")}</h2>
+
+            <h2 className="mt-3 text-3xl font-bold">
+              {t("related.title")}
+            </h2>
 
             <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-              {relatedNews.map((item, index) => (
-                <NewsCard key={item.id} item={item} index={index} />
-              ))}
+              {relatedNews.map(
+                (item, index) => (
+                  <NewsCard
+                    key={`${item.slug}-${item.id}`}
+                    item={item}
+                    index={index}
+                  />
+                ),
+              )}
             </div>
           </div>
         </section>

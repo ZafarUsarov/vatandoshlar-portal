@@ -18,6 +18,12 @@ import {
   getLatestNews,
 } from "../../data/news";
 import { Link } from "../../i18n/navigation";
+import {
+  getPublicNewsCollection,
+} from "../../lib/news/public-news";
+import type {
+  PublicNewsLocale,
+} from "../../lib/news/public-news-repository";
 import type { NewsItem } from "../../types/news";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -41,6 +47,11 @@ export default async function NewsPage() {
   const locale = await getLocale();
   const t = await getTranslations("NewsPage");
 
+  const appLocale: PublicNewsLocale =
+    locale === "de"
+      ? "de"
+      : "uz";
+
   const localizeItem = (item: NewsItem): NewsItem => {
     const key = String(item.id);
 
@@ -56,11 +67,26 @@ export default async function NewsPage() {
     };
   };
 
-  const allNews = getLatestNews().map(localizeItem);
-  const featuredBase = getFeaturedNews();
-  const featuredNews = featuredBase
-    ? localizeItem(featuredBase)
-    : undefined;
+  const localizedStaticNews =
+    getLatestNews().map(
+      localizeItem,
+    );
+
+  const allNews =
+    await getPublicNewsCollection(
+      appLocale,
+      localizedStaticNews,
+    );
+
+  const featuredBase =
+    getFeaturedNews();
+
+  const featuredNews =
+    featuredBase
+      ? localizeItem(
+          featuredBase,
+        )
+      : undefined;
 
   return (
     <>
@@ -304,7 +330,7 @@ export default async function NewsPage() {
             <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
               {allNews.map((item, index) => (
                 <NewsCard
-                  key={item.id}
+                  key={`${item.slug}-${item.id}`}
                   item={item}
                   index={index}
                 />
