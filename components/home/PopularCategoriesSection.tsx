@@ -2,15 +2,18 @@ import { getTranslations } from "next-intl/server";
 
 import CategoryCard from "@/components/cards/CategoryCard";
 import { popularCategories } from "@/data/popular-categories";
-import { specialists } from "@/data/specialists";
 import { Link } from "@/i18n/navigation";
-import type { SpecialistCategory } from "@/types/specialist";
+import {
+  getPublishedSpecialistCategories,
+} from "@/lib/specialists/public-specialists-repository";
 
 type IconProps = Readonly<{
   className?: string;
 }>;
 
-function GridIcon({ className }: IconProps) {
+function GridIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -20,15 +23,44 @@ function GridIcon({ className }: IconProps) {
       strokeWidth="1.7"
       viewBox="0 0 24 24"
     >
-      <rect x="3" y="3" width="7" height="7" rx="2" />
-      <rect x="14" y="3" width="7" height="7" rx="2" />
-      <rect x="3" y="14" width="7" height="7" rx="2" />
-      <rect x="14" y="14" width="7" height="7" rx="2" />
+      <rect
+        x="3"
+        y="3"
+        width="7"
+        height="7"
+        rx="2"
+      />
+
+      <rect
+        x="14"
+        y="3"
+        width="7"
+        height="7"
+        rx="2"
+      />
+
+      <rect
+        x="3"
+        y="14"
+        width="7"
+        height="7"
+        rx="2"
+      />
+
+      <rect
+        x="14"
+        y="14"
+        width="7"
+        height="7"
+        rx="2"
+      />
     </svg>
   );
 }
 
-function ArrowUpRightIcon({ className }: IconProps) {
+function ArrowUpRightIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -48,21 +80,20 @@ function ArrowUpRightIcon({ className }: IconProps) {
 }
 
 export default async function PopularCategoriesSection() {
-  const t = await getTranslations(
-    "PopularCategoriesSection",
-  );
+  const [
+    t,
+    publishedCategories,
+  ] = await Promise.all([
+    getTranslations(
+      "PopularCategoriesSection",
+    ),
+
+    getPublishedSpecialistCategories(),
+  ]);
 
   const activeCategoryIds =
-    new Set<SpecialistCategory>(
-      specialists
-        .filter(
-          (specialist) =>
-            specialist.profilePublished,
-        )
-        .flatMap(
-          (specialist) =>
-            specialist.categories,
-        ),
+    new Set(
+      publishedCategories,
     );
 
   return (
@@ -81,6 +112,7 @@ export default async function PopularCategoriesSection() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700 shadow-sm backdrop-blur dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
               <GridIcon className="size-4" />
+
               {t("badge")}
             </div>
 
@@ -108,7 +140,10 @@ export default async function PopularCategoriesSection() {
 
         <div className="mt-12 grid gap-5 sm:mt-16 md:grid-cols-2 xl:grid-cols-4">
           {popularCategories.map(
-            (category, index) => {
+            (
+              category,
+              index,
+            ) => {
               const isActive =
                 activeCategoryIds.has(
                   category.id,
@@ -117,7 +152,9 @@ export default async function PopularCategoriesSection() {
               return (
                 <CategoryCard
                   key={category.id}
-                  category={category}
+                  category={
+                    category
+                  }
                   title={t(
                     `items.${category.messageKey}.title`,
                   )}
@@ -134,7 +171,9 @@ export default async function PopularCategoriesSection() {
                   linkLabel={t(
                     "openCategory",
                   )}
-                  index={index}
+                  index={
+                    index
+                  }
                 />
               );
             },

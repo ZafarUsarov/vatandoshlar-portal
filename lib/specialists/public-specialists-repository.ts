@@ -57,6 +57,10 @@ type PublishedSpecialistRow = {
   sponsored: boolean;
 };
 
+type PublishedSpecialistCategoryRow = {
+  category: string;
+};
+
 const categoryKeys: ReadonlyArray<SpecialistCategory> = [
   "medical",
   "legal",
@@ -113,22 +117,33 @@ function toNullableNumber(
       ? value
       : Number(value);
 
-  return Number.isFinite(numericValue)
+  return Number.isFinite(
+    numericValue,
+  )
     ? numericValue
     : undefined;
 }
 
 function compactObject<
-  TValue extends Record<string, string | undefined>
+  TValue extends Record<
+    string,
+    string | undefined
+  >,
 >(
   value: TValue,
 ): Partial<TValue> {
   return Object.fromEntries(
-    Object.entries(value).filter(
+    Object.entries(
+      value,
+    ).filter(
       (
         entry,
-      ): entry is [string, string] =>
-        typeof entry[1] === "string" &&
+      ): entry is [
+        string,
+        string,
+      ] =>
+        typeof entry[1] ===
+          "string" &&
         entry[1].length > 0,
     ),
   ) as Partial<TValue>;
@@ -146,9 +161,11 @@ function toPublicSpecialist(
           city:
             row.city ??
             undefined,
+
           bundesland:
             row.bundesland ??
             undefined,
+
           postalCode:
             row.postal_code ??
             undefined,
@@ -160,24 +177,31 @@ function toPublicSpecialist(
       email:
         row.email ??
         undefined,
+
       phone:
         row.phone ??
         undefined,
+
       website:
         row.website ??
         undefined,
+
       whatsapp:
         row.whatsapp ??
         undefined,
+
       telegram:
         row.telegram ??
         undefined,
+
       instagram:
         row.instagram ??
         undefined,
+
       youtube:
         row.youtube ??
         undefined,
+
       facebook:
         row.facebook ??
         undefined,
@@ -241,10 +265,13 @@ function toPublicSpecialist(
     status: {
       verified:
         row.verified,
+
       featured:
         row.featured,
+
       premium:
         row.premium,
+
       sponsored:
         row.sponsored,
     },
@@ -255,8 +282,7 @@ function toPublicSpecialist(
         }
       : {}),
 
-    profilePublished:
-      true,
+    profilePublished: true,
 
     ...(row.avatar_url
       ? {
@@ -265,14 +291,17 @@ function toPublicSpecialist(
         }
       : {}),
 
-    ...(row.years_of_experience !== null
+    ...(row.years_of_experience !==
+    null
       ? {
           yearsOfExperience:
             row.years_of_experience,
         }
       : {}),
 
-    ...(toNullableNumber(row.rating) !== undefined
+    ...(toNullableNumber(
+      row.rating,
+    ) !== undefined
       ? {
           rating:
             toNullableNumber(
@@ -281,7 +310,8 @@ function toPublicSpecialist(
         }
       : {}),
 
-    ...(row.review_count !== null
+    ...(row.review_count !==
+    null
       ? {
           reviewCount:
             row.review_count,
@@ -298,7 +328,8 @@ function hasDatabaseConfiguration(): boolean {
 
 function canSkipDatabaseDuringCi(): boolean {
   return (
-    process.env.CI === "true" &&
+    process.env.CI ===
+      "true" &&
     !hasDatabaseConfiguration()
   );
 }
@@ -360,7 +391,9 @@ const getPublishedSpecialistsCached =
   cache(
     async (
       locale: SupportedLocale,
-    ): Promise<LocalizedSpecialist[]> => {
+    ): Promise<
+      LocalizedSpecialist[]
+    > => {
       assertDatabaseAvailable();
 
       if (
@@ -400,7 +433,9 @@ const getPublishedSpecialistBySlugCached =
     async (
       slug: string,
       locale: SupportedLocale,
-    ): Promise<LocalizedSpecialist | null> => {
+    ): Promise<
+      LocalizedSpecialist | null
+    > => {
       assertDatabaseAvailable();
 
       if (
@@ -418,7 +453,9 @@ const getPublishedSpecialistBySlugCached =
               AND slug = $1
             LIMIT 1
           `,
-          [slug],
+          [
+            slug,
+          ],
         );
 
       const row =
@@ -438,7 +475,9 @@ const getFeaturedPublishedSpecialistsCached =
     async (
       locale: SupportedLocale,
       limit: number,
-    ): Promise<LocalizedSpecialist[]> => {
+    ): Promise<
+      LocalizedSpecialist[]
+    > => {
       assertDatabaseAvailable();
 
       if (
@@ -462,7 +501,9 @@ const getFeaturedPublishedSpecialistsCached =
               id DESC
             LIMIT $1
           `,
-          [limit],
+          [
+            limit,
+          ],
         );
 
       return result.rows.map(
@@ -475,9 +516,54 @@ const getFeaturedPublishedSpecialistsCached =
     },
   );
 
+const getPublishedSpecialistCategoriesCached =
+  cache(
+    async (): Promise<
+      SpecialistCategory[]
+    > => {
+      assertDatabaseAvailable();
+
+      if (
+        canSkipDatabaseDuringCi()
+      ) {
+        return [];
+      }
+
+      const result =
+        await getDb().query<PublishedSpecialistCategoryRow>(
+          `
+            SELECT DISTINCT
+              UNNEST(categories)
+                AS category
+            FROM specialists
+            WHERE
+              status = 'published'
+            ORDER BY
+              category
+          `,
+        );
+
+      return result.rows
+        .map(
+          (row) =>
+            row.category,
+        )
+        .filter(
+          (
+            category,
+          ): category is SpecialistCategory =>
+            categoryKeys.includes(
+              category as SpecialistCategory,
+            ),
+        );
+    },
+  );
+
 export async function getPublishedSpecialists(
   locale: SupportedLocale,
-): Promise<LocalizedSpecialist[]> {
+): Promise<
+  LocalizedSpecialist[]
+> {
   return getPublishedSpecialistsCached(
     locale,
   );
@@ -486,7 +572,9 @@ export async function getPublishedSpecialists(
 export async function getPublishedSpecialistBySlug(
   slug: string,
   locale: SupportedLocale,
-): Promise<LocalizedSpecialist | null> {
+): Promise<
+  LocalizedSpecialist | null
+> {
   return getPublishedSpecialistBySlugCached(
     slug,
     locale,
@@ -496,9 +584,13 @@ export async function getPublishedSpecialistBySlug(
 export async function getFeaturedPublishedSpecialists(
   locale: SupportedLocale,
   limit = 3,
-): Promise<LocalizedSpecialist[]> {
+): Promise<
+  LocalizedSpecialist[]
+> {
   const normalizedLimit =
-    Number.isInteger(limit) &&
+    Number.isInteger(
+      limit,
+    ) &&
     limit > 0
       ? limit
       : 3;
@@ -507,4 +599,10 @@ export async function getFeaturedPublishedSpecialists(
     locale,
     normalizedLimit,
   );
+}
+
+export async function getPublishedSpecialistCategories(): Promise<
+  SpecialistCategory[]
+> {
+  return getPublishedSpecialistCategoriesCached();
 }
