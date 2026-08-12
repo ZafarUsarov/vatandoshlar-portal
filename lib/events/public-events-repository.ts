@@ -676,3 +676,82 @@ export async function getFeaturedUpcomingEvent(
     locale,
   );
 }
+
+const getRelatedPublishedEventsCached =
+  cache(
+    async (
+      slug: string,
+      category: PublicEventCategory,
+      city: string | undefined,
+      locale: SupportedEventLocale,
+      limit: number,
+    ): Promise<PublicEventItem[]> => {
+      assertDatabaseAvailable();
+
+      if (
+        canSkipDatabaseDuringCi()
+      ) {
+        return [];
+      }
+
+      const result =
+        await getDb().query<PublishedEventRow>(
+          `
+            ${publishedEventSelect}
+            WHERE
+              status = 'published'
+              AND slug <> $1
+              AND (
+                category = $2
+                OR (
+                  $3::text IS NOT NULL
+                  AND city = $3
+                )
+              )
+            ORDER BY
+              CASE
+                WHEN category = $2
+                  THEN 0
+                ELSE 1
+              END,
+              start_date ASC,
+              id ASC
+            LIMIT $4
+          `,
+          [
+            slug,
+            category,
+            city ?? null,
+            limit,
+          ],
+        );
+
+      return result.rows.map(
+        (row) =>
+          toPublicEvent(
+            row,
+            locale,
+          ),
+      );
+    },
+  );
+
+export async function getRelatedPublishedEvents(
+  currentEvent: PublicEventItem,
+  locale: SupportedEventLocale,
+  limit = 3,
+): Promise<PublicEventItem[]> {
+  const normalizedLimit =
+    Number.isInteger(limit) &&
+    limit > 0
+      ? limit
+      : 3;
+
+  return getRelatedPublishedEventsCached(
+    currentEvent.slug,
+    currentEvent.category,
+    currentEvent.city,
+    locale,
+    normalizedLimit,
+  );
+}
