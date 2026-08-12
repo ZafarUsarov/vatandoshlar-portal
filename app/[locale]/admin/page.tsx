@@ -22,27 +22,39 @@ const copy = {
       "Vatandoshlar.de boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
     modulesTitle: "Boshqaruv modullari",
     modulesDescription:
-      "Yangiliklar va Ish va karyera boshqaruvi PostgreSQL asosida ishlaydi. Endi Xizmatlar bo‘limi uchun ham PostgreSQL admin foundation qo‘shildi.",
+      "Yangiliklar, Ish va karyera hamda Xizmatlar PostgreSQL asosida boshqariladi. Endi Mutaxassislar bo‘limi uchun ham PostgreSQL admin foundation qo‘shildi.",
+
     newsTitle: "Yangiliklar",
     newsDescription:
       "Yangiliklarni yaratish, tahrirlash, e’lon qilish, arxivlash va featured holatini boshqaring.",
     newsAction: "Yangiliklarni boshqarish",
+
     jobsTitle: "Ish va karyera",
     jobsDescription:
       "Jobs qo‘llanmalarini yaratish, tahrirlash, e’lon qilish, arxivlash va featured holatini boshqaring.",
     jobsAction:
       "Ish qo‘llanmalarini boshqarish",
+
     servicesTitle: "Xizmatlar",
     servicesDescription:
-      "Tarjima, huquq, soliq, tibbiyot, hunarmandchilik va iste’molchi huquqlari bo‘yicha Services PostgreSQL admin foundation’ini oching.",
+      "Tarjima, huquq, soliq, tibbiyot, hunarmandchilik va boshqa xizmat yo‘nalishlarini boshqaring.",
     servicesAction:
       "Xizmatlarni boshqarish",
+
+    specialistsTitle:
+      "Mutaxassislar",
+    specialistsDescription:
+      "Mutaxassis profillari, kategoriyalar, tillar, joylashuv va verification statuslari uchun PostgreSQL admin foundation’ini oching.",
+    specialistsAction:
+      "Mutaxassislarni boshqarish",
+
     account: "Admin account",
     role: "Rol",
     status: "Holat",
     active: "Faol",
     back: "Saytga qaytish",
   },
+
   de: {
     eyebrow: "VATANDOSHLAR.DE · ADMIN",
     title: "Verwaltungsbereich",
@@ -51,24 +63,35 @@ const copy = {
       "Von hier aus können Sie die Verwaltungsbereiche von Vatandoshlar.de aufrufen.",
     modulesTitle: "Verwaltungsmodule",
     modulesDescription:
-      "Nachrichten sowie Arbeit und Karriere werden PostgreSQL-basiert verwaltet. Nun wurde auch die PostgreSQL-Admin-Grundlage für Dienstleistungen ergänzt.",
+      "Nachrichten, Arbeit und Karriere sowie Dienstleistungen werden PostgreSQL-basiert verwaltet. Nun wurde auch die PostgreSQL-Admin-Grundlage für Fachkräfte ergänzt.",
+
     newsTitle: "Nachrichten",
     newsDescription:
       "Erstellen, bearbeiten, veröffentlichen und archivieren Sie Nachrichten und verwalten Sie den Featured-Status.",
     newsAction:
       "Nachrichten verwalten",
+
     jobsTitle:
       "Arbeit und Karriere",
     jobsDescription:
       "Erstellen, bearbeiten, veröffentlichen und archivieren Sie Jobleitfäden und verwalten Sie den Featured-Status.",
     jobsAction:
       "Jobleitfäden verwalten",
+
     servicesTitle:
       "Dienstleistungen",
     servicesDescription:
-      "Öffnen Sie die PostgreSQL-Admin-Grundlage für Übersetzung, Recht, Steuern, Medizin, Handwerk und Verbraucherschutz.",
+      "Verwalten Sie Übersetzung, Recht, Steuern, Medizin, Handwerk und weitere Dienstleistungsbereiche.",
     servicesAction:
       "Dienstleistungen verwalten",
+
+    specialistsTitle:
+      "Fachkräfte",
+    specialistsDescription:
+      "Öffnen Sie die PostgreSQL-Admin-Grundlage für Fachkraftprofile, Kategorien, Sprachen, Standort und Verifizierungsstatus.",
+    specialistsAction:
+      "Fachkräfte verwalten",
+
     account: "Admin-Konto",
     role: "Rolle",
     status: "Status",
@@ -80,12 +103,14 @@ const copy = {
 type AdminModuleHref =
   | "/admin/news"
   | "/admin/jobs"
-  | "/admin/services";
+  | "/admin/services"
+  | "/admin/specialists";
 
 type AdminModuleTone =
   | "emerald"
   | "blue"
-  | "violet";
+  | "violet"
+  | "fuchsia";
 
 type AdminModuleCardProps = {
   href: AdminModuleHref;
@@ -106,6 +131,7 @@ const moduleToneClasses = {
     action:
       "mt-5 text-sm font-bold text-emerald-700 dark:text-emerald-400",
   },
+
   blue: {
     card:
       "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50/60 hover:shadow-lg hover:shadow-blue-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-blue-500/25 dark:hover:bg-blue-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6",
@@ -116,6 +142,7 @@ const moduleToneClasses = {
     action:
       "mt-5 text-sm font-bold text-blue-700 dark:text-blue-400",
   },
+
   violet: {
     card:
       "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-violet-200 hover:bg-violet-50/60 hover:shadow-lg hover:shadow-violet-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-violet-500/25 dark:hover:bg-violet-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6",
@@ -125,6 +152,17 @@ const moduleToneClasses = {
       "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-violet-100 font-black text-violet-700 transition group-hover:bg-violet-600 group-hover:text-white dark:bg-violet-500/10 dark:text-violet-300 dark:group-hover:bg-violet-500 dark:group-hover:text-white",
     action:
       "mt-5 text-sm font-bold text-violet-700 dark:text-violet-400",
+  },
+
+  fuchsia: {
+    card:
+      "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-fuchsia-200 hover:bg-fuchsia-50/60 hover:shadow-lg hover:shadow-fuchsia-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-fuchsia-500/25 dark:hover:bg-fuchsia-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6",
+    title:
+      "text-xl font-black text-slate-950 transition-colors group-hover:text-fuchsia-700 dark:text-white dark:group-hover:text-fuchsia-300",
+    icon:
+      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-fuchsia-100 font-black text-fuchsia-700 transition group-hover:bg-fuchsia-600 group-hover:text-white dark:bg-fuchsia-500/10 dark:text-fuchsia-300 dark:group-hover:bg-fuchsia-500 dark:group-hover:text-white",
+    action:
+      "mt-5 text-sm font-bold text-fuchsia-700 dark:text-fuchsia-400",
   },
 } as const;
 
@@ -262,6 +300,14 @@ export default async function AdminPage() {
                   description={currentCopy.servicesDescription}
                   action={currentCopy.servicesAction}
                   tone="violet"
+                />
+
+                <AdminModuleCard
+                  href="/admin/specialists"
+                  title={currentCopy.specialistsTitle}
+                  description={currentCopy.specialistsDescription}
+                  action={currentCopy.specialistsAction}
+                  tone="fuchsia"
                 />
               </div>
             </div>
