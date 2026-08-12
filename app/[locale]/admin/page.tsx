@@ -22,7 +22,7 @@ const copy = {
       "Vatandoshlar.de boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
     modulesTitle: "Boshqaruv modullari",
     modulesDescription:
-      "Yangiliklar, Ish va karyera, Xizmatlar, Mutaxassislar va Tadbirlar PostgreSQL asosida boshqariladi.",
+      "Yangiliklar, Ish va karyera, Xizmatlar, Mutaxassislar, Tadbirlar va Germaniya qo‘llanmasi PostgreSQL asosida boshqariladi.",
 
     newsTitle: "Yangiliklar",
     newsDescription:
@@ -32,28 +32,27 @@ const copy = {
     jobsTitle: "Ish va karyera",
     jobsDescription:
       "Jobs qo‘llanmalarini yaratish, tahrirlash, e’lon qilish, arxivlash va featured holatini boshqaring.",
-    jobsAction:
-      "Ish qo‘llanmalarini boshqarish",
+    jobsAction: "Ish qo‘llanmalarini boshqarish",
 
     servicesTitle: "Xizmatlar",
     servicesDescription:
       "Tarjima, huquq, soliq, tibbiyot, hunarmandchilik va boshqa xizmat yo‘nalishlarini boshqaring.",
-    servicesAction:
-      "Xizmatlarni boshqarish",
+    servicesAction: "Xizmatlarni boshqarish",
 
-    specialistsTitle:
-      "Mutaxassislar",
+    specialistsTitle: "Mutaxassislar",
     specialistsDescription:
       "Mutaxassis profillari, kategoriyalar, tillar, joylashuv va verification statuslarini boshqaring.",
-    specialistsAction:
-      "Mutaxassislarni boshqarish",
+    specialistsAction: "Mutaxassislarni boshqarish",
 
-    eventsTitle:
-      "Tadbirlar",
+    eventsTitle: "Tadbirlar",
     eventsDescription:
       "Tadbirlarni yaratish, sana va joylashuv ma’lumotlarini boshqarish, e’lon qilish, arxivlash va featured holatini boshqaring.",
-    eventsAction:
-      "Tadbirlarni boshqarish",
+    eventsAction: "Tadbirlarni boshqarish",
+
+    guideTitle: "Germaniya qo‘llanmasi",
+    guideDescription:
+      "Guide maqolalari, kategoriyalar, rasmiy manbalar, FAQ, bosqichlar va tekshiruv sanalarini boshqaring.",
+    guideAction: "Guide maqolalarini boshqarish",
 
     account: "Admin account",
     role: "Rol",
@@ -70,41 +69,37 @@ const copy = {
       "Von hier aus können Sie die Verwaltungsbereiche von Vatandoshlar.de aufrufen.",
     modulesTitle: "Verwaltungsmodule",
     modulesDescription:
-      "Nachrichten, Arbeit und Karriere, Dienstleistungen, Fachkräfte und Veranstaltungen werden PostgreSQL-basiert verwaltet.",
+      "Nachrichten, Arbeit und Karriere, Dienstleistungen, Fachkräfte, Veranstaltungen und der Deutschland-Ratgeber werden PostgreSQL-basiert verwaltet.",
 
     newsTitle: "Nachrichten",
     newsDescription:
       "Erstellen, bearbeiten, veröffentlichen und archivieren Sie Nachrichten und verwalten Sie den Featured-Status.",
-    newsAction:
-      "Nachrichten verwalten",
+    newsAction: "Nachrichten verwalten",
 
-    jobsTitle:
-      "Arbeit und Karriere",
+    jobsTitle: "Arbeit und Karriere",
     jobsDescription:
       "Erstellen, bearbeiten, veröffentlichen und archivieren Sie Jobleitfäden und verwalten Sie den Featured-Status.",
-    jobsAction:
-      "Jobleitfäden verwalten",
+    jobsAction: "Jobleitfäden verwalten",
 
-    servicesTitle:
-      "Dienstleistungen",
+    servicesTitle: "Dienstleistungen",
     servicesDescription:
       "Verwalten Sie Übersetzung, Recht, Steuern, Medizin, Handwerk und weitere Dienstleistungsbereiche.",
-    servicesAction:
-      "Dienstleistungen verwalten",
+    servicesAction: "Dienstleistungen verwalten",
 
-    specialistsTitle:
-      "Fachkräfte",
+    specialistsTitle: "Fachkräfte",
     specialistsDescription:
       "Verwalten Sie Fachkraftprofile, Kategorien, Sprachen, Standort und Verifizierungsstatus.",
-    specialistsAction:
-      "Fachkräfte verwalten",
+    specialistsAction: "Fachkräfte verwalten",
 
-    eventsTitle:
-      "Veranstaltungen",
+    eventsTitle: "Veranstaltungen",
     eventsDescription:
       "Erstellen und verwalten Sie Veranstaltungen, Termine und Orte sowie Veröffentlichung, Archivierung und Featured-Status.",
-    eventsAction:
-      "Veranstaltungen verwalten",
+    eventsAction: "Veranstaltungen verwalten",
+
+    guideTitle: "Deutschland-Ratgeber",
+    guideDescription:
+      "Verwalten Sie Guide-Artikel, Kategorien, offizielle Quellen, FAQ, Schritte und Prüfdatum.",
+    guideAction: "Guide-Artikel verwalten",
 
     account: "Admin-Konto",
     role: "Rolle",
@@ -119,14 +114,16 @@ type AdminModuleHref =
   | "/admin/jobs"
   | "/admin/services"
   | "/admin/specialists"
-  | "/admin/events";
+  | "/admin/events"
+  | "/admin/guide";
 
 type AdminModuleTone =
   | "emerald"
   | "blue"
   | "violet"
   | "fuchsia"
-  | "orange";
+  | "orange"
+  | "teal";
 
 type AdminModuleCardProps = {
   href: AdminModuleHref;
@@ -190,6 +187,17 @@ const moduleToneClasses = {
       "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-orange-100 font-black text-orange-700 transition group-hover:bg-orange-600 group-hover:text-white dark:bg-orange-500/10 dark:text-orange-300 dark:group-hover:bg-orange-500 dark:group-hover:text-white",
     action:
       "mt-5 text-sm font-bold text-orange-700 dark:text-orange-400",
+  },
+
+  teal: {
+    card:
+      "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-teal-200 hover:bg-teal-50/60 hover:shadow-lg hover:shadow-teal-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-teal-500/25 dark:hover:bg-teal-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6",
+    title:
+      "text-xl font-black text-slate-950 transition-colors group-hover:text-teal-700 dark:text-white dark:group-hover:text-teal-300",
+    icon:
+      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-teal-100 font-black text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white dark:bg-teal-500/10 dark:text-teal-300 dark:group-hover:bg-teal-500 dark:group-hover:text-white",
+    action:
+      "mt-5 text-sm font-bold text-teal-700 dark:text-teal-400",
   },
 } as const;
 
@@ -343,6 +351,14 @@ export default async function AdminPage() {
                   description={currentCopy.eventsDescription}
                   action={currentCopy.eventsAction}
                   tone="orange"
+                />
+
+                <AdminModuleCard
+                  href="/admin/guide"
+                  title={currentCopy.guideTitle}
+                  description={currentCopy.guideDescription}
+                  action={currentCopy.guideAction}
+                  tone="teal"
                 />
               </div>
             </div>
