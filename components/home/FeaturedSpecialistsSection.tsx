@@ -4,7 +4,9 @@ import {
 } from "next-intl/server";
 
 import SpecialistCard from "@/components/specialists/SpecialistCard";
-import { getFeaturedSpecialists } from "@/data/specialists";
+import {
+  getFeaturedPublishedSpecialists,
+} from "@/lib/specialists/public-specialists-repository";
 import type {
   SpecialistCategory,
   SupportedLocale,
@@ -28,7 +30,11 @@ function UsersIcon({ className }: IconProps) {
         d="M16 20v-1.5a4.5 4.5 0 0 0-4.5-4.5h-4A4.5 4.5 0 0 0 3 18.5V20"
         strokeLinecap="round"
       />
-      <circle cx="9.5" cy="7.5" r="3.5" />
+      <circle
+        cx="9.5"
+        cy="7.5"
+        r="3.5"
+      />
       <path
         d="M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14.5a4.5 4.5 0 0 1 3 4.2V20"
         strokeLinecap="round"
@@ -98,51 +104,132 @@ function MegaphoneIcon({ className }: IconProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M20 8v6" strokeLinecap="round" />
+      <path
+        d="M20 8v6"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
 export default async function FeaturedSpecialistsSection() {
-  const t = await getTranslations(
-    "FeaturedSpecialistsSection",
-  );
-  const specialistsT = await getTranslations(
-    "SpecialistsPage",
-  );
-  const locale = (await getLocale()) as SupportedLocale;
+  const t =
+    await getTranslations(
+      "FeaturedSpecialistsSection",
+    );
+
+  const specialistsT =
+    await getTranslations(
+      "SpecialistsPage",
+    );
+
+  const locale =
+    (await getLocale()) as SupportedLocale;
 
   const featuredSpecialists =
-    getFeaturedSpecialists(locale);
+    await getFeaturedPublishedSpecialists(
+      locale,
+      3,
+    );
 
   const categories: Readonly<
-    Record<SpecialistCategory, string>
+    Record<
+      SpecialistCategory,
+      string
+    >
   > = {
-    medical: specialistsT("categories.medical"),
-    legal: specialistsT("categories.legal"),
-    technology: specialistsT("categories.technology"),
-    automotive: specialistsT("categories.automotive"),
-    home: specialistsT("categories.home"),
-    education: specialistsT("categories.education"),
-    "language-teaching": specialistsT(
-      "categories.languageTeaching",
-    ),
-    "academic-documents": specialistsT(
-      "categories.academicDocuments",
-    ),
-    beauty: specialistsT("categories.beauty"),
-    finance: specialistsT("categories.finance"),
-    creative: specialistsT("categories.creative"),
+    medical:
+      specialistsT(
+        "categories.medical",
+      ),
+
+    legal:
+      specialistsT(
+        "categories.legal",
+      ),
+
+    technology:
+      specialistsT(
+        "categories.technology",
+      ),
+
+    automotive:
+      specialistsT(
+        "categories.automotive",
+      ),
+
+    home:
+      specialistsT(
+        "categories.home",
+      ),
+
+    education:
+      specialistsT(
+        "categories.education",
+      ),
+
+    "language-teaching":
+      specialistsT(
+        "categories.languageTeaching",
+      ),
+
+    "academic-documents":
+      specialistsT(
+        "categories.academicDocuments",
+      ),
+
+    beauty:
+      specialistsT(
+        "categories.beauty",
+      ),
+
+    finance:
+      specialistsT(
+        "categories.finance",
+      ),
+
+    creative:
+      specialistsT(
+        "categories.creative",
+      ),
   };
 
   const labels = {
-    verified: t("card.verified"),
-    premium: t("card.premium"),
-    sponsored: t("card.sponsored"),
-    details: t("card.details"),
-    detailsSoon: t("card.detailsSoon"),
-    languages: t("card.languages"),
-    serviceArea: specialistsT("card.serviceArea"),
+    verified:
+      t(
+        "card.verified",
+      ),
+
+    premium:
+      t(
+        "card.premium",
+      ),
+
+    sponsored:
+      t(
+        "card.sponsored",
+      ),
+
+    details:
+      t(
+        "card.details",
+      ),
+
+    detailsSoon:
+      t(
+        "card.detailsSoon",
+      ),
+
+    languages:
+      t(
+        "card.languages",
+      ),
+
+    serviceArea:
+      specialistsT(
+        "card.serviceArea",
+      ),
+
     categories,
   };
 
@@ -161,6 +248,7 @@ export default async function FeaturedSpecialistsSection() {
         <div className="mx-auto max-w-3xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-violet-700 dark:border-violet-500/20 dark:bg-violet-500/10 dark:text-violet-300">
             <UsersIcon className="size-4" />
+
             {t("badge")}
           </div>
 
@@ -178,35 +266,51 @@ export default async function FeaturedSpecialistsSection() {
 
         {featuredSpecialists.length > 0 ? (
           <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {featuredSpecialists.map((specialist) => (
-              <SpecialistCard
-                key={specialist.id}
-                specialist={specialist}
-                labels={labels}
-              />
-            ))}
+            {featuredSpecialists.map(
+              (specialist) => (
+                <SpecialistCard
+                  key={
+                    specialist.id
+                  }
+                  specialist={
+                    specialist
+                  }
+                  labels={
+                    labels
+                  }
+                />
+              ),
+            )}
           </div>
         ) : (
           <div className="mx-auto mt-14 max-w-5xl overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50/90 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/80 sm:p-8 lg:p-10">
             <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
               <div>
                 <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">
-                  {t("emptyState.eyebrow")}
+                  {t(
+                    "emptyState.eyebrow",
+                  )}
                 </p>
 
                 <h3 className="mt-4 text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-3xl dark:text-white">
-                  {t("emptyState.title")}
+                  {t(
+                    "emptyState.title",
+                  )}
                 </h3>
 
                 <p className="mt-4 max-w-xl leading-7 text-slate-600 dark:text-slate-400">
-                  {t("emptyState.description")}
+                  {t(
+                    "emptyState.description",
+                  )}
                 </p>
 
                 <a
                   href="mailto:info.vatandoshlar@gmx.de?subject=Mutaxassislar%20katalogiga%20qo%27shilish"
                   className="mt-7 inline-flex items-center justify-center rounded-full bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-900"
                 >
-                  {t("emptyState.applyButton")}
+                  {t(
+                    "emptyState.applyButton",
+                  )}
                 </a>
               </div>
 
@@ -215,12 +319,18 @@ export default async function FeaturedSpecialistsSection() {
                   <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
                     <ShieldIcon className="size-5" />
                   </span>
+
                   <div>
                     <h4 className="font-bold text-slate-950 dark:text-white">
-                      {t("benefits.verification.title")}
+                      {t(
+                        "benefits.verification.title",
+                      )}
                     </h4>
+
                     <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
-                      {t("benefits.verification.description")}
+                      {t(
+                        "benefits.verification.description",
+                      )}
                     </p>
                   </div>
                 </div>
@@ -229,12 +339,18 @@ export default async function FeaturedSpecialistsSection() {
                   <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300">
                     <StarIcon className="size-5" />
                   </span>
+
                   <div>
                     <h4 className="font-bold text-slate-950 dark:text-white">
-                      {t("benefits.visibility.title")}
+                      {t(
+                        "benefits.visibility.title",
+                      )}
                     </h4>
+
                     <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
-                      {t("benefits.visibility.description")}
+                      {t(
+                        "benefits.visibility.description",
+                      )}
                     </p>
                   </div>
                 </div>
@@ -243,12 +359,18 @@ export default async function FeaturedSpecialistsSection() {
                   <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300">
                     <MegaphoneIcon className="size-5" />
                   </span>
+
                   <div>
                     <h4 className="font-bold text-slate-950 dark:text-white">
-                      {t("benefits.premium.title")}
+                      {t(
+                        "benefits.premium.title",
+                      )}
                     </h4>
+
                     <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
-                      {t("benefits.premium.description")}
+                      {t(
+                        "benefits.premium.description",
+                      )}
                     </p>
                   </div>
                 </div>

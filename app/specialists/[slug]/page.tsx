@@ -10,9 +10,8 @@ import Header from "@/components/Header";
 import FounderProfilePromo from "@/components/specialists/FounderProfilePromo";
 import SpecialistProfile from "@/components/specialists/SpecialistProfile";
 import {
-  getSpecialistBySlug,
-  specialists,
-} from "@/data/specialists";
+  getPublishedSpecialistBySlug,
+} from "@/lib/specialists/public-specialists-repository";
 import type {
   SpecialistCategory,
   SpecialistLanguage,
@@ -25,51 +24,91 @@ type SpecialistDetailPageProps = Readonly<{
   }>;
 }>;
 
-export function generateStaticParams() {
-  return specialists
-    .filter((specialist) => specialist.profilePublished)
-    .map((specialist) => ({
-      slug: specialist.slug,
-    }));
-}
+export const dynamic =
+  "force-dynamic";
 
 export async function generateMetadata({
   params,
 }: SpecialistDetailPageProps): Promise<Metadata> {
-  const locale = (await getLocale()) as SupportedLocale;
-  const t = await getTranslations(
-    "SpecialistDetailPage.metadata",
-  );
-  const { slug } = await params;
-  const specialist = getSpecialistBySlug(slug, locale);
+  const locale =
+    (await getLocale()) as SupportedLocale;
 
-  if (!specialist || !specialist.profilePublished) {
+  const t =
+    await getTranslations(
+      "SpecialistDetailPage.metadata",
+    );
+
+  const { slug } =
+    await params;
+
+  const specialist =
+    await getPublishedSpecialistBySlug(
+      slug,
+      locale,
+    );
+
+  if (!specialist) {
     return {
-      title: t("notFound"),
+      title:
+        t("notFound"),
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
   return {
-    title: t("title", {
-      name: specialist.name,
-    }),
-    description: specialist.shortDescription,
+    title:
+      t("title", {
+        name:
+          specialist.name,
+      }),
+
+    description:
+      specialist.shortDescription,
+
+    alternates: {
+      canonical:
+        `/${locale}/specialists/${specialist.slug}`,
+
+      languages: {
+        uz:
+          `/uz/specialists/${specialist.slug}`,
+        de:
+          `/de/specialists/${specialist.slug}`,
+      },
+    },
   };
 }
 
 export default async function SpecialistDetailPage({
   params,
 }: SpecialistDetailPageProps) {
-  const locale = (await getLocale()) as SupportedLocale;
-  const t = await getTranslations("SpecialistDetailPage");
-  const { slug } = await params;
-  const specialist = getSpecialistBySlug(slug, locale);
+  const locale =
+    (await getLocale()) as SupportedLocale;
 
-  if (!specialist || !specialist.profilePublished) {
+  const t =
+    await getTranslations(
+      "SpecialistDetailPage",
+    );
+
+  const { slug } =
+    await params;
+
+  const specialist =
+    await getPublishedSpecialistBySlug(
+      slug,
+      locale,
+    );
+
+  if (!specialist) {
     notFound();
   }
 
-  const categoryKeys: ReadonlyArray<SpecialistCategory> = [
+  const categoryKeys: ReadonlyArray<
+    SpecialistCategory
+  > = [
     "medical",
     "legal",
     "technology",
@@ -83,14 +122,24 @@ export default async function SpecialistDetailPage({
     "creative",
   ];
 
-  const categoriesMap = Object.fromEntries(
-    categoryKeys.map((category) => [
-      category,
-      t(`categories.${category}`),
-    ]),
-  ) as Record<SpecialistCategory, string>;
+  const categoriesMap =
+    Object.fromEntries(
+      categoryKeys.map(
+        (category) => [
+          category,
+          t(
+            `categories.${category}`,
+          ),
+        ],
+      ),
+    ) as Record<
+      SpecialistCategory,
+      string
+    >;
 
-  const languageKeys: ReadonlyArray<SpecialistLanguage> = [
+  const languageKeys: ReadonlyArray<
+    SpecialistLanguage
+  > = [
     "uz",
     "de",
     "ru",
@@ -98,14 +147,22 @@ export default async function SpecialistDetailPage({
     "tr",
   ];
 
-  const languagesMap = Object.fromEntries(
-    languageKeys.map((language) => [
-      language,
-      t(`languagesMap.${language}`),
-    ]),
-  ) as Partial<
-    Record<SpecialistLanguage, string>
-  >;
+  const languagesMap =
+    Object.fromEntries(
+      languageKeys.map(
+        (language) => [
+          language,
+          t(
+            `languagesMap.${language}`,
+          ),
+        ],
+      ),
+    ) as Partial<
+      Record<
+        SpecialistLanguage,
+        string
+      >
+    >;
 
   return (
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
@@ -114,35 +171,119 @@ export default async function SpecialistDetailPage({
       <SpecialistProfile
         specialist={specialist}
         labels={{
-          backToDirectory: t("backToDirectory"),
-          verified: t("verified"),
-          notVerified: t("notVerified"),
-          premium: t("premium"),
-          sponsored: t("sponsored"),
-          location: t("location"),
-          languages: t("languages"),
-          services: t("services"),
-          pricing: t("pricing"),
-          contact: t("contact.title"),
-          contactDescription: t(
-            "contact.description",
-          ),
-          phone: t("contact.phone"),
-          email: t("contact.email"),
-          website: t("contact.website"),
-          whatsapp: t("contact.whatsapp"),
-          telegram: t("contact.telegram"),
-          instagram: t("contact.instagram"),
-          youtube: t("contact.youtube"),
-          facebook: t("contact.facebook"),
-          categories: t("categoriesTitle"),
-          code: t("code"),
+          backToDirectory:
+            t(
+              "backToDirectory",
+            ),
+
+          verified:
+            t(
+              "verified",
+            ),
+
+          notVerified:
+            t(
+              "notVerified",
+            ),
+
+          premium:
+            t(
+              "premium",
+            ),
+
+          sponsored:
+            t(
+              "sponsored",
+            ),
+
+          location:
+            t(
+              "location",
+            ),
+
+          languages:
+            t(
+              "languages",
+            ),
+
+          services:
+            t(
+              "services",
+            ),
+
+          pricing:
+            t(
+              "pricing",
+            ),
+
+          contact:
+            t(
+              "contact.title",
+            ),
+
+          contactDescription:
+            t(
+              "contact.description",
+            ),
+
+          phone:
+            t(
+              "contact.phone",
+            ),
+
+          email:
+            t(
+              "contact.email",
+            ),
+
+          website:
+            t(
+              "contact.website",
+            ),
+
+          whatsapp:
+            t(
+              "contact.whatsapp",
+            ),
+
+          telegram:
+            t(
+              "contact.telegram",
+            ),
+
+          instagram:
+            t(
+              "contact.instagram",
+            ),
+
+          youtube:
+            t(
+              "contact.youtube",
+            ),
+
+          facebook:
+            t(
+              "contact.facebook",
+            ),
+
+          categories:
+            t(
+              "categoriesTitle",
+            ),
+
+          code:
+            t(
+              "code",
+            ),
+
           categoriesMap,
+
           languagesMap,
         }}
       />
 
-      {specialist.slug === "zafar-usarov" && (
+      {specialist.slug ===
+        "zafar-usarov" && (
         <FounderProfilePromo />
       )}
 
