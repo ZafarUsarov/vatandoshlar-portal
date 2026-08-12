@@ -1,6 +1,7 @@
 import { Pool } from "pg";
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString =
+  process.env.DATABASE_URL;
 
 if (!connectionString) {
   throw new Error(
@@ -10,36 +11,72 @@ if (!connectionString) {
 
 const pool = new Pool({
   connectionString,
-  max: 2,
+  max: 4,
   idleTimeoutMillis: 5_000,
   connectionTimeoutMillis: 5_000,
 });
 
-const client = await pool.connect();
-
 try {
-  const statusResult = await client.query(
-    `
+  const [
+    summaryResult,
+    invalidStatusResult,
+    invalidCategoryResult,
+    invalidFeaturedResult,
+    duplicateSlugResult,
+    emptyRequiredFieldsResult,
+    emptyServicesResult,
+    emptyVerificationStepsResult,
+    emptyImportantNotesResult,
+    invalidSourceUrlResult,
+  ] = await Promise.all([
+    pool.query(`
       SELECT
-        status,
-        COUNT(*)::int AS count
+        COUNT(*)::int AS total,
+        COUNT(*) FILTER (
+          WHERE status = 'draft'
+        )::int AS draft,
+        COUNT(*) FILTER (
+          WHERE status = 'published'
+        )::int AS published,
+        COUNT(*) FILTER (
+          WHERE status = 'archived'
+        )::int AS archived,
+        COUNT(*) FILTER (
+          WHERE featured = TRUE
+        )::int AS featured
       FROM services
-      GROUP BY status
-      ORDER BY status
-    `,
-  );
+    `),
 
-  const featuredResult = await client.query(
-    `
+    pool.query(`
       SELECT
-        COUNT(*)::int AS count
+        id::text,
+        slug,
+        status
       FROM services
-      WHERE featured = TRUE
-    `,
-  );
+      WHERE status NOT IN (
+        'draft',
+        'published',
+        'archived'
+      )
+    `),
 
-  const invalidFeaturedResult = await client.query(
-    `
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        category
+      FROM services
+      WHERE category NOT IN (
+        'translation',
+        'legal',
+        'tax',
+        'medical',
+        'craft',
+        'consumer'
+      )
+    `),
+
+    pool.query(`
       SELECT
         id::text,
         slug,
@@ -48,64 +85,118 @@ try {
       WHERE
         featured = TRUE
         AND status <> 'published'
-    `,
-  );
+    `),
 
-  const invalidParallelListsResult = await client.query(
-    `
-      SELECT
-        id::text,
-        slug
-      FROM services
-      WHERE
-        cardinality(services_uz)
-          <> cardinality(services_de)
-        OR cardinality(verification_steps_uz)
-          <> cardinality(verification_steps_de)
-        OR cardinality(important_notes_uz)
-          <> cardinality(important_notes_de)
-    `,
-  );
-
-  const duplicateSlugResult = await client.query(
-    `
+    pool.query(`
       SELECT
         slug,
         COUNT(*)::int AS count
       FROM services
       GROUP BY slug
       HAVING COUNT(*) > 1
-    `,
-  );
+    `),
 
-  const emptyRequiredArrayResult = await client.query(
-    `
+    pool.query(`
       SELECT
         id::text,
         slug
       FROM services
       WHERE
-        cardinality(services_uz) = 0
-        OR cardinality(services_de) = 0
-        OR cardinality(verification_steps_uz) = 0
-        OR cardinality(verification_steps_de) = 0
-        OR cardinality(important_notes_uz) = 0
-        OR cardinality(important_notes_de) = 0
-    `,
-  );
+        BTRIM(slug) = ''
+        OR BTRIM(title_uz) = ''
+        OR BTRIM(title_de) = ''
+        OR BTRIM(short_title_uz) = ''
+        OR BTRIM(short_title_de) = ''
+        OR BTRIM(description_uz) = ''
+        OR BTRIM(description_de) = ''
+        OR BTRIM(icon) = ''
+        OR BTRIM(official_source_name) = ''
+        OR BTRIM(official_source_url) = ''
+        OR BTRIM(source_description_uz) = ''
+        OR BTRIM(source_description_de) = ''
+        OR BTRIM(location_uz) = ''
+        OR BTRIM(location_de) = ''
+    `),
 
-  const totalResult = await client.query(
-    `
+    pool.query(`
       SELECT
-        COUNT(*)::int AS count
+        id::text,
+        slug
       FROM services
-    `,
-  );
+      WHERE
+        COALESCE(
+          array_length(services_uz, 1),
+          0
+        ) = 0
+        OR COALESCE(
+          array_length(services_de, 1),
+          0
+        ) = 0
+    `),
 
-  const total = totalResult.rows[0]?.count ?? 0;
+    pool.query(`
+      SELECT
+        id::text,
+        slug
+      FROM services
+      WHERE
+        COALESCE(
+          array_length(
+            verification_steps_uz,
+            1
+          ),
+          0
+        ) = 0
+        OR COALESCE(
+          array_length(
+            verification_steps_de,
+            1
+          ),
+          0
+        ) = 0
+    `),
 
-  const featuredCount =
-    featuredResult.rows[0]?.count ?? 0;
+    pool.query(`
+      SELECT
+        id::text,
+        slug
+      FROM services
+      WHERE
+        COALESCE(
+          array_length(
+            important_notes_uz,
+            1
+          ),
+          0
+        ) = 0
+        OR COALESCE(
+          array_length(
+            important_notes_de,
+            1
+          ),
+          0
+        ) = 0
+    `),
+
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        official_source_url
+      FROM services
+      WHERE
+        official_source_url !~* '^https?://'
+    `),
+  ]);
+
+  const summary =
+    summaryResult.rows[0];
+
+  if (!summary) {
+    throw new Error(
+      "Verification FAILED: database summary could not be read.",
+    );
+  }
 
   console.log("");
   console.log(
@@ -115,48 +206,107 @@ try {
     "------------------------------",
   );
   console.log(
-    `Total services: ${total}`,
+    `Total services: ${summary.total}`,
   );
-
-  for (const row of statusResult.rows) {
-    console.log(
-      `${row.status}: ${row.count}`,
-    );
-  }
-
   console.log(
-    `Featured: ${featuredCount}`,
+    `draft: ${summary.draft}`,
+  );
+  console.log(
+    `published: ${summary.published}`,
+  );
+  console.log(
+    `archived: ${summary.archived}`,
+  );
+  console.log(
+    `featured: ${summary.featured}`,
   );
 
   const errors = [];
 
-  if (featuredCount > 1) {
+  if (
+    invalidStatusResult.rows.length >
+    0
+  ) {
     errors.push(
-      `Expected at most one featured service, found ${featuredCount}.`,
+      `Found ${invalidStatusResult.rows.length} service(s) with unsupported status.`,
     );
   }
 
-  if (invalidFeaturedResult.rows.length > 0) {
+  if (
+    invalidCategoryResult.rows.length >
+    0
+  ) {
     errors.push(
-      "Featured service must always be published.",
+      `Found ${invalidCategoryResult.rows.length} service(s) with unsupported category.`,
     );
   }
 
-  if (invalidParallelListsResult.rows.length > 0) {
+  if (
+    invalidFeaturedResult.rows.length >
+    0
+  ) {
     errors.push(
-      `Found ${invalidParallelListsResult.rows.length} service(s) with mismatched UZ/DE list lengths.`,
+      `Found ${invalidFeaturedResult.rows.length} featured service(s) that are not published.`,
     );
   }
 
-  if (duplicateSlugResult.rows.length > 0) {
+  if (summary.featured > 1) {
+    errors.push(
+      `Found ${summary.featured} featured services; at most one is allowed.`,
+    );
+  }
+
+  if (
+    duplicateSlugResult.rows.length >
+    0
+  ) {
     errors.push(
       `Found ${duplicateSlugResult.rows.length} duplicate slug group(s).`,
     );
   }
 
-  if (emptyRequiredArrayResult.rows.length > 0) {
+  if (
+    emptyRequiredFieldsResult.rows
+      .length > 0
+  ) {
     errors.push(
-      `Found ${emptyRequiredArrayResult.rows.length} service(s) with empty required lists.`,
+      `Found ${emptyRequiredFieldsResult.rows.length} service(s) with empty required fields.`,
+    );
+  }
+
+  if (
+    emptyServicesResult.rows.length >
+    0
+  ) {
+    errors.push(
+      `Found ${emptyServicesResult.rows.length} service(s) with empty UZ or DE services arrays.`,
+    );
+  }
+
+  if (
+    emptyVerificationStepsResult.rows
+      .length > 0
+  ) {
+    errors.push(
+      `Found ${emptyVerificationStepsResult.rows.length} service(s) with empty UZ or DE verification steps.`,
+    );
+  }
+
+  if (
+    emptyImportantNotesResult.rows
+      .length > 0
+  ) {
+    errors.push(
+      `Found ${emptyImportantNotesResult.rows.length} service(s) with empty UZ or DE important notes.`,
+    );
+  }
+
+  if (
+    invalidSourceUrlResult.rows.length >
+    0
+  ) {
+    errors.push(
+      `Found ${invalidSourceUrlResult.rows.length} service(s) with invalid official source URL.`,
     );
   }
 
@@ -180,6 +330,5 @@ try {
     );
   }
 } finally {
-  client.release();
   await pool.end();
 }
