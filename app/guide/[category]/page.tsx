@@ -2,14 +2,21 @@ import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import Footer from "../../../components/Footer";
+import SectionPromo from "../../../components/SectionPromo";
 import Header from "../../../components/Header";
 import GuideCategoryPage from "../../../components/guide/GuideCategoryPage";
 import {
-  getGuideArticlesByCategory,
   getGuideCategoryBySlug,
-  getGuideCategorySlugs,
 } from "../../../data/guide";
-import type { SupportedGuideLocale } from "../../../types/guide";
+import {
+  getPublishedGuideArticlesByCategory,
+  isPublicGuideCategorySlug,
+} from "../../../lib/guide/public-guide-repository";
+import type {
+  GuideCategory,
+  SupportedGuideLocale,
+} from "../../../types/guide";
 
 type GuideCategoryRouteProps = Readonly<{
   params: Promise<{
@@ -17,37 +24,82 @@ type GuideCategoryRouteProps = Readonly<{
   }>;
 }>;
 
-export function generateStaticParams() {
-  return getGuideCategorySlugs().map((category) => ({
-    category,
-  }));
-}
+export const dynamic =
+  "force-dynamic";
 
 export async function generateMetadata({
   params,
 }: GuideCategoryRouteProps): Promise<Metadata> {
   const locale =
     (await getLocale()) as SupportedGuideLocale;
-  const { category: categorySlug } = await params;
-  const category = getGuideCategoryBySlug(
-    categorySlug,
-    locale,
-  );
+
+  const {
+    category: categorySlug,
+  } =
+    await params;
+
+  if (
+    !isPublicGuideCategorySlug(
+      categorySlug,
+    )
+  ) {
+    return {
+      title:
+        locale === "uz"
+          ? "Qo‘llanma bo‘limi topilmadi | Vatandoshlar.de"
+          : "Guide-Bereich nicht gefunden | Vatandoshlar.de",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const category =
+    getGuideCategoryBySlug(
+      categorySlug,
+      locale,
+    );
 
   if (!category) {
     return {
       title:
         locale === "uz"
-          ? "Yo‘nalish topilmadi | Vatandoshlar.de"
-          : "Bereich nicht gefunden | Vatandoshlar.de",
+          ? "Qo‘llanma bo‘limi topilmadi | Vatandoshlar.de"
+          : "Guide-Bereich nicht gefunden | Vatandoshlar.de",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
   return {
-    title: `${category.title} | Vatandoshlar.de Guide`,
-    description: category.description,
+    title:
+      `${category.title} | Vatandoshlar.de`,
+
+    description:
+      category.description,
+
     alternates: {
-      canonical: `/guide/${category.slug}`,
+      canonical:
+        `/${locale}/guide/${category.slug}`,
+
+      languages: {
+        uz:
+          `/uz/guide/${category.slug}`,
+        de:
+          `/de/guide/${category.slug}`,
+      },
+    },
+
+    openGraph: {
+      title:
+        category.title,
+      description:
+        category.description,
+      siteName:
+        "Vatandoshlar.de",
     },
   };
 }
@@ -57,26 +109,53 @@ export default async function GuideCategoryRoute({
 }: GuideCategoryRouteProps) {
   const locale =
     (await getLocale()) as SupportedGuideLocale;
-  const { category: categorySlug } = await params;
 
-  const category = getGuideCategoryBySlug(
-    categorySlug,
-    locale,
-  );
+  const {
+    category: categorySlug,
+  } =
+    await params;
 
-  if (!category) {
+  if (
+    !isPublicGuideCategorySlug(
+      categorySlug,
+    )
+  ) {
     notFound();
   }
 
-  const articles = getGuideArticlesByCategory(
-    category.slug,
-    locale,
-  );
+  const [
+    categoryBase,
+    articles,
+  ] =
+    await Promise.all([
+      Promise.resolve(
+        getGuideCategoryBySlug(
+          categorySlug,
+          locale,
+        ),
+      ),
 
-  const footer =
-    locale === "uz"
-      ? "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma"
-      : "Digitale Plattform für Usbeken in Deutschland";
+      getPublishedGuideArticlesByCategory(
+        categorySlug,
+        locale,
+      ),
+    ]);
+
+  if (!categoryBase) {
+    notFound();
+  }
+
+  const category: GuideCategory = {
+    ...categoryBase,
+
+    articleCount:
+      articles.length,
+
+    status:
+      articles.length > 0
+        ? "available"
+        : "coming-soon",
+  };
 
   return (
     <>
@@ -88,12 +167,9 @@ export default async function GuideCategoryRoute({
         locale={locale}
       />
 
-      <footer className="border-t border-slate-200 bg-white py-10 dark:border-slate-800 dark:bg-slate-950">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between lg:px-8 dark:text-slate-400">
-          <p>© 2026 Vatandoshlar.de</p>
-          <p>{footer}</p>
-        </div>
-      </footer>
+      <SectionPromo target="news" />
+
+      <Footer />
     </>
   );
 }
