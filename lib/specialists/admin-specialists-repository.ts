@@ -85,6 +85,39 @@ export type AdminSpecialist = {
   updatedAt: string;
 };
 
+export type AdminSpecialistInput = {
+  code: string;
+  slug: string;
+  name: string;
+  professionUz: string;
+  professionDe: string;
+  shortDescriptionUz: string;
+  shortDescriptionDe: string;
+  categories: AdminSpecialistCategory[];
+  languages: AdminSpecialistLanguage[];
+  servicesUz: string[];
+  servicesDe: string[];
+  city: string | null;
+  bundesland: string | null;
+  postalCode: string | null;
+  serviceAreaUz: string | null;
+  serviceAreaDe: string | null;
+  email: string | null;
+  phone: string | null;
+  website: string | null;
+  whatsapp: string | null;
+  telegram: string | null;
+  instagram: string | null;
+  youtube: string | null;
+  facebook: string | null;
+  pricingNoteUz: string | null;
+  pricingNoteDe: string | null;
+  avatarUrl: string | null;
+  yearsOfExperience: number | null;
+  rating: number | null;
+  reviewCount: number | null;
+};
+
 type SummaryRow = {
   id: string;
   code: string;
@@ -333,4 +366,103 @@ export async function getAdminSpecialistById(
   return row
     ? toDetail(row)
     : null;
+}
+
+export async function createAdminSpecialist(
+  input: AdminSpecialistInput,
+): Promise<string> {
+  const result = await getDb().query<{
+    id: string;
+  }>(
+    `
+      INSERT INTO specialists (
+        code,
+        slug,
+        name,
+        profession_uz,
+        profession_de,
+        short_description_uz,
+        short_description_de,
+        categories,
+        languages,
+        services_uz,
+        services_de,
+        city,
+        bundesland,
+        postal_code,
+        service_area_uz,
+        service_area_de,
+        email,
+        phone,
+        website,
+        whatsapp,
+        telegram,
+        instagram,
+        youtube,
+        facebook,
+        pricing_note_uz,
+        pricing_note_de,
+        avatar_url,
+        years_of_experience,
+        rating,
+        review_count,
+        status,
+        verified,
+        featured,
+        premium,
+        sponsored
+      )
+      VALUES (
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
+        $11,$12,$13,$14,$15,$16,$17,$18,$19,$20,
+        $21,$22,$23,$24,$25,$26,$27,$28,$29,$30,
+        'draft',
+        FALSE,
+        FALSE,
+        FALSE,
+        FALSE
+      )
+      RETURNING id::text
+    `,
+    [
+      input.code,
+      input.slug,
+      input.name,
+      input.professionUz,
+      input.professionDe,
+      input.shortDescriptionUz,
+      input.shortDescriptionDe,
+      input.categories,
+      input.languages,
+      input.servicesUz,
+      input.servicesDe,
+      input.city,
+      input.bundesland,
+      input.postalCode,
+      input.serviceAreaUz,
+      input.serviceAreaDe,
+      input.email,
+      input.phone,
+      input.website,
+      input.whatsapp,
+      input.telegram,
+      input.instagram,
+      input.youtube,
+      input.facebook,
+      input.pricingNoteUz,
+      input.pricingNoteDe,
+      input.avatarUrl,
+      input.yearsOfExperience,
+      input.rating,
+      input.reviewCount,
+    ],
+  );
+
+  const row = result.rows[0];
+
+  if (!row) {
+    throw new Error("Specialist was not created.");
+  }
+
+  return row.id;
 }

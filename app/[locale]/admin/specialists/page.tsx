@@ -23,9 +23,12 @@ const copy = {
     eyebrow: "VATANDOSHLAR.DE · ADMIN · MUTAXASSISLAR",
     title: "Mutaxassislarni boshqarish",
     description:
-      "Specialists PostgreSQL foundation tayyor. Hozir bu sahifa ma’lumotlar bazasidagi mutaxassis yozuvlarini ko‘rsatadi.",
+      "PostgreSQL’dagi mutaxassis profillarini boshqaring. Hozirgi bosqichda yangi profil yaratish va uni draft sifatida saqlash ishlaydi.",
+    publicStatic:
+      "Public Mutaxassislar bo‘limi hozircha static data’dan foydalanadi. Admin’da yaratilgan yangi draft public sahifada ko‘rinmaydi.",
     back: "Admin panelga qaytish",
     publicPage: "Public mutaxassislar",
+    create: "Yangi mutaxassis yaratish",
     total: "Jami",
     drafts: "Qoralama",
     published: "E’lon qilingan",
@@ -36,7 +39,7 @@ const copy = {
     sponsored: "Sponsored",
     emptyTitle: "PostgreSQL’da mutaxassislar hali mavjud emas",
     emptyDescription:
-      "Bu normal holat. Keyingi bosqichda yangi mutaxassis yaratish formasi va static Specialists ma’lumotlarini PostgreSQL’ga ko‘chirish workflow’ini qo‘shamiz.",
+      "Yangi mutaxassis yaratib, uni draft sifatida PostgreSQL’ga saqlashingiz mumkin.",
     code: "Kod",
     slug: "Slug",
     location: "Hudud",
@@ -51,9 +54,12 @@ const copy = {
     eyebrow: "VATANDOSHLAR.DE · ADMIN · FACHKRÄFTE",
     title: "Fachkräfte verwalten",
     description:
-      "Die PostgreSQL-Grundlage für Specialists ist eingerichtet. Diese Seite zeigt derzeit die Fachkraft-Einträge aus der Datenbank.",
+      "Verwalten Sie Fachkraftprofile in PostgreSQL. In diesem Schritt können neue Profile erstellt und als Entwurf gespeichert werden.",
+    publicStatic:
+      "Der öffentliche Fachkräftebereich verwendet vorerst weiterhin statische Daten. Neue Admin-Entwürfe erscheinen dort nicht.",
     back: "Zur Admin-Übersicht",
     publicPage: "Öffentliche Fachkräfte",
+    create: "Neue Fachkraft erstellen",
     total: "Gesamt",
     drafts: "Entwürfe",
     published: "Veröffentlicht",
@@ -64,7 +70,7 @@ const copy = {
     sponsored: "Sponsored",
     emptyTitle: "Noch keine Fachkräfte in PostgreSQL",
     emptyDescription:
-      "Das ist derzeit erwartbar. Im nächsten Schritt ergänzen wir das Erstellungsformular und den Workflow zur Migration der statischen Specialists-Daten nach PostgreSQL.",
+      "Erstellen Sie eine neue Fachkraft und speichern Sie sie als Entwurf in PostgreSQL.",
     code: "Code",
     slug: "Slug",
     location: "Ort",
@@ -122,29 +128,22 @@ function getLocationLabel(
 
 export default async function AdminSpecialistsPage() {
   const locale = await getLocale();
-
-  const appLocale: AppLocale =
-    locale === "de" ? "de" : "uz";
+  const appLocale: AppLocale = locale === "de" ? "de" : "uz";
 
   await requireAdmin(appLocale);
 
-  const currentCopy =
-    appLocale === "de" ? copy.de : copy.uz;
-
+  const currentCopy = appLocale === "de" ? copy.de : copy.uz;
   const specialists = await getAdminSpecialists();
 
   const draftCount = specialists.filter(
     (specialist) => specialist.status === "draft",
   ).length;
-
   const publishedCount = specialists.filter(
     (specialist) => specialist.status === "published",
   ).length;
-
   const archivedCount = specialists.filter(
     (specialist) => specialist.status === "archived",
   ).length;
-
   const verifiedCount = specialists.filter(
     (specialist) => specialist.verified,
   ).length;
@@ -166,6 +165,10 @@ export default async function AdminSpecialistsPage() {
               <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
                 {currentCopy.description}
               </p>
+
+              <p className="mt-4 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm leading-6 text-sky-800 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-200">
+                {currentCopy.publicStatic}
+              </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
@@ -178,9 +181,16 @@ export default async function AdminSpecialistsPage() {
 
               <Link
                 href="/specialists"
-                className="inline-flex min-h-10 items-center justify-center rounded-xl bg-fuchsia-600 px-4 text-sm font-bold text-white transition hover:bg-fuchsia-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+                className="inline-flex min-h-10 items-center justify-center rounded-xl border border-fuchsia-200 bg-fuchsia-50 px-4 text-sm font-bold text-fuchsia-700 transition hover:bg-fuchsia-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 focus-visible:ring-offset-2 dark:border-fuchsia-500/20 dark:bg-fuchsia-500/10 dark:text-fuchsia-300 dark:hover:bg-fuchsia-500/15 dark:focus-visible:ring-offset-slate-900"
               >
                 {currentCopy.publicPage}
+              </Link>
+
+              <Link
+                href="/admin/specialists/new"
+                className="inline-flex min-h-10 items-center justify-center rounded-xl bg-fuchsia-600 px-4 text-sm font-bold text-white transition hover:bg-fuchsia-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+              >
+                {currentCopy.create}
               </Link>
             </div>
           </div>
@@ -201,7 +211,6 @@ export default async function AdminSpecialistsPage() {
               <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
                 {item.label}
               </p>
-
               <p className="mt-2 text-3xl font-black tracking-tight text-slate-950 dark:text-white">
                 {item.value}
               </p>
@@ -215,10 +224,15 @@ export default async function AdminSpecialistsPage() {
               <h2 className="text-xl font-black text-slate-950 dark:text-white">
                 {currentCopy.emptyTitle}
               </h2>
-
               <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-400">
                 {currentCopy.emptyDescription}
               </p>
+              <Link
+                href="/admin/specialists/new"
+                className="mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-fuchsia-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-fuchsia-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+              >
+                {currentCopy.create}
+              </Link>
             </div>
           ) : (
             <div className="grid gap-4">
@@ -241,19 +255,16 @@ export default async function AdminSpecialistsPage() {
                         {currentCopy.verified}
                       </span>
                     )}
-
                     {specialist.featured && (
                       <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 dark:border-blue-500/20 dark:bg-blue-500/10 dark:text-blue-300">
                         {currentCopy.featured}
                       </span>
                     )}
-
                     {specialist.premium && (
                       <span className="inline-flex rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700 dark:border-violet-500/20 dark:bg-violet-500/10 dark:text-violet-300">
                         {currentCopy.premium}
                       </span>
                     )}
-
                     {specialist.sponsored && (
                       <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-300">
                         {currentCopy.sponsored}
@@ -273,44 +284,23 @@ export default async function AdminSpecialistsPage() {
 
                   <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4">
                     <div>
-                      <dt className="font-medium text-slate-500 dark:text-slate-400">
-                        {currentCopy.code}
-                      </dt>
-                      <dd className="mt-1 font-mono text-xs text-slate-700 dark:text-slate-300">
-                        {specialist.code}
-                      </dd>
+                      <dt className="font-medium text-slate-500 dark:text-slate-400">{currentCopy.code}</dt>
+                      <dd className="mt-1 font-mono text-xs text-slate-700 dark:text-slate-300">{specialist.code}</dd>
                     </div>
-
                     <div>
-                      <dt className="font-medium text-slate-500 dark:text-slate-400">
-                        {currentCopy.slug}
-                      </dt>
-                      <dd className="mt-1 break-all font-mono text-xs text-slate-700 dark:text-slate-300">
-                        {specialist.slug}
-                      </dd>
+                      <dt className="font-medium text-slate-500 dark:text-slate-400">{currentCopy.slug}</dt>
+                      <dd className="mt-1 break-all font-mono text-xs text-slate-700 dark:text-slate-300">{specialist.slug}</dd>
                     </div>
-
                     <div>
-                      <dt className="font-medium text-slate-500 dark:text-slate-400">
-                        {currentCopy.location}
-                      </dt>
+                      <dt className="font-medium text-slate-500 dark:text-slate-400">{currentCopy.location}</dt>
                       <dd className="mt-1 font-semibold text-slate-700 dark:text-slate-300">
-                        {getLocationLabel(
-                          specialist.city,
-                          specialist.bundesland,
-                        )}
+                        {getLocationLabel(specialist.city, specialist.bundesland)}
                       </dd>
                     </div>
-
                     <div>
-                      <dt className="font-medium text-slate-500 dark:text-slate-400">
-                        {currentCopy.updated}
-                      </dt>
+                      <dt className="font-medium text-slate-500 dark:text-slate-400">{currentCopy.updated}</dt>
                       <dd className="mt-1 font-semibold text-slate-700 dark:text-slate-300">
-                        {formatDate(
-                          specialist.updatedAt,
-                          appLocale,
-                        )}
+                        {formatDate(specialist.updatedAt, appLocale)}
                       </dd>
                     </div>
                   </dl>
