@@ -11,6 +11,8 @@ import {
   type ReactNode,
 } from "react";
 
+import { useGuideSearchItems } from "../hooks/useGuideSearchItems";
+
 import {
   getSearchCategoryLabel,
   searchGlobalItems,
@@ -330,6 +332,7 @@ export default function HeaderSearchModal({
     currentLocale === "de" ? "de" : "uz";
   const copy = modalCopy[locale];
   const router = useRouter();
+  const guideSearchItems = useGuideSearchItems(locale);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -341,8 +344,13 @@ export default function HeaderSearchModal({
 
   const results = useMemo(
     () =>
-      searchGlobalItems(searchQuery, locale).slice(0, 10),
-    [locale, searchQuery],
+      searchGlobalItems(
+        searchQuery,
+        locale,
+        undefined,
+        guideSearchItems,
+      ).slice(0, 10),
+    [guideSearchItems, locale, searchQuery],
   );
 
   useEffect(() => {

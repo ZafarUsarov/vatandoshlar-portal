@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 
+import { useGuideSearchItems } from "../hooks/useGuideSearchItems";
+
 import {
   getSearchCategoryLabel,
   searchGlobalItems,
@@ -102,6 +104,8 @@ export default function SearchSection() {
   const locale: SearchLocale =
     currentLocale === "de" ? "de" : "uz";
 
+  const guideSearchItems = useGuideSearchItems(locale);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] =
     useState<SearchFilter>("Barchasi");
@@ -116,8 +120,14 @@ export default function SearchSection() {
       searchQuery,
       locale,
       category,
+      guideSearchItems,
     );
-  }, [activeCategory, locale, searchQuery]);
+  }, [
+    activeCategory,
+    guideSearchItems,
+    locale,
+    searchQuery,
+  ]);
 
   const showResults =
     searchQuery.trim().length > 0 || activeCategory !== "Barchasi";

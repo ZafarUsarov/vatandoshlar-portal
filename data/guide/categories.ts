@@ -4,7 +4,6 @@ import type {
   SupportedGuideLocale,
 } from "../../types/guide";
 
-import { localizedGuideArticles } from "./articles";
 
 export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
   {
@@ -158,28 +157,18 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
 ];
 
 
-function getPublishedArticleCount(categorySlug: string): number {
-  return localizedGuideArticles.filter(
-    (article) =>
-      article.categorySlug === categorySlug &&
-      article.status === "published",
-  ).length;
-}
-
 function localizeCategory(
   category: LocalizedGuideCategory,
   locale: SupportedGuideLocale,
 ): GuideCategory {
-  const articleCount = getPublishedArticleCount(category.slug);
-
   return {
     id: category.id,
     slug: category.slug,
     icon: category.icon,
     title: category.title[locale],
     description: category.description[locale],
-    articleCount,
-    status: articleCount > 0 ? "available" : "coming-soon",
+    articleCount: category.articleCount,
+    status: category.status,
     featured: category.featured,
   };
 }

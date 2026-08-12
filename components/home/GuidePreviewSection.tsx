@@ -1,6 +1,10 @@
 import { getLocale } from "next-intl/server";
 
 import { getGuideCategories } from "../../data/guide";
+import {
+  getPublishedGuideArticleCountsByCategory,
+  isPublicGuideCategorySlug,
+} from "../../lib/guide/public-guide-repository";
 import { Link } from "../../i18n/navigation";
 import type {
   GuideCategory,
@@ -101,7 +105,26 @@ function isGuideCategory(
 
 export default async function GuidePreviewSection() {
   const locale = (await getLocale()) as SupportedGuideLocale;
-  const categories = getGuideCategories(locale);
+  const categoryCounts =
+    await getPublishedGuideArticleCountsByCategory();
+
+  const categories = getGuideCategories(locale).map(
+    (category): GuideCategory => {
+      const articleCount =
+        isPublicGuideCategorySlug(category.slug)
+          ? categoryCounts[category.slug]
+          : 0;
+
+      return {
+        ...category,
+        articleCount,
+        status:
+          articleCount > 0
+            ? "available"
+            : "coming-soon",
+      };
+    },
+  );
 
   const featuredCategories = featuredCategorySlugs
     .map((slug) =>

@@ -2,8 +2,6 @@ import {
   getJobGuides,
   type SupportedJobLocale,
 } from "./jobs";
-import { getGuideArticlesByCategory } from "./guide/articles";
-import { getGuideCategories } from "./guide/categories";
 import {
   localizeSpecialist,
   specialists,
@@ -466,63 +464,15 @@ function getJobGuideSearchItems(
 }
 
 
-function getGuideSearchItems(
-  locale: SearchLocale,
-): ReadonlyArray<GlobalSearchItem> {
-  return getGuideCategories(locale).flatMap((category) =>
-    getGuideArticlesByCategory(category.slug, locale).map(
-      (article) => ({
-        id: `guide-article-${article.id}`,
-        title: article.title,
-        description: article.excerpt,
-        href: createLocalizedHref(
-          locale,
-          `/guide/${category.slug}/${article.slug}`,
-        ),
-        category: "Qo‘llanma",
-        badge: category.title,
-        keywords: [
-          article.title,
-          article.excerpt,
-          article.intro,
-          article.readingTime,
-          category.title,
-          ...article.facts.flatMap((fact) => [
-            fact.label,
-            fact.value,
-          ]),
-          ...Object.values(article.sections).flatMap(
-            (section) =>
-              section
-                ? [
-                    section.title,
-                    ...section.paragraphs,
-                    ...section.items,
-                  ]
-                : [],
-          ),
-          ...article.steps.flatMap((step) => [
-            step.title,
-            step.description,
-          ]),
-          ...article.faq.flatMap((item) => [
-            item.question,
-            item.answer,
-          ]),
-        ],
-      }),
-    ),
-  );
-}
-
 export function getGlobalSearchItems(
   locale: SearchLocale,
+  additionalItems: ReadonlyArray<GlobalSearchItem> = [],
 ): ReadonlyArray<GlobalSearchItem> {
   return [
     ...getStaticSearchItems(locale),
     ...getSpecialistSearchItems(locale),
     ...getJobGuideSearchItems(locale),
-    ...getGuideSearchItems(locale),
+    ...additionalItems,
   ];
 }
 
@@ -582,13 +532,14 @@ export function searchGlobalItems(
   query: string,
   locale: SearchLocale = "uz",
   category?: SearchCategory,
+  additionalItems: ReadonlyArray<GlobalSearchItem> = [],
 ): GlobalSearchItem[] {
   const normalizedQuery = normalizeSearchText(
     query,
     locale,
   );
 
-  return getGlobalSearchItems(locale)
+  return getGlobalSearchItems(locale, additionalItems)
     .filter((item) => {
       if (
         category &&
