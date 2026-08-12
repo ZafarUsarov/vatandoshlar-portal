@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Loading() {
   return (
     <main
@@ -22,8 +24,15 @@ export default function Loading() {
         <div className="relative">
           <div className="absolute -inset-6 rounded-[2rem] bg-emerald-500/15 blur-2xl dark:bg-emerald-500/20" />
 
-          <div className="relative flex h-20 w-20 items-center justify-center rounded-[1.75rem] bg-gradient-to-br from-emerald-500 to-teal-700 text-3xl font-black text-white shadow-2xl shadow-emerald-950/20">
-            V
+          <div className="relative flex h-20 w-20 items-center justify-center">
+            <Image
+              src="/images/brand/vatandoshlar-icon.png"
+              alt=""
+              width={80}
+              height={80}
+              priority
+              className="h-20 w-20 object-contain"
+            />
           </div>
 
           <span className="absolute -right-1 -top-1 flex h-5 w-5">
