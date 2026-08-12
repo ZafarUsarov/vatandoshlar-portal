@@ -8,6 +8,11 @@ import {
   type AdminTelegramRecordStatus,
 } from "@/lib/telegram/admin-telegram-repository";
 
+import {
+  updateTelegramGroupStatusAction,
+  updateTelegramRecordStatusAction,
+} from "./actions";
+
 export const dynamic =
   "force-dynamic";
 
@@ -27,9 +32,9 @@ const copy = {
     title:
       "Telegram hamjamiyatlarini boshqarish",
     description:
-      "Germaniya Bundeslandlari bo‘yicha Telegram hamjamiyatlari PostgreSQL foundation’ini boshqaring.",
-    foundation:
-      "Bu birinchi foundation bosqichi. Hozir database ro‘yxati ko‘rinadi; create/edit/lifecycle keyingi bosqichda qo‘shiladi.",
+      "Bundeslandlar bo‘yicha Telegram hamjamiyatlarini PostgreSQL orqali tahrirlang va lifecycle holatini boshqaring.",
+    note:
+      "Record status public visibility uchun, guruh holati esa real Telegram mavjudligi uchun ishlatiladi.",
     back:
       "Admin panelga qaytish",
     publicPage:
@@ -42,10 +47,6 @@ const copy = {
       "Tez orada",
     published:
       "Public",
-    draft:
-      "Qoralama",
-    archived:
-      "Arxiv",
     shortName:
       "Kod",
     bundesland:
@@ -54,10 +55,6 @@ const copy = {
       "Telegram",
     buttonType:
       "Turi",
-    status:
-      "Record holati",
-    availability:
-      "Guruh holati",
     updated:
       "Yangilangan",
     noLink:
@@ -66,6 +63,20 @@ const copy = {
       "Bot",
     group:
       "Guruh",
+    edit:
+      "Tahrirlash",
+    publish:
+      "Public qilish",
+    draft:
+      "Qoralamaga qaytarish",
+    archive:
+      "Arxivlash",
+    restore:
+      "Qoralamaga tiklash",
+    makeActive:
+      "Faol qilish",
+    makeComingSoon:
+      "Tez orada qilish",
     statuses: {
       draft:
         "Qoralama",
@@ -82,9 +93,9 @@ const copy = {
     title:
       "Telegram-Communitys verwalten",
     description:
-      "Verwalten Sie die PostgreSQL-Grundlage der Telegram-Communitys nach Bundesländern.",
-    foundation:
-      "Dies ist die erste Foundation-Phase. Die Datenbankliste ist sichtbar; Create/Edit/Lifecycle folgt im nächsten Schritt.",
+      "Bearbeiten Sie Telegram-Communitys nach Bundesland in PostgreSQL und verwalten Sie deren Lifecycle.",
+    note:
+      "Der Datensatzstatus steuert die öffentliche Sichtbarkeit; der Gruppenstatus beschreibt die tatsächliche Telegram-Verfügbarkeit.",
     back:
       "Zur Admin-Übersicht",
     publicPage:
@@ -97,10 +108,6 @@ const copy = {
       "Demnächst",
     published:
       "Öffentlich",
-    draft:
-      "Entwurf",
-    archived:
-      "Archiv",
     shortName:
       "Code",
     bundesland:
@@ -109,10 +116,6 @@ const copy = {
       "Telegram",
     buttonType:
       "Typ",
-    status:
-      "Datensatzstatus",
-    availability:
-      "Gruppenstatus",
     updated:
       "Aktualisiert",
     noLink:
@@ -121,6 +124,20 @@ const copy = {
       "Bot",
     group:
       "Gruppe",
+    edit:
+      "Bearbeiten",
+    publish:
+      "Veröffentlichen",
+    draft:
+      "Als Entwurf setzen",
+    archive:
+      "Archivieren",
+    restore:
+      "Als Entwurf wiederherstellen",
+    makeActive:
+      "Aktiv setzen",
+    makeComingSoon:
+      "Als demnächst setzen",
     statuses: {
       draft:
         "Entwurf",
@@ -141,16 +158,11 @@ function formatDateTime(
       ? "uz-UZ"
       : "de-DE",
     {
-      day:
-        "2-digit",
-      month:
-        "2-digit",
-      year:
-        "numeric",
-      hour:
-        "2-digit",
-      minute:
-        "2-digit",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     },
   ).format(
     new Date(value),
@@ -201,22 +213,19 @@ export default async function AdminTelegramPage() {
   const activeCount =
     groups.filter(
       (group) =>
-        group.groupStatus ===
-        "active",
+        group.groupStatus === "active",
     ).length;
 
   const comingSoonCount =
     groups.filter(
       (group) =>
-        group.groupStatus ===
-        "coming-soon",
+        group.groupStatus === "coming-soon",
     ).length;
 
   const publishedCount =
     groups.filter(
       (group) =>
-        group.status ===
-        "published",
+        group.status === "published",
     ).length;
 
   return (
@@ -238,21 +247,21 @@ export default async function AdminTelegramPage() {
               </p>
 
               <p className="mt-4 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm leading-6 text-sky-800 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-200">
-                {currentCopy.foundation}
+                {currentCopy.note}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/admin"
-                className="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-900"
+                className="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
               >
                 {currentCopy.back}
               </Link>
 
               <Link
                 href="/telegram"
-                className="inline-flex min-h-10 items-center justify-center rounded-xl bg-sky-600 px-4 text-sm font-bold text-white transition hover:bg-sky-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+                className="inline-flex min-h-10 items-center justify-center rounded-xl bg-sky-600 px-4 text-sm font-bold text-white transition hover:bg-sky-500"
               >
                 {currentCopy.publicPage}
               </Link>
@@ -263,28 +272,20 @@ export default async function AdminTelegramPage() {
         <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             {
-              label:
-                currentCopy.total,
-              value:
-                groups.length,
+              label: currentCopy.total,
+              value: groups.length,
             },
             {
-              label:
-                currentCopy.active,
-              value:
-                activeCount,
+              label: currentCopy.active,
+              value: activeCount,
             },
             {
-              label:
-                currentCopy.comingSoon,
-              value:
-                comingSoonCount,
+              label: currentCopy.comingSoon,
+              value: comingSoonCount,
             },
             {
-              label:
-                currentCopy.published,
-              value:
-                publishedCount,
+              label: currentCopy.published,
+              value: publishedCount,
             },
           ].map(
             (item) => (
@@ -326,20 +327,18 @@ export default async function AdminTelegramPage() {
 
                   <span
                     className={
-                      group.groupStatus ===
-                      "active"
+                      group.groupStatus === "active"
                         ? "inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-bold text-sky-700 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-300"
                         : "inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
                     }
                   >
-                    {group.groupStatus ===
-                    "active"
+                    {group.groupStatus === "active"
                       ? currentCopy.active
                       : currentCopy.comingSoon}
                   </span>
                 </div>
 
-                <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <h2 className="text-xl font-black text-slate-950 dark:text-white">
                       {group.customNameUz ??
@@ -348,9 +347,7 @@ export default async function AdminTelegramPage() {
 
                     {group.customNameDe && (
                       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                        {
-                          group.customNameDe
-                        }
+                        {group.customNameDe}
                       </p>
                     )}
                   </div>
@@ -360,12 +357,111 @@ export default async function AdminTelegramPage() {
                   </span>
                 </div>
 
-                <dl className="mt-5 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-5">
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Link
+                    href={`/admin/telegram/${group.id}`}
+                    className="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-800 transition hover:border-sky-200 hover:text-sky-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-sky-500/30 dark:hover:text-sky-300"
+                  >
+                    {currentCopy.edit}
+                  </Link>
+
+                  {group.status === "draft" && (
+                    <>
+                      <form action={updateTelegramRecordStatusAction}>
+                        <input type="hidden" name="groupId" value={group.id} />
+                        <input type="hidden" name="targetStatus" value="published" />
+                        <button
+                          type="submit"
+                          className="inline-flex min-h-10 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-700 transition hover:bg-emerald-100 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300"
+                        >
+                          {currentCopy.publish}
+                        </button>
+                      </form>
+
+                      <form action={updateTelegramRecordStatusAction}>
+                        <input type="hidden" name="groupId" value={group.id} />
+                        <input type="hidden" name="targetStatus" value="archived" />
+                        <button
+                          type="submit"
+                          className="inline-flex min-h-10 items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-bold text-rose-700 transition hover:bg-rose-100 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-300"
+                        >
+                          {currentCopy.archive}
+                        </button>
+                      </form>
+                    </>
+                  )}
+
+                  {group.status === "published" && (
+                    <>
+                      <form action={updateTelegramRecordStatusAction}>
+                        <input type="hidden" name="groupId" value={group.id} />
+                        <input type="hidden" name="targetStatus" value="draft" />
+                        <button
+                          type="submit"
+                          className="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+                        >
+                          {currentCopy.draft}
+                        </button>
+                      </form>
+
+                      <form action={updateTelegramRecordStatusAction}>
+                        <input type="hidden" name="groupId" value={group.id} />
+                        <input type="hidden" name="targetStatus" value="archived" />
+                        <button
+                          type="submit"
+                          className="inline-flex min-h-10 items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-bold text-rose-700 transition hover:bg-rose-100 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-300"
+                        >
+                          {currentCopy.archive}
+                        </button>
+                      </form>
+                    </>
+                  )}
+
+                  {group.status === "archived" && (
+                    <form action={updateTelegramRecordStatusAction}>
+                      <input type="hidden" name="groupId" value={group.id} />
+                      <input type="hidden" name="targetStatus" value="draft" />
+                      <button
+                        type="submit"
+                        className="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+                      >
+                        {currentCopy.restore}
+                      </button>
+                    </form>
+                  )}
+
+                  {group.groupStatus === "active" ? (
+                    <form action={updateTelegramGroupStatusAction}>
+                      <input type="hidden" name="groupId" value={group.id} />
+                      <input type="hidden" name="targetGroupStatus" value="coming-soon" />
+                      <button
+                        type="submit"
+                        className="inline-flex min-h-10 items-center justify-center rounded-xl border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-bold text-sky-700 transition hover:bg-sky-100 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-300"
+                      >
+                        {currentCopy.makeComingSoon}
+                      </button>
+                    </form>
+                  ) : (
+                    group.href && (
+                      <form action={updateTelegramGroupStatusAction}>
+                        <input type="hidden" name="groupId" value={group.id} />
+                        <input type="hidden" name="targetGroupStatus" value="active" />
+                        <button
+                          type="submit"
+                          className="inline-flex min-h-10 items-center justify-center rounded-xl border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-bold text-sky-700 transition hover:bg-sky-100 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-300"
+                        >
+                          {currentCopy.makeActive}
+                        </button>
+                      </form>
+                    )
+                  )}
+                </div>
+
+                <dl className="mt-5 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
                   <div>
                     <dt className="font-medium text-slate-500 dark:text-slate-400">
                       {currentCopy.bundesland}
                     </dt>
-
                     <dd className="mt-1 font-semibold text-slate-700 dark:text-slate-300">
                       {group.bundesland}
                     </dd>
@@ -375,7 +471,6 @@ export default async function AdminTelegramPage() {
                     <dt className="font-medium text-slate-500 dark:text-slate-400">
                       {currentCopy.link}
                     </dt>
-
                     <dd className="mt-1">
                       {group.href ? (
                         <a
@@ -398,10 +493,8 @@ export default async function AdminTelegramPage() {
                     <dt className="font-medium text-slate-500 dark:text-slate-400">
                       {currentCopy.buttonType}
                     </dt>
-
                     <dd className="mt-1 font-semibold text-slate-700 dark:text-slate-300">
-                      {group.buttonType ===
-                      "bot"
+                      {group.buttonType === "bot"
                         ? currentCopy.bot
                         : currentCopy.group}
                     </dd>
@@ -409,22 +502,8 @@ export default async function AdminTelegramPage() {
 
                   <div>
                     <dt className="font-medium text-slate-500 dark:text-slate-400">
-                      {currentCopy.availability}
-                    </dt>
-
-                    <dd className="mt-1 font-semibold text-slate-700 dark:text-slate-300">
-                      {group.groupStatus ===
-                      "active"
-                        ? currentCopy.active
-                        : currentCopy.comingSoon}
-                    </dd>
-                  </div>
-
-                  <div>
-                    <dt className="font-medium text-slate-500 dark:text-slate-400">
                       {currentCopy.updated}
                     </dt>
-
                     <dd className="mt-1 font-semibold text-slate-700 dark:text-slate-300">
                       {formatDateTime(
                         group.updatedAt,
