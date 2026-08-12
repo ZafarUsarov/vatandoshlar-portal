@@ -25,6 +25,12 @@ export type AdminSpecialistLanguage =
   | "en"
   | "tr";
 
+export type AdminSpecialistFlag =
+  | "verified"
+  | "featured"
+  | "premium"
+  | "sponsored";
+
 export type AdminSpecialistSummary = {
   id: string;
   code: string;
@@ -224,7 +230,9 @@ function toNullableNumber(
   }
 
   const numericValue =
-    typeof value === "number" ? value : Number(value);
+    typeof value === "number"
+      ? value
+      : Number(value);
 
   return Number.isFinite(numericValue)
     ? numericValue
@@ -465,4 +473,175 @@ export async function createAdminSpecialist(
   }
 
   return row.id;
+}
+
+export async function updateAdminSpecialist(
+  id: string,
+  input: AdminSpecialistInput,
+): Promise<boolean> {
+  const result = await getDb().query(
+    `
+      UPDATE specialists
+      SET
+        code = $1,
+        slug = $2,
+        name = $3,
+        profession_uz = $4,
+        profession_de = $5,
+        short_description_uz = $6,
+        short_description_de = $7,
+        categories = $8,
+        languages = $9,
+        services_uz = $10,
+        services_de = $11,
+        city = $12,
+        bundesland = $13,
+        postal_code = $14,
+        service_area_uz = $15,
+        service_area_de = $16,
+        email = $17,
+        phone = $18,
+        website = $19,
+        whatsapp = $20,
+        telegram = $21,
+        instagram = $22,
+        youtube = $23,
+        facebook = $24,
+        pricing_note_uz = $25,
+        pricing_note_de = $26,
+        avatar_url = $27,
+        years_of_experience = $28,
+        rating = $29,
+        review_count = $30,
+        updated_at = NOW()
+      WHERE id = $31
+    `,
+    [
+      input.code,
+      input.slug,
+      input.name,
+      input.professionUz,
+      input.professionDe,
+      input.shortDescriptionUz,
+      input.shortDescriptionDe,
+      input.categories,
+      input.languages,
+      input.servicesUz,
+      input.servicesDe,
+      input.city,
+      input.bundesland,
+      input.postalCode,
+      input.serviceAreaUz,
+      input.serviceAreaDe,
+      input.email,
+      input.phone,
+      input.website,
+      input.whatsapp,
+      input.telegram,
+      input.instagram,
+      input.youtube,
+      input.facebook,
+      input.pricingNoteUz,
+      input.pricingNoteDe,
+      input.avatarUrl,
+      input.yearsOfExperience,
+      input.rating,
+      input.reviewCount,
+      id,
+    ],
+  );
+
+  return (result.rowCount ?? 0) > 0;
+}
+
+export async function updateAdminSpecialistStatus(
+  id: string,
+  status: AdminSpecialistStatus,
+): Promise<boolean> {
+  const result = await getDb().query(
+    `
+      UPDATE specialists
+      SET
+        status = $1,
+        featured =
+          CASE
+            WHEN $1 = 'published'
+              THEN featured
+            ELSE FALSE
+          END,
+        premium =
+          CASE
+            WHEN $1 = 'published'
+              THEN premium
+            ELSE FALSE
+          END,
+        sponsored =
+          CASE
+            WHEN $1 = 'published'
+              THEN sponsored
+            ELSE FALSE
+          END,
+        updated_at = NOW()
+      WHERE id = $2
+    `,
+    [status, id],
+  );
+
+  return (result.rowCount ?? 0) > 0;
+}
+
+export async function setAdminSpecialistFlag(
+  id: string,
+  flag: AdminSpecialistFlag,
+  enabled: boolean,
+): Promise<
+  "updated" | "not_found" | "not_published"
+> {
+  const result = await getDb().query<{
+    status: string;
+  }>(
+    `
+      SELECT status
+      FROM specialists
+      WHERE id = $1
+      LIMIT 1
+    `,
+    [id],
+  );
+
+  const specialist = result.rows[0];
+
+  if (!specialist) {
+    return "not_found";
+  }
+
+  if (
+    flag !== "verified" &&
+    enabled &&
+    specialist.status !== "published"
+  ) {
+    return "not_published";
+  }
+
+  const column =
+    flag === "verified"
+      ? "verified"
+      : flag === "featured"
+        ? "featured"
+        : flag === "premium"
+          ? "premium"
+          : "sponsored";
+
+  await getDb().query(
+    `
+      UPDATE specialists
+      SET
+        ${column} = $1,
+        updated_at = NOW()
+      WHERE id = $2
+    `,
+    [enabled, id],
+  );
+
+  return "updated";
 }
