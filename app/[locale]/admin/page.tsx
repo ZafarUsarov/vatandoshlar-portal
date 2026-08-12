@@ -22,7 +22,7 @@ const copy = {
       "Vatandoshlar.de boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
     modulesTitle: "Boshqaruv modullari",
     modulesDescription:
-      "Yangiliklar, Ish va karyera, Xizmatlar, Mutaxassislar, Tadbirlar va Germaniya qo‘llanmasi PostgreSQL asosida boshqariladi.",
+      "Yangiliklar, Ish va karyera, Xizmatlar, Mutaxassislar, Tadbirlar, Germaniya qo‘llanmasi va Telegram hamjamiyatlari PostgreSQL asosida boshqariladi.",
 
     newsTitle: "Yangiliklar",
     newsDescription:
@@ -54,6 +54,11 @@ const copy = {
       "Guide maqolalari, kategoriyalar, rasmiy manbalar, FAQ, bosqichlar va tekshiruv sanalarini boshqaring.",
     guideAction: "Guide maqolalarini boshqarish",
 
+    telegramTitle: "Telegram hamjamiyatlari",
+    telegramDescription:
+      "Bundeslandlar bo‘yicha Telegram guruhlari, havolalar, bot yoki guruh turi va mavjudlik holatini boshqaring.",
+    telegramAction: "Telegram hamjamiyatlarini boshqarish",
+
     account: "Admin account",
     role: "Rol",
     status: "Holat",
@@ -69,7 +74,7 @@ const copy = {
       "Von hier aus können Sie die Verwaltungsbereiche von Vatandoshlar.de aufrufen.",
     modulesTitle: "Verwaltungsmodule",
     modulesDescription:
-      "Nachrichten, Arbeit und Karriere, Dienstleistungen, Fachkräfte, Veranstaltungen und der Deutschland-Ratgeber werden PostgreSQL-basiert verwaltet.",
+      "Nachrichten, Arbeit und Karriere, Dienstleistungen, Fachkräfte, Veranstaltungen, der Deutschland-Ratgeber und Telegram-Communitys werden PostgreSQL-basiert verwaltet.",
 
     newsTitle: "Nachrichten",
     newsDescription:
@@ -101,6 +106,11 @@ const copy = {
       "Verwalten Sie Guide-Artikel, Kategorien, offizielle Quellen, FAQ, Schritte und Prüfdatum.",
     guideAction: "Guide-Artikel verwalten",
 
+    telegramTitle: "Telegram-Communitys",
+    telegramDescription:
+      "Verwalten Sie Telegram-Gruppen nach Bundesland, Links, Bot- oder Gruppentyp und Verfügbarkeitsstatus.",
+    telegramAction: "Telegram-Communitys verwalten",
+
     account: "Admin-Konto",
     role: "Rolle",
     status: "Status",
@@ -115,7 +125,8 @@ type AdminModuleHref =
   | "/admin/services"
   | "/admin/specialists"
   | "/admin/events"
-  | "/admin/guide";
+  | "/admin/guide"
+  | "/admin/telegram";
 
 type AdminModuleTone =
   | "emerald"
@@ -123,7 +134,8 @@ type AdminModuleTone =
   | "violet"
   | "fuchsia"
   | "orange"
-  | "teal";
+  | "teal"
+  | "sky";
 
 type AdminModuleCardProps = {
   href: AdminModuleHref;
@@ -198,6 +210,17 @@ const moduleToneClasses = {
       "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-teal-100 font-black text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white dark:bg-teal-500/10 dark:text-teal-300 dark:group-hover:bg-teal-500 dark:group-hover:text-white",
     action:
       "mt-5 text-sm font-bold text-teal-700 dark:text-teal-400",
+  },
+
+  sky: {
+    card:
+      "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-sky-200 hover:bg-sky-50/60 hover:shadow-lg hover:shadow-sky-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-sky-500/25 dark:hover:bg-sky-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6",
+    title:
+      "text-xl font-black text-slate-950 transition-colors group-hover:text-sky-700 dark:text-white dark:group-hover:text-sky-300",
+    icon:
+      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-sky-100 font-black text-sky-700 transition group-hover:bg-sky-600 group-hover:text-white dark:bg-sky-500/10 dark:text-sky-300 dark:group-hover:bg-sky-500 dark:group-hover:text-white",
+    action:
+      "mt-5 text-sm font-bold text-sky-700 dark:text-sky-400",
   },
 } as const;
 
@@ -359,6 +382,14 @@ export default async function AdminPage() {
                   description={currentCopy.guideDescription}
                   action={currentCopy.guideAction}
                   tone="teal"
+                />
+
+                <AdminModuleCard
+                  href="/admin/telegram"
+                  title={currentCopy.telegramTitle}
+                  description={currentCopy.telegramDescription}
+                  action={currentCopy.telegramAction}
+                  tone="sky"
                 />
               </div>
             </div>
