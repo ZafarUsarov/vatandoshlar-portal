@@ -12,13 +12,10 @@ if (!connectionString) {
 const pool =
   new Pool({
     connectionString,
-    max: 2,
+    max: 4,
     idleTimeoutMillis: 5_000,
     connectionTimeoutMillis: 5_000,
   });
-
-const client =
-  await pool.connect();
 
 const allowedCategories = [
   "coming-to-germany",
@@ -53,7 +50,7 @@ try {
     invalidJsonShapeResult,
     danglingRelatedSlugResult,
   ] = await Promise.all([
-    client.query(
+    pool.query(
       `
         SELECT
           COUNT(*)::int AS count
@@ -61,7 +58,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           status,
@@ -72,7 +69,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           COUNT(*) FILTER (
@@ -82,7 +79,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           id::text,
@@ -97,7 +94,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           legacy_id,
@@ -108,7 +105,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           category_slug,
@@ -122,7 +119,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           slug,
@@ -133,7 +130,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           id::text,
@@ -146,7 +143,7 @@ try {
       [allowedCategories],
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           id::text,
@@ -165,7 +162,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           id::text,
@@ -179,7 +176,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           id::text,
@@ -193,7 +190,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           id::text,
@@ -207,7 +204,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           id::text,
@@ -218,7 +215,10 @@ try {
           (
             SELECT
               COALESCE(
-                array_agg(key ORDER BY key),
+                array_agg(
+                  key
+                  ORDER BY key
+                ),
                 ARRAY[]::text[]
               )
             FROM jsonb_object_keys(
@@ -229,7 +229,10 @@ try {
           (
             SELECT
               COALESCE(
-                array_agg(key ORDER BY key),
+                array_agg(
+                  key
+                  ORDER BY key
+                ),
                 ARRAY[]::text[]
               )
             FROM jsonb_object_keys(
@@ -239,7 +242,7 @@ try {
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT
           id::text,
@@ -247,36 +250,49 @@ try {
           category_slug
         FROM guide_articles
         WHERE
-          jsonb_typeof(facts_uz) <> 'array'
-          OR jsonb_typeof(facts_de) <> 'array'
-          OR jsonb_typeof(sections_uz) <> 'object'
-          OR jsonb_typeof(sections_de) <> 'object'
-          OR jsonb_typeof(steps_uz) <> 'array'
-          OR jsonb_typeof(steps_de) <> 'array'
-          OR jsonb_typeof(faq_uz) <> 'array'
-          OR jsonb_typeof(faq_de) <> 'array'
-          OR jsonb_typeof(sources) <> 'array'
+          jsonb_typeof(facts_uz)
+            <> 'array'
+          OR jsonb_typeof(facts_de)
+            <> 'array'
+          OR jsonb_typeof(sections_uz)
+            <> 'object'
+          OR jsonb_typeof(sections_de)
+            <> 'object'
+          OR jsonb_typeof(steps_uz)
+            <> 'array'
+          OR jsonb_typeof(steps_de)
+            <> 'array'
+          OR jsonb_typeof(faq_uz)
+            <> 'array'
+          OR jsonb_typeof(faq_de)
+            <> 'array'
+          OR jsonb_typeof(sources)
+            <> 'array'
       `,
     ),
 
-    client.query(
+    pool.query(
       `
         SELECT DISTINCT
           current_article.id::text,
           current_article.slug,
           current_article.category_slug,
           related_slug
-        FROM guide_articles AS current_article
+        FROM guide_articles
+          AS current_article
         CROSS JOIN LATERAL
           UNNEST(
-            current_article.related_article_slugs
+            current_article
+              .related_article_slugs
           ) AS related_slug
         WHERE
           NOT EXISTS (
             SELECT 1
-            FROM guide_articles AS related_article
+            FROM guide_articles
+              AS related_article
             WHERE
-              related_article.slug = related_slug
+              related_article.slug
+                = related_slug
           )
         ORDER BY
           current_article.category_slug,
@@ -291,7 +307,8 @@ try {
     0;
 
   const featured =
-    featuredResult.rows[0]?.featured ??
+    featuredResult.rows[0]
+      ?.featured ??
     0;
 
   console.log("");
@@ -301,6 +318,7 @@ try {
   console.log(
     "---------------------------",
   );
+
   console.log(
     `Total articles: ${total}`,
   );
@@ -321,8 +339,8 @@ try {
   const errors = [];
 
   if (
-    lifecycleViolationResult.rows.length >
-    0
+    lifecycleViolationResult.rows
+      .length > 0
   ) {
     errors.push(
       `Found ${lifecycleViolationResult.rows.length} non-published article(s) with featured enabled.`,
@@ -330,8 +348,8 @@ try {
   }
 
   if (
-    duplicateLegacyIdResult.rows.length >
-    0
+    duplicateLegacyIdResult.rows
+      .length > 0
   ) {
     errors.push(
       `Found ${duplicateLegacyIdResult.rows.length} duplicate legacy_id group(s).`,
@@ -339,8 +357,8 @@ try {
   }
 
   if (
-    duplicateCategorySlugResult.rows.length >
-    0
+    duplicateCategorySlugResult
+      .rows.length > 0
   ) {
     errors.push(
       `Found ${duplicateCategorySlugResult.rows.length} duplicate category + slug group(s).`,
@@ -348,8 +366,8 @@ try {
   }
 
   if (
-    duplicateGlobalSlugResult.rows.length >
-    0
+    duplicateGlobalSlugResult.rows
+      .length > 0
   ) {
     errors.push(
       `Found ${duplicateGlobalSlugResult.rows.length} globally duplicated slug group(s). Related article lookup uses slug-only references, so Guide slugs must remain globally unique.`,
@@ -357,8 +375,8 @@ try {
   }
 
   if (
-    invalidCategoryResult.rows.length >
-    0
+    invalidCategoryResult.rows
+      .length > 0
   ) {
     errors.push(
       `Found ${invalidCategoryResult.rows.length} article(s) with unsupported category slugs.`,
@@ -366,8 +384,8 @@ try {
   }
 
   if (
-    missingRequiredTextResult.rows.length >
-    0
+    missingRequiredTextResult.rows
+      .length > 0
   ) {
     errors.push(
       `Found ${missingRequiredTextResult.rows.length} article(s) with empty required UZ/DE text fields.`,
@@ -402,8 +420,8 @@ try {
   }
 
   if (
-    sectionKeyMismatchResult.rows.length >
-    0
+    sectionKeyMismatchResult.rows
+      .length > 0
   ) {
     errors.push(
       `Found ${sectionKeyMismatchResult.rows.length} article(s) whose UZ/DE sections use different keys.`,
@@ -411,8 +429,8 @@ try {
   }
 
   if (
-    invalidJsonShapeResult.rows.length >
-    0
+    invalidJsonShapeResult.rows
+      .length > 0
   ) {
     errors.push(
       `Found ${invalidJsonShapeResult.rows.length} article(s) with invalid JSONB container types.`,
@@ -420,8 +438,8 @@ try {
   }
 
   if (
-    danglingRelatedSlugResult.rows.length >
-    0
+    danglingRelatedSlugResult.rows
+      .length > 0
   ) {
     errors.push(
       `Found ${danglingRelatedSlugResult.rows.length} dangling related article slug reference(s).`,
@@ -453,6 +471,5 @@ try {
     );
   }
 } finally {
-  client.release();
   await pool.end();
 }
