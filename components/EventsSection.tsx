@@ -2,9 +2,14 @@ import { getLocale } from "next-intl/server";
 
 import EventCard from "@/components/cards/EventCard";
 import {
-  getUpcomingEvents,
-  type SupportedEventLocale,
-} from "@/data/events";
+  toEventItem,
+} from "@/lib/events/event-presenter";
+import {
+  getUpcomingPublishedEvents,
+} from "@/lib/events/public-events-repository";
+import type {
+  SupportedEventLocale,
+} from "@/types/event";
 import { Link } from "@/i18n/navigation";
 
 type IconProps = Readonly<{
@@ -58,10 +63,24 @@ function ArrowUpRightIcon({ className }: IconProps) {
 export default async function EventsSection() {
   const locale =
     (await getLocale()) as SupportedEventLocale;
-  const homepageEvents = getUpcomingEvents(locale).slice(
-    0,
-    3,
-  );
+
+  const homepageEvents =
+    (
+      await getUpcomingPublishedEvents(
+        locale,
+      )
+    )
+      .slice(
+        0,
+        3,
+      )
+      .map(
+        (event) =>
+          toEventItem(
+            event,
+            locale,
+          ),
+      );
 
   const copy =
     locale === "uz"

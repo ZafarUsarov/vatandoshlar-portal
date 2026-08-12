@@ -2,10 +2,12 @@ import {
   formatEventDateShort,
   formatEventTime,
   getEventLocation,
-  type EventItem,
-  type RegistrationStatusKey,
-  type SupportedEventLocale,
-} from "@/data/events";
+} from "@/lib/events/event-presenter";
+import type {
+  EventItem,
+  RegistrationStatusKey,
+  SupportedEventLocale,
+} from "@/types/event";
 import { Link } from "@/i18n/navigation";
 
 import { Badge, Card } from "../ui";

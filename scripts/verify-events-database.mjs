@@ -11,19 +11,18 @@ if (!connectionString) {
 
 const pool = new Pool({
   connectionString,
-  max: 2,
+  max: 4,
   idleTimeoutMillis: 5_000,
   connectionTimeoutMillis: 5_000,
 });
 
-const client =
-  await pool.connect();
-
 try {
   const [
-    totalResult,
-    statusResult,
-    featuredResult,
+    summaryResult,
+    invalidStatusResult,
+    invalidCategoryResult,
+    invalidFormatResult,
+    invalidRegistrationStatusResult,
     lifecycleViolationResult,
     duplicateSlugResult,
     descriptionMismatchResult,
@@ -33,185 +32,230 @@ try {
     invalidRegistrationDeadlineResult,
     invalidLocationResult,
   ] = await Promise.all([
-    client.query(
-      `
-        SELECT
-          COUNT(*)::int AS count
-        FROM events
-      `,
-    ),
+    pool.query(`
+      SELECT
+        COUNT(*)::int AS total,
 
-    client.query(
-      `
-        SELECT
-          status,
-          COUNT(*)::int AS count
-        FROM events
-        GROUP BY status
-        ORDER BY status
-      `,
-    ),
+        COUNT(*) FILTER (
+          WHERE status = 'draft'
+        )::int AS draft,
 
-    client.query(
-      `
-        SELECT
-          COUNT(*) FILTER (
-            WHERE featured = TRUE
-          )::int AS featured
-        FROM events
-      `,
-    ),
+        COUNT(*) FILTER (
+          WHERE status = 'published'
+        )::int AS published,
 
-    client.query(
-      `
-        SELECT
-          id::text,
-          slug,
-          status,
-          featured
-        FROM events
-        WHERE
-          status <> 'published'
-          AND featured = TRUE
-      `,
-    ),
+        COUNT(*) FILTER (
+          WHERE status = 'archived'
+        )::int AS archived,
 
-    client.query(
-      `
-        SELECT
-          slug,
-          COUNT(*)::int AS count
-        FROM events
-        GROUP BY slug
-        HAVING COUNT(*) > 1
-      `,
-    ),
+        COUNT(*) FILTER (
+          WHERE featured = TRUE
+        )::int AS featured
+      FROM events
+    `),
 
-    client.query(
-      `
-        SELECT
-          id::text,
-          slug
-        FROM events
-        WHERE
-          cardinality(description_uz)
-          <>
-          cardinality(description_de)
-      `,
-    ),
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        status
+      FROM events
+      WHERE status NOT IN (
+        'draft',
+        'published',
+        'archived'
+      )
+    `),
 
-    client.query(
-      `
-        SELECT
-          id::text,
-          slug
-        FROM events
-        WHERE
-          cardinality(important_notes_uz)
-          <>
-          cardinality(important_notes_de)
-      `,
-    ),
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        category
+      FROM events
+      WHERE category NOT IN (
+        'culture',
+        'education',
+        'career',
+        'business',
+        'community',
+        'sport',
+        'children',
+        'consular'
+      )
+    `),
 
-    client.query(
-      `
-        SELECT
-          id::text,
-          slug,
-          start_date,
-          end_date
-        FROM events
-        WHERE
-          end_date IS NOT NULL
-          AND end_date < start_date
-      `,
-    ),
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        format
+      FROM events
+      WHERE format NOT IN (
+        'offline',
+        'online',
+        'hybrid'
+      )
+    `),
 
-    client.query(
-      `
-        SELECT
-          id::text,
-          slug,
-          start_date,
-          end_date,
-          start_time,
-          end_time
-        FROM events
-        WHERE
-          end_time IS NOT NULL
-          AND start_time IS NOT NULL
-          AND end_date IS NULL
-          AND end_time < start_time
-      `,
-    ),
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        registration_status
+      FROM events
+      WHERE registration_status NOT IN (
+        'open',
+        'not_required',
+        'sold_out',
+        'closed'
+      )
+    `),
 
-    client.query(
-      `
-        SELECT
-          id::text,
-          slug,
-          registration_deadline,
-          start_date,
-          end_date
-        FROM events
-        WHERE
-          registration_deadline IS NOT NULL
-          AND registration_deadline
-              >
-              COALESCE(
-                end_date,
-                start_date
-              )
-      `,
-    ),
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        status,
+        featured
+      FROM events
+      WHERE
+        status <> 'published'
+        AND featured = TRUE
+    `),
 
-    client.query(
-      `
-        SELECT
-          id::text,
-          slug,
-          format,
-          city,
-          bundesland,
-          venue_name,
-          address,
-          online_url
-        FROM events
-        WHERE
-          (
-            format = 'online'
-            AND online_url IS NULL
+    pool.query(`
+      SELECT
+        slug,
+        COUNT(*)::int AS count
+      FROM events
+      GROUP BY slug
+      HAVING COUNT(*) > 1
+    `),
+
+    pool.query(`
+      SELECT
+        id::text,
+        slug
+      FROM events
+      WHERE
+        cardinality(
+          description_uz
+        )
+        <>
+        cardinality(
+          description_de
+        )
+    `),
+
+    pool.query(`
+      SELECT
+        id::text,
+        slug
+      FROM events
+      WHERE
+        cardinality(
+          important_notes_uz
+        )
+        <>
+        cardinality(
+          important_notes_de
+        )
+    `),
+
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        start_date,
+        end_date
+      FROM events
+      WHERE
+        end_date IS NOT NULL
+        AND end_date < start_date
+    `),
+
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        start_date,
+        end_date,
+        start_time,
+        end_time
+      FROM events
+      WHERE
+        end_time IS NOT NULL
+        AND start_time IS NOT NULL
+        AND end_date IS NULL
+        AND end_time < start_time
+    `),
+
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        registration_deadline,
+        start_date,
+        end_date
+      FROM events
+      WHERE
+        registration_deadline
+          IS NOT NULL
+        AND registration_deadline
+          >
+          COALESCE(
+            end_date,
+            start_date
           )
-          OR (
-            format = 'offline'
-            AND city IS NULL
-            AND bundesland IS NULL
-            AND venue_name IS NULL
-            AND address IS NULL
-          )
-          OR (
-            format = 'hybrid'
-            AND (
-              online_url IS NULL
-              OR (
-                city IS NULL
-                AND bundesland IS NULL
-                AND venue_name IS NULL
-                AND address IS NULL
-              )
+    `),
+
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        format,
+        city,
+        bundesland,
+        venue_name,
+        address,
+        online_url
+      FROM events
+      WHERE
+        (
+          format = 'online'
+          AND online_url IS NULL
+        )
+        OR (
+          format = 'offline'
+          AND city IS NULL
+          AND bundesland IS NULL
+          AND venue_name IS NULL
+          AND address IS NULL
+        )
+        OR (
+          format = 'hybrid'
+          AND (
+            online_url IS NULL
+            OR (
+              city IS NULL
+              AND bundesland IS NULL
+              AND venue_name IS NULL
+              AND address IS NULL
             )
           )
-      `,
-    ),
+        )
+    `),
   ]);
 
-  const total =
-    totalResult.rows[0]?.count ??
-    0;
+  const summary =
+    summaryResult.rows[0];
 
-  const featured =
-    featuredResult.rows[0]?.featured ??
-    0;
+  if (!summary) {
+    throw new Error(
+      "Verification FAILED: database summary could not be read.",
+    );
+  }
 
   console.log("");
   console.log(
@@ -220,28 +264,68 @@ try {
   console.log(
     "----------------------------",
   );
+
   console.log(
-    `Total events: ${total}`,
+    `Total events: ${summary.total}`,
   );
 
-  for (
-    const row
-    of statusResult.rows
-  ) {
-    console.log(
-      `${row.status}: ${row.count}`,
-    );
-  }
+  console.log(
+    `draft: ${summary.draft}`,
+  );
 
   console.log(
-    `Featured: ${featured}`,
+    `published: ${summary.published}`,
+  );
+
+  console.log(
+    `archived: ${summary.archived}`,
+  );
+
+  console.log(
+    `Featured: ${summary.featured}`,
   );
 
   const errors = [];
 
   if (
-    lifecycleViolationResult.rows.length >
+    invalidStatusResult.rows.length >
     0
+  ) {
+    errors.push(
+      `Found ${invalidStatusResult.rows.length} event(s) with unsupported status.`,
+    );
+  }
+
+  if (
+    invalidCategoryResult.rows.length >
+    0
+  ) {
+    errors.push(
+      `Found ${invalidCategoryResult.rows.length} event(s) with unsupported category.`,
+    );
+  }
+
+  if (
+    invalidFormatResult.rows.length >
+    0
+  ) {
+    errors.push(
+      `Found ${invalidFormatResult.rows.length} event(s) with unsupported format.`,
+    );
+  }
+
+  if (
+    invalidRegistrationStatusResult
+      .rows.length > 0
+  ) {
+    errors.push(
+      `Found ${invalidRegistrationStatusResult.rows.length} event(s) with unsupported registration status.`,
+    );
+  }
+
+  if (
+    lifecycleViolationResult.rows
+      .length > 0
   ) {
     errors.push(
       `Found ${lifecycleViolationResult.rows.length} non-published event(s) with featured enabled.`,
@@ -258,8 +342,8 @@ try {
   }
 
   if (
-    descriptionMismatchResult.rows.length >
-    0
+    descriptionMismatchResult.rows
+      .length > 0
   ) {
     errors.push(
       `Found ${descriptionMismatchResult.rows.length} event(s) with mismatched UZ/DE description lists.`,
@@ -294,8 +378,8 @@ try {
   }
 
   if (
-    invalidRegistrationDeadlineResult.rows.length >
-    0
+    invalidRegistrationDeadlineResult
+      .rows.length > 0
   ) {
     errors.push(
       `Found ${invalidRegistrationDeadlineResult.rows.length} event(s) with registration deadline after the event end date.`,
@@ -311,18 +395,13 @@ try {
     );
   }
 
-  if (
-    errors.length > 0
-  ) {
+  if (errors.length > 0) {
     console.error("");
     console.error(
       "Verification FAILED:",
     );
 
-    for (
-      const error
-      of errors
-    ) {
+    for (const error of errors) {
       console.error(
         `- ${error}`,
       );
@@ -336,6 +415,5 @@ try {
     );
   }
 } finally {
-  client.release();
   await pool.end();
 }

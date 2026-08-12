@@ -6,17 +6,17 @@ import Footer from "../../components/Footer";
 import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
-import type { EventItem } from "../../data/events";
 import { Link } from "../../i18n/navigation";
+import {
+  toEventItem,
+} from "../../lib/events/event-presenter";
 import {
   getPastPublishedEvents,
   getUpcomingPublishedEvents,
-  type PublicEventCategory,
-  type PublicEventFormat,
-  type PublicEventItem,
-  type PublicEventRegistrationStatus,
-  type SupportedEventLocale,
 } from "../../lib/events/public-events-repository";
+import type {
+  SupportedEventLocale,
+} from "../../types/event";
 
 export const dynamic =
   "force-dynamic";
@@ -52,278 +52,6 @@ export async function generateMetadata(): Promise<Metadata> {
       };
 }
 
-const categoryLabels: Record<
-  SupportedEventLocale,
-  Record<
-    PublicEventCategory,
-    EventItem["category"]
-  >
-> = {
-  uz: {
-    culture: "Madaniyat",
-    education: "Ta’lim",
-    career: "Karyera",
-    business: "Biznes",
-    community: "Jamiyat",
-    sport: "Sport",
-    children: "Bolalar uchun",
-    consular: "Konsullik",
-  },
-
-  de: {
-    culture: "Madaniyat",
-    education: "Ta’lim",
-    career: "Karyera",
-    business: "Biznes",
-    community: "Jamiyat",
-    sport: "Sport",
-    children: "Bolalar uchun",
-    consular: "Konsullik",
-  },
-};
-
-const formatLabels: Record<
-  SupportedEventLocale,
-  Record<
-    PublicEventFormat,
-    EventItem["format"]
-  >
-> = {
-  uz: {
-    offline: "Oflayn",
-    online: "Onlayn",
-    hybrid: "Gibrid",
-  },
-
-  de: {
-    offline: "Oflayn",
-    online: "Onlayn",
-    hybrid: "Gibrid",
-  },
-};
-
-const registrationStatusLabels: Record<
-  SupportedEventLocale,
-  Record<
-    PublicEventRegistrationStatus,
-    EventItem["registrationStatus"]
-  >
-> = {
-  uz: {
-    open:
-      "Ro‘yxatdan o‘tish ochiq",
-    not_required:
-      "Ro‘yxatdan o‘tish shart emas",
-    sold_out:
-      "Joylar tugagan",
-    closed:
-      "Ro‘yxatdan o‘tish yopilgan",
-  },
-
-  de: {
-    open:
-      "Ro‘yxatdan o‘tish ochiq",
-    not_required:
-      "Ro‘yxatdan o‘tish shart emas",
-    sold_out:
-      "Joylar tugagan",
-    closed:
-      "Ro‘yxatdan o‘tish yopilgan",
-  },
-};
-
-const languageLabels: Record<
-  SupportedEventLocale,
-  Record<string, string>
-> = {
-  uz: {
-    uz: "O‘zbek tili",
-    de: "Nemis tili",
-    ru: "Rus tili",
-    en: "Ingliz tili",
-    tr: "Turk tili",
-  },
-
-  de: {
-    uz: "Usbekisch",
-    de: "Deutsch",
-    ru: "Russisch",
-    en: "Englisch",
-    tr: "Türkisch",
-  },
-};
-
-function toEventCardItem(
-  event: PublicEventItem,
-  locale: SupportedEventLocale,
-): EventItem {
-  const numericId =
-    Number(event.id);
-
-  return {
-    id:
-      Number.isSafeInteger(
-        numericId,
-      )
-        ? numericId
-        : 0,
-
-    slug:
-      event.slug,
-
-    title:
-      event.title,
-
-    excerpt:
-      event.excerpt,
-
-    description:
-      event.description,
-
-    category:
-      categoryLabels[
-        locale
-      ][event.category],
-
-    categoryKey:
-      event.category,
-
-    format:
-      formatLabels[
-        locale
-      ][event.format],
-
-    formatKey:
-      event.format,
-
-    registrationStatusKey:
-      event.registrationStatus.replace(
-        "_",
-        "-",
-      ) as EventItem["registrationStatusKey"],
-
-    startDate:
-      event.startDate,
-
-    ...(event.endDate
-      ? {
-          endDate:
-            event.endDate,
-        }
-      : {}),
-
-    ...(event.startTime
-      ? {
-          startTime:
-            event.startTime,
-        }
-      : {}),
-
-    ...(event.endTime
-      ? {
-          endTime:
-            event.endTime,
-        }
-      : {}),
-
-    timezone:
-      event.timezone,
-
-    ...(event.city
-      ? {
-          city:
-            event.city,
-        }
-      : {}),
-
-    ...(event.bundesland
-      ? {
-          bundesland:
-            event.bundesland,
-        }
-      : {}),
-
-    ...(event.venueName
-      ? {
-          venueName:
-            event.venueName,
-        }
-      : {}),
-
-    ...(event.address
-      ? {
-          address:
-            event.address,
-        }
-      : {}),
-
-    ...(event.onlineUrl
-      ? {
-          onlineUrl:
-            event.onlineUrl,
-        }
-      : {}),
-
-    organizerName:
-      event.organizerName,
-
-    ...(event.organizerUrl
-      ? {
-          organizerUrl:
-            event.organizerUrl,
-        }
-      : {}),
-
-    registrationStatus:
-      registrationStatusLabels[
-        locale
-      ][
-        event.registrationStatus
-      ],
-
-    ...(event.registrationUrl
-      ? {
-          registrationUrl:
-            event.registrationUrl,
-        }
-      : {}),
-
-    ...(event.registrationDeadline
-      ? {
-          registrationDeadline:
-            event.registrationDeadline,
-        }
-      : {}),
-
-    language:
-      event.languages.map(
-        (language) =>
-          languageLabels[
-            locale
-          ][language] ??
-          language,
-      ),
-
-    priceLabel:
-      event.priceLabel,
-
-    officialSourceName:
-      event.officialSourceName,
-
-    officialSourceUrl:
-      event.officialSourceUrl,
-
-    verifiedAt:
-      event.verifiedAt,
-
-    importantNotes:
-      event.importantNotes,
-
-    featured:
-      event.featured,
-  };
-}
-
 export default async function EventsPage() {
   const locale =
     (await getLocale()) as SupportedEventLocale;
@@ -344,7 +72,7 @@ export default async function EventsPage() {
   const upcomingEvents =
     upcomingPublicEvents.map(
       (event) =>
-        toEventCardItem(
+        toEventItem(
           event,
           locale,
         ),
@@ -353,7 +81,7 @@ export default async function EventsPage() {
   const pastEvents =
     pastPublicEvents.map(
       (event) =>
-        toEventCardItem(
+        toEventItem(
           event,
           locale,
         ),
