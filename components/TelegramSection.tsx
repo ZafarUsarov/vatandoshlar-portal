@@ -2,7 +2,7 @@ import { getLocale } from "next-intl/server";
 
 import TelegramCard from "@/components/cards/TelegramCard";
 import Card from "@/components/ui/Card";
-import { getTelegramGroups } from "@/data/telegram";
+import { getPublicTelegramGroups } from "@/lib/telegram/public-telegram-repository";
 import type { SupportedTelegramLocale } from "@/types/telegram";
 
 interface IconProps {
@@ -48,8 +48,13 @@ type CommunicationRule = Readonly<{
 }>;
 
 export default async function TelegramSection() {
-  const locale = (await getLocale()) as SupportedTelegramLocale;
-  const telegramGroups = getTelegramGroups(locale);
+  const locale =
+    (await getLocale()) as SupportedTelegramLocale;
+
+  const telegramGroups =
+    await getPublicTelegramGroups(
+      locale,
+    );
 
   const copy =
     locale === "uz"
