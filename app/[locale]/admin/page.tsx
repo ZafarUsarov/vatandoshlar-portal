@@ -22,7 +22,7 @@ const copy = {
       "Vatandoshlar.de boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
     modulesTitle: "Boshqaruv modullari",
     modulesDescription:
-      "Yangiliklar, Ish va karyera hamda Xizmatlar PostgreSQL asosida boshqariladi. Endi Mutaxassislar bo‘limi uchun ham PostgreSQL admin foundation qo‘shildi.",
+      "Yangiliklar, Ish va karyera, Xizmatlar, Mutaxassislar va Tadbirlar PostgreSQL asosida boshqariladi.",
 
     newsTitle: "Yangiliklar",
     newsDescription:
@@ -44,9 +44,16 @@ const copy = {
     specialistsTitle:
       "Mutaxassislar",
     specialistsDescription:
-      "Mutaxassis profillari, kategoriyalar, tillar, joylashuv va verification statuslari uchun PostgreSQL admin foundation’ini oching.",
+      "Mutaxassis profillari, kategoriyalar, tillar, joylashuv va verification statuslarini boshqaring.",
     specialistsAction:
       "Mutaxassislarni boshqarish",
+
+    eventsTitle:
+      "Tadbirlar",
+    eventsDescription:
+      "Tadbirlarni yaratish, sana va joylashuv ma’lumotlarini boshqarish, e’lon qilish, arxivlash va featured holatini boshqaring.",
+    eventsAction:
+      "Tadbirlarni boshqarish",
 
     account: "Admin account",
     role: "Rol",
@@ -63,7 +70,7 @@ const copy = {
       "Von hier aus können Sie die Verwaltungsbereiche von Vatandoshlar.de aufrufen.",
     modulesTitle: "Verwaltungsmodule",
     modulesDescription:
-      "Nachrichten, Arbeit und Karriere sowie Dienstleistungen werden PostgreSQL-basiert verwaltet. Nun wurde auch die PostgreSQL-Admin-Grundlage für Fachkräfte ergänzt.",
+      "Nachrichten, Arbeit und Karriere, Dienstleistungen, Fachkräfte und Veranstaltungen werden PostgreSQL-basiert verwaltet.",
 
     newsTitle: "Nachrichten",
     newsDescription:
@@ -88,9 +95,16 @@ const copy = {
     specialistsTitle:
       "Fachkräfte",
     specialistsDescription:
-      "Öffnen Sie die PostgreSQL-Admin-Grundlage für Fachkraftprofile, Kategorien, Sprachen, Standort und Verifizierungsstatus.",
+      "Verwalten Sie Fachkraftprofile, Kategorien, Sprachen, Standort und Verifizierungsstatus.",
     specialistsAction:
       "Fachkräfte verwalten",
+
+    eventsTitle:
+      "Veranstaltungen",
+    eventsDescription:
+      "Erstellen und verwalten Sie Veranstaltungen, Termine und Orte sowie Veröffentlichung, Archivierung und Featured-Status.",
+    eventsAction:
+      "Veranstaltungen verwalten",
 
     account: "Admin-Konto",
     role: "Rolle",
@@ -104,13 +118,15 @@ type AdminModuleHref =
   | "/admin/news"
   | "/admin/jobs"
   | "/admin/services"
-  | "/admin/specialists";
+  | "/admin/specialists"
+  | "/admin/events";
 
 type AdminModuleTone =
   | "emerald"
   | "blue"
   | "violet"
-  | "fuchsia";
+  | "fuchsia"
+  | "orange";
 
 type AdminModuleCardProps = {
   href: AdminModuleHref;
@@ -163,6 +179,17 @@ const moduleToneClasses = {
       "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-fuchsia-100 font-black text-fuchsia-700 transition group-hover:bg-fuchsia-600 group-hover:text-white dark:bg-fuchsia-500/10 dark:text-fuchsia-300 dark:group-hover:bg-fuchsia-500 dark:group-hover:text-white",
     action:
       "mt-5 text-sm font-bold text-fuchsia-700 dark:text-fuchsia-400",
+  },
+
+  orange: {
+    card:
+      "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-orange-200 hover:bg-orange-50/60 hover:shadow-lg hover:shadow-orange-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-orange-500/25 dark:hover:bg-orange-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6",
+    title:
+      "text-xl font-black text-slate-950 transition-colors group-hover:text-orange-700 dark:text-white dark:group-hover:text-orange-300",
+    icon:
+      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-orange-100 font-black text-orange-700 transition group-hover:bg-orange-600 group-hover:text-white dark:bg-orange-500/10 dark:text-orange-300 dark:group-hover:bg-orange-500 dark:group-hover:text-white",
+    action:
+      "mt-5 text-sm font-bold text-orange-700 dark:text-orange-400",
   },
 } as const;
 
@@ -308,6 +335,14 @@ export default async function AdminPage() {
                   description={currentCopy.specialistsDescription}
                   action={currentCopy.specialistsAction}
                   tone="fuchsia"
+                />
+
+                <AdminModuleCard
+                  href="/admin/events"
+                  title={currentCopy.eventsTitle}
+                  description={currentCopy.eventsDescription}
+                  action={currentCopy.eventsAction}
+                  tone="orange"
                 />
               </div>
             </div>
