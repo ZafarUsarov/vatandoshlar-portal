@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 import { getDb } from "@/lib/db";
 
 export type AdminGuideArticleStatus =
@@ -10,11 +12,11 @@ export type AdminGuideCategorySlug =
   | "visas"
   | "family"
   | "invitation"
-  | "embassy"
+  | "embassy-and-appointments"
   | "documents"
-  | "language"
+  | "language-and-certificates"
   | "education"
-  | "career"
+  | "work-and-career"
   | "after-arrival"
   | "recognition"
   | "integration";
@@ -111,6 +113,48 @@ export type AdminGuideArticle = {
   updatedAt: string;
 };
 
+export type AdminGuideArticleInput = {
+  slug: string;
+  categorySlug: AdminGuideCategorySlug;
+
+  titleUz: string;
+  titleDe: string;
+
+  excerptUz: string;
+  excerptDe: string;
+
+  introUz: string;
+  introDe: string;
+
+  readingTimeUz: string;
+  readingTimeDe: string;
+
+  factsUz: AdminGuideFact[];
+  factsDe: AdminGuideFact[];
+
+  sectionsUz: Record<
+    string,
+    AdminGuideSection
+  >;
+
+  sectionsDe: Record<
+    string,
+    AdminGuideSection
+  >;
+
+  stepsUz: AdminGuideStep[];
+  stepsDe: AdminGuideStep[];
+
+  faqUz: AdminGuideFaq[];
+  faqDe: AdminGuideFaq[];
+
+  sources: AdminGuideSource[];
+
+  relatedArticleSlugs: string[];
+
+  lastReviewedAt: string;
+};
+
 type SummaryRow = {
   id: string;
   legacy_id: string;
@@ -153,17 +197,17 @@ type DetailRow = SummaryRow & {
   created_at: string | Date;
 };
 
-const categorySlugs:
+export const adminGuideCategorySlugs:
   ReadonlyArray<AdminGuideCategorySlug> = [
     "coming-to-germany",
     "visas",
     "family",
     "invitation",
-    "embassy",
+    "embassy-and-appointments",
     "documents",
-    "language",
+    "language-and-certificates",
     "education",
-    "career",
+    "work-and-career",
     "after-arrival",
     "recognition",
     "integration",
@@ -186,7 +230,7 @@ function normalizeCategorySlug(
   value: string,
 ): AdminGuideCategorySlug {
   if (
-    categorySlugs.includes(
+    adminGuideCategorySlugs.includes(
       value as AdminGuideCategorySlug,
     )
   ) {
@@ -590,4 +634,318 @@ export async function getAdminGuideArticleById(
   return row
     ? toDetail(row)
     : null;
+}
+
+export async function createAdminGuideArticle(
+  input: AdminGuideArticleInput,
+): Promise<string> {
+  const legacyId =
+    `admin-${randomUUID()}`;
+
+  const result =
+    await getDb().query<{
+      id: string;
+    }>(
+      `
+        INSERT INTO guide_articles (
+          legacy_id,
+          slug,
+          category_slug,
+
+          title_uz,
+          title_de,
+
+          excerpt_uz,
+          excerpt_de,
+
+          intro_uz,
+          intro_de,
+
+          reading_time_uz,
+          reading_time_de,
+
+          facts_uz,
+          facts_de,
+
+          sections_uz,
+          sections_de,
+
+          steps_uz,
+          steps_de,
+
+          faq_uz,
+          faq_de,
+
+          sources,
+          related_article_slugs,
+
+          last_reviewed_at,
+
+          status,
+          featured
+        )
+        VALUES (
+          $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
+          $11,$12::jsonb,$13::jsonb,$14::jsonb,$15::jsonb,
+          $16::jsonb,$17::jsonb,$18::jsonb,$19::jsonb,
+          $20::jsonb,$21,$22,
+          'draft',
+          FALSE
+        )
+        RETURNING id::text
+      `,
+      [
+        legacyId,
+        input.slug,
+        input.categorySlug,
+
+        input.titleUz,
+        input.titleDe,
+
+        input.excerptUz,
+        input.excerptDe,
+
+        input.introUz,
+        input.introDe,
+
+        input.readingTimeUz,
+        input.readingTimeDe,
+
+        JSON.stringify(
+          input.factsUz,
+        ),
+        JSON.stringify(
+          input.factsDe,
+        ),
+
+        JSON.stringify(
+          input.sectionsUz,
+        ),
+        JSON.stringify(
+          input.sectionsDe,
+        ),
+
+        JSON.stringify(
+          input.stepsUz,
+        ),
+        JSON.stringify(
+          input.stepsDe,
+        ),
+
+        JSON.stringify(
+          input.faqUz,
+        ),
+        JSON.stringify(
+          input.faqDe,
+        ),
+
+        JSON.stringify(
+          input.sources,
+        ),
+
+        input.relatedArticleSlugs,
+
+        input.lastReviewedAt,
+      ],
+    );
+
+  const row =
+    result.rows[0];
+
+  if (!row) {
+    throw new Error(
+      "Guide article was not created.",
+    );
+  }
+
+  return row.id;
+}
+
+export async function updateAdminGuideArticle(
+  id: string,
+  input: AdminGuideArticleInput,
+): Promise<boolean> {
+  const result =
+    await getDb().query(
+      `
+        UPDATE guide_articles
+        SET
+          slug = $1,
+          category_slug = $2,
+
+          title_uz = $3,
+          title_de = $4,
+
+          excerpt_uz = $5,
+          excerpt_de = $6,
+
+          intro_uz = $7,
+          intro_de = $8,
+
+          reading_time_uz = $9,
+          reading_time_de = $10,
+
+          facts_uz = $11::jsonb,
+          facts_de = $12::jsonb,
+
+          sections_uz = $13::jsonb,
+          sections_de = $14::jsonb,
+
+          steps_uz = $15::jsonb,
+          steps_de = $16::jsonb,
+
+          faq_uz = $17::jsonb,
+          faq_de = $18::jsonb,
+
+          sources = $19::jsonb,
+          related_article_slugs = $20,
+
+          last_reviewed_at = $21,
+
+          updated_at = NOW()
+        WHERE id = $22
+      `,
+      [
+        input.slug,
+        input.categorySlug,
+
+        input.titleUz,
+        input.titleDe,
+
+        input.excerptUz,
+        input.excerptDe,
+
+        input.introUz,
+        input.introDe,
+
+        input.readingTimeUz,
+        input.readingTimeDe,
+
+        JSON.stringify(
+          input.factsUz,
+        ),
+        JSON.stringify(
+          input.factsDe,
+        ),
+
+        JSON.stringify(
+          input.sectionsUz,
+        ),
+        JSON.stringify(
+          input.sectionsDe,
+        ),
+
+        JSON.stringify(
+          input.stepsUz,
+        ),
+        JSON.stringify(
+          input.stepsDe,
+        ),
+
+        JSON.stringify(
+          input.faqUz,
+        ),
+        JSON.stringify(
+          input.faqDe,
+        ),
+
+        JSON.stringify(
+          input.sources,
+        ),
+
+        input.relatedArticleSlugs,
+
+        input.lastReviewedAt,
+
+        id,
+      ],
+    );
+
+  return (
+    result.rowCount ??
+    0
+  ) > 0;
+}
+
+export async function updateAdminGuideArticleStatus(
+  id: string,
+  status: AdminGuideArticleStatus,
+): Promise<boolean> {
+  const result =
+    await getDb().query(
+      `
+        UPDATE guide_articles
+        SET
+          status = $1,
+          featured =
+            CASE
+              WHEN $1 = 'published'
+                THEN featured
+              ELSE FALSE
+            END,
+          updated_at = NOW()
+        WHERE id = $2
+      `,
+      [
+        status,
+        id,
+      ],
+    );
+
+  return (
+    result.rowCount ??
+    0
+  ) > 0;
+}
+
+export async function setAdminGuideArticleFeatured(
+  id: string,
+  enabled: boolean,
+): Promise<
+  "updated"
+  | "not_found"
+  | "not_published"
+> {
+  const result =
+    await getDb().query<{
+      status: string;
+    }>(
+      `
+        SELECT status
+        FROM guide_articles
+        WHERE id = $1
+        LIMIT 1
+      `,
+      [id],
+    );
+
+  const article =
+    result.rows[0];
+
+  if (!article) {
+    return "not_found";
+  }
+
+  if (
+    enabled &&
+    article.status !== "published"
+  ) {
+    return "not_published";
+  }
+
+  await getDb().query(
+    `
+      UPDATE guide_articles
+      SET
+        featured = $1,
+        updated_at = NOW()
+      WHERE id = $2
+    `,
+    [
+      enabled,
+      id,
+    ],
+  );
+
+  return "updated";
 }

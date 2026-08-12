@@ -1,4 +1,9 @@
-import type { Metadata } from "next";
+import type {
+  Metadata,
+} from "next";
+import type {
+  ReactNode,
+} from "react";
 import { getLocale } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
@@ -8,6 +13,11 @@ import {
   type AdminGuideArticleStatus,
   type AdminGuideCategorySlug,
 } from "@/lib/guide/admin-guide-repository";
+
+import {
+  updateGuideFeaturedAction,
+  updateGuideStatusAction,
+} from "./actions";
 
 export const dynamic =
   "force-dynamic";
@@ -28,13 +38,31 @@ const copy = {
     title:
       "Guide maqolalarini boshqarish",
     description:
-      "Germany Guide uchun PostgreSQL foundation tayyor. Hozir bu sahifa database’dagi maqolalarni read-only ko‘rinishda ko‘rsatadi.",
-    foundationNote:
-      "Public Guide hozircha mavjud modular static data bilan ishlashda davom etadi. Static maqolalar keyingi bosqichlarda xavfsiz va idempotent tarzda PostgreSQL’ga ko‘chiriladi.",
+      "PostgreSQL’dagi Guide maqolalarini yarating, tahrirlang va lifecycle hamda featured holatini boshqaring.",
+    lifecycleNote:
+      "Featured faqat e’lon qilingan maqolada yoqilishi mumkin. Maqola qoralama yoki arxiv holatiga o‘tkazilganda featured avtomatik o‘chadi.",
+    publicStatic:
+      "Public Guide hozircha modular static source bilan ishlaydi. Admin’dagi lifecycle va content o‘zgarishlari hali public Guide’ga ta’sir qilmaydi.",
     back:
       "Admin panelga qaytish",
     publicPage:
       "Public Guide",
+    create:
+      "Yangi Guide maqolasi",
+    edit:
+      "Tahrirlash",
+    publish:
+      "E’lon qilish",
+    unpublish:
+      "Qoralamaga qaytarish",
+    archive:
+      "Arxivlash",
+    restore:
+      "Qoralamaga tiklash",
+    featuredOn:
+      "Featured qilish",
+    featuredOff:
+      "Featured’dan olish",
     total:
       "Jami",
     drafts:
@@ -46,9 +74,9 @@ const copy = {
     featured:
       "Featured",
     emptyTitle:
-      "PostgreSQL’da Guide maqolalari hali mavjud emas",
+      "PostgreSQL’da Guide maqolalari mavjud emas",
     emptyDescription:
-      "Bu kutilgan holat. Keyingi bosqichda mavjud static Guide maqolalarini PostgreSQL’ga xavfsiz ko‘chirish workflow’ini qo‘shamiz.",
+      "Yangi maqola yaratib, uni draft sifatida PostgreSQL’ga saqlashingiz mumkin.",
     category:
       "Kategoriya",
     slug:
@@ -76,15 +104,15 @@ const copy = {
         "Oila",
       invitation:
         "Taklifnoma",
-      embassy:
-        "Elchixona va konsullik",
+      "embassy-and-appointments":
+        "Elchixona va terminlar",
       documents:
         "Hujjatlar",
-      language:
-        "Til",
+      "language-and-certificates":
+        "Til va sertifikatlar",
       education:
         "Ta’lim",
-      career:
+      "work-and-career":
         "Ish va karyera",
       "after-arrival":
         "Kelgandan keyin",
@@ -101,13 +129,31 @@ const copy = {
     title:
       "Guide-Artikel verwalten",
     description:
-      "Die PostgreSQL-Grundlage für den Deutschland-Ratgeber ist eingerichtet. Diese Seite zeigt derzeit die Datenbankartikel schreibgeschützt an.",
-    foundationNote:
-      "Der öffentliche Guide verwendet vorerst weiterhin die bestehende modulare statische Datenquelle. Die vorhandenen Artikel werden in den nächsten Schritten sicher und idempotent nach PostgreSQL migriert.",
+      "Erstellen und bearbeiten Sie Guide-Artikel in PostgreSQL und verwalten Sie Lifecycle sowie Featured-Status.",
+    lifecycleNote:
+      "Featured kann nur bei veröffentlichten Artikeln aktiviert werden. Beim Zurücksetzen auf Entwurf oder Archiv wird Featured automatisch entfernt.",
+    publicStatic:
+      "Der öffentliche Guide verwendet vorerst weiterhin die modulare statische Quelle. Admin-Lifecycle und Inhaltsänderungen wirken sich noch nicht auf den öffentlichen Guide aus.",
     back:
       "Zur Admin-Übersicht",
     publicPage:
       "Öffentlicher Guide",
+    create:
+      "Neuen Guide-Artikel erstellen",
+    edit:
+      "Bearbeiten",
+    publish:
+      "Veröffentlichen",
+    unpublish:
+      "Als Entwurf setzen",
+    archive:
+      "Archivieren",
+    restore:
+      "Als Entwurf wiederherstellen",
+    featuredOn:
+      "Als Featured setzen",
+    featuredOff:
+      "Featured entfernen",
     total:
       "Gesamt",
     drafts:
@@ -119,9 +165,9 @@ const copy = {
     featured:
       "Featured",
     emptyTitle:
-      "Noch keine Guide-Artikel in PostgreSQL",
+      "Keine Guide-Artikel in PostgreSQL",
     emptyDescription:
-      "Das ist erwartbar. Im nächsten Schritt migrieren wir die vorhandenen statischen Guide-Artikel sicher nach PostgreSQL.",
+      "Erstellen Sie einen neuen Guide-Artikel und speichern Sie ihn als Entwurf in PostgreSQL.",
     category:
       "Kategorie",
     slug:
@@ -149,15 +195,15 @@ const copy = {
         "Familie",
       invitation:
         "Einladung",
-      embassy:
-        "Botschaft und Konsulat",
+      "embassy-and-appointments":
+        "Botschaft und Termine",
       documents:
         "Dokumente",
-      language:
-        "Sprache",
+      "language-and-certificates":
+        "Sprache und Zertifikate",
       education:
         "Bildung",
-      career:
+      "work-and-career":
         "Arbeit und Karriere",
       "after-arrival":
         "Nach der Ankunft",
@@ -231,6 +277,100 @@ function getStatusClasses(
   return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-300";
 }
 
+function StatusButton({
+  articleId,
+  targetStatus,
+  children,
+  tone = "neutral",
+}: {
+  articleId: string;
+  targetStatus: AdminGuideArticleStatus;
+  children: ReactNode;
+  tone?:
+    | "neutral"
+    | "primary"
+    | "danger";
+}) {
+  const className =
+    tone === "primary"
+      ? "border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300 dark:hover:bg-emerald-500/15"
+      : tone === "danger"
+        ? "border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-300 dark:hover:bg-rose-500/15"
+        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800";
+
+  return (
+    <form
+      action={
+        updateGuideStatusAction
+      }
+    >
+      <input
+        type="hidden"
+        name="articleId"
+        value={articleId}
+      />
+
+      <input
+        type="hidden"
+        name="targetStatus"
+        value={targetStatus}
+      />
+
+      <button
+        type="submit"
+        className={`inline-flex min-h-10 items-center justify-center rounded-xl border px-4 py-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 ${className}`}
+      >
+        {children}
+      </button>
+    </form>
+  );
+}
+
+function FeaturedButton({
+  articleId,
+  enabled,
+  children,
+}: {
+  articleId: string;
+  enabled: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <form
+      action={
+        updateGuideFeaturedAction
+      }
+    >
+      <input
+        type="hidden"
+        name="articleId"
+        value={articleId}
+      />
+
+      <input
+        type="hidden"
+        name="enabled"
+        value={
+          enabled
+            ? "false"
+            : "true"
+        }
+      />
+
+      <button
+        type="submit"
+        className={
+          enabled
+            ? "inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 dark:focus-visible:ring-offset-slate-900"
+            : "inline-flex min-h-10 items-center justify-center rounded-xl border border-violet-200 bg-violet-50 px-4 py-2 text-sm font-bold text-violet-700 transition hover:bg-violet-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 dark:border-violet-500/20 dark:bg-violet-500/10 dark:text-violet-300 dark:hover:bg-violet-500/15 dark:focus-visible:ring-offset-slate-900"
+        }
+      >
+        {children}
+      </button>
+    </form>
+  );
+}
+
 export default async function AdminGuidePage() {
   const locale =
     await getLocale();
@@ -282,7 +422,7 @@ export default async function AdminGuidePage() {
         <header className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-teal-600 dark:text-teal-400">
                 {currentCopy.eyebrow}
               </p>
 
@@ -294,24 +434,35 @@ export default async function AdminGuidePage() {
                 {currentCopy.description}
               </p>
 
-              <p className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-800 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-200">
-                {currentCopy.foundationNote}
+              <p className="mt-4 rounded-2xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm leading-6 text-teal-800 dark:border-teal-500/20 dark:bg-teal-500/10 dark:text-teal-200">
+                {currentCopy.lifecycleNote}
+              </p>
+
+              <p className="mt-3 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm leading-6 text-sky-800 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-200">
+                {currentCopy.publicStatic}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/admin"
-                className="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-900"
+                className="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-900"
               >
                 {currentCopy.back}
               </Link>
 
               <Link
                 href="/guide"
-                className="inline-flex min-h-10 items-center justify-center rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white transition hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+                className="inline-flex min-h-10 items-center justify-center rounded-xl border border-teal-200 bg-teal-50 px-4 text-sm font-bold text-teal-700 transition hover:bg-teal-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 dark:border-teal-500/20 dark:bg-teal-500/10 dark:text-teal-300 dark:hover:bg-teal-500/15 dark:focus-visible:ring-offset-slate-900"
               >
                 {currentCopy.publicPage}
+              </Link>
+
+              <Link
+                href="/admin/guide/new"
+                className="inline-flex min-h-10 items-center justify-center rounded-xl bg-teal-600 px-4 text-sm font-bold text-white transition hover:bg-teal-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+              >
+                {currentCopy.create}
               </Link>
             </div>
           </div>
@@ -399,7 +550,7 @@ export default async function AdminGuidePage() {
                         }
                       </span>
 
-                      <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
+                      <span className="inline-flex rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700 dark:border-teal-500/20 dark:bg-teal-500/10 dark:text-teal-300">
                         {
                           currentCopy.categories[
                             article.categorySlug as AdminGuideCategorySlug
@@ -419,6 +570,72 @@ export default async function AdminGuidePage() {
                         ? article.titleDe
                         : article.titleUz}
                     </h2>
+
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      <Link
+                        href={`/admin/guide/${article.id}/edit`}
+                        className="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-800 transition hover:border-teal-200 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-teal-500/30 dark:hover:text-teal-300 dark:focus-visible:ring-offset-slate-900"
+                      >
+                        {currentCopy.edit}
+                      </Link>
+
+                      {article.status === "draft" && (
+                        <>
+                          <StatusButton
+                            articleId={article.id}
+                            targetStatus="published"
+                            tone="primary"
+                          >
+                            {currentCopy.publish}
+                          </StatusButton>
+
+                          <StatusButton
+                            articleId={article.id}
+                            targetStatus="archived"
+                            tone="danger"
+                          >
+                            {currentCopy.archive}
+                          </StatusButton>
+                        </>
+                      )}
+
+                      {article.status === "published" && (
+                        <>
+                          <FeaturedButton
+                            articleId={article.id}
+                            enabled={article.featured}
+                          >
+                            {article.featured
+                              ? currentCopy.featuredOff
+                              : currentCopy.featuredOn}
+                          </FeaturedButton>
+
+                          <StatusButton
+                            articleId={article.id}
+                            targetStatus="draft"
+                          >
+                            {currentCopy.unpublish}
+                          </StatusButton>
+
+                          <StatusButton
+                            articleId={article.id}
+                            targetStatus="archived"
+                            tone="danger"
+                          >
+                            {currentCopy.archive}
+                          </StatusButton>
+                        </>
+                      )}
+
+                      {article.status === "archived" && (
+                        <StatusButton
+                          articleId={article.id}
+                          targetStatus="draft"
+                        >
+                          {currentCopy.restore}
+                        </StatusButton>
+                      )}
+                    </div>
 
                     <dl className="mt-5 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-5">
                       <div>
