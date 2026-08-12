@@ -146,30 +146,16 @@ type AdminEventSummaryRow = {
   updated_at: string | Date;
 };
 
-type AdminEventRow = {
-  id: string;
-  slug: string;
-  title_uz: string;
-  title_de: string;
+type AdminEventRow = AdminEventSummaryRow & {
   excerpt_uz: string;
   excerpt_de: string;
   description_uz: string[];
   description_de: string[];
-  category: string;
-  format: string;
-  start_date: string | Date;
-  end_date: string | Date | null;
-  start_time: string | null;
-  end_time: string | null;
   timezone: string;
-  city: string | null;
-  bundesland: string | null;
   venue_name: string | null;
   address: string | null;
   online_url: string | null;
-  organizer_name: string;
   organizer_url: string | null;
-  registration_status: string;
   registration_url: string | null;
   registration_deadline: string | Date | null;
   languages: string[];
@@ -177,13 +163,9 @@ type AdminEventRow = {
   price_label_de: string;
   official_source_name: string;
   official_source_url: string;
-  verified_at: string | Date;
   important_notes_uz: string[];
   important_notes_de: string[];
-  status: string;
-  featured: boolean;
   created_at: string | Date;
-  updated_at: string | Date;
 };
 
 function normalizeStatus(
@@ -247,22 +229,15 @@ function normalizeRegistrationStatus(
 function toDateString(
   value: string | Date,
 ): string {
-  if (
-    value instanceof Date
-  ) {
-    return value
-      .toISOString()
-      .slice(0, 10);
+  if (value instanceof Date) {
+    return value.toISOString().slice(0, 10);
   }
 
   return value.slice(0, 10);
 }
 
 function toNullableDateString(
-  value:
-    | string
-    | Date
-    | null,
+  value: string | Date | null,
 ): string | null {
   return value === null
     ? null
@@ -277,7 +252,7 @@ function toDateTimeString(
     : value;
 }
 
-function toAdminEventSummary(
+function toSummary(
   row: AdminEventSummaryRow,
 ): AdminEventSummary {
   return {
@@ -332,13 +307,11 @@ function toAdminEventSummary(
   };
 }
 
-function toAdminEvent(
+function toDetail(
   row: AdminEventRow,
 ): AdminEvent {
   return {
-    ...toAdminEventSummary(
-      row,
-    ),
+    ...toSummary(row),
     excerptUz:
       row.excerpt_uz,
     excerptDe:
@@ -418,7 +391,7 @@ export async function getAdminEvents(): Promise<
     );
 
   return result.rows.map(
-    toAdminEventSummary,
+    toSummary,
   );
 }
 
@@ -477,7 +450,7 @@ export async function getAdminEventById(
     result.rows[0];
 
   return row
-    ? toAdminEvent(row)
+    ? toDetail(row)
     : null;
 }
 
@@ -581,4 +554,174 @@ export async function createAdminEvent(
   }
 
   return row.id;
+}
+
+export async function updateAdminEvent(
+  id: string,
+  input: AdminEventInput,
+): Promise<boolean> {
+  const result =
+    await getDb().query(
+      `
+        UPDATE events
+        SET
+          slug = $1,
+          title_uz = $2,
+          title_de = $3,
+          excerpt_uz = $4,
+          excerpt_de = $5,
+          description_uz = $6,
+          description_de = $7,
+          category = $8,
+          format = $9,
+          start_date = $10,
+          end_date = $11,
+          start_time = $12,
+          end_time = $13,
+          timezone = $14,
+          city = $15,
+          bundesland = $16,
+          venue_name = $17,
+          address = $18,
+          online_url = $19,
+          organizer_name = $20,
+          organizer_url = $21,
+          registration_status = $22,
+          registration_url = $23,
+          registration_deadline = $24,
+          languages = $25,
+          price_label_uz = $26,
+          price_label_de = $27,
+          official_source_name = $28,
+          official_source_url = $29,
+          verified_at = $30,
+          important_notes_uz = $31,
+          important_notes_de = $32,
+          updated_at = NOW()
+        WHERE id = $33
+      `,
+      [
+        input.slug,
+        input.titleUz,
+        input.titleDe,
+        input.excerptUz,
+        input.excerptDe,
+        input.descriptionUz,
+        input.descriptionDe,
+        input.category,
+        input.format,
+        input.startDate,
+        input.endDate,
+        input.startTime,
+        input.endTime,
+        input.timezone,
+        input.city,
+        input.bundesland,
+        input.venueName,
+        input.address,
+        input.onlineUrl,
+        input.organizerName,
+        input.organizerUrl,
+        input.registrationStatus,
+        input.registrationUrl,
+        input.registrationDeadline,
+        input.languages,
+        input.priceLabelUz,
+        input.priceLabelDe,
+        input.officialSourceName,
+        input.officialSourceUrl,
+        input.verifiedAt,
+        input.importantNotesUz,
+        input.importantNotesDe,
+        id,
+      ],
+    );
+
+  return (
+    result.rowCount ??
+    0
+  ) > 0;
+}
+
+export async function updateAdminEventStatus(
+  id: string,
+  status: AdminEventStatus,
+): Promise<boolean> {
+  const result =
+    await getDb().query(
+      `
+        UPDATE events
+        SET
+          status = $1,
+          featured =
+            CASE
+              WHEN $1 = 'published'
+                THEN featured
+              ELSE FALSE
+            END,
+          updated_at = NOW()
+        WHERE id = $2
+      `,
+      [
+        status,
+        id,
+      ],
+    );
+
+  return (
+    result.rowCount ??
+    0
+  ) > 0;
+}
+
+export async function setAdminEventFeatured(
+  id: string,
+  enabled: boolean,
+): Promise<
+  "updated"
+  | "not_found"
+  | "not_published"
+> {
+  const result =
+    await getDb().query<{
+      status: string;
+    }>(
+      `
+        SELECT status
+        FROM events
+        WHERE id = $1
+        LIMIT 1
+      `,
+      [id],
+    );
+
+  const event =
+    result.rows[0];
+
+  if (!event) {
+    return "not_found";
+  }
+
+  if (
+    enabled &&
+    event.status !== "published"
+  ) {
+    return "not_published";
+  }
+
+  await getDb().query(
+    `
+      UPDATE events
+      SET
+        featured = $1,
+        updated_at = NOW()
+      WHERE id = $2
+    `,
+    [
+      enabled,
+      id,
+    ],
+  );
+
+  return "updated";
 }
