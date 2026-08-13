@@ -259,44 +259,32 @@ export default function SearchSection() {
           <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-950/5 sm:p-6 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/20">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-500" />
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <div className="relative flex-1">
-                <span className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
-                  <SearchIcon />
-                </span>
+            <div className="relative">
+              <span className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
+                <SearchIcon />
+              </span>
 
-                <input
-                  type="search"
-                  value={
-                    searchQuery
-                  }
-                  onChange={(
-                    event,
-                  ) =>
-                    setSearchQuery(
-                      event.target
-                        .value,
-                    )
-                  }
-                  aria-label={t(
-                    "inputLabel",
-                  )}
-                  placeholder={t(
-                    "placeholder",
-                  )}
-                  className="h-16 w-full rounded-2xl border border-slate-200 bg-slate-50 pl-14 pr-5 text-base font-medium text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-emerald-400 dark:focus:bg-slate-950"
-                />
-              </div>
-
-              <button
-                type="button"
-                className="inline-flex h-16 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 px-7 font-bold text-white shadow-lg shadow-emerald-600/20 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-600/25"
-              >
-                {t(
-                  "searchButton",
+              <input
+                type="search"
+                value={
+                  searchQuery
+                }
+                onChange={(
+                  event,
+                ) =>
+                  setSearchQuery(
+                    event.target
+                      .value,
+                  )
+                }
+                aria-label={t(
+                  "inputLabel",
                 )}
-                <ArrowRightIcon />
-              </button>
+                placeholder={t(
+                  "placeholder",
+                )}
+                className="h-16 w-full rounded-2xl border border-slate-200 bg-slate-50 pl-14 pr-5 text-base font-medium text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-emerald-400 dark:focus:bg-slate-950"
+              />
             </div>
 
             <div
