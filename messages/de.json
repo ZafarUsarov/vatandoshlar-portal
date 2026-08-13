@@ -121,18 +121,20 @@
   "SearchSection": {
     "badge": "Globale Suche",
     "title": "Finden Sie wichtige Informationen in wenigen Sekunden",
-    "description": "Durchsuchen Sie Jobs, Dienstleistungen, Nachrichten, Telegram-Gruppen und Veranstaltungen an einem Ort.",
+    "description": "Finden Sie Guide-Artikel, Fachkräfte, Jobs, Dienstleistungen, Nachrichten, Telegram-Gruppen und Veranstaltungen über eine Suche.",
     "inputLabel": "Das Portal durchsuchen",
-    "placeholder": "Zum Beispiel: Elektriker, Berlin, Anwalt, Minijob...",
+    "placeholder": "Zum Beispiel: Anmeldung, Steuer-ID, Ausbildung...",
     "searchButton": "Suchen",
     "categoryFilterLabel": "Suchkategorien",
     "categories": {
       "all": "Alle",
       "news": "Nachrichten",
       "services": "Dienstleistungen",
+      "specialists": "Fachkräfte",
       "jobs": "Arbeit",
       "telegram": "Telegram",
-      "events": "Veranstaltungen"
+      "events": "Veranstaltungen",
+      "guide": "Guide"
     },
     "results": {
       "title": "Ergebnisse",
@@ -182,15 +184,15 @@
       },
       "services": {
         "title": "Dienstleistungen finden",
-        "description": "Dolmetscher, Anwälte, Ärzte und weitere Fachkräfte"
+        "description": "Übersetzung, Recht, Medizin und weitere Dienstleistungen"
       },
       "telegram": {
         "title": "Telegram-Gruppen",
         "description": "Aktive Communities nach Bundesland"
       },
-      "events": {
-        "title": "Veranstaltungen",
-        "description": "Geprüfte Treffen und Veranstaltungen"
+      "guide": {
+        "title": "Deutschland Guide",
+        "description": "Visa, Anmeldung, Ausbildung und Alltag"
       }
     }
   },

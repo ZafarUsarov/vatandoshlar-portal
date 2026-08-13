@@ -121,18 +121,20 @@
   "SearchSection": {
     "badge": "Global qidiruv",
     "title": "Kerakli ma’lumotni bir necha soniyada toping",
-    "description": "Ish, xizmat, yangilik, Telegram guruhi yoki tadbirni bitta qidiruv orqali toping.",
+    "description": "Qo‘llanma maqolalari, mutaxassislar, ish, xizmat, yangilik, Telegram guruhi va tadbirlarni bitta qidiruv orqali toping.",
     "inputLabel": "Portal bo‘ylab qidirish",
-    "placeholder": "Masalan: Elektrik, Berlin, yurist, Minijob...",
+    "placeholder": "Masalan: Anmeldung, Steuer-ID, Ausbildung...",
     "searchButton": "Qidirish",
     "categoryFilterLabel": "Qidiruv kategoriyalari",
     "categories": {
       "all": "Barchasi",
       "news": "Yangilik",
       "services": "Xizmat",
+      "specialists": "Mutaxassis",
       "jobs": "Ish",
       "telegram": "Telegram",
-      "events": "Tadbir"
+      "events": "Tadbir",
+      "guide": "Qo‘llanma"
     },
     "results": {
       "title": "Natijalar",
@@ -182,15 +184,15 @@
       },
       "services": {
         "title": "Xizmat topish",
-        "description": "Tarjimon, yurist, shifokor va mutaxassislar"
+        "description": "Tarjima, huquq, tibbiyot va boshqa xizmatlar"
       },
       "telegram": {
         "title": "Telegram guruhlari",
         "description": "Bundeslandlar bo‘yicha faol hamjamiyatlar"
       },
-      "events": {
-        "title": "Tadbirlar",
-        "description": "Tekshirilgan uchrashuv va tadbirlar"
+      "guide": {
+        "title": "Germaniya qo‘llanmasi",
+        "description": "Viza, Anmeldung, Ausbildung va kundalik hayot"
       }
     }
   },
