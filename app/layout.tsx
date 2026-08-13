@@ -47,7 +47,6 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: "website",
-    locale: "uz_UZ",
     siteName: "Vatandoshlar.de",
     title: "Vatandoshlar.de",
     description:

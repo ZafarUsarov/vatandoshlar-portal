@@ -53,16 +53,43 @@ function isSpecialistCategory(
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale =
+    (await getLocale()) as SupportedLocale;
+
   const t =
     await getTranslations(
       "SpecialistsPage.metadata",
     );
 
+  const title =
+    t("title");
+  const description =
+    t("description");
+
   return {
-    title:
-      t("title"),
-    description:
-      t("description"),
+    title,
+    description,
+    alternates: {
+      canonical:
+        `/${locale}/specialists`,
+      languages: {
+        uz: "/uz/specialists",
+        de: "/de/specialists",
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale:
+        locale === "de"
+          ? "de_DE"
+          : "uz_UZ",
+      siteName:
+        "Vatandoshlar.de",
+      title,
+      description,
+      url:
+        `/${locale}/specialists`,
+    },
   };
 }
 

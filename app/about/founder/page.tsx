@@ -13,13 +13,20 @@ import { founderProfile } from "@/data/founder";
 type SupportedFounderLocale = "uz" | "de";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale =
+    (await getLocale()) as SupportedFounderLocale;
+
   const t = await getTranslations(
     "FounderPage.metadata",
   );
 
+  const title = t("title");
+  const description =
+    t("description");
+
   return {
-    title: t("title"),
-    description: t("description"),
+    title,
+    description,
     keywords: [
       "Vatandoshlar.de",
       "Zafar Usarov",
@@ -30,10 +37,26 @@ export async function generateMetadata(): Promise<Metadata> {
       "Wirtschaftsinformatik",
       "Next.js",
     ],
+    alternates: {
+      canonical:
+        `/${locale}/about/founder`,
+      languages: {
+        uz: "/uz/about/founder",
+        de: "/de/about/founder",
+      },
+    },
     openGraph: {
-      title: t("title"),
-      description: t("description"),
+      title,
+      description,
       type: "profile",
+      locale:
+        locale === "de"
+          ? "de_DE"
+          : "uz_UZ",
+      siteName:
+        "Vatandoshlar.de",
+      url:
+        `/${locale}/about/founder`,
     },
   };
 }

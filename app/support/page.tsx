@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import {
+  getLocale,
+  getTranslations,
+} from "next-intl/server";
 
 import Header from "@/components/Header";
 import SupportHero from "@/components/support/SupportHero";
@@ -11,11 +14,41 @@ const paymentLinks = {
 } as const;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("SupportPage.metadata");
+  const locale =
+    (await getLocale()) as "uz" | "de";
+
+  const t = await getTranslations(
+    "SupportPage.metadata",
+  );
+
+  const title = t("title");
+  const description =
+    t("description");
 
   return {
-    title: t("title"),
-    description: t("description"),
+    title,
+    description,
+    alternates: {
+      canonical:
+        `/${locale}/support`,
+      languages: {
+        uz: "/uz/support",
+        de: "/de/support",
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale:
+        locale === "de"
+          ? "de_DE"
+          : "uz_UZ",
+      siteName:
+        "Vatandoshlar.de",
+      title,
+      description,
+      url:
+        `/${locale}/support`,
+    },
   };
 }
 

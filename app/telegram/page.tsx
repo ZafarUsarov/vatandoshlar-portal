@@ -11,19 +11,47 @@ import { Link } from "../../i18n/navigation";
 type Locale = "uz" | "de";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as Locale;
+  const locale =
+    (await getLocale()) as Locale;
 
-  return locale === "uz"
-    ? {
-        title: "Telegram hamjamiyatlari | Vatandoshlar.de",
-        description:
-          "Germaniya federal yerlari bo‘yicha o‘zbek Telegram hamjamiyatlarini toping.",
-      }
-    : {
-        title: "Telegram-Communitys | Vatandoshlar.de",
-        description:
-          "Finden Sie usbekische Telegram-Communitys nach Bundesländern in Deutschland.",
-      };
+  const isGerman =
+    locale === "de";
+
+  const title = isGerman
+    ? "Telegram-Communitys | Vatandoshlar.de"
+    : "Telegram hamjamiyatlari | Vatandoshlar.de";
+
+  const description = isGerman
+    ? "Finden Sie usbekische Telegram-Communitys nach Bundesländern in Deutschland."
+    : "Germaniya federal yerlari bo‘yicha o‘zbek Telegram hamjamiyatlarini toping.";
+
+  return {
+    title: {
+      absolute: title,
+    },
+    description,
+    alternates: {
+      canonical:
+        `/${locale}/telegram`,
+      languages: {
+        uz: "/uz/telegram",
+        de: "/de/telegram",
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale:
+        isGerman
+          ? "de_DE"
+          : "uz_UZ",
+      siteName:
+        "Vatandoshlar.de",
+      title,
+      description,
+      url:
+        `/${locale}/telegram`,
+    },
+  };
 }
 
 export default async function TelegramPage() {
