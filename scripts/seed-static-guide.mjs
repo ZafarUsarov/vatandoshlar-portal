@@ -285,7 +285,7 @@ async function loadStaticGuideArticles() {
         "articles.ts",
       );
 
-    const module =
+    const guideModule =
       await import(
         `${pathToFileURL(
           aggregatorPath,
@@ -294,7 +294,7 @@ async function loadStaticGuideArticles() {
 
     if (
       !Array.isArray(
-        module.localizedGuideArticles,
+        guideModule.localizedGuideArticles,
       )
     ) {
       throw new Error(
@@ -303,7 +303,7 @@ async function loadStaticGuideArticles() {
     }
 
     return [
-      module.localizedGuideArticles,
+      guideModule.localizedGuideArticles,
       temporaryRoot,
     ];
   } catch (error) {

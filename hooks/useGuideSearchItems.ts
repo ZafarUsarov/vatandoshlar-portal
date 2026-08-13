@@ -11,12 +11,18 @@ type GuideSearchApiResponse = Readonly<{
   items?: ReadonlyArray<GlobalSearchItem>;
 }>;
 
+type GuideSearchState = Readonly<{
+  locale: SearchLocale | null;
+  items: ReadonlyArray<GlobalSearchItem>;
+}>;
+
 export function useGuideSearchItems(
   locale: SearchLocale,
 ): ReadonlyArray<GlobalSearchItem> {
-  const [items, setItems] = useState<
-    ReadonlyArray<GlobalSearchItem>
-  >([]);
+  const [state, setState] = useState<GuideSearchState>({
+    locale: null,
+    items: [],
+  });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -41,11 +47,12 @@ export function useGuideSearchItems(
           (await response.json()) as GuideSearchApiResponse;
 
         if (!controller.signal.aborted) {
-          setItems(
-            Array.isArray(payload.items)
+          setState({
+            locale,
+            items: Array.isArray(payload.items)
               ? payload.items
               : [],
-          );
+          });
         }
       } catch (error) {
         if (
@@ -56,12 +63,14 @@ export function useGuideSearchItems(
         }
 
         if (!controller.signal.aborted) {
-          setItems([]);
+          setState({
+            locale,
+            items: [],
+          });
         }
       }
     }
 
-    setItems([]);
     void loadGuideSearchItems();
 
     return () => {
@@ -69,5 +78,7 @@ export function useGuideSearchItems(
     };
   }, [locale]);
 
-  return items;
+  return state.locale === locale
+    ? state.items
+    : [];
 }

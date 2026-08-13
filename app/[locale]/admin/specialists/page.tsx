@@ -387,12 +387,6 @@ export default async function AdminSpecialistsPage() {
         specialist.status === "published",
     ).length;
 
-  const archivedCount =
-    specialists.filter(
-      (specialist) =>
-        specialist.status === "archived",
-    ).length;
-
   const verifiedCount =
     specialists.filter(
       (specialist) =>

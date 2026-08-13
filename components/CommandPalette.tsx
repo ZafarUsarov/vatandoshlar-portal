@@ -12,6 +12,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
 import { createPortal } from "react-dom";
@@ -459,7 +460,11 @@ export default function CommandPalette() {
 
   const storageKey = `vatandoshlar-recent-searches-${locale}`;
 
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useSyncExternalStore(
+    () => () => undefined,
+    () => true,
+    () => false,
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -571,10 +576,6 @@ export default function CommandPalette() {
   }, [storageKey]);
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
       const isCommandShortcut =
         (event.metaKey || event.ctrlKey) &&
@@ -634,10 +635,6 @@ export default function CommandPalette() {
       document.body.style.overflow = previousOverflow;
     };
   }, [isOpen]);
-
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [query]);
 
   useEffect(() => {
     const activeElement =
@@ -765,7 +762,10 @@ export default function CommandPalette() {
                 ref={inputRef}
                 type="search"
                 value={query}
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => {
+                  setQuery(event.target.value);
+                  setSelectedIndex(0);
+                }}
                 onKeyDown={handleInputKeyDown}
                 placeholder={t("placeholder")}
                 autoComplete="off"
@@ -934,7 +934,10 @@ export default function CommandPalette() {
 
                   <button
                     type="button"
-                    onClick={() => setQuery("")}
+                    onClick={() => {
+                      setQuery("");
+                      setSelectedIndex(0);
+                    }}
                     className="mt-5 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
                   >
                     {t("emptyState.clear")}

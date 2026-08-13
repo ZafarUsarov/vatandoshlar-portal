@@ -432,7 +432,14 @@ export default function Header() {
     const initialDarkMode = getInitialDarkMode();
 
     applyTheme(initialDarkMode);
-    setIsDarkMode(initialDarkMode);
+
+    const frameId = window.requestAnimationFrame(() => {
+      setIsDarkMode(initialDarkMode);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
   }, [applyTheme]);
 
   useEffect(() => {
@@ -488,10 +495,6 @@ export default function Header() {
       document.body.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
 
   return (
     <>

@@ -2,7 +2,6 @@
 
 import type {
   SpecialistCategory,
-  SpecialistStatus,
 } from "@/types/specialist";
 
 type FilterOption<T extends string> = Readonly<{

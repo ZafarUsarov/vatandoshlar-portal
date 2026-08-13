@@ -10,7 +10,6 @@ export function useActiveSection(
 
   useEffect(() => {
     if (sectionIds.length === 0) {
-      setActiveSectionId(null);
       return;
     }
 
@@ -21,7 +20,6 @@ export function useActiveSection(
       );
 
     if (elements.length === 0) {
-      setActiveSectionId(null);
       return;
     }
 
@@ -75,5 +73,16 @@ export function useActiveSection(
     return () => observer.disconnect();
   }, [sectionIds]);
 
-  return activeSectionId;
+  if (sectionIds.length === 0) {
+    return null;
+  }
+
+  if (
+    activeSectionId &&
+    sectionIds.includes(activeSectionId)
+  ) {
+    return activeSectionId;
+  }
+
+  return sectionIds[0] ?? null;
 }

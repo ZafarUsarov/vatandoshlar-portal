@@ -6,7 +6,6 @@ import {
 } from "../../../data/guide/categories";
 import type {
   GlobalSearchItem,
-  SearchLocale,
 } from "../../../data/searchIndex";
 import {
   getPublishedGuideArticlesByCategory,
