@@ -187,6 +187,7 @@ export default async function JobsSection() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-300">
               <BriefcaseIcon className="size-4" />
+
               {
                 copy.badge
               }
@@ -210,7 +211,7 @@ export default async function JobsSection() {
 
           <Link
             href="/jobs"
-            className="group hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/10 lg:inline-flex"
+            className="group hidden items-center gap-2 rounded-full border border-emerald-400/60 bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-950/20 transition duration-200 hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 lg:inline-flex"
           >
             {
               copy.allGuides
@@ -285,7 +286,7 @@ export default async function JobsSection() {
         <div className="mt-8 flex justify-center lg:hidden">
           <Link
             href="/jobs"
-            className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/10"
+            className="group inline-flex items-center gap-2 rounded-full border border-emerald-400/60 bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-950/20 transition duration-200 hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             {
               copy.allGuides
