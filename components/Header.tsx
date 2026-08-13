@@ -673,7 +673,7 @@ export default function Header() {
                 ${
                   isScrolled
                     ? "h-10 w-10 gap-0 px-0"
-                    : "h-11 w-11 gap-0 px-0 2xl:w-[142px] 2xl:gap-2.5 2xl:px-3.5"
+                    : "h-11 w-11 gap-0 px-0"
                 }
               `}
             >
@@ -690,7 +690,7 @@ export default function Header() {
                   ${
                     isScrolled
                       ? "max-w-0 -translate-x-1 overflow-hidden opacity-0"
-                      : "max-w-0 -translate-x-1 overflow-hidden opacity-0 2xl:max-w-20 2xl:translate-x-0 2xl:opacity-100"
+                      : "max-w-0 -translate-x-1 overflow-hidden opacity-0"
                   }
                 `}
               >{t("actions.search")}</span>
@@ -710,7 +710,7 @@ export default function Header() {
                   ${
                     isScrolled
                       ? "hidden max-w-0 border-0 px-0 py-0 opacity-0"
-                      : "hidden max-w-12 px-1.5 py-0.5 opacity-100 2xl:inline-flex"
+                      : "hidden max-w-0 border-0 px-0 py-0 opacity-0"
                   }
                 `}
               >
