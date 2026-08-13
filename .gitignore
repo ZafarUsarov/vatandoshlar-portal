@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 vatandoshlar-portal.zip
+
+# Local database backups
+backups/
