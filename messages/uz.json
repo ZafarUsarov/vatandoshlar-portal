@@ -881,5 +881,19 @@
       }
     },
     "privacy": "To‘lov bevosita PayPal yoki Taps platformasida amalga oshiriladi. Vatandoshlar.de karta yoki bank ma’lumotlaringizni qabul qilmaydi va saqlamaydi."
+  },
+  "NotFoundPage": {
+    "eyebrow": "404 · Sahifa topilmadi",
+    "title": "Siz izlayotgan sahifa topilmadi",
+    "description": "Havola eskirgan, manzil noto‘g‘ri yozilgan yoki sahifa boshqa joyga ko‘chirilgan bo‘lishi mumkin. Bosh sahifaga qayting yoki Germaniya qo‘llanmasini ko‘ring.",
+    "home": "Bosh sahifaga qaytish",
+    "guide": "Germaniya qo‘llanmasi"
+  },
+  "ErrorPage": {
+    "eyebrow": "Texnik xatolik",
+    "title": "Sahifani yuklashda muammo yuz berdi",
+    "description": "Bu vaqtinchalik texnik muammo bo‘lishi mumkin. Qayta urinib ko‘ring yoki bosh sahifaga qayting.",
+    "retry": "Qayta urinish",
+    "home": "Bosh sahifaga qaytish"
   }
 }

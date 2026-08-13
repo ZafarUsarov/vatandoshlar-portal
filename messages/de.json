@@ -881,5 +881,19 @@
       }
     },
     "privacy": "Die Zahlung erfolgt direkt über PayPal oder Taps. Vatandoshlar.de erhält und speichert keine Karten- oder Bankdaten."
+  },
+  "NotFoundPage": {
+    "eyebrow": "404 · Seite nicht gefunden",
+    "title": "Die gesuchte Seite wurde nicht gefunden",
+    "description": "Der Link ist möglicherweise veraltet, die Adresse wurde falsch eingegeben oder die Seite wurde verschoben. Kehren Sie zur Startseite zurück oder öffnen Sie den Deutschland-Ratgeber.",
+    "home": "Zur Startseite",
+    "guide": "Deutschland-Ratgeber"
+  },
+  "ErrorPage": {
+    "eyebrow": "Technischer Fehler",
+    "title": "Beim Laden der Seite ist ein Problem aufgetreten",
+    "description": "Möglicherweise handelt es sich um ein vorübergehendes technisches Problem. Versuchen Sie es erneut oder kehren Sie zur Startseite zurück.",
+    "retry": "Erneut versuchen",
+    "home": "Zur Startseite"
   }
 }
