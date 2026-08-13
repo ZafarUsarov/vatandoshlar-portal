@@ -22,6 +22,9 @@ import {
   getPublishedSpecialists,
 } from "@/lib/specialists/public-specialists-repository";
 
+export const dynamic =
+  "force-dynamic";
+
 const baseUrl =
   "https://vatandoshlar.de";
 
