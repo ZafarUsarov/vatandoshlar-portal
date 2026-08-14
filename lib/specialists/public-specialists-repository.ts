@@ -55,6 +55,7 @@ type PublishedSpecialistRow = {
   featured: boolean;
   premium: boolean;
   sponsored: boolean;
+  updated_at: string | Date;
 };
 
 type PublishedSpecialistCategoryRow = {
@@ -147,6 +148,14 @@ function compactObject<
         entry[1].length > 0,
     ),
   ) as Partial<TValue>;
+}
+
+function toDateTimeString(
+  value: string | Date,
+): string {
+  return value instanceof Date
+    ? value.toISOString()
+    : value;
 }
 
 function toPublicSpecialist(
@@ -317,6 +326,11 @@ function toPublicSpecialist(
             row.review_count,
         }
       : {}),
+
+    updatedAt:
+      toDateTimeString(
+        row.updated_at,
+      ),
   };
 }
 
@@ -383,7 +397,8 @@ const publishedSpecialistSelect = `
     verified,
     featured,
     premium,
-    sponsored
+    sponsored,
+    updated_at
   FROM specialists
 `;
 

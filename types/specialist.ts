@@ -68,6 +68,7 @@ export type Specialist = Readonly<{
   yearsOfExperience?: number;
   rating?: number;
   reviewCount?: number;
+  updatedAt?: string;
 }>;
 
 export type LocalizedSpecialist = Omit<
