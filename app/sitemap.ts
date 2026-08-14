@@ -125,6 +125,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ),
     );
 
+  const jobsLastModified =
+    getLatestLastModified(
+      jobs.map(
+        (guide) =>
+          guide.updatedAt,
+      ),
+    );
+
   const specialistsLastModified =
     getLatestLastModified(
       specialists.map(
@@ -242,6 +250,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency:
           "weekly",
         priority: 0.8,
+        lastModified:
+          jobsLastModified,
       },
     ),
 
