@@ -66,6 +66,28 @@ export async function generateMetadata({
           `/de/jobs/${guide.slug}`,
       },
     },
+    openGraph: {
+      type: "article",
+      title:
+        guide.title,
+      description:
+        guide.description,
+      url:
+        `/${locale}/jobs/${guide.slug}`,
+      siteName:
+        "Vatandoshlar.de",
+      locale:
+        locale === "de"
+          ? "de_DE"
+          : "uz_UZ",
+    },
+    twitter: {
+      card: "summary",
+      title:
+        guide.title,
+      description:
+        guide.description,
+    },
   };
 }
 

@@ -58,19 +58,24 @@ export async function generateMetadata({
     };
   }
 
+  const title =
+    t("title", {
+      name:
+        specialist.name,
+    });
+
+  const canonicalUrl =
+    `/${locale}/specialists/${specialist.slug}`;
+
   return {
-    title:
-      t("title", {
-        name:
-          specialist.name,
-      }),
+    title,
 
     description:
       specialist.shortDescription,
 
     alternates: {
       canonical:
-        `/${locale}/specialists/${specialist.slug}`,
+        canonicalUrl,
 
       languages: {
         uz:
@@ -78,6 +83,26 @@ export async function generateMetadata({
         de:
           `/de/specialists/${specialist.slug}`,
       },
+    },
+    openGraph: {
+      type: "profile",
+      title,
+      description:
+        specialist.shortDescription,
+      url:
+        canonicalUrl,
+      siteName:
+        "Vatandoshlar.de",
+      locale:
+        locale === "de"
+          ? "de_DE"
+          : "uz_UZ",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description:
+        specialist.shortDescription,
     },
   };
 }

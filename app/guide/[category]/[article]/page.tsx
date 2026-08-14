@@ -103,8 +103,21 @@ export async function generateMetadata({
         guideArticle.title,
       description:
         guideArticle.excerpt,
+      url:
+        `/${locale}/guide/${categorySlug}/${articleSlug}`,
       siteName:
         "Vatandoshlar.de",
+      locale:
+        locale === "de"
+          ? "de_DE"
+          : "uz_UZ",
+    },
+    twitter: {
+      card: "summary",
+      title:
+        guideArticle.title,
+      description:
+        guideArticle.excerpt,
     },
   };
 }
@@ -172,7 +185,7 @@ export default async function GuideArticleRoute({
     description:
       article.excerpt,
     dateModified:
-      article.lastReviewedAt,
+      article.updatedAt,
     inLanguage:
       locale,
     isPartOf: {

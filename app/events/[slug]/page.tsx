@@ -106,6 +106,28 @@ export async function generateMetadata({
           `/de/events/${event.slug}`,
       },
     },
+    openGraph: {
+      type: "website",
+      title:
+        event.title,
+      description:
+        event.excerpt,
+      url:
+        `/${locale}/events/${event.slug}`,
+      siteName:
+        "Vatandoshlar.de",
+      locale:
+        locale === "de"
+          ? "de_DE"
+          : "uz_UZ",
+    },
+    twitter: {
+      card: "summary",
+      title:
+        event.title,
+      description:
+        event.excerpt,
+    },
   };
 }
 

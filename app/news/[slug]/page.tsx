@@ -113,6 +113,13 @@ export async function generateMetadata({
           }
         : {}),
     },
+    twitter: {
+      card: "summary",
+      title:
+        article.title,
+      description:
+        article.excerpt,
+    },
   };
 }
 
