@@ -31,17 +31,37 @@ export async function generateMetadata(): Promise<Metadata> {
       "NewsPage.metadata",
     );
 
+  const title =
+    t("title");
+
+  const description =
+    t("description");
+
+  const canonicalUrl =
+    `/${locale}/news`;
+
   return {
-    title: t("title"),
-    description:
-      t("description"),
+    title,
+    description,
     alternates: {
       canonical:
-        `/${locale}/news`,
+        canonicalUrl,
       languages: {
         uz: "/uz/news",
         de: "/de/news",
       },
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName:
+        "Vatandoshlar.de",
+      locale:
+        locale === "de"
+          ? "de_DE"
+          : "uz_UZ",
+      type: "website",
     },
   };
 }
