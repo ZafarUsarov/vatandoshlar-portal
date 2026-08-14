@@ -26,6 +26,7 @@ type PublishedServiceSummaryRow = {
   source_description_de: string;
   location_uz: string;
   location_de: string;
+  updated_at: string | Date;
   featured: boolean;
 };
 
@@ -97,6 +98,14 @@ function toSafeNumericId(
     : 0;
 }
 
+function toDateTimeString(
+  value: string | Date,
+): string {
+  return value instanceof Date
+    ? value.toISOString()
+    : value;
+}
+
 function toPublicServiceSummary(
   row: PublishedServiceSummaryRow,
   locale: SupportedContentLocale,
@@ -159,6 +168,11 @@ function toPublicServiceSummary(
       locale === "de"
         ? row.location_de
         : row.location_uz,
+
+    updatedAt:
+      toDateTimeString(
+        row.updated_at,
+      ),
 
     featured:
       row.featured,
@@ -249,6 +263,7 @@ const getPublishedServicesCached =
               source_description_de,
               location_uz,
               location_de,
+              updated_at,
               featured
             FROM services
             WHERE
@@ -318,6 +333,7 @@ const getPublishedServiceBySlugCached =
               source_description_de,
               location_uz,
               location_de,
+              updated_at,
               featured
             FROM services
             WHERE
@@ -375,6 +391,7 @@ const getFeaturedPublishedServiceCached =
               source_description_de,
               location_uz,
               location_de,
+              updated_at,
               featured
             FROM services
             WHERE
@@ -436,6 +453,7 @@ const getRelatedPublishedServicesCached =
               source_description_de,
               location_uz,
               location_de,
+              updated_at,
               featured
             FROM services
             WHERE

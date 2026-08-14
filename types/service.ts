@@ -45,5 +45,6 @@ export type ServiceItem = Readonly<{
   officialSourceUrl: string;
   sourceDescription: string;
   location: string;
+  updatedAt?: string;
   featured?: boolean;
 }>;
