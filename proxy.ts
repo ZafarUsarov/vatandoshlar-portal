@@ -81,8 +81,15 @@ function isAdminPath(
 }
 
 export default auth((request) => {
+  const forwardedHost =
+    request.headers
+      .get("x-forwarded-host")
+      ?.split(",")[0]
+      ?.trim()
+      .toLowerCase();
+
   if (
-    request.nextUrl.hostname ===
+    forwardedHost ===
     RAILWAY_HOSTNAME
   ) {
     const canonicalUrl =
