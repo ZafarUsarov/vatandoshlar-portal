@@ -297,6 +297,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ),
 
     ...createLocalizedEntries(
+      "/telegram/how-to-ask",
+      {
+        changeFrequency:
+          "monthly",
+        priority: 0.6,
+      },
+    ),
+
+    ...createLocalizedEntries(
       "/events",
       {
         changeFrequency:
