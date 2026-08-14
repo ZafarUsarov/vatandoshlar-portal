@@ -20,6 +20,7 @@ export type AdminNewsArticleSummary = {
   status: AdminNewsStatus;
   featured: boolean;
   verifiedAt: string;
+  publishedAt: string | null;
   updatedAt: string;
 };
 
@@ -46,6 +47,7 @@ export type AdminNewsArticle = {
   verifiedAt: string;
   status: AdminNewsStatus;
   featured: boolean;
+  publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -83,6 +85,7 @@ type AdminNewsArticleSummaryRow = {
   status: string;
   featured: boolean;
   verified_at: string | Date;
+  published_at: string | Date | null;
   updated_at: string | Date;
 };
 
@@ -109,6 +112,7 @@ type AdminNewsArticleRow = {
   verified_at: string | Date;
   status: string;
   featured: boolean;
+  published_at: string | Date | null;
   created_at: string | Date;
   updated_at: string | Date;
 };
@@ -170,6 +174,12 @@ function toAdminNewsArticleSummary(
     verifiedAt: toDateOnlyString(
       row.verified_at,
     ),
+    publishedAt:
+      row.published_at === null
+        ? null
+        : toDateTimeString(
+            row.published_at,
+          ),
     updatedAt: toDateTimeString(
       row.updated_at,
     ),
@@ -208,6 +218,12 @@ function toAdminNewsArticle(
     ),
     status: normalizeStatus(row.status),
     featured: row.featured,
+    publishedAt:
+      row.published_at === null
+        ? null
+        : toDateTimeString(
+            row.published_at,
+          ),
     createdAt: toDateTimeString(
       row.created_at,
     ),
@@ -231,6 +247,7 @@ export async function getAdminNewsArticles(): Promise<
           status,
           featured,
           verified_at,
+          published_at,
           updated_at
         FROM news_articles
         ORDER BY
@@ -273,6 +290,7 @@ export async function getAdminNewsArticleById(
           verified_at,
           status,
           featured,
+          published_at,
           created_at,
           updated_at
         FROM news_articles
@@ -449,6 +467,15 @@ export async function updateAdminNewsArticleStatus(
             WHEN $1 = 'published'
               THEN featured
             ELSE FALSE
+          END,
+        published_at =
+          CASE
+            WHEN $1 = 'published'
+              THEN COALESCE(
+                published_at,
+                NOW()
+              )
+            ELSE published_at
           END,
         updated_at = NOW()
       WHERE id = $2
