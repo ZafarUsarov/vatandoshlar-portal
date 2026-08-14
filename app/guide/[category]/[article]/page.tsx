@@ -28,6 +28,18 @@ type GuideArticleRouteProps = Readonly<{
 export const dynamic =
   "force-dynamic";
 
+const baseUrl =
+  "https://vatandoshlar.de";
+
+function serializeStructuredData(
+  data: object,
+): string {
+  return JSON.stringify(data).replace(
+    /</g,
+    "\\u003c",
+  );
+}
+
 export async function generateMetadata({
   params,
 }: GuideArticleRouteProps): Promise<Metadata> {
@@ -175,6 +187,9 @@ export default async function GuideArticleRoute({
       3,
     );
 
+  const articleUrl =
+    `${baseUrl}/${locale}/guide/${categorySlug}/${article.slug}`;
+
   const articleJsonLd = {
     "@context":
       "https://schema.org",
@@ -184,15 +199,35 @@ export default async function GuideArticleRoute({
       article.title,
     description:
       article.excerpt,
+    url:
+      articleUrl,
+    mainEntityOfPage: {
+      "@type":
+        "WebPage",
+      "@id":
+        articleUrl,
+    },
     dateModified:
       article.updatedAt,
     inLanguage:
-      locale,
+      locale === "de"
+        ? "de-DE"
+        : "uz-UZ",
+    publisher: {
+      "@type":
+        "Organization",
+      name:
+        "Vatandoshlar.de",
+      url:
+        baseUrl,
+    },
     isPartOf: {
       "@type":
         "WebSite",
       name:
         "Vatandoshlar.de",
+      url:
+        baseUrl,
     },
   };
 
@@ -233,7 +268,7 @@ export default async function GuideArticleRoute({
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html:
-            JSON.stringify(
+            serializeStructuredData(
               articleJsonLd,
             ),
         }}
@@ -245,7 +280,7 @@ export default async function GuideArticleRoute({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html:
-              JSON.stringify(
+              serializeStructuredData(
                 faqJsonLd,
               ),
           }}

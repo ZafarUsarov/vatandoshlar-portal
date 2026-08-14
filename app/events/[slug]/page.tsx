@@ -36,6 +36,18 @@ type EventPageProps = {
 export const dynamic =
   "force-dynamic";
 
+const baseUrl =
+  "https://vatandoshlar.de";
+
+function serializeStructuredData(
+  data: object,
+): string {
+  return JSON.stringify(data).replace(
+    /</g,
+    "\\u003c",
+  );
+}
+
 function getRegistrationStyles(
   status: RegistrationStatusKey,
 ): string {
@@ -172,6 +184,86 @@ export default async function EventPage({
         ),
     );
 
+  const eventUrl =
+    `${baseUrl}/${locale}/events/${event.slug}`;
+
+  const startDate =
+    event.startTime
+      ? `${event.startDate}T${event.startTime}`
+      : event.startDate;
+
+  const endDate =
+    event.endDate
+      ? (
+          event.endTime
+            ? `${event.endDate}T${event.endTime}`
+            : event.endDate
+        )
+      : undefined;
+
+  const attendanceMode =
+    event.onlineUrl &&
+    event.address
+      ? "https://schema.org/MixedEventAttendanceMode"
+      : event.onlineUrl
+        ? "https://schema.org/OnlineEventAttendanceMode"
+        : "https://schema.org/OfflineEventAttendanceMode";
+
+  const eventStructuredData = {
+    "@context":
+      "https://schema.org",
+    "@type":
+      "Event",
+    name:
+      event.title,
+    description:
+      event.excerpt,
+    url:
+      eventUrl,
+    inLanguage:
+      locale === "de"
+        ? "de-DE"
+        : "uz-UZ",
+    startDate,
+    ...(endDate
+      ? {
+          endDate,
+        }
+      : {}),
+    eventAttendanceMode:
+      attendanceMode,
+    location:
+      event.onlineUrl &&
+      !event.address
+        ? {
+            "@type":
+              "VirtualLocation",
+            url:
+              event.onlineUrl,
+          }
+        : {
+            "@type":
+              "Place",
+            name:
+              getEventLocation(
+                event,
+                locale,
+              ),
+            ...(event.address
+              ? {
+                  address:
+                    event.address,
+                }
+              : {}),
+          },
+    organizer: {
+      "@type":
+        "Organization",
+      name:
+        event.organizerName,
+    },
+  };
+
   const copy =
     locale === "uz"
       ? {
@@ -285,6 +377,16 @@ export default async function EventPage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html:
+            serializeStructuredData(
+              eventStructuredData,
+            ),
+        }}
+      />
+
       <Header />
 
       <main className="min-h-screen bg-white pt-20 text-slate-950 transition-colors dark:bg-slate-950 dark:text-white">

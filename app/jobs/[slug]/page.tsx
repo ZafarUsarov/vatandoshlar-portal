@@ -23,6 +23,18 @@ type JobGuidePageProps = Readonly<{
 export const dynamic =
   "force-dynamic";
 
+const baseUrl =
+  "https://vatandoshlar.de";
+
+function serializeStructuredData(
+  data: object,
+): string {
+  return JSON.stringify(data).replace(
+    /</g,
+    "\\u003c",
+  );
+}
+
 export async function generateMetadata({
   params,
 }: JobGuidePageProps): Promise<Metadata> {
@@ -118,6 +130,42 @@ export default async function JobGuidePage({
   if (!guide) {
     notFound();
   }
+
+  const guideUrl =
+    `${baseUrl}/${locale}/jobs/${guide.slug}`;
+
+  const jobGuideStructuredData = {
+    "@context":
+      "https://schema.org",
+    "@type":
+      "Article",
+    headline:
+      guide.title,
+    description:
+      guide.description,
+    url:
+      guideUrl,
+    mainEntityOfPage: {
+      "@type":
+        "WebPage",
+      "@id":
+        guideUrl,
+    },
+    inLanguage:
+      locale === "de"
+        ? "de-DE"
+        : "uz-UZ",
+    dateModified:
+      guide.updatedAt,
+    publisher: {
+      "@type":
+        "Organization",
+      name:
+        "Vatandoshlar.de",
+      url:
+        baseUrl,
+    },
+  };
 
   const copy =
     locale === "uz"
@@ -220,6 +268,16 @@ export default async function JobGuidePage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html:
+            serializeStructuredData(
+              jobGuideStructuredData,
+            ),
+        }}
+      />
+
       <Header />
 
       <main className="min-h-screen bg-white pt-20 text-slate-950 dark:bg-slate-950 dark:text-white">

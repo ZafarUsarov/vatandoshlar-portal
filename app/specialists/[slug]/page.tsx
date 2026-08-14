@@ -27,6 +27,18 @@ type SpecialistDetailPageProps = Readonly<{
 export const dynamic =
   "force-dynamic";
 
+const baseUrl =
+  "https://vatandoshlar.de";
+
+function serializeStructuredData(
+  data: object,
+): string {
+  return JSON.stringify(data).replace(
+    /</g,
+    "\\u003c",
+  );
+}
+
 export async function generateMetadata({
   params,
 }: SpecialistDetailPageProps): Promise<Metadata> {
@@ -131,6 +143,28 @@ export default async function SpecialistDetailPage({
     notFound();
   }
 
+  const specialistUrl =
+    `${baseUrl}/${locale}/specialists/${specialist.slug}`;
+
+  const specialistStructuredData = {
+    "@context":
+      "https://schema.org",
+    "@type":
+      "Person",
+    name:
+      specialist.name,
+    description:
+      specialist.shortDescription,
+    url:
+      specialistUrl,
+    mainEntityOfPage: {
+      "@type":
+        "ProfilePage",
+      "@id":
+        specialistUrl,
+    },
+  };
+
   const categoryKeys: ReadonlyArray<
     SpecialistCategory
   > = [
@@ -191,6 +225,16 @@ export default async function SpecialistDetailPage({
 
   return (
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html:
+            serializeStructuredData(
+              specialistStructuredData,
+            ),
+        }}
+      />
+
       <Header />
 
       <SpecialistProfile

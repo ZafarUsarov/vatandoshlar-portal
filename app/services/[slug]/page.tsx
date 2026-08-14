@@ -20,6 +20,18 @@ type ServiceDetailPageProps = Readonly<{
 export const dynamic =
   "force-dynamic";
 
+const baseUrl =
+  "https://vatandoshlar.de";
+
+function serializeStructuredData(
+  data: object,
+): string {
+  return JSON.stringify(data).replace(
+    /</g,
+    "\\u003c",
+  );
+}
+
 export async function generateMetadata({
   params,
 }: ServiceDetailPageProps): Promise<Metadata> {
@@ -116,6 +128,36 @@ export default async function ServiceDetailPage({
     notFound();
   }
 
+  const serviceUrl =
+    `${baseUrl}/${locale}/services/${service.slug}`;
+
+  const serviceStructuredData = {
+    "@context":
+      "https://schema.org",
+    "@type":
+      "Service",
+    name:
+      service.title,
+    description:
+      service.description,
+    url:
+      serviceUrl,
+    serviceType:
+      service.category,
+    areaServed: {
+      "@type":
+        "Country",
+      name:
+        "Germany",
+    },
+    mainEntityOfPage: {
+      "@type":
+        "WebPage",
+      "@id":
+        serviceUrl,
+    },
+  };
+
   const copy =
     locale === "uz"
       ? {
@@ -175,6 +217,16 @@ export default async function ServiceDetailPage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html:
+            serializeStructuredData(
+              serviceStructuredData,
+            ),
+        }}
+      />
+
       <Header />
 
       <main className="min-h-screen bg-white pt-20 text-slate-950 transition-colors dark:bg-slate-950 dark:text-white">
