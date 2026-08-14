@@ -71,13 +71,7 @@ export async function generateMetadata({
   }
 
   const title =
-    t(
-      "metadata.title",
-      {
-        title:
-          article.title,
-      },
-    );
+    article.title;
 
   const canonicalUrl =
     `/${locale}/news/${article.slug}`;
