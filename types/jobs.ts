@@ -27,5 +27,6 @@ export type JobGuide = Readonly<{
   officialSourceUrl: string;
   sourceDescription: string;
   verifiedAt: string;
+  updatedAt?: string;
   featured?: boolean;
 }>;

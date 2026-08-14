@@ -28,6 +28,7 @@ type PublishedJobGuideSummaryRow = {
   source_description_uz: string;
   source_description_de: string;
   verified_at: string | Date;
+  updated_at: string | Date;
   featured: boolean;
 };
 
@@ -103,6 +104,14 @@ function toSafeNumericId(
     : 0;
 }
 
+function toDateTimeString(
+  value: string | Date,
+): string {
+  return value instanceof Date
+    ? value.toISOString()
+    : value;
+}
+
 function toDateOnlyString(
   value: string | Date,
 ): string {
@@ -171,6 +180,10 @@ function toPublicJobGuideSummary(
     verifiedAt:
       toDateOnlyString(
         row.verified_at,
+      ),
+    updatedAt:
+      toDateTimeString(
+        row.updated_at,
       ),
     featured:
       row.featured,
@@ -261,6 +274,7 @@ const getPublishedJobsCached =
               source_description_uz,
               source_description_de,
               verified_at,
+              updated_at,
               featured
             FROM job_guides
             WHERE
@@ -333,6 +347,7 @@ const getPublishedJobBySlugCached =
               source_description_uz,
               source_description_de,
               verified_at,
+              updated_at,
               featured
             FROM job_guides
             WHERE
@@ -392,6 +407,7 @@ const getFeaturedPublishedJobCached =
               source_description_uz,
               source_description_de,
               verified_at,
+              updated_at,
               featured
             FROM job_guides
             WHERE
@@ -455,6 +471,7 @@ const getRelatedPublishedJobsCached =
               source_description_uz,
               source_description_de,
               verified_at,
+              updated_at,
               featured
             FROM job_guides
             WHERE
