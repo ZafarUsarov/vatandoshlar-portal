@@ -386,6 +386,28 @@ export default function Header() {
     [isHomePage],
   );
 
+  const handleNavigationClick = useCallback(
+    (
+      event: MouseEvent<HTMLAnchorElement>,
+      href: string,
+    ) => {
+      setIsMobileMenuOpen(false);
+
+      if (pathname !== href) {
+        return;
+      }
+
+      event.preventDefault();
+
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    },
+    [pathname],
+  );
+
   const openCommandPalette = useCallback(() => {
     setIsMobileMenuOpen(false);
 
@@ -602,6 +624,12 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={(event) =>
+                    handleNavigationClick(
+                      event,
+                      item.href,
+                    )
+                  }
                   aria-current={
                     isActive ? "page" : undefined
                   }
@@ -913,7 +941,12 @@ export default function Header() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      onClick={closeMobileMenu}
+                      onClick={(event) =>
+                        handleNavigationClick(
+                          event,
+                          item.href,
+                        )
+                      }
                       aria-current={
                         isActive
                           ? "page"
