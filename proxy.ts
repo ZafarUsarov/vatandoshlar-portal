@@ -10,6 +10,12 @@ import { routing } from "@/i18n/routing";
 const handleI18nRouting =
   createMiddleware(routing);
 
+const RAILWAY_HOSTNAME =
+  "vatandoshlar-portal-production.up.railway.app";
+
+const CANONICAL_HOSTNAME =
+  "vatandoshlar.de";
+
 type AppLocale =
   (typeof routing.locales)[number];
 
@@ -75,6 +81,24 @@ function isAdminPath(
 }
 
 export default auth((request) => {
+  if (
+    request.nextUrl.hostname ===
+    RAILWAY_HOSTNAME
+  ) {
+    const canonicalUrl =
+      request.nextUrl.clone();
+
+    canonicalUrl.protocol = "https:";
+    canonicalUrl.hostname =
+      CANONICAL_HOSTNAME;
+    canonicalUrl.port = "";
+
+    return NextResponse.redirect(
+      canonicalUrl,
+      308,
+    );
+  }
+
   const pathname =
     request.nextUrl.pathname;
 
