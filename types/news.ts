@@ -20,6 +20,8 @@ export type NewsItem = {
   contentType: ContentType;
   readingTime: string;
   verifiedAt: string;
+  publishedAt: string | null;
+  updatedAt: string;
   sourceName: string;
   sourceUrl: string;
   sourceLanguage: string;

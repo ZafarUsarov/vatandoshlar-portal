@@ -21,6 +21,18 @@ type NewsDetailPageProps = {
 export const dynamic =
   "force-dynamic";
 
+const baseUrl =
+  "https://vatandoshlar.de";
+
+function serializeStructuredData(
+  data: object,
+): string {
+  return JSON.stringify(data).replace(
+    /</g,
+    "\\u003c",
+  );
+}
+
 export async function generateMetadata({
   params,
 }: NewsDetailPageProps): Promise<Metadata> {
@@ -58,25 +70,54 @@ export async function generateMetadata({
     };
   }
 
-  return {
-    title: t(
+  const title =
+    t(
       "metadata.title",
       {
         title:
           article.title,
       },
-    ),
+    );
+
+  const canonicalUrl =
+    `/${locale}/news/${article.slug}`;
+
+  return {
+    title,
     description:
       article.excerpt,
     alternates: {
       canonical:
-        `/${locale}/news/${article.slug}`,
+        canonicalUrl,
       languages: {
         uz:
           `/uz/news/${article.slug}`,
         de:
           `/de/news/${article.slug}`,
       },
+    },
+    openGraph: {
+      type: "article",
+      title:
+        article.title,
+      description:
+        article.excerpt,
+      url:
+        canonicalUrl,
+      siteName:
+        "Vatandoshlar.de",
+      locale:
+        locale === "de"
+          ? "de_DE"
+          : "uz_UZ",
+      modifiedTime:
+        article.updatedAt,
+      ...(article.publishedAt
+        ? {
+            publishedTime:
+              article.publishedAt,
+          }
+        : {}),
     },
   };
 }
@@ -119,8 +160,66 @@ export default async function NewsDetailPage({
     notFound();
   }
 
+  const articleUrl =
+    `${baseUrl}/${locale}/news/${article.slug}`;
+
+  const newsArticleStructuredData = {
+    "@context":
+      "https://schema.org",
+    "@type":
+      "NewsArticle",
+    headline:
+      article.title,
+    description:
+      article.excerpt,
+    url:
+      articleUrl,
+    mainEntityOfPage: {
+      "@type":
+        "WebPage",
+      "@id":
+        articleUrl,
+    },
+    inLanguage:
+      locale === "de"
+        ? "de-DE"
+        : "uz-UZ",
+    dateModified:
+      article.updatedAt,
+    ...(article.publishedAt
+      ? {
+          datePublished:
+            article.publishedAt,
+        }
+      : {}),
+    publisher: {
+      "@type":
+        "Organization",
+      name:
+        "Vatandoshlar.de",
+      url:
+        baseUrl,
+      logo: {
+        "@type":
+          "ImageObject",
+        url:
+          `${baseUrl}/images/brand/vatandoshlar-icon.png`,
+      },
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html:
+            serializeStructuredData(
+              newsArticleStructuredData,
+            ),
+        }}
+      />
+
       <Header />
 
       <main className="min-h-screen bg-white pt-20 text-slate-950 transition-colors dark:bg-slate-950 dark:text-white">

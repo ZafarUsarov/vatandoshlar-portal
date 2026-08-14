@@ -29,6 +29,8 @@ type PublishedNewsSummaryRow = {
   location_uz: string | null;
   location_de: string | null;
   verified_at: string | Date;
+  published_at: string | Date | null;
+  updated_at: string | Date;
   featured: boolean;
 };
 
@@ -82,15 +84,20 @@ function getLocalizedContentType(
   ];
 }
 
+function toDateTimeString(
+  value: string | Date,
+): string {
+  return value instanceof Date
+    ? value.toISOString()
+    : value;
+}
+
 function toDateOnlyString(
   value: string | Date,
 ): string {
-  const date =
-    value instanceof Date
-      ? value.toISOString()
-      : value;
-
-  return date.slice(0, 10);
+  return toDateTimeString(
+    value,
+  ).slice(0, 10);
 }
 
 function toSafeNumericId(
@@ -143,6 +150,16 @@ function toPublicNewsSummary(
     verifiedAt:
       toDateOnlyString(
         row.verified_at,
+      ),
+    publishedAt:
+      row.published_at === null
+        ? null
+        : toDateTimeString(
+            row.published_at,
+          ),
+    updatedAt:
+      toDateTimeString(
+        row.updated_at,
       ),
     sourceName:
       row.source_name,
@@ -241,6 +258,8 @@ const loadPublishedNews =
               location_uz,
               location_de,
               verified_at,
+              published_at,
+              updated_at,
               featured
             FROM news_articles
             WHERE status = 'published'
@@ -308,6 +327,8 @@ const loadPublishedNewsBySlug =
               location_uz,
               location_de,
               verified_at,
+              published_at,
+              updated_at,
               featured
             FROM news_articles
             WHERE
@@ -367,6 +388,8 @@ const loadRelatedPublishedNews =
               location_uz,
               location_de,
               verified_at,
+              published_at,
+              updated_at,
               featured
             FROM news_articles
             WHERE
@@ -430,6 +453,8 @@ const loadFeaturedPublishedNews =
               location_uz,
               location_de,
               verified_at,
+              published_at,
+              updated_at,
               featured
             FROM news_articles
             WHERE
