@@ -201,6 +201,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ),
     );
 
+  const guideCategoryLastModified =
+    new Map(
+      guideCategories.map(
+        (
+          category,
+          index,
+        ) => [
+          category.slug,
+          getLatestLastModified(
+            (
+              guideArticleGroups[index] ??
+              []
+            ).map(
+              (article) =>
+                article.updatedAt,
+            ),
+          ),
+        ],
+      ),
+    );
+
+  const guideLastModified =
+    getLatestLastModified(
+      guideArticleGroups.flatMap(
+        (articles) =>
+          articles.map(
+            (article) =>
+              article.updatedAt,
+          ),
+      ),
+    );
+
   const entries: MetadataRoute.Sitemap = [
     ...createLocalizedEntries(
       "",
@@ -281,6 +313,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency:
           "weekly",
         priority: 0.9,
+        lastModified:
+          guideLastModified,
       },
     ),
 
@@ -404,6 +438,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           changeFrequency:
             "weekly",
           priority: 0.8,
+          lastModified:
+            guideCategoryLastModified.get(
+              category.slug,
+            ),
         },
       ),
     );
