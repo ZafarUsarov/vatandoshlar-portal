@@ -290,6 +290,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           changeFrequency:
             "daily",
           priority: 0.7,
+          lastModified:
+            event.updatedAt,
         },
       ),
     );

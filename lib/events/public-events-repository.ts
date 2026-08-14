@@ -69,6 +69,7 @@ export type PublicEventItem = {
   officialSourceUrl: string;
 
   verifiedAt: string;
+  updatedAt: string;
 
   importantNotes: string[];
 
@@ -124,6 +125,7 @@ type PublishedEventRow = {
   official_source_url: string;
 
   verified_at: string | Date;
+  updated_at: string | Date;
 
   important_notes_uz: string[];
   important_notes_de: string[];
@@ -188,12 +190,20 @@ function normalizeRegistrationStatus(
     : "closed";
 }
 
-function toDateString(
+function toDateTimeString(
   value: string | Date,
 ): string {
   return value instanceof Date
-    ? value.toISOString().slice(0, 10)
-    : value.slice(0, 10);
+    ? value.toISOString()
+    : value;
+}
+
+function toDateString(
+  value: string | Date,
+): string {
+  return toDateTimeString(
+    value,
+  ).slice(0, 10);
 }
 
 function toNullableDateString(
@@ -406,6 +416,11 @@ function toPublicEvent(
         row.verified_at,
       ),
 
+    updatedAt:
+      toDateTimeString(
+        row.updated_at,
+      ),
+
     importantNotes:
       isGerman
         ? row.important_notes_de
@@ -475,6 +490,7 @@ const publishedEventSelect = `
     official_source_name,
     official_source_url,
     verified_at,
+    updated_at,
     important_notes_uz,
     important_notes_de,
     featured
