@@ -15,8 +15,6 @@ export default function robots(): MetadataRoute.Robots {
           "/uz/admin/",
           "/de/admin",
           "/de/admin/",
-          "/uz/login",
-          "/de/login",
         ],
       },
     ],
