@@ -38,6 +38,7 @@ function createLocalizedEntries(
   options?: Readonly<{
     changeFrequency?: MetadataRoute.Sitemap[number]["changeFrequency"];
     priority?: number;
+    lastModified?: MetadataRoute.Sitemap[number]["lastModified"];
   }>,
 ): MetadataRoute.Sitemap {
   return locales.map(
@@ -48,6 +49,8 @@ function createLocalizedEntries(
         options?.changeFrequency,
       priority:
         options?.priority,
+      lastModified:
+        options?.lastModified,
       alternates: {
         languages: {
           uz:
@@ -221,6 +224,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           changeFrequency:
             "weekly",
           priority: 0.8,
+          lastModified:
+            article.updatedAt,
         },
       ),
     );
