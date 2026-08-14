@@ -3,6 +3,8 @@ import Script from "next/script";
 import { getLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 
+import StructuredData from "../components/seo/StructuredData";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -113,6 +115,7 @@ export default async function RootLayout({
       </head>
 
       <body className="min-h-screen bg-white text-slate-950 antialiased transition-colors duration-200 dark:bg-slate-950 dark:text-slate-50">
+        <StructuredData />
         {children}
       </body>
     </html>
