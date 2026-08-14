@@ -546,7 +546,7 @@ export default function Header() {
             href="/"
             onClick={handleBrandClick}
             aria-label={t("accessibility.homeLink")}
-            className="group flex shrink-0 items-center gap-2"
+            className="group flex min-w-0 shrink items-center gap-2 min-[1160px]:shrink-0"
           >
             <span
               className={`
@@ -571,7 +571,7 @@ export default function Header() {
               />
             </span>
 
-            <span className="hidden min-[390px]:block">
+            <span className="min-w-0 overflow-hidden">
               <span
                 className={`
                   block font-extrabold tracking-tight
@@ -580,8 +580,8 @@ export default function Header() {
                   dark:text-white
                   ${
                     isScrolled
-                      ? "text-base xl:text-lg"
-                      : "text-base xl:text-xl"
+                      ? "text-sm min-[390px]:text-base xl:text-lg"
+                      : "text-sm min-[390px]:text-base xl:text-xl"
                   }
                 `}
               >
