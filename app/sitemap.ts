@@ -33,6 +33,43 @@ const locales = [
   "de",
 ] as const;
 
+function getLatestLastModified(
+  values: ReadonlyArray<string | undefined>,
+): string | undefined {
+  let latestValue:
+    | string
+    | undefined;
+
+  let latestTimestamp =
+    Number.NEGATIVE_INFINITY;
+
+  for (
+    const value
+    of values
+  ) {
+    if (!value) {
+      continue;
+    }
+
+    const timestamp =
+      Date.parse(value);
+
+    if (
+      Number.isNaN(timestamp) ||
+      timestamp <= latestTimestamp
+    ) {
+      continue;
+    }
+
+    latestTimestamp =
+      timestamp;
+    latestValue =
+      value;
+  }
+
+  return latestValue;
+}
+
 function createLocalizedEntries(
   pathname: string,
   options?: Readonly<{
@@ -79,6 +116,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getUpcomingPublishedEvents("uz"),
     getPastPublishedEvents("uz"),
   ]);
+
+  const newsLastModified =
+    getLatestLastModified(
+      news.map(
+        (article) =>
+          article.updatedAt,
+      ),
+    );
 
   const eventsBySlug =
     new Map(
@@ -137,6 +182,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency:
           "daily",
         priority: 0.9,
+        lastModified:
+          newsLastModified,
       },
     ),
 
