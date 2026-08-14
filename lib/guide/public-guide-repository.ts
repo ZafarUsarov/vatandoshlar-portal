@@ -61,6 +61,10 @@ type GuideArticleRow = {
     | string
     | Date;
 
+  updated_at:
+    | string
+    | Date;
+
   featured: boolean;
 };
 
@@ -131,6 +135,14 @@ function normalizeCategorySlug(
         value as PublicGuideCategorySlug
       )
     : null;
+}
+
+function toDateTimeString(
+  value: string | Date,
+): string {
+  return value instanceof Date
+    ? value.toISOString()
+    : value;
 }
 
 function toDateString(
@@ -396,6 +408,11 @@ function toGuideArticle(
         row.last_reviewed_at,
       ),
 
+    updatedAt:
+      toDateTimeString(
+        row.updated_at,
+      ),
+
     readingTime:
       isGerman
         ? row.reading_time_de
@@ -475,6 +492,7 @@ const publishedGuideSelect = `
     related_article_slugs,
 
     last_reviewed_at,
+    updated_at,
     featured
 
   FROM guide_articles

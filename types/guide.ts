@@ -126,6 +126,7 @@ export type GuideArticle = Readonly<{
   status: GuideArticleStatus;
   featured?: boolean;
   lastReviewedAt: string;
+  updatedAt?: string;
   readingTime: string;
   facts: ReadonlyArray<Readonly<{
     label: string;
