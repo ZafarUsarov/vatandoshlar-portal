@@ -125,6 +125,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ),
     );
 
+  const eventsLastModified =
+    getLatestLastModified(
+      [
+        ...upcomingEvents,
+        ...pastEvents,
+      ].map(
+        (event) =>
+          event.updatedAt,
+      ),
+    );
+
   const eventsBySlug =
     new Map(
       [
@@ -229,6 +240,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency:
           "daily",
         priority: 0.8,
+        lastModified:
+          eventsLastModified,
       },
     ),
 
