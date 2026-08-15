@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import NewsCard from "../../components/cards/NewsCard";
+import BrandName from "../../components/ui/BrandName";
 import {
   ButtonLink,
   Container,
@@ -114,7 +115,7 @@ export default async function NewsPage() {
           </div>
 
           <PageHero
-            eyebrow="Vatandoshlar.de"
+            eyebrow={<BrandName />}
             title={t(
               "hero.title",
             )}

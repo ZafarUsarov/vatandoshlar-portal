@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 
 import Header from "../../../components/Header";
 import NewsCard from "../../../components/cards/NewsCard";
+import BrandName from "../../../components/ui/BrandName";
+import BrandedText from "../../../components/ui/BrandedText";
 import { Link } from "../../../i18n/navigation";
 import { formatNewsDate } from "../../../lib/news/format-news-date";
 import {
@@ -403,9 +405,11 @@ export default async function NewsDetailPage({
 
             <div className="mt-12 flex flex-col gap-5 border-t border-slate-200 pt-8 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
               <p className="text-sm text-slate-500 dark:text-slate-400">
-                {t(
-                  "preparedNote",
-                )}
+                <BrandedText
+                  text={t(
+                    "preparedNote",
+                  )}
+                />
               </p>
 
               <Link
@@ -464,7 +468,7 @@ export default async function NewsDetailPage({
       <footer className="border-t border-slate-200 bg-white py-10 transition-colors dark:border-slate-800 dark:bg-slate-950">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between lg:px-8 dark:text-slate-400">
           <p>
-            © 2026 Vatandoshlar.de
+            © 2026 <BrandName />
           </p>
 
           <p>
