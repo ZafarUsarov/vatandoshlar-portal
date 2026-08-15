@@ -27,109 +27,112 @@ export type PublicEventRegistrationStatus =
   | "sold_out"
   | "closed";
 
-export type PublicEventItem = {
+export type PublicEventOrganizerType =
+  | "vatandoshlar"
+  | "external";
+
+export type PublicEventRegistrationMethod =
+  | "google_form"
+  | "telegram"
+  | "email"
+  | "phone"
+  | "external_url"
+  | "none";
+
+type PublicEventCommon = {
   id: string;
   slug: string;
-
   title: string;
   excerpt: string;
   description: string[];
-
   category: PublicEventCategory;
   format: PublicEventFormat;
-
-  startDate: string;
-  endDate?: string;
-
-  startTime?: string;
-  endTime?: string;
-
   timezone: string;
-
-  city?: string;
-  bundesland?: string;
-  venueName?: string;
-  address?: string;
-  onlineUrl?: string;
-
+  organizerType: PublicEventOrganizerType;
   organizerName: string;
   organizerUrl?: string;
-
   registrationStatus:
     PublicEventRegistrationStatus;
-
+  registrationMethod:
+    PublicEventRegistrationMethod;
+  registrationRequired: boolean;
   registrationUrl?: string;
+  registrationValue?: string;
   registrationDeadline?: string;
-
+  capacity?: number;
   languages: string[];
-
   priceLabel: string;
-
-  officialSourceName: string;
-  officialSourceUrl: string;
-
-  verifiedAt: string;
-  updatedAt: string;
-
   importantNotes: string[];
-
   featured: boolean;
+  updatedAt: string;
 };
+
+export type PublicEventItem =
+  PublicEventCommon & {
+    eventStatus: "scheduled";
+    startDate: string;
+    endDate?: string;
+    startTime?: string;
+    endTime?: string;
+    city?: string;
+    bundesland?: string;
+    venueName?: string;
+    address?: string;
+    onlineUrl?: string;
+    officialSourceName: string;
+    officialSourceUrl: string;
+    verifiedAt: string;
+  };
+
+export type PublicPlanningEventItem =
+  PublicEventCommon & {
+    eventStatus: "planning";
+  };
 
 type PublishedEventRow = {
   id: string;
   slug: string;
-
   title_uz: string;
   title_de: string;
-
   excerpt_uz: string;
   excerpt_de: string;
-
   description_uz: string[];
   description_de: string[];
-
   category: string;
   format: string;
-
-  start_date: string | Date;
+  event_status: string;
+  start_date: string | Date | null;
   end_date: string | Date | null;
-
   start_time: string | null;
   end_time: string | null;
-
   timezone: string;
-
   city: string | null;
   bundesland: string | null;
   venue_name: string | null;
   address: string | null;
   online_url: string | null;
-
+  organizer_type: string;
   organizer_name: string;
   organizer_url: string | null;
-
   registration_status: string;
+  registration_method: string;
   registration_url: string | null;
+  registration_value: string | null;
+  registration_required: boolean;
   registration_deadline:
     | string
     | Date
     | null;
-
+  capacity: number | null;
   languages: string[];
-
   price_label_uz: string;
   price_label_de: string;
-
-  official_source_name: string;
-  official_source_url: string;
-
-  verified_at: string | Date;
+  official_source_name: string | null;
+  official_source_url: string | null;
+  verified_at: string | Date | null;
   updated_at: string | Date;
-
   important_notes_uz: string[];
   important_notes_de: string[];
-
   featured: boolean;
 };
 
@@ -160,6 +163,16 @@ const registrationStatusValues:
     "closed",
   ];
 
+const registrationMethodValues:
+  ReadonlyArray<PublicEventRegistrationMethod> = [
+    "google_form",
+    "telegram",
+    "email",
+    "phone",
+    "external_url",
+    "none",
+  ];
+
 function normalizeCategory(
   value: string,
 ): PublicEventCategory {
@@ -188,6 +201,24 @@ function normalizeRegistrationStatus(
   )
     ? (value as PublicEventRegistrationStatus)
     : "closed";
+}
+
+function normalizeOrganizerType(
+  value: string,
+): PublicEventOrganizerType {
+  return value === "vatandoshlar"
+    ? "vatandoshlar"
+    : "external";
+}
+
+function normalizeRegistrationMethod(
+  value: string,
+): PublicEventRegistrationMethod {
+  return registrationMethodValues.includes(
+    value as PublicEventRegistrationMethod,
+  )
+    ? (value as PublicEventRegistrationMethod)
+    : "none";
 }
 
 function toDateTimeString(
@@ -224,141 +255,51 @@ function cleanOptional(
     return undefined;
   }
 
-  const trimmed =
-    value.trim();
+  const trimmed = value.trim();
 
   return trimmed.length > 0
     ? trimmed
     : undefined;
 }
 
-function toPublicEvent(
+function getCommonEventFields(
   row: PublishedEventRow,
   locale: SupportedEventLocale,
-): PublicEventItem {
+): PublicEventCommon {
   const isGerman =
     locale === "de";
 
   return {
     id: row.id,
     slug: row.slug,
-
     title:
       isGerman
         ? row.title_de
         : row.title_uz,
-
     excerpt:
       isGerman
         ? row.excerpt_de
         : row.excerpt_uz,
-
     description:
       isGerman
         ? row.description_de
         : row.description_uz,
-
     category:
       normalizeCategory(
         row.category,
       ),
-
     format:
       normalizeFormat(
         row.format,
       ),
-
-    startDate:
-      toDateString(
-        row.start_date,
-      ),
-
-    ...(toNullableDateString(
-      row.end_date,
-    )
-      ? {
-          endDate:
-            toNullableDateString(
-              row.end_date,
-            ),
-        }
-      : {}),
-
-    ...(row.start_time
-      ? {
-          startTime:
-            row.start_time,
-        }
-      : {}),
-
-    ...(row.end_time
-      ? {
-          endTime:
-            row.end_time,
-        }
-      : {}),
-
     timezone:
       row.timezone,
-
-    ...(cleanOptional(
-      row.city,
-    )
-      ? {
-          city:
-            cleanOptional(
-              row.city,
-            ),
-        }
-      : {}),
-
-    ...(cleanOptional(
-      row.bundesland,
-    )
-      ? {
-          bundesland:
-            cleanOptional(
-              row.bundesland,
-            ),
-        }
-      : {}),
-
-    ...(cleanOptional(
-      row.venue_name,
-    )
-      ? {
-          venueName:
-            cleanOptional(
-              row.venue_name,
-            ),
-        }
-      : {}),
-
-    ...(cleanOptional(
-      row.address,
-    )
-      ? {
-          address:
-            cleanOptional(
-              row.address,
-            ),
-        }
-      : {}),
-
-    ...(cleanOptional(
-      row.online_url,
-    )
-      ? {
-          onlineUrl:
-            cleanOptional(
-              row.online_url,
-            ),
-        }
-      : {}),
-
+    organizerType:
+      normalizeOrganizerType(
+        row.organizer_type,
+      ),
     organizerName:
       row.organizer_name,
-
     ...(cleanOptional(
       row.organizer_url,
     )
@@ -369,12 +310,16 @@ function toPublicEvent(
             ),
         }
       : {}),
-
     registrationStatus:
       normalizeRegistrationStatus(
         row.registration_status,
       ),
-
+    registrationMethod:
+      normalizeRegistrationMethod(
+        row.registration_method,
+      ),
+    registrationRequired:
+      row.registration_required,
     ...(cleanOptional(
       row.registration_url,
     )
@@ -385,7 +330,16 @@ function toPublicEvent(
             ),
         }
       : {}),
-
+    ...(cleanOptional(
+      row.registration_value,
+    )
+      ? {
+          registrationValue:
+            cleanOptional(
+              row.registration_value,
+            ),
+        }
+      : {}),
     ...(toNullableDateString(
       row.registration_deadline,
     )
@@ -396,38 +350,149 @@ function toPublicEvent(
             ),
         }
       : {}),
-
+    ...(row.capacity !== null
+      ? {
+          capacity:
+            row.capacity,
+        }
+      : {}),
     languages:
       row.languages,
-
     priceLabel:
       isGerman
         ? row.price_label_de
         : row.price_label_uz,
-
-    officialSourceName:
-      row.official_source_name,
-
-    officialSourceUrl:
-      row.official_source_url,
-
-    verifiedAt:
-      toDateString(
-        row.verified_at,
-      ),
-
-    updatedAt:
-      toDateTimeString(
-        row.updated_at,
-      ),
-
     importantNotes:
       isGerman
         ? row.important_notes_de
         : row.important_notes_uz,
-
     featured:
       row.featured,
+    updatedAt:
+      toDateTimeString(
+        row.updated_at,
+      ),
+  };
+}
+
+function toScheduledPublicEvent(
+  row: PublishedEventRow,
+  locale: SupportedEventLocale,
+): PublicEventItem {
+  if (
+    row.start_date === null ||
+    row.official_source_name === null ||
+    row.official_source_url === null ||
+    row.verified_at === null
+  ) {
+    throw new Error(
+      `Scheduled event "${row.slug}" is missing required public data.`,
+    );
+  }
+
+  return {
+    ...getCommonEventFields(
+      row,
+      locale,
+    ),
+    eventStatus: "scheduled",
+    startDate:
+      toDateString(
+        row.start_date,
+      ),
+    ...(toNullableDateString(
+      row.end_date,
+    )
+      ? {
+          endDate:
+            toNullableDateString(
+              row.end_date,
+            ),
+        }
+      : {}),
+    ...(row.start_time
+      ? {
+          startTime:
+            row.start_time,
+        }
+      : {}),
+    ...(row.end_time
+      ? {
+          endTime:
+            row.end_time,
+        }
+      : {}),
+    ...(cleanOptional(
+      row.city,
+    )
+      ? {
+          city:
+            cleanOptional(
+              row.city,
+            ),
+        }
+      : {}),
+    ...(cleanOptional(
+      row.bundesland,
+    )
+      ? {
+          bundesland:
+            cleanOptional(
+              row.bundesland,
+            ),
+        }
+      : {}),
+    ...(cleanOptional(
+      row.venue_name,
+    )
+      ? {
+          venueName:
+            cleanOptional(
+              row.venue_name,
+            ),
+        }
+      : {}),
+    ...(cleanOptional(
+      row.address,
+    )
+      ? {
+          address:
+            cleanOptional(
+              row.address,
+            ),
+        }
+      : {}),
+    ...(cleanOptional(
+      row.online_url,
+    )
+      ? {
+          onlineUrl:
+            cleanOptional(
+              row.online_url,
+            ),
+        }
+      : {}),
+    officialSourceName:
+      row.official_source_name,
+    officialSourceUrl:
+      row.official_source_url,
+    verifiedAt:
+      toDateString(
+        row.verified_at,
+      ),
+  };
+}
+
+function toPlanningPublicEvent(
+  row: PublishedEventRow,
+  locale: SupportedEventLocale,
+): PublicPlanningEventItem {
+  return {
+    ...getCommonEventFields(
+      row,
+      locale,
+    ),
+    eventStatus: "planning",
   };
 }
 
@@ -469,6 +534,7 @@ const publishedEventSelect = `
     description_de,
     category,
     format,
+    event_status,
     start_date,
     end_date,
     start_time::text,
@@ -479,11 +545,16 @@ const publishedEventSelect = `
     venue_name,
     address,
     online_url,
+    organizer_type,
     organizer_name,
     organizer_url,
     registration_status,
+    registration_method,
     registration_url,
+    registration_value,
+    registration_required,
     registration_deadline,
+    capacity,
     languages,
     price_label_uz,
     price_label_de,
@@ -530,7 +601,43 @@ const getUpcomingPublishedEventsCached =
 
       return result.rows.map(
         (row) =>
-          toPublicEvent(
+          toScheduledPublicEvent(
+            row,
+            locale,
+          ),
+      );
+    },
+  );
+
+const getPlanningPublishedEventsCached =
+  cache(
+    async (
+      locale: SupportedEventLocale,
+    ): Promise<PublicPlanningEventItem[]> => {
+      assertDatabaseAvailable();
+
+      if (
+        canSkipDatabaseDuringCi()
+      ) {
+        return [];
+      }
+
+      const result =
+        await getDb().query<PublishedEventRow>(
+          `
+            ${publishedEventSelect}
+            WHERE
+              status = 'published'
+              AND event_status = 'planning'
+            ORDER BY
+              updated_at DESC,
+              id ASC
+          `,
+        );
+
+      return result.rows.map(
+        (row) =>
+          toPlanningPublicEvent(
             row,
             locale,
           ),
@@ -571,7 +678,7 @@ const getPastPublishedEventsCached =
 
       return result.rows.map(
         (row) =>
-          toPublicEvent(
+          toScheduledPublicEvent(
             row,
             locale,
           ),
@@ -610,7 +717,7 @@ const getPublishedEventBySlugCached =
         result.rows[0];
 
       return row
-        ? toPublicEvent(
+        ? toScheduledPublicEvent(
             row,
             locale,
           )
@@ -655,7 +762,7 @@ const getFeaturedUpcomingEventCached =
         result.rows[0];
 
       return row
-        ? toPublicEvent(
+        ? toScheduledPublicEvent(
             row,
             locale,
           )
@@ -667,6 +774,14 @@ export async function getUpcomingPublishedEvents(
   locale: SupportedEventLocale,
 ): Promise<PublicEventItem[]> {
   return getUpcomingPublishedEventsCached(
+    locale,
+  );
+}
+
+export async function getPlanningPublishedEvents(
+  locale: SupportedEventLocale,
+): Promise<PublicPlanningEventItem[]> {
+  return getPlanningPublishedEventsCached(
     locale,
   );
 }
@@ -749,7 +864,7 @@ const getRelatedPublishedEventsCached =
 
       return result.rows.map(
         (row) =>
-          toPublicEvent(
+          toScheduledPublicEvent(
             row,
             locale,
           ),

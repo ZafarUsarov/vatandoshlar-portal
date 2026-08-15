@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
+import BrandName from "../../components/ui/BrandName";
 import EventCard from "../../components/cards/EventCard";
 import Footer from "../../components/Footer";
 import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
-import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
-import { Link } from "../../i18n/navigation";
 import {
   toEventItem,
+  toPlanningEventItem,
 } from "../../lib/events/event-presenter";
 import {
   getPastPublishedEvents,
+  getPlanningPublishedEvents,
   getUpcomingPublishedEvents,
 } from "../../lib/events/public-events-repository";
 import type {
@@ -21,32 +22,92 @@ import type {
 export const dynamic =
   "force-dynamic";
 
+type IconProps = Readonly<{
+  className?: string;
+}>;
+
+function CalendarIcon({
+  className,
+}: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M7 3.5v3m10-3v3M4.5 9.5h15M7 5h10a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+      <path
+        d="M8 13h3m2 0h3M8 16h3"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="1.7"
+      />
+    </svg>
+  );
+}
+
+function CheckIcon({
+  className,
+}: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="m6.5 12.5 3.3 3.3 7.7-8"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.9"
+      />
+    </svg>
+  );
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const locale =
     (await getLocale()) as SupportedEventLocale;
 
   return locale === "uz"
     ? {
-        title: "Tadbirlar | Vatandoshlar.de",
+        title:
+          "Tadbirlar | Vatandoshlar.de",
         description:
-          "Germaniyadagi o‘zbekistonliklar uchun tekshirilgan madaniy, ta’lim, karyera, biznes va jamoat tadbirlari.",
+          "Germaniyadagi o‘zbekistonliklar uchun e’lon qilingan tadbirlar va kelajak uchun rejalashtirilayotgan hamjamiyat tadbirlari.",
         alternates: {
-          canonical: "/uz/events",
+          canonical:
+            "/uz/events",
           languages: {
-            uz: "/uz/events",
-            de: "/de/events",
+            uz:
+              "/uz/events",
+            de:
+              "/de/events",
           },
         },
       }
     : {
-        title: "Veranstaltungen | Vatandoshlar.de",
+        title:
+          "Veranstaltungen | Vatandoshlar.de",
         description:
-          "Geprüfte Kultur-, Bildungs-, Karriere-, Wirtschafts- und Gemeinschaftsveranstaltungen für Usbeken in Deutschland.",
+          "Veröffentlichte Veranstaltungen und geplante Community-Veranstaltungen für Usbeken in Deutschland.",
         alternates: {
-          canonical: "/de/events",
+          canonical:
+            "/de/events",
           languages: {
-            uz: "/uz/events",
-            de: "/de/events",
+            uz:
+              "/uz/events",
+            de:
+              "/de/events",
           },
         },
       };
@@ -58,21 +119,33 @@ export default async function EventsPage() {
 
   const [
     upcomingPublicEvents,
+    planningPublicEvents,
     pastPublicEvents,
-  ] =
-    await Promise.all([
-      getUpcomingPublishedEvents(
-        locale,
-      ),
-      getPastPublishedEvents(
-        locale,
-      ),
-    ]);
+  ] = await Promise.all([
+    getUpcomingPublishedEvents(
+      locale,
+    ),
+    getPlanningPublishedEvents(
+      locale,
+    ),
+    getPastPublishedEvents(
+      locale,
+    ),
+  ]);
 
   const upcomingEvents =
     upcomingPublicEvents.map(
       (event) =>
         toEventItem(
+          event,
+          locale,
+        ),
+    );
+
+  const planningEvents =
+    planningPublicEvents.map(
+      (event) =>
+        toPlanningEventItem(
           event,
           locale,
         ),
@@ -87,131 +160,105 @@ export default async function EventsPage() {
         ),
     );
 
-  const calendarImage =
-    locale === "uz"
-      ? {
-          src: "/images/events/calendar-uz.webp",
-          alt: "Vatandoshlar.de tadbirlar kalendari",
-        }
-      : {
-          src: "/images/events/calendar-de.webp",
-          alt: "Vatandoshlar.de Veranstaltungskalender",
-        };
-
   const copy =
     locale === "uz"
       ? {
           heroEyebrow:
-            "Vatandoshlar.de tadbirlar kalendari",
+            "Tadbirlar",
           heroTitle:
-            "Uchrashing, o‘rganing va hamjamiyat bilan bog‘laning",
+            "Hamjamiyat bilan uchrashing, o‘rganing va birga vaqt o‘tkazing",
           heroDescription:
-            "Germaniyadagi o‘zbekistonliklar uchun madaniy, ta’limiy, professional va jamoat tadbirlari. Har bir e’lon rasmiy manba orqali tekshiriladi.",
+            "E’lon qilingan tadbirlar tasdiqlangan ma’lumot va rasmiy manba bilan ko‘rsatiladi. Rejadagi tadbirlar esa sana yoki joy uydirilmasdan, aniq “Rejalashtirilmoqda” holatida beriladi.",
           upcomingButton:
-            "Yaqin tadbirlarni ko‘rish",
-          policyButton:
-            "Tekshirish tartibi",
+            "E’lon qilingan tadbirlar",
+          planningButton:
+            "Rejadagi tadbirlar",
           stats: {
-            upcoming:
-              "Yaqin tadbir",
-            categories:
-              "Asosiy yo‘nalish",
-            verified:
-              "Rasmiy manbasi tekshirilgan",
+            overview:
+              "Tadbirlar holati",
+            upcoming: {
+              label:
+                "E’lon qilingan tadbirlar",
+              description:
+                "Sana va ma’lumotlari tasdiqlangan",
+              emptyDescription:
+                "Hozircha e’lon qilingan tadbir yo‘q",
+            },
+            planning: {
+              label:
+                "Rejadagi tadbirlar",
+              description:
+                "Tafsilotlari tayyorlanmoqda",
+            },
           },
+          categoryEyebrow:
+            "Yo‘nalishlar",
+          categoryTitle:
+            "Turli qiziqishlar uchun tadbirlar",
           categories: [
             {
               title:
                 "Madaniyat",
               description:
-                "Konsertlar, bayramlar, ko‘rgazmalar va milliy madaniyat tadbirlari.",
-              icon:
-                "◈",
-            },
-            {
-              title:
-                "Ta’lim",
-              description:
-                "Seminarlar, kurslar, ochiq darslar va talabalar uchun uchrashuvlar.",
-              icon:
-                "▤",
-            },
-            {
-              title:
-                "Karyera",
-              description:
-                "Ish yarmarkalari, networking, Ausbildung va professional uchrashuvlar.",
-              icon:
-                "◇",
+                "Bayramlar, madaniy uchrashuvlar va milliy an’analar.",
+              accent:
+                "from-cyan-500/14 to-blue-500/5",
             },
             {
               title:
                 "Jamiyat",
               description:
-                "Vatandoshlar uchrashuvlari, oilaviy tadbirlar va jamoat loyihalari.",
-              icon:
-                "◎",
+                "Vatandoshlar uchrashuvlari, oilalar va networking.",
+              accent:
+                "from-emerald-500/14 to-cyan-500/5",
+            },
+            {
+              title:
+                "Sport",
+              description:
+                "Futbol, voleybol, shaxmat va boshqa jamoaviy faoliyatlar.",
+              accent:
+                "from-violet-500/12 to-blue-500/5",
+            },
+            {
+              title:
+                "Ta’lim va karyera",
+              description:
+                "Seminar, workshop, ta’lim va professional uchrashuvlar.",
+              accent:
+                "from-amber-500/12 to-orange-500/5",
             },
           ],
           upcomingEyebrow:
-            "Yaqin tadbirlar",
+            "Tasdiqlangan",
           upcomingTitle:
-            "Rejalashtirilgan tadbirlar",
+            "Yaqin tadbirlar",
           upcomingDescription:
-            "Sana, manzil, tashkilotchi va ro‘yxatdan o‘tish havolasi tekshirilgan tadbirlar shu yerda ko‘rsatiladi.",
+            "Sana, tashkilotchi, joy va mavjud ro‘yxatdan o‘tish ma’lumotlari tekshirilgan real tadbirlar.",
           emptyBadge:
-            "Hozircha tasdiqlangan tadbir yo‘q",
+            "Hozircha tasdiqlangan real tadbir yo‘q",
           emptyTitle:
-            "Yangi tadbirlar tekshirilgandan keyin e’lon qilinadi",
+            "Yangi tadbirlar tekshirilgandan keyin shu yerda paydo bo‘ladi",
           emptyDescription:
-            "Vatandoshlar.de foydalanuvchilarni chalg‘itmaslik uchun uydirma sana, manzil yoki ro‘yxatdan o‘tish havolalarini joylashtirmaydi.",
-          emptyRequirementsTitle:
-            "Tadbir e’lon qilinishi uchun:",
-          emptyRequirements: [
-            "Rasmiy tashkilotchi ko‘rsatilishi",
-            "Sana va manzil tasdiqlanishi",
-            "Rasmiy manba havolasi mavjud bo‘lishi",
-            "Ro‘yxatdan o‘tish tartibi aniq bo‘lishi",
-          ],
+            "Biz bo‘limni sun’iy sana yoki manzil bilan to‘ldirmaymiz. Quyidagi rejalar esa kelajakdagi tadbir yo‘nalishlarini ochiq ko‘rsatadi.",
+          planningEyebrow:
+            "Rejadagi tadbirlar",
+          planningTitle:
+            "Rejadagi tadbirlar",
+          planningDescription:
+            "Bu kartalar hali e’lon qilingan tadbirlar emas. Sana, joy va ro‘yxatdan o‘tish tartibi aniqlangach ma’lumotlar yangilanadi.",
+          planningNote:
+            "“Rejalashtirilmoqda” statusi foydalanuvchini taxminiy yoki uydirma ma’lumotdan himoya qiladi.",
           policyEyebrow:
             "Ishonchlilik",
           policyTitle:
-            "Tadbirlar qanday tekshiriladi?",
+            "Har bir holat aniq ajratiladi",
           policyDescription:
-            "Har bir tadbir portalga joylashtirilishidan oldin asosiy ma’lumotlari va rasmiy manbasi tekshiriladi.",
-          policySteps: [
-            {
-              number:
-                "01",
-              title:
-                "Tashkilotchi",
-              description:
-                "Tashkilot yoki mas’ul shaxsning rasmiy sahifasi tekshiriladi.",
-            },
-            {
-              number:
-                "02",
-              title:
-                "Sana va manzil",
-              description:
-                "Tadbir sanasi, vaqti va manzili manba bilan solishtiriladi.",
-            },
-            {
-              number:
-                "03",
-              title:
-                "Ro‘yxatdan o‘tish",
-              description:
-                "Ariza havolasi va qatnashish shartlari tekshiriladi.",
-            },
-            {
-              number:
-                "04",
-              title:
-                "Tekshiruv sanasi",
-              description:
-                "Har bir tadbirda ma’lumot oxirgi marta qachon tekshirilgani ko‘rsatiladi.",
-            },
+            "E’lon qilingan tadbir bilan hali rejadagi tadbir bir xil holatda taqdim etilmaydi. Bu foydalanuvchiga nima tasdiqlangan, nima hali reja ekanini darhol tushunishga yordam beradi.",
+          policyItems: [
+            "Real tadbirda sana va rasmiy manba tekshiriladi",
+            "Tashkilotchi kartada aniq ko‘rsatiladi",
+            "Rejadagi tadbirlarda noma’lum ma’lumot uydirilmaydi",
           ],
           archiveEyebrow:
             "Arxiv",
@@ -220,11 +267,11 @@ export default async function EventsPage() {
           reminderEyebrow:
             "Muhim eslatma",
           reminderTitle:
-            "Yo‘lga chiqishdan oldin tadbirni qayta tekshiring",
+            "Yo‘lga chiqishdan oldin rasmiy manbani yana tekshiring",
           reminderDescription:
-            "Tashkilotchilar sana, manzil yoki dasturga o‘zgartirish kiritishi mumkin. Tadbirga borishdan oldin rasmiy manba sahifasini yana bir marta oching.",
-          homeButton:
-            "Bosh sahifaga qaytish",
+            "Tashkilotchilar sana, manzil yoki dasturga o‘zgartirish kiritishi mumkin. Tasdiqlangan tadbir detail sahifasida rasmiy manba ko‘rsatiladi.",
+          eventsButton:
+            "Tadbirlarga qaytish",
           card: {
             time:
               "Vaqt",
@@ -238,120 +285,115 @@ export default async function EventsPage() {
               "Batafsil dastur va manzil",
             details:
               "Batafsil",
+            organizer:
+              "Tashkilotchi",
+            planning:
+              "Rejalashtirilmoqda",
+            dateTbd:
+              "Sana keyinroq e’lon qilinadi",
+            locationTbd:
+              "Manzil tasdiqlangandan keyin qo‘shiladi",
+            planningDescription:
+              "Tafsilotlar tasdiqlangach yangilanadi",
           },
         }
       : {
           heroEyebrow:
-            "Veranstaltungskalender von Vatandoshlar.de",
+            "Veranstaltungen",
           heroTitle:
-            "Begegnen, lernen und sich mit der Gemeinschaft vernetzen",
+            "Begegnen, lernen und gemeinsam Zeit verbringen",
           heroDescription:
-            "Kulturelle, bildungsbezogene, berufliche und gemeinschaftliche Veranstaltungen für Usbeken in Deutschland. Jede Veröffentlichung wird anhand einer offiziellen Quelle geprüft.",
+            "Veröffentlichte Veranstaltungen werden mit geprüften Angaben und offizieller Quelle angezeigt. Geplante Veranstaltungen erscheinen transparent als „In Planung“, ohne erfundene Termine oder Orte.",
           upcomingButton:
-            "Kommende Veranstaltungen ansehen",
-          policyButton:
-            "Prüfverfahren",
+            "Veröffentlichte Veranstaltungen",
+          planningButton:
+            "Geplante Veranstaltungen",
           stats: {
-            upcoming:
-              "Kommende Veranstaltungen",
-            categories:
-              "Hauptbereiche",
-            verified:
-              "Offizielle Quelle geprüft",
+            overview:
+              "Event-Status im Überblick",
+            upcoming: {
+              label:
+                "Veröffentlichte Veranstaltungen",
+              description:
+                "Termin und Angaben sind bestätigt",
+              emptyDescription:
+                "Derzeit keine veröffentlichten Termine",
+            },
+            planning: {
+              label:
+                "Geplante Veranstaltungen",
+              description:
+                "Details werden vorbereitet",
+            },
           },
+          categoryEyebrow:
+            "Bereiche",
+          categoryTitle:
+            "Veranstaltungen für unterschiedliche Interessen",
           categories: [
             {
               title:
                 "Kultur",
               description:
-                "Konzerte, Feiertage, Ausstellungen und Veranstaltungen zur usbekischen Kultur.",
-              icon:
-                "◈",
-            },
-            {
-              title:
-                "Bildung",
-              description:
-                "Seminare, Kurse, offene Unterrichtsangebote und Treffen für Studierende.",
-              icon:
-                "▤",
-            },
-            {
-              title:
-                "Karriere",
-              description:
-                "Jobmessen, Networking, Ausbildung und berufliche Begegnungen.",
-              icon:
-                "◇",
+                "Feiertage, kulturelle Treffen und usbekische Traditionen.",
+              accent:
+                "from-cyan-500/14 to-blue-500/5",
             },
             {
               title:
                 "Gemeinschaft",
               description:
-                "Treffen von Landsleuten, Familienveranstaltungen und Gemeinschaftsprojekte.",
-              icon:
-                "◎",
+                "Community-Treffen, Familien und Networking.",
+              accent:
+                "from-emerald-500/14 to-cyan-500/5",
+            },
+            {
+              title:
+                "Sport",
+              description:
+                "Fußball, Volleyball, Schach und weitere gemeinsame Aktivitäten.",
+              accent:
+                "from-violet-500/12 to-blue-500/5",
+            },
+            {
+              title:
+                "Bildung und Karriere",
+              description:
+                "Seminare, Workshops, Bildung und berufliche Begegnungen.",
+              accent:
+                "from-amber-500/12 to-orange-500/5",
             },
           ],
           upcomingEyebrow:
-            "Kommende Veranstaltungen",
+            "Bestätigt",
           upcomingTitle:
-            "Geplante Veranstaltungen",
+            "Kommende Veranstaltungen",
           upcomingDescription:
-            "Hier erscheinen Veranstaltungen, deren Datum, Ort, Veranstalter und Anmeldelink geprüft wurden.",
+            "Reale Veranstaltungen mit geprüftem Datum, Veranstalter, Ort und vorhandenen Anmeldeinformationen.",
           emptyBadge:
-            "Derzeit keine bestätigte Veranstaltung",
+            "Derzeit keine bestätigte reale Veranstaltung",
           emptyTitle:
-            "Neue Veranstaltungen werden nach der Prüfung veröffentlicht",
+            "Neue Veranstaltungen erscheinen hier nach der Prüfung",
           emptyDescription:
-            "Vatandoshlar.de veröffentlicht keine erfundenen Termine, Orte oder Anmeldelinks.",
-          emptyRequirementsTitle:
-            "Voraussetzungen für eine Veröffentlichung:",
-          emptyRequirements: [
-            "Ein offizieller Veranstalter ist angegeben",
-            "Datum und Veranstaltungsort sind bestätigt",
-            "Eine offizielle Quellenangabe ist vorhanden",
-            "Das Anmeldeverfahren ist eindeutig beschrieben",
-          ],
+            "Wir füllen den Bereich nicht mit erfundenen Terminen oder Orten. Die folgenden Planungen zeigen transparent mögliche zukünftige Veranstaltungen.",
+          planningEyebrow:
+            "Geplante Veranstaltungen",
+          planningTitle:
+            "Geplante Veranstaltungen",
+          planningDescription:
+            "Diese Karten sind noch keine bestätigten realen Veranstaltungen. Datum, Ort und Anmeldung werden ergänzt, sobald sie feststehen.",
+          planningNote:
+            "Der Status „In Planung“ schützt vor voreiligen oder erfundenen Angaben.",
           policyEyebrow:
             "Verlässlichkeit",
           policyTitle:
-            "Wie werden Veranstaltungen geprüft?",
+            "Jeder Status wird klar unterschieden",
           policyDescription:
-            "Vor der Veröffentlichung werden die wichtigsten Angaben und die offizielle Quelle jeder Veranstaltung geprüft.",
-          policySteps: [
-            {
-              number:
-                "01",
-              title:
-                "Veranstalter",
-              description:
-                "Die offizielle Seite der Organisation oder verantwortlichen Person wird geprüft.",
-            },
-            {
-              number:
-                "02",
-              title:
-                "Datum und Ort",
-              description:
-                "Datum, Uhrzeit und Ort werden mit der Quelle abgeglichen.",
-            },
-            {
-              number:
-                "03",
-              title:
-                "Anmeldung",
-              description:
-                "Anmeldelink und Teilnahmebedingungen werden geprüft.",
-            },
-            {
-              number:
-                "04",
-              title:
-                "Prüfdatum",
-              description:
-                "Bei jeder Veranstaltung wird das Datum der letzten Prüfung angegeben.",
-            },
+            "Eine veröffentlichte Veranstaltung und eine noch geplante Veranstaltung werden nicht gleich dargestellt. So ist sofort erkennbar, was bestätigt und was noch in Planung ist.",
+          policyItems: [
+            "Bei realen Veranstaltungen werden Datum und offizielle Quelle geprüft",
+            "Der Veranstalter wird direkt auf der Karte genannt",
+            "Bei geplanten Veranstaltungen werden unbekannte Angaben nicht erfunden",
           ],
           archiveEyebrow:
             "Archiv",
@@ -360,11 +402,11 @@ export default async function EventsPage() {
           reminderEyebrow:
             "Wichtiger Hinweis",
           reminderTitle:
-            "Prüfen Sie die Veranstaltung vor der Abfahrt erneut",
+            "Offizielle Quelle vor der Anreise erneut prüfen",
           reminderDescription:
-            "Veranstalter können Datum, Ort oder Programm ändern. Öffnen Sie deshalb vor der Teilnahme noch einmal die offizielle Quellenseite.",
-          homeButton:
-            "Zur Startseite",
+            "Veranstalter können Datum, Ort oder Programm ändern. Bei bestätigten Veranstaltungen ist die offizielle Quelle auf der Detailseite angegeben.",
+          eventsButton:
+            "Zu den Veranstaltungen",
           card: {
             time:
               "Uhrzeit",
@@ -378,6 +420,16 @@ export default async function EventsPage() {
               "Programm und Veranstaltungsort",
             details:
               "Details",
+            organizer:
+              "Veranstalter",
+            planning:
+              "In Planung",
+            dateTbd:
+              "Datum wird später bekannt gegeben",
+            locationTbd:
+              "Ort wird nach der Bestätigung ergänzt",
+            planningDescription:
+              "Details folgen nach der Bestätigung",
           },
         };
 
@@ -385,102 +437,156 @@ export default async function EventsPage() {
     <>
       <Header />
 
-      <main className="min-h-screen bg-slate-50 pt-20 text-slate-950 transition-colors dark:bg-slate-950 dark:text-white">
-        <SectionHeroBackground tone="events">
-          <section className="border-b border-slate-200/80 bg-transparent text-slate-950 dark:border-slate-800/80 dark:text-white">
-            <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8">
-              <div className="max-w-4xl">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-violet-700 dark:text-violet-300">
-                  {copy.heroEyebrow}
-                </p>
+      <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f8fbfd_46%,#ffffff_100%)] pt-20 text-slate-950 dark:bg-[linear-gradient(180deg,#020617_0%,#07111f_48%,#020617_100%)] dark:text-white">
+        <header className="relative isolate overflow-hidden border-b border-slate-200/70 dark:border-slate-800">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+          >
+            <div className="absolute -left-28 -top-36 size-[32rem] rounded-full bg-cyan-200/30 blur-[120px] dark:bg-cyan-400/[0.035]" />
+            <div className="absolute right-[4%] top-0 size-[28rem] rounded-full bg-emerald-200/22 blur-[110px] dark:bg-emerald-400/[0.03]" />
+            <div className="absolute right-[22%] top-[58%] size-[18rem] rounded-full bg-amber-200/12 blur-[100px] dark:bg-amber-300/[0.015]" />
+          </div>
 
-                <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-6xl sm:leading-tight">
-                  {copy.heroTitle}
-                </h1>
+          <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 sm:py-20 lg:grid-cols-[minmax(0,1.55fr)_minmax(17rem,0.75fr)] lg:items-center lg:px-8 lg:py-24">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-cyan-200/80 bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 shadow-sm backdrop-blur dark:border-cyan-400/15 dark:bg-white/[0.035] dark:text-cyan-300">
+                <CalendarIcon className="size-4" />
+                <BrandName /> · {copy.heroEyebrow}
+              </span>
 
-                <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-400">
-                  {copy.heroDescription}
-                </p>
+              <h1 className="mt-7 max-w-4xl text-4xl font-black tracking-[-0.05em] sm:text-5xl lg:text-6xl">
+                {copy.heroTitle}
+              </h1>
 
-                <div className="mt-10 flex flex-wrap gap-3">
-                  <a
-                    href="#upcoming-events"
-                    className="rounded-full bg-violet-600 px-6 py-3 font-semibold text-white shadow-lg shadow-violet-600/15 transition hover:-translate-y-0.5 hover:bg-violet-500"
-                  >
-                    {copy.upcomingButton}
-                  </a>
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl sm:leading-9 dark:text-slate-300">
+                {copy.heroDescription}
+              </p>
 
-                  <a
-                    href="#event-policy"
-                    className="rounded-full border border-slate-300/80 bg-white/70 px-6 py-3 font-semibold text-slate-900 shadow-sm backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
-                  >
-                    {copy.policyButton}
-                  </a>
-                </div>
-              </div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="#upcoming-events"
+                  className="button-primary text-sm shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-page"
+                >
+                  {copy.upcomingButton}
+                </a>
 
-              <div className="mt-16 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl border border-slate-200/80 bg-white/75 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
-                  <p className="text-3xl font-bold">
-                    {upcomingEvents.length}
-                  </p>
-
-                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-                    {copy.stats.upcoming}
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-slate-200/80 bg-white/75 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
-                  <p className="text-3xl font-bold">
-                    {copy.categories.length}
-                  </p>
-
-                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-                    {copy.stats.categories}
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-slate-200/80 bg-white/75 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
-                  <p className="text-3xl font-bold">
-                    100%
-                  </p>
-
-                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-                    {copy.stats.verified}
-                  </p>
-                </div>
+                <a
+                  href="#planning-events"
+                  className="button-secondary text-sm backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-page"
+                >
+                  {copy.planningButton}
+                </a>
               </div>
             </div>
-          </section>
-        </SectionHeroBackground>
 
-        <section className="border-b border-slate-200 bg-white py-16 dark:border-slate-800 dark:bg-slate-900">
+            <aside
+              aria-label={copy.stats.overview}
+              className="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/65 p-6 shadow-[0_28px_80px_-58px_rgba(15,23,42,0.55)] backdrop-blur-xl dark:border-white/[0.08] dark:bg-slate-900/45 sm:p-7 lg:p-8"
+            >
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-20 -top-24 size-64 rounded-full bg-cyan-200/25 blur-3xl dark:bg-cyan-400/[0.035]"
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-24 -left-20 size-64 rounded-full bg-emerald-200/20 blur-3xl dark:bg-emerald-400/[0.03]"
+              />
+
+              <div className="relative">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">
+                  {copy.stats.overview}
+                </p>
+
+                <div className="mt-7 grid gap-6 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center lg:grid-cols-1 xl:grid-cols-[auto_minmax(0,1fr)]">
+                  <div className="relative flex size-28 shrink-0 items-center justify-center sm:size-32">
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-full border border-cyan-300/55 dark:border-cyan-300/15"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-3 rounded-full border border-emerald-300/65 dark:border-emerald-300/20"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="absolute right-1 top-4 size-2 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,0.65)]"
+                    />
+
+                    <span className="relative text-6xl font-black leading-none tracking-[-0.07em] text-emerald-600 dark:text-emerald-400">
+                      {planningEvents.length}
+                    </span>
+                  </div>
+
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        aria-hidden="true"
+                        className="size-2 rounded-full bg-emerald-500 shadow-[0_0_0_5px_rgba(16,185,129,0.08)]"
+                      />
+                      <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-300">
+                        {copy.stats.planning.label}
+                      </p>
+                    </div>
+
+                    <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                      {copy.stats.planning.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-7 border-t border-slate-200/80 pt-5 dark:border-white/[0.08]">
+                  <div className="flex items-start gap-4">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-400/[0.07] dark:text-emerald-300">
+                      <CheckIcon className="size-4" />
+                    </span>
+
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                        <span className="text-2xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">
+                          {upcomingEvents.length}
+                        </span>
+                        <span className="text-xs font-black uppercase tracking-[0.14em] text-cyan-700 dark:text-cyan-300">
+                          {copy.stats.upcoming.label}
+                        </span>
+                      </div>
+
+                      <p className="mt-1.5 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                        {upcomingEvents.length === 0
+                          ? copy.stats.upcoming.emptyDescription
+                          : copy.stats.upcoming.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </header>
+
+        <section className="relative py-16 sm:py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">
+              {copy.categoryEyebrow}
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-4xl">
+              {copy.categoryTitle}
+            </h2>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {copy.categories.map(
                 (category) => (
                   <article
-                    key={
-                      category.title
-                    }
-                    className="rounded-3xl border border-slate-200 bg-white p-7 transition hover:-translate-y-1 hover:shadow-lg dark:border-slate-800 dark:bg-slate-950"
+                    key={category.title}
+                    className={`rounded-[1.75rem] border border-slate-200/80 bg-gradient-to-br ${category.accent} p-6 shadow-[0_18px_48px_-38px_rgba(15,23,42,0.4)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:border-slate-700`}
                   >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-xl font-bold text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">
-                      {
-                        category.icon
-                      }
-                    </div>
-
-                    <h2 className="mt-6 text-xl font-bold">
-                      {
-                        category.title
-                      }
-                    </h2>
-
+                    <span className="block h-1 w-10 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400" />
+                    <h3 className="mt-5 text-xl font-bold">
+                      {category.title}
+                    </h3>
                     <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                      {
-                        category.description
-                      }
+                      {category.description}
                     </p>
                   </article>
                 ),
@@ -491,28 +597,20 @@ export default async function EventsPage() {
 
         <section
           id="upcoming-events"
-          className="py-20"
+          className="relative py-16 sm:py-20"
         >
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">
-                {
-                  copy.upcomingEyebrow
-                }
-              </p>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">
+              {copy.upcomingEyebrow}
+            </p>
 
-              <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                {
-                  copy.upcomingTitle
-                }
-              </h2>
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-4xl">
+              {copy.upcomingTitle}
+            </h2>
 
-              <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-400">
-                {
-                  copy.upcomingDescription
-                }
-              </p>
-            </div>
+            <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-400">
+              {copy.upcomingDescription}
+            </p>
 
             {upcomingEvents.length >
             0 ? (
@@ -523,175 +621,133 @@ export default async function EventsPage() {
                     index,
                   ) => (
                     <EventCard
-                      key={
-                        event.id
-                      }
-                      event={
-                        event
-                      }
-                      locale={
-                        locale
-                      }
-                      labels={
-                        copy.card
-                      }
-                      index={
-                        index
-                      }
+                      key={event.id}
+                      event={event}
+                      locale={locale}
+                      labels={copy.card}
+                      index={index}
                     />
                   ),
                 )}
               </div>
             ) : (
-              <div className="mt-12 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
-                <div className="grid lg:grid-cols-[0.8fr_1.2fr]">
-                  <div
-                    role="img"
-                    aria-label={
-                      calendarImage.alt
-                    }
-                    style={{
-                      backgroundImage:
-                        `url(${calendarImage.src})`,
-                    }}
-                    className="
-                      min-h-80
-                      bg-slate-200
-                      bg-cover
-                      bg-center
-                      bg-no-repeat
-                      dark:bg-slate-800
-                      sm:min-h-[420px]
-                      lg:min-h-[560px]
-                    "
-                  />
+              <div className="relative mt-12 overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/75 p-8 shadow-[0_24px_70px_-52px_rgba(15,23,42,0.5)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/65 sm:p-10">
+                <div
+                  aria-hidden="true"
+                  className="absolute -right-24 -top-24 size-64 rounded-full bg-cyan-200/25 blur-3xl dark:bg-cyan-400/[0.03]"
+                />
 
-                  <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-14">
-                    <span className="w-fit rounded-full bg-amber-100 px-4 py-2 text-sm font-semibold text-amber-700 dark:bg-amber-500/10 dark:text-amber-300">
-                      {
-                        copy.emptyBadge
-                      }
-                    </span>
+                <span className="relative inline-flex rounded-full border border-amber-200/80 bg-amber-50 px-4 py-2 text-sm font-bold text-amber-700 dark:border-amber-400/15 dark:bg-amber-400/[0.05] dark:text-amber-300">
+                  {copy.emptyBadge}
+                </span>
 
-                    <h3 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">
-                      {
-                        copy.emptyTitle
-                      }
-                    </h3>
+                <h3 className="relative mt-6 max-w-3xl text-2xl font-black tracking-[-0.035em] sm:text-3xl">
+                  {copy.emptyTitle}
+                </h3>
 
-                    <p className="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-400">
-                      {
-                        copy.emptyDescription
-                      }
-                    </p>
-
-                    <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-950">
-                      <p className="font-semibold">
-                        {
-                          copy.emptyRequirementsTitle
-                        }
-                      </p>
-
-                      <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                        {copy.emptyRequirements.map(
-                          (
-                            requirement,
-                          ) => (
-                            <li
-                              key={
-                                requirement
-                              }
-                            >
-                              •{" "}
-                              {
-                                requirement
-                              }
-                            </li>
-                          ),
-                        )}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                <p className="relative mt-4 max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-400">
+                  {copy.emptyDescription}
+                </p>
               </div>
             )}
           </div>
         </section>
 
         <section
-          id="event-policy"
-          className="border-y border-slate-200 bg-white py-20 dark:border-slate-800 dark:bg-slate-900"
+          id="planning-events"
+          className="relative border-y border-cyan-100/80 bg-[radial-gradient(circle_at_80%_20%,rgba(34,211,238,0.09),transparent_26%),linear-gradient(180deg,rgba(248,250,252,0.72),rgba(255,255,255,0.9))] py-16 dark:border-cyan-400/[0.08] dark:bg-[radial-gradient(circle_at_80%_20%,rgba(34,211,238,0.025),transparent_26%),linear-gradient(180deg,rgba(15,23,42,0.45),rgba(2,6,23,0.72))] sm:py-20"
         >
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">
-                  {
-                    copy.policyEyebrow
-                  }
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">
+                  {copy.planningEyebrow}
                 </p>
 
-                <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-                  {
-                    copy.policyTitle
-                  }
+                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-4xl">
+                  {copy.planningTitle}
                 </h2>
 
-                <p className="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
-                  {
-                    copy.policyDescription
-                  }
+                <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-400">
+                  {copy.planningDescription}
                 </p>
               </div>
 
-              <ol className="grid gap-4 sm:grid-cols-2">
-                {copy.policySteps.map(
-                  (step) => (
+              <div className="rounded-2xl border border-cyan-200/75 bg-white/70 p-5 text-sm leading-6 text-slate-600 shadow-sm backdrop-blur dark:border-cyan-400/12 dark:bg-white/[0.035] dark:text-slate-300">
+                {copy.planningNote}
+              </div>
+            </div>
+
+            {planningEvents.length >
+            0 && (
+              <div className="mt-12 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+                {planningEvents.map(
+                  (
+                    event,
+                    index,
+                  ) => (
+                    <EventCard
+                      key={event.id}
+                      event={event}
+                      locale={locale}
+                      labels={copy.card}
+                      index={index}
+                    />
+                  ),
+                )}
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className="relative py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">
+                  {copy.policyEyebrow}
+                </p>
+
+                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-4xl">
+                  {copy.policyTitle}
+                </h2>
+
+                <p className="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
+                  {copy.policyDescription}
+                </p>
+              </div>
+
+              <ul className="space-y-4">
+                {copy.policyItems.map(
+                  (item) => (
                     <li
-                      key={
-                        step.number
-                      }
-                      className="rounded-3xl border border-slate-200 bg-slate-50 p-7 dark:border-slate-800 dark:bg-slate-950"
+                      key={item}
+                      className="flex gap-4 rounded-2xl border border-slate-200/80 bg-white/70 p-5 shadow-[0_16px_42px_-34px_rgba(15,23,42,0.45)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/60"
                     >
-                      <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
-                        {
-                          step.number
-                        }
+                      <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-400/[0.06] dark:text-emerald-300">
+                        <CheckIcon className="size-4" />
                       </span>
-
-                      <h3 className="mt-4 text-xl font-bold">
-                        {
-                          step.title
-                        }
-                      </h3>
-
-                      <p className="mt-3 leading-7 text-slate-600 dark:text-slate-400">
-                        {
-                          step.description
-                        }
-                      </p>
+                      <span className="pt-1 text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">
+                        {item}
+                      </span>
                     </li>
                   ),
                 )}
-              </ol>
+              </ul>
             </div>
           </div>
         </section>
 
         {pastEvents.length >
           0 && (
-          <section className="py-20">
+          <section className="relative py-16 sm:py-20">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
-                {
-                  copy.archiveEyebrow
-                }
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">
+                {copy.archiveEyebrow}
               </p>
 
-              <h2 className="mt-3 text-3xl font-bold tracking-tight">
-                {
-                  copy.archiveTitle
-                }
+              <h2 className="mt-3 text-3xl font-black tracking-[-0.04em]">
+                {copy.archiveTitle}
               </h2>
 
               <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
@@ -701,21 +757,11 @@ export default async function EventsPage() {
                     index,
                   ) => (
                     <EventCard
-                      key={
-                        event.id
-                      }
-                      event={
-                        event
-                      }
-                      locale={
-                        locale
-                      }
-                      labels={
-                        copy.card
-                      }
-                      index={
-                        index
-                      }
+                      key={event.id}
+                      event={event}
+                      locale={locale}
+                      labels={copy.card}
+                      index={index}
                     />
                   ),
                 )}
@@ -724,38 +770,32 @@ export default async function EventsPage() {
           </section>
         )}
 
-        <section className="bg-slate-950 py-20 text-white">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-              <div className="max-w-3xl">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-400">
-                  {
-                    copy.reminderEyebrow
-                  }
-                </p>
+        <section className="relative overflow-hidden bg-slate-950 py-18 text-white sm:py-20">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(34,211,238,0.14),transparent_30%),radial-gradient(circle_at_90%_70%,rgba(16,185,129,0.10),transparent_28%)]"
+          />
+          <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+            <div className="max-w-3xl">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-300">
+                {copy.reminderEyebrow}
+              </p>
 
-                <h2 className="mt-4 text-3xl font-bold sm:text-4xl">
-                  {
-                    copy.reminderTitle
-                  }
-                </h2>
+              <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] sm:text-4xl">
+                {copy.reminderTitle}
+              </h2>
 
-                <p className="mt-5 text-lg leading-8 text-slate-300">
-                  {
-                    copy.reminderDescription
-                  }
-                </p>
-              </div>
-
-              <Link
-                href="/"
-                className="inline-flex min-h-12 w-fit items-center justify-center rounded-full border border-white !bg-white px-7 py-3 font-bold !text-slate-950 shadow-lg shadow-black/20 transition duration-200 visited:!text-slate-950 hover:-translate-y-0.5 hover:!bg-slate-100 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
-              >
-                {
-                  copy.homeButton
-                }
-              </Link>
+              <p className="mt-5 text-lg leading-8 text-slate-300">
+                {copy.reminderDescription}
+              </p>
             </div>
+
+            <a
+              href="#upcoming-events"
+              className="button-primary w-fit shadow-lg shadow-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
+            >
+              {copy.eventsButton}
+            </a>
           </div>
         </section>
       </main>

@@ -1,19 +1,15 @@
 import type {
   PublicEventItem,
+  PublicPlanningEventItem,
 } from "@/lib/events/public-events-repository";
 import type {
   EventItem,
+  PlanningEventItem,
   RegistrationStatusKey,
   SupportedEventLocale,
 } from "@/types/event";
 
-const categoryLabels: Record<
-  SupportedEventLocale,
-  Record<
-    PublicEventItem["category"],
-    string
-  >
-> = {
+const categoryLabels = {
   uz: {
     culture: "Madaniyat",
     education: "Ta’lim",
@@ -24,7 +20,6 @@ const categoryLabels: Record<
     children: "Bolalar uchun",
     consular: "Konsullik",
   },
-
   de: {
     culture: "Kultur",
     education: "Bildung",
@@ -35,27 +30,26 @@ const categoryLabels: Record<
     children: "Für Kinder",
     consular: "Konsularisches",
   },
-};
-
-const formatLabels: Record<
+} satisfies Record<
   SupportedEventLocale,
-  Record<
-    PublicEventItem["format"],
-    string
-  >
-> = {
+  Record<PublicEventItem["category"], string>
+>;
+
+const formatLabels = {
   uz: {
     offline: "Oflayn",
     online: "Onlayn",
     hybrid: "Gibrid",
   },
-
   de: {
     offline: "Vor Ort",
     online: "Online",
     hybrid: "Hybrid",
   },
-};
+} satisfies Record<
+  SupportedEventLocale,
+  Record<PublicEventItem["format"], string>
+>;
 
 const registrationStatusLabels: Record<
   SupportedEventLocale,
@@ -74,7 +68,6 @@ const registrationStatusLabels: Record<
     closed:
       "Ro‘yxatdan o‘tish yopilgan",
   },
-
   de: {
     open:
       "Anmeldung geöffnet",
@@ -98,7 +91,6 @@ const languageLabels: Record<
     en: "Ingliz tili",
     tr: "Turk tili",
   },
-
   de: {
     uz: "Usbekisch",
     de: "Deutsch",
@@ -109,7 +101,9 @@ const languageLabels: Record<
 };
 
 function toRegistrationStatusKey(
-  value: PublicEventItem["registrationStatus"],
+  value:
+    | PublicEventItem["registrationStatus"]
+    | PublicPlanningEventItem["registrationStatus"],
 ): RegistrationStatusKey {
   if (
     value === "not_required"
@@ -126,13 +120,23 @@ function toRegistrationStatusKey(
   return value;
 }
 
+function toNumericId(
+  id: string,
+): number {
+  const numericId =
+    Number(id);
+
+  return Number.isSafeInteger(
+    numericId,
+  )
+    ? numericId
+    : 0;
+}
+
 export function toEventItem(
   event: PublicEventItem,
   locale: SupportedEventLocale,
 ): EventItem {
-  const numericId =
-    Number(event.id);
-
   const registrationStatusKey =
     toRegistrationStatusKey(
       event.registrationStatus,
@@ -140,133 +144,126 @@ export function toEventItem(
 
   return {
     id:
-      Number.isSafeInteger(
-        numericId,
-      )
-        ? numericId
-        : 0,
-
+      toNumericId(
+        event.id,
+      ),
     slug:
       event.slug,
-
+    eventStatus:
+      "scheduled",
     title:
       event.title,
-
     excerpt:
       event.excerpt,
-
     description:
       event.description,
-
     category:
       categoryLabels[
         locale
       ][event.category],
-
     categoryKey:
       event.category,
-
     format:
       formatLabels[
         locale
       ][event.format],
-
     formatKey:
       event.format,
-
     startDate:
       event.startDate,
-
     ...(event.endDate
       ? {
           endDate:
             event.endDate,
         }
       : {}),
-
     ...(event.startTime
       ? {
           startTime:
             event.startTime,
         }
       : {}),
-
     ...(event.endTime
       ? {
           endTime:
             event.endTime,
         }
       : {}),
-
     timezone:
       event.timezone,
-
     ...(event.city
       ? {
           city:
             event.city,
         }
       : {}),
-
     ...(event.bundesland
       ? {
           bundesland:
             event.bundesland,
         }
       : {}),
-
     ...(event.venueName
       ? {
           venueName:
             event.venueName,
         }
       : {}),
-
     ...(event.address
       ? {
           address:
             event.address,
         }
       : {}),
-
     ...(event.onlineUrl
       ? {
           onlineUrl:
             event.onlineUrl,
         }
       : {}),
-
+    organizerType:
+      event.organizerType,
     organizerName:
       event.organizerName,
-
     ...(event.organizerUrl
       ? {
           organizerUrl:
             event.organizerUrl,
         }
       : {}),
-
     registrationStatus:
       registrationStatusLabels[
         locale
       ][registrationStatusKey],
-
     registrationStatusKey,
-
+    registrationMethod:
+      event.registrationMethod,
+    ...(event.registrationValue
+      ? {
+          registrationValue:
+            event.registrationValue,
+        }
+      : {}),
+    registrationRequired:
+      event.registrationRequired,
     ...(event.registrationUrl
       ? {
           registrationUrl:
             event.registrationUrl,
         }
       : {}),
-
     ...(event.registrationDeadline
       ? {
           registrationDeadline:
             event.registrationDeadline,
         }
       : {}),
-
+    ...(event.capacity !== undefined
+      ? {
+          capacity:
+            event.capacity,
+        }
+      : {}),
     language:
       event.languages.map(
         (language) =>
@@ -275,24 +272,90 @@ export function toEventItem(
           ][language] ??
           language,
       ),
-
     priceLabel:
       event.priceLabel,
-
     officialSourceName:
       event.officialSourceName,
-
     officialSourceUrl:
       event.officialSourceUrl,
-
     verifiedAt:
       event.verifiedAt,
-
     importantNotes:
       event.importantNotes,
-
     featured:
       event.featured,
+  };
+}
+
+export function toPlanningEventItem(
+  event: PublicPlanningEventItem,
+  locale: SupportedEventLocale,
+): PlanningEventItem {
+  const registrationStatusKey =
+    toRegistrationStatusKey(
+      event.registrationStatus,
+    );
+
+  return {
+    id:
+      toNumericId(
+        event.id,
+      ),
+    slug:
+      event.slug,
+    eventStatus:
+      "planning",
+    title:
+      event.title,
+    excerpt:
+      event.excerpt,
+    description:
+      event.description,
+    category:
+      categoryLabels[
+        locale
+      ][event.category],
+    categoryKey:
+      event.category,
+    format:
+      formatLabels[
+        locale
+      ][event.format],
+    formatKey:
+      event.format,
+    timezone:
+      event.timezone,
+    organizerType:
+      event.organizerType,
+    organizerName:
+      event.organizerName,
+    ...(event.organizerUrl
+      ? {
+          organizerUrl:
+            event.organizerUrl,
+        }
+      : {}),
+    registrationStatus:
+      registrationStatusLabels[
+        locale
+      ][registrationStatusKey],
+    registrationStatusKey,
+    registrationMethod:
+      event.registrationMethod,
+    registrationRequired:
+      event.registrationRequired,
+    language:
+      event.languages.map(
+        (language) =>
+          languageLabels[
+            locale
+          ][language] ??
+          language,
+      ),
+    priceLabel:
+      event.priceLabel,
+    importantNotes:
+      event.importantNotes,
   };
 }
 

@@ -4,13 +4,17 @@ import {
   getEventLocation,
 } from "@/lib/events/event-presenter";
 import type {
-  EventItem,
+  EventDiscoveryItem,
   RegistrationStatusKey,
   SupportedEventLocale,
 } from "@/types/event";
 import { Link } from "@/i18n/navigation";
+import BrandName from "@/components/ui/BrandName";
 
-import { Badge, Card } from "../ui";
+import {
+  Badge,
+  Card,
+} from "../ui";
 
 type EventCardLabels = Readonly<{
   time: string;
@@ -19,10 +23,15 @@ type EventCardLabels = Readonly<{
   event: string;
   detailsDescription: string;
   details: string;
+  organizer?: string;
+  planning?: string;
+  dateTbd?: string;
+  locationTbd?: string;
+  planningDescription?: string;
 }>;
 
 type EventCardProps = Readonly<{
-  event: EventItem;
+  event: EventDiscoveryItem;
   locale: SupportedEventLocale;
   labels: EventCardLabels;
   index?: number;
@@ -32,7 +41,9 @@ type IconProps = Readonly<{
   className?: string;
 }>;
 
-function ArrowUpRightIcon({ className }: IconProps) {
+function ArrowUpRightIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -51,7 +62,9 @@ function ArrowUpRightIcon({ className }: IconProps) {
   );
 }
 
-function ClockIcon({ className }: IconProps) {
+function ClockIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -77,7 +90,9 @@ function ClockIcon({ className }: IconProps) {
   );
 }
 
-function LocationIcon({ className }: IconProps) {
+function LocationIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -102,7 +117,9 @@ function LocationIcon({ className }: IconProps) {
   );
 }
 
-function PriceIcon({ className }: IconProps) {
+function PriceIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -115,6 +132,33 @@ function PriceIcon({ className }: IconProps) {
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+    </svg>
+  );
+}
+
+function PeopleIcon({
+  className,
+}: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        cx="9"
+        cy="8"
+        r="3"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <path
+        d="M3.8 19c.4-3.4 2.2-5.2 5.2-5.2s4.8 1.8 5.2 5.2M15.5 5.8a2.6 2.6 0 0 1 0 5.1M16.2 14c2.4.4 3.7 2 4 4.5"
+        stroke="currentColor"
+        strokeLinecap="round"
         strokeWidth="1.7"
       />
     </svg>
@@ -169,14 +213,57 @@ export default function EventCard({
   labels,
   index = 0,
 }: EventCardProps) {
-  const href = `/events/${event.slug}`;
-  const titleId = `event-${event.id}-title`;
-  const formattedDate = formatEventDateShort(
-    event.startDate,
-    locale,
-  );
-  const [day, ...monthParts] = formattedDate.split(" ");
-  const month = monthParts.join(" ");
+  const isPlanning =
+    event.eventStatus === "planning";
+  const href =
+    `/events/${event.slug}`;
+  const titleId =
+    `event-${event.eventStatus}-${event.id}-title`;
+
+  const organizerLabel =
+    labels.organizer ??
+    (locale === "uz"
+      ? "Tashkilotchi"
+      : "Veranstalter");
+  const planningLabel =
+    labels.planning ??
+    (locale === "uz"
+      ? "Rejalashtirilmoqda"
+      : "In Planung");
+  const dateTbd =
+    labels.dateTbd ??
+    (locale === "uz"
+      ? "Sana keyinroq e’lon qilinadi"
+      : "Datum wird später bekannt gegeben");
+  const locationTbd =
+    labels.locationTbd ??
+    (locale === "uz"
+      ? "Manzil keyinroq e’lon qilinadi"
+      : "Ort wird später bekannt gegeben");
+  const planningDescription =
+    labels.planningDescription ??
+    (locale === "uz"
+      ? "Tafsilotlar tasdiqlangach yangilanadi"
+      : "Details werden nach der Bestätigung ergänzt");
+
+  let day = "";
+  let month = "";
+
+  if (!isPlanning) {
+    const formattedDate =
+      formatEventDateShort(
+        event.startDate,
+        locale,
+      );
+    const [
+      dayPart,
+      ...monthParts
+    ] = formattedDate.split(" ");
+
+    day = dayPart;
+    month =
+      monthParts.join(" ");
+  }
 
   return (
     <Card
@@ -186,48 +273,66 @@ export default function EventCard({
       aria-labelledby={titleId}
       className="group relative isolate flex min-h-[520px] flex-col overflow-hidden rounded-[2rem] bg-surface animate-fade-in-up"
       style={{
-        animationDelay: `${index * 70}ms`,
+        animationDelay:
+          `${index * 70}ms`,
       }}
     >
-      <div className="relative overflow-hidden border-b border-white/10 bg-gradient-to-br from-brand via-indigo-700 to-slate-950 p-6 text-white sm:p-7">
+      <div
+        className={`relative overflow-hidden border-b border-white/10 p-6 text-white sm:p-7 ${
+          isPlanning
+            ? "bg-gradient-to-br from-cyan-700 via-sky-800 to-slate-950"
+            : "bg-gradient-to-br from-brand via-indigo-700 to-slate-950"
+        }`}
+      >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.20),transparent_30%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_31%)]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-20 size-52 rounded-full border border-white/10 transition-transform duration-700 group-hover:scale-125"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-24 -left-20 size-52 rounded-full bg-white/10 blur-3xl transition-transform duration-700 group-hover:scale-125"
+          className="pointer-events-none absolute -bottom-24 -left-20 size-52 rounded-full bg-white/10 blur-3xl transition-transform duration-500 group-hover:scale-110 motion-reduce:transform-none"
         />
 
         <div className="relative flex items-start justify-between gap-4">
-          <time
-            dateTime={event.startDate}
-            className="flex min-h-16 min-w-16 flex-col items-center justify-center rounded-2xl border border-white/60 bg-white px-3 py-2 text-center text-slate-950 shadow-lg shadow-slate-950/15 transition-transform duration-300 group-hover:scale-105"
-          >
-            <span className="text-2xl font-bold leading-none">
-              {day}
-            </span>
-            {month && (
-              <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                {month}
+          {isPlanning ? (
+            <div className="flex min-h-16 min-w-20 flex-col items-center justify-center rounded-2xl border border-white/30 bg-white/10 px-3 py-2 text-center shadow-lg shadow-slate-950/10 backdrop-blur">
+              <span className="text-xs font-black uppercase tracking-[0.16em] text-cyan-100">
+                {locale === "uz"
+                  ? "Reja"
+                  : "Plan"}
               </span>
-            )}
-          </time>
+              <span className="mt-1 size-2 rounded-full bg-emerald-300 shadow-[0_0_0_5px_rgba(110,231,183,0.10)]" />
+            </div>
+          ) : (
+            <time
+              dateTime={
+                event.startDate
+              }
+              className="flex min-h-16 min-w-16 flex-col items-center justify-center rounded-2xl border border-white/60 bg-white px-3 py-2 text-center text-slate-950 shadow-lg shadow-slate-950/15 transition-transform duration-300 group-hover:scale-[1.03] motion-reduce:transform-none"
+            >
+              <span className="text-2xl font-bold leading-none">
+                {day}
+              </span>
+              {month && (
+                <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                  {month}
+                </span>
+              )}
+            </time>
+          )}
 
           <Badge
             variant="neutral"
             className="border-white/15 bg-white/10 text-white backdrop-blur-md"
           >
-            {event.format}
+            {isPlanning
+              ? planningLabel
+              : event.format}
           </Badge>
         </div>
 
         <div className="relative mt-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-200">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200">
             {event.category}
           </p>
 
@@ -235,16 +340,20 @@ export default function EventCard({
             id={titleId}
             className="mt-3 text-2xl font-bold leading-tight tracking-[-0.025em] text-white"
           >
-            <Link
-              href={href}
-              className="outline-none transition-opacity duration-200 hover:opacity-90 focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-brand"
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 z-20"
-              />
-              {event.title}
-            </Link>
+            {isPlanning ? (
+              event.title
+            ) : (
+              <Link
+                href={href}
+                className="outline-none transition-opacity duration-200 hover:opacity-90 focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-brand"
+              >
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 z-20"
+                />
+                {event.title}
+              </Link>
+            )}
           </h3>
         </div>
       </div>
@@ -256,38 +365,93 @@ export default function EventCard({
 
         <dl className="mt-7 space-y-4">
           <EventDetail
-            label={labels.time}
-            icon={<ClockIcon className="size-[18px]" />}
+            label={
+              isPlanning
+                ? (locale === "uz"
+                    ? "Sana"
+                    : "Datum")
+                : labels.time
+            }
+            icon={
+              <ClockIcon className="size-[18px]" />
+            }
           >
-            {formatEventTime(
-              locale,
-              event.startTime,
-              event.endTime,
+            {isPlanning
+              ? dateTbd
+              : formatEventTime(
+                  locale,
+                  event.startTime,
+                  event.endTime,
+                )}
+          </EventDetail>
+
+          <EventDetail
+            label={
+              labels.location
+            }
+            icon={
+              <LocationIcon className="size-[18px]" />
+            }
+          >
+            {isPlanning
+              ? locationTbd
+              : getEventLocation(
+                  event,
+                  locale,
+                )}
+          </EventDetail>
+
+          <EventDetail
+            label={
+              organizerLabel
+            }
+            icon={
+              <PeopleIcon className="size-[18px]" />
+            }
+          >
+            {event.organizerType ===
+            "vatandoshlar" ? (
+              locale === "uz" ? (
+                <>
+                  <BrandName /> tomonidan
+                </>
+              ) : (
+                <>
+                  Von <BrandName />
+                </>
+              )
+            ) : (
+              event.organizerName
             )}
           </EventDetail>
 
-          <EventDetail
-            label={labels.location}
-            icon={<LocationIcon className="size-[18px]" />}
-          >
-            {getEventLocation(event, locale)}
-          </EventDetail>
-
-          <EventDetail
-            label={labels.price}
-            icon={<PriceIcon className="size-[18px]" />}
-          >
-            {event.priceLabel}
-          </EventDetail>
+          {!isPlanning && (
+            <EventDetail
+              label={
+                labels.price
+              }
+              icon={
+                <PriceIcon className="size-[18px]" />
+              }
+            >
+              {event.priceLabel}
+            </EventDetail>
+          )}
         </dl>
 
         <div className="mt-7">
           <span
-            className={`inline-flex rounded-full border px-3 py-1.5 text-xs font-semibold ${getStatusStyles(
-              event.registrationStatusKey,
-            )}`}
+            className={`inline-flex rounded-full border px-3 py-1.5 text-xs font-semibold ${
+              isPlanning
+                ? "border-cyan-500/20 bg-cyan-500/10 text-cyan-700 dark:text-cyan-300"
+                : getStatusStyles(
+                    event.registrationStatusKey,
+                  )
+            }`}
           >
-            {event.registrationStatus}
+            {isPlanning
+              ? planningDescription
+              : event.registrationStatus}
           </span>
         </div>
 
@@ -298,17 +462,21 @@ export default function EventCard({
                 {labels.event}
               </p>
               <p className="mt-1 text-sm font-semibold text-text-secondary">
-                {labels.detailsDescription}
+                {isPlanning
+                  ? planningDescription
+                  : labels.detailsDescription}
               </p>
             </div>
 
-            <span
-              aria-hidden="true"
-              className="flex shrink-0 items-center gap-2 text-sm font-semibold text-brand transition-all duration-300 group-hover:gap-3"
-            >
-              {labels.details}
-              <ArrowUpRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </span>
+            {!isPlanning && (
+              <span
+                aria-hidden="true"
+                className="flex shrink-0 items-center gap-2 text-sm font-semibold text-brand transition-all duration-300 group-hover:gap-3"
+              >
+                {labels.details}
+                <ArrowUpRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none" />
+              </span>
+            )}
           </div>
         </div>
       </div>

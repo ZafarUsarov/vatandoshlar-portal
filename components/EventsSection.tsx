@@ -3,11 +3,14 @@ import { getLocale } from "next-intl/server";
 import EventCard from "@/components/cards/EventCard";
 import {
   toEventItem,
+  toPlanningEventItem,
 } from "@/lib/events/event-presenter";
 import {
+  getPlanningPublishedEvents,
   getUpcomingPublishedEvents,
 } from "@/lib/events/public-events-repository";
 import type {
+  EventDiscoveryItem,
   SupportedEventLocale,
 } from "@/types/event";
 import { Link } from "@/i18n/navigation";
@@ -16,7 +19,9 @@ type IconProps = Readonly<{
   className?: string;
 }>;
 
-function CalendarIcon({ className }: IconProps) {
+function CalendarIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -41,7 +46,9 @@ function CalendarIcon({ className }: IconProps) {
   );
 }
 
-function ArrowUpRightIcon({ className }: IconProps) {
+function ArrowUpRightIcon({
+  className,
+}: IconProps) {
   return (
     <svg
       aria-hidden="true"
@@ -64,51 +71,76 @@ export default async function EventsSection() {
   const locale =
     (await getLocale()) as SupportedEventLocale;
 
-  const homepageEvents =
-    (
-      await getUpcomingPublishedEvents(
-        locale,
-      )
-    )
-      .slice(
-        0,
-        3,
-      )
-      .map(
-        (event) =>
-          toEventItem(
-            event,
-            locale,
-          ),
-      );
+  const [
+    upcomingPublicEvents,
+    planningPublicEvents,
+  ] = await Promise.all([
+    getUpcomingPublishedEvents(
+      locale,
+    ),
+    getPlanningPublishedEvents(
+      locale,
+    ),
+  ]);
+
+  const confirmedEvents =
+    upcomingPublicEvents.map(
+      (event) =>
+        toEventItem(
+          event,
+          locale,
+        ),
+    );
+
+  const planningEvents =
+    planningPublicEvents.map(
+      (event) =>
+        toPlanningEventItem(
+          event,
+          locale,
+        ),
+    );
+
+  const homepageEvents:
+    EventDiscoveryItem[] = [
+      ...confirmedEvents,
+      ...planningEvents,
+    ].slice(0, 3);
 
   const copy =
     locale === "uz"
       ? {
           badge: "Tadbirlar",
           title:
-            "Germaniyadagi o‘zbeklar uchun muhim tadbirlar",
+            "Germaniyadagi o‘zbeklar uchun tadbirlar va kelajakdagi rejalar",
           description:
-            "Madaniy uchrashuvlar, ta’lim dasturlari, karyera tadbirlari va jamoat yig‘inlari. Faqat rasmiy manbasi tekshirilgan tadbirlar e’lon qilinadi.",
-          allEvents: "Barcha tadbirlar",
+            "E’lon qilingan tadbirlar alohida tekshiriladi. Sana yoki joyi hali belgilanmagan rejadagi tadbirlar esa foydalanuvchini chalg‘itmasdan “Rejalashtirilmoqda” holatida ko‘rsatiladi.",
+          allEvents:
+            "Barcha tadbirlar",
           stats: [
             {
-              value: `${homepageEvents.length}`,
-              label: "yaqin tadbir",
+              value:
+                `${confirmedEvents.length}`,
+              label:
+                "e’lon qilingan tadbir",
             },
             {
-              value: "100%",
-              label: "manbasi tekshirilgan",
+              value:
+                `${planningEvents.length}`,
+              label:
+                "rejadagi tadbir",
             },
             {
-              value: "DE",
-              label: "Germaniya bo‘ylab",
+              value:
+                "DE",
+              label:
+                "Germaniya bo‘ylab",
             },
           ],
           emptyTitle:
-            "Hozircha tasdiqlangan tadbir mavjud emas",
+            "Hozircha tadbir e’loni mavjud emas",
           emptyDescription:
-            "Yangi tadbirlar rasmiy manbasi tekshirilgandan keyin e’lon qilinadi.",
+            "E’lon qilingan va rejadagi tadbirlar shu yerda ko‘rsatiladi.",
           card: {
             time: "Vaqt",
             location: "Manzil",
@@ -117,33 +149,51 @@ export default async function EventsSection() {
             detailsDescription:
               "Batafsil dastur va manzil",
             details: "Batafsil",
+            organizer:
+              "Tashkilotchi",
+            planning:
+              "Rejalashtirilmoqda",
+            dateTbd:
+              "Sana keyinroq e’lon qilinadi",
+            locationTbd:
+              "Manzil tasdiqlangandan keyin qo‘shiladi",
+            planningDescription:
+              "Tafsilotlar tasdiqlangach yangilanadi",
           },
         }
       : {
-          badge: "Veranstaltungen",
+          badge:
+            "Veranstaltungen",
           title:
-            "Wichtige Veranstaltungen für Usbeken in Deutschland",
+            "Veranstaltungen und kommende Ideen für die usbekische Community",
           description:
-            "Kulturelle Treffen, Bildungsprogramme, Karriereveranstaltungen und gemeinschaftliche Begegnungen. Veröffentlicht werden nur Veranstaltungen mit geprüfter offizieller Quelle.",
-          allEvents: "Alle Veranstaltungen",
+            "Veröffentlichte Veranstaltungen werden separat geprüft. Geplante Veranstaltungen ohne bestätigtes Datum oder Ort erscheinen transparent als „In Planung“.",
+          allEvents:
+            "Alle Veranstaltungen",
           stats: [
             {
-              value: `${homepageEvents.length}`,
-              label: "kommende Veranstaltungen",
+              value:
+                `${confirmedEvents.length}`,
+              label:
+                "veröffentlichte Veranstaltung",
             },
             {
-              value: "100%",
-              label: "Quelle geprüft",
+              value:
+                `${planningEvents.length}`,
+              label:
+                "geplante Veranstaltung",
             },
             {
-              value: "DE",
-              label: "deutschlandweit",
+              value:
+                "DE",
+              label:
+                "deutschlandweit",
             },
           ],
           emptyTitle:
-            "Derzeit gibt es keine bestätigte Veranstaltung",
+            "Derzeit gibt es keine Veranstaltung",
           emptyDescription:
-            "Neue Veranstaltungen werden veröffentlicht, sobald ihre offizielle Quelle geprüft wurde.",
+            "Veröffentlichte und geplante Veranstaltungen werden hier angezeigt.",
           card: {
             time: "Uhrzeit",
             location: "Ort",
@@ -152,107 +202,96 @@ export default async function EventsSection() {
             detailsDescription:
               "Programm und Veranstaltungsort",
             details: "Details",
+            organizer:
+              "Veranstalter",
+            planning:
+              "In Planung",
+            dateTbd:
+              "Datum wird später bekannt gegeben",
+            locationTbd:
+              "Ort wird nach der Bestätigung ergänzt",
+            planningDescription:
+              "Details folgen nach der Bestätigung",
           },
         };
 
   return (
     <section
       id="events"
-      aria-labelledby="events-heading"
-      className="relative isolate overflow-hidden bg-slate-50 py-20 sm:py-24 lg:py-32 dark:bg-slate-950"
+      className="relative isolate overflow-hidden border-y border-slate-200/70 bg-[radial-gradient(circle_at_15%_10%,rgba(34,211,238,0.10),transparent_28%),radial-gradient(circle_at_88%_24%,rgba(16,185,129,0.09),transparent_24%),linear-gradient(180deg,#f8fbfd_0%,#ffffff_48%,#f8fafc_100%)] py-24 sm:py-28 dark:border-slate-800 dark:bg-[radial-gradient(circle_at_15%_10%,rgba(34,211,238,0.035),transparent_28%),radial-gradient(circle_at_88%_24%,rgba(16,185,129,0.03),transparent_24%),linear-gradient(180deg,#020617_0%,#07111f_48%,#020617_100%)]"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(37,99,235,0.10),transparent_28%),radial-gradient(circle_at_85%_20%,rgba(124,58,237,0.08),transparent_26%),radial-gradient(circle_at_50%_100%,rgba(14,165,233,0.06),transparent_32%)]"
-      />
-
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700 dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-300">
+            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-200/80 bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 shadow-sm backdrop-blur dark:border-cyan-400/15 dark:bg-white/[0.035] dark:text-cyan-300">
               <CalendarIcon className="size-4" />
               {copy.badge}
-            </div>
+            </span>
 
-            <h2
-              id="events-heading"
-              className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white"
-            >
+            <h2 className="mt-6 text-3xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white">
               {copy.title}
             </h2>
 
-            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">
               {copy.description}
             </p>
           </div>
 
           <Link
             href="/events"
-            className="group hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md lg:inline-flex dark:border-white/10 dark:bg-white/[0.05] dark:text-white"
+            className="inline-flex min-h-12 w-fit items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3 text-sm font-bold text-slate-900 shadow-sm backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-4 dark:border-slate-700 dark:bg-slate-900/80 dark:text-white dark:hover:border-cyan-400/30 dark:focus-visible:ring-offset-slate-950"
           >
             {copy.allEvents}
-            <ArrowUpRightIcon className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <ArrowUpRightIcon className="size-4" />
           </Link>
         </div>
 
-        {homepageEvents.length > 0 ? (
-          <>
-            <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-              {homepageEvents.map((event, index) => (
+        <div className="mt-10 grid gap-4 sm:grid-cols-3">
+          {copy.stats.map(
+            (stat) => (
+              <div
+                key={stat.label}
+                className="rounded-2xl border border-white/80 bg-white/65 px-5 py-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.45)] backdrop-blur dark:border-white/[0.06] dark:bg-white/[0.035]"
+              >
+                <p className="text-2xl font-black tracking-[-0.03em] text-slate-950 dark:text-white">
+                  {stat.value}
+                </p>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  {stat.label}
+                </p>
+              </div>
+            ),
+          )}
+        </div>
+
+        {homepageEvents.length >
+        0 ? (
+          <div className="mt-12 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+            {homepageEvents.map(
+              (
+                event,
+                index,
+              ) => (
                 <EventCard
-                  key={event.id}
+                  key={`${event.eventStatus}-${event.id}`}
                   event={event}
                   locale={locale}
                   labels={copy.card}
                   index={index}
                 />
-              ))}
-            </div>
-
-            <div className="mt-10 overflow-hidden rounded-[2rem] border border-slate-200 bg-white/80 backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.04]">
-              <div className="grid divide-y divide-slate-200 sm:grid-cols-3 sm:divide-x sm:divide-y-0 dark:divide-white/[0.08]">
-                {copy.stats.map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="px-8 py-7"
-                  >
-                    <div className="text-3xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white">
-                      {stat.value}
-                    </div>
-                    <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </>
+              ),
+            )}
+          </div>
         ) : (
-          <div className="mt-14 rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-sm sm:p-12 dark:border-slate-800 dark:bg-slate-900">
-            <div
-              aria-hidden="true"
-              className="mx-auto flex size-20 items-center justify-center rounded-3xl bg-blue-50 text-3xl text-blue-700 dark:bg-blue-500/10 dark:text-blue-300"
-            >
-              ◷
-            </div>
-            <h3 className="mt-6 text-2xl font-bold text-slate-950 dark:text-white">
+          <div className="mt-12 rounded-[2rem] border border-dashed border-slate-300 bg-white/70 p-8 text-center backdrop-blur dark:border-slate-700 dark:bg-slate-900/60 sm:p-12">
+            <h3 className="text-2xl font-bold text-slate-950 dark:text-white">
               {copy.emptyTitle}
             </h3>
-            <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600 dark:text-slate-400">
+            <p className="mx-auto mt-3 max-w-2xl leading-7 text-slate-600 dark:text-slate-400">
               {copy.emptyDescription}
             </p>
           </div>
         )}
-
-        <div className="mt-8 flex justify-center lg:hidden">
-          <Link
-            href="/events"
-            className="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-white/[0.05] dark:text-white"
-          >
-            {copy.allEvents}
-            <ArrowUpRightIcon className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
-        </div>
       </div>
     </section>
   );
