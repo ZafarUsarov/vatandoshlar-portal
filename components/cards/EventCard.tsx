@@ -340,20 +340,16 @@ export default function EventCard({
             id={titleId}
             className="mt-3 text-2xl font-bold leading-tight tracking-[-0.025em] text-white"
           >
-            {isPlanning ? (
-              event.title
-            ) : (
-              <Link
-                href={href}
-                className="outline-none transition-opacity duration-200 hover:opacity-90 focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-brand"
-              >
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 z-20"
-                />
-                {event.title}
-              </Link>
-            )}
+            <Link
+              href={href}
+              className="outline-none transition-opacity duration-200 hover:opacity-90 focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-brand"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 z-20"
+              />
+              {event.title}
+            </Link>
           </h3>
         </div>
       </div>

@@ -89,6 +89,10 @@ export type PublicPlanningEventItem =
     eventStatus: "planning";
   };
 
+export type PublicEventDetailItem =
+  | PublicEventItem
+  | PublicPlanningEventItem;
+
 type PublishedEventRow = {
   id: string;
   slug: string;
@@ -725,6 +729,55 @@ const getPublishedEventBySlugCached =
     },
   );
 
+const getPublishedEventDetailBySlugCached =
+  cache(
+    async (
+      slug: string,
+      locale: SupportedEventLocale,
+    ): Promise<PublicEventDetailItem | null> => {
+      assertDatabaseAvailable();
+
+      if (
+        canSkipDatabaseDuringCi()
+      ) {
+        return null;
+      }
+
+      const result =
+        await getDb().query<PublishedEventRow>(
+          `
+            ${publishedEventSelect}
+            WHERE
+              status = 'published'
+              AND event_status IN (
+                'scheduled',
+                'planning'
+              )
+              AND slug = $1
+            LIMIT 1
+          `,
+          [slug],
+        );
+
+      const row =
+        result.rows[0];
+
+      if (!row) {
+        return null;
+      }
+
+      return row.event_status === "planning"
+        ? toPlanningPublicEvent(
+            row,
+            locale,
+          )
+        : toScheduledPublicEvent(
+            row,
+            locale,
+          );
+    },
+  );
+
 const getFeaturedUpcomingEventCached =
   cache(
     async (
@@ -799,6 +852,16 @@ export async function getPublishedEventBySlug(
   locale: SupportedEventLocale,
 ): Promise<PublicEventItem | null> {
   return getPublishedEventBySlugCached(
+    slug,
+    locale,
+  );
+}
+
+export async function getPublishedEventDetailBySlug(
+  slug: string,
+  locale: SupportedEventLocale,
+): Promise<PublicEventDetailItem | null> {
+  return getPublishedEventDetailBySlugCached(
     slug,
     locale,
   );
