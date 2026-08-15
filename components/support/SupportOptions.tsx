@@ -1,3 +1,5 @@
+import BrandedText from "@/components/ui/BrandedText";
+
 type SupportOption = Readonly<{
   name: string;
   description: string;
@@ -75,11 +77,11 @@ export default function SupportOptions({
         <div className="mx-auto max-w-5xl">
           <div className="max-w-2xl">
             <h2 className="text-3xl font-bold tracking-[-0.035em] sm:text-4xl">
-              {title}
+              <BrandedText text={title} />
             </h2>
 
             <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-400">
-              {description}
+              <BrandedText text={description} />
             </p>
           </div>
 
@@ -97,11 +99,11 @@ export default function SupportOptions({
                       <p
                         className={`text-sm font-bold uppercase tracking-[0.16em] ${styles.label}`}
                       >
-                        {option.name}
+                        <BrandedText text={option.name} />
                       </p>
 
                       <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
-                        {option.description}
+                        <BrandedText text={option.description} />
                       </p>
                     </div>
 
@@ -119,7 +121,7 @@ export default function SupportOptions({
                     rel="noopener noreferrer"
                     className={`group mt-7 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold text-white shadow-lg transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 ${styles.button}`}
                   >
-                    {option.action}
+                    <BrandedText text={option.action} />
                     <ExternalLinkIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
 
@@ -130,11 +132,11 @@ export default function SupportOptions({
                       <p
                         className={`text-xs font-bold uppercase tracking-[0.14em] ${styles.label}`}
                       >
-                        {option.noteTitle}
+                        <BrandedText text={option.noteTitle} />
                       </p>
 
                       <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                        {option.note}
+                        <BrandedText text={option.note} />
                       </p>
                     </div>
                   )}
@@ -144,7 +146,7 @@ export default function SupportOptions({
           </div>
 
           <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm leading-7 text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
-            {privacy}
+            <BrandedText text={privacy} />
           </div>
         </div>
       </div>

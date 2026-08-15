@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import FeatureCard from "@/components/features/FeatureCard";
+import BrandedText from "@/components/ui/BrandedText";
 import { features } from "@/data/features";
 import { Link } from "@/i18n/navigation";
 
@@ -93,7 +94,7 @@ export default async function Features() {
             </h2>
 
             <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
-              {t("description")}
+              <BrandedText text={t("description")} />
             </p>
           </div>
 

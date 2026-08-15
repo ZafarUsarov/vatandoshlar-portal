@@ -1,3 +1,5 @@
+import BrandedText from "@/components/ui/BrandedText";
+
 type SupportCostItem = Readonly<{
   title: string;
   description: string;
@@ -126,21 +128,21 @@ export default function SupportHero({
           </span>
 
           <h1 className="mt-7 text-balance text-4xl font-extrabold tracking-[-0.045em] sm:text-5xl lg:text-6xl">
-            {title}
+            <BrandedText text={title} />
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-300">
-            {description}
+            <BrandedText text={description} />
           </p>
 
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-500 dark:text-slate-400">
-            {voluntary}
+            <BrandedText text={voluntary} />
           </p>
         </div>
 
         <div className="mx-auto mt-14 max-w-5xl">
           <h2 className="text-center text-2xl font-bold tracking-[-0.03em] sm:text-3xl">
-            {costsTitle}
+            <BrandedText text={costsTitle} />
           </h2>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -154,11 +156,11 @@ export default function SupportHero({
                 </span>
 
                 <h3 className="mt-5 text-lg font-bold">
-                  {item.title}
+                  <BrandedText text={item.title} />
                 </h3>
 
                 <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                  {item.description}
+                  <BrandedText text={item.description} />
                 </p>
               </article>
             ))}
