@@ -1,59 +1,73 @@
 "use server";
 
-import {
-  getLocale,
-} from "next-intl/server";
+import { getLocale } from "next-intl/server";
 
-import {
-  redirect,
-} from "@/i18n/navigation";
-import {
-  requireAdmin,
-} from "@/lib/auth/admin";
+import { redirect } from "@/i18n/navigation";
+import { requireAdmin } from "@/lib/auth/admin";
 import {
   createAdminEvent,
   type AdminEventCategory,
   type AdminEventFormat,
+  type AdminEventOperationalStatus,
+  type AdminEventOrganizerType,
+  type AdminEventRegistrationMethod,
   type AdminEventRegistrationStatus,
+  type AdminEventInput,
 } from "@/lib/events/admin-events-repository";
 
 export type EventCreateActionState = {
   error: string | null;
 };
 
-const categories:
-  AdminEventCategory[] = [
-    "culture",
-    "education",
-    "career",
-    "business",
-    "community",
-    "sport",
-    "children",
-    "consular",
-  ];
+const categories: AdminEventCategory[] = [
+  "culture",
+  "education",
+  "career",
+  "business",
+  "community",
+  "sport",
+  "children",
+  "consular",
+];
 
-const formats:
-  AdminEventFormat[] = [
-    "offline",
-    "online",
-    "hybrid",
-  ];
+const formats: AdminEventFormat[] = [
+  "offline",
+  "online",
+  "hybrid",
+];
 
-const registrationStatuses:
-  AdminEventRegistrationStatus[] = [
-    "open",
-    "not_required",
-    "sold_out",
-    "closed",
-  ];
+const eventStatuses: AdminEventOperationalStatus[] = [
+  "planning",
+  "scheduled",
+  "cancelled",
+];
+
+const organizerTypes: AdminEventOrganizerType[] = [
+  "vatandoshlar",
+  "external",
+];
+
+const registrationStatuses: AdminEventRegistrationStatus[] = [
+  "open",
+  "not_required",
+  "sold_out",
+  "closed",
+];
+
+const registrationMethods: AdminEventRegistrationMethod[] = [
+  "google_form",
+  "telegram",
+  "email",
+  "phone",
+  "external_url",
+  "none",
+];
 
 function getString(
   formData: FormData,
   key: string,
 ): string {
-  const value =
-    formData.get(key);
+  const value = formData.get(key);
 
   return typeof value === "string"
     ? value.trim()
@@ -64,46 +78,26 @@ function getNullableString(
   formData: FormData,
   key: string,
 ): string | null {
-  const value =
-    getString(
-      formData,
-      key,
-    );
+  const value = getString(formData, key);
 
   return value || null;
 }
 
-function getLines(
-  value: string,
-): string[] {
+function getLines(value: string): string[] {
   return value
     .split(/\r?\n/)
-    .map(
-      (line) =>
-        line.trim(),
-    )
+    .map((line) => line.trim())
     .filter(Boolean);
 }
 
-function normalizeSlug(
-  value: string,
-): string {
+function normalizeSlug(value: string): string {
   return value
     .trim()
     .toLowerCase()
     .replace(/['’`]/g, "")
-    .replace(
-      /[^a-z0-9-]+/g,
-      "-",
-    )
-    .replace(
-      /-{2,}/g,
-      "-",
-    )
-    .replace(
-      /^-|-$/g,
-      "",
-    );
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/-{2,}/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 function isCategory(
@@ -122,6 +116,22 @@ function isFormat(
   );
 }
 
+function isEventStatus(
+  value: string,
+): value is AdminEventOperationalStatus {
+  return eventStatuses.includes(
+    value as AdminEventOperationalStatus,
+  );
+}
+
+function isOrganizerType(
+  value: string,
+): value is AdminEventOrganizerType {
+  return organizerTypes.includes(
+    value as AdminEventOrganizerType,
+  );
+}
+
 function isRegistrationStatus(
   value: string,
 ): value is AdminEventRegistrationStatus {
@@ -130,41 +140,31 @@ function isRegistrationStatus(
   );
 }
 
-function isIsoDate(
+function isRegistrationMethod(
   value: string,
-): boolean {
-  if (
-    !/^\d{4}-\d{2}-\d{2}$/.test(
-      value,
-    )
-  ) {
+): value is AdminEventRegistrationMethod {
+  return registrationMethods.includes(
+    value as AdminEventRegistrationMethod,
+  );
+}
+
+function isIsoDate(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
     return false;
   }
 
-  const date =
-    new Date(
-      `${value}T12:00:00Z`,
-    );
+  const date = new Date(`${value}T12:00:00Z`);
 
-  return !Number.isNaN(
-    date.getTime(),
-  );
+  return !Number.isNaN(date.getTime());
 }
 
-function isTime(
-  value: string,
-): boolean {
-  return /^\d{2}:\d{2}$/.test(
-    value,
-  );
+function isTime(value: string): boolean {
+  return /^\d{2}:\d{2}$/.test(value);
 }
 
-function isHttpUrl(
-  value: string,
-): boolean {
+function isHttpUrl(value: string): boolean {
   try {
-    const url =
-      new URL(value);
+    const url = new URL(value);
 
     return (
       url.protocol === "https:" ||
@@ -175,22 +175,41 @@ function isHttpUrl(
   }
 }
 
+function isGoogleFormViewUrl(
+  value: string,
+): boolean {
+  if (!isHttpUrl(value)) {
+    return false;
+  }
+
+  const url = new URL(value);
+
+  return (
+    url.protocol === "https:" &&
+    url.hostname === "docs.google.com" &&
+    url.pathname.includes("/forms/") &&
+    url.pathname.endsWith("/viewform")
+  );
+}
+
 function compareDates(
   left: string,
   right: string,
 ): number {
-  return left.localeCompare(
-    right,
-  );
+  return left.localeCompare(right);
 }
 
 function compareTimes(
   left: string,
   right: string,
 ): number {
-  return left.localeCompare(
-    right,
-  );
+  return left.localeCompare(right);
+}
+
+function isPositiveInteger(
+  value: string,
+): boolean {
+  return /^\d+$/.test(value) && Number(value) > 0;
 }
 
 function isUniqueViolation(
@@ -208,230 +227,109 @@ export async function createEventAction(
   _previousState: EventCreateActionState,
   formData: FormData,
 ): Promise<EventCreateActionState> {
-  const locale =
-    await getLocale();
+  const locale = await getLocale();
+  const appLocale: "uz" | "de" =
+    locale === "de" ? "de" : "uz";
 
-  const appLocale:
-    | "uz"
-    | "de" =
-    locale === "de"
-      ? "de"
-      : "uz";
-
-  await requireAdmin(
-    appLocale,
-  );
+  await requireAdmin(appLocale);
 
   const slug =
     normalizeSlug(
-      getString(
-        formData,
-        "slug",
-      ),
+      getString(formData, "slug"),
     );
-
-  const titleUz =
-    getString(
-      formData,
-      "titleUz",
-    );
-
-  const titleDe =
-    getString(
-      formData,
-      "titleDe",
-    );
-
-  const excerptUz =
-    getString(
-      formData,
-      "excerptUz",
-    );
-
-  const excerptDe =
-    getString(
-      formData,
-      "excerptDe",
-    );
-
+  const titleUz = getString(formData, "titleUz");
+  const titleDe = getString(formData, "titleDe");
+  const excerptUz = getString(formData, "excerptUz");
+  const excerptDe = getString(formData, "excerptDe");
   const descriptionUz =
-    getLines(
-      getString(
-        formData,
-        "descriptionUz",
-      ),
-    );
-
+    getLines(getString(formData, "descriptionUz"));
   const descriptionDe =
-    getLines(
-      getString(
-        formData,
-        "descriptionDe",
-      ),
-    );
+    getLines(getString(formData, "descriptionDe"));
 
-  const categoryValue =
-    getString(
-      formData,
-      "category",
-    );
-
-  const formatValue =
-    getString(
-      formData,
-      "format",
-    );
+  const categoryValue = getString(formData, "category");
+  const formatValue = getString(formData, "format");
+  const eventStatusValue = getString(formData, "eventStatus");
 
   const startDate =
-    getString(
-      formData,
-      "startDate",
-    );
-
+    getNullableString(formData, "startDate");
   const endDate =
-    getNullableString(
-      formData,
-      "endDate",
-    );
-
+    getNullableString(formData, "endDate");
   const startTime =
-    getNullableString(
-      formData,
-      "startTime",
-    );
-
+    getNullableString(formData, "startTime");
   const endTime =
-    getNullableString(
-      formData,
-      "endTime",
-    );
-
+    getNullableString(formData, "endTime");
   const timezone =
-    getString(
-      formData,
-      "timezone",
-    ) ||
+    getString(formData, "timezone") ||
     "Europe/Berlin";
 
   const city =
-    getNullableString(
-      formData,
-      "city",
-    );
-
+    getNullableString(formData, "city");
   const bundesland =
-    getNullableString(
-      formData,
-      "bundesland",
-    );
-
+    getNullableString(formData, "bundesland");
   const venueName =
-    getNullableString(
-      formData,
-      "venueName",
-    );
-
+    getNullableString(formData, "venueName");
   const address =
-    getNullableString(
-      formData,
-      "address",
-    );
-
+    getNullableString(formData, "address");
   const onlineUrl =
-    getNullableString(
-      formData,
-      "onlineUrl",
-    );
+    getNullableString(formData, "onlineUrl");
 
+  const organizerTypeValue =
+    getString(formData, "organizerType");
   const organizerName =
-    getString(
-      formData,
-      "organizerName",
-    );
-
+    getString(formData, "organizerName");
   const organizerUrl =
-    getNullableString(
-      formData,
-      "organizerUrl",
-    );
+    getNullableString(formData, "organizerUrl");
 
   const registrationStatusValue =
-    getString(
-      formData,
-      "registrationStatus",
-    );
-
+    getString(formData, "registrationStatus");
+  const registrationMethodValue =
+    getString(formData, "registrationMethod");
   const registrationUrl =
-    getNullableString(
-      formData,
-      "registrationUrl",
-    );
-
+    getNullableString(formData, "registrationUrl");
+  const registrationValue =
+    getNullableString(formData, "registrationValue");
+  const registrationRequired =
+    formData.get("registrationRequired") === "on";
   const registrationDeadline =
-    getNullableString(
-      formData,
-      "registrationDeadline",
-    );
+    getNullableString(formData, "registrationDeadline");
+  const capacityValue =
+    getNullableString(formData, "capacity");
 
   const languages =
     formData
       .getAll("languages")
       .filter(
-        (
-          value,
-        ): value is string =>
+        (value): value is string =>
           typeof value === "string",
       )
-      .map(
-        (value) =>
-          value.trim(),
-      )
+      .map((value) => value.trim())
       .filter(Boolean);
 
   const priceLabelUz =
-    getString(
-      formData,
-      "priceLabelUz",
-    );
-
+    getString(formData, "priceLabelUz");
   const priceLabelDe =
-    getString(
-      formData,
-      "priceLabelDe",
-    );
+    getString(formData, "priceLabelDe");
 
   const officialSourceName =
-    getString(
+    getNullableString(
       formData,
       "officialSourceName",
     );
-
   const officialSourceUrl =
-    getString(
+    getNullableString(
       formData,
       "officialSourceUrl",
     );
-
   const verifiedAt =
-    getString(
-      formData,
-      "verifiedAt",
-    );
+    getNullableString(formData, "verifiedAt");
 
   const importantNotesUz =
     getLines(
-      getString(
-        formData,
-        "importantNotesUz",
-      ),
+      getString(formData, "importantNotesUz"),
     );
-
   const importantNotesDe =
     getLines(
-      getString(
-        formData,
-        "importantNotesDe",
-      ),
+      getString(formData, "importantNotesDe"),
     );
 
   if (
@@ -444,10 +342,7 @@ export async function createEventAction(
     descriptionDe.length === 0 ||
     !organizerName ||
     !priceLabelUz ||
-    !priceLabelDe ||
-    !officialSourceName ||
-    !officialSourceUrl ||
-    !verifiedAt
+    !priceLabelDe
   ) {
     return {
       error:
@@ -458,42 +353,53 @@ export async function createEventAction(
   }
 
   if (
-    !isCategory(
-      categoryValue,
-    ) ||
-    !isFormat(
-      formatValue,
-    ) ||
-    !isRegistrationStatus(
-      registrationStatusValue,
+    !isCategory(categoryValue) ||
+    !isFormat(formatValue) ||
+    !isEventStatus(eventStatusValue) ||
+    !isOrganizerType(organizerTypeValue) ||
+    !isRegistrationStatus(registrationStatusValue) ||
+    !isRegistrationMethod(registrationMethodValue)
+  ) {
+    return {
+      error:
+        appLocale === "de"
+          ? "Kategorie, Format, Veranstaltungsstatus, Veranstaltertyp oder Anmeldung ist ungültig."
+          : "Kategoriya, format, tadbir holati, tashkilotchi turi yoki ro‘yxatdan o‘tish qiymati noto‘g‘ri.",
+    };
+  }
+
+  const isScheduled =
+    eventStatusValue === "scheduled";
+
+  if (
+    isScheduled &&
+    (
+      !startDate ||
+      !officialSourceName ||
+      !officialSourceUrl ||
+      !verifiedAt
     )
   ) {
     return {
       error:
         appLocale === "de"
-          ? "Kategorie, Format oder Anmeldestatus ist ungültig."
-          : "Kategoriya, format yoki ro‘yxatdan o‘tish holati noto‘g‘ri.",
+          ? "Geplante reale Veranstaltungen benötigen Startdatum, offizielle Quelle und Prüfdatum."
+          : "Tasdiqlangan real tadbir uchun boshlanish sanasi, rasmiy manba va tekshirilgan sana majburiy.",
     };
   }
 
+  const dateValues = [
+    startDate,
+    endDate,
+    registrationDeadline,
+    verifiedAt,
+  ];
+
   if (
-    !isIsoDate(
-      startDate,
-    ) ||
-    !isIsoDate(
-      verifiedAt,
-    ) ||
-    (
-      endDate !== null &&
-      !isIsoDate(
-        endDate,
-      )
-    ) ||
-    (
-      registrationDeadline !== null &&
-      !isIsoDate(
-        registrationDeadline,
-      )
+    dateValues.some(
+      (value) =>
+        value !== null &&
+        !isIsoDate(value),
     )
   ) {
     return {
@@ -506,24 +412,22 @@ export async function createEventAction(
 
   if (
     endDate !== null &&
-    compareDates(
-      endDate,
-      startDate,
-    ) < 0
+    (
+      startDate === null ||
+      compareDates(endDate, startDate) < 0
+    )
   ) {
     return {
       error:
         appLocale === "de"
-          ? "Das Enddatum darf nicht vor dem Startdatum liegen."
-          : "Tugash sanasi boshlanish sanasidan oldin bo‘lishi mumkin emas.",
+          ? "Ein Enddatum ist nur mit gültigem Startdatum möglich und darf nicht davor liegen."
+          : "Tugash sanasi faqat boshlanish sanasi bilan kiritiladi va undan oldin bo‘lishi mumkin emas.",
     };
   }
 
   if (
     startTime !== null &&
-    !isTime(
-      startTime,
-    )
+    !isTime(startTime)
   ) {
     return {
       error:
@@ -535,9 +439,7 @@ export async function createEventAction(
 
   if (
     endTime !== null &&
-    !isTime(
-      endTime,
-    )
+    !isTime(endTime)
   ) {
     return {
       error:
@@ -551,10 +453,7 @@ export async function createEventAction(
     startTime !== null &&
     endTime !== null &&
     endDate === null &&
-    compareTimes(
-      endTime,
-      startTime,
-    ) < 0
+    compareTimes(endTime, startTime) < 0
   ) {
     return {
       error:
@@ -566,17 +465,19 @@ export async function createEventAction(
 
   if (
     registrationDeadline !== null &&
-    compareDates(
-      registrationDeadline,
-      endDate ??
-        startDate,
-    ) > 0
+    (
+      startDate === null ||
+      compareDates(
+        registrationDeadline,
+        endDate ?? startDate,
+      ) > 0
+    )
   ) {
     return {
       error:
         appLocale === "de"
-          ? "Die Anmeldefrist darf nicht nach dem Veranstaltungsende liegen."
-          : "Ro‘yxatdan o‘tish muddati tadbir tugaganidan keyin bo‘lishi mumkin emas.",
+          ? "Eine Anmeldefrist benötigt ein Veranstaltungsdatum und darf nicht nach dem Veranstaltungsende liegen."
+          : "Ro‘yxatdan o‘tish muddati uchun tadbir sanasi kerak va muddat tadbir tugaganidan keyin bo‘lishi mumkin emas.",
     };
   }
 
@@ -613,6 +514,7 @@ export async function createEventAction(
     );
 
   if (
+    isScheduled &&
     formatValue === "online" &&
     !onlineUrl
   ) {
@@ -625,6 +527,7 @@ export async function createEventAction(
   }
 
   if (
+    isScheduled &&
     formatValue === "offline" &&
     !hasPhysicalLocation
   ) {
@@ -637,6 +540,7 @@ export async function createEventAction(
   }
 
   if (
+    isScheduled &&
     formatValue === "hybrid" &&
     (
       !onlineUrl ||
@@ -662,9 +566,7 @@ export async function createEventAction(
     urlValues.some(
       (value) =>
         value !== null &&
-        !isHttpUrl(
-          value,
-        ),
+        !isHttpUrl(value),
     )
   ) {
     return {
@@ -675,50 +577,132 @@ export async function createEventAction(
     };
   }
 
+  if (
+    registrationMethodValue === "none" &&
+    (
+      registrationRequired ||
+      registrationUrl !== null ||
+      registrationValue !== null
+    )
+  ) {
+    return {
+      error:
+        appLocale === "de"
+          ? "Bei 'keine Anmeldung' dürfen kein Anmeldeziel und keine Pflichtanmeldung gesetzt sein."
+          : "'Ro‘yxatdan o‘tish kerak emas' usulida registration manzili bo‘sh va majburiy ro‘yxatdan o‘tish o‘chiq bo‘lishi kerak.",
+    };
+  }
+
+  if (
+    registrationMethodValue === "google_form" &&
+    (
+      registrationUrl === null ||
+      !isGoogleFormViewUrl(registrationUrl) ||
+      registrationValue !== null
+    )
+  ) {
+    return {
+      error:
+        appLocale === "de"
+          ? "Für Google Forms ist ausschließlich die öffentliche viewform-URL zulässig."
+          : "Google Form uchun faqat respondentlarga mo‘ljallangan public viewform URL ishlatilishi mumkin.",
+    };
+  }
+
+  if (
+    registrationMethodValue === "external_url" &&
+    (
+      registrationUrl === null ||
+      registrationValue !== null
+    )
+  ) {
+    return {
+      error:
+        appLocale === "de"
+          ? "Für externe Anmeldung ist eine vollständige URL erforderlich."
+          : "Tashqi ro‘yxatdan o‘tish uchun to‘liq URL kerak.",
+    };
+  }
+
+  if (
+    (
+      registrationMethodValue === "telegram" ||
+      registrationMethodValue === "email" ||
+      registrationMethodValue === "phone"
+    ) &&
+    (
+      registrationValue === null ||
+      registrationUrl !== null
+    )
+  ) {
+    return {
+      error:
+        appLocale === "de"
+          ? "Für Telegram, E-Mail oder Telefon ist der öffentliche Kontaktwert erforderlich."
+          : "Telegram, email yoki telefon usuli uchun tashkilotchi ommaga bergan kontakt qiymati kerak.",
+    };
+  }
+
+  if (
+    capacityValue !== null &&
+    !isPositiveInteger(capacityValue)
+  ) {
+    return {
+      error:
+        appLocale === "de"
+          ? "Die Kapazität muss eine positive ganze Zahl sein."
+          : "Sig‘im musbat butun son bo‘lishi kerak.",
+    };
+  }
+
+  const input: AdminEventInput = {
+    slug,
+    titleUz,
+    titleDe,
+    excerptUz,
+    excerptDe,
+    descriptionUz,
+    descriptionDe,
+    category: categoryValue,
+    format: formatValue,
+    eventStatus: eventStatusValue,
+    startDate,
+    endDate,
+    startTime,
+    endTime,
+    timezone,
+    city,
+    bundesland,
+    venueName,
+    address,
+    onlineUrl,
+    organizerType: organizerTypeValue,
+    organizerName,
+    organizerUrl,
+    registrationStatus: registrationStatusValue,
+    registrationMethod: registrationMethodValue,
+    registrationUrl,
+    registrationValue,
+    registrationRequired,
+    registrationDeadline,
+    capacity:
+      capacityValue === null
+        ? null
+        : Number(capacityValue),
+    languages,
+    priceLabelUz,
+    priceLabelDe,
+    officialSourceName,
+    officialSourceUrl,
+    verifiedAt,
+    importantNotesUz,
+    importantNotesDe,
+  };
+
   try {
-    await createAdminEvent({
-      slug,
-      titleUz,
-      titleDe,
-      excerptUz,
-      excerptDe,
-      descriptionUz,
-      descriptionDe,
-      category:
-        categoryValue,
-      format:
-        formatValue,
-      startDate,
-      endDate,
-      startTime,
-      endTime,
-      timezone,
-      city,
-      bundesland,
-      venueName,
-      address,
-      onlineUrl,
-      organizerName,
-      organizerUrl,
-      registrationStatus:
-        registrationStatusValue,
-      registrationUrl,
-      registrationDeadline,
-      languages,
-      priceLabelUz,
-      priceLabelDe,
-      officialSourceName,
-      officialSourceUrl,
-      verifiedAt,
-      importantNotesUz,
-      importantNotesDe,
-    });
+    await createAdminEvent(input);
   } catch (error) {
-    if (
-      isUniqueViolation(
-        error,
-      )
-    ) {
+    if (isUniqueViolation(error)) {
       return {
         error:
           appLocale === "de"
@@ -742,7 +726,6 @@ export async function createEventAction(
 
   return redirect({
     href: "/admin/events",
-    locale:
-      appLocale,
+    locale: appLocale,
   });
 }

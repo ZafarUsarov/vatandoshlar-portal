@@ -2,6 +2,7 @@
 
 import {
   useActionState,
+  useState,
   type ReactNode,
 } from "react";
 
@@ -9,6 +10,9 @@ import type {
   AdminEvent,
   AdminEventCategory,
   AdminEventFormat,
+  AdminEventOperationalStatus,
+  AdminEventOrganizerType,
+  AdminEventRegistrationMethod,
   AdminEventRegistrationStatus,
 } from "@/lib/events/admin-events-repository";
 
@@ -57,6 +61,25 @@ const formats: ReadonlyArray<{
   { value: "hybrid", uz: "Gibrid", de: "Hybrid" },
 ];
 
+const eventStatuses: ReadonlyArray<{
+  value: AdminEventOperationalStatus;
+  uz: string;
+  de: string;
+}> = [
+  { value: "planning", uz: "Rejalashtirilmoqda", de: "In Planung" },
+  { value: "scheduled", uz: "Tasdiqlangan / rejalashtirilgan", de: "Bestätigt / terminiert" },
+  { value: "cancelled", uz: "Bekor qilingan", de: "Abgesagt" },
+];
+
+const organizerTypes: ReadonlyArray<{
+  value: AdminEventOrganizerType;
+  uz: string;
+  de: string;
+}> = [
+  { value: "vatandoshlar", uz: "Vatandoshlar.de", de: "Vatandoshlar.de" },
+  { value: "external", uz: "Tashqi tashkilotchi", de: "Externer Veranstalter" },
+];
+
 const registrationStatuses: ReadonlyArray<{
   value: AdminEventRegistrationStatus;
   uz: string;
@@ -66,6 +89,19 @@ const registrationStatuses: ReadonlyArray<{
   { value: "not_required", uz: "Ro‘yxatdan o‘tish shart emas", de: "Keine Anmeldung erforderlich" },
   { value: "sold_out", uz: "Joylar tugagan", de: "Ausgebucht" },
   { value: "closed", uz: "Ro‘yxatdan o‘tish yopilgan", de: "Anmeldung geschlossen" },
+];
+
+const registrationMethods: ReadonlyArray<{
+  value: AdminEventRegistrationMethod;
+  uz: string;
+  de: string;
+}> = [
+  { value: "google_form", uz: "Google Form", de: "Google Form" },
+  { value: "telegram", uz: "Telegram", de: "Telegram" },
+  { value: "email", uz: "Email", de: "E-Mail" },
+  { value: "phone", uz: "Telefon", de: "Telefon" },
+  { value: "external_url", uz: "Tashqi URL", de: "Externe URL" },
+  { value: "none", uz: "Ro‘yxatdan o‘tish kerak emas", de: "Keine Anmeldung" },
 ];
 
 const languages = [
@@ -113,6 +149,8 @@ const copy = {
     descriptionHint: "Har bir bo‘limni yangi qatordan yozing. UZ va DE qatorlari soni teng bo‘lishi kerak.",
     category: "Kategoriya",
     format: "Format",
+    eventStatus: "Tadbir holati",
+    planningHint: "Rejalashtirilayotgan tadbirda sana, joy va rasmiy manba hali noma’lum bo‘lishi mumkin. Uydirma ma’lumot kiritmang.",
     startDate: "Boshlanish sanasi",
     endDate: "Tugash sanasi",
     startTime: "Boshlanish vaqti",
@@ -124,20 +162,27 @@ const copy = {
     venueName: "Joy nomi",
     address: "Manzil",
     onlineUrl: "Online URL",
+    organizerType: "Tashkilotchi turi",
     organizerName: "Tashkilotchi nomi",
     organizerUrl: "Tashkilotchi URL",
     registrationStatus: "Ro‘yxatdan o‘tish holati",
-    registrationUrl: "Ro‘yxatdan o‘tish URL",
+    registrationMethod: "Ro‘yxatdan o‘tish usuli",
+    registrationUrl: "Registration URL",
+    registrationValue: "Public kontakt / qiymat",
+    registrationValueHint: "Telegram username/link, ommaviy email yoki ommaviy telefon raqami. Faqat tashkilotchi public qilgan kontaktni kiriting.",
+    registrationRequired: "Ro‘yxatdan o‘tish talab qilinadi",
     registrationDeadline: "Ro‘yxatdan o‘tish muddati",
+    capacity: "Sig‘im",
     languages: "Tillar",
     priceLabel: "Narx yozuvi",
     officialSourceName: "Rasmiy manba nomi",
     officialSourceUrl: "Rasmiy manba URL",
     verifiedAt: "Oxirgi tekshirilgan sana",
+    sourceHint: "Tasdiqlangan real tadbirda rasmiy manba va tekshiruv sanasi majburiy. Concept/planning tadbirda ixtiyoriy.",
     importantNotes: "Muhim eslatmalar",
     importantNotesHint: "Har bir eslatmani yangi qatordan yozing. UZ va DE qatorlari soni teng bo‘lishi kerak.",
     createNote: "Yangi tadbir avtomatik draft holatida yaratiladi va public Events sahifasida hali ko‘rinmaydi.",
-    editNote: "Tahrirlash tadbir kontentini o‘zgartiradi; lifecycle alohida boshqariladi.",
+    editNote: "Tahrirlash tadbir kontentini o‘zgartiradi; CMS lifecycle alohida boshqariladi.",
     saveCreate: "Qoralama sifatida saqlash",
     saveEdit: "O‘zgarishlarni saqlash",
     saving: "Saqlanmoqda…",
@@ -159,6 +204,8 @@ const copy = {
     descriptionHint: "Jeden Abschnitt in eine neue Zeile schreiben. UZ- und DE-Listen müssen gleich lang sein.",
     category: "Kategorie",
     format: "Format",
+    eventStatus: "Veranstaltungsstatus",
+    planningHint: "Bei einer Veranstaltung in Planung dürfen Datum, Ort und offizielle Quelle noch unbekannt sein. Bitte keine Angaben erfinden.",
     startDate: "Startdatum",
     endDate: "Enddatum",
     startTime: "Startzeit",
@@ -170,20 +217,27 @@ const copy = {
     venueName: "Veranstaltungsort",
     address: "Adresse",
     onlineUrl: "Online-URL",
+    organizerType: "Veranstaltertyp",
     organizerName: "Veranstalter",
     organizerUrl: "Veranstalter-URL",
     registrationStatus: "Anmeldestatus",
+    registrationMethod: "Anmeldemethode",
     registrationUrl: "Anmelde-URL",
+    registrationValue: "Öffentlicher Kontakt / Wert",
+    registrationValueHint: "Telegram-Nutzername/-Link, öffentliche E-Mail oder öffentliche Telefonnummer. Nur vom Veranstalter veröffentlichte Kontaktdaten eintragen.",
+    registrationRequired: "Anmeldung erforderlich",
     registrationDeadline: "Anmeldefrist",
+    capacity: "Kapazität",
     languages: "Sprachen",
     priceLabel: "Preisangabe",
     officialSourceName: "Name der offiziellen Quelle",
     officialSourceUrl: "URL der offiziellen Quelle",
     verifiedAt: "Zuletzt geprüft am",
+    sourceHint: "Bei bestätigten realen Veranstaltungen sind offizielle Quelle und Prüfdatum Pflicht. Bei Concept-/Planning-Veranstaltungen sind sie optional.",
     importantNotes: "Wichtige Hinweise",
     importantNotesHint: "Jeden Hinweis in eine neue Zeile schreiben. UZ- und DE-Listen müssen gleich lang sein.",
     createNote: "Neue Veranstaltungen werden automatisch als Entwurf erstellt und erscheinen noch nicht im öffentlichen Events-Bereich.",
-    editNote: "Die Bearbeitung ändert den Inhalt; der Lifecycle wird separat verwaltet.",
+    editNote: "Die Bearbeitung ändert den Inhalt; der CMS-Lifecycle wird separat verwaltet.",
     saveCreate: "Als Entwurf speichern",
     saveEdit: "Änderungen speichern",
     saving: "Wird gespeichert…",
@@ -227,12 +281,34 @@ export default function EventForm({
       initialState,
     );
 
+  const [eventStatus, setEventStatus] =
+    useState<AdminEventOperationalStatus>(
+      event?.eventStatus ?? "planning",
+    );
+
+  const [registrationMethod, setRegistrationMethod] =
+    useState<AdminEventRegistrationMethod>(
+      event?.registrationMethod ?? "none",
+    );
+
   const currentCopy =
     locale === "de" ? copy.de : copy.uz;
 
   const listValue = (
     values?: string[],
   ) => values?.join("\n") ?? "";
+
+  const scheduled =
+    eventStatus === "scheduled";
+
+  const registrationUsesUrl =
+    registrationMethod === "google_form" ||
+    registrationMethod === "external_url";
+
+  const registrationUsesValue =
+    registrationMethod === "telegram" ||
+    registrationMethod === "email" ||
+    registrationMethod === "phone";
 
   return (
     <form
@@ -310,28 +386,58 @@ export default function EventForm({
               ))}
             </select>
           </label>
+
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2">
+            <FieldLabel locale={locale} required>
+              {currentCopy.eventStatus}
+            </FieldLabel>
+            <select
+              name="eventStatus"
+              required
+              disabled={pending}
+              value={eventStatus}
+              onChange={(event) =>
+                setEventStatus(
+                  event.target.value as AdminEventOperationalStatus,
+                )
+              }
+              className={inputClassName}
+            >
+              {eventStatuses.map((item) => (
+                <option
+                  key={item.value}
+                  value={item.value}
+                >
+                  {locale === "de" ? item.de : item.uz}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
 
-        <p className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200">
+        {eventStatus === "planning" && (
+          <p className="mt-5 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm leading-6 text-sky-800 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-200">
+            {currentCopy.planningHint}
+          </p>
+        )}
+
+        <p className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200">
           {mode === "edit"
             ? currentCopy.editNote
             : currentCopy.createNote}
         </p>
       </section>
 
-      {(["uz", "de"] as const).map((contentLocale) => {
-        const isUz =
-          contentLocale === "uz";
+      {(["uz", "de"] as const).map((language) => {
+        const isUz = language === "uz";
 
         return (
           <section
-            key={contentLocale}
+            key={language}
             className="rounded-[2rem] border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900 sm:p-8"
           >
             <h2 className="text-xl font-black text-slate-950 dark:text-white">
-              {isUz
-                ? currentCopy.uzContent
-                : currentCopy.deContent}
+              {isUz ? currentCopy.uzContent : currentCopy.deContent}
             </h2>
 
             <div className="mt-6 grid gap-5">
@@ -343,11 +449,7 @@ export default function EventForm({
                   name={isUz ? "titleUz" : "titleDe"}
                   required
                   disabled={pending}
-                  defaultValue={
-                    isUz
-                      ? event?.titleUz
-                      : event?.titleDe
-                  }
+                  defaultValue={isUz ? event?.titleUz : event?.titleDe}
                   className={inputClassName}
                 />
               </label>
@@ -358,14 +460,10 @@ export default function EventForm({
                 </FieldLabel>
                 <textarea
                   name={isUz ? "excerptUz" : "excerptDe"}
-                  rows={3}
                   required
+                  rows={3}
                   disabled={pending}
-                  defaultValue={
-                    isUz
-                      ? event?.excerptUz
-                      : event?.excerptDe
-                  }
+                  defaultValue={isUz ? event?.excerptUz : event?.excerptDe}
                   className={inputClassName}
                 />
               </label>
@@ -376,8 +474,8 @@ export default function EventForm({
                 </FieldLabel>
                 <textarea
                   name={isUz ? "descriptionUz" : "descriptionDe"}
-                  rows={8}
                   required
+                  rows={8}
                   disabled={pending}
                   defaultValue={listValue(
                     isUz
@@ -386,7 +484,7 @@ export default function EventForm({
                   )}
                   className={inputClassName}
                 />
-                <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
+                <span className="mt-2 block text-xs font-medium leading-5 text-slate-500 dark:text-slate-400">
                   {currentCopy.descriptionHint}
                 </span>
               </label>
@@ -399,12 +497,7 @@ export default function EventForm({
                   name={isUz ? "priceLabelUz" : "priceLabelDe"}
                   required
                   disabled={pending}
-                  defaultValue={
-                    isUz
-                      ? event?.priceLabelUz
-                      : event?.priceLabelDe
-                  }
-                  placeholder={isUz ? "Bepul" : "Kostenlos"}
+                  defaultValue={isUz ? event?.priceLabelUz : event?.priceLabelDe}
                   className={inputClassName}
                 />
               </label>
@@ -424,7 +517,7 @@ export default function EventForm({
                   )}
                   className={inputClassName}
                 />
-                <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">
+                <span className="mt-2 block text-xs font-medium leading-5 text-slate-500 dark:text-slate-400">
                   {currentCopy.importantNotesHint}
                 </span>
               </label>
@@ -438,17 +531,17 @@ export default function EventForm({
           {currentCopy.schedule}
         </h2>
 
-        <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-5 md:grid-cols-2">
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
-            <FieldLabel locale={locale} required>
+            <FieldLabel locale={locale} required={scheduled}>
               {currentCopy.startDate}
             </FieldLabel>
             <input
               name="startDate"
               type="date"
-              required
+              required={scheduled}
               disabled={pending}
-              defaultValue={event?.startDate}
+              defaultValue={event?.startDate ?? ""}
               className={inputClassName}
             />
           </label>
@@ -478,6 +571,8 @@ export default function EventForm({
               className={inputClassName}
             />
           </label>
+
+          <div />
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>
@@ -597,18 +692,37 @@ export default function EventForm({
         <div className="mt-6 grid gap-5 md:grid-cols-2">
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale} required>
+              {currentCopy.organizerType}
+            </FieldLabel>
+            <select
+              name="organizerType"
+              required
+              disabled={pending}
+              defaultValue={event?.organizerType ?? "vatandoshlar"}
+              className={inputClassName}
+            >
+              {organizerTypes.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {locale === "de" ? item.de : item.uz}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
+            <FieldLabel locale={locale} required>
               {currentCopy.organizerName}
             </FieldLabel>
             <input
               name="organizerName"
               required
               disabled={pending}
-              defaultValue={event?.organizerName}
+              defaultValue={event?.organizerName ?? "Vatandoshlar.de"}
               className={inputClassName}
             />
           </label>
 
-          <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2">
             <FieldLabel locale={locale}>
               {currentCopy.organizerUrl}
             </FieldLabel>
@@ -623,24 +737,104 @@ export default function EventForm({
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale} required>
+              {currentCopy.registrationMethod}
+            </FieldLabel>
+            <select
+              name="registrationMethod"
+              required
+              disabled={pending}
+              value={registrationMethod}
+              onChange={(event) =>
+                setRegistrationMethod(
+                  event.target.value as AdminEventRegistrationMethod,
+                )
+              }
+              className={inputClassName}
+            >
+              {registrationMethods.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {locale === "de" ? item.de : item.uz}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
+            <FieldLabel locale={locale} required>
               {currentCopy.registrationStatus}
             </FieldLabel>
             <select
               name="registrationStatus"
               required
               disabled={pending}
-              defaultValue={event?.registrationStatus ?? "open"}
+              defaultValue={
+                event?.registrationStatus ??
+                (registrationMethod === "none"
+                  ? "not_required"
+                  : "open")
+              }
               className={inputClassName}
             >
               {registrationStatuses.map((item) => (
-                <option
-                  key={item.value}
-                  value={item.value}
-                >
+                <option key={item.value} value={item.value}>
                   {locale === "de" ? item.de : item.uz}
                 </option>
               ))}
             </select>
+          </label>
+
+          {registrationUsesUrl && (
+            <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2">
+              <FieldLabel locale={locale} required>
+                {currentCopy.registrationUrl}
+              </FieldLabel>
+              <input
+                name="registrationUrl"
+                type="url"
+                required
+                disabled={pending}
+                defaultValue={event?.registrationUrl ?? ""}
+                placeholder={
+                  registrationMethod === "google_form"
+                    ? "https://docs.google.com/forms/d/.../viewform"
+                    : "https://..."
+                }
+                className={inputClassName}
+              />
+            </label>
+          )}
+
+          {registrationUsesValue && (
+            <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2">
+              <FieldLabel locale={locale} required>
+                {currentCopy.registrationValue}
+              </FieldLabel>
+              <input
+                name="registrationValue"
+                required
+                disabled={pending}
+                defaultValue={event?.registrationValue ?? ""}
+                className={inputClassName}
+              />
+              <span className="mt-2 block text-xs font-medium leading-5 text-slate-500 dark:text-slate-400">
+                {currentCopy.registrationValueHint}
+              </span>
+            </label>
+          )}
+
+          <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-800 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100">
+            <input
+              name="registrationRequired"
+              type="checkbox"
+              disabled={pending || registrationMethod === "none"}
+              defaultChecked={
+                registrationMethod === "none"
+                  ? false
+                  : (event?.registrationRequired ?? true)
+              }
+              className="size-4 accent-orange-600"
+            />
+            {currentCopy.registrationRequired}
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
@@ -656,15 +850,17 @@ export default function EventForm({
             />
           </label>
 
-          <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2">
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>
-              {currentCopy.registrationUrl}
+              {currentCopy.capacity}
             </FieldLabel>
             <input
-              name="registrationUrl"
-              type="url"
+              name="capacity"
+              type="number"
+              min={1}
+              step={1}
               disabled={pending}
-              defaultValue={event?.registrationUrl ?? ""}
+              defaultValue={event?.capacity ?? ""}
               className={inputClassName}
             />
           </label>
@@ -701,44 +897,48 @@ export default function EventForm({
           {currentCopy.source}
         </h2>
 
+        <p className="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400">
+          {currentCopy.sourceHint}
+        </p>
+
         <div className="mt-6 grid gap-5 md:grid-cols-2">
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
-            <FieldLabel locale={locale} required>
+            <FieldLabel locale={locale} required={scheduled}>
               {currentCopy.officialSourceName}
             </FieldLabel>
             <input
               name="officialSourceName"
-              required
+              required={scheduled}
               disabled={pending}
-              defaultValue={event?.officialSourceName}
+              defaultValue={event?.officialSourceName ?? ""}
               className={inputClassName}
             />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
-            <FieldLabel locale={locale} required>
+            <FieldLabel locale={locale} required={scheduled}>
               {currentCopy.verifiedAt}
             </FieldLabel>
             <input
               name="verifiedAt"
               type="date"
-              required
+              required={scheduled}
               disabled={pending}
-              defaultValue={event?.verifiedAt}
+              defaultValue={event?.verifiedAt ?? ""}
               className={inputClassName}
             />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2">
-            <FieldLabel locale={locale} required>
+            <FieldLabel locale={locale} required={scheduled}>
               {currentCopy.officialSourceUrl}
             </FieldLabel>
             <input
               name="officialSourceUrl"
               type="url"
-              required
+              required={scheduled}
               disabled={pending}
-              defaultValue={event?.officialSourceUrl}
+              defaultValue={event?.officialSourceUrl ?? ""}
               placeholder="https://..."
               className={inputClassName}
             />

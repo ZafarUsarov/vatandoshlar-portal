@@ -26,6 +26,23 @@ export type AdminEventRegistrationStatus =
   | "sold_out"
   | "closed";
 
+export type AdminEventOperationalStatus =
+  | "planning"
+  | "scheduled"
+  | "cancelled";
+
+export type AdminEventOrganizerType =
+  | "vatandoshlar"
+  | "external";
+
+export type AdminEventRegistrationMethod =
+  | "google_form"
+  | "telegram"
+  | "email"
+  | "phone"
+  | "external_url"
+  | "none";
+
 export type AdminEventSummary = {
   id: string;
   slug: string;
@@ -33,16 +50,18 @@ export type AdminEventSummary = {
   titleDe: string;
   category: AdminEventCategory;
   format: AdminEventFormat;
-  startDate: string;
+  eventStatus: AdminEventOperationalStatus;
+  startDate: string | null;
   endDate: string | null;
   startTime: string | null;
   endTime: string | null;
   city: string | null;
   bundesland: string | null;
+  organizerType: AdminEventOrganizerType;
   organizerName: string;
-  registrationStatus:
-    AdminEventRegistrationStatus;
-  verifiedAt: string;
+  registrationStatus: AdminEventRegistrationStatus;
+  registrationMethod: AdminEventRegistrationMethod;
+  verifiedAt: string | null;
   status: AdminEventStatus;
   featured: boolean;
   updatedAt: string;
@@ -59,7 +78,8 @@ export type AdminEvent = {
   descriptionDe: string[];
   category: AdminEventCategory;
   format: AdminEventFormat;
-  startDate: string;
+  eventStatus: AdminEventOperationalStatus;
+  startDate: string | null;
   endDate: string | null;
   startTime: string | null;
   endTime: string | null;
@@ -69,18 +89,22 @@ export type AdminEvent = {
   venueName: string | null;
   address: string | null;
   onlineUrl: string | null;
+  organizerType: AdminEventOrganizerType;
   organizerName: string;
   organizerUrl: string | null;
-  registrationStatus:
-    AdminEventRegistrationStatus;
+  registrationStatus: AdminEventRegistrationStatus;
+  registrationMethod: AdminEventRegistrationMethod;
   registrationUrl: string | null;
+  registrationValue: string | null;
+  registrationRequired: boolean;
   registrationDeadline: string | null;
+  capacity: number | null;
   languages: string[];
   priceLabelUz: string;
   priceLabelDe: string;
-  officialSourceName: string;
-  officialSourceUrl: string;
-  verifiedAt: string;
+  officialSourceName: string | null;
+  officialSourceUrl: string | null;
+  verifiedAt: string | null;
   importantNotesUz: string[];
   importantNotesDe: string[];
   status: AdminEventStatus;
@@ -99,7 +123,8 @@ export type AdminEventInput = {
   descriptionDe: string[];
   category: AdminEventCategory;
   format: AdminEventFormat;
-  startDate: string;
+  eventStatus: AdminEventOperationalStatus;
+  startDate: string | null;
   endDate: string | null;
   startTime: string | null;
   endTime: string | null;
@@ -109,18 +134,22 @@ export type AdminEventInput = {
   venueName: string | null;
   address: string | null;
   onlineUrl: string | null;
+  organizerType: AdminEventOrganizerType;
   organizerName: string;
   organizerUrl: string | null;
-  registrationStatus:
-    AdminEventRegistrationStatus;
+  registrationStatus: AdminEventRegistrationStatus;
+  registrationMethod: AdminEventRegistrationMethod;
   registrationUrl: string | null;
+  registrationValue: string | null;
+  registrationRequired: boolean;
   registrationDeadline: string | null;
+  capacity: number | null;
   languages: string[];
   priceLabelUz: string;
   priceLabelDe: string;
-  officialSourceName: string;
-  officialSourceUrl: string;
-  verifiedAt: string;
+  officialSourceName: string | null;
+  officialSourceUrl: string | null;
+  verifiedAt: string | null;
   importantNotesUz: string[];
   importantNotesDe: string[];
 };
@@ -132,15 +161,18 @@ type AdminEventSummaryRow = {
   title_de: string;
   category: string;
   format: string;
-  start_date: string | Date;
+  event_status: string;
+  start_date: string | Date | null;
   end_date: string | Date | null;
   start_time: string | null;
   end_time: string | null;
   city: string | null;
   bundesland: string | null;
+  organizer_type: string;
   organizer_name: string;
   registration_status: string;
-  verified_at: string | Date;
+  registration_method: string;
+  verified_at: string | Date | null;
   status: string;
   featured: boolean;
   updated_at: string | Date;
@@ -157,33 +189,29 @@ type AdminEventRow = AdminEventSummaryRow & {
   online_url: string | null;
   organizer_url: string | null;
   registration_url: string | null;
+  registration_value: string | null;
+  registration_required: boolean;
   registration_deadline: string | Date | null;
+  capacity: number | null;
   languages: string[];
   price_label_uz: string;
   price_label_de: string;
-  official_source_name: string;
-  official_source_url: string;
+  official_source_name: string | null;
+  official_source_url: string | null;
   important_notes_uz: string[];
   important_notes_de: string[];
   created_at: string | Date;
 };
 
-function normalizeStatus(
-  value: string,
-): AdminEventStatus {
-  if (
-    value === "published" ||
-    value === "archived"
-  ) {
+function normalizeStatus(value: string): AdminEventStatus {
+  if (value === "published" || value === "archived") {
     return value;
   }
 
   return "draft";
 }
 
-function normalizeCategory(
-  value: string,
-): AdminEventCategory {
+function normalizeCategory(value: string): AdminEventCategory {
   if (
     value === "education" ||
     value === "career" ||
@@ -199,13 +227,8 @@ function normalizeCategory(
   return "culture";
 }
 
-function normalizeFormat(
-  value: string,
-): AdminEventFormat {
-  if (
-    value === "online" ||
-    value === "hybrid"
-  ) {
+function normalizeFormat(value: string): AdminEventFormat {
+  if (value === "online" || value === "hybrid") {
     return value;
   }
 
@@ -224,6 +247,40 @@ function normalizeRegistrationStatus(
   }
 
   return "open";
+}
+
+function normalizeOperationalStatus(
+  value: string,
+): AdminEventOperationalStatus {
+  if (value === "planning" || value === "cancelled") {
+    return value;
+  }
+
+  return "scheduled";
+}
+
+function normalizeOrganizerType(
+  value: string,
+): AdminEventOrganizerType {
+  return value === "vatandoshlar"
+    ? "vatandoshlar"
+    : "external";
+}
+
+function normalizeRegistrationMethod(
+  value: string,
+): AdminEventRegistrationMethod {
+  if (
+    value === "google_form" ||
+    value === "telegram" ||
+    value === "email" ||
+    value === "phone" ||
+    value === "none"
+  ) {
+    return value;
+  }
+
+  return "external_url";
 }
 
 function toDateString(
@@ -260,46 +317,46 @@ function toSummary(
     slug: row.slug,
     titleUz: row.title_uz,
     titleDe: row.title_de,
-    category:
-      normalizeCategory(
-        row.category,
-      ),
-    format:
-      normalizeFormat(
-        row.format,
+    category: normalizeCategory(row.category),
+    format: normalizeFormat(row.format),
+    eventStatus:
+      normalizeOperationalStatus(
+        row.event_status,
       ),
     startDate:
-      toDateString(
+      toNullableDateString(
         row.start_date,
       ),
     endDate:
       toNullableDateString(
         row.end_date,
       ),
-    startTime:
-      row.start_time,
-    endTime:
-      row.end_time,
-    city:
-      row.city,
-    bundesland:
-      row.bundesland,
-    organizerName:
-      row.organizer_name,
+    startTime: row.start_time,
+    endTime: row.end_time,
+    city: row.city,
+    bundesland: row.bundesland,
+    organizerType:
+      normalizeOrganizerType(
+        row.organizer_type,
+      ),
+    organizerName: row.organizer_name,
     registrationStatus:
       normalizeRegistrationStatus(
         row.registration_status,
       ),
+    registrationMethod:
+      normalizeRegistrationMethod(
+        row.registration_method,
+      ),
     verifiedAt:
-      toDateString(
+      toNullableDateString(
         row.verified_at,
       ),
     status:
       normalizeStatus(
         row.status,
       ),
-    featured:
-      row.featured,
+    featured: row.featured,
     updatedAt:
       toDateTimeString(
         row.updated_at,
@@ -312,36 +369,29 @@ function toDetail(
 ): AdminEvent {
   return {
     ...toSummary(row),
-    excerptUz:
-      row.excerpt_uz,
-    excerptDe:
-      row.excerpt_de,
-    descriptionUz:
-      row.description_uz,
-    descriptionDe:
-      row.description_de,
-    timezone:
-      row.timezone,
-    venueName:
-      row.venue_name,
-    address:
-      row.address,
-    onlineUrl:
-      row.online_url,
-    organizerUrl:
-      row.organizer_url,
+    excerptUz: row.excerpt_uz,
+    excerptDe: row.excerpt_de,
+    descriptionUz: row.description_uz,
+    descriptionDe: row.description_de,
+    timezone: row.timezone,
+    venueName: row.venue_name,
+    address: row.address,
+    onlineUrl: row.online_url,
+    organizerUrl: row.organizer_url,
     registrationUrl:
       row.registration_url,
+    registrationValue:
+      row.registration_value,
+    registrationRequired:
+      row.registration_required,
     registrationDeadline:
       toNullableDateString(
         row.registration_deadline,
       ),
-    languages:
-      row.languages,
-    priceLabelUz:
-      row.price_label_uz,
-    priceLabelDe:
-      row.price_label_de,
+    capacity: row.capacity,
+    languages: row.languages,
+    priceLabelUz: row.price_label_uz,
+    priceLabelDe: row.price_label_de,
     officialSourceName:
       row.official_source_name,
     officialSourceUrl:
@@ -370,29 +420,30 @@ export async function getAdminEvents(): Promise<
           title_de,
           category,
           format,
+          event_status,
           start_date,
           end_date,
           start_time::text,
           end_time::text,
           city,
           bundesland,
+          organizer_type,
           organizer_name,
           registration_status,
+          registration_method,
           verified_at,
           status,
           featured,
           updated_at
         FROM events
         ORDER BY
-          start_date DESC,
+          start_date DESC NULLS LAST,
           updated_at DESC,
           id DESC
       `,
     );
 
-  return result.rows.map(
-    toSummary,
-  );
+  return result.rows.map(toSummary);
 }
 
 export async function getAdminEventById(
@@ -412,6 +463,7 @@ export async function getAdminEventById(
           description_de,
           category,
           format,
+          event_status,
           start_date,
           end_date,
           start_time::text,
@@ -422,11 +474,16 @@ export async function getAdminEventById(
           venue_name,
           address,
           online_url,
+          organizer_type,
           organizer_name,
           organizer_url,
           registration_status,
+          registration_method,
           registration_url,
+          registration_value,
+          registration_required,
           registration_deadline,
+          capacity,
           languages,
           price_label_uz,
           price_label_de,
@@ -446,12 +503,9 @@ export async function getAdminEventById(
       [id],
     );
 
-  const row =
-    result.rows[0];
+  const row = result.rows[0];
 
-  return row
-    ? toDetail(row)
-    : null;
+  return row ? toDetail(row) : null;
 }
 
 export async function createAdminEvent(
@@ -472,6 +526,7 @@ export async function createAdminEvent(
           description_de,
           category,
           format,
+          event_status,
           start_date,
           end_date,
           start_time,
@@ -482,11 +537,16 @@ export async function createAdminEvent(
           venue_name,
           address,
           online_url,
+          organizer_type,
           organizer_name,
           organizer_url,
           registration_status,
+          registration_method,
           registration_url,
+          registration_value,
+          registration_required,
           registration_deadline,
+          capacity,
           languages,
           price_label_uz,
           price_label_de,
@@ -502,7 +562,7 @@ export async function createAdminEvent(
           $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
           $11,$12,$13,$14,$15,$16,$17,$18,$19,$20,
           $21,$22,$23,$24,$25,$26,$27,$28,$29,$30,
-          $31,$32,
+          $31,$32,$33,$34,$35,$36,$37,$38,
           'draft',
           FALSE
         )
@@ -518,6 +578,7 @@ export async function createAdminEvent(
         input.descriptionDe,
         input.category,
         input.format,
+        input.eventStatus,
         input.startDate,
         input.endDate,
         input.startTime,
@@ -528,11 +589,16 @@ export async function createAdminEvent(
         input.venueName,
         input.address,
         input.onlineUrl,
+        input.organizerType,
         input.organizerName,
         input.organizerUrl,
         input.registrationStatus,
+        input.registrationMethod,
         input.registrationUrl,
+        input.registrationValue,
+        input.registrationRequired,
         input.registrationDeadline,
+        input.capacity,
         input.languages,
         input.priceLabelUz,
         input.priceLabelDe,
@@ -544,8 +610,7 @@ export async function createAdminEvent(
       ],
     );
 
-  const row =
-    result.rows[0];
+  const row = result.rows[0];
 
   if (!row) {
     throw new Error(
@@ -574,31 +639,37 @@ export async function updateAdminEvent(
           description_de = $7,
           category = $8,
           format = $9,
-          start_date = $10,
-          end_date = $11,
-          start_time = $12,
-          end_time = $13,
-          timezone = $14,
-          city = $15,
-          bundesland = $16,
-          venue_name = $17,
-          address = $18,
-          online_url = $19,
-          organizer_name = $20,
-          organizer_url = $21,
-          registration_status = $22,
-          registration_url = $23,
-          registration_deadline = $24,
-          languages = $25,
-          price_label_uz = $26,
-          price_label_de = $27,
-          official_source_name = $28,
-          official_source_url = $29,
-          verified_at = $30,
-          important_notes_uz = $31,
-          important_notes_de = $32,
+          event_status = $10,
+          start_date = $11,
+          end_date = $12,
+          start_time = $13,
+          end_time = $14,
+          timezone = $15,
+          city = $16,
+          bundesland = $17,
+          venue_name = $18,
+          address = $19,
+          online_url = $20,
+          organizer_type = $21,
+          organizer_name = $22,
+          organizer_url = $23,
+          registration_status = $24,
+          registration_method = $25,
+          registration_url = $26,
+          registration_value = $27,
+          registration_required = $28,
+          registration_deadline = $29,
+          capacity = $30,
+          languages = $31,
+          price_label_uz = $32,
+          price_label_de = $33,
+          official_source_name = $34,
+          official_source_url = $35,
+          verified_at = $36,
+          important_notes_uz = $37,
+          important_notes_de = $38,
           updated_at = NOW()
-        WHERE id = $33
+        WHERE id = $39
       `,
       [
         input.slug,
@@ -610,6 +681,7 @@ export async function updateAdminEvent(
         input.descriptionDe,
         input.category,
         input.format,
+        input.eventStatus,
         input.startDate,
         input.endDate,
         input.startTime,
@@ -620,11 +692,16 @@ export async function updateAdminEvent(
         input.venueName,
         input.address,
         input.onlineUrl,
+        input.organizerType,
         input.organizerName,
         input.organizerUrl,
         input.registrationStatus,
+        input.registrationMethod,
         input.registrationUrl,
+        input.registrationValue,
+        input.registrationRequired,
         input.registrationDeadline,
+        input.capacity,
         input.languages,
         input.priceLabelUz,
         input.priceLabelDe,
@@ -637,10 +714,7 @@ export async function updateAdminEvent(
       ],
     );
 
-  return (
-    result.rowCount ??
-    0
-  ) > 0;
+  return (result.rowCount ?? 0) > 0;
 }
 
 export async function updateAdminEventStatus(
@@ -662,25 +736,17 @@ export async function updateAdminEventStatus(
           updated_at = NOW()
         WHERE id = $2
       `,
-      [
-        status,
-        id,
-      ],
+      [status, id],
     );
 
-  return (
-    result.rowCount ??
-    0
-  ) > 0;
+  return (result.rowCount ?? 0) > 0;
 }
 
 export async function setAdminEventFeatured(
   id: string,
   enabled: boolean,
 ): Promise<
-  "updated"
-  | "not_found"
-  | "not_published"
+  "updated" | "not_found" | "not_published"
 > {
   const result =
     await getDb().query<{
@@ -695,8 +761,7 @@ export async function setAdminEventFeatured(
       [id],
     );
 
-  const event =
-    result.rows[0];
+  const event = result.rows[0];
 
   if (!event) {
     return "not_found";
@@ -717,10 +782,7 @@ export async function setAdminEventFeatured(
         updated_at = NOW()
       WHERE id = $2
     `,
-    [
-      enabled,
-      id,
-    ],
+    [enabled, id],
   );
 
   return "updated";

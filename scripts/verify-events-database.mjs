@@ -23,6 +23,9 @@ try {
     invalidCategoryResult,
     invalidFormatResult,
     invalidRegistrationStatusResult,
+    invalidEventStatusResult,
+    invalidOrganizerTypeResult,
+    invalidRegistrationMethodResult,
     lifecycleViolationResult,
     duplicateSlugResult,
     descriptionMismatchResult,
@@ -30,35 +33,39 @@ try {
     invalidDateRangeResult,
     invalidTimeRangeResult,
     invalidRegistrationDeadlineResult,
-    invalidLocationResult,
+    invalidScheduledRequirementsResult,
+    invalidRegistrationDestinationResult,
+    invalidCapacityResult,
   ] = await Promise.all([
     pool.query(`
       SELECT
         COUNT(*)::int AS total,
-
         COUNT(*) FILTER (
           WHERE status = 'draft'
         )::int AS draft,
-
         COUNT(*) FILTER (
           WHERE status = 'published'
         )::int AS published,
-
         COUNT(*) FILTER (
           WHERE status = 'archived'
         )::int AS archived,
-
         COUNT(*) FILTER (
           WHERE featured = TRUE
-        )::int AS featured
+        )::int AS featured,
+        COUNT(*) FILTER (
+          WHERE event_status = 'planning'
+        )::int AS planning,
+        COUNT(*) FILTER (
+          WHERE event_status = 'scheduled'
+        )::int AS scheduled,
+        COUNT(*) FILTER (
+          WHERE event_status = 'cancelled'
+        )::int AS cancelled
       FROM events
     `),
 
     pool.query(`
-      SELECT
-        id::text,
-        slug,
-        status
+      SELECT id::text, slug, status
       FROM events
       WHERE status NOT IN (
         'draft',
@@ -68,10 +75,7 @@ try {
     `),
 
     pool.query(`
-      SELECT
-        id::text,
-        slug,
-        category
+      SELECT id::text, slug, category
       FROM events
       WHERE category NOT IN (
         'culture',
@@ -86,10 +90,7 @@ try {
     `),
 
     pool.query(`
-      SELECT
-        id::text,
-        slug,
-        format
+      SELECT id::text, slug, format
       FROM events
       WHERE format NOT IN (
         'offline',
@@ -99,10 +100,7 @@ try {
     `),
 
     pool.query(`
-      SELECT
-        id::text,
-        slug,
-        registration_status
+      SELECT id::text, slug, registration_status
       FROM events
       WHERE registration_status NOT IN (
         'open',
@@ -113,11 +111,39 @@ try {
     `),
 
     pool.query(`
-      SELECT
-        id::text,
-        slug,
-        status,
-        featured
+      SELECT id::text, slug, event_status
+      FROM events
+      WHERE event_status NOT IN (
+        'planning',
+        'scheduled',
+        'cancelled'
+      )
+    `),
+
+    pool.query(`
+      SELECT id::text, slug, organizer_type
+      FROM events
+      WHERE organizer_type NOT IN (
+        'vatandoshlar',
+        'external'
+      )
+    `),
+
+    pool.query(`
+      SELECT id::text, slug, registration_method
+      FROM events
+      WHERE registration_method NOT IN (
+        'google_form',
+        'telegram',
+        'email',
+        'phone',
+        'external_url',
+        'none'
+      )
+    `),
+
+    pool.query(`
+      SELECT id::text, slug, status, featured
       FROM events
       WHERE
         status <> 'published'
@@ -125,54 +151,39 @@ try {
     `),
 
     pool.query(`
-      SELECT
-        slug,
-        COUNT(*)::int AS count
+      SELECT slug, COUNT(*)::int AS count
       FROM events
       GROUP BY slug
       HAVING COUNT(*) > 1
     `),
 
     pool.query(`
-      SELECT
-        id::text,
-        slug
+      SELECT id::text, slug
       FROM events
       WHERE
-        cardinality(
-          description_uz
-        )
+        cardinality(description_uz)
         <>
-        cardinality(
-          description_de
-        )
+        cardinality(description_de)
     `),
 
     pool.query(`
-      SELECT
-        id::text,
-        slug
+      SELECT id::text, slug
       FROM events
       WHERE
-        cardinality(
-          important_notes_uz
-        )
+        cardinality(important_notes_uz)
         <>
-        cardinality(
-          important_notes_de
-        )
+        cardinality(important_notes_de)
     `),
 
     pool.query(`
-      SELECT
-        id::text,
-        slug,
-        start_date,
-        end_date
+      SELECT id::text, slug, start_date, end_date
       FROM events
       WHERE
         end_date IS NOT NULL
-        AND end_date < start_date
+        AND (
+          start_date IS NULL
+          OR end_date < start_date
+        )
     `),
 
     pool.query(`
@@ -200,51 +211,100 @@ try {
         end_date
       FROM events
       WHERE
-        registration_deadline
-          IS NOT NULL
-        AND registration_deadline
-          >
-          COALESCE(
-            end_date,
-            start_date
-          )
+        registration_deadline IS NOT NULL
+        AND (
+          start_date IS NULL
+          OR registration_deadline >
+            COALESCE(end_date, start_date)
+        )
     `),
 
     pool.query(`
       SELECT
         id::text,
         slug,
+        event_status,
         format,
-        city,
-        bundesland,
-        venue_name,
-        address,
-        online_url
+        start_date,
+        official_source_name,
+        official_source_url,
+        verified_at
       FROM events
       WHERE
-        (
-          format = 'online'
-          AND online_url IS NULL
-        )
-        OR (
-          format = 'offline'
-          AND city IS NULL
-          AND bundesland IS NULL
-          AND venue_name IS NULL
-          AND address IS NULL
-        )
-        OR (
-          format = 'hybrid'
-          AND (
-            online_url IS NULL
-            OR (
-              city IS NULL
-              AND bundesland IS NULL
-              AND venue_name IS NULL
-              AND address IS NULL
+        event_status = 'scheduled'
+        AND (
+          start_date IS NULL
+          OR official_source_name IS NULL
+          OR official_source_url IS NULL
+          OR verified_at IS NULL
+          OR (
+            format = 'online'
+            AND online_url IS NULL
+          )
+          OR (
+            format = 'offline'
+            AND city IS NULL
+            AND bundesland IS NULL
+            AND venue_name IS NULL
+            AND address IS NULL
+          )
+          OR (
+            format = 'hybrid'
+            AND (
+              online_url IS NULL
+              OR (
+                city IS NULL
+                AND bundesland IS NULL
+                AND venue_name IS NULL
+                AND address IS NULL
+              )
             )
           )
         )
+    `),
+
+    pool.query(`
+      SELECT
+        id::text,
+        slug,
+        registration_method,
+        registration_url,
+        registration_value,
+        registration_required
+      FROM events
+      WHERE NOT (
+        (
+          registration_method = 'none'
+          AND registration_url IS NULL
+          AND registration_value IS NULL
+          AND registration_required = FALSE
+        )
+        OR (
+          registration_method IN (
+            'google_form',
+            'external_url'
+          )
+          AND registration_url IS NOT NULL
+          AND registration_value IS NULL
+        )
+        OR (
+          registration_method IN (
+            'telegram',
+            'email',
+            'phone'
+          )
+          AND registration_value IS NOT NULL
+          AND registration_url IS NULL
+        )
+      )
+    `),
+
+    pool.query(`
+      SELECT id::text, slug, capacity
+      FROM events
+      WHERE
+        capacity IS NOT NULL
+        AND capacity <= 0
     `),
   ]);
 
@@ -264,135 +324,110 @@ try {
   console.log(
     "----------------------------",
   );
-
   console.log(
     `Total events: ${summary.total}`,
   );
-
   console.log(
     `draft: ${summary.draft}`,
   );
-
   console.log(
     `published: ${summary.published}`,
   );
-
   console.log(
     `archived: ${summary.archived}`,
   );
-
   console.log(
     `Featured: ${summary.featured}`,
   );
+  console.log(
+    `planning: ${summary.planning}`,
+  );
+  console.log(
+    `scheduled: ${summary.scheduled}`,
+  );
+  console.log(
+    `cancelled: ${summary.cancelled}`,
+  );
+
+  const checks = [
+    [
+      invalidStatusResult,
+      "event(s) with unsupported CMS status.",
+    ],
+    [
+      invalidCategoryResult,
+      "event(s) with unsupported category.",
+    ],
+    [
+      invalidFormatResult,
+      "event(s) with unsupported format.",
+    ],
+    [
+      invalidRegistrationStatusResult,
+      "event(s) with unsupported registration status.",
+    ],
+    [
+      invalidEventStatusResult,
+      "event(s) with unsupported event status.",
+    ],
+    [
+      invalidOrganizerTypeResult,
+      "event(s) with unsupported organizer type.",
+    ],
+    [
+      invalidRegistrationMethodResult,
+      "event(s) with unsupported registration method.",
+    ],
+    [
+      lifecycleViolationResult,
+      "non-published event(s) with featured enabled.",
+    ],
+    [
+      duplicateSlugResult,
+      "duplicate event slug group(s).",
+    ],
+    [
+      descriptionMismatchResult,
+      "event(s) with mismatched UZ/DE description lists.",
+    ],
+    [
+      notesMismatchResult,
+      "event(s) with mismatched UZ/DE important note lists.",
+    ],
+    [
+      invalidDateRangeResult,
+      "event(s) with invalid date range.",
+    ],
+    [
+      invalidTimeRangeResult,
+      "one-day event(s) with invalid time range.",
+    ],
+    [
+      invalidRegistrationDeadlineResult,
+      "event(s) with invalid registration deadline.",
+    ],
+    [
+      invalidScheduledRequirementsResult,
+      "scheduled event(s) missing required confirmed-event data.",
+    ],
+    [
+      invalidRegistrationDestinationResult,
+      "event(s) with invalid registration destination data.",
+    ],
+    [
+      invalidCapacityResult,
+      "event(s) with invalid capacity.",
+    ],
+  ];
 
   const errors = [];
 
-  if (
-    invalidStatusResult.rows.length >
-    0
-  ) {
-    errors.push(
-      `Found ${invalidStatusResult.rows.length} event(s) with unsupported status.`,
-    );
-  }
-
-  if (
-    invalidCategoryResult.rows.length >
-    0
-  ) {
-    errors.push(
-      `Found ${invalidCategoryResult.rows.length} event(s) with unsupported category.`,
-    );
-  }
-
-  if (
-    invalidFormatResult.rows.length >
-    0
-  ) {
-    errors.push(
-      `Found ${invalidFormatResult.rows.length} event(s) with unsupported format.`,
-    );
-  }
-
-  if (
-    invalidRegistrationStatusResult
-      .rows.length > 0
-  ) {
-    errors.push(
-      `Found ${invalidRegistrationStatusResult.rows.length} event(s) with unsupported registration status.`,
-    );
-  }
-
-  if (
-    lifecycleViolationResult.rows
-      .length > 0
-  ) {
-    errors.push(
-      `Found ${lifecycleViolationResult.rows.length} non-published event(s) with featured enabled.`,
-    );
-  }
-
-  if (
-    duplicateSlugResult.rows.length >
-    0
-  ) {
-    errors.push(
-      `Found ${duplicateSlugResult.rows.length} duplicate event slug group(s).`,
-    );
-  }
-
-  if (
-    descriptionMismatchResult.rows
-      .length > 0
-  ) {
-    errors.push(
-      `Found ${descriptionMismatchResult.rows.length} event(s) with mismatched UZ/DE description lists.`,
-    );
-  }
-
-  if (
-    notesMismatchResult.rows.length >
-    0
-  ) {
-    errors.push(
-      `Found ${notesMismatchResult.rows.length} event(s) with mismatched UZ/DE important note lists.`,
-    );
-  }
-
-  if (
-    invalidDateRangeResult.rows.length >
-    0
-  ) {
-    errors.push(
-      `Found ${invalidDateRangeResult.rows.length} event(s) with end_date before start_date.`,
-    );
-  }
-
-  if (
-    invalidTimeRangeResult.rows.length >
-    0
-  ) {
-    errors.push(
-      `Found ${invalidTimeRangeResult.rows.length} one-day event(s) with end_time before start_time.`,
-    );
-  }
-
-  if (
-    invalidRegistrationDeadlineResult
-      .rows.length > 0
-  ) {
-    errors.push(
-      `Found ${invalidRegistrationDeadlineResult.rows.length} event(s) with registration deadline after the event end date.`,
-    );
-  }
-
-  if (
-    invalidLocationResult.rows.length >
-    0
-  ) {
-    errors.push(
-      `Found ${invalidLocationResult.rows.length} event(s) with format/location invariant violations.`,
-    );
+  for (const [result, message] of checks) {
+    if (result.rows.length > 0) {
+      errors.push(
+        `Found ${result.rows.length} ${message}`,
+      );
+    }
   }
 
   if (errors.length > 0) {
@@ -402,9 +437,7 @@ try {
     );
 
     for (const error of errors) {
-      console.error(
-        `- ${error}`,
-      );
+      console.error(`- ${error}`);
     }
 
     process.exitCode = 1;

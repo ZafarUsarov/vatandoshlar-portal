@@ -516,6 +516,7 @@ const getUpcomingPublishedEventsCached =
             ${publishedEventSelect}
             WHERE
               status = 'published'
+              AND event_status = 'scheduled'
               AND COALESCE(
                 end_date,
                 start_date
@@ -556,6 +557,7 @@ const getPastPublishedEventsCached =
             ${publishedEventSelect}
             WHERE
               status = 'published'
+              AND event_status = 'scheduled'
               AND COALESCE(
                 end_date,
                 start_date
@@ -597,6 +599,7 @@ const getPublishedEventBySlugCached =
             ${publishedEventSelect}
             WHERE
               status = 'published'
+              AND event_status = 'scheduled'
               AND slug = $1
             LIMIT 1
           `,
@@ -634,6 +637,7 @@ const getFeaturedUpcomingEventCached =
             ${publishedEventSelect}
             WHERE
               status = 'published'
+              AND event_status = 'scheduled'
               AND featured = TRUE
               AND COALESCE(
                 end_date,
@@ -716,6 +720,7 @@ const getRelatedPublishedEventsCached =
             ${publishedEventSelect}
             WHERE
               status = 'published'
+              AND event_status = 'scheduled'
               AND slug <> $1
               AND (
                 category = $2

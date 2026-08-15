@@ -46,7 +46,7 @@ const copy = {
     lifecycleNote:
       "Featured faqat e’lon qilingan tadbirda yoqilishi mumkin. Tadbir qoralama yoki arxiv holatiga o‘tkazilganda featured avtomatik o‘chadi.",
     publicStatic:
-      "Public Tadbirlar bo‘limi hozircha static source bilan ishlaydi. Admin’dagi o‘zgarishlar hali public sahifaga ta’sir qilmaydi.",
+      "Public Tadbirlar bo‘limi PostgreSQL’dagi e’lon qilingan va tasdiqlangan real tadbirlarni ko‘rsatadi. Planning tadbirlar keyingi UX bosqichida alohida ko‘rsatiladi.",
     back:
       "Admin panelga qaytish",
     publicPage:
@@ -153,7 +153,7 @@ const copy = {
     lifecycleNote:
       "Featured kann nur bei veröffentlichten Veranstaltungen aktiviert werden. Beim Zurücksetzen auf Entwurf oder beim Archivieren wird Featured automatisch entfernt.",
     publicStatic:
-      "Der öffentliche Veranstaltungsbereich verwendet vorerst weiterhin die statische Quelle. Admin-Änderungen wirken sich noch nicht auf die öffentliche Seite aus.",
+      "Der öffentliche Veranstaltungsbereich zeigt veröffentlichte und bestätigte reale Veranstaltungen aus PostgreSQL. Planning-Veranstaltungen erhalten im nächsten UX-Schritt eine eigene Darstellung.",
     back:
       "Zur Admin-Übersicht",
     publicPage:
@@ -337,8 +337,12 @@ function getLocationLabel(
 
 function isPastEvent(
   endDate: string | null,
-  startDate: string,
+  startDate: string | null,
 ): boolean {
+  if (!startDate) {
+    return false;
+  }
+
   const finalDate =
     endDate ??
     startDate;
@@ -493,6 +497,7 @@ export default async function AdminEventsPage() {
   const upcomingCount =
     events.filter(
       (event) =>
+        event.eventStatus === "scheduled" &&
         !isPastEvent(
           event.endDate,
           event.startDate,
@@ -500,8 +505,14 @@ export default async function AdminEventsPage() {
     ).length;
 
   const pastCount =
-    events.length -
-    upcomingCount;
+    events.filter(
+      (event) =>
+        event.eventStatus === "scheduled" &&
+        isPastEvent(
+          event.endDate,
+          event.startDate,
+        ),
+    ).length;
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 dark:bg-slate-950 sm:px-6 lg:px-8">
@@ -765,12 +776,17 @@ export default async function AdminEventsPage() {
                         </dt>
 
                         <dd className="mt-1 font-semibold text-slate-700 dark:text-slate-300">
-                          {formatDate(
-                            event.startDate,
-                            appLocale,
-                          )}
+                          {event.startDate
+                            ? formatDate(
+                                event.startDate,
+                                appLocale,
+                              )
+                            : appLocale === "de"
+                              ? "Wird später bekannt gegeben"
+                              : "Sana keyinroq e’lon qilinadi"}
 
-                          {event.endDate &&
+                          {event.startDate &&
+                          event.endDate &&
                           event.endDate !==
                             event.startDate
                             ? ` — ${formatDate(
