@@ -41,6 +41,7 @@ type EventPageProps = {
 type RegistrationAction = Readonly<{
   href: string;
   label: string;
+  external: boolean;
 }>;
 
 export const dynamic =
@@ -176,6 +177,7 @@ function getRegistrationAction(
         event.registrationUrl,
       label:
         labels.google_form,
+      external: true,
     };
   }
 
@@ -189,6 +191,7 @@ function getRegistrationAction(
         event.registrationUrl,
       label:
         labels.external_url,
+      external: true,
     };
   }
 
@@ -213,6 +216,8 @@ function getRegistrationAction(
       href,
       label:
         labels.telegram,
+      external:
+        /^https?:\/\//i.test(href),
     };
   }
 
@@ -226,6 +231,7 @@ function getRegistrationAction(
         `mailto:${event.registrationValue}`,
       label:
         labels.email,
+      external: false,
     };
   }
 
@@ -242,6 +248,7 @@ function getRegistrationAction(
         )}`,
       label:
         labels.phone,
+      external: false,
     };
   }
 
@@ -519,6 +526,8 @@ export default async function EventPage({
             "Ro‘yxatdan o‘tish muddati",
           registrationClosed:
             "Ro‘yxatdan o‘tish yopilgan",
+          registrationUnavailable:
+            "Ro‘yxatdan o‘tish ma’lumoti hozircha mavjud emas",
           noRegistration:
             "Ro‘yxatdan o‘tish talab qilinmaydi",
           capacity:
@@ -599,6 +608,8 @@ export default async function EventPage({
             "Anmeldefrist",
           registrationClosed:
             "Anmeldung geschlossen",
+          registrationUnavailable:
+            "Anmeldeinformation ist derzeit nicht verfügbar",
           noRegistration:
             "Keine Anmeldung erforderlich",
           capacity:
@@ -660,14 +671,21 @@ export default async function EventPage({
     event.eventStatus ===
       "planning"
       ? copy.planningRegistration
-      : isRegistrationUnavailable(
-            event,
-          )
-        ? copy.registrationClosed
-        : event.registrationMethod ===
-              "none"
-          ? copy.noRegistration
-          : event.registrationStatus;
+      : event.registrationStatusKey ===
+            "sold-out"
+        ? event.registrationStatus
+        : isRegistrationUnavailable(
+              event,
+            )
+          ? copy.registrationClosed
+          : event.registrationMethod ===
+                "none"
+            ? copy.noRegistration
+            : event.registrationStatusKey ===
+                  "open" &&
+                !registrationAction
+              ? copy.registrationUnavailable
+              : event.registrationStatus;
 
   return (
     <>
@@ -1010,11 +1028,18 @@ export default async function EventPage({
                       ) : (
                         <span
                           className={`inline-flex rounded-full border px-3 py-1.5 text-xs font-bold ${getRegistrationStyles(
-                            isRegistrationUnavailable(
-                              event,
-                            )
-                              ? "closed"
-                              : event.registrationStatusKey,
+                            event.registrationStatusKey ===
+                              "sold-out"
+                              ? "sold-out"
+                              : isRegistrationUnavailable(
+                                    event,
+                                  )
+                                ? "closed"
+                                : event.registrationStatusKey ===
+                                      "open" &&
+                                    !registrationAction
+                                  ? "closed"
+                                  : event.registrationStatusKey,
                           )}`}
                         >
                           {
@@ -1073,8 +1098,16 @@ export default async function EventPage({
                         href={
                           registrationAction.href
                         }
-                        target="_blank"
-                        rel="noreferrer"
+                        {...(
+                          registrationAction.external
+                            ? {
+                                target:
+                                  "_blank",
+                                rel:
+                                  "noreferrer",
+                              }
+                            : {}
+                        )}
                         className="button-primary w-full text-center"
                       >
                         {
