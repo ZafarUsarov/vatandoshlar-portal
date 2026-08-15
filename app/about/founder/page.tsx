@@ -70,15 +70,118 @@ export default async function FounderPage() {
     locale === "uz"
       ? {
           storyParagraph:
-            "Hozirda Landesverband Bibliotheken SH e.V. tashkilotida Software Engineer sifatida faoliyat yuritaman. Shu bilan birga Wirtschaftsinformatik yo‘nalishida magistratura bosqichida tahsil olyapman. Amaliy dasturiy ta’minot ishlab chiqish tajribasi bilan biznes va axborot texnologiyalarini birlashtiruvchi akademik bilimlarni parallel rivojlantirib boraman.",
+            "Hozir Germaniyada Software Engineer sifatida faoliyat yuritaman. Shu bilan birga Wirtschaftsinformatik yo‘nalishida magistratura bosqichida tahsil olyapman. Amaliy dasturiy ta’minot ishlab chiqish tajribasi bilan biznes va axborot texnologiyalarini birlashtiruvchi akademik bilimlarni parallel rivojlantirib boraman.",
           workDescription:
-            "Asosiy faoliyatim professional dasturiy mahsulotlar yaratish, raqamli jarayonlarni tushunarli yechimlarga aylantirish va foydalanuvchilarga amaliy yo‘naltirish berishga qaratilgan.",
+            "Faoliyatim production darajasidagi dasturiy mahsulotlar, barqaror IT infratuzilmasi, avtomatlashtirish va tushunarli texnik yechimlarni birlashtirishga qaratilgan.",
         }
       : {
           storyParagraph:
-            "Aktuell arbeite ich als Software Engineer beim Landesverband Bibliotheken SH e.V. und studiere parallel im Masterstudiengang Wirtschaftsinformatik. Dabei verbinde ich praktische Erfahrung in der Softwareentwicklung mit akademischem Wissen an der Schnittstelle von Wirtschaft und Informationstechnologie.",
+            "Aktuell arbeite ich in Deutschland als Software Engineer und studiere parallel im Masterstudiengang Wirtschaftsinformatik. Dabei verbinde ich praktische Erfahrung in der Softwareentwicklung mit akademischem Wissen an der Schnittstelle von Wirtschaft und Informationstechnologie.",
           workDescription:
-            "Meine Tätigkeit verbindet professionelle Softwareentwicklung, die Umsetzung verständlicher digitaler Lösungen und praktische Orientierung für Nutzerinnen und Nutzer.",
+            "Meine Tätigkeit verbindet produktionsreife Softwareentwicklung, stabile IT-Infrastruktur, Automatisierung und nachvollziehbare technische Lösungen.",
+        };
+
+  const engineeringCopy =
+    locale === "uz"
+      ? {
+          title: "Muhandislik kompetensiyalari",
+          description:
+            "Dasturiy mahsulot yaratishdan tashqari server, tarmoq, xavfsizlik, virtualizatsiya va avtomatlashtirish yo‘nalishlarida ham amaliy tajribaga egaman. Bu tajriba mahsulotni faqat kod darajasida emas, balki ishlaydigan tizim sifatida ko‘rishga yordam beradi.",
+          competencies: [
+            {
+              title: "Software & Product Engineering",
+              accent: "emerald" as const,
+              items: [
+                "Next.js, React, TypeScript, Node.js va PostgreSQL asosidagi production web-ilovalar",
+                "Maintainable architecture, strict typing va Git/GitHub workflow",
+                "Foydalanuvchi ehtiyoji, accessibility, SEO va performance’ni birgalikda hisobga olish",
+              ],
+            },
+            {
+              title: "Microsoft & Server",
+              accent: "sky" as const,
+              items: [
+                "Microsoft 365, Exchange Online va Teams",
+                "Windows Server 2019 / 2022 / 2025",
+                "Active Directory, GPO, DNS, DHCP va WSUS",
+              ],
+            },
+            {
+              title: "Network & Security",
+              accent: "violet" as const,
+              items: [
+                "Fortinet FortiGate: rules, VPN, NAT va policies",
+                "UniFi switches, access points va VLANlar",
+                "Trellix XDR va endpoint security",
+              ],
+            },
+            {
+              title: "Virtualization, Automation & Support",
+              accent: "amber" as const,
+              items: [
+                "VMware, Hyper-V va Synology NAS",
+                "Active Backup for Business, Hyper Backup va storage management",
+                "PowerShell automation, troubleshooting, documentation va remote support",
+              ],
+            },
+          ],
+          approachTitle: "Ishlash usuli",
+          approachItems: [
+            "Strukturali",
+            "Yechimga yo‘naltirilgan",
+            "Hujjatlashtirishga e’tiborli",
+            "Remote ishlashga mos",
+          ],
+        }
+      : {
+          title: "Engineering-Kompetenzen",
+          description:
+            "Neben der Softwareentwicklung bringe ich praktische Erfahrung in Server-, Netzwerk-, Security-, Virtualisierungs- und Automatisierungsumgebungen mit. Dadurch betrachte ich digitale Produkte nicht nur auf Code-Ebene, sondern als zuverlässig betriebene Gesamtsysteme.",
+          competencies: [
+            {
+              title: "Software & Product Engineering",
+              accent: "emerald" as const,
+              items: [
+                "Produktionsreife Webanwendungen mit Next.js, React, TypeScript, Node.js und PostgreSQL",
+                "Wartbare Architektur, strikte Typisierung und professionelle Git/GitHub-Workflows",
+                "Gemeinsame Betrachtung von Nutzerbedürfnissen, Accessibility, SEO und Performance",
+              ],
+            },
+            {
+              title: "Microsoft & Server",
+              accent: "sky" as const,
+              items: [
+                "Microsoft 365, Exchange Online und Teams",
+                "Windows Server 2019 / 2022 / 2025",
+                "Active Directory, GPO, DNS, DHCP und WSUS",
+              ],
+            },
+            {
+              title: "Netzwerk & Security",
+              accent: "violet" as const,
+              items: [
+                "Fortinet FortiGate: Regeln, VPN, NAT und Policies",
+                "UniFi Switches, Access Points und VLANs",
+                "Trellix XDR und Endpoint Security",
+              ],
+            },
+            {
+              title: "Virtualisierung, Automation & Support",
+              accent: "amber" as const,
+              items: [
+                "VMware, Hyper-V und Synology NAS",
+                "Active Backup for Business, Hyper Backup und Speicherverwaltung",
+                "PowerShell-Automatisierung, Troubleshooting, Dokumentation und Remote-Support",
+              ],
+            },
+          ],
+          approachTitle: "Arbeitsweise",
+          approachItems: [
+            "Strukturiert",
+            "Lösungsorientiert",
+            "Dokumentationsstark",
+            "Remote-fähig",
+          ],
         };
 
   const storyParagraphs = [
@@ -116,7 +219,12 @@ export default async function FounderPage() {
       <main>
         <FounderHero
           name={founderProfile.name}
-          avatarUrl={founderProfile.avatarUrl}
+          imageUrl="/images/founder/vatandoshlar-project-hero.webp"
+          imageAlt={
+            locale === "de"
+              ? "Editoriale Darstellung des Projekts Vatandoshlar.de"
+              : "Vatandoshlar.de loyihasining editorial vizuali"
+          }
           labels={{
             badge: t("hero.badge"),
             title: t("hero.title"),
@@ -143,6 +251,16 @@ export default async function FounderPage() {
             workDescription:
               professionalCopy.workDescription,
             workItems,
+            competenciesTitle:
+              engineeringCopy.title,
+            competenciesDescription:
+              engineeringCopy.description,
+            competencies:
+              engineeringCopy.competencies,
+            approachTitle:
+              engineeringCopy.approachTitle,
+            approachItems:
+              engineeringCopy.approachItems,
             technologiesTitle: t(
               "technologies.title",
             ),

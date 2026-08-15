@@ -1,6 +1,31 @@
+import { Fragment } from "react";
 import { getLocale } from "next-intl/server";
 
 import { Link } from "../../i18n/navigation";
+import BrandName from "../ui/BrandName";
+
+function BrandedText({
+  text,
+}: Readonly<{
+  text: string;
+}>) {
+  const parts = text.split("Vatandoshlar.de");
+
+  if (parts.length === 1) {
+    return text;
+  }
+
+  return (
+    <>
+      {parts.map((part, index) => (
+        <Fragment key={`${part}-${index}`}>
+          {index > 0 && <BrandName />}
+          {part}
+        </Fragment>
+      ))}
+    </>
+  );
+}
 
 function ArrowUpRightIcon() {
   return (
@@ -93,18 +118,18 @@ export default async function FounderProfilePromo() {
                   <UserIcon />
                 </span>
 
-                {copy.label}
+                <BrandedText text={copy.label} />
               </div>
 
               <h2
                 id="founder-profile-promo-title"
                 className="mt-5 text-2xl font-bold tracking-[-0.035em] text-slate-950 dark:text-white sm:text-3xl lg:text-4xl"
               >
-                {copy.title}
+                <BrandedText text={copy.title} />
               </h2>
 
               <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-400 sm:text-lg sm:leading-8">
-                {copy.description}
+                <BrandedText text={copy.description} />
               </p>
             </div>
 

@@ -1,8 +1,13 @@
+import Image from "next/image";
+import { Fragment } from "react";
+
 import { Link } from "@/i18n/navigation";
+import BrandName from "@/components/ui/BrandName";
 
 type FounderHeroProps = Readonly<{
   name: string;
-  avatarUrl?: string;
+  imageUrl?: string;
+  imageAlt: string;
   labels: Readonly<{
     badge: string;
     title: string;
@@ -12,6 +17,29 @@ type FounderHeroProps = Readonly<{
     specialistButton: string;
   }>;
 }>;
+
+function BrandedText({
+  text,
+}: Readonly<{
+  text: string;
+}>) {
+  const parts = text.split("Vatandoshlar.de");
+
+  if (parts.length === 1) {
+    return text;
+  }
+
+  return (
+    <>
+      {parts.map((part, index) => (
+        <Fragment key={`${part}-${index}`}>
+          {index > 0 && <BrandName />}
+          {part}
+        </Fragment>
+      ))}
+    </>
+  );
+}
 
 function ArrowUpRightIcon() {
   return (
@@ -34,7 +62,8 @@ function ArrowUpRightIcon() {
 
 export default function FounderHero({
   name,
-  avatarUrl,
+  imageUrl,
+  imageAlt,
   labels,
 }: FounderHeroProps) {
   return (
@@ -63,7 +92,7 @@ export default function FounderHero({
           </h2>
 
           <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
-            {labels.description}
+            <BrandedText text={labels.description} />
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -91,22 +120,32 @@ export default function FounderHero({
             className="absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-emerald-400/20 via-cyan-400/10 to-violet-400/20 blur-2xl"
           />
 
-          <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[2.75rem] border border-white/50 bg-gradient-to-br from-emerald-500 to-teal-800 shadow-2xl shadow-emerald-950/20 dark:border-white/10">
-            {avatarUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={avatarUrl}
-                alt={name}
-                className="h-full w-full object-cover"
-              />
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[2.75rem] border border-white/60 bg-slate-100 shadow-2xl shadow-emerald-950/20 dark:border-white/10 dark:bg-slate-900">
+            {imageUrl ? (
+              <>
+                <Image
+                  src={imageUrl}
+                  alt={imageAlt}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 380px, (min-width: 640px) 384px, calc(100vw - 48px)"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_58%,rgba(2,6,23,0.16))] dark:bg-[linear-gradient(180deg,rgba(2,6,23,0.04),rgba(2,6,23,0.28))]"
+                />
+              </>
             ) : (
-              <div className="text-center text-white">
-                <span className="block text-7xl font-black tracking-[-0.08em]">
-                  ZU
-                </span>
-                <span className="mt-4 block text-sm font-bold uppercase tracking-[0.22em] text-emerald-100">
-                  Vatandoshlar.de
-                </span>
+              <div className="flex h-full items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-800 text-center text-white">
+                <div>
+                  <span className="block text-7xl font-black tracking-[-0.08em]">
+                    ZU
+                  </span>
+                  <span className="mt-4 block text-sm font-bold uppercase tracking-[0.22em]">
+                    <BrandName />
+                  </span>
+                </div>
               </div>
             )}
           </div>

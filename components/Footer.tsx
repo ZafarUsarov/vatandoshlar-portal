@@ -1,12 +1,37 @@
 import Image from "next/image";
+import { Fragment } from "react";
 import {
   getLocale,
   getTranslations,
 } from "next-intl/server";
 
 import { Link } from "../i18n/navigation";
+import BrandName from "./ui/BrandName";
 
 type SupportedFooterLocale = "uz" | "de";
+
+function BrandedText({
+  text,
+}: Readonly<{
+  text: string;
+}>) {
+  const parts = text.split("Vatandoshlar.de");
+
+  if (parts.length === 1) {
+    return text;
+  }
+
+  return (
+    <>
+      {parts.map((part, index) => (
+        <Fragment key={`${part}-${index}`}>
+          {index > 0 && <BrandName />}
+          {part}
+        </Fragment>
+      ))}
+    </>
+  );
+}
 
 type IconProps = Readonly<{
   className?: string;
@@ -347,8 +372,8 @@ export default async function Footer({
                     </span>
 
                     <span>
-                      <span className="block text-lg font-semibold tracking-[-0.025em] text-slate-950 dark:text-white">
-                        Vatandoshlar.de
+                      <span className="block text-lg font-semibold tracking-[-0.025em]">
+                        <BrandName />
                       </span>
 
                       <span className="block text-xs text-slate-500 dark:text-slate-400">
@@ -433,7 +458,9 @@ export default async function Footer({
                   </h3>
 
                   <p className="mt-2 max-w-sm text-sm leading-6 text-slate-500 dark:text-slate-400">
-                    {localCopy.followDescription}
+                    <BrandedText
+                      text={localCopy.followDescription}
+                    />
                   </p>
 
                   <div className="mt-5 flex flex-wrap gap-3">
@@ -510,7 +537,9 @@ export default async function Footer({
                   </div>
 
                   <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
-                    {localCopy.supportTitle}
+                    <BrandedText
+                      text={localCopy.supportTitle}
+                    />
                   </h3>
 
                   <p className="mt-3 flex-1 text-sm leading-7 text-slate-600 dark:text-slate-400">
@@ -555,7 +584,9 @@ export default async function Footer({
                   </h3>
 
                   <p className="mt-3 flex-1 text-sm leading-7 text-slate-600 dark:text-slate-400">
-                    {localCopy.founderDescription}
+                    <BrandedText
+                      text={localCopy.founderDescription}
+                    />
                   </p>
 
                   <Link
@@ -573,9 +604,11 @@ export default async function Footer({
 
         <div className="mt-12 flex flex-col gap-5 border-t border-slate-200 pt-8 dark:border-white/[0.08] sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-500">
-            {t("bottom.copyright", {
-              year: currentYear,
-            })}
+            <BrandedText
+              text={t("bottom.copyright", {
+                year: currentYear,
+              })}
+            />
           </p>
 
           <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:gap-x-5">

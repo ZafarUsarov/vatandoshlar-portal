@@ -12,6 +12,7 @@ import {
 
 import { Link, usePathname } from "../i18n/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
+import BrandName from "./ui/BrandName";
 
 type NavigationItem = {
   name: string;
@@ -585,10 +586,7 @@ export default function Header() {
                   }
                 `}
               >
-                Vatandoshlar
-                <span className="text-emerald-600 dark:text-emerald-400">
-                  .de
-                </span>
+                <BrandName />
               </span>
 
               <span
