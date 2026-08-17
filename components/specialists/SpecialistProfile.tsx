@@ -1,3 +1,4 @@
+import BrandedText from "@/components/ui/BrandedText";
 import { Link } from "@/i18n/navigation";
 import type {
   LocalizedSpecialist,
@@ -334,7 +335,7 @@ export default function SpecialistProfile({
           <div className="space-y-8">
             <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
               <p className="text-lg leading-8 text-slate-600 dark:text-slate-300">
-                {specialist.shortDescription}
+                <BrandedText text={specialist.shortDescription} />
               </p>
 
               <div className="mt-7 grid gap-5 sm:grid-cols-2">
