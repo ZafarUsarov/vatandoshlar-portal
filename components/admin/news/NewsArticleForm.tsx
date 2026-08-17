@@ -31,7 +31,8 @@ export type NewsArticleFormValues = {
   contentType: AdminNewsContentType;
   readingTimeUz: string;
   readingTimeDe: string;
-  sourceName: string;
+  sourceNameUz: string;
+  sourceNameDe: string;
   sourceUrl: string;
   sourceLanguageUz: string;
   sourceLanguageDe: string;
@@ -203,18 +204,6 @@ export default function NewsArticleForm({
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2">
-            <FieldLabel locale={locale}>{currentCopy.sourceName}</FieldLabel>
-            <input
-              name="sourceName"
-              type="text"
-              required
-              disabled={pending}
-              defaultValue={initialValues?.sourceName ?? ""}
-              className={inputClassName}
-            />
-          </label>
-
-          <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2">
             <FieldLabel locale={locale}>{currentCopy.sourceUrl}</FieldLabel>
             <input
               name="sourceUrl"
@@ -268,6 +257,11 @@ export default function NewsArticleForm({
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
+            <FieldLabel locale={locale}>{currentCopy.sourceName}</FieldLabel>
+            <input name="sourceNameUz" type="text" required disabled={pending} defaultValue={initialValues?.sourceNameUz ?? ""} className={inputClassName} />
+          </label>
+
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.sourceLanguage}</FieldLabel>
             <input name="sourceLanguageUz" type="text" required disabled={pending} defaultValue={initialValues?.sourceLanguageUz ?? ""} className={inputClassName} />
           </label>
@@ -311,6 +305,11 @@ export default function NewsArticleForm({
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel locale={locale}>{currentCopy.readingTime}</FieldLabel>
             <input name="readingTimeDe" type="text" required disabled={pending} defaultValue={initialValues?.readingTimeDe ?? ""} placeholder="5 Minuten" className={inputClassName} />
+          </label>
+
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
+            <FieldLabel locale={locale}>{currentCopy.sourceName}</FieldLabel>
+            <input name="sourceNameDe" type="text" required disabled={pending} defaultValue={initialValues?.sourceNameDe ?? ""} className={inputClassName} />
           </label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">

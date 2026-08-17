@@ -148,8 +148,11 @@ export async function updateNewsAction(
   const readingTimeDe =
     getString(formData, "readingTimeDe");
 
-  const sourceName =
-    getString(formData, "sourceName");
+  const sourceNameUz =
+    getString(formData, "sourceNameUz");
+
+  const sourceNameDe =
+    getString(formData, "sourceNameDe");
 
   const sourceUrl =
     getString(formData, "sourceUrl");
@@ -185,7 +188,8 @@ export async function updateNewsAction(
     categoryDe,
     readingTimeUz,
     readingTimeDe,
-    sourceName,
+    sourceNameUz,
+    sourceNameDe,
     sourceUrl,
     sourceLanguageUz,
     sourceLanguageDe,
@@ -252,7 +256,8 @@ export async function updateNewsAction(
             contentTypeValue,
           readingTimeUz,
           readingTimeDe,
-          sourceName,
+          sourceNameUz,
+          sourceNameDe,
           sourceUrl,
           sourceLanguageUz,
           sourceLanguageDe,

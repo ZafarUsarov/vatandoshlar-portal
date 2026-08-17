@@ -22,7 +22,8 @@ type PublishedNewsSummaryRow = {
   content_type: string;
   reading_time_uz: string;
   reading_time_de: string;
-  source_name: string;
+  source_name_uz: string;
+  source_name_de: string;
   source_url: string;
   source_language_uz: string;
   source_language_de: string;
@@ -162,7 +163,9 @@ function toPublicNewsSummary(
         row.updated_at,
       ),
     sourceName:
-      row.source_name,
+      locale === "de"
+        ? row.source_name_de
+        : row.source_name_uz,
     sourceUrl:
       row.source_url,
     sourceLanguage:
@@ -251,7 +254,8 @@ const loadPublishedNews =
               content_type,
               reading_time_uz,
               reading_time_de,
-              source_name,
+              source_name_uz,
+              source_name_de,
               source_url,
               source_language_uz,
               source_language_de,
@@ -320,7 +324,8 @@ const loadPublishedNewsBySlug =
               content_type,
               reading_time_uz,
               reading_time_de,
-              source_name,
+              source_name_uz,
+              source_name_de,
               source_url,
               source_language_uz,
               source_language_de,
@@ -381,7 +386,8 @@ const loadRelatedPublishedNews =
               content_type,
               reading_time_uz,
               reading_time_de,
-              source_name,
+              source_name_uz,
+              source_name_de,
               source_url,
               source_language_uz,
               source_language_de,
@@ -446,7 +452,8 @@ const loadFeaturedPublishedNews =
               content_type,
               reading_time_uz,
               reading_time_de,
-              source_name,
+              source_name_uz,
+              source_name_de,
               source_url,
               source_language_uz,
               source_language_de,

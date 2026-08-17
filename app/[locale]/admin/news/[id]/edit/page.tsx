@@ -167,8 +167,10 @@ export default async function AdminNewsEditPage({
                 article.readingTimeUz,
               readingTimeDe:
                 article.readingTimeDe,
-              sourceName:
-                article.sourceName,
+              sourceNameUz:
+                article.sourceNameUz,
+              sourceNameDe:
+                article.sourceNameDe,
               sourceUrl:
                 article.sourceUrl,
               sourceLanguageUz:

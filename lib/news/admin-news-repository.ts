@@ -38,7 +38,8 @@ export type AdminNewsArticle = {
   contentType: AdminNewsContentType;
   readingTimeUz: string;
   readingTimeDe: string;
-  sourceName: string;
+  sourceNameUz: string;
+  sourceNameDe: string;
   sourceUrl: string;
   sourceLanguageUz: string;
   sourceLanguageDe: string;
@@ -65,7 +66,8 @@ export type AdminNewsArticleInput = {
   contentType: AdminNewsContentType;
   readingTimeUz: string;
   readingTimeDe: string;
-  sourceName: string;
+  sourceNameUz: string;
+  sourceNameDe: string;
   sourceUrl: string;
   sourceLanguageUz: string;
   sourceLanguageDe: string;
@@ -103,7 +105,8 @@ type AdminNewsArticleRow = {
   content_type: string;
   reading_time_uz: string;
   reading_time_de: string;
-  source_name: string;
+  source_name_uz: string;
+  source_name_de: string;
   source_url: string;
   source_language_uz: string;
   source_language_de: string;
@@ -205,7 +208,8 @@ function toAdminNewsArticle(
     ),
     readingTimeUz: row.reading_time_uz,
     readingTimeDe: row.reading_time_de,
-    sourceName: row.source_name,
+    sourceNameUz: row.source_name_uz,
+    sourceNameDe: row.source_name_de,
     sourceUrl: row.source_url,
     sourceLanguageUz:
       row.source_language_uz,
@@ -281,7 +285,8 @@ export async function getAdminNewsArticleById(
           content_type,
           reading_time_uz,
           reading_time_de,
-          source_name,
+          source_name_uz,
+          source_name_de,
           source_url,
           source_language_uz,
           source_language_de,
@@ -327,7 +332,8 @@ export async function createAdminNewsArticle(
         content_type,
         reading_time_uz,
         reading_time_de,
-        source_name,
+        source_name_uz,
+        source_name_de,
         source_url,
         source_language_uz,
         source_language_de,
@@ -357,6 +363,7 @@ export async function createAdminNewsArticle(
         $17,
         $18,
         $19,
+        $20,
         'draft',
         FALSE
       )
@@ -375,7 +382,8 @@ export async function createAdminNewsArticle(
       input.contentType,
       input.readingTimeUz,
       input.readingTimeDe,
-      input.sourceName,
+      input.sourceNameUz,
+      input.sourceNameDe,
       input.sourceUrl,
       input.sourceLanguageUz,
       input.sourceLanguageDe,
@@ -416,15 +424,16 @@ export async function updateAdminNewsArticle(
         content_type = $10,
         reading_time_uz = $11,
         reading_time_de = $12,
-        source_name = $13,
-        source_url = $14,
-        source_language_uz = $15,
-        source_language_de = $16,
-        location_uz = $17,
-        location_de = $18,
-        verified_at = $19,
+        source_name_uz = $13,
+        source_name_de = $14,
+        source_url = $15,
+        source_language_uz = $16,
+        source_language_de = $17,
+        location_uz = $18,
+        location_de = $19,
+        verified_at = $20,
         updated_at = NOW()
-      WHERE id = $20
+      WHERE id = $21
     `,
     [
       input.slug,
@@ -439,7 +448,8 @@ export async function updateAdminNewsArticle(
       input.contentType,
       input.readingTimeUz,
       input.readingTimeDe,
-      input.sourceName,
+      input.sourceNameUz,
+      input.sourceNameDe,
       input.sourceUrl,
       input.sourceLanguageUz,
       input.sourceLanguageDe,
