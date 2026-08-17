@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 
 import Header from "../../../components/Header";
 import ServiceCard from "../../../components/cards/ServiceCard";
+import BrandName from "../../../components/ui/BrandName";
+import BrandedText from "../../../components/ui/BrandedText";
 import { Link } from "../../../i18n/navigation";
 import {
   getPublishedServiceBySlug,
@@ -413,7 +415,7 @@ export default async function ServiceDetailPage({
 
             <div className="mt-12 border-t border-slate-200 pt-8 dark:border-slate-800">
               <p className="text-sm leading-6 text-slate-500 dark:text-slate-400">
-                {copy.disclaimer}
+                <BrandedText text={copy.disclaimer} />
               </p>
             </div>
           </div>
@@ -453,7 +455,7 @@ export default async function ServiceDetailPage({
 
       <footer className="border-t border-slate-200 bg-white py-10 dark:border-slate-800 dark:bg-slate-950">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between lg:px-8 dark:text-slate-400">
-          <p>© 2026 Vatandoshlar.de</p>
+          <p>© 2026 <BrandName /></p>
           <p>{copy.footer}</p>
         </div>
       </footer>
