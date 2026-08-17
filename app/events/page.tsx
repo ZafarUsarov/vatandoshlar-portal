@@ -168,7 +168,7 @@ export default async function EventsPage() {
           heroTitle:
             "Hamjamiyat bilan uchrashing, o‘rganing va birga vaqt o‘tkazing",
           heroDescription:
-            "E’lon qilingan tadbirlar tasdiqlangan ma’lumot va rasmiy manba bilan ko‘rsatiladi. Rejadagi tadbirlar esa sana yoki joy uydirilmasdan, aniq “Rejalashtirilmoqda” holatida beriladi.",
+            "E’lon qilingan tadbirlar tasdiqlangan ma’lumot va rasmiy manba bilan ko‘rsatiladi. Rejadagi tadbirlar esa tasdiqlanmagan sana yoki joy ko‘rsatilmasdan, aniq “Rejalashtirilmoqda” holatida beriladi.",
           upcomingButton:
             "E’lon qilingan tadbirlar",
           planningButton:
@@ -258,7 +258,7 @@ export default async function EventsPage() {
           policyItems: [
             "Real tadbirda sana va rasmiy manba tekshiriladi",
             "Tashkilotchi kartada aniq ko‘rsatiladi",
-            "Rejadagi tadbirlarda noma’lum ma’lumot uydirilmaydi",
+            "Rejadagi tadbirlarda faqat tasdiqlangan ma’lumotlar ko‘rsatiladi",
           ],
           archiveEyebrow:
             "Arxiv",

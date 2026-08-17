@@ -63,7 +63,7 @@ export const visaArticles = [
         {
           label: { uz: "Rad javobi", de: "Ablehnung" },
           value: {
-            uz: "2025-yil 1-iyuldan remonstratsiya bekor qilingan; odatda yangi ariza yoki sud yo‘li qoladi",
+            uz: "2025-yil 1-iyuldan viza rad javobini vakolatxonada qayta ko‘rib chiqishni so‘rash tartibi (remonstratsiya) bekor qilingan; yangi ariza topshirish yoki sud orqali huquqiy himoya yo‘lidan foydalanish mumkin",
             de: "Seit 1. Juli 2025 ist die Remonstration abgeschafft; regelmäßig bleiben Neuantrag oder gerichtliches Verfahren",
           },
         },
@@ -258,7 +258,7 @@ export const visaArticles = [
           },
           items: [
             {
-              uz: "2025-yil 1-iyuldan Germaniya vizalari bo‘yicha remonstratsiya jarayoni butun dunyo bo‘ylab bekor qilingan. Rad javobidan keyin odatda kamchiliklarni tuzatib yangi ariza berish yoki qonuniy muddat ichida sud yo‘lini tekshirish mumkin.",
+              uz: "2025-yil 1-iyuldan Germaniya vizalari bo‘yicha remonstratsiya — ya’ni viza rad etilgandan keyin Germaniya vakolatxonasidan qarorni qayta ko‘rib chiqishni so‘rash tartibi — butun dunyo bo‘ylab bekor qilingan. Rad javobidan keyin yangi viza arizasi topshirish yoki rad qarorida ko‘rsatilgan huquqiy himoya yo‘lidan foydalanish mumkin.",
               de: "Seit dem 1. Juli 2025 ist das Remonstrationsverfahren für deutsche Visumentscheidungen weltweit abgeschafft. Nach einer Ablehnung kommen grundsätzlich ein verbesserter Neuantrag oder die Prüfung gerichtlichen Rechtsschutzes innerhalb der Rechtsbehelfsfrist in Betracht.",
             },
             {
@@ -439,11 +439,11 @@ export const visaArticles = [
         },
         {
           question: {
-            uz: "Viza rad etilsa remonstratsiya qilish mumkinmi?",
+            uz: "Viza rad etilsa qarorni qayta ko‘rib chiqishni so‘rash mumkinmi?",
             de: "Kann man nach einer Ablehnung remonstrieren?",
           },
           answer: {
-            uz: "Yo‘q. 2025-yil 1-iyuldan remonstratsiya jarayoni bekor qilingan. Rad sababini tuzatib yangi ariza berish yoki ko‘rsatilgan muddatda sud yo‘lini tekshirish mumkin.",
+            uz: "2025-yil 1-iyuldan remonstratsiya — ya’ni Germaniya vakolatxonasidan viza rad javobini qayta ko‘rib chiqishni so‘rash tartibi — bekor qilingan. Rad javobidan keyin yangi viza arizasi topshirish yoki rad qarorida ko‘rsatilgan huquqiy himoya yo‘lidan foydalanish mumkin.",
             de: "Nein. Seit dem 1. Juli 2025 ist das Remonstrationsverfahren abgeschafft. Möglich sind ein verbesserter Neuantrag oder die Prüfung gerichtlichen Rechtsschutzes innerhalb der angegebenen Frist.",
           },
         },
