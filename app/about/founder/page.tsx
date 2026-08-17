@@ -72,7 +72,7 @@ export default async function FounderPage() {
           storyParagraph:
             "Hozir Germaniyada Software Engineer sifatida faoliyat yuritaman. Shu bilan birga Wirtschaftsinformatik yo‘nalishida magistratura bosqichida tahsil olyapman. Amaliy dasturiy ta’minot ishlab chiqish tajribasi bilan biznes va axborot texnologiyalarini birlashtiruvchi akademik bilimlarni parallel rivojlantirib boraman.",
           workDescription:
-            "Faoliyatim production darajasidagi dasturiy mahsulotlar, barqaror IT infratuzilmasi, avtomatlashtirish va tushunarli texnik yechimlarni birlashtirishga qaratilgan.",
+            "Faoliyatim amalda foydalanishga tayyor dasturiy mahsulotlar, barqaror IT infratuzilmasi, avtomatlashtirish va tushunarli texnik yechimlarni birlashtirishga qaratilgan.",
         }
       : {
           storyParagraph:
@@ -92,9 +92,9 @@ export default async function FounderPage() {
               title: "Software & Product Engineering",
               accent: "emerald" as const,
               items: [
-                "Next.js, React, TypeScript, Node.js va PostgreSQL asosidagi production web-ilovalar",
-                "Maintainable architecture, strict typing va Git/GitHub workflow",
-                "Foydalanuvchi ehtiyoji, accessibility, SEO va performance’ni birgalikda hisobga olish",
+                "Next.js, React, TypeScript, Node.js va PostgreSQL asosidagi amalda foydalanishga tayyor veb-ilovalar",
+                "Qo‘llab-quvvatlashga qulay arxitektura, qat’iy tiplash va Git/GitHub ish jarayoni",
+                "Foydalanuvchi ehtiyoji, foydalanish imkoniyati, SEO va unumdorlikni birgalikda hisobga olish",
               ],
             },
             {
@@ -110,9 +110,9 @@ export default async function FounderPage() {
               title: "Network & Security",
               accent: "violet" as const,
               items: [
-                "Fortinet FortiGate: rules, VPN, NAT va policies",
-                "UniFi switches, access points va VLANlar",
-                "Trellix XDR va endpoint security",
+                "Fortinet FortiGate: qoidalar, VPN, NAT va siyosatlar",
+                "UniFi kommutatorlari, kirish nuqtalari va VLANlar",
+                "Trellix XDR va oxirgi qurilmalar xavfsizligi",
               ],
             },
             {
@@ -120,8 +120,8 @@ export default async function FounderPage() {
               accent: "amber" as const,
               items: [
                 "VMware, Hyper-V va Synology NAS",
-                "Active Backup for Business, Hyper Backup va storage management",
-                "PowerShell automation, troubleshooting, documentation va remote support",
+                "Active Backup for Business, Hyper Backup va saqlash tizimini boshqarish",
+                "PowerShell avtomatlashtirish, nosozliklarni aniqlash, hujjatlashtirish va masofaviy yordam",
               ],
             },
           ],
@@ -130,7 +130,7 @@ export default async function FounderPage() {
             "Strukturali",
             "Yechimga yo‘naltirilgan",
             "Hujjatlashtirishga e’tiborli",
-            "Remote ishlashga mos",
+            "Masofadan ishlashga mos",
           ],
         }
       : {

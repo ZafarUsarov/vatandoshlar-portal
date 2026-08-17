@@ -488,7 +488,7 @@ const localizedJobPlatforms: ReadonlyArray<LocalizedJobPlatform> = [
     platformType: "professional-network",
     official: false,
     websiteUrl: "https://www.linkedin.com/jobs/",
-    languages: ["english", "german-english"],
+    languages: ["german-english"],
     professions: [
       "it-technology",
       "engineering",

@@ -703,7 +703,7 @@
       "finance": "Soliq va moliya",
       "creative": "Foto, video va kreativ",
       "languageTeaching": "Nemis tili o‘qituvchilari",
-      "academicDocuments": "Bachelor, Master va PhD hujjatlari",
+      "academicDocuments": "Bakalavr, magistratura va doktorantura hujjatlari",
       "beauty": "Go‘zallik xizmatlari"
     },
     "results": {
@@ -766,7 +766,7 @@
       "home": "Uy va hunarmandchilik",
       "education": "Ta’lim va repetitorlik",
       "language-teaching": "Nemis tili o‘qituvchilari",
-      "academic-documents": "Bachelor, Master va PhD hujjatlari",
+      "academic-documents": "Bakalavr, magistratura va doktorantura hujjatlari",
       "beauty": "Go‘zallik xizmatlari",
       "finance": "Soliq va moliya",
       "creative": "Foto, video va kreativ"
@@ -795,7 +795,7 @@
     "story": {
       "title": "Men haqimda",
       "paragraphs": {
-        "0": "Men — Zafar Usarov, Vatandoshlar.de loyihasining asoschisi va dasturchisiman. Production darajasidagi veb-ilovalarni toza arxitektura, qat’iy TypeScript va uzoq muddatli rivojlanishga mos yondashuv asosida yarataman.",
+        "0": "Men — Zafar Usarov, Vatandoshlar.de loyihasining asoschisi va dasturchisiman. Amalda foydalanishga tayyor veb-ilovalarni toza arxitektura, qat’iy TypeScript va uzoq muddatli rivojlanishga mos yondashuv asosida yarataman.",
         "1": "Vatandoshlar.de men uchun oddiy sayt emas. Uning maqsadi Germaniyadagi o‘zbekistonliklarga kerakli ma’lumot va ishonchli mutaxassislarni tezroq topishga yordam beradigan mustaqil, zamonaviy va mas’uliyatli platforma qurishdir."
       }
     },
@@ -806,7 +806,7 @@
         "0": "Rasmiy va tekshiriladigan manbalarga asoslangan ma’lumot",
         "1": "O‘zbek va nemis tillarida qulay foydalanish",
         "2": "Ishonchli mutaxassislar va xizmatlarni topish",
-        "3": "Maxfiylik, accessibility va barqaror rivojlanish"
+        "3": "Maxfiylik, foydalanish imkoniyati va barqaror rivojlanish"
       }
     },
     "work": {
@@ -815,11 +815,11 @@
       "items": {
         "platform": {
           "title": "Veb-platformalar ishlab chiqish",
-          "description": "Next.js, React va TypeScript asosida tezkor, accessible va kengaytiriladigan veb-ilovalar."
+          "description": "Next.js, React va TypeScript asosida tezkor, foydalanishga qulay va kengaytiriladigan veb-ilovalar."
         },
         "academic": {
           "title": "Akademik hujjatlar bo‘yicha yo‘naltirish",
-          "description": "Bachelor, Master va PhD jarayonlarida hujjatlar va keyingi qadamlarni tushunishga amaliy yordam."
+          "description": "Bakalavr, magistratura va doktorantura jarayonlarida hujjatlar va keyingi qadamlarni tushunishga amaliy yordam."
         }
       }
     },

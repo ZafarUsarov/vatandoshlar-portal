@@ -98,7 +98,7 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
     icon: "education",
     title: { uz: "Ta’lim", de: "Bildung" },
     description: {
-      uz: "Studienkolleg, Bachelor, Master, PhD, stipendiya va universitetga qabul.",
+      uz: "Studienkolleg, bakalavr, magistratura, doktorantura, stipendiya va universitetga qabul.",
       de: "Studienkolleg, Bachelor, Master, Promotion, Stipendien und Hochschulzulassung.",
     },
     articleCount: 0,
@@ -111,7 +111,7 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
     icon: "career",
     title: { uz: "Ish va karyera", de: "Arbeit und Karriere" },
     description: {
-      uz: "CV, Bewerbung, suhbat, Praktikum va Germaniyada ish boshlash bo‘yicha yo‘nalishlar.",
+      uz: "Rezyume, ishga ariza, suhbat, amaliyot va Germaniyada ish boshlash bo‘yicha yo‘nalishlar.",
       de: "Lebenslauf, Bewerbung, Vorstellungsgespräch, Praktikum und Berufseinstieg.",
     },
     articleCount: 0,
