@@ -5,6 +5,7 @@ import type {
   SupportedGuideLocale,
 } from "../../types/guide";
 import { Link } from "../../i18n/navigation";
+import BrandedText from "../ui/BrandedText";
 import GuideArticleSection from "./GuideArticleSection";
 import GuideFAQ from "./GuideFAQ";
 import GuideInfoBox from "./GuideInfoBox";
@@ -171,7 +172,7 @@ export default function GuideArticlePage({
                 {category.title}
               </Link>
               <span aria-hidden="true">/</span>
-              <span aria-current="page">{article.title}</span>
+              <span aria-current="page"><BrandedText text={article.title} /></span>
             </nav>
 
             <p className="mt-10 text-sm font-semibold uppercase tracking-[0.18em] text-emerald-300">
@@ -179,11 +180,11 @@ export default function GuideArticlePage({
             </p>
 
             <h1 className="mt-5 text-4xl font-bold tracking-[-0.045em] sm:text-6xl sm:leading-[1.08]">
-              {article.title}
+              <BrandedText text={article.title} />
             </h1>
 
             <p className="mt-7 max-w-4xl text-xl leading-9 text-slate-300">
-              {article.excerpt}
+              <BrandedText text={article.excerpt} />
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -210,7 +211,7 @@ export default function GuideArticlePage({
 
             <div className="min-w-0">
               <p className="text-xl leading-9 text-slate-700 dark:text-slate-300">
-                {article.intro}
+                <BrandedText text={article.intro} />
               </p>
 
           <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-7 sm:p-9 dark:border-slate-800 dark:bg-slate-900">
@@ -225,10 +226,10 @@ export default function GuideArticlePage({
                   className="rounded-2xl bg-slate-50 p-5 dark:bg-slate-950"
                 >
                   <dt className="text-sm font-semibold text-slate-500 dark:text-slate-400">
-                    {fact.label}
+                    <BrandedText text={fact.label} />
                   </dt>
                   <dd className="mt-2 font-bold leading-7 text-slate-950 dark:text-white">
-                    {fact.value}
+                    <BrandedText text={fact.value} />
                   </dd>
                 </div>
               ))}
@@ -261,7 +262,7 @@ export default function GuideArticlePage({
                           className="flex gap-3"
                         >
                           <span aria-hidden="true">•</span>
-                          <span>{item}</span>
+                          <span><BrandedText text={item} /></span>
                         </li>
                       ))}
                       </ul>

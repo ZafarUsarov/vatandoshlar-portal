@@ -1,5 +1,7 @@
+import type { ReactNode } from "react";
+
 type GuideHeroProps = Readonly<{
-  eyebrow: string;
+  eyebrow: ReactNode;
   title: string;
   description: string;
   primaryLabel: string;

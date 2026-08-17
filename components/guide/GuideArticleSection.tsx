@@ -1,3 +1,5 @@
+import BrandedText from "../ui/BrandedText";
+
 type GuideArticleSectionProps = Readonly<{
   title: string;
   paragraphs?: ReadonlyArray<string>;
@@ -12,13 +14,13 @@ export default function GuideArticleSection({
   return (
     <section className="scroll-mt-28 rounded-3xl border border-slate-200 bg-white p-7 sm:p-9 dark:border-slate-800 dark:bg-slate-900">
       <h2 className="text-2xl font-bold tracking-[-0.03em] sm:text-3xl">
-        {title}
+        <BrandedText text={title} />
       </h2>
 
       {paragraphs.length > 0 && (
         <div className="mt-5 space-y-5 text-lg leading-8 text-slate-700 dark:text-slate-300">
           {paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+            <p key={paragraph}><BrandedText text={paragraph} /></p>
           ))}
         </div>
       )}
@@ -36,7 +38,7 @@ export default function GuideArticleSection({
               >
                 ✓
               </span>
-              <span>{item}</span>
+              <span><BrandedText text={item} /></span>
             </li>
           ))}
         </ul>

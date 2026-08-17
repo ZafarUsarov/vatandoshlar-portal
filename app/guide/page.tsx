@@ -6,6 +6,7 @@ import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import GuideCategoryGrid from "../../components/guide/GuideCategoryGrid";
 import GuideHero from "../../components/guide/GuideHero";
+import BrandedText from "../../components/ui/BrandedText";
 import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
 import SectionBackground from "../../components/ui/SectionBackground";
 import { getGuideCategories } from "../../data/guide";
@@ -280,7 +281,9 @@ export default async function GuidePage() {
         <SectionHeroBackground tone="guide">
           <GuideHero
             eyebrow={
-              copy.hero.eyebrow
+              <span className="text-slate-900 dark:text-slate-100">
+                <BrandedText text={copy.hero.eyebrow} />
+              </span>
             }
             title={
               copy.hero.title

@@ -16,6 +16,7 @@ import {
   StatCard,
 } from "../../components/ui";
 import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
+import BrandedText from "../../components/ui/BrandedText";
 import { Link } from "../../i18n/navigation";
 import { formatJobDate } from "../../lib/jobs/format-job-date";
 import {
@@ -257,7 +258,9 @@ export default async function JobsPage() {
         <SectionHeroBackground tone="jobs">
           <PageHero
             eyebrow={
-              copy.eyebrow
+              <span className="text-slate-900 dark:text-slate-100">
+                <BrandedText text={copy.eyebrow} />
+              </span>
             }
             title={
               copy.title
