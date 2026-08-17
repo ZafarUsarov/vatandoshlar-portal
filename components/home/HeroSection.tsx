@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
 import {
   getLocale,
@@ -305,10 +306,25 @@ export default async function HeroSection() {
         aria-hidden="true"
         className="absolute inset-0 -z-10 overflow-hidden"
       >
-        <div className="absolute -right-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-emerald-500/25 blur-3xl" />
-        <div className="absolute -bottom-48 left-0 h-[32rem] w-[32rem] rounded-full bg-teal-500/20 blur-3xl" />
-        <div className="absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-3xl" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:56px_56px]" />
+        <Image
+          src="/images/home/homepage-master-visual.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          quality={88}
+          className="object-cover object-[78%_center] opacity-45 sm:object-[74%_center] sm:opacity-55 lg:object-[70%_center] lg:opacity-65 xl:object-center xl:opacity-75"
+        />
+
+        <div className="absolute inset-0 bg-slate-950/28" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.99)_0%,rgba(2,6,23,0.96)_28%,rgba(2,6,23,0.82)_48%,rgba(2,6,23,0.48)_70%,rgba(2,6,23,0.24)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,6,23,0.08),rgba(2,6,23,0.28))]" />
+
+        <div className="absolute -right-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-emerald-500/16 blur-3xl" />
+        <div className="absolute -bottom-48 left-0 h-[32rem] w-[32rem] rounded-full bg-teal-500/12 blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.07] blur-3xl" />
+
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:56px_56px]" />
       </div>
 
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 sm:py-20 lg:px-8 lg:py-24 xl:grid-cols-[1.02fr_0.98fr] xl:items-center xl:gap-14 xl:py-28 2xl:gap-16">
