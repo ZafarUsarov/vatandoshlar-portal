@@ -547,7 +547,7 @@ export default function Header() {
             href="/"
             onClick={handleBrandClick}
             aria-label={t("accessibility.homeLink")}
-            className="group flex min-w-0 shrink items-center gap-2 min-[1160px]:shrink-0"
+            className="group flex shrink-0 items-center gap-2"
           >
             <span
               className={`
