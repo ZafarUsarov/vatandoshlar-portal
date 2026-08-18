@@ -126,7 +126,7 @@ const staticMetadata = [
     sourceName:
       "Deutscher Akademischer Austauschdienst — DAAD",
     sourceUrl:
-      "https://www.daad.de/en/studying-in-germany/scholarships/daad-funding-programmes/",
+      "https://www2.daad.de/deutschland/stipendium/datenbank/en/21148-scholarship-database/?daad=1",
   },
   {
     id: "5",
