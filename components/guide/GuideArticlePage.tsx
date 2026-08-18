@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type {
   GuideArticle,
   GuideArticleSectionKey,
@@ -6,6 +7,7 @@ import type {
 } from "../../types/guide";
 import { Link } from "../../i18n/navigation";
 import BrandedText from "../ui/BrandedText";
+import { getGuideArticleVisual } from "../../data/guide/article-visuals";
 import GuideArticleSection from "./GuideArticleSection";
 import GuideFAQ from "./GuideFAQ";
 import GuideInfoBox from "./GuideInfoBox";
@@ -136,6 +138,11 @@ export default function GuideArticlePage({
       : []),
   ];
 
+  const articleVisual = getGuideArticleVisual(
+    category.slug,
+    article.slug,
+  );
+
   return (
     <main className="min-h-screen bg-slate-50 pt-20 text-slate-950 dark:bg-slate-950 dark:text-white">
       <GuideReadingProgress
@@ -144,13 +151,36 @@ export default function GuideArticlePage({
       />
 
       <article id="guide-article-content">
-        <header className="relative overflow-hidden border-b border-slate-800 bg-slate-950 text-white">
+        <header className="relative isolate overflow-hidden border-b border-slate-800 bg-slate-950 text-white">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
+            className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
           >
-            <div className="absolute -right-32 -top-40 size-[32rem] rounded-full bg-emerald-500/20 blur-3xl" />
-            <div className="absolute -bottom-48 left-8 size-[30rem] rounded-full bg-blue-500/15 blur-3xl" />
+            {articleVisual ? (
+              <>
+                <Image
+                  src={articleVisual}
+                  alt=""
+                  fill
+                  priority
+                  sizes="100vw"
+                  quality={88}
+                  className="object-cover object-[68%_center] opacity-58 sm:object-[70%_center] sm:opacity-64 lg:object-[72%_center] lg:opacity-72"
+                />
+
+                <div className="absolute inset-0 bg-slate-950/16" />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.995)_0%,rgba(2,6,23,0.975)_34%,rgba(2,6,23,0.88)_52%,rgba(2,6,23,0.58)_72%,rgba(2,6,23,0.28)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,6,23,0.06),rgba(2,6,23,0.28))]" />
+
+                <div className="absolute -right-32 -top-40 size-[32rem] rounded-full bg-emerald-500/10 blur-3xl" />
+                <div className="absolute -bottom-48 left-8 size-[30rem] rounded-full bg-blue-500/[0.07] blur-3xl" />
+              </>
+            ) : (
+              <>
+                <div className="absolute -right-32 -top-40 size-[32rem] rounded-full bg-emerald-500/20 blur-3xl" />
+                <div className="absolute -bottom-48 left-8 size-[30rem] rounded-full bg-blue-500/15 blur-3xl" />
+              </>
+            )}
           </div>
 
           <div className="relative mx-auto max-w-5xl px-6 py-16 sm:py-20 lg:px-8 lg:py-24">

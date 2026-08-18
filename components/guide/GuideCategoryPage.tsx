@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type {
   GuideArticle,
   GuideCategory,
@@ -67,13 +68,27 @@ export default function GuideCategoryPage({
 
   return (
     <main className="min-h-screen bg-slate-50 pt-20 text-slate-950 dark:bg-slate-950 dark:text-white">
-      <section className="relative overflow-hidden border-b border-slate-800 bg-slate-950 text-white">
+      <section className="relative isolate overflow-hidden border-b border-slate-800 bg-slate-950 text-white">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
         >
-          <div className="absolute -right-32 -top-36 size-[30rem] rounded-full bg-emerald-500/20 blur-3xl" />
-          <div className="absolute -bottom-44 left-10 size-[28rem] rounded-full bg-blue-500/15 blur-3xl" />
+          <Image
+            src="/images/guide/guide-category-master-visual.webp"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            quality={88}
+            className="object-cover object-[68%_42%] opacity-54 sm:object-[70%_42%] sm:opacity-60 lg:object-[72%_44%] lg:opacity-68"
+          />
+
+          <div className="absolute inset-0 bg-slate-950/18" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.995)_0%,rgba(2,6,23,0.975)_34%,rgba(2,6,23,0.88)_52%,rgba(2,6,23,0.58)_72%,rgba(2,6,23,0.30)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,6,23,0.08),rgba(2,6,23,0.30))]" />
+
+          <div className="absolute -right-32 -top-36 size-[30rem] rounded-full bg-emerald-500/12 blur-3xl" />
+          <div className="absolute -bottom-44 left-10 size-[28rem] rounded-full bg-blue-500/[0.08] blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-8 lg:py-24">

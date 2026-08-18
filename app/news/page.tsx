@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 
@@ -103,14 +104,24 @@ export default async function NewsPage() {
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
           >
-            <div className="absolute -left-40 top-8 size-[32rem] rounded-full bg-cyan-200/25 blur-[120px] sm:size-[38rem] lg:size-[44rem] dark:bg-cyan-400/[0.035]" />
+            <Image
+              src="/images/news/news-master-visual.webp"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              quality={88}
+              className="object-cover object-[72%_center] opacity-42 sm:object-[70%_center] sm:opacity-50 lg:object-[68%_center] lg:opacity-62 dark:opacity-34 dark:sm:opacity-42 dark:lg:opacity-52"
+            />
 
-            <div className="absolute -right-32 -top-20 size-[34rem] rounded-full bg-emerald-200/30 blur-[130px] sm:size-[40rem] lg:size-[46rem] dark:bg-emerald-400/[0.04]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.995)_0%,rgba(248,250,252,0.97)_34%,rgba(248,250,252,0.84)_52%,rgba(248,250,252,0.46)_72%,rgba(248,250,252,0.18)_100%)] dark:bg-[linear-gradient(90deg,rgba(2,6,23,0.995)_0%,rgba(2,6,23,0.97)_34%,rgba(2,6,23,0.86)_52%,rgba(2,6,23,0.58)_72%,rgba(2,6,23,0.30)_100%)]" />
 
-            <div className="absolute left-1/2 top-[48%] size-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/90 blur-[110px] dark:bg-white/[0.015]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(248,250,252,0.06),rgba(248,250,252,0.44))] dark:bg-[linear-gradient(to_bottom,rgba(2,6,23,0.04),rgba(2,6,23,0.28))]" />
+
+            <div className="absolute -left-40 top-8 size-[32rem] rounded-full bg-cyan-200/16 blur-[120px] sm:size-[38rem] lg:size-[44rem] dark:bg-cyan-400/[0.025]" />
+            <div className="absolute -right-32 -top-20 size-[34rem] rounded-full bg-emerald-200/14 blur-[130px] sm:size-[40rem] lg:size-[46rem] dark:bg-emerald-400/[0.025]" />
 
             <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-slate-50/55 dark:to-slate-950/30" />
-
             <div className="absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(148,163,184,0.18),rgba(16,185,129,0.16),rgba(56,189,248,0.14),transparent)]" />
           </div>
 

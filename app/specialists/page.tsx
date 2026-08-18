@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import {
   getLocale,
@@ -201,36 +202,56 @@ export default async function SpecialistsPage({
 
       <main>
         <SectionHeroBackground tone="specialists">
-          <DirectoryHeader
-            labels={{
-              badge:
-                t("hero.badge"),
-              title:
-                t("hero.title"),
-              description:
-                t("hero.description"),
-              profilesLabel:
-                t(
-                  "hero.statistics.profiles",
-                ),
-              categoriesLabel:
-                t(
-                  "hero.statistics.categories",
-                ),
-              verifiedLabel:
-                t(
-                  "hero.statistics.verified",
-                ),
-            }}
-            statistics={{
-              profiles:
-                localizedSpecialists.length,
-              categories:
-                uniqueCategories,
-              verified:
-                verifiedProfiles,
-            }}
-          />
+          <div className="relative isolate overflow-hidden">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+            >
+              <Image
+                src="/images/specialists/specialists-master-visual.webp"
+                alt=""
+                fill
+                priority
+                sizes="100vw"
+                quality={88}
+                className="object-cover object-[72%_center] opacity-32 sm:object-[70%_center] sm:opacity-38 lg:object-[68%_center] lg:opacity-44 dark:opacity-22 dark:sm:opacity-26 dark:lg:opacity-30"
+              />
+
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.995)_0%,rgba(248,250,252,0.97)_36%,rgba(248,250,252,0.86)_54%,rgba(248,250,252,0.48)_72%,rgba(248,250,252,0.18)_100%)] dark:bg-[linear-gradient(90deg,rgba(2,6,23,0.995)_0%,rgba(2,6,23,0.97)_36%,rgba(2,6,23,0.88)_54%,rgba(2,6,23,0.62)_72%,rgba(2,6,23,0.38)_100%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(248,250,252,0.08),rgba(248,250,252,0.46))] dark:bg-[linear-gradient(to_bottom,rgba(2,6,23,0.04),rgba(2,6,23,0.28))]" />
+            </div>
+
+            <DirectoryHeader
+              labels={{
+                badge:
+                  t("hero.badge"),
+                title:
+                  t("hero.title"),
+                description:
+                  t("hero.description"),
+                profilesLabel:
+                  t(
+                    "hero.statistics.profiles",
+                  ),
+                categoriesLabel:
+                  t(
+                    "hero.statistics.categories",
+                  ),
+                verifiedLabel:
+                  t(
+                    "hero.statistics.verified",
+                  ),
+              }}
+              statistics={{
+                profiles:
+                  localizedSpecialists.length,
+                categories:
+                  uniqueCategories,
+                verified:
+                  verifiedProfiles,
+              }}
+            />
+          </div>
         </SectionHeroBackground>
 
         <section className="bg-white py-16 dark:bg-slate-950 sm:py-20">
