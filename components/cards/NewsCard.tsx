@@ -2,6 +2,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { formatNewsDate } from "@/lib/news/format-news-date";
+import ViewCount from "@/components/content-views/ViewCount";
 import type { NewsItem } from "@/types/news";
 
 import { Badge, Card } from "../ui";
@@ -125,10 +126,17 @@ export default async function NewsCard({
             {item.category}
           </Badge>
 
-          <span className="inline-flex items-center gap-1.5 text-sm text-text-muted">
-            <ClockIcon className="size-4 shrink-0" />
-            {item.readingTime}
-          </span>
+          <div className="flex items-center gap-3 text-sm text-text-muted">
+            <span className="inline-flex items-center gap-1.5">
+              <ClockIcon className="size-4 shrink-0" />
+              {item.readingTime}
+            </span>
+
+            <ViewCount
+              count={item.viewCount}
+              locale={locale}
+            />
+          </div>
         </div>
 
         <div className="mt-7">

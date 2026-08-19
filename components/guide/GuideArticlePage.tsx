@@ -7,6 +7,7 @@ import type {
 } from "../../types/guide";
 import { Link } from "../../i18n/navigation";
 import BrandedText from "../ui/BrandedText";
+import ViewCount from "../content-views/ViewCount";
 import { getGuideArticleVisual } from "../../data/guide/article-visuals";
 import GuideArticleSection from "./GuideArticleSection";
 import GuideFAQ from "./GuideFAQ";
@@ -228,6 +229,12 @@ export default function GuideArticlePage({
                   locale,
                 )}
               </span>
+
+              <ViewCount
+                count={article.viewCount}
+                locale={locale}
+                className="px-1 py-2 text-sm font-semibold text-slate-300"
+              />
             </div>
           </div>
         </header>

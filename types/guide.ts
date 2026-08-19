@@ -118,6 +118,7 @@ export type LocalizedGuideArticle = Readonly<{
 
 export type GuideArticle = Readonly<{
   id: string;
+  databaseId?: string;
   slug: string;
   categorySlug: string;
   title: string;
@@ -127,6 +128,7 @@ export type GuideArticle = Readonly<{
   featured?: boolean;
   lastReviewedAt: string;
   updatedAt?: string;
+  viewCount?: number;
   readingTime: string;
   facts: ReadonlyArray<Readonly<{
     label: string;

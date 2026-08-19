@@ -66,6 +66,7 @@ type GuideArticleRow = {
     | Date;
 
   featured: boolean;
+  view_count: string | number;
 };
 
 type CategoryCountRow = {
@@ -377,6 +378,9 @@ function toGuideArticle(
       row.legacy_id ||
       row.id,
 
+    databaseId:
+      row.id,
+
     slug:
       row.slug,
 
@@ -402,6 +406,9 @@ function toGuideArticle(
 
     featured:
       row.featured,
+
+    viewCount:
+      Number(row.view_count),
 
     lastReviewedAt:
       toDateString(
@@ -493,7 +500,8 @@ const publishedGuideSelect = `
 
     last_reviewed_at,
     updated_at,
-    featured
+    featured,
+    view_count
 
   FROM guide_articles
 `;

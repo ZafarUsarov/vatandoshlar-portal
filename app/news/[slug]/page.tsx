@@ -3,6 +3,8 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import Header from "../../../components/Header";
+import ContentViewTracker from "../../../components/content-views/ContentViewTracker";
+import ViewCount from "../../../components/content-views/ViewCount";
 import NewsCard from "../../../components/cards/NewsCard";
 import BrandName from "../../../components/ui/BrandName";
 import BrandedText from "../../../components/ui/BrandedText";
@@ -225,6 +227,11 @@ export default async function NewsDetailPage({
 
       <Header />
 
+      <ContentViewTracker
+        contentType="news"
+        contentId={article.id}
+      />
+
       <main className="min-h-screen bg-white pt-20 text-slate-950 transition-colors dark:bg-slate-950 dark:text-white">
         <article>
           <header className="border-b border-slate-200 bg-slate-50 transition-colors dark:border-slate-800 dark:bg-slate-900/60">
@@ -257,6 +264,12 @@ export default async function NewsDetailPage({
                     article.readingTime
                   }
                 </span>
+
+                <ViewCount
+                  count={article.viewCount}
+                  locale={locale}
+                  className="text-slate-500 dark:text-slate-400"
+                />
 
                 {article.location && (
                   <>

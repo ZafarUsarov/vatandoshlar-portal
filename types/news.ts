@@ -22,6 +22,7 @@ export type NewsItem = {
   verifiedAt: string;
   publishedAt: string | null;
   updatedAt: string;
+  viewCount: number;
   sourceName: string;
   sourceUrl: string;
   sourceLanguage: string;

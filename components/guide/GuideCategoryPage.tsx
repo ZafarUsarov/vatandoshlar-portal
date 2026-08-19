@@ -5,6 +5,7 @@ import type {
   SupportedGuideLocale,
 } from "../../types/guide";
 import { Link } from "../../i18n/navigation";
+import ViewCount from "../content-views/ViewCount";
 
 type GuideCategoryPageProps = Readonly<{
   category: GuideCategory;
@@ -150,9 +151,17 @@ export default function GuideCategoryPage({
                   <p className="mt-3 flex-1 leading-7 text-slate-600 dark:text-slate-400">
                     {article.excerpt}
                   </p>
-                  <p className="mt-6 border-t border-slate-200 pt-5 text-sm font-semibold text-emerald-700 dark:border-slate-800 dark:text-emerald-300">
-                    {locale === "uz" ? "Maqolani ochish" : "Artikel öffnen"} →
-                  </p>
+                  <div className="mt-6 flex items-center justify-between gap-4 border-t border-slate-200 pt-5 text-sm dark:border-slate-800">
+                    <ViewCount
+                      count={article.viewCount}
+                      locale={locale}
+                      className="text-slate-500 dark:text-slate-400"
+                    />
+
+                    <span className="font-semibold text-emerald-700 dark:text-emerald-300">
+                      {locale === "uz" ? "Maqolani ochish" : "Artikel öffnen"} →
+                    </span>
+                  </div>
                 </article>
               ))}
             </div>

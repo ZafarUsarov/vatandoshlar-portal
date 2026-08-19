@@ -33,6 +33,7 @@ type PublishedNewsSummaryRow = {
   published_at: string | Date | null;
   updated_at: string | Date;
   featured: boolean;
+  view_count: string | number;
 };
 
 type PublishedNewsDetailRow =
@@ -180,6 +181,8 @@ function toPublicNewsSummary(
           undefined,
     featured:
       row.featured,
+    viewCount:
+      Number(row.view_count),
   };
 }
 
@@ -264,7 +267,8 @@ const loadPublishedNews =
               verified_at,
               published_at,
               updated_at,
-              featured
+              featured,
+              view_count
             FROM news_articles
             WHERE status = 'published'
             ORDER BY
@@ -334,7 +338,8 @@ const loadPublishedNewsBySlug =
               verified_at,
               published_at,
               updated_at,
-              featured
+              featured,
+              view_count
             FROM news_articles
             WHERE
               status = 'published'
@@ -396,7 +401,8 @@ const loadRelatedPublishedNews =
               verified_at,
               published_at,
               updated_at,
-              featured
+              featured,
+              view_count
             FROM news_articles
             WHERE
               status = 'published'
@@ -462,7 +468,8 @@ const loadFeaturedPublishedNews =
               verified_at,
               published_at,
               updated_at,
-              featured
+              featured,
+              view_count
             FROM news_articles
             WHERE
               status = 'published'

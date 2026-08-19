@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import Footer from "../../../../components/Footer";
 import Header from "../../../../components/Header";
+import ContentViewTracker from "../../../../components/content-views/ContentViewTracker";
 import SectionPromo from "../../../../components/SectionPromo";
 import GuideArticlePage from "../../../../components/guide/GuideArticlePage";
 import {
@@ -256,6 +257,13 @@ export default async function GuideArticleRoute({
   return (
     <>
       <Header />
+
+      {article.databaseId && (
+        <ContentViewTracker
+          contentType="guide"
+          contentId={article.databaseId}
+        />
+      )}
 
       <GuideArticlePage
         article={article}
