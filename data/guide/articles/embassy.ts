@@ -80,7 +80,7 @@ export const embassyArticles = [
               de: "Ein Termin ist keine Visumentscheidung. Er reserviert lediglich einen Zeitpunkt für die Antragstellung. Die Buchung garantiert weder erfüllte Voraussetzungen noch Annahme aller Unterlagen oder Erteilung des Visums.",
             },
             {
-              uz: "Viza maqsadini noto‘g‘ri tanlab bron qilingan termin bilan kelish xavfli. Masalan, Schengen mehmon vizasi, Ausbildung, Chancenkarte va Familiennachzug (oila birlashtirish) uchun bir xil termin kategoriyasidan foydalanilmaydi.",
+              uz: "Viza maqsadini noto‘g‘ri tanlab bron qilingan termin bilan kelish xavfli. Masalan, Schengen mehmon vizasi, Ausbildung (kasbiy ta’lim), Chancenkarte (Imkoniyatlar kartasi) va Familiennachzug (oila birlashtirish) uchun bir xil termin kategoriyasidan foydalanilmaydi.",
               de: "Eine Buchung in der falschen Kategorie ist riskant. Für Schengen-Besuch, Ausbildung, Chancenkarte und Familiennachzug werden nicht dieselben Terminkategorien verwendet.",
             },
             {
