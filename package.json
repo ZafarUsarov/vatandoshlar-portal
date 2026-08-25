@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "geoip:prepare": "node scripts/prepare-geolite-country.mjs",
     "db:migrate": "node scripts/migrate-database.mjs",
     "db:migrate:local": "node --env-file=.env.local scripts/migrate-database.mjs",
     "db:migrate:baseline": "node --env-file=.env.local scripts/baseline-database.mjs"
@@ -14,6 +15,7 @@
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "framer-motion": "^12.43.0",
+    "maxmind": "^5.0.7",
     "next": "16.2.12",
     "next-auth": "^5.0.0-beta.32",
     "next-intl": "^4.13.4",

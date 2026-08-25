@@ -43,3 +43,6 @@ vatandoshlar-portal.zip
 
 # Local database backups
 backups/
+
+# GeoIP databases
+/data/geoip/*.mmdb
