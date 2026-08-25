@@ -22,7 +22,7 @@ const copy = {
       "Vatandoshlar.de boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
     modulesTitle: "Boshqaruv modullari",
     modulesDescription:
-      "Yangiliklar, Ish va karyera, Xizmatlar, Mutaxassislar, Tadbirlar, Germaniya qo‘llanmasi va Telegram hamjamiyatlari PostgreSQL asosida boshqariladi.",
+      "Yangiliklar, Ish va karyera, Xizmatlar, Mutaxassislar, Tadbirlar, Germaniya qo‘llanmasi, Telegram hamjamiyatlari va sayt analitikasi PostgreSQL asosida boshqariladi.",
 
     newsTitle: "Yangiliklar",
     newsDescription:
@@ -59,6 +59,11 @@ const copy = {
       "Bundeslandlar bo‘yicha Telegram guruhlari, havolalar, bot yoki guruh turi va mavjudlik holatini boshqaring.",
     telegramAction: "Telegram hamjamiyatlarini boshqarish",
 
+    analyticsTitle: "Sayt analitikasi",
+    analyticsDescription:
+      "Sahifa ko‘rishlari, davlatlar, tillar, eng ko‘p ko‘rilgan sahifalar va oxirgi 30 kunlik trafikni kuzating.",
+    analyticsAction: "Analitikani ko‘rish",
+
     account: "Admin account",
     role: "Rol",
     status: "Holat",
@@ -74,7 +79,7 @@ const copy = {
       "Von hier aus können Sie die Verwaltungsbereiche von Vatandoshlar.de aufrufen.",
     modulesTitle: "Verwaltungsmodule",
     modulesDescription:
-      "Nachrichten, Arbeit und Karriere, Dienstleistungen, Fachkräfte, Veranstaltungen, der Deutschland-Ratgeber und Telegram-Communitys werden PostgreSQL-basiert verwaltet.",
+      "Nachrichten, Arbeit und Karriere, Dienstleistungen, Fachkräfte, Veranstaltungen, der Deutschland-Ratgeber, Telegram-Communitys und die Website-Analyse werden PostgreSQL-basiert verwaltet.",
 
     newsTitle: "Nachrichten",
     newsDescription:
@@ -111,6 +116,11 @@ const copy = {
       "Verwalten Sie Telegram-Gruppen nach Bundesland, Links, Bot- oder Gruppentyp und Verfügbarkeitsstatus.",
     telegramAction: "Telegram-Communitys verwalten",
 
+    analyticsTitle: "Website-Analyse",
+    analyticsDescription:
+      "Beobachten Sie Seitenaufrufe, Länder, Sprachen, meistbesuchte Seiten und den Traffic der letzten 30 Tage.",
+    analyticsAction: "Analyse ansehen",
+
     account: "Admin-Konto",
     role: "Rolle",
     status: "Status",
@@ -126,7 +136,8 @@ type AdminModuleHref =
   | "/admin/specialists"
   | "/admin/events"
   | "/admin/guide"
-  | "/admin/telegram";
+  | "/admin/telegram"
+  | "/admin/analytics";
 
 type AdminModuleTone =
   | "emerald"
@@ -135,7 +146,8 @@ type AdminModuleTone =
   | "fuchsia"
   | "orange"
   | "teal"
-  | "sky";
+  | "sky"
+  | "cyan";
 
 type AdminModuleCardProps = {
   href: AdminModuleHref;
@@ -207,7 +219,7 @@ const moduleToneClasses = {
     title:
       "text-xl font-black text-slate-950 transition-colors group-hover:text-teal-700 dark:text-white dark:group-hover:text-teal-300",
     icon:
-      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-teal-100 font-black text-teal-700 transition group-hover:bg-teal-600 group-hover:text-white dark:bg-teal-500/10 dark:text-teal-300 dark:group-hover:bg-teal-500 dark:group-hover:text-white",
+      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-teal-100 font-black text-teal-700 transition group-hover:bg-teal-500 group-hover:text-white dark:bg-teal-500/10 dark:text-teal-300 dark:group-hover:bg-teal-500 dark:group-hover:text-white",
     action:
       "mt-5 text-sm font-bold text-teal-700 dark:text-teal-400",
   },
@@ -221,6 +233,17 @@ const moduleToneClasses = {
       "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-sky-100 font-black text-sky-700 transition group-hover:bg-sky-600 group-hover:text-white dark:bg-sky-500/10 dark:text-sky-300 dark:group-hover:bg-sky-500 dark:group-hover:text-white",
     action:
       "mt-5 text-sm font-bold text-sky-700 dark:text-sky-400",
+  },
+
+  cyan: {
+    card:
+      "group block rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-cyan-200 hover:bg-cyan-50/60 hover:shadow-lg hover:shadow-cyan-900/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-cyan-500/25 dark:hover:bg-cyan-500/[0.06] dark:focus-visible:ring-offset-slate-900 sm:p-6",
+    title:
+      "text-xl font-black text-slate-950 transition-colors group-hover:text-cyan-700 dark:text-white dark:group-hover:text-cyan-300",
+    icon:
+      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-cyan-100 font-black text-cyan-700 transition group-hover:bg-cyan-600 group-hover:text-white dark:bg-cyan-500/10 dark:text-cyan-300 dark:group-hover:bg-cyan-500 dark:group-hover:text-white",
+    action:
+      "mt-5 text-sm font-bold text-cyan-700 dark:text-cyan-400",
   },
 } as const;
 
@@ -390,6 +413,14 @@ export default async function AdminPage() {
                   description={currentCopy.telegramDescription}
                   action={currentCopy.telegramAction}
                   tone="sky"
+                />
+
+                <AdminModuleCard
+                  href="/admin/analytics"
+                  title={currentCopy.analyticsTitle}
+                  description={currentCopy.analyticsDescription}
+                  action={currentCopy.analyticsAction}
+                  tone="cyan"
                 />
               </div>
             </div>

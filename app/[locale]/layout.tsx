@@ -9,6 +9,7 @@ import {
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
+import PageViewTracker from "../../components/analytics/PageViewTracker";
 import CommandPalette from "../../components/CommandPalette";
 import { routing } from "../../i18n/routing";
 
@@ -44,6 +45,8 @@ export default async function LocaleLayout({
       locale={locale}
       messages={messages}
     >
+      <PageViewTracker locale={locale} />
+
       {children}
 
       <CommandPalette />
