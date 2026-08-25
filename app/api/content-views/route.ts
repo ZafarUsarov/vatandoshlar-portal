@@ -1,6 +1,6 @@
-import { createHash, randomUUID } from "node:crypto";
+import { createHmac } from "node:crypto";
 
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 import {
@@ -8,11 +8,8 @@ import {
   type ViewableContentType,
 } from "@/lib/content-views/content-view-repository";
 
-const VISITOR_COOKIE_NAME =
+const LEGACY_VISITOR_COOKIE_NAME =
   "vatandoshlar_view_visitor";
-
-const VISITOR_COOKIE_MAX_AGE =
-  60 * 60 * 24 * 365;
 
 type ContentViewRequestBody = Readonly<{
   contentType?: unknown;
@@ -40,11 +37,86 @@ function isLikelyBot(
   );
 }
 
-function createVisitorKey(
-  visitorId: string,
+function resolveClientIp(
+  requestHeaders: Headers,
 ): string {
-  return createHash("sha256")
-    .update(visitorId)
+  const realIp =
+    requestHeaders
+      .get("x-real-ip")
+      ?.trim();
+
+  if (realIp) {
+    return realIp.slice(0, 128);
+  }
+
+  const forwardedFor =
+    requestHeaders.get(
+      "x-forwarded-for",
+    );
+
+  return (
+    forwardedFor
+      ?.split(",")[0]
+      ?.trim()
+      .slice(0, 128) ||
+    "unknown"
+  );
+}
+
+function hasLegacyVisitorCookie(
+  requestHeaders: Headers,
+): boolean {
+  const cookieHeader =
+    requestHeaders.get("cookie");
+
+  if (!cookieHeader) {
+    return false;
+  }
+
+  return cookieHeader
+    .split(";")
+    .some((cookie) =>
+      cookie
+        .trim()
+        .startsWith(
+          `${LEGACY_VISITOR_COOKIE_NAME}=`,
+        ),
+    );
+}
+
+function createVisitorKey({
+  contentType,
+  contentId,
+  clientIp,
+  userAgent,
+}: Readonly<{
+  contentType: ViewableContentType;
+  contentId: string;
+  clientIp: string;
+  userAgent: string | null;
+}>): string | null {
+  const secret =
+    process.env.CONTENT_VIEW_DEDUP_SECRET?.trim();
+
+  if (!secret) {
+    return null;
+  }
+
+  return createHmac(
+    "sha256",
+    secret,
+  )
+    .update(contentType)
+    .update("\0")
+    .update(contentId)
+    .update("\0")
+    .update(clientIp)
+    .update("\0")
+    .update(
+      userAgent
+        ?.slice(0, 512) ??
+        "unknown",
+    )
     .digest("hex");
 }
 
@@ -55,11 +127,14 @@ export async function POST(
     const requestHeaders =
       await headers();
 
+    const userAgent =
+      requestHeaders.get(
+        "user-agent",
+      );
+
     if (
       isLikelyBot(
-        requestHeaders.get(
-          "user-agent",
-        ),
+        userAgent,
       )
     ) {
       return new NextResponse(null, {
@@ -90,17 +165,24 @@ export async function POST(
       );
     }
 
-    const cookieStore =
-      await cookies();
+    const visitorKey =
+      createVisitorKey({
+        contentType:
+          body.contentType,
+        contentId:
+          body.contentId,
+        clientIp:
+          resolveClientIp(
+            requestHeaders,
+          ),
+        userAgent,
+      });
 
-    const existingVisitorId =
-      cookieStore.get(
-        VISITOR_COOKIE_NAME,
-      )?.value;
-
-    const visitorId =
-      existingVisitorId ??
-      randomUUID();
+    if (!visitorKey) {
+      return new NextResponse(null, {
+        status: 204,
+      });
+    }
 
     const counted =
       await recordContentView({
@@ -108,10 +190,7 @@ export async function POST(
           body.contentType,
         contentId:
           body.contentId,
-        visitorKey:
-          createVisitorKey(
-            visitorId,
-          ),
+        visitorKey,
       });
 
     const response =
@@ -119,20 +198,13 @@ export async function POST(
         counted,
       });
 
-    if (!existingVisitorId) {
-      response.cookies.set(
-        VISITOR_COOKIE_NAME,
-        visitorId,
-        {
-          httpOnly: true,
-          sameSite: "lax",
-          secure:
-            process.env.NODE_ENV ===
-            "production",
-          maxAge:
-            VISITOR_COOKIE_MAX_AGE,
-          path: "/",
-        },
+    if (
+      hasLegacyVisitorCookie(
+        requestHeaders,
+      )
+    ) {
+      response.cookies.delete(
+        LEGACY_VISITOR_COOKIE_NAME,
       );
     }
 

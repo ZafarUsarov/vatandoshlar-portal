@@ -19,6 +19,14 @@ type DedupRow = {
 const DEDUP_WINDOW =
   "24 hours";
 
+const DEDUP_RETENTION =
+  "48 hours";
+
+const CLEANUP_INTERVAL_MS =
+  60 * 60 * 1000;
+
+let lastCleanupAt = 0;
+
 function isValidContentId(
   contentId: string,
 ): boolean {
@@ -75,6 +83,31 @@ async function isPublishedContent(
     );
 
   return result.rows[0]?.exists === true;
+}
+
+async function deleteExpiredDedupRecords(
+  client: PoolClient,
+): Promise<void> {
+  const now = Date.now();
+
+  if (
+    now - lastCleanupAt <
+    CLEANUP_INTERVAL_MS
+  ) {
+    return;
+  }
+
+  await client.query(
+    `
+      DELETE FROM content_view_dedup
+      WHERE
+        viewed_at
+          < NOW() - $1::interval
+    `,
+    [DEDUP_RETENTION],
+  );
+
+  lastCleanupAt = now;
 }
 
 async function claimViewWindow(
@@ -188,6 +221,10 @@ export async function recordContentView({
 
       return false;
     }
+
+    await deleteExpiredDedupRecords(
+      client,
+    );
 
     const shouldCount =
       await claimViewWindow(
