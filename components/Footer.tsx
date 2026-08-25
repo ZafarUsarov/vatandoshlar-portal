@@ -298,6 +298,7 @@ export default async function Footer({
             "Agar loyihani foydali deb bilsangiz, hosting, domen va platformani rivojlantirish xarajatlariga ixtiyoriy hissa qo‘shishingiz mumkin.",
           supportAction: "Hissa qo‘shish",
           compactSupportLink: "Loyihaga hissa qo‘shish",
+          privacyLink: "Maxfiylik",
           founderEyebrow: "Loyiha ortidagi inson",
           founderTitle: "Loyiha asoschisi",
           founderDescription:
@@ -325,6 +326,7 @@ export default async function Footer({
             "Wenn Sie das Projekt hilfreich finden, können Sie freiwillig zu den Kosten für Hosting, Domain und die Weiterentwicklung der Plattform beitragen.",
           supportAction: "Beitrag leisten",
           compactSupportLink: "Projekt unterstützen",
+          privacyLink: "Datenschutz",
           founderEyebrow: "Die Person hinter dem Projekt",
           founderTitle: "Projektgründer",
           founderDescription:
@@ -602,43 +604,66 @@ export default async function Footer({
           </div>
         )}
 
-        <div className="mt-12 flex flex-col gap-5 border-t border-slate-200 pt-8 dark:border-white/[0.08] sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-slate-500">
-            <BrandedText
-              text={t("bottom.copyright", {
-                year: currentYear,
-              })}
-            />
-          </p>
+        <div className="mt-12 border-t border-slate-200 pt-8 dark:border-white/[0.08] sm:mt-16">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm text-slate-500">
+                <BrandedText
+                  text={t("bottom.copyright", {
+                    year: currentYear,
+                  })}
+                />
+              </p>
 
-          <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:gap-x-5">
-            {showCompactSupportLink && (
-              <Link
-                href="/support"
-                className="group inline-flex min-h-10 items-center gap-2 rounded-full border border-emerald-200/80 bg-white/80 px-3.5 py-1.5 text-sm font-semibold text-slate-800 shadow-sm backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-emerald-400/20 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
-              >
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 transition-colors duration-200 group-hover:bg-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-300 dark:group-hover:bg-emerald-400/15">
-                  <HeartIcon className="size-3.5" />
-                </span>
+              <p className="mt-2 max-w-xl text-xs leading-5 text-slate-400 dark:text-slate-500">
+                {t("bottom.disclaimer")}
+              </p>
+            </div>
 
-                <span>{localCopy.compactSupportLink}</span>
-
-                <ArrowUpRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
-            )}
-
-            <p className="max-w-xl text-xs leading-5 text-slate-500">
-              {t("bottom.disclaimer")}
-            </p>
-
-            <a
-              href="#top"
-              className="group inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-slate-700 transition hover:text-slate-950 focus-visible:outline-none focus-visible:text-slate-950 dark:text-slate-300 dark:hover:text-white dark:focus-visible:text-white"
+            <nav
+              aria-label={
+                locale === "uz"
+                  ? "Footer havolalari"
+                  : "Footer-Navigation"
+              }
+              className="flex flex-wrap items-center gap-x-5 gap-y-3"
             >
-              {t("bottom.backToTop")}
+              {showCompactSupportLink && (
+                <Link
+                  href="/support"
+                  className="group inline-flex min-h-10 items-center gap-2 rounded-full border border-emerald-200/80 bg-white/80 px-3.5 py-1.5 text-sm font-semibold text-slate-800 shadow-sm backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-emerald-400/20 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                >
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 transition-colors duration-200 group-hover:bg-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-300 dark:group-hover:bg-emerald-400/15">
+                    <HeartIcon className="size-3.5" />
+                  </span>
 
-              <ArrowUpIcon className="size-4 transition-transform group-hover:-translate-y-0.5" />
-            </a>
+                  <span>{localCopy.compactSupportLink}</span>
+
+                  <ArrowUpRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              )}
+
+              <Link
+                href="/privacy"
+                className="inline-flex min-h-10 items-center rounded-lg px-1 text-sm font-semibold text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-slate-300 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+              >
+                {localCopy.privacyLink}
+              </Link>
+
+              <span
+                aria-hidden="true"
+                className="hidden h-4 w-px bg-slate-200 dark:bg-white/10 sm:block"
+              />
+
+              <a
+                href="#top"
+                className="group inline-flex min-h-10 items-center gap-2 rounded-lg px-1 text-sm font-semibold text-slate-700 transition hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-slate-300 dark:hover:text-white dark:focus-visible:ring-offset-slate-950"
+              >
+                {t("bottom.backToTop")}
+
+                <ArrowUpIcon className="size-4 transition-transform group-hover:-translate-y-0.5" />
+              </a>
+            </nav>
           </div>
         </div>
       </div>
