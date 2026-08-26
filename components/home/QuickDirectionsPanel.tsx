@@ -101,7 +101,7 @@ export default function QuickDirectionsPanel({
                   {item.icon}
                 </span>
 
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-slate-500 transition group-hover:translate-x-0.5 group-hover:text-emerald-300">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/[0.05] text-slate-300 transition duration-300 group-hover:translate-x-0.5 group-hover:border-emerald-400/30 group-hover:bg-emerald-400/10 group-hover:text-emerald-300">
                   <ArrowRightIcon />
                 </span>
               </span>
