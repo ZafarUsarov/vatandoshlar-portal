@@ -228,7 +228,7 @@ export default function SearchSection() {
   return (
     <section
       id="search"
-      className="relative overflow-hidden border-b border-slate-200 bg-white py-20 sm:py-24 dark:border-slate-800 dark:bg-slate-950"
+      className="relative overflow-hidden border-b border-slate-200 bg-white py-14 sm:py-20 lg:py-24 dark:border-slate-800 dark:bg-slate-950"
     >
       <div
         className="absolute inset-0 overflow-hidden"
@@ -244,19 +244,19 @@ export default function SearchSection() {
             {t("badge")}
           </span>
 
-          <h2 className="mt-6 text-balance text-3xl font-extrabold tracking-tight text-slate-950 sm:text-5xl dark:text-white">
+          <h2 className="mt-5 text-balance text-3xl font-extrabold tracking-tight text-slate-950 sm:mt-6 sm:text-5xl dark:text-white">
             {t("title")}
           </h2>
 
-          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-400">
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8 dark:text-slate-400">
             {t(
               "description",
             )}
           </p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-5xl">
-          <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-950/5 sm:p-6 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/20">
+        <div className="mx-auto mt-8 max-w-5xl sm:mt-10 lg:mt-12">
+          <div className="relative overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white p-3 shadow-xl shadow-slate-950/5 sm:rounded-[2rem] sm:p-6 sm:shadow-2xl dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/20">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-500" />
 
             <div className="relative">
@@ -283,12 +283,12 @@ export default function SearchSection() {
                 placeholder={t(
                   "placeholder",
                 )}
-                className="h-16 w-full rounded-2xl border border-slate-200 bg-slate-50 pl-14 pr-5 text-base font-medium text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-emerald-400 dark:focus:bg-slate-950"
+                className="h-14 w-full rounded-xl border border-slate-200 bg-slate-50 pl-14 pr-5 text-base font-medium text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 sm:h-16 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-emerald-400 dark:focus:bg-slate-950"
               />
             </div>
 
             <div
-              className="mt-5 flex flex-wrap justify-center gap-2"
+              className="-mx-1 mt-4 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:mt-5 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0 sm:pb-0"
               aria-label={t(
                 "categoryFilterLabel",
               )}
@@ -310,7 +310,7 @@ export default function SearchSection() {
                           category,
                         )
                       }
-                      className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                      className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition ${
                         isActive
                           ? "bg-slate-950 text-white shadow-lg dark:bg-white dark:text-slate-950"
                           : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white"
@@ -463,7 +463,7 @@ export default function SearchSection() {
           )}
 
           {!showResults && (
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-4">
               {previewItems.map(
                 (item) => (
                   <Link

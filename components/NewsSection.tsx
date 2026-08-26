@@ -91,7 +91,7 @@ export default async function NewsSection() {
     <section
       id="news"
       aria-labelledby="news-heading"
-      className="relative isolate overflow-hidden bg-slate-50 py-24 sm:py-28 lg:py-32 dark:bg-slate-950"
+      className="relative isolate overflow-hidden bg-slate-50 py-16 sm:py-20 lg:py-24 dark:bg-slate-950"
     >
       <div
         aria-hidden="true"
@@ -110,14 +110,14 @@ export default async function NewsSection() {
 
             <h2
               id="news-heading"
-              className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white"
+              className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:mt-6 sm:text-4xl lg:text-5xl dark:text-white"
             >
               {t(
                 "title",
               )}
             </h2>
 
-            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
+            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8 dark:text-slate-400">
               {t(
                 "description",
               )}
@@ -137,23 +137,27 @@ export default async function NewsSection() {
         </div>
 
         {latestNews.length > 0 ? (
-          <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
             {latestNews.map(
               (
                 item,
                 index,
               ) => (
-                <NewsCard
-                  key={
-                    item.slug
+                <div
+                  key={item.slug}
+                  className={
+                    index === 0
+                      ? undefined
+                      : index === 1
+                        ? "hidden md:block"
+                        : "hidden lg:block"
                   }
-                  item={
-                    item
-                  }
-                  index={
-                    index
-                  }
-                />
+                >
+                  <NewsCard
+                    item={item}
+                    index={index}
+                  />
+                </div>
               ),
             )}
           </div>
@@ -167,7 +171,7 @@ export default async function NewsSection() {
           </div>
         )}
 
-        <div className="mt-10 flex justify-center lg:hidden">
+        <div className="mt-8 flex justify-center lg:hidden">
           <Link
             href="/news"
             className="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-4 dark:border-white/10 dark:bg-white/[0.05] dark:text-white dark:hover:border-white/20 dark:focus-visible:ring-violet-400 dark:focus-visible:ring-offset-slate-950"
