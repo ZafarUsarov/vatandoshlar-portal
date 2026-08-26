@@ -60,19 +60,19 @@ const outputs = {
 };
 
 const cropSizes = {
-  // Favicon uchun tighter crop.
-  // 16–48 px o‘lchamlarda geometrik belgi
-  // imkon qadar aniq ko‘rinadi.
-  favicon: 880,
+  // Tiny browser favicons need slightly more visual weight
+  // because the geometric mark loses detail at 16–48 px.
+  favicon: 1040,
 
-  // iOS Home Screen va oddiy PWA iconlari.
-  // Original assetdagi ortiqcha whitespace kamayadi.
-  app: 920,
+  // iOS Home Screen / regular PWA icon.
+  // Target: roughly 62% visual footprint of the canvas.
+  // This restores breathing room without returning to the
+  // original undersized appearance.
+  app: 1080,
 
-  // Maskable icon uchun konservativroq crop.
-  // Platforma maskasi qo‘llanganda belgi
-  // safe-zone ichida qoladi.
-  maskable: 1080,
+  // Maskable icons require a larger safe area because
+  // operating systems may crop them into different shapes.
+  maskable: 1254,
 };
 
 function runSips(args) {
