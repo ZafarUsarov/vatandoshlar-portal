@@ -63,7 +63,7 @@ export default async function ServicesSection() {
   const homepageServices =
     await getPublishedServices(
       locale,
-      6,
+      3,
     );
 
   const copy =
@@ -95,7 +95,7 @@ export default async function ServicesSection() {
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="relative isolate overflow-hidden bg-white py-24 sm:py-28 lg:py-32 dark:bg-slate-950"
+      className="relative isolate overflow-hidden bg-white py-16 sm:py-20 lg:py-24 dark:bg-slate-950"
     >
       <div
         aria-hidden="true"
@@ -108,7 +108,7 @@ export default async function ServicesSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
+        <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700 shadow-sm backdrop-blur dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-blue-300">
               <ShieldCheckIcon className="size-4" />
@@ -117,12 +117,12 @@ export default async function ServicesSection() {
 
             <h2
               id="services-heading"
-              className="mt-6 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white"
+              className="mt-5 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white"
             >
               {copy.title}
             </h2>
 
-            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
+            <p className="mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
               {copy.description}
             </p>
           </div>
@@ -138,14 +138,18 @@ export default async function ServicesSection() {
         </div>
 
         {homepageServices.length > 0 ? (
-          <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-2 lg:grid-cols-3">
             {homepageServices.map((service, index) => (
-              <ServiceCard
+              <div
                 key={service.id}
-                service={service}
-                index={index}
-                detailsLabel={copy.details}
-              />
+                className={index === 2 ? "hidden lg:block" : undefined}
+              >
+                <ServiceCard
+                  service={service}
+                  index={index}
+                  detailsLabel={copy.details}
+                />
+              </div>
             ))}
           </div>
         ) : (
@@ -156,7 +160,7 @@ export default async function ServicesSection() {
           </div>
         )}
 
-        <div className="mt-10 flex justify-center lg:hidden">
+        <div className="mt-8 flex justify-center lg:hidden">
           <Link
             href="/services"
             className="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-4 dark:border-white/10 dark:bg-white/[0.05] dark:text-white dark:hover:border-white/20 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-slate-950"

@@ -19,8 +19,6 @@ const featuredCategorySlugs = [
   "visas",
   "documents",
   "family",
-  "language-and-certificates",
-  "education",
   "work-and-career",
 ] as const;
 
@@ -172,7 +170,7 @@ export default async function GuidePreviewSection() {
     <section
       id="guide-preview"
       aria-labelledby="guide-preview-heading"
-      className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-950 py-20 text-white sm:py-24 lg:py-28 dark:border-slate-800"
+      className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-950 py-16 text-white sm:py-20 lg:py-24 dark:border-slate-800"
     >
       <div
         aria-hidden="true"
@@ -185,7 +183,7 @@ export default async function GuidePreviewSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center xl:gap-16">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center xl:gap-14">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-300 backdrop-blur">
               <BookOpenIcon />
@@ -241,28 +239,19 @@ export default async function GuidePreviewSection() {
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            {featuredCategories.map((category) => (
-              <Link
+            {featuredCategories.map((category, index) => (
+              <div
                 key={category.id}
-                href={`/guide/${category.slug}`}
-                aria-label={`${copy.categoryAction}: ${category.title}`}
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.065] p-5 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-emerald-400/30 hover:bg-white/[0.095] hover:shadow-xl hover:shadow-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:p-6"
+                className={index > 1 ? "hidden sm:block" : undefined}
               >
-                <div
-                  aria-hidden="true"
-                  className="absolute -right-10 -top-10 size-28 rounded-full bg-emerald-400/10 blur-2xl transition group-hover:bg-emerald-400/20"
-                />
-
-                <div className="relative flex h-full flex-col">
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl border border-emerald-400/15 bg-emerald-400/10 text-emerald-300 transition group-hover:bg-emerald-500 group-hover:text-white">
-                      <BookOpenIcon />
-                    </span>
-
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] text-slate-400 transition group-hover:border-emerald-400/20 group-hover:text-emerald-300">
-                      <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-                    </span>
-                  </div>
+                <Link
+                  href={`/guide/${category.slug}`}
+                  aria-label={`${copy.categoryAction}: ${category.title}`}
+                  className="group flex h-full min-h-[15rem] flex-col rounded-3xl border border-white/10 bg-white/[0.065] p-5 transition duration-300 hover:-translate-y-1 hover:border-emerald-400/30 hover:bg-white/[0.09] hover:shadow-xl hover:shadow-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:min-h-[16rem] sm:p-6"
+                >
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl border border-emerald-400/15 bg-emerald-400/10 text-emerald-300 transition group-hover:bg-emerald-500 group-hover:text-white">
+                    <BookOpenIcon />
+                  </span>
 
                   <h3 className="mt-5 text-lg font-bold leading-7 text-white">
                     {category.title}
@@ -272,17 +261,23 @@ export default async function GuidePreviewSection() {
                     {category.description}
                   </p>
 
-                  <div className="mt-5 flex items-center justify-between gap-4 border-t border-white/10 pt-4">
-                    <span className="text-xs font-bold uppercase tracking-[0.12em] text-emerald-300">
+                  <div className="mt-5 flex min-h-11 items-center gap-3 border-t border-white/10 pt-4">
+                    <span className="shrink-0 text-xs font-bold uppercase tracking-[0.12em] text-emerald-300">
                       {category.articleCount} {copy.articleCountLabel}
                     </span>
 
-                    <span className="text-xs font-semibold text-slate-500 transition group-hover:text-slate-300">
-                      {copy.categoryAction}
+                    <span className="ml-auto inline-flex items-center gap-2 text-xs font-semibold text-slate-500 transition group-hover:text-slate-300">
+                      <span>{copy.categoryAction}</span>
+                      <span
+                        aria-hidden="true"
+                        className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition group-hover:border-emerald-400/25 group-hover:text-emerald-300"
+                      >
+                        <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+                      </span>
                     </span>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         </div>

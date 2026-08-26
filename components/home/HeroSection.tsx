@@ -96,53 +96,6 @@ function JobsIcon() {
   );
 }
 
-function NewsIcon() {
-  return (
-    <BaseIcon>
-      <path
-        d="M5 4.75h11.5A2.5 2.5 0 0 1 19 7.25V19H7.5A2.5 2.5 0 0 1 5 16.5V4.75Z"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M8.5 9h7M8.5 12.5h7M8.5 16h4" strokeLinecap="round" />
-    </BaseIcon>
-  );
-}
-
-function EventsIcon() {
-  return (
-    <BaseIcon>
-      <rect x="3" y="5" width="18" height="16" rx="2.5" />
-      <path d="M7.5 3v4M16.5 3v4M3 9h18" strokeLinecap="round" />
-    </BaseIcon>
-  );
-}
-
-function TelegramIcon() {
-  return (
-    <BaseIcon>
-      <path
-        d="m20.25 4.25-3.1 14.5c-.2.95-1.05 1.2-1.8.75l-4.65-3.4-2.25 2.15c-.25.25-.45.45-.95.45l.35-4.75 8.65-7.8c.4-.35-.1-.55-.6-.2L5.2 12.65.65 11.25c-1-.3-1.05-1 .2-1.5l17.95-6.9c.85-.3 1.6.2 1.45 1.4Z"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </BaseIcon>
-  );
-}
-
-function DocumentsIcon() {
-  return (
-    <BaseIcon>
-      <path
-        d="M6 3.5h8l4 4V20.5H6V3.5Z"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M14 3.5v4h4M8.75 12h6.5M8.75 15.5h6.5" strokeLinecap="round" />
-    </BaseIcon>
-  );
-}
-
 function ArrowIcon() {
   return (
     <svg
@@ -185,22 +138,6 @@ export default async function HeroSection() {
             title: "Ish va karyera",
             description: "Ish platformalari, Minijob, Ausbildung va karyera yo‘nalishlari.",
           },
-          news: {
-            title: "Yangiliklar",
-            description: "Germaniyadagi muhim va tekshirilgan yangiliklarni kuzating.",
-          },
-          events: {
-            title: "Tadbirlar",
-            description: "Uchrashuvlar, seminarlar va hamjamiyat tadbirlarini toping.",
-          },
-          telegram: {
-            title: "Telegram hamjamiyatlari",
-            description: "Hududiy va mavzuli o‘zbek Telegram guruhlarini toping.",
-          },
-          documents: {
-            title: "Muhim hujjatlar",
-            description: "Apostil, tarjima, tasdiq va hujjat tayyorlash qo‘llanmalari.",
-          },
           open: "Bo‘limni ochish",
         }
       : {
@@ -219,22 +156,6 @@ export default async function HeroSection() {
           jobs: {
             title: "Arbeit & Karriere",
             description: "Jobportale, Minijob, Ausbildung und Karrierewege entdecken.",
-          },
-          news: {
-            title: "Nachrichten",
-            description: "Wichtige und geprüfte Nachrichten aus Deutschland verfolgen.",
-          },
-          events: {
-            title: "Veranstaltungen",
-            description: "Treffen, Seminare und Community-Veranstaltungen entdecken.",
-          },
-          telegram: {
-            title: "Telegram-Communities",
-            description: "Regionale und thematische usbekische Telegram-Gruppen finden.",
-          },
-          documents: {
-            title: "Wichtige Dokumente",
-            description: "Leitfäden zu Apostille, Übersetzung, Beglaubigung und Dokumenten.",
           },
           open: "Bereich öffnen",
         };
@@ -270,34 +191,6 @@ export default async function HeroSection() {
       label: `${quickCopy.open}: ${quickCopy.jobs.title}`,
       icon: <JobsIcon />,
     },
-    {
-      title: quickCopy.news.title,
-      description: quickCopy.news.description,
-      href: "/news",
-      label: `${quickCopy.open}: ${quickCopy.news.title}`,
-      icon: <NewsIcon />,
-    },
-    {
-      title: quickCopy.events.title,
-      description: quickCopy.events.description,
-      href: "/events",
-      label: `${quickCopy.open}: ${quickCopy.events.title}`,
-      icon: <EventsIcon />,
-    },
-    {
-      title: quickCopy.telegram.title,
-      description: quickCopy.telegram.description,
-      href: "/telegram",
-      label: `${quickCopy.open}: ${quickCopy.telegram.title}`,
-      icon: <TelegramIcon />,
-    },
-    {
-      title: quickCopy.documents.title,
-      description: quickCopy.documents.description,
-      href: "/guide/documents",
-      label: `${quickCopy.open}: ${quickCopy.documents.title}`,
-      icon: <DocumentsIcon />,
-    },
   ];
 
   return (
@@ -327,25 +220,25 @@ export default async function HeroSection() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:56px_56px]" />
       </div>
 
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 sm:py-20 lg:px-8 lg:py-24 xl:grid-cols-[1.02fr_0.98fr] xl:items-center xl:gap-14 xl:py-28 2xl:gap-16">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:py-18 lg:px-8 lg:py-22 xl:grid-cols-[1.02fr_0.98fr] xl:items-center xl:gap-14 xl:py-28 2xl:gap-16">
         <div className="max-w-3xl xl:max-w-none">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-xs font-semibold text-emerald-300 backdrop-blur sm:text-sm">
             <span className="h-2 w-2 rounded-full bg-emerald-400" />
             {t("hero.badge")}
           </div>
 
-          <h1 className="mt-6 max-w-4xl text-balance text-4xl font-extrabold tracking-tight leading-[1.03] sm:text-5xl md:text-6xl xl:text-[3.7rem] 2xl:text-7xl">
+          <h1 className="mt-5 max-w-4xl text-balance text-4xl font-extrabold tracking-tight leading-[1.03] sm:text-5xl md:text-6xl xl:text-[3.7rem] 2xl:text-7xl">
             {t("hero.title")}
             <span className="block bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
               {t("hero.highlight")}
             </span>
           </h1>
 
-          <p className="mt-6 max-w-2xl text-pretty text-base leading-7 text-slate-300 sm:text-lg sm:leading-8 xl:text-xl">
+          <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-slate-300 sm:text-lg sm:leading-8 xl:text-xl">
             {t("hero.description")}
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap xl:mt-9">
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap xl:mt-9">
             <Link
               href="/services"
               className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-3.5 font-bold sm:px-7 sm:py-4 text-white shadow-xl shadow-emerald-950/30 transition duration-300 hover:-translate-y-0.5 hover:from-emerald-400 hover:to-teal-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
@@ -362,7 +255,7 @@ export default async function HeroSection() {
             </Link>
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/10 pt-6 text-sm text-slate-300 sm:gap-x-7 xl:mt-9 xl:pt-7">
+          <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/10 pt-6 text-sm text-slate-300 sm:gap-x-7 xl:mt-9 xl:pt-7">
             <span className="flex items-center gap-2">
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-300">
                 ✓

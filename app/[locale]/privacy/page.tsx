@@ -420,7 +420,7 @@ export default async function PrivacyPage() {
 
       <main
         id="top"
-        className="relative min-h-screen overflow-hidden bg-slate-50 px-4 pb-10 pt-12 dark:bg-slate-950 sm:px-6 sm:pb-12 sm:pt-14 lg:px-8 lg:pb-16 lg:pt-16"
+        className="relative min-h-screen overflow-hidden bg-slate-50 px-4 pb-10 pt-24 dark:bg-slate-950 sm:px-6 sm:pb-12 sm:pt-24 lg:px-8 lg:pb-16 lg:pt-16"
       >
         <div
           aria-hidden="true"

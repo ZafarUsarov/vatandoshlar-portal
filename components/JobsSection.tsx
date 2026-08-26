@@ -77,7 +77,7 @@ export default async function JobsSection() {
   const homepageGuides =
     await getPublishedJobGuides(
       locale,
-      3,
+      2,
     );
 
   const copy =
@@ -93,26 +93,6 @@ export default async function JobsSection() {
             "Barcha qo‘llanmalar",
           empty:
             "Hozircha e’lon qilingan ish qo‘llanmalari mavjud emas.",
-          stats: [
-            {
-              value:
-                `${homepageGuides.length}+`,
-              label:
-                "qo‘llanma",
-            },
-            {
-              value:
-                "100%",
-              label:
-                "tekshirilgan",
-            },
-            {
-              value:
-                "DE",
-              label:
-                "mehnat bozori",
-            },
-          ],
           card: {
             highlightsAria:
               "Qo‘llanmaning asosiy mavzulari",
@@ -137,26 +117,6 @@ export default async function JobsSection() {
             "Alle Leitfäden",
           empty:
             "Derzeit sind keine veröffentlichten Jobleitfäden vorhanden.",
-          stats: [
-            {
-              value:
-                `${homepageGuides.length}+`,
-              label:
-                "Leitfäden",
-            },
-            {
-              value:
-                "100%",
-              label:
-                "geprüft",
-            },
-            {
-              value:
-                "DE",
-              label:
-                "Arbeitsmarkt",
-            },
-          ],
           card: {
             highlightsAria:
               "Wichtige Themen des Leitfadens",
@@ -175,7 +135,7 @@ export default async function JobsSection() {
     <section
       id="jobs"
       aria-labelledby="jobs-heading"
-      className="relative isolate overflow-hidden bg-slate-950 py-20 sm:py-24 lg:py-32"
+      className="relative isolate overflow-hidden bg-slate-950 py-16 sm:py-20 lg:py-24"
     >
       <div
         aria-hidden="true"
@@ -183,7 +143,7 @@ export default async function JobsSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
+        <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-300">
               <BriefcaseIcon className="size-4" />
@@ -195,14 +155,14 @@ export default async function JobsSection() {
 
             <h2
               id="jobs-heading"
-              className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl"
+              className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl"
             >
               {
                 copy.title
               }
             </h2>
 
-            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+            <p className="mt-4 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
               {
                 copy.description
               }
@@ -223,7 +183,7 @@ export default async function JobsSection() {
 
         {homepageGuides.length >
         0 ? (
-          <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-2">
             {homepageGuides.map(
               (
                 guide,
@@ -255,33 +215,6 @@ export default async function JobsSection() {
             </p>
           </div>
         )}
-
-        <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] backdrop-blur-xl">
-          <div className="grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-            {copy.stats.map(
-              (stat) => (
-                <div
-                  key={
-                    stat.label
-                  }
-                  className="px-8 py-7"
-                >
-                  <div className="text-3xl font-semibold tracking-[-0.04em] text-white">
-                    {
-                      stat.value
-                    }
-                  </div>
-
-                  <p className="mt-2 text-sm text-slate-400">
-                    {
-                      stat.label
-                    }
-                  </p>
-                </div>
-              ),
-            )}
-          </div>
-        </div>
 
         <div className="mt-8 flex justify-center lg:hidden">
           <Link
