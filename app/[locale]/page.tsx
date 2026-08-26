@@ -12,6 +12,10 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "Vatandoshlar.de – Plattform für Usbeken in Deutschland"
     : "Vatandoshlar.de – Germaniyadagi o‘zbekistonliklar platformasi";
 
+  const socialTitle = isGerman
+    ? "Plattform für Usbeken in Deutschland"
+    : "Germaniyadagi o‘zbekistonliklar platformasi";
+
   const description = isGerman
     ? "Nachrichten, Services, Jobs, Fachkräfte, Ratgeber, Telegram-Communitys und Veranstaltungen für Usbeken in Deutschland."
     : "Germaniyadagi o‘zbekistonliklar uchun yangiliklar, xizmatlar, ish, mutaxassislar, qo‘llanmalar, Telegram hamjamiyatlari va tadbirlar.";
@@ -32,9 +36,14 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: isGerman ? "de_DE" : "uz_UZ",
       siteName: "Vatandoshlar.de",
-      title,
+      title: socialTitle,
       description,
       url: `/${locale}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: socialTitle,
+      description,
     },
   };
 }
