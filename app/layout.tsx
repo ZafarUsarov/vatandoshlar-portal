@@ -46,23 +46,27 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/images/brand/favicon-vatandoshlar.png",
+        url: "/images/brand/favicon-32x32.png",
+        sizes: "32x32",
         type: "image/png",
       },
       {
-        url: "/images/brand/vatandoshlar-icon.png",
+        url: "/images/brand/favicon-48x48.png",
+        sizes: "48x48",
         type: "image/png",
       },
     ],
     shortcut: [
       {
-        url: "/images/brand/favicon-vatandoshlar.png",
+        url: "/images/brand/favicon-32x32.png",
+        sizes: "32x32",
         type: "image/png",
       },
     ],
     apple: [
       {
-        url: "/images/brand/vatandoshlar-icon.png",
+        url: "/images/brand/apple-touch-icon.png",
+        sizes: "180x180",
         type: "image/png",
       },
     ],

@@ -12,14 +12,16 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#059669",
     icons: [
       {
-        src: "/images/brand/favicon-vatandoshlar.png",
-        sizes: "any",
+        src: "/images/brand/icon-192x192.png",
+        sizes: "192x192",
         type: "image/png",
+        purpose: "any",
       },
       {
-        src: "/images/brand/vatandoshlar-icon.png",
-        sizes: "any",
+        src: "/images/brand/icon-512x512.png",
+        sizes: "512x512",
         type: "image/png",
+        purpose: "any",
       },
     ],
   };
