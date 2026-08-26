@@ -246,6 +246,26 @@ const commandDefinitions: CommandDefinition[] = [
   },
 ];
 
+const MOBILE_SEARCH_QUERY = "(max-width: 639px)";
+
+function subscribeToMobileSearchViewport(onStoreChange: () => void) {
+  const mediaQuery = window.matchMedia(MOBILE_SEARCH_QUERY);
+
+  mediaQuery.addEventListener("change", onStoreChange);
+
+  return () => {
+    mediaQuery.removeEventListener("change", onStoreChange);
+  };
+}
+
+function getMobileSearchViewportSnapshot() {
+  return window.matchMedia(MOBILE_SEARCH_QUERY).matches;
+}
+
+function getMobileSearchViewportServerSnapshot() {
+  return false;
+}
+
 function normalizeText(value: string, locale: string) {
   return value
     .toLocaleLowerCase(locale)
@@ -567,6 +587,11 @@ export default function CommandPalette() {
     () => true,
     () => false,
   );
+  const isMobileSearchViewport = useSyncExternalStore(
+    subscribeToMobileSearchViewport,
+    getMobileSearchViewportSnapshot,
+    getMobileSearchViewportServerSnapshot,
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -593,6 +618,11 @@ export default function CommandPalette() {
 
   const closeLabel =
     locale === "de" ? "Suche schließen" : "Qidiruvni yopish";
+  const searchPlaceholder = isMobileSearchViewport
+    ? locale === "de"
+      ? "Seite oder Dienst suchen..."
+      : "Sahifa yoki xizmatni qidiring..."
+    : t("placeholder");
 
   const filteredCommands = useMemo(() => {
     const normalizedQuery = normalizeText(query, locale);
@@ -872,8 +902,8 @@ export default function CommandPalette() {
               }
             `}</style>
 
-            <div className="border-b border-slate-200 px-4 py-4 dark:border-slate-800 sm:px-5">
-              <div className="flex min-h-14 items-center gap-3 rounded-full border border-slate-200 bg-slate-50/80 px-4 transition focus-within:border-emerald-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950/60 dark:focus-within:border-emerald-500 dark:focus-within:bg-slate-950 dark:focus-within:ring-emerald-400/15">
+            <div className="w-full min-w-0 border-b border-slate-200 px-3 py-4 dark:border-slate-800 sm:px-5">
+              <div className="flex w-full min-w-0 min-h-14 items-center gap-2 rounded-full border border-slate-200 bg-slate-50/80 px-3 transition focus-within:border-emerald-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-500/20 sm:gap-3 sm:px-4 dark:border-slate-700 dark:bg-slate-950/60 dark:focus-within:border-emerald-500 dark:focus-within:bg-slate-950 dark:focus-within:ring-emerald-400/15">
                 <span className="shrink-0 text-slate-400">
                   <SearchIcon className="h-5 w-5 sm:h-6 sm:w-6" />
                 </span>
@@ -888,10 +918,10 @@ export default function CommandPalette() {
                     setSelectedIndex(0);
                   }}
                   onKeyDown={handleInputKeyDown}
-                  placeholder={t("placeholder")}
+                  placeholder={searchPlaceholder}
                   autoComplete="off"
                   spellCheck={false}
-                  className="h-14 min-w-0 flex-1 appearance-none border-0 bg-transparent p-0 text-base font-medium text-slate-950 outline-none placeholder:text-slate-400 ring-0 shadow-none sm:text-lg dark:text-white [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
+                  className="h-14 w-full min-w-0 flex-1 box-border appearance-none border-0 bg-transparent p-0 text-sm font-medium text-slate-950 outline-none placeholder:text-slate-400 ring-0 shadow-none sm:text-lg dark:text-white [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
                   aria-label={t("accessibility.searchInput")}
                   aria-controls="command-palette-results"
                   aria-activedescendant={
@@ -1023,7 +1053,7 @@ export default function CommandPalette() {
                           </span>
                         </span>
 
-                        <span className="mt-1 block truncate text-sm text-slate-500 dark:text-slate-400">
+                        <span className="mt-1 block line-clamp-2 text-sm leading-5 text-slate-500 sm:line-clamp-1 dark:text-slate-400">
                           {command.description}
                         </span>
                       </span>
