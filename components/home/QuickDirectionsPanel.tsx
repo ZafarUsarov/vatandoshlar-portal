@@ -2,7 +2,6 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { Link } from "../../i18n/navigation";
-import BrandName from "@/components/ui/BrandName";
 
 export type QuickDirectionItem = Readonly<{
   title: string;
@@ -56,7 +55,8 @@ export default function QuickDirectionsPanel({
         <div className="flex items-center justify-between border-b border-white/10 pb-4 sm:pb-5">
           <div>
             <p className="text-sm font-semibold">
-              <BrandName />
+              <span className="text-white">Vatandoshlar</span>
+              <span className="text-emerald-400">.de</span>
             </p>
 
             <h2 className="mt-1 text-xl font-bold">{title}</h2>

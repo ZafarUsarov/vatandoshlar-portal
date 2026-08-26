@@ -295,6 +295,24 @@ function SearchIcon({
   );
 }
 
+function CloseIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M7 7l10 10M17 7 7 17"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 function ArrowRightIcon() {
   return (
     <svg
@@ -488,6 +506,9 @@ export default function CommandPalette() {
     t("popularSearches.ausbildung"),
     t("popularSearches.internship"),
   ];
+
+  const closeLabel =
+    locale === "de" ? "Suche schließen" : "Qidiruvni yopish";
 
   const filteredCommands = useMemo(() => {
     const normalizedQuery = normalizeText(query, locale);
@@ -710,7 +731,7 @@ export default function CommandPalette() {
         >
           <motion.button
             type="button"
-            aria-label={t("accessibility.closeDialog")}
+            aria-label={closeLabel}
             className="absolute inset-0 cursor-default bg-slate-950/65 backdrop-blur-md"
             onClick={closePalette}
             initial={prefersReducedMotion ? false : { opacity: 0 }}
@@ -753,41 +774,44 @@ export default function CommandPalette() {
 
             <div className="h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
 
-            <div className="flex items-center gap-3 border-b border-slate-200 px-5 dark:border-slate-800">
-              <span className="shrink-0 text-slate-400">
-                <SearchIcon className="h-6 w-6" />
-              </span>
+            <div className="border-b border-slate-200 px-4 py-4 dark:border-slate-800 sm:px-5">
+              <div className="flex min-h-14 items-center gap-3 rounded-full border border-slate-200 bg-slate-50/80 px-4 transition focus-within:border-emerald-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950/60 dark:focus-within:border-emerald-500 dark:focus-within:bg-slate-950 dark:focus-within:ring-emerald-400/15">
+                <span className="shrink-0 text-slate-400">
+                  <SearchIcon className="h-5 w-5 sm:h-6 sm:w-6" />
+                </span>
 
-              <input
-                ref={inputRef}
-                type="search"
-                value={query}
-                onChange={(event) => {
-                  setQuery(event.target.value);
-                  setSelectedIndex(0);
-                }}
-                onKeyDown={handleInputKeyDown}
-                placeholder={t("placeholder")}
-                autoComplete="off"
-                spellCheck={false}
-                className="h-20 min-w-0 flex-1 bg-transparent text-base font-medium text-slate-950 outline-none placeholder:text-slate-400 sm:text-lg dark:text-white"
-                aria-label={t("accessibility.searchInput")}
-                aria-controls="command-palette-results"
-                aria-activedescendant={
-                  filteredCommands[selectedIndex]
-                    ? `command-${filteredCommands[selectedIndex].key}`
-                    : undefined
-                }
-              />
+                <input
+                  ref={inputRef}
+                  type="search"
+                  value={query}
+                  onChange={(event) => {
+                    setQuery(event.target.value);
+                    setSelectedIndex(0);
+                  }}
+                  onKeyDown={handleInputKeyDown}
+                  placeholder={t("placeholder")}
+                  autoComplete="off"
+                  spellCheck={false}
+                  className="h-14 min-w-0 flex-1 appearance-none bg-transparent text-base font-medium text-slate-950 outline-none placeholder:text-slate-400 sm:text-lg dark:text-white [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
+                  aria-label={t("accessibility.searchInput")}
+                  aria-controls="command-palette-results"
+                  aria-activedescendant={
+                    filteredCommands[selectedIndex]
+                      ? `command-${filteredCommands[selectedIndex].key}`
+                      : undefined
+                  }
+                />
 
-              <button
-                type="button"
-                onClick={closePalette}
-                aria-label={t("accessibility.closeDialog")}
-                className="shrink-0 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 font-mono text-xs font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white"
-              >
-                ESC
-              </button>
+                <button
+                  type="button"
+                  onClick={closePalette}
+                  aria-label={closeLabel}
+                  title={closeLabel}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-200/70 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:hover:bg-slate-800 dark:hover:text-white dark:focus-visible:ring-offset-slate-950"
+                >
+                  <CloseIcon />
+                </button>
+              </div>
             </div>
 
             {!query && (
