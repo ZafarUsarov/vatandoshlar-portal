@@ -30,6 +30,9 @@ type CommandIconName =
   | "home"
   | "news"
   | "service"
+  | "translation"
+  | "legal"
+  | "tax"
   | "job"
   | "telegram"
   | "event";
@@ -113,7 +116,7 @@ const commandDefinitions: CommandDefinition[] = [
     key: "translationServices",
     href: "/services/qasamyod-qilgan-tarjimonlar",
     category: "services",
-    icon: "service",
+    icon: "translation",
     keywords: [
       "tarjimon",
       "tarjima",
@@ -132,7 +135,7 @@ const commandDefinitions: CommandDefinition[] = [
     key: "legalServices",
     href: "/services/yuridik-yordam-va-huquqiy-xizmatlar",
     category: "services",
-    icon: "service",
+    icon: "legal",
     keywords: [
       "huquq",
       "yuridik",
@@ -149,7 +152,7 @@ const commandDefinitions: CommandDefinition[] = [
     key: "taxServices",
     href: "/services/soliq-maslahatchisini-topish",
     category: "services",
-    icon: "service",
+    icon: "tax",
     keywords: [
       "soliq",
       "steuer",
@@ -403,7 +406,56 @@ function CommandIcon({
       return (
         <svg {...commonProps}>
           <path
-            d="M14.25 6.25a4.5 4.5 0 0 0-5.9 5.9L3.5 17a2.12 2.12 0 0 0 3 3l4.85-4.85a4.5 4.5 0 0 0 5.9-5.9l-2.6 2.6-2.5-.5-.5-2.5 2.6-2.6Z"
+            d="M12 3.75 19 6.3v5.15c0 4.35-2.7 7.65-7 9.05-4.3-1.4-7-4.7-7-9.05V6.3L12 3.75Z"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="m8.75 11.9 2.1 2.1 4.5-4.55"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+
+    case "translation":
+      return (
+        <svg {...commonProps}>
+          <path
+            d="M4 5.5h8M8 3.5v2M5.25 8.25c1.5 2.7 3.85 4.9 6.75 6.15"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M11.25 8.25c-1.15 2.15-2.85 4.05-5.15 5.55M14.25 19.5l3.1-8 3.15 8M15.4 16.5h4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+
+    case "legal":
+      return (
+        <svg {...commonProps}>
+          <path
+            d="M12 4v16M6.5 7h11M8 7 4.75 13h6.5L8 7Zm8 0-3.25 6h6.5L16 7Z"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M4.75 13c.35 1.65 1.45 2.5 3.25 2.5s2.9-.85 3.25-2.5M12.75 13c.35 1.65 1.45 2.5 3.25 2.5s2.9-.85 3.25-2.5M8.5 20h7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+
+    case "tax":
+      return (
+        <svg {...commonProps}>
+          <circle cx="12" cy="12" r="8.5" />
+          <path
+            d="M14.75 8.25c-.6-.55-1.35-.85-2.25-.85-1.75 0-3 1.15-3.4 2.85h4.55M9.1 13.1h4.2c-.45 1.6-1.65 2.65-3.3 2.65-.8 0-1.55-.25-2.15-.75"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
@@ -451,6 +503,38 @@ function CommandIcon({
         </svg>
       );
   }
+}
+
+function getCommandIconStyles(
+  icon: CommandIconName,
+  isSelected: boolean,
+) {
+  const styles: Record<CommandIconName, string> = {
+    home:
+      "border-emerald-600 bg-emerald-600 text-white shadow-md shadow-emerald-600/20 dark:border-emerald-500 dark:bg-emerald-500 dark:text-slate-950",
+    news:
+      "border-blue-200 bg-blue-50 text-blue-600 dark:border-blue-500/25 dark:bg-blue-500/15 dark:text-blue-300",
+    service:
+      "border-emerald-200 bg-emerald-50 text-emerald-600 dark:border-emerald-500/25 dark:bg-emerald-500/15 dark:text-emerald-300",
+    translation:
+      "border-sky-200 bg-sky-50 text-sky-600 dark:border-sky-500/25 dark:bg-sky-500/15 dark:text-sky-300",
+    legal:
+      "border-violet-200 bg-violet-50 text-violet-600 dark:border-violet-500/25 dark:bg-violet-500/15 dark:text-violet-300",
+    tax:
+      "border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-500/25 dark:bg-orange-500/15 dark:text-orange-300",
+    job:
+      "border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-500/25 dark:bg-orange-500/15 dark:text-orange-300",
+    telegram:
+      "border-sky-200 bg-sky-50 text-sky-500 dark:border-sky-500/25 dark:bg-sky-500/15 dark:text-sky-300",
+    event:
+      "border-rose-200 bg-rose-50 text-rose-600 dark:border-rose-500/25 dark:bg-rose-500/15 dark:text-rose-300",
+  };
+
+  return `${styles[icon]} ${
+    isSelected
+      ? "scale-[1.03]"
+      : "group-hover:scale-[1.03]"
+  }`;
 }
 
 function getCategoryStyles(category: CommandCategory) {
@@ -774,6 +858,20 @@ export default function CommandPalette() {
 
             <div className="h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
 
+            <style>{`
+              #command-palette-search-input,
+              #command-palette-search-input:focus,
+              #command-palette-search-input:focus-visible {
+                border: 0 !important;
+                outline: 0 !important;
+                outline-offset: 0 !important;
+                box-shadow: none !important;
+                -webkit-box-shadow: none !important;
+                -webkit-appearance: none;
+                appearance: none;
+              }
+            `}</style>
+
             <div className="border-b border-slate-200 px-4 py-4 dark:border-slate-800 sm:px-5">
               <div className="flex min-h-14 items-center gap-3 rounded-full border border-slate-200 bg-slate-50/80 px-4 transition focus-within:border-emerald-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950/60 dark:focus-within:border-emerald-500 dark:focus-within:bg-slate-950 dark:focus-within:ring-emerald-400/15">
                 <span className="shrink-0 text-slate-400">
@@ -781,6 +879,7 @@ export default function CommandPalette() {
                 </span>
 
                 <input
+                  id="command-palette-search-input"
                   ref={inputRef}
                   type="search"
                   value={query}
@@ -792,7 +891,7 @@ export default function CommandPalette() {
                   placeholder={t("placeholder")}
                   autoComplete="off"
                   spellCheck={false}
-                  className="h-14 min-w-0 flex-1 appearance-none bg-transparent text-base font-medium text-slate-950 outline-none placeholder:text-slate-400 sm:text-lg dark:text-white [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
+                  className="h-14 min-w-0 flex-1 appearance-none border-0 bg-transparent p-0 text-base font-medium text-slate-950 outline-none placeholder:text-slate-400 ring-0 shadow-none sm:text-lg dark:text-white [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
                   aria-label={t("accessibility.searchInput")}
                   aria-controls="command-palette-results"
                   aria-activedescendant={
@@ -901,11 +1000,10 @@ export default function CommandPalette() {
                       }`}
                     >
                       <span
-                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition ${
-                          isSelected
-                            ? "bg-emerald-600 text-white shadow-lg shadow-emerald-600/20"
-                            : "bg-slate-100 text-slate-500 group-hover:text-emerald-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:text-emerald-400"
-                        }`}
+                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition duration-200 ${getCommandIconStyles(
+                          command.icon,
+                          isSelected,
+                        )}`}
                       >
                         <CommandIcon icon={command.icon} />
                       </span>
