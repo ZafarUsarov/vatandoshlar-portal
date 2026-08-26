@@ -39,19 +39,19 @@ const outputs = {
   ),
   apple180: resolve(
     brandDir,
-    "apple-touch-icon.png",
+    "apple-touch-icon-v2.png",
   ),
   pwa192: resolve(
     brandDir,
-    "icon-192x192.png",
+    "icon-192x192-v2.png",
   ),
   pwa512: resolve(
     brandDir,
-    "icon-512x512.png",
+    "icon-512x512-v2.png",
   ),
   maskable512: resolve(
     brandDir,
-    "icon-maskable-512x512.png",
+    "icon-maskable-512x512-v2.png",
   ),
   ico: resolve(
     root,
@@ -59,37 +59,34 @@ const outputs = {
   ),
 };
 
-const cropSizes = {
-  // Tiny browser favicons need slightly more visual weight
-  // because the geometric mark loses detail at 16–48 px.
-  favicon: 1040,
-
-  // iOS Home Screen / regular PWA icon.
-  // Target: roughly 62% visual footprint of the canvas.
-  // This restores breathing room without returning to the
-  // original undersized appearance.
-  app: 1080,
-
-  // Maskable icons require a larger safe area because
-  // operating systems may crop them into different shapes.
-  maskable: 1254,
+/**
+ * Visual-balance targets:
+ *
+ * - favicon: intentionally denser for legibility at 16–48 px
+ * - app: ~64% visual occupancy on a pure-white square canvas
+ * - maskable: slightly safer (~61%) for platform masks
+ *
+ * The source logo itself is never distorted or redesigned.
+ */
+const canvasSizes = {
+  favicon: 1450,
+  app: 1690,
+  maskable: 1760,
 };
 
 function runSips(args) {
-  execFileSync(
-    "sips",
-    args,
-    {
-      stdio: "inherit",
-    },
-  );
+  execFileSync("sips", args, {
+    stdio: "inherit",
+  });
 }
 
-function cropSource(size, output) {
+function padSource(size, output) {
   runSips([
-    "--cropToHeightWidth",
+    "--padToHeightWidth",
     String(size),
     String(size),
+    "--padColor",
+    "FFFFFF",
     source,
     "--out",
     output,
@@ -127,7 +124,8 @@ function writeIco(
 
   const dataOffset =
     headerSize +
-    directoryEntrySize * images.length;
+    directoryEntrySize *
+      images.length;
 
   const totalSize =
     dataOffset +
@@ -139,7 +137,6 @@ function writeIco(
 
   const ico = Buffer.alloc(totalSize);
 
-  // ICONDIR header
   ico.writeUInt16LE(0, 0);
   ico.writeUInt16LE(1, 2);
   ico.writeUInt16LE(
@@ -153,7 +150,8 @@ function writeIco(
     (image, index) => {
       const entryOffset =
         headerSize +
-        index * directoryEntrySize;
+        index *
+          directoryEntrySize;
 
       const dimension =
         image.size >= 256
@@ -164,37 +162,30 @@ function writeIco(
         dimension,
         entryOffset,
       );
-
       ico.writeUInt8(
         dimension,
         entryOffset + 1,
       );
-
       ico.writeUInt8(
         0,
         entryOffset + 2,
       );
-
       ico.writeUInt8(
         0,
         entryOffset + 3,
       );
-
       ico.writeUInt16LE(
         1,
         entryOffset + 4,
       );
-
       ico.writeUInt16LE(
         32,
         entryOffset + 6,
       );
-
       ico.writeUInt32LE(
         image.data.length,
         entryOffset + 8,
       );
-
       ico.writeUInt32LE(
         imageOffset,
         entryOffset + 12,
@@ -223,98 +214,94 @@ function writeIco(
   );
 }
 
-mkdirSync(
-  brandDir,
-  {
-    recursive: true,
-  },
-);
+mkdirSync(brandDir, {
+  recursive: true,
+});
 
-mkdirSync(
+mkdirSync(tempDir, {
+  recursive: true,
+});
+
+const faviconCanvas = resolve(
   tempDir,
-  {
-    recursive: true,
-  },
+  "favicon-canvas.png",
 );
 
-const faviconCrop = resolve(
+const appCanvas = resolve(
   tempDir,
-  "favicon-crop.png",
+  "app-canvas.png",
 );
 
-const appCrop = resolve(
+const maskableCanvas = resolve(
   tempDir,
-  "app-crop.png",
+  "maskable-canvas.png",
 );
 
-const maskableCrop = resolve(
-  tempDir,
-  "maskable-crop.png",
+// Pure-white canvases with optical breathing room.
+// No border, gradient, shadow or extra rounded panel is added.
+padSource(
+  canvasSizes.favicon,
+  faviconCanvas,
 );
 
-// Source logodan uch xil optik crop.
-cropSource(
-  cropSizes.favicon,
-  faviconCrop,
+padSource(
+  canvasSizes.app,
+  appCanvas,
 );
 
-cropSource(
-  cropSizes.app,
-  appCrop,
+padSource(
+  canvasSizes.maskable,
+  maskableCanvas,
 );
 
-cropSource(
-  cropSizes.maskable,
-  maskableCrop,
-);
-
-// Browser favicons.
+// Browser favicon family.
 resize(
-  faviconCrop,
+  faviconCanvas,
   16,
   outputs.favicon16,
 );
 
 resize(
-  faviconCrop,
+  faviconCanvas,
   32,
   outputs.favicon32,
 );
 
 resize(
-  faviconCrop,
+  faviconCanvas,
   48,
   outputs.favicon48,
 );
 
-// Apple Touch Icon.
+// iOS Home Screen icon (~64% visual occupancy).
 resize(
-  appCrop,
+  appCanvas,
   180,
   outputs.apple180,
 );
 
-// PWA icons.
+// Standard PWA/macOS installed-app icons.
+// They intentionally share the same visual occupancy as iOS.
 resize(
-  appCrop,
+  appCanvas,
   192,
   outputs.pwa192,
 );
 
 resize(
-  appCrop,
+  appCanvas,
   512,
   outputs.pwa512,
 );
 
-// Maskable PWA icon.
+// Maskable icon gets a slightly larger safe area.
 resize(
-  maskableCrop,
+  maskableCanvas,
   512,
   outputs.maskable512,
 );
 
-// Multi-size favicon.ico.
+// Multi-resolution favicon.ico.
 writeIco(
   [
     {
@@ -333,14 +320,10 @@ writeIco(
   outputs.ico,
 );
 
-// Temporary crop fayllarini tozalash.
-rmSync(
-  tempDir,
-  {
-    recursive: true,
-    force: true,
-  },
-);
+rmSync(tempDir, {
+  recursive: true,
+  force: true,
+});
 
 console.log(
   "\nVatandoshlar.de app icons generated successfully:",
