@@ -7,8 +7,11 @@ import StructuredData from "../components/seo/StructuredData";
 
 import "./globals.css";
 
+const SITE_URL = "https://vatandoshlar.de";
+const SOCIAL_PREVIEW_IMAGE_URL = `${SITE_URL}/api/social-preview`;
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vatandoshlar.de"),
+  metadataBase: new URL(SITE_URL),
 
   title: {
     default: "Vatandoshlar.de",
@@ -38,10 +41,28 @@ export const metadata: Metadata = {
   creator: "Vatandoshlar.de",
   publisher: "Vatandoshlar.de",
 
+  manifest: "/manifest.webmanifest",
+
   icons: {
     icon: [
       {
         url: "/images/brand/favicon-vatandoshlar.png",
+        type: "image/png",
+      },
+      {
+        url: "/images/brand/vatandoshlar-icon.png",
+        type: "image/png",
+      },
+    ],
+    shortcut: [
+      {
+        url: "/images/brand/favicon-vatandoshlar.png",
+        type: "image/png",
+      },
+    ],
+    apple: [
+      {
+        url: "/images/brand/vatandoshlar-icon.png",
         type: "image/png",
       },
     ],
@@ -53,6 +74,23 @@ export const metadata: Metadata = {
     title: "Vatandoshlar.de",
     description:
       "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma.",
+    images: [
+      {
+        url: SOCIAL_PREVIEW_IMAGE_URL,
+        width: 1200,
+        height: 630,
+        alt: "Vatandoshlar.de",
+        type: "image/png",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Vatandoshlar.de",
+    description:
+      "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma.",
+    images: [SOCIAL_PREVIEW_IMAGE_URL],
   },
 
   robots: {
