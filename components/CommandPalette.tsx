@@ -17,7 +17,17 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
-import { useRouter } from "../i18n/navigation";
+import { useRouter } from "next/navigation";
+
+import HighlightedText from "./search/HighlightedText";
+import type {
+  SearchCategory,
+  SearchLocale,
+} from "../data/searchIndex";
+import { getSearchCategoryLabel } from "../lib/search/search-category";
+import { useSearch } from "../hooks/useSearch";
+import type { SearchResult } from "../lib/search/search-types";
+import { normalizeSearchText } from "../lib/search/search-normalization";
 
 type CommandCategory =
   | "main"
@@ -30,6 +40,8 @@ type CommandIconName =
   | "home"
   | "news"
   | "service"
+  | "specialist"
+  | "guide"
   | "translation"
   | "legal"
   | "tax"
@@ -59,9 +71,21 @@ type CommandDefinition = {
 };
 
 type LocalizedCommand = CommandDefinition & {
+  id: string;
   title: string;
   description: string;
+  resultCategory: SearchCategory;
 };
+
+type PaletteItem = Readonly<{
+  id: string;
+  title: string;
+  description: string;
+  href: string;
+  category: SearchCategory;
+  badge?: string;
+  icon: CommandIconName;
+}>;
 
 const commandDefinitions: CommandDefinition[] = [
   {
@@ -266,11 +290,8 @@ function getMobileSearchViewportServerSnapshot() {
   return false;
 }
 
-function normalizeText(value: string, locale: string) {
-  return value
-    .toLocaleLowerCase(locale)
-    .replace(/[‘’ʼ`]/g, "'")
-    .trim();
+function normalizeText(value: string, locale: SearchLocale) {
+  return normalizeSearchText(value, locale);
 }
 
 function readRecentSearches(storageKey: string): string[] {
@@ -438,6 +459,34 @@ function CommandIcon({
         </svg>
       );
 
+    case "specialist":
+      return (
+        <svg {...commonProps}>
+          <circle cx="9" cy="8" r="3" />
+          <circle cx="16.5" cy="9.5" r="2.5" />
+          <path
+            d="M3.75 19c.35-3.4 2.45-5.25 5.25-5.25S13.9 15.6 14.25 19M14 14.4c2.75-.3 5.45 1.35 5.9 4.6"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+
+    case "guide":
+      return (
+        <svg {...commonProps}>
+          <path
+            d="M5 4.75h5.25A2.75 2.75 0 0 1 13 7.5v11.75H7A2 2 0 0 1 5 17.25V4.75Z"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M19 4.75h-3.25A2.75 2.75 0 0 0 13 7.5v11.75h4A2 2 0 0 0 19 17.25V4.75Z"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+
     case "translation":
       return (
         <svg {...commonProps}>
@@ -536,6 +585,10 @@ function getCommandIconStyles(
       "border-blue-200 bg-blue-50 text-blue-600 dark:border-blue-500/25 dark:bg-blue-500/15 dark:text-blue-300",
     service:
       "border-emerald-200 bg-emerald-50 text-emerald-600 dark:border-emerald-500/25 dark:bg-emerald-500/15 dark:text-emerald-300",
+    specialist:
+      "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-600 dark:border-fuchsia-500/25 dark:bg-fuchsia-500/15 dark:text-fuchsia-300",
+    guide:
+      "border-emerald-200 bg-emerald-50 text-emerald-600 dark:border-emerald-500/25 dark:bg-emerald-500/15 dark:text-emerald-300",
     translation:
       "border-sky-200 bg-sky-50 text-sky-600 dark:border-sky-500/25 dark:bg-sky-500/15 dark:text-sky-300",
     legal:
@@ -557,24 +610,69 @@ function getCommandIconStyles(
   }`;
 }
 
-function getCategoryStyles(category: CommandCategory) {
+function getCategoryStyles(category: SearchCategory) {
   switch (category) {
-    case "news":
+    case "Yangilik":
       return "bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-300";
-    case "services":
+    case "Xizmat":
       return "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300";
-    case "jobs":
+    case "Mutaxassis":
+      return "bg-fuchsia-50 text-fuchsia-700 dark:bg-fuchsia-500/10 dark:text-fuchsia-300";
+    case "Ish":
       return "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300";
-    case "community":
+    case "Ish platformasi":
+      return "bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300";
+    case "Telegram":
       return "bg-cyan-50 text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300";
-    case "main":
+    case "Tadbir":
+      return "bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-300";
+    case "Qo‘llanma":
+      return "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300";
+    case "Sahifa":
+    default:
       return "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300";
+  }
+}
+
+function getQuickCategory(command: CommandDefinition): SearchCategory {
+  if (command.key === "events") return "Tadbir";
+  if (command.key === "telegram") return "Telegram";
+
+  switch (command.category) {
+    case "news": return "Yangilik";
+    case "services": return "Xizmat";
+    case "jobs": return "Ish";
+    default: return "Sahifa";
+  }
+}
+
+function getResultIcon(item: SearchResult, locale: SearchLocale): CommandIconName {
+  switch (item.category) {
+    case "Yangilik": return "news";
+    case "Mutaxassis": return "specialist";
+    case "Ish":
+    case "Ish platformasi": return "job";
+    case "Telegram": return "telegram";
+    case "Tadbir": return "event";
+    case "Qo‘llanma": return "guide";
+    case "Xizmat": {
+      const value = normalizeSearchText(
+        `${item.title} ${item.badge ?? ""} ${item.description}`,
+        locale,
+      );
+      if (value.includes("tarjim") || value.includes("übersetz") || value.includes("dolmetsch")) return "translation";
+      if (value.includes("huquq") || value.includes("yuridik") || value.includes("recht") || value.includes("anwalt")) return "legal";
+      if (value.includes("soliq") || value.includes("steuer") || value.includes("finanz")) return "tax";
+      return "service";
+    }
+    default: return "home";
   }
 }
 
 export default function CommandPalette() {
   const t = useTranslations("CommandPalette");
-  const locale = useLocale();
+  const currentLocale = useLocale();
+  const locale: SearchLocale = currentLocale === "de" ? "de" : "uz";
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -601,10 +699,13 @@ export default function CommandPalette() {
     () =>
       commandDefinitions.map((command) => ({
         ...command,
+        id: `quick-${command.key}`,
+        href: `/${locale}${command.href === "/" ? "" : command.href}`,
         title: t(`commands.${command.key}.title`),
         description: t(`commands.${command.key}.description`),
+        resultCategory: getQuickCategory(command),
       })),
-    [t],
+    [locale, t],
   );
 
   const popularSearches = [
@@ -624,27 +725,37 @@ export default function CommandPalette() {
       : "Sahifa yoki xizmatni qidiring..."
     : t("placeholder");
 
-  const filteredCommands = useMemo(() => {
-    const normalizedQuery = normalizeText(query, locale);
+  const hasQuery = query.trim().length > 0;
+  const {
+    results: searchResults,
+    total: searchTotal,
+    isLoading,
+    isError,
+  } = useSearch({
+    query,
+    locale,
+    limit: 10,
+    debounceMs: 220,
+  });
 
-    if (!normalizedQuery) {
-      return commands;
+  const filteredCommands = useMemo<ReadonlyArray<PaletteItem>>(() => {
+    if (!hasQuery) {
+      return commands.map((command) => ({
+        id: command.id,
+        title: command.title,
+        description: command.description,
+        href: command.href,
+        category: command.resultCategory,
+        badge: getSearchCategoryLabel(command.resultCategory, locale),
+        icon: command.icon,
+      }));
     }
 
-    return commands.filter((command) => {
-      const searchableText = normalizeText(
-        [
-          command.title,
-          command.description,
-          t(`categories.${command.category}`),
-          ...command.keywords,
-        ].join(" "),
-        locale,
-      );
-
-      return searchableText.includes(normalizedQuery);
-    });
-  }, [commands, locale, query, t]);
+    return searchResults.map((item) => ({
+      ...item,
+      icon: getResultIcon(item, locale),
+    }));
+  }, [commands, hasQuery, locale, searchResults]);
 
   const openPalette = useCallback(() => {
     setRecentSearches(readRecentSearches(storageKey));
@@ -688,7 +799,7 @@ export default function CommandPalette() {
   );
 
   const selectCommand = useCallback(
-    (command: LocalizedCommand) => {
+    (command: PaletteItem) => {
       saveRecentSearch(query || command.title);
       closePalette();
       router.push(command.href);
@@ -926,7 +1037,7 @@ export default function CommandPalette() {
                   aria-controls="command-palette-results"
                   aria-activedescendant={
                     filteredCommands[selectedIndex]
-                      ? `command-${filteredCommands[selectedIndex].key}`
+                      ? `command-${filteredCommands[selectedIndex].id}`
                       : undefined
                   }
                 />
@@ -1009,14 +1120,33 @@ export default function CommandPalette() {
               aria-label={t("accessibility.results")}
               className="max-h-[min(60vh,32rem)] overflow-y-auto p-2"
             >
-              {filteredCommands.length > 0 ? (
+              {hasQuery && isLoading ? (
+                <div className="px-6 py-14 text-center" role="status" aria-live="polite">
+                  <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-slate-200 border-t-emerald-600 dark:border-slate-700 dark:border-t-emerald-400" />
+                  <p className="mt-4 text-sm font-semibold text-slate-500 dark:text-slate-400">
+                    {locale === "de" ? "Suche läuft…" : "Qidirilmoqda…"}
+                  </p>
+                </div>
+              ) : hasQuery && isError ? (
+                <div className="px-6 py-14 text-center" role="alert">
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-50 text-rose-500 dark:bg-rose-500/10 dark:text-rose-300">
+                    <SearchIcon className="h-7 w-7" />
+                  </div>
+                  <h3 className="mt-5 text-xl font-bold text-slate-950 dark:text-white">
+                    {locale === "de" ? "Suche derzeit nicht verfügbar" : "Qidiruv vaqtincha ishlamayapti"}
+                  </h3>
+                  <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500 dark:text-slate-400">
+                    {locale === "de" ? "Bitte versuchen Sie es gleich noch einmal." : "Iltimos, birozdan keyin qayta urinib ko‘ring."}
+                  </p>
+                </div>
+              ) : filteredCommands.length > 0 ? (
                 filteredCommands.map((command, index) => {
                   const isSelected = selectedIndex === index;
 
                   return (
                     <button
-                      key={command.key}
-                      id={`command-${command.key}`}
+                      key={command.id}
+                      id={`command-${command.id}`}
                       type="button"
                       role="option"
                       aria-selected={isSelected}
@@ -1041,7 +1171,11 @@ export default function CommandPalette() {
                       <span className="min-w-0 flex-1">
                         <span className="flex flex-wrap items-center gap-2">
                           <span className="font-bold text-slate-950 dark:text-white">
-                            {command.title}
+                            <HighlightedText
+                              text={command.title}
+                              query={query}
+                              locale={locale}
+                            />
                           </span>
 
                           <span
@@ -1049,12 +1183,17 @@ export default function CommandPalette() {
                               command.category,
                             )}`}
                           >
-                            {t(`categories.${command.category}`)}
+                            {command.badge ??
+                              getSearchCategoryLabel(command.category, locale)}
                           </span>
                         </span>
 
-                        <span className="mt-1 block line-clamp-2 text-sm leading-5 text-slate-500 sm:line-clamp-1 dark:text-slate-400">
-                          {command.description}
+                        <span className="mt-1 block text-sm leading-5 text-slate-500 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] overflow-hidden sm:leading-6 dark:text-slate-400">
+                          <HighlightedText
+                            text={command.description}
+                            query={query}
+                            locale={locale}
+                          />
                         </span>
                       </span>
 
@@ -1120,7 +1259,7 @@ export default function CommandPalette() {
 
               <span>
                 {t("resultCount", {
-                  count: filteredCommands.length,
+                  count: hasQuery ? searchTotal : filteredCommands.length,
                 })}
               </span>
             </div>

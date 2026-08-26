@@ -5,19 +5,15 @@ import {
   useLocale,
   useTranslations,
 } from "next-intl";
-import {
-  useMemo,
-  useState,
-} from "react";
+import { useState } from "react";
 
-import {
-  getSearchCategoryLabel,
-  searchGlobalItems,
-  type GlobalSearchItem,
-  type SearchCategory,
-  type SearchLocale,
+import HighlightedText from "./search/HighlightedText";
+import type {
+  SearchCategory,
+  SearchLocale,
 } from "../data/searchIndex";
-import { useGuideSearchItems } from "../hooks/useGuideSearchItems";
+import { getSearchCategoryLabel } from "../lib/search/search-category";
+import { useSearch } from "../hooks/useSearch";
 
 type SearchFilter =
   | "Barchasi"
@@ -126,11 +122,6 @@ export default function SearchSection() {
       ? "de"
       : "uz";
 
-  const guideSearchItems =
-    useGuideSearchItems(
-      locale,
-    );
-
   const [
     searchQuery,
     setSearchQuery,
@@ -145,34 +136,26 @@ export default function SearchSection() {
       "Barchasi",
     );
 
-  const filteredItems =
-    useMemo<
-      ReadonlyArray<GlobalSearchItem>
-    >(() => {
-      const category =
-        activeCategory ===
-        "Barchasi"
-          ? undefined
-          : activeCategory;
+  const category =
+    activeCategory === "Barchasi"
+      ? undefined
+      : activeCategory;
 
-      return searchGlobalItems(
-        searchQuery,
-        locale,
-        category,
-        guideSearchItems,
-      );
-    }, [
-      activeCategory,
-      guideSearchItems,
-      locale,
-      searchQuery,
-    ]);
+  const {
+    results: filteredItems,
+    total,
+    isLoading,
+    isError,
+  } = useSearch({
+    query: searchQuery,
+    locale,
+    category,
+    limit: 50,
+    debounceMs: 220,
+  });
 
   const showResults =
-    searchQuery.trim().length >
-      0 ||
-    activeCategory !==
-      "Barchasi";
+    searchQuery.trim().length > 0;
 
   const previewItems = [
     {
@@ -346,8 +329,7 @@ export default function SearchSection() {
                     {t(
                       "results.count",
                       {
-                        count:
-                          filteredItems.length,
+                        count: total,
                       },
                     )}
                   </p>
@@ -375,8 +357,28 @@ export default function SearchSection() {
                 )}
               </div>
 
-              {filteredItems.length >
-              0 ? (
+              {isLoading ? (
+                <div className="px-6 py-14 text-center" role="status" aria-live="polite">
+                  <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-slate-200 border-t-emerald-600 dark:border-slate-700 dark:border-t-emerald-400" />
+                  <p className="mt-4 text-sm font-semibold text-slate-500 dark:text-slate-400">
+                    {locale === "de" ? "Suche läuft…" : "Qidirilmoqda…"}
+                  </p>
+                </div>
+              ) : isError ? (
+                <div className="px-6 py-14 text-center" role="alert">
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-50 text-rose-500 dark:bg-rose-500/10 dark:text-rose-300">
+                    <SearchIcon />
+                  </div>
+                  <h3 className="mt-5 text-xl font-bold text-slate-950 dark:text-white">
+                    {locale === "de" ? "Suche derzeit nicht verfügbar" : "Qidiruv vaqtincha ishlamayapti"}
+                  </h3>
+                  <p className="mx-auto mt-3 max-w-md leading-7 text-slate-500 dark:text-slate-400">
+                    {locale === "de"
+                      ? "Bitte versuchen Sie es gleich noch einmal."
+                      : "Iltimos, birozdan keyin qayta urinib ko‘ring."}
+                  </p>
+                </div>
+              ) : filteredItems.length > 0 ? (
                 <div className="divide-y divide-slate-200 dark:divide-slate-800">
                   {filteredItems.map(
                     (item) => (
@@ -392,9 +394,11 @@ export default function SearchSection() {
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-3">
                             <h3 className="text-lg font-bold text-slate-950 dark:text-white">
-                              {
-                                item.title
-                              }
+                              <HighlightedText
+                                text={item.title}
+                                query={searchQuery}
+                                locale={locale}
+                              />
                             </h3>
 
                             <span
@@ -410,9 +414,11 @@ export default function SearchSection() {
                           </div>
 
                           <p className="mt-2 leading-7 text-slate-600 dark:text-slate-400">
-                            {
-                              item.description
-                            }
+                            <HighlightedText
+                              text={item.description}
+                              query={searchQuery}
+                              locale={locale}
+                            />
                           </p>
                         </div>
 

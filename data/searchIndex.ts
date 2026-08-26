@@ -380,7 +380,7 @@ function createLocalizedHref(
   return `/${locale}${path}`;
 }
 
-function getStaticSearchItems(
+export function getStaticSearchItems(
   locale: SearchLocale,
 ): ReadonlyArray<GlobalSearchItem> {
   return staticSearchDefinitions.map((definition) => {
