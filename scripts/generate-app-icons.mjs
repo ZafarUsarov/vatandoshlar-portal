@@ -1,5 +1,4 @@
 import {
-  existsSync,
   mkdirSync,
   readFileSync,
   writeFileSync,
@@ -35,52 +34,59 @@ const outputs = {
     brandDir,
     "favicon-48x48-v2.png",
   ),
-  apple180: resolve(
-    brandDir,
-    "apple-touch-icon-v3.png",
-  ),
-  pwa192: resolve(
-    brandDir,
-    "icon-192x192-v3.png",
-  ),
-  pwa512: resolve(
-    brandDir,
-    "icon-512x512-v3.png",
-  ),
-  maskable512: resolve(
-    brandDir,
-    "icon-maskable-512x512-v3.png",
-  ),
   ico: resolve(
     root,
     "public/favicon-v2.ico",
   ),
+  fallbackIco: resolve(
+    root,
+    "public/favicon.ico",
+  ),
 };
-
-const previousDesktopIcon = resolve(
-  brandDir,
-  "icon-512x512-v2.png",
-);
 
 /**
- * Browser favicon targets.
+ * Browser favicon configuration only.
  *
- * 16px stays at the maximum safe size that still leaves
- * transparent breathing room around the geometric mark.
+ * No Apple Touch / PWA assets are generated here.
  *
- * 32px and 48px use slightly larger optical occupancy.
+ * Important:
+ * - occupancy stays unchanged
+ * - no dilation
+ * - no stroke expansion
+ * - no gap bridging
  *
- * iPhone/PWA values stay independent and are not generated
- * by this script run.
+ * Fine-line readability is improved through proper
+ * subpixel area sampling during rasterization.
  */
-const TARGETS = {
-  favicon16: 0.875,
-  favicon32: 0.91,
-  favicon48: 0.90,
-  iphone: 0.64,
-  desktopFallback: 0.545,
-  maskable: 0.58,
-};
+const FAVICON_CONFIGS = [
+  {
+    size: 16,
+    path: outputs.favicon16,
+    occupancy: 0.875,
+    samplesPerAxis: 8,
+    alphaGamma: 0.84,
+    alphaBlend: 0.42,
+    centerHoleMinArea: 7,
+  },
+  {
+    size: 32,
+    path: outputs.favicon32,
+    occupancy: 0.91,
+    samplesPerAxis: 5,
+    alphaGamma: 0.93,
+    alphaBlend: 0.22,
+    centerHoleMinArea: 24,
+  },
+  {
+    size: 48,
+    path: outputs.favicon48,
+    occupancy: 0.90,
+    samplesPerAxis: 3,
+    alphaGamma: 0.98,
+    alphaBlend: 0.08,
+    centerHoleMinArea: 50,
+  },
+];
 
 const PNG_SIGNATURE = Buffer.from([
   0x89,
@@ -93,6 +99,20 @@ const PNG_SIGNATURE = Buffer.from([
   0x0a,
 ]);
 
+function clamp(
+  value,
+  min,
+  max,
+) {
+  return Math.max(
+    min,
+    Math.min(
+      max,
+      value,
+    ),
+  );
+}
+
 function crc32(buffer) {
   let crc = 0xffffffff;
 
@@ -104,7 +124,8 @@ function crc32(buffer) {
       bit < 8;
       bit += 1
     ) {
-      const mask = -(crc & 1);
+      const mask =
+        -(crc & 1);
 
       crc =
         (crc >>> 1) ^
@@ -122,10 +143,11 @@ function createChunk(
   type,
   data,
 ) {
-  const typeBuffer = Buffer.from(
-    type,
-    "ascii",
-  );
+  const typeBuffer =
+    Buffer.from(
+      type,
+      "ascii",
+    );
 
   const length =
     Buffer.alloc(4);
@@ -157,9 +179,52 @@ function createChunk(
   ]);
 }
 
-function decodePng(
-  filePath,
+function paethPredictor(
+  left,
+  up,
+  upperLeft,
 ) {
+  const prediction =
+    left +
+    up -
+    upperLeft;
+
+  const distanceLeft =
+    Math.abs(
+      prediction - left,
+    );
+
+  const distanceUp =
+    Math.abs(
+      prediction - up,
+    );
+
+  const distanceUpperLeft =
+    Math.abs(
+      prediction -
+        upperLeft,
+    );
+
+  if (
+    distanceLeft <=
+      distanceUp &&
+    distanceLeft <=
+      distanceUpperLeft
+  ) {
+    return left;
+  }
+
+  if (
+    distanceUp <=
+    distanceUpperLeft
+  ) {
+    return up;
+  }
+
+  return upperLeft;
+}
+
+function decodePng(filePath) {
   const file =
     readFileSync(filePath);
 
@@ -227,7 +292,9 @@ function decodePng(
     } else if (
       type === "IDAT"
     ) {
-      idatChunks.push(data);
+      idatChunks.push(
+        data,
+      );
     } else if (
       type === "IEND"
     ) {
@@ -236,6 +303,15 @@ function decodePng(
 
     offset =
       dataEnd + 4;
+  }
+
+  if (
+    width <= 0 ||
+    height <= 0
+  ) {
+    throw new Error(
+      `Invalid PNG dimensions: ${filePath}`,
+    );
   }
 
   if (
@@ -260,7 +336,7 @@ function decodePng(
     interlace !== 0
   ) {
     throw new Error(
-      "Interlaced PNG is not supported by the icon generator.",
+      "Interlaced PNG is not supported by the favicon generator.",
     );
   }
 
@@ -273,7 +349,8 @@ function decodePng(
     channels;
 
   const rowLength =
-    width * channels;
+    width *
+    channels;
 
   const inflated =
     inflateSync(
@@ -282,9 +359,23 @@ function decodePng(
       ),
     );
 
+  const expectedLength =
+    height *
+    (rowLength + 1);
+
+  if (
+    inflated.length <
+    expectedLength
+  ) {
+    throw new Error(
+      `PNG data is incomplete: ${filePath}`,
+    );
+  }
+
   const raw =
     Buffer.alloc(
-      height * rowLength,
+      height *
+      rowLength,
     );
 
   let inputOffset = 0;
@@ -295,15 +386,19 @@ function decodePng(
     y += 1
   ) {
     const filter =
-      inflated[inputOffset];
+      inflated[
+        inputOffset
+      ];
 
     inputOffset += 1;
 
     const rowOffset =
-      y * rowLength;
+      y *
+      rowLength;
 
     const previousRowOffset =
-      (y - 1) * rowLength;
+      (y - 1) *
+      rowLength;
 
     for (
       let x = 0;
@@ -316,7 +411,8 @@ function decodePng(
         ];
 
       const left =
-        x >= bytesPerPixel
+        x >=
+        bytesPerPixel
           ? raw[
               rowOffset +
                 x -
@@ -334,7 +430,8 @@ function decodePng(
 
       const upperLeft =
         y > 0 &&
-        x >= bytesPerPixel
+        x >=
+          bytesPerPixel
           ? raw[
               previousRowOffset +
                 x -
@@ -342,81 +439,70 @@ function decodePng(
             ]
           : 0;
 
-      let decoded =
-        value;
+      let decoded;
 
-      if (
-        filter === 1
-      ) {
-        decoded =
-          (value + left) &
-          0xff;
-      } else if (
-        filter === 2
-      ) {
-        decoded =
-          (value + up) &
-          0xff;
-      } else if (
-        filter === 3
-      ) {
-        decoded =
-          (
-            value +
-            Math.floor(
-              (left + up) / 2,
-            )
-          ) &
-          0xff;
-      } else if (
-        filter === 4
-      ) {
-        const prediction =
-          left +
-          up -
-          upperLeft;
+      switch (filter) {
+        case 0:
+          decoded =
+            value;
+          break;
 
-        const distanceLeft =
-          Math.abs(
-            prediction - left,
+        case 1:
+          decoded =
+            (
+              value +
+              left
+            ) &
+            0xff;
+          break;
+
+        case 2:
+          decoded =
+            (
+              value +
+              up
+            ) &
+            0xff;
+          break;
+
+        case 3:
+          decoded =
+            (
+              value +
+              Math.floor(
+                (
+                  left +
+                  up
+                ) /
+                  2,
+              )
+            ) &
+            0xff;
+          break;
+
+        case 4:
+          decoded =
+            (
+              value +
+              paethPredictor(
+                left,
+                up,
+                upperLeft,
+              )
+            ) &
+            0xff;
+          break;
+
+        default:
+          throw new Error(
+            `Unsupported PNG filter type ${filter}.`,
           );
-
-        const distanceUp =
-          Math.abs(
-            prediction - up,
-          );
-
-        const distanceUpperLeft =
-          Math.abs(
-            prediction -
-              upperLeft,
-          );
-
-        const paeth =
-          distanceLeft <=
-            distanceUp &&
-          distanceLeft <=
-            distanceUpperLeft
-            ? left
-            : distanceUp <=
-                distanceUpperLeft
-              ? up
-              : upperLeft;
-
-        decoded =
-          (value + paeth) &
-          0xff;
-      } else if (
-        filter !== 0
-      ) {
-        throw new Error(
-          `Unsupported PNG filter type ${filter}.`,
-        );
       }
 
       raw[
         rowOffset + x
-      ] = decoded;
+      ] =
+        decoded;
     }
 
     inputOffset +=
@@ -433,17 +519,23 @@ function decodePng(
   for (
     let pixel = 0;
     pixel <
-    width * height;
+      width *
+        height;
     pixel += 1
   ) {
     const sourceOffset =
-      pixel * channels;
+      pixel *
+      channels;
 
     const targetOffset =
       pixel * 4;
 
-    rgba[targetOffset] =
-      raw[sourceOffset];
+    rgba[
+      targetOffset
+    ] =
+      raw[
+        sourceOffset
+      ];
 
     rgba[
       targetOffset + 1
@@ -509,7 +601,8 @@ function encodePng(
     Buffer.from(
       rgba.buffer,
       rgba.byteOffset +
-        y * rowLength,
+        y *
+          rowLength,
       rowLength,
     ).copy(
       scanlines,
@@ -581,7 +674,9 @@ function encodePng(
     ]);
 
   mkdirSync(
-    dirname(filePath),
+    dirname(
+      filePath,
+    ),
     {
       recursive: true,
     },
@@ -636,7 +731,10 @@ function rgbToHsv(
         60 *
         (
           (
-            (green - blue) /
+            (
+              green -
+              blue
+            ) /
             delta
           ) %
           6
@@ -647,7 +745,10 @@ function rgbToHsv(
       hue =
         60 *
         (
-          (blue - red) /
+          (
+            blue -
+            red
+          ) /
             delta +
           2
         );
@@ -655,7 +756,10 @@ function rgbToHsv(
       hue =
         60 *
         (
-          (red - green) /
+          (
+            red -
+            green
+          ) /
             delta +
           4
         );
@@ -670,11 +774,15 @@ function rgbToHsv(
 
   return {
     hue,
+
     saturation:
       max === 0
         ? 0
-        : delta / max,
-    value: max,
+        : delta /
+          max,
+
+    value:
+      max,
   };
 }
 
@@ -694,11 +802,12 @@ function logoStrength(
     hue,
     saturation,
     value,
-  } = rgbToHsv(
-    r,
-    g,
-    b,
-  );
+  } =
+    rgbToHsv(
+      r,
+      g,
+      b,
+    );
 
   const isTealHue =
     hue >= 135 &&
@@ -712,21 +821,22 @@ function logoStrength(
   }
 
   const saturationStrength =
-    Math.max(
+    clamp(
+      (
+        saturation -
+        0.055
+      ) /
+        0.16,
       0,
-      Math.min(
-        1,
-        (
-          saturation -
-          0.055
-        ) /
-          0.16,
-      ),
+      1,
     );
 
   return (
     saturationStrength *
-    (alpha / 255)
+    (
+      alpha /
+      255
+    )
   );
 }
 
@@ -741,11 +851,16 @@ function extractLogo(
 
   const strengths =
     new Float32Array(
-      width * height,
+      width *
+        height,
     );
 
-  let minX = width;
-  let minY = height;
+  let minX =
+    width;
+
+  let minY =
+    height;
+
   let maxX = -1;
   let maxY = -1;
 
@@ -760,24 +875,37 @@ function extractLogo(
       x += 1
     ) {
       const pixel =
-        y * width + x;
+        y *
+          width +
+        x;
 
       const offset =
         pixel * 4;
 
       const strength =
         logoStrength(
-          rgba[offset],
-          rgba[offset + 1],
-          rgba[offset + 2],
-          rgba[offset + 3],
+          rgba[
+            offset
+          ],
+          rgba[
+            offset + 1
+          ],
+          rgba[
+            offset + 2
+          ],
+          rgba[
+            offset + 3
+          ],
         );
 
-      strengths[pixel] =
+      strengths[
+        pixel
+      ] =
         strength;
 
       if (
-        strength >= 0.08
+        strength >=
+        0.08
       ) {
         minX =
           Math.min(
@@ -869,8 +997,12 @@ function extractLogo(
           sourcePixel
         ];
 
-      crop[targetOffset] =
-        rgba[sourceOffset];
+      crop[
+        targetOffset
+      ] =
+        rgba[
+          sourceOffset
+        ];
 
       crop[
         targetOffset + 1
@@ -890,7 +1022,8 @@ function extractLogo(
         targetOffset + 3
       ] =
         Math.round(
-          255 * strength,
+          255 *
+          strength,
         );
     }
   }
@@ -920,32 +1053,36 @@ function sampleBilinear(
   y,
 ) {
   const x0 =
-    Math.max(
-      0,
-      Math.min(
-        image.width - 1,
-        Math.floor(x),
+    clamp(
+      Math.floor(
+        x,
       ),
+      0,
+      image.width -
+        1,
     );
 
   const y0 =
-    Math.max(
-      0,
-      Math.min(
-        image.height - 1,
-        Math.floor(y),
+    clamp(
+      Math.floor(
+        y,
       ),
+      0,
+      image.height -
+        1,
     );
 
   const x1 =
     Math.min(
-      image.width - 1,
+      image.width -
+        1,
       x0 + 1,
     );
 
   const y1 =
     Math.min(
-      image.height - 1,
+      image.height -
+        1,
       y0 + 1,
     );
 
@@ -975,7 +1112,7 @@ function sampleBilinear(
           x0
         ) *
           4 +
-          channel
+        channel
       ];
 
     const b =
@@ -986,7 +1123,7 @@ function sampleBilinear(
           x1
         ) *
           4 +
-          channel
+        channel
       ];
 
     const c =
@@ -997,7 +1134,7 @@ function sampleBilinear(
           x0
         ) *
           4 +
-          channel
+        channel
       ];
 
     const d =
@@ -1008,20 +1145,31 @@ function sampleBilinear(
           x1
         ) *
           4 +
-          channel
+        channel
       ];
 
     const top =
       a +
-      (b - a) * tx;
+      (
+        b - a
+      ) *
+        tx;
 
     const bottom =
       c +
-      (d - c) * tx;
+      (
+        d - c
+      ) *
+        tx;
 
-    result[channel] =
+    result[
+      channel
+    ] =
       top +
-      (bottom - top) *
+      (
+        bottom -
+        top
+      ) *
         ty;
   }
 
@@ -1029,21 +1177,198 @@ function sampleBilinear(
 }
 
 /**
- * Browser favicon renderer.
+ * Compute one destination favicon pixel through
+ * supersampled area coverage.
  *
- * Transparent canvas.
- * No white square.
- * No border.
- * No shadow.
- * No background panel.
+ * This differs fundamentally from the old renderer:
+ *
+ * OLD:
+ * one sample at destination pixel centre
+ *
+ * NEW:
+ * NxN subpixel samples covering the whole destination
+ * pixel footprint
+ *
+ * Thin diagonal source strokes therefore contribute to
+ * a favicon pixel even when they do not pass exactly
+ * through its mathematical centre.
  */
-function renderTransparentIcon(
+function sampleAreaCoverage(
+  image,
+  destinationX,
+  destinationY,
+  renderedWidth,
+  renderedHeight,
+  samplesPerAxis,
+) {
+  let alphaSum = 0;
+
+  let premultipliedRed =
+    0;
+
+  let premultipliedGreen =
+    0;
+
+  let premultipliedBlue =
+    0;
+
+  const totalSamples =
+    samplesPerAxis *
+    samplesPerAxis;
+
+  for (
+    let sampleY = 0;
+    sampleY <
+      samplesPerAxis;
+    sampleY += 1
+  ) {
+    for (
+      let sampleX = 0;
+      sampleX <
+        samplesPerAxis;
+      sampleX += 1
+    ) {
+      const fractionX =
+        (
+          sampleX +
+          0.5
+        ) /
+        samplesPerAxis;
+
+      const fractionY =
+        (
+          sampleY +
+          0.5
+        ) /
+        samplesPerAxis;
+
+      const sourceX =
+        (
+          (
+            destinationX +
+            fractionX
+          ) /
+          renderedWidth
+        ) *
+          image.width -
+        0.5;
+
+      const sourceY =
+        (
+          (
+            destinationY +
+            fractionY
+          ) /
+          renderedHeight
+        ) *
+          image.height -
+        0.5;
+
+      const [
+        r,
+        g,
+        b,
+        a,
+      ] =
+        sampleBilinear(
+          image,
+          sourceX,
+          sourceY,
+        );
+
+      const normalizedAlpha =
+        a / 255;
+
+      alphaSum +=
+        normalizedAlpha;
+
+      premultipliedRed +=
+        r *
+        normalizedAlpha;
+
+      premultipliedGreen +=
+        g *
+        normalizedAlpha;
+
+      premultipliedBlue +=
+        b *
+        normalizedAlpha;
+    }
+  }
+
+  const averageAlpha =
+    alphaSum /
+    totalSamples;
+
+  if (
+    averageAlpha <=
+    0.0001
+  ) {
+    return [
+      0,
+      0,
+      0,
+      0,
+    ];
+  }
+
+  const r =
+    premultipliedRed /
+    alphaSum;
+
+  const g =
+    premultipliedGreen /
+    alphaSum;
+
+  const b =
+    premultipliedBlue /
+    alphaSum;
+
+  return [
+    clamp(
+      Math.round(
+        r,
+      ),
+      0,
+      255,
+    ),
+
+    clamp(
+      Math.round(
+        g,
+      ),
+      0,
+      255,
+    ),
+
+    clamp(
+      Math.round(
+        b,
+      ),
+      0,
+      255,
+    ),
+
+    clamp(
+      Math.round(
+        averageAlpha *
+        255,
+      ),
+      0,
+      255,
+    ),
+  ];
+}
+
+function renderSupersampledIcon(
   logo,
   size,
   occupancy,
+  samplesPerAxis,
 ) {
   const targetMaxDimension =
-    size * occupancy;
+    size *
+    occupancy;
 
   const logoMaxDimension =
     Math.max(
@@ -1059,7 +1384,8 @@ function renderTransparentIcon(
     Math.max(
       1,
       Math.round(
-        logo.width * scale,
+        logo.width *
+        scale,
       ),
     );
 
@@ -1067,7 +1393,8 @@ function renderTransparentIcon(
     Math.max(
       1,
       Math.round(
-        logo.height * scale,
+        logo.height *
+        scale,
       ),
     );
 
@@ -1106,36 +1433,23 @@ function renderTransparentIcon(
       x < renderedWidth;
       x += 1
     ) {
-      const sourceX =
-        (
-          (x + 0.5) /
-          renderedWidth
-        ) *
-          logo.width -
-        0.5;
-
-      const sourceY =
-        (
-          (y + 0.5) /
-          renderedHeight
-        ) *
-          logo.height -
-        0.5;
-
       const [
         r,
         g,
         b,
         a,
       ] =
-        sampleBilinear(
+        sampleAreaCoverage(
           logo,
-          sourceX,
-          sourceY,
+          x,
+          y,
+          renderedWidth,
+          renderedHeight,
+          samplesPerAxis,
         );
 
       if (
-        a <= 0.5
+        a <= 0
       ) {
         continue;
       }
@@ -1145,6 +1459,17 @@ function renderTransparentIcon(
 
       const targetY =
         offsetY + y;
+
+      if (
+        targetX < 0 ||
+        targetX >=
+          size ||
+        targetY < 0 ||
+        targetY >=
+          size
+      ) {
+        continue;
+      }
 
       const targetOffset =
         (
@@ -1157,30 +1482,209 @@ function renderTransparentIcon(
       rgba[
         targetOffset
       ] =
-        Math.round(r);
+        r;
 
       rgba[
         targetOffset + 1
       ] =
-        Math.round(g);
+        g;
 
       rgba[
         targetOffset + 2
       ] =
-        Math.round(b);
+        b;
 
       rgba[
         targetOffset + 3
       ] =
-        Math.round(a);
+        a;
     }
   }
 
   return {
-    width: size,
-    height: size,
+    width:
+      size,
+
+    height:
+      size,
+
     rgba,
   };
+}
+
+/**
+ * Very small alpha adjustment after accurate coverage
+ * calculation.
+ *
+ * Critical:
+ * alpha === 0 remains alpha === 0.
+ *
+ * Therefore this step can never grow the geometry into
+ * an entirely empty destination pixel.
+ */
+function reinforceExistingCoverage(
+  image,
+  gamma,
+  blend,
+) {
+  const output =
+    new Uint8Array(
+      image.rgba,
+    );
+
+  for (
+    let pixel = 0;
+    pixel <
+      image.width *
+        image.height;
+    pixel += 1
+  ) {
+    const offset =
+      pixel * 4;
+
+    const alpha =
+      image.rgba[
+        offset + 3
+      ];
+
+    if (
+      alpha === 0 ||
+      alpha === 255
+    ) {
+      continue;
+    }
+
+    const normalized =
+      alpha /
+      255;
+
+    const target =
+      Math.pow(
+        normalized,
+        gamma,
+      ) *
+      255;
+
+    const corrected =
+      alpha +
+      (
+        target -
+        alpha
+      ) *
+        blend;
+
+    output[
+      offset + 3
+    ] =
+      clamp(
+        Math.round(
+          corrected,
+        ),
+        alpha,
+        255,
+      );
+  }
+
+  return {
+    width:
+      image.width,
+
+    height:
+      image.height,
+
+    rgba:
+      output,
+  };
+}
+
+function getAlpha(
+  image,
+  x,
+  y,
+) {
+  if (
+    x < 0 ||
+    x >= image.width ||
+    y < 0 ||
+    y >= image.height
+  ) {
+    return 0;
+  }
+
+  return image.rgba[
+    (
+      y *
+        image.width +
+      x
+    ) *
+      4 +
+    3
+  ];
+}
+
+function assertTransparentOuterRing(
+  image,
+  label,
+) {
+  for (
+    let x = 0;
+    x < image.width;
+    x += 1
+  ) {
+    const top =
+      getAlpha(
+        image,
+        x,
+        0,
+      );
+
+    const bottom =
+      getAlpha(
+        image,
+        x,
+        image.height -
+          1,
+      );
+
+    if (
+      top !== 0 ||
+      bottom !== 0
+    ) {
+      throw new Error(
+        `${label}: top/bottom safe-area ring is not transparent.`,
+      );
+    }
+  }
+
+  for (
+    let y = 0;
+    y < image.height;
+    y += 1
+  ) {
+    const left =
+      getAlpha(
+        image,
+        0,
+        y,
+      );
+
+    const right =
+      getAlpha(
+        image,
+        image.width -
+          1,
+        y,
+      );
+
+    if (
+      left !== 0 ||
+      right !== 0
+    ) {
+      throw new Error(
+        `${label}: left/right safe-area ring is not transparent.`,
+      );
+    }
+  }
 }
 
 function measureVisibleOccupancy(
@@ -1215,7 +1719,9 @@ function measureVisibleOccupancy(
 
       const strength =
         logoStrength(
-          image.rgba[offset],
+          image.rgba[
+            offset
+          ],
           image.rgba[
             offset + 1
           ],
@@ -1228,7 +1734,8 @@ function measureVisibleOccupancy(
         );
 
       if (
-        strength >= 0.08
+        strength >=
+        0.08
       ) {
         minX =
           Math.min(
@@ -1297,213 +1804,321 @@ function measureVisibleOccupancy(
   };
 }
 
-function getDesktopOccupancy() {
-  if (
-    !existsSync(
-      previousDesktopIcon,
-    )
-  ) {
-    return TARGETS.desktopFallback;
-  }
-
-  try {
-    const measurement =
-      measureVisibleOccupancy(
-        decodePng(
-          previousDesktopIcon,
-        ),
-      );
-
-    if (
-      !measurement
-    ) {
-      return TARGETS.desktopFallback;
-    }
-
-    return Math.max(
-      0.48,
-      Math.min(
-        0.72,
-        measurement.occupancy,
-      ),
-    );
-  } catch {
-    return TARGETS.desktopFallback;
-  }
-}
-
-function assertWhiteBackground(
+function countVisiblePixels(
   image,
-  label,
+  threshold = 8,
 ) {
-  const points = [
-    [0, 0],
-    [
-      image.width - 1,
-      0,
-    ],
-    [
-      0,
-      image.height - 1,
-    ],
-    [
-      image.width - 1,
-      image.height - 1,
-    ],
-    [
-      Math.floor(
-        image.width / 2,
-      ),
-      0,
-    ],
-    [
-      Math.floor(
-        image.width / 2,
-      ),
-      image.height - 1,
-    ],
-    [
-      0,
-      Math.floor(
-        image.height / 2,
-      ),
-    ],
-    [
-      image.width - 1,
-      Math.floor(
-        image.height / 2,
-      ),
-    ],
-  ];
+  let count = 0;
 
   for (
-    const [
-      x,
-      y,
-    ] of points
+    let pixel = 0;
+    pixel <
+      image.width *
+        image.height;
+    pixel += 1
   ) {
-    const offset =
-      (
-        y *
-          image.width +
-        x
-      ) *
-        4;
-
-    const pixel =
-      Array.from(
-        image.rgba.subarray(
-          offset,
-          offset + 4,
-        ),
-      );
-
     if (
-      pixel[0] !== 255 ||
-      pixel[1] !== 255 ||
-      pixel[2] !== 255 ||
-      pixel[3] !== 255
-    ) {
-      throw new Error(
-        `${label} white background validation failed at (${x}, ${y}): ${pixel.join(",")}`,
-      );
-    }
-  }
-}
-
-function assertTransparentBackground(
-  image,
-  label,
-) {
-  const points = [
-    [0, 0],
-    [
-      image.width - 1,
-      0,
-    ],
-    [
-      0,
-      image.height - 1,
-    ],
-    [
-      image.width - 1,
-      image.height - 1,
-    ],
-    [
-      Math.floor(
-        image.width / 2,
-      ),
-      0,
-    ],
-    [
-      Math.floor(
-        image.width / 2,
-      ),
-      image.height - 1,
-    ],
-    [
-      0,
-      Math.floor(
-        image.height / 2,
-      ),
-    ],
-    [
-      image.width - 1,
-      Math.floor(
-        image.height / 2,
-      ),
-    ],
-  ];
-
-  for (
-    const [
-      x,
-      y,
-    ] of points
-  ) {
-    const offset =
-      (
-        y *
-          image.width +
-        x
-      ) *
-        4;
-
-    const alpha =
       image.rgba[
-        offset + 3
+        pixel *
+          4 +
+        3
+      ] >
+      threshold
+    ) {
+      count += 1;
+    }
+  }
+
+  return count;
+}
+
+/**
+ * Find the most transparent seed close to the
+ * mathematical centre of the favicon.
+ *
+ * This makes the central-hole validation robust even
+ * when an even-sized icon has its exact centre between
+ * four pixels.
+ */
+function findCenterHoleSeed(
+  image,
+) {
+  const centerX =
+    (
+      image.width -
+      1
+    ) /
+    2;
+
+  const centerY =
+    (
+      image.height -
+      1
+    ) /
+    2;
+
+  const candidates = [];
+
+  const minX =
+    Math.max(
+      0,
+      Math.floor(
+        centerX,
+      ) -
+        2,
+    );
+
+  const maxX =
+    Math.min(
+      image.width -
+        1,
+      Math.ceil(
+        centerX,
+      ) +
+        2,
+    );
+
+  const minY =
+    Math.max(
+      0,
+      Math.floor(
+        centerY,
+      ) -
+        2,
+    );
+
+  const maxY =
+    Math.min(
+      image.height -
+        1,
+      Math.ceil(
+        centerY,
+      ) +
+        2,
+    );
+
+  for (
+    let y = minY;
+    y <= maxY;
+    y += 1
+  ) {
+    for (
+      let x = minX;
+      x <= maxX;
+      x += 1
+    ) {
+      const alpha =
+        getAlpha(
+          image,
+          x,
+          y,
+        );
+
+      const distance =
+        Math.hypot(
+          x -
+            centerX,
+          y -
+            centerY,
+        );
+
+      candidates.push({
+        x,
+        y,
+        alpha,
+        distance,
+      });
+    }
+  }
+
+  candidates.sort(
+    (
+      first,
+      second,
+    ) => {
+      if (
+        first.alpha !==
+        second.alpha
+      ) {
+        return (
+          first.alpha -
+          second.alpha
+        );
+      }
+
+      return (
+        first.distance -
+        second.distance
+      );
+    },
+  );
+
+  return candidates[0];
+}
+
+function measureCenterHole(
+  image,
+  threshold = 36,
+) {
+  const seed =
+    findCenterHoleSeed(
+      image,
+    );
+
+  if (
+    !seed ||
+    seed.alpha >
+      threshold
+  ) {
+    return {
+      area: 0,
+      touchesOuterEdge: false,
+      seed,
+    };
+  }
+
+  const visited =
+    new Uint8Array(
+      image.width *
+        image.height,
+    );
+
+  const queue = [
+    [
+      seed.x,
+      seed.y,
+    ],
+  ];
+
+  visited[
+    seed.y *
+      image.width +
+    seed.x
+  ] = 1;
+
+  const directions = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1],
+  ];
+
+  let area = 0;
+
+  let touchesOuterEdge =
+    false;
+
+  for (
+    let index = 0;
+    index <
+      queue.length;
+    index += 1
+  ) {
+    const [
+      currentX,
+      currentY,
+    ] =
+      queue[
+        index
       ];
 
+    area += 1;
+
     if (
-      alpha !== 0
+      currentX === 0 ||
+      currentX ===
+        image.width -
+          1 ||
+      currentY === 0 ||
+      currentY ===
+        image.height -
+          1
     ) {
-      throw new Error(
-        `${label} transparent background validation failed at (${x}, ${y}). Alpha=${alpha}`,
-      );
+      touchesOuterEdge =
+        true;
+    }
+
+    for (
+      const [
+        dx,
+        dy,
+      ] of directions
+    ) {
+      const nextX =
+        currentX +
+        dx;
+
+      const nextY =
+        currentY +
+        dy;
+
+      if (
+        nextX < 0 ||
+        nextX >=
+          image.width ||
+        nextY < 0 ||
+        nextY >=
+          image.height
+      ) {
+        continue;
+      }
+
+      const nextIndex =
+        nextY *
+          image.width +
+        nextX;
+
+      if (
+        visited[
+          nextIndex
+        ] === 1
+      ) {
+        continue;
+      }
+
+      const alpha =
+        getAlpha(
+          image,
+          nextX,
+          nextY,
+        );
+
+      if (
+        alpha >
+        threshold
+      ) {
+        continue;
+      }
+
+      visited[
+        nextIndex
+      ] = 1;
+
+      queue.push([
+        nextX,
+        nextY,
+      ]);
     }
   }
+
+  return {
+    area,
+    touchesOuterEdge,
+    seed,
+  };
 }
 
 function validateIcon(
   image,
-  expectedOccupancy,
-  label,
-  background,
+  config,
 ) {
-  if (
-    background ===
-    "transparent"
-  ) {
-    assertTransparentBackground(
-      image,
-      label,
-    );
-  } else {
-    assertWhiteBackground(
-      image,
-      label,
-    );
-  }
+  const label =
+    `favicon-${config.size}x${config.size}`;
+
+  assertTransparentOuterRing(
+    image,
+    label,
+  );
 
   const measurement =
     measureVisibleOccupancy(
@@ -1514,36 +2129,36 @@ function validateIcon(
     !measurement
   ) {
     throw new Error(
-      `${label}: no visible Vatandoshlar logo detected.`,
+      `${label}: no visible Vatandoshlar mark detected.`,
     );
   }
 
-  const delta =
+  const occupancyDelta =
     Math.abs(
       measurement.occupancy -
-        expectedOccupancy,
+        config.occupancy,
     );
 
-  const tolerance =
+  const occupancyTolerance =
     Math.max(
       0.025,
       2 /
-        Math.max(
-          image.width,
-          image.height,
-        ),
+        config.size,
     );
 
   if (
-    delta > tolerance
+    occupancyDelta >
+    occupancyTolerance
   ) {
     throw new Error(
       `${label}: expected ~${(
-        expectedOccupancy * 100
+        config.occupancy *
+        100
       ).toFixed(
         1,
-      )}% visible occupancy, got ${(
-        measurement.occupancy * 100
+      )}% occupancy, got ${(
+        measurement.occupancy *
+        100
       ).toFixed(
         1,
       )}%.`,
@@ -1555,63 +2170,93 @@ function validateIcon(
       measurement.bounds.minX +
       measurement.bounds.maxX
     ) /
-      2;
+    2;
 
   const centerY =
     (
       measurement.bounds.minY +
       measurement.bounds.maxY
     ) /
-      2;
+    2;
 
   const expectedCenterX =
     (
-      image.width - 1
+      image.width -
+      1
     ) /
-      2;
+    2;
 
   const expectedCenterY =
     (
-      image.height - 1
+      image.height -
+      1
     ) /
-      2;
+    2;
 
   if (
     Math.abs(
       centerX -
         expectedCenterX,
-    ) > 1.5 ||
+    ) >
+      1.5 ||
     Math.abs(
       centerY -
         expectedCenterY,
-    ) > 1.5
+    ) >
+      1.5
   ) {
     throw new Error(
-      `${label}: logo is not centered within tolerance.`,
+      `${label}: mark is not centered within tolerance.`,
     );
   }
 
-  console.log(
-    `${label}: ${(
-      measurement.occupancy * 100
-    ).toFixed(
-      1,
-    )}% visible occupancy, ${background} background, centered.`,
-  );
+  const centerHole =
+    measureCenterHole(
+      image,
+    );
+
+  if (
+    centerHole.area <
+    config.centerHoleMinArea
+  ) {
+    throw new Error(
+      `${label}: central negative space is too small (${centerHole.area}px; expected at least ${config.centerHoleMinArea}px).`,
+    );
+  }
+
+  if (
+    centerHole.touchesOuterEdge
+  ) {
+    throw new Error(
+      `${label}: central negative space incorrectly connects to the outer transparent canvas.`,
+    );
+  }
+
+  return {
+    measurement,
+    centerHole,
+    visiblePixels:
+      countVisiblePixels(
+        image,
+      ),
+  };
 }
 
 function writeIco(
-  pngPaths,
+  entries,
   destination,
 ) {
   const images =
-    pngPaths.map(
+    entries.map(
       ({
         path,
         size,
       }) => ({
         data:
-          readFileSync(path),
+          readFileSync(
+            path,
+          ),
+
         size,
       }),
     );
@@ -1672,7 +2317,8 @@ function writeIco(
           directoryEntrySize;
 
       const dimension =
-        image.size >= 256
+        image.size >=
+        256
           ? 0
           : image.size;
 
@@ -1727,7 +2373,9 @@ function writeIco(
   );
 
   mkdirSync(
-    dirname(destination),
+    dirname(
+      destination,
+    ),
     {
       recursive: true,
     },
@@ -1756,126 +2404,83 @@ const logo =
     source,
   );
 
-const desktopOccupancy =
-  getDesktopOccupancy();
-
 console.log(
   `Detected source logo bounds: ${logo.width}x${logo.height} inside ${source.width}x${source.height}.`,
 );
 
 console.log(
-  `Desktop/PWA occupancy preserved from current v2 asset: ${(
-    desktopOccupancy * 100
-  ).toFixed(
-    1,
-  )}%.`,
+  "\nGenerating browser-only favicons with supersampled area rasterization...",
 );
 
-/**
- * Only browser favicon assets are generated here.
- *
- * Apple-touch and PWA icon files are intentionally
- * left untouched.
- */
-const faviconConfigs = [
-  {
-    size: 16,
-    path: outputs.favicon16,
-    occupancy:
-      TARGETS.favicon16,
-  },
-  {
-    size: 32,
-    path: outputs.favicon32,
-    occupancy:
-      TARGETS.favicon32,
-  },
-  {
-    size: 48,
-    path: outputs.favicon48,
-    occupancy:
-      TARGETS.favicon48,
-  },
-];
-
-const generated =
-  faviconConfigs.map(
-    ({
-      size,
-      path,
-      occupancy,
-    }) => ({
-      path,
-
-      image:
-        renderTransparentIcon(
-          logo,
-          size,
-          occupancy,
-        ),
-
-      occupancy,
-
-      label:
-        `favicon-${size}x${size}`,
-
-      background:
-        "transparent",
-    }),
-  );
+const generated = [];
 
 for (
-  const item of generated
+  const config of
+    FAVICON_CONFIGS
 ) {
+  const baseImage =
+    renderSupersampledIcon(
+      logo,
+      config.size,
+      config.occupancy,
+      config.samplesPerAxis,
+    );
+
+  const finalImage =
+    reinforceExistingCoverage(
+      baseImage,
+      config.alphaGamma,
+      config.alphaBlend,
+    );
+
+  const validation =
+    validateIcon(
+      finalImage,
+      config,
+    );
+
   encodePng(
-    item.image,
-    item.path,
+    finalImage,
+    config.path,
   );
 
-  validateIcon(
-    item.image,
-    item.occupancy,
-    item.label,
-    item.background,
+  generated.push({
+    path:
+      config.path,
+
+    size:
+      config.size,
+  });
+
+  console.log(
+    `favicon-${config.size}x${config.size}: ${(validation.measurement.occupancy * 100).toFixed(1)}% visible occupancy, transparent background, centered.`,
+  );
+
+  console.log(
+    `  rasterization: ${config.samplesPerAxis}x${config.samplesPerAxis} subpixel samples per destination pixel.`,
+  );
+
+  console.log(
+    `  visible pixels: ${validation.visiblePixels}.`,
+  );
+
+  console.log(
+    `  central negative-space area: ${validation.centerHole.area}px.`,
+  );
+
+  console.log(
+    `  alpha correction: gamma=${config.alphaGamma}, blend=${config.alphaBlend}.`,
   );
 }
 
-/**
- * favicon-v2.ico is used by the new versioned metadata.
- *
- * /favicon.ico is also updated with the same artwork as a
- * fallback for browsers that request the conventional URL
- * automatically.
- */
-const faviconIcoEntries = [
-  {
-    path:
-      outputs.favicon16,
-    size: 16,
-  },
-  {
-    path:
-      outputs.favicon32,
-    size: 32,
-  },
-  {
-    path:
-      outputs.favicon48,
-    size: 48,
-  },
-];
-
 writeIco(
-  faviconIcoEntries,
+  generated,
   outputs.ico,
 );
 
 writeIco(
-  faviconIcoEntries,
-  resolve(
-    root,
-    "public/favicon.ico",
-  ),
+  generated,
+  outputs.fallbackIco,
 );
 
 console.log(
@@ -1903,9 +2508,41 @@ console.log(
 );
 
 console.log(
-  "\nBrowser favicon: transparent background with size-specific optical occupancy.",
+  "\nRaster strategy:",
 );
 
 console.log(
-  "Apple/PWA icons were NOT modified.",
+  "- 16x16: 8x8 supersampled area coverage + moderate existing-alpha reinforcement",
+);
+
+console.log(
+  "- 32x32: 5x5 supersampled area coverage + light existing-alpha reinforcement",
+);
+
+console.log(
+  "- 48x48: 3x3 supersampled area coverage + near-original existing-alpha reinforcement",
+);
+
+console.log(
+  "- no dilation",
+);
+
+console.log(
+  "- no gap bridging",
+);
+
+console.log(
+  "- no new pixels are added after rasterization",
+);
+
+console.log(
+  "- central negative space is explicitly validated",
+);
+
+console.log(
+  "- outer 1px favicon ring must remain fully transparent",
+);
+
+console.log(
+  "- Apple/PWA icons are NOT modified",
 );
