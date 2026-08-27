@@ -670,7 +670,7 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="ml-auto hidden items-center gap-1 min-[1160px]:flex xl:gap-2">
+          <div className="ml-auto hidden items-center gap-1 pl-3 min-[1160px]:flex xl:gap-2 xl:pl-4 2xl:pl-6">
             <button
               type="button"
               onClick={openCommandPalette}
