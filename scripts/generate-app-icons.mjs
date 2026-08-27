@@ -62,19 +62,22 @@ const previousDesktopIcon = resolve(
   "icon-512x512-v2.png",
 );
 
+/**
+ * Browser favicon target:
+ *
+ * Transparent canvas + only the original Vatandoshlar
+ * geometric mark.
+ *
+ * ~86% visible occupancy keeps the symbol large enough
+ * for browser tabs while preserving ~7% safe padding
+ * on each side.
+ *
+ * iPhone/PWA values remain independent.
+ */
 const TARGETS = {
-  // Tiny favicons need slightly more visual weight.
-  favicon: 0.72,
-
-  // Final iPhone specification:
-  // REAL visible geometric logo occupancy.
+  favicon: 0.86,
   iphone: 0.64,
-
-  // Used only if the existing approved desktop
-  // v2 icon cannot be measured.
-  desktopFallback: 0.56,
-
-  // Slightly safer for maskable platform cropping.
+  desktopFallback: 0.545,
   maskable: 0.58,
 };
 
@@ -118,11 +121,10 @@ function createChunk(
   type,
   data,
 ) {
-  const typeBuffer =
-    Buffer.from(
-      type,
-      "ascii",
-    );
+  const typeBuffer = Buffer.from(
+    type,
+    "ascii",
+  );
 
   const length =
     Buffer.alloc(4);
@@ -180,13 +182,10 @@ function decodePng(
   const idatChunks = [];
 
   while (
-    offset <
-    file.length
+    offset < file.length
   ) {
     const length =
-      file.readUInt32BE(
-        offset,
-      );
+      file.readUInt32BE(offset);
 
     const type =
       file.toString(
@@ -199,8 +198,7 @@ function decodePng(
       offset + 8;
 
     const dataEnd =
-      dataStart +
-      length;
+      dataStart + length;
 
     const data =
       file.subarray(
@@ -228,9 +226,7 @@ function decodePng(
     } else if (
       type === "IDAT"
     ) {
-      idatChunks.push(
-        data,
-      );
+      idatChunks.push(data);
     } else if (
       type === "IEND"
     ) {
@@ -276,8 +272,7 @@ function decodePng(
     channels;
 
   const rowLength =
-    width *
-    channels;
+    width * channels;
 
   const inflated =
     inflateSync(
@@ -288,8 +283,7 @@ function decodePng(
 
   const raw =
     Buffer.alloc(
-      height *
-        rowLength,
+      height * rowLength,
     );
 
   let inputOffset = 0;
@@ -300,19 +294,15 @@ function decodePng(
     y += 1
   ) {
     const filter =
-      inflated[
-        inputOffset
-      ];
+      inflated[inputOffset];
 
     inputOffset += 1;
 
     const rowOffset =
-      y *
-      rowLength;
+      y * rowLength;
 
     const previousRowOffset =
-      (y - 1) *
-      rowLength;
+      (y - 1) * rowLength;
 
     for (
       let x = 0;
@@ -373,8 +363,7 @@ function decodePng(
           (
             value +
             Math.floor(
-              (left + up) /
-                2,
+              (left + up) / 2,
             )
           ) &
           0xff;
@@ -388,8 +377,7 @@ function decodePng(
 
         const distanceLeft =
           Math.abs(
-            prediction -
-              left,
+            prediction - left,
           );
 
         const distanceUp =
@@ -448,18 +436,13 @@ function decodePng(
     pixel += 1
   ) {
     const sourceOffset =
-      pixel *
-      channels;
+      pixel * channels;
 
     const targetOffset =
       pixel * 4;
 
-    rgba[
-      targetOffset
-    ] =
-      raw[
-        sourceOffset
-      ];
+    rgba[targetOffset] =
+      raw[sourceOffset];
 
     rgba[
       targetOffset + 1
@@ -480,8 +463,7 @@ function decodePng(
     ] =
       colorType === 6
         ? raw[
-            sourceOffset +
-              3
+            sourceOffset + 3
           ]
         : 255;
   }
@@ -526,8 +508,7 @@ function encodePng(
     Buffer.from(
       rgba.buffer,
       rgba.byteOffset +
-        y *
-          rowLength,
+        y * rowLength,
       rowLength,
     ).copy(
       scanlines,
@@ -599,9 +580,7 @@ function encodePng(
     ]);
 
   mkdirSync(
-    dirname(
-      filePath,
-    ),
+    dirname(filePath),
     {
       recursive: true,
     },
@@ -656,8 +635,7 @@ function rgbToHsv(
         60 *
         (
           (
-            (green -
-              blue) /
+            (green - blue) /
             delta
           ) %
           6
@@ -668,8 +646,7 @@ function rgbToHsv(
       hue =
         60 *
         (
-          (blue -
-            red) /
+          (blue - red) /
             delta +
           2
         );
@@ -677,8 +654,7 @@ function rgbToHsv(
       hue =
         60 *
         (
-          (red -
-            green) /
+          (red - green) /
             delta +
           4
         );
@@ -735,17 +711,11 @@ function logoStrength(
   }
 
   /**
-   * Source PNG contains pale/off-white
-   * background/panel pixels.
+   * The source PNG can contain pale/off-white
+   * background pixels.
    *
-   * Those have very low saturation.
-   *
-   * The real Vatandoshlar teal geometry
-   * has much stronger saturation.
-   *
-   * We therefore softly isolate only the
-   * brand mark instead of keeping the
-   * source canvas/background.
+   * Only the saturated Vatandoshlar teal mark
+   * should survive extraction.
    */
   const saturationStrength =
     Math.max(
@@ -777,8 +747,7 @@ function extractLogo(
 
   const strengths =
     new Float32Array(
-      width *
-        height,
+      width * height,
     );
 
   let minX = width;
@@ -797,37 +766,24 @@ function extractLogo(
       x += 1
     ) {
       const pixel =
-        y *
-          width +
-        x;
+        y * width + x;
 
       const offset =
         pixel * 4;
 
       const strength =
         logoStrength(
-          rgba[
-            offset
-          ],
-          rgba[
-            offset + 1
-          ],
-          rgba[
-            offset + 2
-          ],
-          rgba[
-            offset + 3
-          ],
+          rgba[offset],
+          rgba[offset + 1],
+          rgba[offset + 2],
+          rgba[offset + 3],
         );
 
-      strengths[
-        pixel
-      ] =
+      strengths[pixel] =
         strength;
 
       if (
-        strength >=
-        0.08
+        strength >= 0.08
       ) {
         minX =
           Math.min(
@@ -884,14 +840,12 @@ function extractLogo(
 
   for (
     let y = 0;
-    y <
-    cropHeight;
+    y < cropHeight;
     y += 1
   ) {
     for (
       let x = 0;
-      x <
-      cropWidth;
+      x < cropWidth;
       x += 1
     ) {
       const sourceX =
@@ -906,8 +860,7 @@ function extractLogo(
         sourceX;
 
       const sourceOffset =
-        sourcePixel *
-        4;
+        sourcePixel * 4;
 
       const targetOffset =
         (
@@ -922,12 +875,8 @@ function extractLogo(
           sourcePixel
         ];
 
-      crop[
-        targetOffset
-      ] =
-        rgba[
-          sourceOffset
-        ];
+      crop[targetOffset] =
+        rgba[sourceOffset];
 
       crop[
         targetOffset + 1
@@ -947,8 +896,7 @@ function extractLogo(
         targetOffset + 3
       ] =
         Math.round(
-          255 *
-            strength,
+          255 * strength,
         );
     }
   }
@@ -981,8 +929,7 @@ function sampleBilinear(
     Math.max(
       0,
       Math.min(
-        image.width -
-          1,
+        image.width - 1,
         Math.floor(x),
       ),
     );
@@ -991,23 +938,20 @@ function sampleBilinear(
     Math.max(
       0,
       Math.min(
-        image.height -
-          1,
+        image.height - 1,
         Math.floor(y),
       ),
     );
 
   const x1 =
     Math.min(
-      image.width -
-        1,
+      image.width - 1,
       x0 + 1,
     );
 
   const y1 =
     Math.min(
-      image.height -
-        1,
+      image.height - 1,
       y0 + 1,
     );
 
@@ -1075,17 +1019,13 @@ function sampleBilinear(
 
     const top =
       a +
-      (b - a) *
-        tx;
+      (b - a) * tx;
 
     const bottom =
       c +
-      (d - c) *
-        tx;
+      (d - c) * tx;
 
-    result[
-      channel
-    ] =
+    result[channel] =
       top +
       (bottom - top) *
         ty;
@@ -1094,14 +1034,24 @@ function sampleBilinear(
   return result;
 }
 
-function renderIcon(
+/**
+ * Browser favicon renderer.
+ *
+ * IMPORTANT:
+ * - Transparent canvas.
+ * - No white square.
+ * - No border.
+ * - No shadow.
+ * - No extra background panel.
+ * - Only the original Vatandoshlar mark.
+ */
+function renderTransparentIcon(
   logo,
   size,
   occupancy,
 ) {
   const targetMaxDimension =
-    size *
-    occupancy;
+    size * occupancy;
 
   const logoMaxDimension =
     Math.max(
@@ -1117,8 +1067,7 @@ function renderIcon(
     Math.max(
       1,
       Math.round(
-        logo.width *
-          scale,
+        logo.width * scale,
       ),
     );
 
@@ -1126,8 +1075,7 @@ function renderIcon(
     Math.max(
       1,
       Math.round(
-        logo.height *
-          scale,
+        logo.height * scale,
       ),
     );
 
@@ -1149,6 +1097,13 @@ function renderIcon(
         2,
     );
 
+  /**
+   * Uint8Array starts with all zeroes:
+   *
+   * RGBA(0, 0, 0, 0)
+   *
+   * = completely transparent canvas.
+   */
   const rgba =
     new Uint8Array(
       size *
@@ -1156,50 +1111,14 @@ function renderIcon(
         4,
     );
 
-  /**
-   * Entire icon canvas is pure:
-   *
-   * #FFFFFF
-   *
-   * There is no inner panel,
-   * border, gradient or shadow.
-   */
-  for (
-    let pixel = 0;
-    pixel <
-    size * size;
-    pixel += 1
-  ) {
-    const offset =
-      pixel * 4;
-
-    rgba[
-      offset
-    ] = 255;
-
-    rgba[
-      offset + 1
-    ] = 255;
-
-    rgba[
-      offset + 2
-    ] = 255;
-
-    rgba[
-      offset + 3
-    ] = 255;
-  }
-
   for (
     let y = 0;
-    y <
-    renderedHeight;
+    y < renderedHeight;
     y += 1
   ) {
     for (
       let x = 0;
-      x <
-      renderedWidth;
+      x < renderedWidth;
       x += 1
     ) {
       const sourceX =
@@ -1230,18 +1149,8 @@ function renderIcon(
           sourceY,
         );
 
-      const alpha =
-        Math.max(
-          0,
-          Math.min(
-            1,
-            a / 255,
-          ),
-        );
-
       if (
-        alpha <=
-        0.001
+        a <= 0.5
       ) {
         continue;
       }
@@ -1263,59 +1172,38 @@ function renderIcon(
       rgba[
         targetOffset
       ] =
-        Math.round(
-          r *
-            alpha +
-            255 *
-              (
-                1 -
-                alpha
-              ),
-        );
+        Math.round(r);
 
       rgba[
         targetOffset + 1
       ] =
-        Math.round(
-          g *
-            alpha +
-            255 *
-              (
-                1 -
-                alpha
-              ),
-        );
+        Math.round(g);
 
       rgba[
         targetOffset + 2
       ] =
-        Math.round(
-          b *
-            alpha +
-            255 *
-              (
-                1 -
-                alpha
-              ),
-        );
+        Math.round(b);
 
       rgba[
         targetOffset + 3
-      ] = 255;
+      ] =
+        Math.round(a);
     }
   }
 
   return {
-    width:
-      size,
-
-    height:
-      size,
-
+    width: size,
+    height: size,
     rgba,
   };
 }
 
+/**
+ * App/PWA renderer.
+ *
+ * This intentionally keeps the existing
+ * pure-white app-icon design.
+ */
 function measureVisibleOccupancy(
   image,
 ) {
@@ -1330,14 +1218,12 @@ function measureVisibleOccupancy(
 
   for (
     let y = 0;
-    y <
-    image.height;
+    y < image.height;
     y += 1
   ) {
     for (
       let x = 0;
-      x <
-      image.width;
+      x < image.width;
       x += 1
     ) {
       const offset =
@@ -1350,9 +1236,7 @@ function measureVisibleOccupancy(
 
       const strength =
         logoStrength(
-          image.rgba[
-            offset
-          ],
+          image.rgba[offset],
           image.rgba[
             offset + 1
           ],
@@ -1365,8 +1249,7 @@ function measureVisibleOccupancy(
         );
 
       if (
-        strength >=
-        0.08
+        strength >= 0.08
       ) {
         minX =
           Math.min(
@@ -1458,10 +1341,6 @@ function getDesktopOccupancy() {
       return TARGETS.desktopFallback;
     }
 
-    /**
-     * Preserve the CURRENT macOS/PWA
-     * visible logo size that was approved.
-     */
     return Math.max(
       0.48,
       Math.min(
@@ -1480,57 +1359,40 @@ function assertWhiteBackground(
 ) {
   const points = [
     [0, 0],
-
     [
-      image.width -
-        1,
+      image.width - 1,
       0,
     ],
-
     [
       0,
-      image.height -
-        1,
+      image.height - 1,
     ],
-
     [
-      image.width -
-        1,
-      image.height -
-        1,
+      image.width - 1,
+      image.height - 1,
     ],
-
     [
       Math.floor(
-        image.width /
-          2,
+        image.width / 2,
       ),
       0,
     ],
-
     [
       Math.floor(
-        image.width /
-          2,
+        image.width / 2,
       ),
-      image.height -
-        1,
+      image.height - 1,
     ],
-
     [
       0,
       Math.floor(
-        image.height /
-          2,
+        image.height / 2,
       ),
     ],
-
     [
-      image.width -
-        1,
+      image.width - 1,
       Math.floor(
-        image.height /
-          2,
+        image.height / 2,
       ),
     ],
   ];
@@ -1564,7 +1426,80 @@ function assertWhiteBackground(
       pixel[3] !== 255
     ) {
       throw new Error(
-        `${label} background validation failed at (${x}, ${y}): ${pixel.join(",")}`,
+        `${label} white background validation failed at (${x}, ${y}): ${pixel.join(",")}`,
+      );
+    }
+  }
+}
+
+function assertTransparentBackground(
+  image,
+  label,
+) {
+  const points = [
+    [0, 0],
+    [
+      image.width - 1,
+      0,
+    ],
+    [
+      0,
+      image.height - 1,
+    ],
+    [
+      image.width - 1,
+      image.height - 1,
+    ],
+    [
+      Math.floor(
+        image.width / 2,
+      ),
+      0,
+    ],
+    [
+      Math.floor(
+        image.width / 2,
+      ),
+      image.height - 1,
+    ],
+    [
+      0,
+      Math.floor(
+        image.height / 2,
+      ),
+    ],
+    [
+      image.width - 1,
+      Math.floor(
+        image.height / 2,
+      ),
+    ],
+  ];
+
+  for (
+    const [
+      x,
+      y,
+    ] of points
+  ) {
+    const offset =
+      (
+        y *
+          image.width +
+        x
+      ) *
+      4;
+
+    const alpha =
+      image.rgba[
+        offset + 3
+      ];
+
+    if (
+      alpha !== 0
+    ) {
+      throw new Error(
+        `${label} transparent background validation failed at (${x}, ${y}). Alpha=${alpha}`,
       );
     }
   }
@@ -1574,11 +1509,22 @@ function validateIcon(
   image,
   expectedOccupancy,
   label,
+  background,
 ) {
-  assertWhiteBackground(
-    image,
-    label,
-  );
+  if (
+    background ===
+    "transparent"
+  ) {
+    assertTransparentBackground(
+      image,
+      label,
+    );
+  } else {
+    assertWhiteBackground(
+      image,
+      label,
+    );
+  }
 
   const measurement =
     measureVisibleOccupancy(
@@ -1599,11 +1545,6 @@ function validateIcon(
         expectedOccupancy,
     );
 
-  /**
-   * Tiny favicon sizes are pixel-quantized,
-   * therefore their tolerance must scale
-   * with the actual icon resolution.
-   */
   const tolerance =
     Math.max(
       0.025,
@@ -1615,18 +1556,15 @@ function validateIcon(
     );
 
   if (
-    delta >
-    tolerance
+    delta > tolerance
   ) {
     throw new Error(
       `${label}: expected ~${(
-        expectedOccupancy *
-        100
+        expectedOccupancy * 100
       ).toFixed(
         1,
       )}% visible occupancy, got ${(
-        measurement.occupancy *
-        100
+        measurement.occupancy * 100
       ).toFixed(
         1,
       )}%.`,
@@ -1635,33 +1573,27 @@ function validateIcon(
 
   const centerX =
     (
-      measurement.bounds
-        .minX +
-      measurement.bounds
-        .maxX
+      measurement.bounds.minX +
+      measurement.bounds.maxX
     ) /
     2;
 
   const centerY =
     (
-      measurement.bounds
-        .minY +
-      measurement.bounds
-        .maxY
+      measurement.bounds.minY +
+      measurement.bounds.maxY
     ) /
     2;
 
   const expectedCenterX =
     (
-      image.width -
-      1
+      image.width - 1
     ) /
     2;
 
   const expectedCenterY =
     (
-      image.height -
-      1
+      image.height - 1
     ) /
     2;
 
@@ -1669,13 +1601,11 @@ function validateIcon(
     Math.abs(
       centerX -
         expectedCenterX,
-    ) >
-      1.5 ||
+    ) > 1.5 ||
     Math.abs(
       centerY -
         expectedCenterY,
-    ) >
-      1.5
+    ) > 1.5
   ) {
     throw new Error(
       `${label}: logo is not centered within tolerance.`,
@@ -1684,11 +1614,10 @@ function validateIcon(
 
   console.log(
     `${label}: ${(
-      measurement.occupancy *
-      100
+      measurement.occupancy * 100
     ).toFixed(
       1,
-    )}% visible occupancy, pure #FFFFFF background, centered.`,
+    )}% visible occupancy, ${background} background, centered.`,
   );
 }
 
@@ -1703,9 +1632,7 @@ function writeIco(
         size,
       }) => ({
         data:
-          readFileSync(
-            path,
-          ),
+          readFileSync(path),
         size,
       }),
     );
@@ -1728,8 +1655,7 @@ function writeIco(
         image,
       ) =>
         total +
-        image.data
-          .length,
+        image.data.length,
       0,
     );
 
@@ -1778,45 +1704,37 @@ function writeIco(
 
       ico.writeUInt8(
         dimension,
-        entryOffset +
-          1,
+        entryOffset + 1,
       );
 
       ico.writeUInt8(
         0,
-        entryOffset +
-          2,
+        entryOffset + 2,
       );
 
       ico.writeUInt8(
         0,
-        entryOffset +
-          3,
+        entryOffset + 3,
       );
 
       ico.writeUInt16LE(
         1,
-        entryOffset +
-          4,
+        entryOffset + 4,
       );
 
       ico.writeUInt16LE(
         32,
-        entryOffset +
-          6,
+        entryOffset + 6,
       );
 
       ico.writeUInt32LE(
-        image.data
-          .length,
-        entryOffset +
-          8,
+        image.data.length,
+        entryOffset + 8,
       );
 
       ico.writeUInt32LE(
         imageOffset,
-        entryOffset +
-          12,
+        entryOffset + 12,
       );
 
       image.data.copy(
@@ -1825,15 +1743,12 @@ function writeIco(
       );
 
       imageOffset +=
-        image.data
-          .length;
+        image.data.length;
     },
   );
 
   mkdirSync(
-    dirname(
-      destination,
-    ),
+    dirname(destination),
     {
       recursive: true,
     },
@@ -1871,20 +1786,27 @@ console.log(
 
 console.log(
   `Desktop/PWA occupancy preserved from current v2 asset: ${(
-    desktopOccupancy *
-    100
+    desktopOccupancy * 100
   ).toFixed(
     1,
   )}%.`,
 );
 
+/**
+ * IMPORTANT:
+ *
+ * Browser favicon files are generated with
+ * TRANSPARENT background.
+ *
+ * iPhone/PWA files retain PURE WHITE background.
+ */
 const generated = [
   {
     path:
       outputs.favicon16,
 
     image:
-      renderIcon(
+      renderTransparentIcon(
         logo,
         16,
         TARGETS.favicon,
@@ -1895,6 +1817,9 @@ const generated = [
 
     label:
       "favicon-16x16",
+
+    background:
+      "transparent",
   },
 
   {
@@ -1902,7 +1827,7 @@ const generated = [
       outputs.favicon32,
 
     image:
-      renderIcon(
+      renderTransparentIcon(
         logo,
         32,
         TARGETS.favicon,
@@ -1913,6 +1838,9 @@ const generated = [
 
     label:
       "favicon-32x32",
+
+    background:
+      "transparent",
   },
 
   {
@@ -1920,7 +1848,7 @@ const generated = [
       outputs.favicon48,
 
     image:
-      renderIcon(
+      renderTransparentIcon(
         logo,
         48,
         TARGETS.favicon,
@@ -1931,78 +1859,9 @@ const generated = [
 
     label:
       "favicon-48x48",
-  },
 
-  {
-    path:
-      outputs.apple180,
-
-    image:
-      renderIcon(
-        logo,
-        180,
-        TARGETS.iphone,
-      ),
-
-    occupancy:
-      TARGETS.iphone,
-
-    label:
-      "apple-touch-icon-v3",
-  },
-
-  {
-    path:
-      outputs.pwa192,
-
-    image:
-      renderIcon(
-        logo,
-        192,
-        desktopOccupancy,
-      ),
-
-    occupancy:
-      desktopOccupancy,
-
-    label:
-      "PWA-192-v3",
-  },
-
-  {
-    path:
-      outputs.pwa512,
-
-    image:
-      renderIcon(
-        logo,
-        512,
-        desktopOccupancy,
-      ),
-
-    occupancy:
-      desktopOccupancy,
-
-    label:
-      "PWA-512-v3",
-  },
-
-  {
-    path:
-      outputs.maskable512,
-
-    image:
-      renderIcon(
-        logo,
-        512,
-        TARGETS.maskable,
-      ),
-
-    occupancy:
-      TARGETS.maskable,
-
-    label:
-      "maskable-512-v3",
+    background:
+      "transparent",
   },
 ];
 
@@ -2018,9 +1877,14 @@ for (
     item.image,
     item.occupancy,
     item.label,
+    item.background,
   );
 }
 
+/**
+ * favicon.ico is assembled ONLY from the
+ * transparent 16/32/48 PNG variants.
+ */
 writeIco(
   [
     {
@@ -2045,18 +1909,29 @@ writeIco(
 );
 
 console.log(
-  "\nVatandoshlar.de app icons generated successfully:",
+  "\nBrowser favicon assets generated successfully:",
 );
 
-for (
-  const output of Object.values(
-    outputs,
-  )
-) {
-  console.log(
-    `- ${output.replace(
-      `${root}/`,
-      "",
-    )}`,
-  );
-}
+console.log(
+  "- public/images/brand/favicon-16x16.png",
+);
+
+console.log(
+  "- public/images/brand/favicon-32x32.png",
+);
+
+console.log(
+  "- public/images/brand/favicon-48x48.png",
+);
+
+console.log(
+  "- public/favicon.ico",
+);
+
+console.log(
+  "\nBrowser favicon: transparent background, ~86% visible logo occupancy.",
+);
+
+console.log(
+  "Apple/PWA icons were NOT modified.",
+);
