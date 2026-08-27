@@ -7,6 +7,12 @@ import {
 import Header from "@/components/Header";
 import SupportHero from "@/components/support/SupportHero";
 import SupportOptions from "@/components/support/SupportOptions";
+import SupporterRecognition from "@/components/support/SupporterRecognition";
+import {
+  getPublicSupportSummary,
+} from "@/lib/support/public-support-repository";
+
+export const dynamic = "force-dynamic";
 
 const paymentLinks = {
   paypal: "https://paypal.me/ZafarUsarov",
@@ -53,8 +59,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SupportPage() {
+  const locale =
+    (await getLocale()) as "uz" | "de";
+
   const t = await getTranslations("SupportPage");
   const footerT = await getTranslations("Footer");
+
+  const supportSummary =
+    await getPublicSupportSummary();
 
   const costs = [
     {
@@ -114,6 +126,11 @@ export default async function SupportPage() {
           description={t("options.description")}
           options={options}
           privacy={t("privacy")}
+        />
+
+        <SupporterRecognition
+          locale={locale}
+          summary={supportSummary}
         />
       </main>
 

@@ -22,7 +22,7 @@ const copy = {
       "Vatandoshlar.de boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
     modulesTitle: "Boshqaruv modullari",
     modulesDescription:
-      "Yangiliklar, Ish va karyera, Xizmatlar, Mutaxassislar, Tadbirlar, Germaniya qo‘llanmasi, Telegram hamjamiyatlari va sayt analitikasi PostgreSQL asosida boshqariladi.",
+      "Yangiliklar, Ish va karyera, Xizmatlar, Mutaxassislar, Tadbirlar, Germaniya qo‘llanmasi, Telegram hamjamiyatlari, Support va sayt analitikasi PostgreSQL asosida boshqariladi.",
 
     newsTitle: "Yangiliklar",
     newsDescription:
@@ -59,6 +59,11 @@ const copy = {
       "Bundeslandlar bo‘yicha Telegram guruhlari, havolalar, bot yoki guruh turi va mavjudlik holatini boshqaring.",
     telegramAction: "Telegram hamjamiyatlarini boshqarish",
 
+    supportTitle: "Support",
+    supportDescription:
+      "PayPal va Taps orqali kelgan real contributionlarni, public ko‘rinishni va transaction holatini boshqaring.",
+    supportAction: "Supportni boshqarish",
+
     analyticsTitle: "Sayt analitikasi",
     analyticsDescription:
       "Sahifa ko‘rishlari, davlatlar, tillar, eng ko‘p ko‘rilgan sahifalar va oxirgi 30 kunlik trafikni kuzating.",
@@ -79,7 +84,7 @@ const copy = {
       "Von hier aus können Sie die Verwaltungsbereiche von Vatandoshlar.de aufrufen.",
     modulesTitle: "Verwaltungsmodule",
     modulesDescription:
-      "Nachrichten, Arbeit und Karriere, Dienstleistungen, Fachkräfte, Veranstaltungen, der Deutschland-Ratgeber, Telegram-Communitys und die Website-Analyse werden PostgreSQL-basiert verwaltet.",
+      "Nachrichten, Arbeit und Karriere, Dienstleistungen, Fachkräfte, Veranstaltungen, der Deutschland-Ratgeber, Telegram-Communitys, Unterstützung und die Website-Analyse werden PostgreSQL-basiert verwaltet.",
 
     newsTitle: "Nachrichten",
     newsDescription:
@@ -116,6 +121,11 @@ const copy = {
       "Verwalten Sie Telegram-Gruppen nach Bundesland, Links, Bot- oder Gruppentyp und Verfügbarkeitsstatus.",
     telegramAction: "Telegram-Communitys verwalten",
 
+    supportTitle: "Unterstützung",
+    supportDescription:
+      "Verwalten Sie reale PayPal- und Taps-Beiträge, öffentliche Sichtbarkeit und Transaktionsstatus.",
+    supportAction: "Unterstützung verwalten",
+
     analyticsTitle: "Website-Analyse",
     analyticsDescription:
       "Beobachten Sie Seitenaufrufe, Länder, Sprachen, meistbesuchte Seiten und den Traffic der letzten 30 Tage.",
@@ -137,6 +147,7 @@ type AdminModuleHref =
   | "/admin/events"
   | "/admin/guide"
   | "/admin/telegram"
+  | "/admin/support"
   | "/admin/analytics";
 
 type AdminModuleTone =
@@ -175,7 +186,7 @@ const moduleToneClasses = {
     title:
       "text-xl font-black text-slate-950 transition-colors group-hover:text-blue-700 dark:text-white dark:group-hover:text-blue-300",
     icon:
-      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-blue-100 font-black text-blue-700 transition group-hover:bg-blue-600 group-hover:text-white dark:bg-blue-500/10 dark:text-blue-300 dark:group-hover:bg-blue-500 dark:group-hover:text-white",
+      "flex size-10 shrink-0 items-center justify-center rounded-2xl bg-blue-100 font-black text-blue-700 transition group-hover:bg-blue-600 group-hover:text-white dark:bg-blue-500/10 dark:text-blue-300 dark:group-hover:bg-blue-600 dark:group-hover:text-white",
     action:
       "mt-5 text-sm font-bold text-blue-700 dark:text-blue-400",
   },
@@ -413,6 +424,14 @@ export default async function AdminPage() {
                   description={currentCopy.telegramDescription}
                   action={currentCopy.telegramAction}
                   tone="sky"
+                />
+
+                <AdminModuleCard
+                  href="/admin/support"
+                  title={currentCopy.supportTitle}
+                  description={currentCopy.supportDescription}
+                  action={currentCopy.supportAction}
+                  tone="emerald"
                 />
 
                 <AdminModuleCard
