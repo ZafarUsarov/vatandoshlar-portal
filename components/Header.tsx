@@ -611,7 +611,7 @@ export default function Header() {
 
           <nav
             aria-label={t("accessibility.mainNavigation")}
-            className="mx-auto hidden min-w-0 items-center gap-0 min-[1160px]:flex"
+            className="hidden min-w-max shrink-0 items-center gap-0 min-[1160px]:flex"
           >
             {navigation.map((item) => {
               const isActive = isActiveRoute(
@@ -670,7 +670,7 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="ml-auto hidden items-center gap-1 pl-3 min-[1160px]:flex xl:gap-2 xl:pl-4 2xl:pl-6">
+          <div className="ml-auto hidden shrink-0 items-center gap-1 min-[1160px]:ml-3 min-[1160px]:flex xl:ml-4 xl:gap-2 2xl:ml-6">
             <button
               type="button"
               onClick={openCommandPalette}
