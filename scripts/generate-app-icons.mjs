@@ -25,15 +25,15 @@ const brandDir = resolve(
 const outputs = {
   favicon16: resolve(
     brandDir,
-    "favicon-16x16.png",
+    "favicon-16x16-v2.png",
   ),
   favicon32: resolve(
     brandDir,
-    "favicon-32x32.png",
+    "favicon-32x32-v2.png",
   ),
   favicon48: resolve(
     brandDir,
-    "favicon-48x48.png",
+    "favicon-48x48-v2.png",
   ),
   apple180: resolve(
     brandDir,
@@ -53,7 +53,7 @@ const outputs = {
   ),
   ico: resolve(
     root,
-    "public/favicon.ico",
+    "public/favicon-v2.ico",
   ),
 };
 
@@ -63,19 +63,20 @@ const previousDesktopIcon = resolve(
 );
 
 /**
- * Browser favicon target:
+ * Browser favicon targets.
  *
- * Transparent canvas + only the original Vatandoshlar
- * geometric mark.
+ * 16px stays at the maximum safe size that still leaves
+ * transparent breathing room around the geometric mark.
  *
- * ~86% visible occupancy keeps the symbol large enough
- * for browser tabs while preserving ~7% safe padding
- * on each side.
+ * 32px and 48px use slightly larger optical occupancy.
  *
- * iPhone/PWA values remain independent.
+ * iPhone/PWA values stay independent and are not generated
+ * by this script run.
  */
 const TARGETS = {
-  favicon: 0.86,
+  favicon16: 0.875,
+  favicon32: 0.91,
+  favicon48: 0.90,
   iphone: 0.64,
   desktopFallback: 0.545,
   maskable: 0.58,
@@ -710,13 +711,6 @@ function logoStrength(
     return 0;
   }
 
-  /**
-   * The source PNG can contain pale/off-white
-   * background pixels.
-   *
-   * Only the saturated Vatandoshlar teal mark
-   * should survive extraction.
-   */
   const saturationStrength =
     Math.max(
       0,
@@ -1037,13 +1031,11 @@ function sampleBilinear(
 /**
  * Browser favicon renderer.
  *
- * IMPORTANT:
- * - Transparent canvas.
- * - No white square.
- * - No border.
- * - No shadow.
- * - No extra background panel.
- * - Only the original Vatandoshlar mark.
+ * Transparent canvas.
+ * No white square.
+ * No border.
+ * No shadow.
+ * No background panel.
  */
 function renderTransparentIcon(
   logo,
@@ -1097,13 +1089,6 @@ function renderTransparentIcon(
         2,
     );
 
-  /**
-   * Uint8Array starts with all zeroes:
-   *
-   * RGBA(0, 0, 0, 0)
-   *
-   * = completely transparent canvas.
-   */
   const rgba =
     new Uint8Array(
       size *
@@ -1198,12 +1183,6 @@ function renderTransparentIcon(
   };
 }
 
-/**
- * App/PWA renderer.
- *
- * This intentionally keeps the existing
- * pure-white app-icon design.
- */
 function measureVisibleOccupancy(
   image,
 ) {
@@ -1409,7 +1388,7 @@ function assertWhiteBackground(
           image.width +
         x
       ) *
-      4;
+        4;
 
     const pixel =
       Array.from(
@@ -1488,7 +1467,7 @@ function assertTransparentBackground(
           image.width +
         x
       ) *
-      4;
+        4;
 
     const alpha =
       image.rgba[
@@ -1576,26 +1555,26 @@ function validateIcon(
       measurement.bounds.minX +
       measurement.bounds.maxX
     ) /
-    2;
+      2;
 
   const centerY =
     (
       measurement.bounds.minY +
       measurement.bounds.maxY
     ) /
-    2;
+      2;
 
   const expectedCenterX =
     (
       image.width - 1
     ) /
-    2;
+      2;
 
   const expectedCenterY =
     (
       image.height - 1
     ) /
-    2;
+      2;
 
   if (
     Math.abs(
@@ -1793,77 +1772,57 @@ console.log(
 );
 
 /**
- * IMPORTANT:
+ * Only browser favicon assets are generated here.
  *
- * Browser favicon files are generated with
- * TRANSPARENT background.
- *
- * iPhone/PWA files retain PURE WHITE background.
+ * Apple-touch and PWA icon files are intentionally
+ * left untouched.
  */
-const generated = [
+const faviconConfigs = [
   {
-    path:
-      outputs.favicon16,
-
-    image:
-      renderTransparentIcon(
-        logo,
-        16,
-        TARGETS.favicon,
-      ),
-
+    size: 16,
+    path: outputs.favicon16,
     occupancy:
-      TARGETS.favicon,
-
-    label:
-      "favicon-16x16",
-
-    background:
-      "transparent",
+      TARGETS.favicon16,
   },
-
   {
-    path:
-      outputs.favicon32,
-
-    image:
-      renderTransparentIcon(
-        logo,
-        32,
-        TARGETS.favicon,
-      ),
-
+    size: 32,
+    path: outputs.favicon32,
     occupancy:
-      TARGETS.favicon,
-
-    label:
-      "favicon-32x32",
-
-    background:
-      "transparent",
+      TARGETS.favicon32,
   },
-
   {
-    path:
-      outputs.favicon48,
-
-    image:
-      renderTransparentIcon(
-        logo,
-        48,
-        TARGETS.favicon,
-      ),
-
+    size: 48,
+    path: outputs.favicon48,
     occupancy:
-      TARGETS.favicon,
-
-    label:
-      "favicon-48x48",
-
-    background:
-      "transparent",
+      TARGETS.favicon48,
   },
 ];
+
+const generated =
+  faviconConfigs.map(
+    ({
+      size,
+      path,
+      occupancy,
+    }) => ({
+      path,
+
+      image:
+        renderTransparentIcon(
+          logo,
+          size,
+          occupancy,
+        ),
+
+      occupancy,
+
+      label:
+        `favicon-${size}x${size}`,
+
+      background:
+        "transparent",
+    }),
+  );
 
 for (
   const item of generated
@@ -1882,30 +1841,41 @@ for (
 }
 
 /**
- * favicon.ico is assembled ONLY from the
- * transparent 16/32/48 PNG variants.
+ * favicon-v2.ico is used by the new versioned metadata.
+ *
+ * /favicon.ico is also updated with the same artwork as a
+ * fallback for browsers that request the conventional URL
+ * automatically.
  */
+const faviconIcoEntries = [
+  {
+    path:
+      outputs.favicon16,
+    size: 16,
+  },
+  {
+    path:
+      outputs.favicon32,
+    size: 32,
+  },
+  {
+    path:
+      outputs.favicon48,
+    size: 48,
+  },
+];
+
 writeIco(
-  [
-    {
-      path:
-        outputs.favicon16,
-      size: 16,
-    },
-
-    {
-      path:
-        outputs.favicon32,
-      size: 32,
-    },
-
-    {
-      path:
-        outputs.favicon48,
-      size: 48,
-    },
-  ],
+  faviconIcoEntries,
   outputs.ico,
+);
+
+writeIco(
+  faviconIcoEntries,
+  resolve(
+    root,
+    "public/favicon.ico",
+  ),
 );
 
 console.log(
@@ -1913,23 +1883,27 @@ console.log(
 );
 
 console.log(
-  "- public/images/brand/favicon-16x16.png",
+  "- public/images/brand/favicon-16x16-v2.png",
 );
 
 console.log(
-  "- public/images/brand/favicon-32x32.png",
+  "- public/images/brand/favicon-32x32-v2.png",
 );
 
 console.log(
-  "- public/images/brand/favicon-48x48.png",
+  "- public/images/brand/favicon-48x48-v2.png",
 );
 
 console.log(
-  "- public/favicon.ico",
+  "- public/favicon-v2.ico",
 );
 
 console.log(
-  "\nBrowser favicon: transparent background, ~86% visible logo occupancy.",
+  "- public/favicon.ico (fallback)",
+);
+
+console.log(
+  "\nBrowser favicon: transparent background with size-specific optical occupancy.",
 );
 
 console.log(
