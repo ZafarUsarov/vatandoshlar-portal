@@ -203,6 +203,7 @@ export default async function HeroSection() {
           src="/images/home/homepage-master-visual.webp"
           alt=""
           fill
+          priority
           fetchPriority="high"
           sizes="100vw"
           quality={88}
