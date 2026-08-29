@@ -1,1 +1,4 @@
-export { default } from "../../telegram/page";
+export {
+  default,
+  generateMetadata,
+} from "../../telegram/page";
