@@ -204,7 +204,6 @@ export default async function HeroSection() {
           alt=""
           fill
           priority
-          fetchPriority="high"
           sizes="100vw"
           quality={88}
           className="object-cover object-[78%_center] opacity-45 sm:object-[74%_center] sm:opacity-55 lg:object-[70%_center] lg:opacity-65 xl:object-center xl:opacity-75"
