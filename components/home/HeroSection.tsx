@@ -213,9 +213,9 @@ export default async function HeroSection() {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.99)_0%,rgba(2,6,23,0.96)_28%,rgba(2,6,23,0.82)_48%,rgba(2,6,23,0.48)_70%,rgba(2,6,23,0.24)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,6,23,0.08),rgba(2,6,23,0.28))]" />
 
-        <div className="absolute -right-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-emerald-500/16 blur-3xl" />
-        <div className="absolute -bottom-48 left-0 h-[32rem] w-[32rem] rounded-full bg-teal-500/12 blur-3xl" />
-        <div className="absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.07] blur-3xl" />
+        <div className="hidden absolute -right-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-emerald-500/16 blur-3xl sm:block" />
+        <div className="hidden absolute -bottom-48 left-0 h-[32rem] w-[32rem] rounded-full bg-teal-500/12 blur-3xl sm:block" />
+        <div className="hidden absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.07] blur-3xl sm:block" />
 
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:56px_56px]" />
       </div>
