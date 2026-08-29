@@ -10,7 +10,7 @@ export default function BrandName({
       <span className="text-text-primary">
         Vatandoshlar
       </span>
-      <span className="text-emerald-600 dark:text-emerald-400">
+      <span className="text-emerald-700 dark:text-emerald-400">
         .de
       </span>
     </span>
