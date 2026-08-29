@@ -286,7 +286,7 @@ export default async function FeaturedSpecialistsSection() {
           <div className="mx-auto mt-14 max-w-5xl overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50/90 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/80 sm:p-8 lg:p-10">
             <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
               <div>
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-400">
                   {t(
                     "emptyState.eyebrow",
                   )}
