@@ -487,7 +487,7 @@ export default function SearchSection() {
                       }
                     </p>
 
-                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 transition group-hover:gap-3 dark:text-emerald-400">
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 transition group-hover:gap-3 dark:text-emerald-400">
                       {t(
                         "preview.open",
                       )}

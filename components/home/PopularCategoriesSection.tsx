@@ -214,7 +214,7 @@ export default async function PopularCategoriesSection() {
                 </span>
               </div>
 
-              <p className="mt-6 text-xs font-bold uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-300">
+              <p className="mt-6 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-300">
                 {copy.specialists.eyebrow}
               </p>
 
