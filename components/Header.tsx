@@ -611,7 +611,7 @@ export default function Header() {
 
           <nav
             aria-label={t("accessibility.mainNavigation")}
-            className="hidden min-w-max shrink-0 items-center gap-0 min-[1160px]:flex"
+            className="hidden min-w-max shrink-0 items-center gap-0 min-[1160px]:ml-3 min-[1160px]:flex xl:ml-4"
           >
             {navigation.map((item) => {
               const isActive = isActiveRoute(
