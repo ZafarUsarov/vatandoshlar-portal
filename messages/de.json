@@ -1,7 +1,7 @@
 {
   "Home": {
     "hero": {
-      "badge": "Portal für Usbeken in Deutschland",
+      "badge": "Portal für Usbeken rund um Deutschland",
       "title": "Wichtige Informationen für das Leben in Deutschland",
       "highlight": "jetzt an einem Ort",
       "description": "Offizielle Nachrichten, geprüfte Dienstleistungen, Informationen zu Arbeit und Karriere, Telegram-Gruppen sowie Veranstaltungen an einem Ort.",
@@ -84,7 +84,7 @@
       "guide": "Leitfäden für Deutschland"
     },
     "brand": {
-      "subtitle": "Portal für Usbeken in Deutschland"
+      "subtitle": "Portal für Usbeken rund um Deutschland"
     },
     "actions": {
       "search": "Suchen",
@@ -263,7 +263,7 @@
   "NewsPage": {
     "metadata": {
       "title": "Nachrichten und nützliche Informationen | Vatandoshlar.de",
-      "description": "Offizielle und geprüfte Informationen zu Integration, Arbeit, Bildung und konsularischen Themen für Usbeken in Deutschland."
+      "description": "Offizielle und geprüfte Informationen zu Integration, Arbeit, Bildung und konsularischen Themen für Usbeken rund um Deutschland."
     },
     "hero": {
       "title": "Nachrichten und nützliche Informationen",
@@ -281,7 +281,7 @@
       "description": "Finden Sie verlässliche Inhalte zu Integration, Arbeit, Bildung, rechtlichen Fragen und konsularischen Dienstleistungen.",
       "count": "{count, plural, one {Insgesamt # Beitrag} other {Insgesamt # Beiträge}}"
     },
-    "footer": "Digitale Plattform für Usbeken in Deutschland",
+    "footer": "Digitale Plattform für Usbeken rund um Deutschland",
     "items": {
       "1": {
         "title": "Integrationskurse in Deutschland: Teilnahme und Kosten",
@@ -361,7 +361,7 @@
       "eyebrow": "Nützliche Informationen",
       "title": "Weitere Beiträge"
     },
-    "footer": "Digitale Plattform für Usbeken in Deutschland",
+    "footer": "Digitale Plattform für Usbeken rund um Deutschland",
     "items": {
       "1": {
         "title": "Integrationskurse in Deutschland: Teilnahme und Kosten",
@@ -552,8 +552,8 @@
       "servicesButton": "Dienstleistungen ansehen"
     },
     "brand": {
-      "subtitle": "Portal für Usbeken in Deutschland",
-      "description": "Unabhängige Informations- und Community-Plattform für Usbeken, die in Deutschland leben, studieren und arbeiten.",
+      "subtitle": "Portal für Usbeken rund um Deutschland",
+      "description": "Unabhängige Informations- und Community-Plattform für Usbeken, die in Deutschland leben oder sich für Deutschland interessieren.",
       "trust": "Die Inhalte werden nach Möglichkeit auf Grundlage offizieller und verlässlicher Quellen erstellt."
     },
     "columns": {
@@ -787,8 +787,8 @@
     "hero": {
       "badge": "Projektgründer",
       "profession": "Projektgründer und Softwareentwickler",
-      "title": "Entwickler einer verlässlichen digitalen Plattform für Usbeken in Deutschland",
-      "description": "Vatandoshlar.de ist ein langfristiges Projekt mit dem Ziel, Usbeken in Deutschland geprüfte Informationen, Dienstleistungen und hilfreiche Orientierung an einem Ort bereitzustellen.",
+      "title": "Entwickler einer verlässlichen digitalen Plattform für Usbeken rund um Deutschland",
+      "description": "Vatandoshlar.de ist ein langfristiges Projekt mit dem Ziel, Usbeken, die in Deutschland leben oder sich für Deutschland interessieren, geprüfte Informationen, Dienstleistungen und hilfreiche Orientierung an einem Ort bereitzustellen.",
       "contactButton": "Kontakt aufnehmen",
       "specialistButton": "Fachkräfteprofil ansehen"
     },
@@ -796,7 +796,7 @@
       "title": "Über mich",
       "paragraphs": {
         "0": "Ich bin Zafar Usarov, Gründer und Entwickler von Vatandoshlar.de. Ich entwickle produktionsreife Webanwendungen mit sauberer Architektur, strengem TypeScript und einem Ansatz, der auf langfristige Weiterentwicklung ausgelegt ist.",
-        "1": "Vatandoshlar.de ist für mich keine einfache Website. Ziel ist eine unabhängige, moderne und verantwortungsvolle Plattform, die Usbeken in Deutschland hilft, relevante Informationen und verlässliche Fachkräfte schneller zu finden."
+        "1": "Vatandoshlar.de ist für mich keine einfache Website. Ziel ist eine unabhängige, moderne und verantwortungsvolle Plattform, die Usbeken, die in Deutschland leben oder sich für Deutschland interessieren, dabei unterstützt, relevante Informationen und verlässliche Fachkräfte schneller zu finden."
       }
     },
     "mission": {

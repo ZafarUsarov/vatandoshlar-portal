@@ -42,14 +42,14 @@ const promoConfig: Record<SectionPromoTarget, PromoConfig> = {
       label: "Keyingi bo‘lim · Yangiliklar",
       title: "Germaniyadagi muhim yangiliklardan xabardor bo‘ling",
       description:
-        "Rasmiy manbalarga tayangan yangiliklar, foydali e’lonlar va Germaniyadagi o‘zbekistonliklar uchun muhim o‘zgarishlarni kuzating.",
+        "Rasmiy manbalarga tayangan yangiliklar, foydali e’lonlar va o‘zbekistonliklar uchun Germaniya bo‘yicha muhim o‘zgarishlarni kuzating.",
       action: "Yangiliklarni ko‘rish",
     },
     de: {
       label: "Nächster Bereich · Nachrichten",
       title: "Bleiben Sie über wichtige Entwicklungen in Deutschland informiert",
       description:
-        "Verfolgen Sie geprüfte Nachrichten, hilfreiche Hinweise und relevante Änderungen für Usbeken in Deutschland.",
+        "Verfolgen Sie geprüfte Nachrichten, hilfreiche Hinweise und relevante Entwicklungen rund um Deutschland für Usbeken.",
       action: "Nachrichten ansehen",
     },
   },

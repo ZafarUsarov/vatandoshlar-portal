@@ -1,7 +1,7 @@
 {
   "Home": {
     "hero": {
-      "badge": "Germaniyadagi o‘zbekistonliklar uchun portal",
+      "badge": "Germaniya bo‘yicha o‘zbekistonliklar portali",
       "title": "Germaniyada hayot uchun kerakli ma’lumotlar",
       "highlight": "endi bir joyda",
       "description": "Rasmiy yangiliklar, tekshirilgan xizmatlar, ish va karyera qo‘llanmalari, Telegram guruhlari hamda tadbirlarni qulay platformada toping.",
@@ -84,7 +84,7 @@
       "guide": "Germaniya bo‘yicha qo‘llanmalar"
     },
     "brand": {
-      "subtitle": "Germaniyadagi o‘zbekistonliklar portali"
+      "subtitle": "Germaniya bo‘yicha o‘zbekistonliklar portali"
     },
     "actions": {
       "search": "Qidirish",
@@ -263,7 +263,7 @@
   "NewsPage": {
     "metadata": {
       "title": "Yangiliklar va foydali ma’lumotlar | Vatandoshlar.de",
-      "description": "Germaniyadagi o‘zbekistonliklar uchun rasmiy manbalarga asoslangan integratsiya, ish, ta’lim va konsullik ma’lumotlari."
+      "description": "Germaniya bo‘yicha o‘zbekistonliklar uchun rasmiy manbalarga asoslangan integratsiya, ish, ta’lim va konsullik ma’lumotlari."
     },
     "hero": {
       "title": "Yangiliklar va foydali ma’lumotlar",
@@ -281,7 +281,7 @@
       "description": "Integratsiya, ish, ta’lim, huquqiy masalalar va konsullik xizmatlariga oid ishonchli materiallarni bir joyda toping.",
       "count": "Jami {count} ta material"
     },
-    "footer": "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
+    "footer": "Germaniya bo‘yicha o‘zbekistonliklar uchun raqamli platforma",
     "items": {
       "1": {
         "title": "Germaniyada integratsiya kurslari: qatnashish va xarajatlar",
@@ -361,7 +361,7 @@
       "eyebrow": "Foydali ma’lumotlar",
       "title": "Boshqa materiallar"
     },
-    "footer": "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
+    "footer": "Germaniya bo‘yicha o‘zbekistonliklar uchun raqamli platforma",
     "items": {
       "1": {
         "title": "Germaniyada integratsiya kurslari: qatnashish va xarajatlar",
@@ -552,8 +552,8 @@
       "servicesButton": "Xizmatlarni ko‘rish"
     },
     "brand": {
-      "subtitle": "Germaniyadagi o‘zbekistonliklar portali",
-      "description": "Germaniyada yashayotgan, o‘qiyotgan va ishlayotgan o‘zbekistonliklar uchun mustaqil axborot va hamjamiyat platformasi.",
+      "subtitle": "Germaniya bo‘yicha o‘zbekistonliklar portali",
+      "description": "Germaniyada yashayotgan va Germaniyaga qiziqayotgan o‘zbekistonliklar uchun mustaqil axborot va hamjamiyat platformasi.",
       "trust": "Ma’lumotlar imkon qadar rasmiy va ishonchli manbalar asosida tayyorlanadi."
     },
     "columns": {
@@ -787,8 +787,8 @@
     "hero": {
       "badge": "Loyiha asoschisi",
       "profession": "Loyiha asoschisi va dasturchisi",
-      "title": "Germaniyadagi o‘zbekistonliklar uchun ishonchli raqamli platforma yaratuvchisi",
-      "description": "Vatandoshlar.de — Germaniyada yashayotgan o‘zbekistonliklarga tekshirilgan ma’lumot, xizmat va foydali yo‘nalishlarni bir joyda taqdim etish maqsadida yaratilgan uzoq muddatli loyiha.",
+      "title": "Germaniya bo‘yicha o‘zbekistonliklar uchun ishonchli raqamli platforma yaratuvchisi",
+      "description": "Vatandoshlar.de — Germaniyada yashayotgan va Germaniyaga qiziqayotgan o‘zbekistonliklarga tekshirilgan ma’lumot, xizmat va foydali yo‘nalishlarni bir joyda taqdim etish maqsadida yaratilgan uzoq muddatli loyiha.",
       "contactButton": "Bog‘lanish",
       "specialistButton": "Mutaxassis profilini ko‘rish"
     },
@@ -796,7 +796,7 @@
       "title": "Men haqimda",
       "paragraphs": {
         "0": "Men — Zafar Usarov, Vatandoshlar.de loyihasining asoschisi va dasturchisiman. Amalda foydalanishga tayyor veb-ilovalarni toza arxitektura, qat’iy TypeScript va uzoq muddatli rivojlanishga mos yondashuv asosida yarataman.",
-        "1": "Vatandoshlar.de men uchun oddiy sayt emas. Uning maqsadi Germaniyadagi o‘zbekistonliklarga kerakli ma’lumot va ishonchli mutaxassislarni tezroq topishga yordam beradigan mustaqil, zamonaviy va mas’uliyatli platforma qurishdir."
+        "1": "Vatandoshlar.de men uchun oddiy sayt emas. Uning maqsadi Germaniyada yashayotgan va Germaniyaga qiziqayotgan o‘zbekistonliklarga kerakli ma’lumot va ishonchli mutaxassislarni tezroq topishga yordam beradigan mustaqil, zamonaviy va mas’uliyatli platforma qurishdir."
       }
     },
     "mission": {

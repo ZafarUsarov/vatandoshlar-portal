@@ -187,7 +187,7 @@ export default async function ServiceDetailPage({
             "Sizga foydali bo‘lishi mumkin",
           details: "Batafsil",
           footer:
-            "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
+            "Germaniya bo‘yicha o‘zbekistonliklar uchun raqamli platforma",
         }
       : {
           back: "Alle Dienstleistungen",
@@ -214,7 +214,7 @@ export default async function ServiceDetailPage({
             "Das könnte ebenfalls hilfreich sein",
           details: "Details",
           footer:
-            "Digitale Plattform für Usbeken in Deutschland",
+            "Digitale Plattform für Usbeken rund um Deutschland",
         };
 
   return (

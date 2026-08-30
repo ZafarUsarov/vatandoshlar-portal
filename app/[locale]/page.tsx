@@ -11,16 +11,16 @@ export async function generateMetadata(): Promise<Metadata> {
   const isGerman = locale === "de";
 
   const title = isGerman
-    ? "Vatandoshlar.de – Plattform für Usbeken in Deutschland"
-    : "Vatandoshlar.de – Germaniyadagi o‘zbekistonliklar platformasi";
+    ? "Vatandoshlar.de – Plattform für Usbeken rund um Deutschland"
+    : "Vatandoshlar.de – Germaniya bo‘yicha o‘zbekistonliklar platformasi";
 
   const socialTitle = isGerman
-    ? "Plattform für Usbeken in Deutschland"
-    : "Germaniyadagi o‘zbekistonliklar platformasi";
+    ? "Plattform für Usbeken rund um Deutschland"
+    : "Germaniya bo‘yicha o‘zbekistonliklar platformasi";
 
   const description = isGerman
-    ? "Nachrichten, Services, Jobs, Fachkräfte, Ratgeber, Telegram-Communitys und Veranstaltungen für Usbeken in Deutschland."
-    : "Germaniyadagi o‘zbekistonliklar uchun yangiliklar, xizmatlar, ish, mutaxassislar, qo‘llanmalar, Telegram hamjamiyatlari va tadbirlar.";
+    ? "Informationen für Usbeken rund um Deutschland zu Leben, Studium, Arbeit, Ausbildung, Visum und Einreise sowie zu Dienstleistungen, Fachkräften und Communitys."
+    : "Germaniyada yashash, o‘qish, ishlash, Ausbildung, viza va ko‘chish bo‘yicha o‘zbekistonliklar uchun yangiliklar, xizmatlar, mutaxassislar, qo‘llanmalar va hamjamiyatlar.";
 
   const canonicalUrl = `${SITE_URL}/${locale}`;
 

@@ -204,7 +204,7 @@ export default async function JobGuidePage({
           relatedTitle:
             "Sizga foydali bo‘lishi mumkin",
           footer:
-            "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
+            "Germaniya bo‘yicha o‘zbekistonliklar uchun raqamli platforma",
           card: {
             highlightsAria:
               "Qo‘llanmaning asosiy mavzulari",
@@ -252,7 +252,7 @@ export default async function JobGuidePage({
           relatedTitle:
             "Das könnte ebenfalls hilfreich sein",
           footer:
-            "Digitale Plattform für Usbeken in Deutschland",
+            "Digitale Plattform für Usbeken rund um Deutschland",
           card: {
             highlightsAria:
               "Wichtige Themen des Leitfadens",

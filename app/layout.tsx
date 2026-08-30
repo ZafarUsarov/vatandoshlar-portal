@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Germaniyadagi o‘zbekistonliklar uchun yangiliklar, xizmatlar, ish, Telegram guruhlari va tadbirlar portali.",
+    "Germaniya bo‘yicha o‘zbekistonliklar uchun yangiliklar, xizmatlar, ish, ta’lim, viza, qo‘llanmalar, Telegram hamjamiyatlari va tadbirlar portali.",
 
   applicationName: "Vatandoshlar.de",
 
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     siteName: "Vatandoshlar.de",
     title: "Vatandoshlar.de",
     description:
-      "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma.",
+      "Germaniya bo‘yicha o‘zbekistonliklar uchun raqamli platforma.",
     images: [
       {
         url: SOCIAL_PREVIEW_IMAGE_URL,
@@ -100,7 +100,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vatandoshlar.de",
     description:
-      "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma.",
+      "Germaniya bo‘yicha o‘zbekistonliklar uchun raqamli platforma.",
     images: [SOCIAL_PREVIEW_IMAGE_URL],
   },
 

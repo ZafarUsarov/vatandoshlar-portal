@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Vatandoshlar.de",
     short_name: "Vatandoshlar.de",
     description:
-      "Germaniyadagi o‘zbekistonliklar uchun yangiliklar, xizmatlar, ish, mutaxassislar, qo‘llanmalar, Telegram hamjamiyatlari va tadbirlar.",
+      "Germaniya bo‘yicha o‘zbekistonliklar uchun yangiliklar, xizmatlar, ish, ta’lim, viza, mutaxassislar, qo‘llanmalar, Telegram hamjamiyatlari va tadbirlar.",
     start_url: "/uz",
     display: "standalone",
     background_color: "#ffffff",
