@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { getLocale } from "next-intl/server";
 import type { ReactNode } from "react";
@@ -9,6 +9,21 @@ import "./globals.css";
 
 const SITE_URL = "https://vatandoshlar.de";
 const SOCIAL_PREVIEW_IMAGE_URL = `${SITE_URL}/api/social-preview`;
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    {
+      media: "(prefers-color-scheme: light)",
+      color: "#ffffff",
+    },
+    {
+      media: "(prefers-color-scheme: dark)",
+      color: "#020617",
+    },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
