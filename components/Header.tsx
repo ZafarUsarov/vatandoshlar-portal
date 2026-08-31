@@ -6,6 +6,7 @@ import {
   useCallback,
   useEffect,
   useState,
+  useSyncExternalStore,
   type MouseEvent,
   type ReactNode,
 } from "react";
@@ -25,6 +26,42 @@ type IconProps = {
   children: ReactNode;
   className?: string;
 };
+
+function getIOSWebViewFallbackSnapshot() {
+  const isIOS = /iPhone|iPad|iPod/.test(
+    window.navigator.userAgent,
+  );
+
+  const hasConstrainedOuterViewport =
+    window.screen.height - window.outerHeight >= 64;
+
+  return isIOS && hasConstrainedOuterViewport;
+}
+
+function getServerIOSWebViewFallbackSnapshot() {
+  return false;
+}
+
+function subscribeToViewportChanges(
+  onStoreChange: () => void,
+) {
+  window.addEventListener("resize", onStoreChange);
+  window.addEventListener(
+    "orientationchange",
+    onStoreChange,
+  );
+
+  return () => {
+    window.removeEventListener(
+      "resize",
+      onStoreChange,
+    );
+    window.removeEventListener(
+      "orientationchange",
+      onStoreChange,
+    );
+  };
+}
 
 function Icon({
   children,
@@ -349,6 +386,12 @@ export default function Header() {
   const [isScrolled, setIsScrolled] =
     useState(false);
 
+  const useIOSWebViewFallback = useSyncExternalStore(
+    subscribeToViewportChanges,
+    getIOSWebViewFallbackSnapshot,
+    getServerIOSWebViewFallbackSnapshot,
+  );
+
   const isActiveRoute = useCallback(
     (href: string) => {
       if (href === "/") {
@@ -523,7 +566,8 @@ export default function Header() {
     <>
       <header
         className={`
-          fixed inset-x-0 top-0 z-50
+          ${useIOSWebViewFallback ? "absolute" : "fixed"}
+          inset-x-0 top-0 z-50
           border-b
           transition-[background-color,border-color,box-shadow]
           duration-300
