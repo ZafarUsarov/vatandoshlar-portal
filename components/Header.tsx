@@ -523,17 +523,29 @@ export default function Header() {
     <>
       <header
         className={`
-          fixed inset-x-0 top-0 z-50
+          fixed inset-x-0 top-0 z-50 isolate
           border-b
-          transition-[background-color,border-color,box-shadow]
+          transition-[border-color,box-shadow]
           duration-300
           ${
             isScrolled
-              ? "border-slate-200/90 bg-white/80 shadow-[0_12px_40px_-24px_rgba(15,23,42,0.35)] backdrop-blur-2xl dark:border-white/10 dark:bg-slate-950/80"
-              : "border-slate-200/80 bg-white/90 shadow-[0_1px_20px_rgba(15,23,42,0.04)] backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-950/90"
+              ? "border-slate-200/90 shadow-[0_12px_40px_-24px_rgba(15,23,42,0.35)] dark:border-white/10"
+              : "border-slate-200/80 shadow-[0_1px_20px_rgba(15,23,42,0.04)] dark:border-slate-800/80"
           }
         `}
       >
+        <div
+          aria-hidden="true"
+          className={`
+            pointer-events-none absolute inset-0 -z-10
+            ${
+              isScrolled
+                ? "bg-white/80 backdrop-blur-2xl dark:bg-slate-950/80"
+                : "bg-white/90 backdrop-blur-xl dark:bg-slate-950/90"
+            }
+          `}
+        />
+
         <div
           className={`
             mx-auto flex max-w-[1380px]
@@ -904,12 +916,15 @@ export default function Header() {
               transition-[top,max-height] duration-300
               dark:border-slate-800
               dark:bg-slate-950
-              ${
-                isScrolled
-                  ? "top-16 max-h-[calc(100dvh-4rem)]"
-                  : "top-20 max-h-[calc(100dvh-5rem)]"
-              }
+              ${isScrolled ? "top-16" : "top-20"}
             `}
+            style={{
+              maxHeight: isScrolled
+                ? "calc(100dvh - 4rem - env(safe-area-inset-bottom, 0px))"
+                : "calc(100dvh - 5rem - env(safe-area-inset-bottom, 0px))",
+              paddingBottom:
+                "env(safe-area-inset-bottom, 0px)",
+            }}
           >
             <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
               <div className="mb-5 flex items-center justify-between">
