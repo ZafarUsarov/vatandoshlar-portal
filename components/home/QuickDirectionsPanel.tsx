@@ -64,14 +64,14 @@ export default function QuickDirectionsPanel({
 
           <div
             aria-hidden="true"
-            className="flex h-12 w-12 shrink-0 items-center justify-center"
+            className="flex h-14 w-14 shrink-0 items-center justify-center"
           >
             <Image
-              src="/images/brand/vatandoshlar-icon.png"
+              src="/images/brand/Logo_New_Transparent.png"
               alt=""
-              width={48}
-              height={48}
-              className="h-11 w-11 object-contain"
+              width={56}
+              height={56}
+              className="h-14 w-14 object-contain"
             />
           </div>
         </div>

@@ -591,28 +591,23 @@ export default function Header() {
             href="/"
             onClick={handleBrandClick}
             aria-label={t("accessibility.homeLink")}
-            className="group flex shrink-0 items-center gap-2"
+            className="group flex shrink-0 items-center gap-[6px]"
           >
             <span
-              className={`
+              className="
                 relative flex shrink-0 items-center justify-center
                 transition-all duration-300
                 group-hover:-translate-y-0.5
-                ${
-                  isScrolled
-                    ? "h-10 w-10 xl:h-[42px] xl:w-[42px]"
-                    : "h-11 w-11 xl:h-[52px] xl:w-[52px]"
-                }
-              `}
+              "
             >
               <Image
-                src="/images/brand/vatandoshlar-icon.png"
+                src="/images/brand/Logo_New_Transparent.png"
                 alt=""
                 aria-hidden="true"
                 width={44}
                 height={44}
                 priority
-                className="h-full w-full object-contain"
+                className="-translate-y-px h-[30px] w-auto object-contain"
               />
             </span>
 

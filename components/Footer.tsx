@@ -364,7 +364,7 @@ export default async function Footer({
                   >
                     <span className="flex size-11 shrink-0 items-center justify-center transition-transform duration-300 group-hover:scale-105">
                       <Image
-                        src="/images/brand/vatandoshlar-icon.png"
+                        src="/images/brand/Logo_New_Transparent.png"
                         alt=""
                         aria-hidden="true"
                         width={44}
