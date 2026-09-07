@@ -34,6 +34,7 @@ export type SpecialistStatus = Readonly<{
 export type SpecialistContact = Readonly<{
   email?: string;
   phone?: string;
+  mobile?: string;
   website?: string;
   whatsapp?: string;
   telegram?: string;
@@ -55,6 +56,9 @@ export type Specialist = Readonly<{
   name: string;
   profession: LocalizedText;
   shortDescription: LocalizedText;
+  profile?: ReadonlyArray<LocalizedText>;
+  education?: ReadonlyArray<LocalizedText>;
+  memberships?: ReadonlyArray<LocalizedText>;
   categories: ReadonlyArray<SpecialistCategory>;
   languages: ReadonlyArray<SpecialistLanguage>;
   services: ReadonlyArray<LocalizedText>;
@@ -76,12 +80,18 @@ export type LocalizedSpecialist = Omit<
   | "profession"
   | "shortDescription"
   | "services"
+  | "profile"
+  | "education"
+  | "memberships"
   | "pricingNote"
   | "serviceArea"
 > & {
   profession: string;
   shortDescription: string;
   services: ReadonlyArray<string>;
+  profile?: ReadonlyArray<string>;
+  education?: ReadonlyArray<string>;
+  memberships?: ReadonlyArray<string>;
   pricingNote?: string;
   serviceArea?: string;
 };

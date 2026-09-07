@@ -1,7 +1,7 @@
 {
   "Home": {
     "hero": {
-      "badge": "Germaniya bo‘yicha o‘zbekistonliklar portali",
+      "badge": "Germaniyadagi o‘zbekistonliklar uchun portal",
       "title": "Germaniyada hayot uchun kerakli ma’lumotlar",
       "highlight": "endi bir joyda",
       "description": "Rasmiy yangiliklar, tekshirilgan xizmatlar, ish va karyera qo‘llanmalari, Telegram guruhlari hamda tadbirlarni qulay platformada toping.",
@@ -9,7 +9,7 @@
       "jobsCta": "Ish bo‘limiga o‘tish",
       "trust": {
         "officialSources": "Rasmiy manbalar",
-        "verifiedListings": "Ishonchli e’lonlar",
+        "verifiedListings": "Uydirma e’lonlarsiz",
         "mobileFriendly": "Mobil qurilmalarga mos"
       }
     },
@@ -84,7 +84,7 @@
       "guide": "Germaniya bo‘yicha qo‘llanmalar"
     },
     "brand": {
-      "subtitle": "Germaniya bo‘yicha o‘zbekistonliklar portali"
+      "subtitle": "Germaniyadagi o‘zbekistonliklar portali"
     },
     "actions": {
       "search": "Qidirish",
@@ -121,20 +121,18 @@
   "SearchSection": {
     "badge": "Global qidiruv",
     "title": "Kerakli ma’lumotni bir necha soniyada toping",
-    "description": "Qo‘llanma maqolalari, mutaxassislar, ish, xizmat, yangilik, Telegram guruhi va tadbirlarni bitta qidiruv orqali toping.",
+    "description": "Ish, xizmat, yangilik, Telegram guruhi yoki tadbirni bitta qidiruv orqali toping.",
     "inputLabel": "Portal bo‘ylab qidirish",
-    "placeholder": "Masalan: Anmeldung, Steuer-ID, Ausbildung...",
+    "placeholder": "Masalan: Elektrik, Berlin, yurist, Minijob...",
     "searchButton": "Qidirish",
     "categoryFilterLabel": "Qidiruv kategoriyalari",
     "categories": {
       "all": "Barchasi",
       "news": "Yangilik",
       "services": "Xizmat",
-      "specialists": "Mutaxassis",
       "jobs": "Ish",
       "telegram": "Telegram",
-      "events": "Tadbir",
-      "guide": "Qo‘llanma"
+      "events": "Tadbir"
     },
     "results": {
       "title": "Natijalar",
@@ -184,15 +182,15 @@
       },
       "services": {
         "title": "Xizmat topish",
-        "description": "Tarjima, huquq, tibbiyot va boshqa xizmatlar"
+        "description": "Tarjimon, yurist, shifokor va mutaxassislar"
       },
       "telegram": {
         "title": "Telegram guruhlari",
         "description": "Bundeslandlar bo‘yicha faol hamjamiyatlar"
       },
-      "guide": {
-        "title": "Germaniya qo‘llanmasi",
-        "description": "Viza, Anmeldung, Ausbildung va kundalik hayot"
+      "events": {
+        "title": "Tadbirlar",
+        "description": "Tekshirilgan uchrashuv va tadbirlar"
       }
     }
   },
@@ -263,7 +261,7 @@
   "NewsPage": {
     "metadata": {
       "title": "Yangiliklar va foydali ma’lumotlar | Vatandoshlar.de",
-      "description": "Germaniya bo‘yicha o‘zbekistonliklar uchun rasmiy manbalarga asoslangan integratsiya, ish, ta’lim va konsullik ma’lumotlari."
+      "description": "Germaniyadagi o‘zbekistonliklar uchun rasmiy manbalarga asoslangan integratsiya, ish, ta’lim va konsullik ma’lumotlari."
     },
     "hero": {
       "title": "Yangiliklar va foydali ma’lumotlar",
@@ -281,7 +279,7 @@
       "description": "Integratsiya, ish, ta’lim, huquqiy masalalar va konsullik xizmatlariga oid ishonchli materiallarni bir joyda toping.",
       "count": "Jami {count} ta material"
     },
-    "footer": "Germaniya bo‘yicha o‘zbekistonliklar uchun raqamli platforma",
+    "footer": "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
     "items": {
       "1": {
         "title": "Germaniyada integratsiya kurslari: qatnashish va xarajatlar",
@@ -361,7 +359,7 @@
       "eyebrow": "Foydali ma’lumotlar",
       "title": "Boshqa materiallar"
     },
-    "footer": "Germaniya bo‘yicha o‘zbekistonliklar uchun raqamli platforma",
+    "footer": "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
     "items": {
       "1": {
         "title": "Germaniyada integratsiya kurslari: qatnashish va xarajatlar",
@@ -552,8 +550,8 @@
       "servicesButton": "Xizmatlarni ko‘rish"
     },
     "brand": {
-      "subtitle": "Germaniya bo‘yicha o‘zbekistonliklar portali",
-      "description": "Germaniyada yashayotgan va Germaniyaga qiziqayotgan o‘zbekistonliklar uchun mustaqil axborot va hamjamiyat platformasi.",
+      "subtitle": "Germaniyadagi o‘zbekistonliklar portali",
+      "description": "Germaniyada yashayotgan, o‘qiyotgan va ishlayotgan o‘zbekistonliklar uchun mustaqil axborot va hamjamiyat platformasi.",
       "trust": "Ma’lumotlar imkon qadar rasmiy va ishonchli manbalar asosida tayyorlanadi."
     },
     "columns": {
@@ -703,7 +701,7 @@
       "finance": "Soliq va moliya",
       "creative": "Foto, video va kreativ",
       "languageTeaching": "Nemis tili o‘qituvchilari",
-      "academicDocuments": "Bakalavr, magistratura va doktorantura hujjatlari",
+      "academicDocuments": "Bachelor, Master va PhD hujjatlari",
       "beauty": "Go‘zallik xizmatlari"
     },
     "results": {
@@ -756,7 +754,8 @@
       "telegram": "Telegram",
       "instagram": "Instagram",
       "youtube": "YouTube",
-      "facebook": "Facebook"
+      "facebook": "Facebook",
+      "mobile": "Mobil"
     },
     "categories": {
       "medical": "Shifokorlar",
@@ -766,7 +765,7 @@
       "home": "Uy va hunarmandchilik",
       "education": "Ta’lim va repetitorlik",
       "language-teaching": "Nemis tili o‘qituvchilari",
-      "academic-documents": "Bakalavr, magistratura va doktorantura hujjatlari",
+      "academic-documents": "Bachelor, Master va PhD hujjatlari",
       "beauty": "Go‘zallik xizmatlari",
       "finance": "Soliq va moliya",
       "creative": "Foto, video va kreativ"
@@ -777,7 +776,10 @@
       "ru": "Ruscha",
       "en": "Inglizcha",
       "tr": "Turkcha"
-    }
+    },
+    "profile": "Professional profil",
+    "education": "Ta’lim",
+    "memberships": "A’zoliklar"
   },
   "FounderPage": {
     "metadata": {
@@ -787,16 +789,16 @@
     "hero": {
       "badge": "Loyiha asoschisi",
       "profession": "Loyiha asoschisi va dasturchisi",
-      "title": "Germaniya bo‘yicha o‘zbekistonliklar uchun ishonchli raqamli platforma yaratuvchisi",
-      "description": "Vatandoshlar.de — Germaniyada yashayotgan va Germaniyaga qiziqayotgan o‘zbekistonliklarga tekshirilgan ma’lumot, xizmat va foydali yo‘nalishlarni bir joyda taqdim etish maqsadida yaratilgan uzoq muddatli loyiha.",
+      "title": "Germaniyadagi o‘zbekistonliklar uchun ishonchli raqamli platforma yaratuvchisi",
+      "description": "Vatandoshlar.de — Germaniyada yashayotgan o‘zbekistonliklarga tekshirilgan ma’lumot, xizmat va foydali yo‘nalishlarni bir joyda taqdim etish maqsadida yaratilgan uzoq muddatli loyiha.",
       "contactButton": "Bog‘lanish",
       "specialistButton": "Mutaxassis profilini ko‘rish"
     },
     "story": {
       "title": "Men haqimda",
       "paragraphs": {
-        "0": "Men — Zafar Usarov, Vatandoshlar.de loyihasining asoschisi va dasturchisiman. Amalda foydalanishga tayyor veb-ilovalarni toza arxitektura, qat’iy TypeScript va uzoq muddatli rivojlanishga mos yondashuv asosida yarataman.",
-        "1": "Vatandoshlar.de men uchun oddiy sayt emas. Uning maqsadi Germaniyada yashayotgan va Germaniyaga qiziqayotgan o‘zbekistonliklarga kerakli ma’lumot va ishonchli mutaxassislarni tezroq topishga yordam beradigan mustaqil, zamonaviy va mas’uliyatli platforma qurishdir."
+        "0": "Men — Zafar Usarov, Vatandoshlar.de loyihasining asoschisi va dasturchisiman. Production darajasidagi veb-ilovalarni toza arxitektura, qat’iy TypeScript va uzoq muddatli rivojlanishga mos yondashuv asosida yarataman.",
+        "1": "Vatandoshlar.de men uchun oddiy sayt emas. Uning maqsadi Germaniyadagi o‘zbekistonliklarga kerakli ma’lumot va ishonchli mutaxassislarni tezroq topishga yordam beradigan mustaqil, zamonaviy va mas’uliyatli platforma qurishdir."
       }
     },
     "mission": {
@@ -806,7 +808,7 @@
         "0": "Rasmiy va tekshiriladigan manbalarga asoslangan ma’lumot",
         "1": "O‘zbek va nemis tillarida qulay foydalanish",
         "2": "Ishonchli mutaxassislar va xizmatlarni topish",
-        "3": "Maxfiylik, foydalanish imkoniyati va barqaror rivojlanish"
+        "3": "Maxfiylik, accessibility va barqaror rivojlanish"
       }
     },
     "work": {
@@ -815,11 +817,11 @@
       "items": {
         "platform": {
           "title": "Veb-platformalar ishlab chiqish",
-          "description": "Next.js, React va TypeScript asosida tezkor, foydalanishga qulay va kengaytiriladigan veb-ilovalar."
+          "description": "Next.js, React va TypeScript asosida tezkor, accessible va kengaytiriladigan veb-ilovalar."
         },
         "academic": {
           "title": "Akademik hujjatlar bo‘yicha yo‘naltirish",
-          "description": "Bakalavr, magistratura va doktorantura jarayonlarida hujjatlar va keyingi qadamlarni tushunishga amaliy yordam."
+          "description": "Bachelor, Master va PhD jarayonlarida hujjatlar va keyingi qadamlarni tushunishga amaliy yordam."
         }
       }
     },
@@ -883,19 +885,5 @@
       }
     },
     "privacy": "To‘lov bevosita PayPal yoki Taps platformasida amalga oshiriladi. Vatandoshlar.de karta yoki bank ma’lumotlaringizni qabul qilmaydi va saqlamaydi."
-  },
-  "NotFoundPage": {
-    "eyebrow": "404 · Sahifa topilmadi",
-    "title": "Siz izlayotgan sahifa topilmadi",
-    "description": "Havola eskirgan, manzil noto‘g‘ri yozilgan yoki sahifa boshqa joyga ko‘chirilgan bo‘lishi mumkin. Bosh sahifaga qayting yoki Germaniya qo‘llanmasini ko‘ring.",
-    "home": "Bosh sahifaga qaytish",
-    "guide": "Germaniya qo‘llanmasi"
-  },
-  "ErrorPage": {
-    "eyebrow": "Texnik xatolik",
-    "title": "Sahifani yuklashda muammo yuz berdi",
-    "description": "Bu vaqtinchalik texnik muammo bo‘lishi mumkin. Qayta urinib ko‘ring yoki bosh sahifaga qayting.",
-    "retry": "Qayta urinish",
-    "home": "Bosh sahifaga qaytish"
   }
 }

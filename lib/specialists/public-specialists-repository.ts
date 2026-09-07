@@ -20,6 +20,13 @@ type PublishedSpecialistRow = {
   short_description_uz: string;
   short_description_de: string;
 
+  profile_uz: string[];
+  profile_de: string[];
+  education_uz: string[];
+  education_de: string[];
+  memberships_uz: string[];
+  memberships_de: string[];
+
   categories: string[];
   languages: string[];
 
@@ -35,6 +42,7 @@ type PublishedSpecialistRow = {
 
   email: string | null;
   phone: string | null;
+  mobile: string | null;
   website: string | null;
   whatsapp: string | null;
   telegram: string | null;
@@ -191,6 +199,10 @@ function toPublicSpecialist(
         row.phone ??
         undefined,
 
+      mobile:
+        row.mobile ??
+        undefined,
+
       website:
         row.website ??
         undefined,
@@ -241,6 +253,21 @@ function toPublicSpecialist(
       locale === "de"
         ? row.short_description_de
         : row.short_description_uz,
+
+    profile:
+      locale === "de"
+        ? row.profile_de
+        : row.profile_uz,
+
+    education:
+      locale === "de"
+        ? row.education_de
+        : row.education_uz,
+
+    memberships:
+      locale === "de"
+        ? row.memberships_de
+        : row.memberships_uz,
 
     categories:
       normalizeCategories(
@@ -371,6 +398,12 @@ const publishedSpecialistSelect = `
     profession_de,
     short_description_uz,
     short_description_de,
+    profile_uz,
+    profile_de,
+    education_uz,
+    education_de,
+    memberships_uz,
+    memberships_de,
     categories,
     languages,
     services_uz,
@@ -382,6 +415,7 @@ const publishedSpecialistSelect = `
     service_area_de,
     email,
     phone,
+    mobile,
     website,
     whatsapp,
     telegram,

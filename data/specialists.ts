@@ -23,7 +23,7 @@ export const specialists: ReadonlyArray<Specialist> = [
       de: "Unterstützt Ärztinnen und Ärzte in Nordrhein-Westfalen bei Unterlagen und der Vorbereitung auf die Fachsprachprüfung.",
     },
     categories: ["medical"],
-    languages: ["uz", "de", "ru"],
+    languages: [],
     services: [
       {
         uz: "Shifokorlar uchun NRW bo‘yicha hujjatlar maslahati",
@@ -62,18 +62,18 @@ export const specialists: ReadonlyArray<Specialist> = [
       de: "Damenfriseurin",
     },
     shortDescription: {
-      uz: "Hamm shahrida ayollar uchun soch turmagi va soch kesish xizmatlarini taklif qiladi.",
+      uz: "Hamm shahrida ayollar uchun soch turmagi va soch qirqish xizmatlarini taklif qiladi.",
       de: "Bietet in Hamm Haarschnitte und Frisuren für Frauen an.",
     },
     categories: ["beauty"],
-    languages: ["uz", "de", "ru"],
+    languages: [],
     services: [
       {
         uz: "Ayollar uchun soch turmagi",
         de: "Damenfrisuren",
       },
       {
-        uz: "Ayollar uchun soch kesish",
+        uz: "Ayollar uchun soch qirqish",
         de: "Damenhaarschnitte",
       },
     ],
@@ -108,7 +108,7 @@ export const specialists: ReadonlyArray<Specialist> = [
       de: "Softwareentwickler und Projektgründer",
     },
     shortDescription: {
-      uz: "Vatandoshlar.de asoschisi va dasturchisi. Veb-platformalar hamda bakalavr, magistratura va doktorantura hujjatlari bo‘yicha amaliy yo‘naltirish bilan shug‘ullanadi.",
+      uz: "Vatandoshlar.de asoschisi va dasturchisi. Veb-platformalar hamda Bachelor, Master va PhD hujjatlari bo‘yicha amaliy yo‘naltirish bilan shug‘ullanadi.",
       de: "Gründer und Entwickler von Vatandoshlar.de. Unterstützt bei Webplattformen sowie bei der Orientierung rund um Bachelor-, Master- und Promotionsunterlagen.",
     },
     categories: ["technology", "academic-documents"],
@@ -119,7 +119,7 @@ export const specialists: ReadonlyArray<Specialist> = [
         de: "Entwicklung von Websites und Webplattformen",
       },
       {
-        uz: "Bakalavr, magistratura va doktorantura hujjatlari bo‘yicha yo‘naltirish",
+        uz: "Bachelor, Master va PhD hujjatlari bo‘yicha yo‘naltirish",
         de: "Orientierung bei Bachelor-, Master- und Promotionsunterlagen",
       },
     ],
@@ -154,6 +154,15 @@ export function localizeSpecialist(
     shortDescription: specialist.shortDescription[locale],
     services: specialist.services.map(
       (service) => service[locale],
+    ),
+    profile: specialist.profile?.map(
+      (paragraph) => paragraph[locale],
+    ),
+    education: specialist.education?.map(
+      (item) => item[locale],
+    ),
+    memberships: specialist.memberships?.map(
+      (item) => item[locale],
     ),
     pricingNote: specialist.pricingNote?.[locale],
     serviceArea: specialist.serviceArea?.[locale],

@@ -275,6 +275,21 @@ export default async function SpecialistDetailPage({
               "languages",
             ),
 
+          profile:
+            t(
+              "profile",
+            ),
+
+          education:
+            t(
+              "education",
+            ),
+
+          memberships:
+            t(
+              "memberships",
+            ),
+
           services:
             t(
               "services",
@@ -298,6 +313,11 @@ export default async function SpecialistDetailPage({
           phone:
             t(
               "contact.phone",
+            ),
+
+          mobile:
+            t(
+              "contact.mobile",
             ),
 
           email:

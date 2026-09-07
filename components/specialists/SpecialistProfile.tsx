@@ -16,11 +16,15 @@ type SpecialistProfileProps = Readonly<{
     sponsored: string;
     location: string;
     languages: string;
+    profile: string;
+    education: string;
+    memberships: string;
     services: string;
     pricing: string;
     contact: string;
     contactDescription: string;
     phone: string;
+    mobile: string;
     email: string;
     website: string;
     whatsapp: string;
@@ -181,6 +185,17 @@ export default function SpecialistProfile({
           )}`,
         }
       : null,
+    specialist.contact.mobile
+      ? {
+          key: "mobile",
+          label: labels.mobile,
+          value: specialist.contact.mobile,
+          href: `tel:${specialist.contact.mobile.replace(
+            /\s+/g,
+            "",
+          )}`,
+        }
+      : null,
     specialist.contact.email
       ? {
           key: "email",
@@ -249,7 +264,7 @@ export default function SpecialistProfile({
   );
 
   return (
-    <main className="min-h-screen bg-white pt-20 text-slate-950 dark:bg-slate-950 dark:text-white">
+    <main className="min-h-screen bg-white bg-[radial-gradient(circle_at_8%_28%,rgba(16,185,129,0.055),transparent_30rem),radial-gradient(circle_at_92%_48%,rgba(59,130,246,0.045),transparent_34rem),radial-gradient(circle_at_45%_88%,rgba(20,184,166,0.04),transparent_32rem)] bg-no-repeat pt-20 text-slate-950 dark:bg-none dark:bg-slate-950 dark:text-white">
       <section className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-50 py-14 dark:border-slate-800 dark:bg-slate-950 sm:py-20">
         <div
           aria-hidden="true"
@@ -372,6 +387,59 @@ export default function SpecialistProfile({
                 )}
               </div>
             </article>
+
+            {specialist.profile && specialist.profile.length > 0 && (
+              <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
+                <h2 className="text-2xl font-bold tracking-[-0.03em] text-slate-950 dark:text-white">
+                  {labels.profile}
+                </h2>
+
+                <div className="mt-6 space-y-5 text-base leading-8 text-slate-600 dark:text-slate-300">
+                  {specialist.profile.map((paragraph) => (
+                    <p key={paragraph}>
+                      <BrandedText text={paragraph} />
+                    </p>
+                  ))}
+                </div>
+              </article>
+            )}
+
+            {((specialist.education && specialist.education.length > 0) ||
+              (specialist.memberships && specialist.memberships.length > 0)) && (
+              <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
+                <div className="grid gap-8 sm:grid-cols-2">
+                  {specialist.education && specialist.education.length > 0 && (
+                    <div>
+                      <h2 className="text-xl font-bold tracking-[-0.03em] text-slate-950 dark:text-white">
+                        {labels.education}
+                      </h2>
+                      <ul className="mt-4 space-y-3 text-slate-600 dark:text-slate-300">
+                        {specialist.education.map((item) => (
+                          <li key={item} className="leading-7">
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {specialist.memberships && specialist.memberships.length > 0 && (
+                    <div>
+                      <h2 className="text-xl font-bold tracking-[-0.03em] text-slate-950 dark:text-white">
+                        {labels.memberships}
+                      </h2>
+                      <ul className="mt-4 space-y-3 text-slate-600 dark:text-slate-300">
+                        {specialist.memberships.map((item) => (
+                          <li key={item} className="leading-7">
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </article>
+            )}
 
             <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
               <h2 className="text-2xl font-bold tracking-[-0.03em] text-slate-950 dark:text-white">
