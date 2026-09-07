@@ -591,7 +591,7 @@ export default function Header() {
             href="/"
             onClick={handleBrandClick}
             aria-label={t("accessibility.homeLink")}
-            className="group flex shrink-0 items-center gap-[6px]"
+            className="group flex shrink-0 items-center gap-1"
           >
             <span
               className="
@@ -607,7 +607,7 @@ export default function Header() {
                 width={44}
                 height={44}
                 priority
-                className="-translate-y-px h-[30px] w-auto object-contain"
+                className="-translate-y-px h-7 w-auto object-contain"
               />
             </span>
 
