@@ -1,7 +1,9 @@
 import { Fragment } from "react";
+
 import { getLocale } from "next-intl/server";
 
 import { Link } from "../../i18n/navigation";
+
 import BrandName from "../ui/BrandName";
 
 function BrandedText({
@@ -78,20 +80,20 @@ export default async function FounderProfilePromo() {
   const copy =
     locale === "de"
       ? {
-          label: "Vatandoshlar.de · Projektgründer",
+          label: "Zafar Usarov · Ausführliches Profil",
           title:
-            "Lernen Sie das Projekt hinter Vatandoshlar.de und seine Ziele kennen",
+            "Mehr über meinen beruflichen Hintergrund und Vatandoshlar.de",
           description:
-            "Erfahren Sie mehr darüber, warum Zafar Usarov Vatandoshlar.de gegründet hat, welche Ziele die Plattform verfolgt und wie sie weiterentwickelt wird.",
-          action: "Mehr über den Projektgründer",
+            "Dieses Fachkräfteprofil bietet einen kompakten Überblick. Ausführliche Informationen zu meinem beruflichen Hintergrund, meiner Arbeit, den eingesetzten Technologien sowie zur Entstehung und Mission von Vatandoshlar.de finden Sie auf der Gründerseite.",
+          action: "Ausführliches Profil ansehen",
         }
       : {
-          label: "Vatandoshlar.de · Loyiha asoschisi",
+          label: "Zafar Usarov · Batafsil profil",
           title:
-            "Vatandoshlar.de ortidagi loyiha va uning maqsadi bilan tanishing",
+            "Professional faoliyatim va Vatandoshlar.de haqida batafsil",
           description:
-            "Zafar Usarovning Vatandoshlar.de loyihasini nima uchun yaratgani, platformaning maqsadi va rivojlanish yo‘nalishlari haqida batafsil ma’lumot oling.",
-          action: "Loyiha asoschisi haqida",
+            "Ushbu mutaxassis profilida asosiy ma’lumotlar qisqacha jamlangan. Professional faoliyatim, tajribam, foydalanadigan texnologiyalarim hamda Vatandoshlar.de loyihasining yaratilishi va missiyasi haqidagi batafsil ma’lumotlar loyiha asoschisi sahifasida keltirilgan.",
+          action: "Batafsil profilni ko‘rish",
         };
 
   return (
@@ -103,7 +105,6 @@ export default async function FounderProfilePromo() {
         aria-hidden="true"
         className="pointer-events-none absolute -right-24 top-1/2 size-64 -translate-y-1/2 rounded-full bg-violet-400/15 blur-3xl dark:bg-violet-400/10"
       />
-
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(139,92,246,0.45),rgba(16,185,129,0.35),transparent)]"
@@ -117,7 +118,6 @@ export default async function FounderProfilePromo() {
                 <span className="flex size-5 items-center justify-center rounded-full border border-current/20">
                   <UserIcon />
                 </span>
-
                 <BrandedText text={copy.label} />
               </div>
 
@@ -138,7 +138,6 @@ export default async function FounderProfilePromo() {
               className="group/link inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-violet-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-violet-600/20 transition duration-200 hover:-translate-y-0.5 hover:bg-violet-500 hover:shadow-xl hover:shadow-violet-600/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto lg:min-w-56 dark:focus-visible:ring-offset-slate-950"
             >
               {copy.action}
-
               <span className="transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
                 <ArrowUpRightIcon />
               </span>
