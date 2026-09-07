@@ -191,10 +191,6 @@
       "events": {
         "title": "Tadbirlar",
         "description": "Tekshirilgan uchrashuv va tadbirlar"
-      },
-      "guide": {
-        "title": "Germaniya qo‘llanmasi",
-        "description": "Germaniyaga kelish va yashash bo‘yicha amaliy ma’lumotlar"
       }
     }
   },
@@ -706,7 +702,7 @@
       "creative": "Foto, video va kreativ",
       "languageTeaching": "Nemis tili o‘qituvchilari",
       "academicDocuments": "Bachelor, Master va PhD hujjatlari",
-      "beauty": "Go‘zallik xizmatlari"
+      "beauty": "Sartaroshlik va go‘zallik"
     },
     "results": {
       "title": "Mutaxassislar",
@@ -758,8 +754,7 @@
       "telegram": "Telegram",
       "instagram": "Instagram",
       "youtube": "YouTube",
-      "facebook": "Facebook",
-      "mobile": "Mobil"
+      "facebook": "Facebook"
     },
     "categories": {
       "medical": "Shifokorlar",
@@ -770,7 +765,7 @@
       "education": "Ta’lim va repetitorlik",
       "language-teaching": "Nemis tili o‘qituvchilari",
       "academic-documents": "Bachelor, Master va PhD hujjatlari",
-      "beauty": "Go‘zallik xizmatlari",
+      "beauty": "Sartaroshlik va go‘zallik",
       "finance": "Soliq va moliya",
       "creative": "Foto, video va kreativ"
     },
@@ -780,10 +775,7 @@
       "ru": "Ruscha",
       "en": "Inglizcha",
       "tr": "Turkcha"
-    },
-    "profile": "Professional profil",
-    "education": "Ta’lim",
-    "memberships": "A’zoliklar"
+    }
   },
   "FounderPage": {
     "metadata": {

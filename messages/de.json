@@ -191,10 +191,6 @@
       "events": {
         "title": "Veranstaltungen",
         "description": "Geprüfte Treffen und Veranstaltungen"
-      },
-      "guide": {
-        "title": "Deutschland-Guide",
-        "description": "Praktische Informationen zum Ankommen und Leben in Deutschland"
       }
     }
   },
@@ -706,7 +702,7 @@
       "creative": "Foto, Video und Kreatives",
       "languageTeaching": "Deutschlehrerinnen und Deutschlehrer",
       "academicDocuments": "Bachelor-, Master- und Promotionsunterlagen",
-      "beauty": "Beauty und Friseur"
+      "beauty": "Friseur & Beauty"
     },
     "results": {
       "title": "Fachkräfte",
@@ -758,8 +754,7 @@
       "telegram": "Telegram",
       "instagram": "Instagram",
       "youtube": "YouTube",
-      "facebook": "Facebook",
-      "mobile": "Mobil"
+      "facebook": "Facebook"
     },
     "categories": {
       "medical": "Ärzte und Medizin",
@@ -770,7 +765,7 @@
       "education": "Bildung und Nachhilfe",
       "language-teaching": "Deutschlehrerinnen und Deutschlehrer",
       "academic-documents": "Bachelor-, Master- und Promotionsunterlagen",
-      "beauty": "Beauty und Friseur",
+      "beauty": "Friseur & Beauty",
       "finance": "Steuern und Finanzen",
       "creative": "Foto, Video und Kreatives"
     },
@@ -780,10 +775,7 @@
       "ru": "Russisch",
       "en": "Englisch",
       "tr": "Türkisch"
-    },
-    "profile": "Berufliches Profil",
-    "education": "Ausbildung",
-    "memberships": "Mitgliedschaften"
+    }
   },
   "FounderPage": {
     "metadata": {
