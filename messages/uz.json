@@ -754,7 +754,8 @@
       "telegram": "Telegram",
       "instagram": "Instagram",
       "youtube": "YouTube",
-      "facebook": "Facebook"
+      "facebook": "Facebook",
+      "mobile": "Mobil telefon"
     },
     "categories": {
       "medical": "Shifokorlar",
@@ -775,7 +776,10 @@
       "ru": "Ruscha",
       "en": "Inglizcha",
       "tr": "Turkcha"
-    }
+    },
+    "profile": "Professional profil",
+    "education": "Ta’lim",
+    "memberships": "A’zoliklar"
   },
   "FounderPage": {
     "metadata": {

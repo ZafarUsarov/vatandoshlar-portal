@@ -754,7 +754,8 @@
       "telegram": "Telegram",
       "instagram": "Instagram",
       "youtube": "YouTube",
-      "facebook": "Facebook"
+      "facebook": "Facebook",
+      "mobile": "Mobiltelefon"
     },
     "categories": {
       "medical": "Ärzte und Medizin",
@@ -775,7 +776,10 @@
       "ru": "Russisch",
       "en": "Englisch",
       "tr": "Türkisch"
-    }
+    },
+    "profile": "Berufliches Profil",
+    "education": "Ausbildung",
+    "memberships": "Mitgliedschaften"
   },
   "FounderPage": {
     "metadata": {
