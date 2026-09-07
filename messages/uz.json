@@ -191,6 +191,10 @@
       "events": {
         "title": "Tadbirlar",
         "description": "Tekshirilgan uchrashuv va tadbirlar"
+      },
+      "guide": {
+        "title": "Germaniya qo‘llanmasi",
+        "description": "Germaniyaga kelish va yashash bo‘yicha amaliy ma’lumotlar"
       }
     }
   },

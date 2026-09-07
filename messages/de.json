@@ -191,6 +191,10 @@
       "events": {
         "title": "Veranstaltungen",
         "description": "Geprüfte Treffen und Veranstaltungen"
+      },
+      "guide": {
+        "title": "Deutschland-Guide",
+        "description": "Praktische Informationen zum Ankommen und Leben in Deutschland"
       }
     }
   },
