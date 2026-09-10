@@ -61,7 +61,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon-v3.ico?v=20260910-2",
+        url: "/favicon-v3.ico?v=20260910-3",
         type: "image/x-icon",
       },
       {
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     ],
     shortcut: [
       {
-        url: "/favicon-v3.ico?v=20260910-2",
+        url: "/favicon-v3.ico?v=20260910-3",
         type: "image/x-icon",
       },
     ],

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   useCallback,
   useEffect,
@@ -324,6 +324,7 @@ function getInitialDarkMode(): boolean {
 export default function Header() {
   const t = useTranslations("Header");
   const specialistsT = useTranslations("SpecialistsPage");
+  const locale = useLocale();
   const pathname = usePathname();
 
   const navigation: NavigationItem[] = [
@@ -651,7 +652,15 @@ export default function Header() {
 
           <nav
             aria-label={t("accessibility.mainNavigation")}
-            className="hidden min-w-max shrink-0 items-center gap-0.5 min-[1160px]:ml-5 min-[1160px]:flex xl:ml-6 xl:gap-1 2xl:ml-8"
+            className={`
+              hidden min-w-max shrink-0 items-center gap-0.5
+              min-[1160px]:flex xl:gap-1
+              ${
+                locale === "uz"
+                  ? "min-[1160px]:ml-auto"
+                  : "min-[1160px]:ml-5 xl:ml-6 2xl:ml-8"
+              }
+            `}
           >
             {navigation.map((item) => {
               const isActive = isActiveRoute(
@@ -710,7 +719,17 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="ml-auto hidden shrink-0 items-center gap-1.5 min-[1160px]:flex xl:gap-2">
+          <div
+            className={`
+              hidden shrink-0 items-center gap-1.5
+              min-[1160px]:flex xl:gap-2
+              ${
+                locale === "uz"
+                  ? "min-[1160px]:ml-3 xl:ml-4"
+                  : "ml-auto"
+              }
+            `}
+          >
             <button
               type="button"
               onClick={openCommandPalette}
