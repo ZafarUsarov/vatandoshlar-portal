@@ -8,7 +8,7 @@ import StructuredData from "../components/seo/StructuredData";
 import "./globals.css";
 
 const SITE_URL = "https://vatandoshlar.de";
-const SOCIAL_PREVIEW_IMAGE_URL = `${SITE_URL}/api/social-preview`;
+const SOCIAL_PREVIEW_IMAGE_URL = `${SITE_URL}/api/social-preview?v=20260910`;
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -61,28 +61,14 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon-v2.ico",
-        sizes: "any",
-      },
-      {
-        url: "/images/brand/favicon-16x16-v2.png",
-        sizes: "16x16",
-        type: "image/png",
-      },
-      {
-        url: "/images/brand/favicon-32x32-v2.png",
-        sizes: "32x32",
-        type: "image/png",
-      },
-      {
-        url: "/images/brand/favicon-48x48-v2.png",
-        sizes: "48x48",
+        url: "/images/brand/Logo_New_Transparent.png?v=20260910",
         type: "image/png",
       },
     ],
     shortcut: [
       {
-        url: "/favicon-v2.ico",
+        url: "/images/brand/Logo_New_Transparent.png?v=20260910",
+        type: "image/png",
       },
     ],
     apple: [

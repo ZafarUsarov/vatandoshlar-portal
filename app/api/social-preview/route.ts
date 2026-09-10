@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { createElement } from "react";
 
 const BRAND_ICON_URL =
-  "https://vatandoshlar.de/images/brand/vatandoshlar-icon.png";
+  "https://vatandoshlar.de/images/brand/Logo_New_Transparent.png";
 
 export async function GET() {
   const content = createElement(

@@ -4,7 +4,7 @@ import { getLocale } from "next-intl/server";
 type Locale = "uz" | "de";
 
 const SITE_URL = "https://vatandoshlar.de";
-const SOCIAL_PREVIEW_IMAGE_URL = `${SITE_URL}/api/social-preview`;
+const SOCIAL_PREVIEW_IMAGE_URL = `${SITE_URL}/api/social-preview?v=20260910`;
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale;
