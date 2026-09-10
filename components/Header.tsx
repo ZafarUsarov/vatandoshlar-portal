@@ -340,6 +340,12 @@ export default function Header() {
       icon: <NewsIcon />,
     },
     {
+      name: t("navigation.guide"),
+      href: "/guide",
+      description: t("navigationDescriptions.guide"),
+      icon: <GuideIcon />,
+    },
+    {
       name: t("navigation.services"),
       href: "/services",
       description: t("navigationDescriptions.services"),
@@ -368,12 +374,6 @@ export default function Header() {
       href: "/events",
       description: t("navigationDescriptions.events"),
       icon: <EventsIcon />,
-    },
-    {
-      name: t("navigation.guide"),
-      href: "/guide",
-      description: t("navigationDescriptions.guide"),
-      icon: <GuideIcon />,
     },
   ];
 
@@ -580,10 +580,11 @@ export default function Header() {
       >
         <div
           className={`
-            mx-auto flex max-w-[1380px]
+            mx-auto flex w-full max-w-[1440px]
             items-center gap-3 px-4
             transition-[height] duration-300
-            sm:px-6 lg:px-8
+            sm:px-6 min-[1160px]:px-5
+            xl:px-8 2xl:px-10
             ${isScrolled ? "h-16" : "h-20"}
           `}
         >
@@ -650,7 +651,7 @@ export default function Header() {
 
           <nav
             aria-label={t("accessibility.mainNavigation")}
-            className="hidden min-w-max shrink-0 items-center gap-0 min-[1160px]:ml-3 min-[1160px]:flex xl:ml-4"
+            className="hidden min-w-max shrink-0 items-center gap-0.5 min-[1160px]:ml-5 min-[1160px]:flex xl:ml-6 xl:gap-1 2xl:ml-8"
           >
             {navigation.map((item) => {
               const isActive = isActiveRoute(
@@ -709,7 +710,7 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="ml-auto hidden shrink-0 items-center gap-1 min-[1160px]:ml-3 min-[1160px]:flex xl:ml-4 xl:gap-2 2xl:ml-6">
+          <div className="ml-auto hidden shrink-0 items-center gap-1.5 min-[1160px]:flex xl:gap-2">
             <button
               type="button"
               onClick={openCommandPalette}
