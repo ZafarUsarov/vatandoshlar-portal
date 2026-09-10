@@ -20,6 +20,7 @@ import GuideStepList from "./GuideStepList";
 import GuideTableOfContents, {
   type GuideTableOfContentsItem,
 } from "./GuideTableOfContents";
+import GuideRichContent from "./rich-content/GuideRichContent";
 
 type GuideArticlePageProps = Readonly<{
   article: GuideArticle;
@@ -100,7 +101,41 @@ export default function GuideArticlePage({
     "warnings",
   ];
 
+  const richTocItems: ReadonlyArray<GuideTableOfContentsItem> =
+    article.slug === "email-yozishni-organamiz"
+      ? locale === "uz"
+        ? [
+            { id: "guide-section-email-basics", label: "E-mail nima?" },
+            { id: "guide-section-email-anatomy", label: "E-mail anatomiyasi" },
+            { id: "guide-section-email-writing", label: "E-mailni 6 qadamda yozish" },
+            { id: "guide-section-email-subject", label: "Subject yozish" },
+            { id: "guide-section-email-comparison", label: "Yaxshi va yomon E-mail" },
+            { id: "guide-section-email-style", label: "Rasmiy va norasmiy E-mail" },
+            { id: "guide-section-email-attachments", label: "Fayl biriktirish" },
+            { id: "guide-section-email-cc-bcc", label: "CC va BCC" },
+            { id: "guide-section-email-reply", label: "Reply, Reply all va Forward" },
+            { id: "guide-section-email-security", label: "Xavfsizlik" },
+            { id: "guide-section-email-checklist", label: "Yuborishdan oldingi tekshiruv" },
+            { id: "guide-section-email-templates", label: "Tayyor shablonlar" },
+          ]
+        : [
+            { id: "guide-section-email-basics", label: "Was ist eine E-Mail?" },
+            { id: "guide-section-email-anatomy", label: "Aufbau einer E-Mail" },
+            { id: "guide-section-email-writing", label: "E-Mail in 6 Schritten" },
+            { id: "guide-section-email-subject", label: "Betreff schreiben" },
+            { id: "guide-section-email-comparison", label: "Gute und schlechte E-Mail" },
+            { id: "guide-section-email-style", label: "Formell und informell" },
+            { id: "guide-section-email-attachments", label: "Dateien anhängen" },
+            { id: "guide-section-email-cc-bcc", label: "CC und BCC" },
+            { id: "guide-section-email-reply", label: "Antworten und Weiterleiten" },
+            { id: "guide-section-email-security", label: "Sicherheit" },
+            { id: "guide-section-email-checklist", label: "Kontrolle vor dem Senden" },
+            { id: "guide-section-email-templates", label: "Vorlagen" },
+          ]
+      : [];
+
   const tocItems: ReadonlyArray<GuideTableOfContentsItem> = [
+    ...richTocItems,
     ...sectionOrder.flatMap((key) => {
       const section = article.sections[key];
 
@@ -272,6 +307,11 @@ export default function GuideArticlePage({
               ))}
             </dl>
           </section>
+
+          <GuideRichContent
+            article={article}
+            locale={locale}
+          />
 
           <div className="mt-8 space-y-8">
             {sectionOrder.map((key) => {
