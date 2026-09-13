@@ -2,6 +2,7 @@ import { getDb } from "@/lib/db";
 
 import type {
   SupportedTelegramLocale,
+  TelegramCommunityType,
   TelegramGroup,
   TelegramGroupStatus,
 } from "@/types/telegram";
@@ -20,6 +21,7 @@ type PublicTelegramGroupRow = {
 
   button_type: string;
   group_status: string;
+  community_type: string;
 };
 
 function hasDatabaseConfiguration(): boolean {
@@ -56,14 +58,20 @@ function normalizeGroupStatus(
     : "coming-soon";
 }
 
+function normalizeCommunityType(
+  value: string,
+): TelegramCommunityType {
+  return value === "professional"
+    ? "professional"
+    : "regional";
+}
+
 function getDefaultDescription(
   bundesland: string,
   status: TelegramGroupStatus,
   locale: SupportedTelegramLocale,
 ): string {
-  if (
-    status === "active"
-  ) {
+  if (status === "active") {
     return locale === "uz"
       ? `${bundesland} hududidagi vatandoshlar uchun Telegram guruhi.`
       : `Telegram-Gruppe für die usbekische Community in ${bundesland}.`;
@@ -141,6 +149,11 @@ function toTelegramGroup(
         : isActive
           ? "Aktiv"
           : "Demnächst",
+
+    communityType:
+      normalizeCommunityType(
+        row.community_type,
+      ),
   };
 }
 
@@ -171,7 +184,8 @@ export async function getPublicTelegramGroups(
           href,
 
           button_type,
-          group_status
+          group_status,
+          community_type
 
         FROM telegram_groups
 

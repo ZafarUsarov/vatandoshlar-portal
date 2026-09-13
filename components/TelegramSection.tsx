@@ -41,7 +41,6 @@ function ArrowUpRightIcon({ className }: IconProps) {
   );
 }
 
-
 export default async function TelegramSection() {
   const locale =
     (await getLocale()) as SupportedTelegramLocale;
@@ -49,6 +48,18 @@ export default async function TelegramSection() {
   const telegramGroups =
     await getPublicTelegramGroups(
       locale,
+    );
+
+  const regionalGroups =
+    telegramGroups.filter(
+      (group) =>
+        group.communityType === "regional",
+    );
+
+  const professionalGroups =
+    telegramGroups.filter(
+      (group) =>
+        group.communityType === "professional",
     );
 
   const copy =
@@ -64,6 +75,13 @@ export default async function TelegramSection() {
             officialChannelAria:
               "Vatandoshlar.de rasmiy Telegram kanalini ochish",
           },
+          professional: {
+            eyebrow: "Professional hamjamiyatlar",
+            title:
+              "Kasbiy yo‘nalishdagi hamjamiyatlar",
+            description:
+              "Germaniyada o‘z sohasi bo‘yicha tajriba almashish, professional aloqalar o‘rnatish va bir-birini qo‘llab-quvvatlash uchun o‘zbek hamjamiyatlari.",
+          },
         }
       : {
           groups: {
@@ -75,6 +93,13 @@ export default async function TelegramSection() {
             officialChannel: "Offizieller Telegram-Kanal",
             officialChannelAria:
               "Offiziellen Telegram-Kanal von Vatandoshlar.de öffnen",
+          },
+          professional: {
+            eyebrow: "Professionelle Communitys",
+            title:
+              "Berufliche Netzwerke",
+            description:
+              "Usbekische Communitys für fachlichen Austausch, berufliche Vernetzung und gegenseitige Unterstützung in Deutschland.",
           },
         };
 
@@ -195,7 +220,7 @@ export default async function TelegramSection() {
           </div>
 
           <div className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-4">
-            {telegramGroups.map((group, index) => (
+            {regionalGroups.map((group, index) => (
               <TelegramCard
                 key={group.shortName}
                 group={group}
@@ -241,6 +266,67 @@ export default async function TelegramSection() {
               />
             </a>
           </div>
+
+          {professionalGroups.length > 0 && (
+            <section
+              aria-labelledby="telegram-professional-heading"
+              className="
+                mt-20
+                border-t border-slate-200/80
+                pt-14
+                dark:border-slate-800/80
+              "
+            >
+              <div className="max-w-3xl">
+                <p
+                  className="
+                    text-sm font-semibold
+                    uppercase tracking-[0.16em]
+                    text-sky-700
+                    dark:text-sky-300
+                  "
+                >
+                  {copy.professional.eyebrow}
+                </p>
+
+                <h3
+                  id="telegram-professional-heading"
+                  className="
+                    mt-4
+                    text-2xl font-semibold
+                    tracking-[-0.035em]
+                    text-slate-950
+                    sm:text-3xl
+                    dark:text-white
+                  "
+                >
+                  {copy.professional.title}
+                </h3>
+
+                <p
+                  className="
+                    mt-4
+                    max-w-2xl
+                    text-base leading-8
+                    text-slate-600
+                    dark:text-slate-400
+                  "
+                >
+                  {copy.professional.description}
+                </p>
+              </div>
+
+              <div className="mt-8 grid gap-7 md:grid-cols-2 xl:grid-cols-4">
+                {professionalGroups.map((group, index) => (
+                  <TelegramCard
+                    key={group.shortName}
+                    group={group}
+                    index={index}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       </section>
 
