@@ -655,3 +655,75 @@ export async function getPublishedSpecialistCategories(): Promise<
 > {
   return getPublishedSpecialistCategoriesCached();
 }
+
+const getPublishedSpecialistsByLocationIdCached =
+  cache(
+    async (
+      locationId: string,
+      locale: SupportedLocale,
+      limit: number,
+    ): Promise<
+      LocalizedSpecialist[]
+    > => {
+      assertDatabaseAvailable();
+
+      if (
+        canSkipDatabaseDuringCi()
+      ) {
+        return [];
+      }
+
+      const result =
+        await getDb().query<PublishedSpecialistRow>(
+          `
+            ${publishedSpecialistSelect}
+
+            WHERE
+              status = 'published'
+              AND location_id = $1
+
+            ORDER BY
+              featured DESC,
+              premium DESC,
+              verified DESC,
+              sponsored DESC,
+              updated_at DESC,
+              id DESC
+
+            LIMIT $2
+          `,
+          [
+            locationId,
+            limit,
+          ],
+        );
+
+      return result.rows.map(
+        (row) =>
+          toPublicSpecialist(
+            row,
+            locale,
+          ),
+      );
+    },
+  );
+
+export async function getPublishedSpecialistsByLocationId(
+  locationId: string,
+  locale: SupportedLocale,
+  limit = 3,
+): Promise<
+  LocalizedSpecialist[]
+> {
+  const normalizedLimit =
+    Number.isInteger(limit) &&
+    limit > 0
+      ? Math.min(limit, 12)
+      : 3;
+
+  return getPublishedSpecialistsByLocationIdCached(
+    locationId,
+    locale,
+    normalizedLimit,
+  );
+}

@@ -954,3 +954,73 @@ export async function getRelatedPublishedEvents(
     normalizedLimit,
   );
 }
+
+const getUpcomingPublishedEventsByLocationIdCached =
+  cache(
+    async (
+      locationId: string,
+      locale: SupportedEventLocale,
+      limit: number,
+    ): Promise<PublicEventItem[]> => {
+      assertDatabaseAvailable();
+
+      if (
+        canSkipDatabaseDuringCi()
+      ) {
+        return [];
+      }
+
+      const result =
+        await getDb().query<PublishedEventRow>(
+          `
+            ${publishedEventSelect}
+
+            WHERE
+              status = 'published'
+              AND event_status = 'scheduled'
+              AND location_id = $1
+              AND COALESCE(
+                end_date,
+                start_date
+              ) >= CURRENT_DATE
+
+            ORDER BY
+              start_date ASC,
+              start_time ASC NULLS LAST,
+              id ASC
+
+            LIMIT $2
+          `,
+          [
+            locationId,
+            limit,
+          ],
+        );
+
+      return result.rows.map(
+        (row) =>
+          toScheduledPublicEvent(
+            row,
+            locale,
+          ),
+      );
+    },
+  );
+
+export async function getUpcomingPublishedEventsByLocationId(
+  locationId: string,
+  locale: SupportedEventLocale,
+  limit = 3,
+): Promise<PublicEventItem[]> {
+  const normalizedLimit =
+    Number.isInteger(limit) &&
+    limit > 0
+      ? Math.min(limit, 12)
+      : 3;
+
+  return getUpcomingPublishedEventsByLocationIdCached(
+    locationId,
+    locale,
+    normalizedLimit,
+  );
+}
