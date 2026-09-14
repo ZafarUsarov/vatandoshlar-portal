@@ -1,3 +1,7 @@
+import type {
+  Location,
+} from "@/types/location";
+
 export type PublicUserStatus =
   | "active"
   | "disabled"
@@ -35,8 +39,21 @@ export type PublicUserProfile = Readonly<{
   updatedAt: string;
 }>;
 
+export type PublicUserProfileCompletion = Readonly<{
+  isComplete: boolean;
+  completedFields: number;
+  totalFields: number;
+
+  hasDisplayName: boolean;
+  hasHomeLocation: boolean;
+  hasResidencyStage: boolean;
+  hasInterests: boolean;
+}>;
+
 export type PublicUserContext = Readonly<{
   user: PublicUser;
   profile: PublicUserProfile | null;
+  homeLocation: Location | null;
   interests: ReadonlyArray<string>;
+  completion: PublicUserProfileCompletion;
 }>;
