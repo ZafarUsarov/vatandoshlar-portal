@@ -1,7 +1,6 @@
 import type {
   Metadata,
 } from "next";
-
 import {
   getLocale,
 } from "next-intl/server";
@@ -17,7 +16,7 @@ import {
 
 export const metadata: Metadata = {
   title:
-    "Vatandoshlar ID yaratish",
+    "Vatandoshlar.de hisobini yaratish",
   robots: {
     index:
       false,
@@ -47,27 +46,27 @@ export default async function VatandoshlarIdRegisterPage() {
     locale === "de"
       ? {
           eyebrow:
-            "VATANDOSHLAR ID",
+            "VATANDOSHLAR.DE",
           title:
-            "Vatandoshlar ID erstellen",
+            "Vatandoshlar.de Konto erstellen",
           description:
-            "Erstellen Sie Ihr Konto. Ort und Interessen werden erst in den nächsten Profil-Schritten ergänzt.",
+            "Erstellen Sie kostenlos ein Konto. Ihre Stadt und Interessen können Sie im nächsten Schritt auswählen.",
           login:
-            "Bereits registriert? Anmelden",
+            "Sie haben bereits ein Konto? Anmelden",
           privacy:
             "Wir speichern in diesem Schritt nur die für das Konto notwendigen Angaben.",
         }
       : {
           eyebrow:
-            "VATANDOSHLAR ID",
+            "VATANDOSHLAR.DE",
           title:
-            "Vatandoshlar ID yarating",
+            "Vatandoshlar.de hisobini yarating",
           description:
-            "Akkauntingizni yarating. Shahar va qiziqishlar keyingi profil bosqichida qo‘shiladi.",
+            "Bepul hisob yarating. Shahar va qiziqishlaringizni keyingi bosqichda tanlashingiz mumkin.",
           login:
-            "Akkauntingiz bormi? Kirish",
+            "Hisobingiz bormi? Kirish",
           privacy:
-            "Bu bosqichda faqat akkaunt uchun zarur ma’lumotlar saqlanadi.",
+            "Bu bosqichda faqat hisob uchun zarur ma’lumotlar saqlanadi.",
         };
 
   return (

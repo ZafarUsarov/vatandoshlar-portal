@@ -42,7 +42,7 @@ export default function PublicRegisterForm({
           passwordHint:
             "Mindestens 12 Zeichen.",
           submit:
-            "Vatandoshlar ID erstellen",
+            "Konto erstellen",
           pending:
             "Konto wird erstellt…",
         }
@@ -58,9 +58,9 @@ export default function PublicRegisterForm({
           passwordHint:
             "Kamida 12 ta belgi.",
           submit:
-            "Vatandoshlar ID yaratish",
+            "Hisob yaratish",
           pending:
-            "Akkaunt yaratilmoqda…",
+            "Hisob yaratilmoqda…",
         };
 
   return (
