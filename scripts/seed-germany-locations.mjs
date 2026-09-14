@@ -30,14 +30,44 @@ const states = [
 
 const cities = [
   {
-    stateCode: "DE-NW",
-    cityName: "Essen",
-    slug: "essen-nordrhein-westfalen",
+    stateCode:
+      "DE-NW",
+    cityName:
+      "Essen",
+    slug:
+      "essen-nordrhein-westfalen",
   },
   {
-    stateCode: "DE-NW",
-    cityName: "Hamm",
-    slug: "hamm-nordrhein-westfalen",
+    stateCode:
+      "DE-NW",
+    cityName:
+      "Hamm",
+    slug:
+      "hamm-nordrhein-westfalen",
+  },
+  {
+    stateCode:
+      "DE-NW",
+    cityName:
+      "Beckum",
+    slug:
+      "beckum-nordrhein-westfalen",
+  },
+  {
+    stateCode:
+      "DE-NI",
+    cityName:
+      "Osnabrück",
+    slug:
+      "osnabrueck-niedersachsen",
+  },
+  {
+    stateCode:
+      "DE-SH",
+    cityName:
+      "Rendsburg",
+    slug:
+      "rendsburg-schleswig-holstein",
   },
 ];
 
@@ -45,8 +75,10 @@ const pool =
   new Pool({
     connectionString,
     max: 2,
-    idleTimeoutMillis: 10_000,
-    connectionTimeoutMillis: 5_000,
+    idleTimeoutMillis:
+      10_000,
+    connectionTimeoutMillis:
+      5_000,
   });
 
 const client =
@@ -58,9 +90,18 @@ let insertedCities = 0;
 let skippedCities = 0;
 
 try {
-  await client.query("BEGIN");
+  await client.query(
+    "BEGIN",
+  );
 
-  for (const [stateCode, stateName, slug] of states) {
+  for (
+    const [
+      stateCode,
+      stateName,
+      slug,
+    ]
+    of states
+  ) {
     const result =
       await client.query(
         `
@@ -88,7 +129,11 @@ try {
           DO NOTHING
           RETURNING id
         `,
-        [stateCode, stateName, slug],
+        [
+          stateCode,
+          stateName,
+          slug,
+        ],
       );
 
     if (result.rowCount === 1) {
@@ -98,7 +143,10 @@ try {
     }
   }
 
-  for (const city of cities) {
+  for (
+    const city
+    of cities
+  ) {
     const parentResult =
       await client.query(
         `
@@ -109,9 +157,12 @@ try {
           WHERE
             location_type = 'state'
             AND state_code = $1
+            AND status = 'active'
           LIMIT 1
         `,
-        [city.stateCode],
+        [
+          city.stateCode,
+        ],
       );
 
     const parent =
@@ -119,7 +170,7 @@ try {
 
     if (!parent) {
       throw new Error(
-        `Missing parent state for ${city.cityName}: ${city.stateCode}.`,
+        `Missing active parent state for ${city.cityName}: ${city.stateCode}.`,
       );
     }
 
@@ -166,10 +217,14 @@ try {
     }
   }
 
-  await client.query("COMMIT");
+  await client.query(
+    "COMMIT",
+  );
 } catch (error) {
   try {
-    await client.query("ROLLBACK");
+    await client.query(
+      "ROLLBACK",
+    );
   } catch {
     // Preserve the original error.
   }
@@ -183,7 +238,15 @@ try {
 console.log("");
 console.log("Germany locations seed");
 console.log("----------------------");
-console.log(`States inserted: ${insertedStates}`);
-console.log(`States skipped: ${skippedStates}`);
-console.log(`Cities inserted: ${insertedCities}`);
-console.log(`Cities skipped: ${skippedCities}`);
+console.log(
+  `States inserted: ${insertedStates}`,
+);
+console.log(
+  `States skipped: ${skippedStates}`,
+);
+console.log(
+  `Cities inserted: ${insertedCities}`,
+);
+console.log(
+  `Cities skipped: ${skippedCities}`,
+);

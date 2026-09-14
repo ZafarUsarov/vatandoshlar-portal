@@ -1,6 +1,7 @@
 import { Pool } from "pg";
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString =
+  process.env.DATABASE_URL;
 
 if (!connectionString) {
   throw new Error(
@@ -8,14 +9,26 @@ if (!connectionString) {
   );
 }
 
-const pool = new Pool({
-  connectionString,
-  max: 2,
-  idleTimeoutMillis: 10_000,
-  connectionTimeoutMillis: 5_000,
-});
+const requiredCitySlugs = [
+  "essen-nordrhein-westfalen",
+  "hamm-nordrhein-westfalen",
+  "beckum-nordrhein-westfalen",
+  "osnabrueck-niedersachsen",
+  "rendsburg-schleswig-holstein",
+];
 
-const client = await pool.connect();
+const pool =
+  new Pool({
+    connectionString,
+    max: 2,
+    idleTimeoutMillis:
+      10_000,
+    connectionTimeoutMillis:
+      5_000,
+  });
+
+const client =
+  await pool.connect();
 
 try {
   const countResult = await client.query(`
@@ -110,15 +123,18 @@ try {
       )
   `);
 
-  const requiredCityResult = await client.query(`
-    SELECT
-      slug
-    FROM locations
-    WHERE slug IN (
-      'essen-nordrhein-westfalen',
-      'hamm-nordrhein-westfalen'
-    )
-  `);
+  const requiredCityResult =
+    await client.query(
+      `
+        SELECT
+          slug
+        FROM locations
+        WHERE slug = ANY($1::text[])
+      `,
+      [
+        requiredCitySlugs,
+      ],
+    );
 
   const errors = [];
 
@@ -167,19 +183,21 @@ try {
     );
   }
 
-  const requiredCities = new Set(
-    requiredCityResult.rows.map(
-      (row) => row.slug,
-    ),
-  );
+  const requiredCities =
+    new Set(
+      requiredCityResult.rows.map(
+        (row) =>
+          row.slug,
+      ),
+    );
 
-  for (const slug of [
-    "essen-nordrhein-westfalen",
-    "hamm-nordrhein-westfalen",
-  ]) {
+  for (
+    const slug
+    of requiredCitySlugs
+  ) {
     if (!requiredCities.has(slug)) {
       errors.push(
-        `Missing required seed city: ${slug}.`,
+        `Missing required canonical city: ${slug}.`,
       );
     }
   }
@@ -198,13 +216,16 @@ try {
     `Federal states: ${stateCount}`,
   );
   console.log(
-    `Seed cities found: ${requiredCities.size}/2`,
+    `Required cities found: ${requiredCities.size}/${requiredCitySlugs.length}`,
   );
 
   if (errors.length > 0) {
     console.error("");
 
-    for (const error of errors) {
+    for (
+      const error
+      of errors
+    ) {
       console.error(
         `ERROR: ${error}`,
       );
