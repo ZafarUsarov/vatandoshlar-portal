@@ -51,9 +51,11 @@ export default async function VatandoshlarIdLoginPage() {
           title:
             "Bei Vatandoshlar.de anmelden",
           description:
-            "Melden Sie sich an, damit Vatandoshlar.de später Inhalte nach Ihrem Ort und Ihren Interessen personalisieren kann.",
+            "Melden Sie sich an, damit Vatandoshlar.de Inhalte nach Ihrem Ort und Ihren Interessen personalisieren kann.",
+          newUser:
+            "Neu bei Vatandoshlar.de?",
           register:
-            "Noch keine Vatandoshlar ID? Konto erstellen",
+            "Vatandoshlar ID erstellen",
           back:
             "Zur Startseite",
         }
@@ -64,8 +66,10 @@ export default async function VatandoshlarIdLoginPage() {
             "Vatandoshlar.de hisobiga kiring",
           description:
             "Shahringiz va qiziqishlaringiz asosida portalni sizga moslashtirish uchun Vatandoshlar ID bilan kiring.",
+          newUser:
+            "Vatandoshlar ID hali yo‘qmi?",
           register:
-            "Vatandoshlar ID yo‘qmi? Akkaunt yarating",
+            "Vatandoshlar ID yaratish",
           back:
             "Bosh sahifaga qaytish",
         };
@@ -92,17 +96,21 @@ export default async function VatandoshlarIdLoginPage() {
             />
           </div>
 
-          <div className="mt-6 space-y-3 text-center text-sm">
+          <div className="mt-7 border-t border-slate-200 pt-6 text-center dark:border-slate-800">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              {copy.newUser}
+            </p>
+
             <Link
               href="/id/register"
-              className="block font-semibold text-emerald-700 hover:text-emerald-600 dark:text-emerald-300"
+              className="mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-emerald-600 px-5 text-sm font-bold text-emerald-700 transition hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-emerald-500 dark:text-emerald-300 dark:hover:bg-emerald-500/10 dark:focus-visible:ring-offset-slate-900"
             >
               {copy.register}
             </Link>
 
             <Link
               href="/"
-              className="block text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+              className="mt-4 block text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
             >
               {copy.back}
             </Link>

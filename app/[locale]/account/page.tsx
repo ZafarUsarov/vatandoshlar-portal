@@ -6,6 +6,7 @@ import {
   getLocale,
 } from "next-intl/server";
 
+import PublicSignOutButton from "@/components/auth/PublicSignOutButton";
 import {
   Link,
 } from "@/i18n/navigation";
@@ -35,13 +36,6 @@ export default async function AccountPage() {
       locale,
     );
 
-  const profileComplete =
-    Boolean(
-      context.profile?.homeLocationId ||
-      context.profile?.residencyStage ||
-      context.interests.length > 0,
-    );
-
   const copy =
     locale === "de"
       ? {
@@ -50,11 +44,11 @@ export default async function AccountPage() {
           title:
             "Ihr Konto ist aktiv",
           description:
-            "Ihre Vatandoshlar ID ist bereit. Ergänzen Sie Ihr Profil, damit wir Inhalte später besser personalisieren können.",
+            "Ihre Vatandoshlar ID ist bereit. Ergänzen Sie Ihr Profil, damit wir Inhalte besser personalisieren können.",
           email:
             "E-Mail",
           profile:
-            profileComplete
+            context.completion.isComplete
               ? "Profil bearbeiten"
               : "Profil einrichten",
           myCity:
@@ -72,7 +66,7 @@ export default async function AccountPage() {
           email:
             "E-mail",
           profile:
-            profileComplete
+            context.completion.isComplete
               ? "Profilni tahrirlash"
               : "Profilni sozlash",
           myCity:
@@ -127,6 +121,10 @@ export default async function AccountPage() {
           >
             {copy.home}
           </Link>
+
+          <PublicSignOutButton
+            locale={locale}
+          />
         </div>
       </div>
     </main>

@@ -148,16 +148,11 @@ export async function saveProfileSetupAction(
     await updatePublicUserProfile({
       userId:
         context.user.id,
-
       displayName,
-
       preferredLocale:
         locale,
-
       homeLocationId,
-
       residencyStage,
-
       interests,
     });
   } catch (error) {
@@ -176,7 +171,7 @@ export async function saveProfileSetupAction(
 
   return redirect({
     href:
-      "/account",
+      "/my-city",
     locale,
   });
 }
