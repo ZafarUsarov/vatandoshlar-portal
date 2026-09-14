@@ -17,21 +17,31 @@ type MyCityDashboardProps = Readonly<{
 function SectionShell({
   title,
   description,
+  badge,
   children,
 }: Readonly<{
   title: string;
   description: string;
+  badge: string;
   children: ReactNode;
 }>) {
   return (
     <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6">
-      <h2 className="text-xl font-black tracking-tight text-slate-950 dark:text-white">
-        {title}
-      </h2>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 className="text-xl font-black tracking-tight text-slate-950 dark:text-white">
+            {title}
+          </h2>
 
-      <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-        {description}
-      </p>
+          <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+            {description}
+          </p>
+        </div>
+
+        <span className="inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] text-slate-600 dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-300">
+          {badge}
+        </span>
+      </div>
 
       <div className="mt-5">
         {children}
@@ -52,14 +62,93 @@ function EmptyState({
   );
 }
 
+function EventList({
+  events,
+  openLabel,
+}: Readonly<{
+  events: MyCityDashboardData["city"]["events"];
+  openLabel: string;
+}>) {
+  return (
+    <div className="space-y-3">
+      {events.map(
+        (event) => (
+          <article
+            key={event.id}
+            className="rounded-2xl border border-slate-200 p-4 dark:border-slate-800"
+          >
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
+              {event.startDate}
+            </p>
+
+            <h3 className="mt-2 font-black text-slate-950 dark:text-white">
+              {event.title}
+            </h3>
+
+            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+              {event.excerpt}
+            </p>
+
+            <Link
+              href={`/events/${event.slug}`}
+              className="mt-3 inline-flex text-sm font-bold text-emerald-700 hover:text-emerald-600 dark:text-emerald-300"
+            >
+              {openLabel} →
+            </Link>
+          </article>
+        ),
+      )}
+    </div>
+  );
+}
+
+function SpecialistList({
+  specialists,
+  openLabel,
+}: Readonly<{
+  specialists: MyCityDashboardData["city"]["specialists"];
+  openLabel: string;
+}>) {
+  return (
+    <div className="space-y-3">
+      {specialists.map(
+        (specialist) => (
+          <article
+            key={specialist.id}
+            className="rounded-2xl border border-slate-200 p-4 dark:border-slate-800"
+          >
+            <h3 className="font-black text-slate-950 dark:text-white">
+              {specialist.name}
+            </h3>
+
+            <p className="mt-1 text-sm font-semibold text-emerald-700 dark:text-emerald-300">
+              {specialist.profession}
+            </p>
+
+            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+              {specialist.shortDescription}
+            </p>
+
+            <Link
+              href={`/specialists/${specialist.slug}`}
+              className="mt-3 inline-flex text-sm font-bold text-emerald-700 hover:text-emerald-600 dark:text-emerald-300"
+            >
+              {openLabel} →
+            </Link>
+          </article>
+        ),
+      )}
+    </div>
+  );
+}
+
 export default function MyCityDashboard({
   data,
 }: MyCityDashboardProps) {
   const {
     context,
-    events,
-    specialists,
-    communities,
+    city,
+    region,
   } = data;
 
   const locale =
@@ -82,27 +171,49 @@ export default function MyCityDashboard({
           localInfo:
             "Lokale Übersicht",
           localInfoDescription:
-            "Ihre persönliche lokale Übersicht basiert ausschließlich auf verknüpften, bestätigten Standortdaten.",
+            "Ihre Übersicht basiert ausschließlich auf kanonisch verknüpften Standortdaten.",
+          cityBadge:
+            "Stadt",
+          regionBadge:
+            "Bundesland",
           state:
             "Bundesland",
-          events:
-            "Veranstaltungen in Ihrer Nähe",
-          eventsDescription:
-            "Veröffentlichte Veranstaltungen, die eindeutig Ihrer Stadt zugeordnet sind.",
-          noEvents:
+          cityEvents:
+            "Veranstaltungen in Ihrer Stadt",
+          cityEventsDescription:
+            "Veröffentlichte Veranstaltungen mit eindeutiger Zuordnung zu Ihrer Stadt.",
+          noCityEvents:
             "Für Ihre Stadt sind aktuell keine eindeutig zugeordneten kommenden Veranstaltungen verfügbar.",
-          specialists:
-            "Fachkräfte",
-          specialistsDescription:
-            "Veröffentlichte Fachkräfte mit bestätigter Zuordnung zu Ihrer Stadt.",
-          noSpecialists:
+          citySpecialists:
+            "Fachkräfte in Ihrer Stadt",
+          citySpecialistsDescription:
+            "Veröffentlichte Fachkräfte mit eindeutiger Zuordnung zu Ihrer Stadt.",
+          noCitySpecialists:
             "Für Ihre Stadt sind aktuell keine eindeutig zugeordneten Fachkräfte verfügbar.",
+          regionEvents:
+            "Veranstaltungen im Bundesland",
+          regionEventsDescription:
+            "Veröffentlichte Veranstaltungen, die kanonisch Ihrem Bundesland zugeordnet sind.",
+          noRegionEvents:
+            "Für Ihr Bundesland sind aktuell keine eindeutig zugeordneten kommenden Veranstaltungen verfügbar.",
+          regionSpecialists:
+            "Fachkräfte im Bundesland",
+          regionSpecialistsDescription:
+            "Veröffentlichte Fachkräfte mit kanonischer Zuordnung zu Ihrem Bundesland.",
+          noRegionSpecialists:
+            "Für Ihr Bundesland sind aktuell keine eindeutig zugeordneten Fachkräfte verfügbar.",
           community:
-            "Community",
+            "Regionale Community",
           communityDescription:
-            "Regionale Community-Angebote für Ihr Bundesland.",
+            "Veröffentlichte Community-Angebote für Ihr Bundesland.",
           noCommunity:
             "Für Ihr Bundesland ist aktuell keine veröffentlichte regionale Community verfügbar.",
+          editorial:
+            "Lokale News & Ratgeber",
+          editorialDescription:
+            "News und Guide-Inhalte werden erst angezeigt, wenn dafür eine kanonische Standort-Zuordnung vorhanden ist.",
+          editorialEmpty:
+            "Aktuell gibt es noch keine kanonisch zugeordneten lokalen News oder Ratgeber. Andere Regionen werden nicht als Ersatz angezeigt.",
           viewEvent:
             "Veranstaltung öffnen",
           viewSpecialist:
@@ -122,27 +233,49 @@ export default function MyCityDashboard({
           localInfo:
             "Mahalliy ma’lumotlar",
           localInfoDescription:
-            "Lokal dashboard faqat canonical va ishonchli bog‘langan location ma’lumotlaridan foydalanadi.",
+            "Dashboard faqat canonical va ishonchli bog‘langan location ma’lumotlaridan foydalanadi.",
+          cityBadge:
+            "Shahar",
+          regionBadge:
+            "Bundesland",
           state:
             "Hudud",
-          events:
-            "Yaqin tadbirlar",
-          eventsDescription:
-            "Sizning shahringizga ishonchli bog‘langan e’lon qilingan tadbirlar.",
-          noEvents:
+          cityEvents:
+            "Shahardagi tadbirlar",
+          cityEventsDescription:
+            "Aynan sizning shahringizga canonical location orqali bog‘langan tadbirlar.",
+          noCityEvents:
             "Hozircha shahringizga ishonchli bog‘langan yaqin tadbirlar mavjud emas.",
-          specialists:
-            "Mutaxassislar",
-          specialistsDescription:
-            "Sizning shahringizga canonical location orqali bog‘langan mutaxassislar.",
-          noSpecialists:
+          citySpecialists:
+            "Shahardagi mutaxassislar",
+          citySpecialistsDescription:
+            "Aynan sizning shahringizga canonical location orqali bog‘langan mutaxassislar.",
+          noCitySpecialists:
             "Hozircha shahringizga ishonchli bog‘langan mutaxassislar mavjud emas.",
+          regionEvents:
+            "Bundesland bo‘yicha tadbirlar",
+          regionEventsDescription:
+            "Sizning Bundeslandingizga canonical location orqali bog‘langan tadbirlar.",
+          noRegionEvents:
+            "Hozircha Bundeslandingizga ishonchli bog‘langan yaqin tadbirlar mavjud emas.",
+          regionSpecialists:
+            "Bundesland bo‘yicha mutaxassislar",
+          regionSpecialistsDescription:
+            "Sizning Bundeslandingizga canonical location orqali bog‘langan mutaxassislar.",
+          noRegionSpecialists:
+            "Hozircha Bundeslandingizga ishonchli bog‘langan mutaxassislar mavjud emas.",
           community:
-            "Community",
+            "Regional Community",
           communityDescription:
-            "Sizning Bundeslandingiz uchun mavjud hududiy hamjamiyatlar.",
+            "Sizning Bundeslandingiz uchun e’lon qilingan hududiy communitylar.",
           noCommunity:
             "Hozircha hududingiz uchun e’lon qilingan regional community mavjud emas.",
+          editorial:
+            "Mahalliy yangilik va qo‘llanmalar",
+          editorialDescription:
+            "News va Guide kontenti faqat canonical location mapping mavjud bo‘lganda lokal dashboardga qo‘shiladi.",
+          editorialEmpty:
+            "Hozircha canonical location bilan bog‘langan mahalliy yangilik yoki qo‘llanma yo‘q. Boshqa hudud kontenti o‘rniga chiqarilmaydi.",
           viewEvent:
             "Tadbirni ochish",
           viewSpecialist:
@@ -203,6 +336,7 @@ export default function MyCityDashboard({
           <SectionShell
             title={copy.localInfo}
             description={copy.localInfoDescription}
+            badge={copy.cityBadge}
           >
             <dl className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-950/60">
@@ -228,14 +362,15 @@ export default function MyCityDashboard({
           <SectionShell
             title={copy.community}
             description={copy.communityDescription}
+            badge={copy.regionBadge}
           >
-            {communities.length === 0 ? (
+            {region.communities.length === 0 ? (
               <EmptyState>
                 {copy.noCommunity}
               </EmptyState>
             ) : (
               <div className="space-y-3">
-                {communities.slice(0, 3).map(
+                {region.communities.slice(0, 3).map(
                   (community) => (
                     <div
                       key={`${community.shortName}-${community.state}`}
@@ -267,85 +402,81 @@ export default function MyCityDashboard({
           </SectionShell>
 
           <SectionShell
-            title={copy.events}
-            description={copy.eventsDescription}
+            title={copy.cityEvents}
+            description={copy.cityEventsDescription}
+            badge={copy.cityBadge}
           >
-            {events.length === 0 ? (
+            {city.events.length === 0 ? (
               <EmptyState>
-                {copy.noEvents}
+                {copy.noCityEvents}
               </EmptyState>
             ) : (
-              <div className="space-y-3">
-                {events.map(
-                  (event) => (
-                    <article
-                      key={event.id}
-                      className="rounded-2xl border border-slate-200 p-4 dark:border-slate-800"
-                    >
-                      <p className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
-                        {event.startDate}
-                      </p>
-
-                      <h3 className="mt-2 font-black text-slate-950 dark:text-white">
-                        {event.title}
-                      </h3>
-
-                      <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                        {event.excerpt}
-                      </p>
-
-                      <Link
-                        href={`/events/${event.slug}`}
-                        className="mt-3 inline-flex text-sm font-bold text-emerald-700 hover:text-emerald-600 dark:text-emerald-300"
-                      >
-                        {copy.viewEvent} →
-                      </Link>
-                    </article>
-                  ),
-                )}
-              </div>
+              <EventList
+                events={city.events}
+                openLabel={copy.viewEvent}
+              />
             )}
           </SectionShell>
 
           <SectionShell
-            title={copy.specialists}
-            description={copy.specialistsDescription}
+            title={copy.citySpecialists}
+            description={copy.citySpecialistsDescription}
+            badge={copy.cityBadge}
           >
-            {specialists.length === 0 ? (
+            {city.specialists.length === 0 ? (
               <EmptyState>
-                {copy.noSpecialists}
+                {copy.noCitySpecialists}
               </EmptyState>
             ) : (
-              <div className="space-y-3">
-                {specialists.map(
-                  (specialist) => (
-                    <article
-                      key={specialist.id}
-                      className="rounded-2xl border border-slate-200 p-4 dark:border-slate-800"
-                    >
-                      <h3 className="font-black text-slate-950 dark:text-white">
-                        {specialist.name}
-                      </h3>
-
-                      <p className="mt-1 text-sm font-semibold text-emerald-700 dark:text-emerald-300">
-                        {specialist.profession}
-                      </p>
-
-                      <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                        {specialist.shortDescription}
-                      </p>
-
-                      <Link
-                        href={`/specialists/${specialist.slug}`}
-                        className="mt-3 inline-flex text-sm font-bold text-emerald-700 hover:text-emerald-600 dark:text-emerald-300"
-                      >
-                        {copy.viewSpecialist} →
-                      </Link>
-                    </article>
-                  ),
-                )}
-              </div>
+              <SpecialistList
+                specialists={city.specialists}
+                openLabel={copy.viewSpecialist}
+              />
             )}
+          </SectionShell>
+
+          <SectionShell
+            title={copy.regionEvents}
+            description={copy.regionEventsDescription}
+            badge={copy.regionBadge}
+          >
+            {region.events.length === 0 ? (
+              <EmptyState>
+                {copy.noRegionEvents}
+              </EmptyState>
+            ) : (
+              <EventList
+                events={region.events}
+                openLabel={copy.viewEvent}
+              />
+            )}
+          </SectionShell>
+
+          <SectionShell
+            title={copy.regionSpecialists}
+            description={copy.regionSpecialistsDescription}
+            badge={copy.regionBadge}
+          >
+            {region.specialists.length === 0 ? (
+              <EmptyState>
+                {copy.noRegionSpecialists}
+              </EmptyState>
+            ) : (
+              <SpecialistList
+                specialists={region.specialists}
+                openLabel={copy.viewSpecialist}
+              />
+            )}
+          </SectionShell>
+
+          <SectionShell
+            title={copy.editorial}
+            description={copy.editorialDescription}
+            badge={copy.regionBadge}
+          >
+            <EmptyState>
+              {copy.editorialEmpty}
+            </EmptyState>
           </SectionShell>
         </div>
       </div>

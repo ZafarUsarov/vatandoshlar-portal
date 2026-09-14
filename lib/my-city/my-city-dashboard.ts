@@ -26,9 +26,21 @@ import type {
 export type MyCityDashboardData = Readonly<{
   context: MyCityUserContext;
 
-  events: ReadonlyArray<PublicEventItem>;
-  specialists: ReadonlyArray<LocalizedSpecialist>;
-  communities: ReadonlyArray<TelegramGroup>;
+  city: Readonly<{
+    events: ReadonlyArray<PublicEventItem>;
+    specialists: ReadonlyArray<LocalizedSpecialist>;
+  }>;
+
+  region: Readonly<{
+    events: ReadonlyArray<PublicEventItem>;
+    specialists: ReadonlyArray<LocalizedSpecialist>;
+    communities: ReadonlyArray<TelegramGroup>;
+  }>;
+
+  localEditorial: Readonly<{
+    newsAvailable: false;
+    guidesAvailable: false;
+  }>;
 }>;
 
 export async function getMyCityDashboardData(
@@ -40,18 +52,38 @@ export async function getMyCityDashboardData(
   if (!location) {
     return {
       context,
-      events: [],
-      specialists: [],
-      communities: [],
+
+      city: {
+        events: [],
+        specialists: [],
+      },
+
+      region: {
+        events: [],
+        specialists: [],
+        communities: [],
+      },
+
+      localEditorial: {
+        newsAvailable:
+          false,
+        guidesAvailable:
+          false,
+      },
     };
   }
 
   const locale =
     context.locale as SupportedLocale;
 
+  const regionLocationId =
+    location.parentId;
+
   const [
-    events,
-    specialists,
+    cityEvents,
+    citySpecialists,
+    regionEvents,
+    regionSpecialists,
     telegramGroups,
   ] =
     await Promise.all([
@@ -67,6 +99,22 @@ export async function getMyCityDashboardData(
         3,
       ),
 
+      regionLocationId
+        ? getUpcomingPublishedEventsByLocationId(
+            regionLocationId,
+            locale as SupportedEventLocale,
+            3,
+          )
+        : Promise.resolve([]),
+
+      regionLocationId
+        ? getPublishedSpecialistsByLocationId(
+            regionLocationId,
+            locale,
+            3,
+          )
+        : Promise.resolve([]),
+
       getPublicTelegramGroups(
         locale,
       ),
@@ -81,8 +129,27 @@ export async function getMyCityDashboardData(
 
   return {
     context,
-    events,
-    specialists,
-    communities,
+
+    city: {
+      events:
+        cityEvents,
+      specialists:
+        citySpecialists,
+    },
+
+    region: {
+      events:
+        regionEvents,
+      specialists:
+        regionSpecialists,
+      communities,
+    },
+
+    localEditorial: {
+      newsAvailable:
+        false,
+      guidesAvailable:
+        false,
+    },
   };
 }
