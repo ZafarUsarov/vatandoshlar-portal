@@ -30,9 +30,10 @@ const client =
 
 const testEmail =
   `auth-flow-${Date.now()}@example.invalid`;
-
 const testPassword =
-  "verification-only-password";
+  "EightPwd";
+const testDisplayName =
+  "Verification User";
 
 try {
   await client.query(
@@ -88,12 +89,13 @@ try {
       )
       VALUES (
         $1,
-        'Verification User',
+        $2,
         'uz'
       )
     `,
     [
       user.id,
+      testDisplayName,
     ],
   );
 
@@ -126,7 +128,9 @@ try {
 
   if (
     profileResult.rows[0]
-      ?.preferred_locale !== "uz"
+      ?.preferred_locale !== "uz" ||
+    profileResult.rows[0]
+      ?.display_name !== testDisplayName
   ) {
     throw new Error(
       "Public profile verification failed.",
@@ -187,10 +191,13 @@ try {
     "-----------------------------",
   );
   console.log(
-    "Password hashing: PASS",
+    "8-character password hashing: PASS",
   );
   console.log(
     "User/profile transaction: PASS",
+  );
+  console.log(
+    "Display name persistence: PASS",
   );
   console.log(
     "Rollback safety: PASS",

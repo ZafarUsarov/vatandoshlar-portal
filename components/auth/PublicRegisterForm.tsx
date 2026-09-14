@@ -3,7 +3,6 @@
 import {
   useActionState,
 } from "react";
-
 import {
   initialPublicRegisterState,
   publicRegisterAction,
@@ -31,8 +30,10 @@ export default function PublicRegisterForm({
   const copy =
     locale === "de"
       ? {
-          name:
-            "Name (optional)",
+          firstName:
+            "Vorname",
+          lastName:
+            "Nachname",
           email:
             "E-Mail",
           password:
@@ -40,15 +41,17 @@ export default function PublicRegisterForm({
           passwordConfirm:
             "Passwort wiederholen",
           passwordHint:
-            "Mindestens 12 Zeichen.",
+            "Mindestens 8 Zeichen.",
           submit:
             "Konto erstellen",
           pending:
             "Konto wird erstellt…",
         }
       : {
-          name:
-            "Ism (ixtiyoriy)",
+          firstName:
+            "Ism",
+          lastName:
+            "Familiya",
           email:
             "E-mail",
           password:
@@ -56,16 +59,20 @@ export default function PublicRegisterForm({
           passwordConfirm:
             "Parolni takrorlang",
           passwordHint:
-            "Kamida 12 ta belgi.",
+            "Kamida 8 ta belgi.",
           submit:
             "Hisob yaratish",
           pending:
             "Hisob yaratilmoqda…",
         };
 
+  const inputClassName =
+    "min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white";
+
   return (
     <form
       action={formAction}
+      noValidate
       className="space-y-5"
     >
       <input
@@ -76,19 +83,37 @@ export default function PublicRegisterForm({
 
       <div>
         <label
-          htmlFor="public-register-name"
+          htmlFor="public-register-first-name"
           className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200"
         >
-          {copy.name}
+          {copy.firstName}
         </label>
-
         <input
-          id="public-register-name"
-          name="displayName"
+          id="public-register-first-name"
+          name="firstName"
           type="text"
-          autoComplete="name"
-          maxLength={80}
-          className="min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+          autoComplete="given-name"
+          maxLength={40}
+          required
+          className={inputClassName}
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="public-register-last-name"
+          className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200"
+        >
+          {copy.lastName}
+        </label>
+        <input
+          id="public-register-last-name"
+          name="lastName"
+          type="text"
+          autoComplete="family-name"
+          maxLength={40}
+          required
+          className={inputClassName}
         />
       </div>
 
@@ -99,14 +124,13 @@ export default function PublicRegisterForm({
         >
           {copy.email}
         </label>
-
         <input
           id="public-register-email"
           name="email"
           type="email"
           autoComplete="email"
           required
-          className="min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+          className={inputClassName}
         />
       </div>
 
@@ -117,17 +141,15 @@ export default function PublicRegisterForm({
         >
           {copy.password}
         </label>
-
         <input
           id="public-register-password"
           name="password"
           type="password"
           autoComplete="new-password"
-          minLength={12}
+          minLength={8}
           required
-          className="min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+          className={inputClassName}
         />
-
         <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
           {copy.passwordHint}
         </p>
@@ -140,21 +162,21 @@ export default function PublicRegisterForm({
         >
           {copy.passwordConfirm}
         </label>
-
         <input
           id="public-register-password-confirm"
           name="passwordConfirm"
           type="password"
           autoComplete="new-password"
-          minLength={12}
+          minLength={8}
           required
-          className="min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+          className={inputClassName}
         />
       </div>
 
       {state.error && (
         <p
           role="alert"
+          aria-live="polite"
           className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300"
         >
           {state.error}

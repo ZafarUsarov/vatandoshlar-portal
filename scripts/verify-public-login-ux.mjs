@@ -13,6 +13,8 @@ const files = {
     "components/auth/PublicRegisterForm.tsx",
   registerAction:
     "app/[locale]/id/register/actions.ts",
+  publicUserRepository:
+    "lib/auth/public-user-repository.ts",
   profileAction:
     "app/[locale]/account/profile/actions.ts",
   header:
@@ -105,15 +107,81 @@ const assertions = [
   ],
   [
     contents.registerForm.includes(
+      '"Ism"',
+    ),
+    "Uzbek first name field",
+  ],
+  [
+    contents.registerForm.includes(
+      '"Familiya"',
+    ),
+    "Uzbek last name field",
+  ],
+  [
+    contents.registerForm.includes(
+      "noValidate",
+    ),
+    "Browser-native validation disabled",
+  ],
+  [
+    contents.registerForm.includes(
+      "minLength={8}",
+    ),
+    "Registration UI password minimum",
+  ],
+  [
+    contents.registerForm.includes(
+      '"Kamida 8 ta belgi."',
+    ),
+    "Uzbek password helper",
+  ],
+  [
+    contents.registerForm.includes(
       '"Hisob yaratish"',
     ),
     "Uzbek registration submit",
   ],
   [
-    contents.registerPage.includes(
-      "Hisobingiz bormi? Kirish",
+    contents.registerAction.includes(
+      "Ismingizni kiriting.",
     ),
-    "Uzbek existing account copy",
+    "Uzbek required first name message",
+  ],
+  [
+    contents.registerAction.includes(
+      "Familiyangizni kiriting.",
+    ),
+    "Uzbek required last name message",
+  ],
+  [
+    contents.registerAction.includes(
+      "To‘g‘ri e-mail manzilini kiriting.",
+    ),
+    "Uzbek invalid email message",
+  ],
+  [
+    contents.registerAction.includes(
+      "Parol kamida 8 ta belgidan iborat bo‘lishi kerak.",
+    ),
+    "Uzbek password minimum message",
+  ],
+  [
+    contents.registerAction.includes(
+      "Parollar bir xil emas.",
+    ),
+    "Uzbek password mismatch message",
+  ],
+  [
+    contents.publicUserRepository.includes(
+      "input.password.length < 8",
+    ),
+    "Repository password minimum enforcement",
+  ],
+  [
+    contents.publicUserRepository.includes(
+      "input.displayName.trim()",
+    ),
+    "Repository display name enforcement",
   ],
   [
     contents.registerAction.includes(

@@ -30,9 +30,10 @@ const client =
 
 const email =
   `public-journey-${Date.now()}@example.invalid`;
-
 const password =
-  "Vatandoshlar-Test-2026!";
+  "EightPwd";
+const displayName =
+  "Verification User";
 
 try {
   await client.query(
@@ -72,6 +73,46 @@ try {
   if (!userId) {
     throw new Error(
       "Public user creation verification failed.",
+    );
+  }
+
+  await client.query(
+    `
+      INSERT INTO user_profiles (
+        user_id,
+        display_name,
+        preferred_locale
+      )
+      VALUES (
+        $1,
+        $2,
+        'uz'
+      )
+    `,
+    [
+      userId,
+      displayName,
+    ],
+  );
+
+  const profileResult =
+    await client.query(
+      `
+        SELECT display_name
+        FROM user_profiles
+        WHERE user_id = $1
+      `,
+      [
+        userId,
+      ],
+    );
+
+  if (
+    profileResult.rows[0]
+      ?.display_name !== displayName
+  ) {
+    throw new Error(
+      "Registration display name persistence failed.",
     );
   }
 
@@ -152,10 +193,13 @@ try {
     "-------------------------------",
   );
   console.log(
-    "Password hashing/valid login: PASS",
+    "8-character password hashing/valid login: PASS",
   );
   console.log(
     "Invalid password rejection: PASS",
+  );
+  console.log(
+    "Display name persistence: PASS",
   );
   console.log(
     "Duplicate email protection: PASS",

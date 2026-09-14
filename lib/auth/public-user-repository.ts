@@ -2,9 +2,7 @@ import {
   compare,
   hash,
 } from "bcryptjs";
-
 import { getDb } from "@/lib/db";
-
 import type {
   UserPreferredLocale,
 } from "@/types/user";
@@ -20,7 +18,7 @@ type PublicCredentialRow = {
 type RegisterPublicUserInput = Readonly<{
   email: string;
   password: string;
-  displayName: string | null;
+  displayName: string;
   preferredLocale: UserPreferredLocale;
 }>;
 
@@ -127,6 +125,22 @@ export async function verifyPublicUserCredentials(
 export async function registerPublicUser(
   input: RegisterPublicUserInput,
 ): Promise<RegisterPublicUserResult> {
+  if (
+    input.password.length < 8
+  ) {
+    throw new Error(
+      "Public user password must contain at least 8 characters.",
+    );
+  }
+
+  if (
+    !input.displayName.trim()
+  ) {
+    throw new Error(
+      "Public user display name is required.",
+    );
+  }
+
   const normalizedEmail =
     normalizeEmail(
       input.email,
@@ -140,7 +154,6 @@ export async function registerPublicUser(
 
   const pool =
     getDb();
-
   const client =
     await pool.connect();
 
@@ -253,7 +266,7 @@ export async function registerPublicUser(
       `,
       [
         userId,
-        input.displayName,
+        input.displayName.trim(),
         input.preferredLocale,
       ],
     );
