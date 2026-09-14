@@ -51,10 +51,19 @@ export default function PublicLoginForm({
             "Kirilmoqda…",
         };
 
+  const emailInvalid =
+    state.errorField === "email" ||
+    state.errorField === "credentials";
+
+  const passwordInvalid =
+    state.errorField === "password" ||
+    state.errorField === "credentials";
+
   return (
     <form
       action={formAction}
       className="space-y-5"
+      noValidate
     >
       <input
         type="hidden"
@@ -75,8 +84,23 @@ export default function PublicLoginForm({
           name="email"
           type="email"
           autoComplete="email"
-          required
-          className="min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+          inputMode="email"
+          aria-invalid={
+            emailInvalid
+              ? true
+              : undefined
+          }
+          aria-describedby={
+            state.error
+              ? "public-login-error"
+              : undefined
+          }
+          className={[
+            "min-h-12 w-full rounded-2xl border bg-white px-4 text-slate-950 outline-none transition focus:ring-4 dark:bg-slate-900 dark:text-white",
+            emailInvalid
+              ? "border-red-400 focus:border-red-500 focus:ring-red-500/10 dark:border-red-500/60"
+              : "border-slate-300 focus:border-emerald-500 focus:ring-emerald-500/10 dark:border-slate-700",
+          ].join(" ")}
         />
       </div>
 
@@ -93,15 +117,31 @@ export default function PublicLoginForm({
           name="password"
           type="password"
           autoComplete="current-password"
-          required
-          className="min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+          aria-invalid={
+            passwordInvalid
+              ? true
+              : undefined
+          }
+          aria-describedby={
+            state.error
+              ? "public-login-error"
+              : undefined
+          }
+          className={[
+            "min-h-12 w-full rounded-2xl border bg-white px-4 text-slate-950 outline-none transition focus:ring-4 dark:bg-slate-900 dark:text-white",
+            passwordInvalid
+              ? "border-red-400 focus:border-red-500 focus:ring-red-500/10 dark:border-red-500/60"
+              : "border-slate-300 focus:border-emerald-500 focus:ring-emerald-500/10 dark:border-slate-700",
+          ].join(" ")}
         />
       </div>
 
       {state.error && (
         <p
+          id="public-login-error"
           role="alert"
-          className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300"
+          aria-live="polite"
+          className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium leading-6 text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300"
         >
           {state.error}
         </p>

@@ -63,7 +63,7 @@ export default async function VatandoshlarIdLoginPage() {
           eyebrow:
             "VATANDOSHLAR ID",
           title:
-            "Vatandoshlar.de hisobiga kiring",
+            "Vatandoshlar.de hisobingizga kiring",
           description:
             "Shahringiz va qiziqishlaringiz asosida portalni sizga moslashtirish uchun Vatandoshlar ID bilan kiring.",
           newUser:

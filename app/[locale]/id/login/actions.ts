@@ -8,12 +8,21 @@ import {
   signIn,
 } from "@/auth";
 
+export type PublicLoginErrorField =
+  | "email"
+  | "password"
+  | "credentials"
+  | "service"
+  | null;
+
 export type PublicLoginState = Readonly<{
   error: string | null;
+  errorField: PublicLoginErrorField;
 }>;
 
 export const initialPublicLoginState: PublicLoginState = {
   error: null,
+  errorField: null,
 };
 
 function getLocale(
@@ -44,26 +53,34 @@ export async function publicLoginAction(
     );
 
   const email =
-    typeof emailValue ===
-    "string"
+    typeof emailValue === "string"
       ? emailValue.trim()
       : "";
 
   const password =
-    typeof passwordValue ===
-    "string"
+    typeof passwordValue === "string"
       ? passwordValue
       : "";
 
-  if (
-    !email ||
-    !password
-  ) {
+  if (!email) {
     return {
       error:
         locale === "de"
-          ? "Bitte E-Mail-Adresse und Passwort eingeben."
-          : "E-mail va parolni kiriting.",
+          ? "Bitte geben Sie Ihre E-Mail-Adresse ein."
+          : "E-mail manzilini kiriting.",
+      errorField:
+        "email",
+    };
+  }
+
+  if (!password) {
+    return {
+      error:
+        locale === "de"
+          ? "Bitte geben Sie Ihr Passwort ein."
+          : "Parolni kiriting.",
+      errorField:
+        "password",
     };
   }
 
@@ -79,22 +96,45 @@ export async function publicLoginAction(
     );
 
     return {
-      error:
-        null,
+      error: null,
+      errorField: null,
     };
   } catch (error) {
     if (
       error instanceof
       AuthError
     ) {
+      if (
+        error.type ===
+        "CredentialsSignin"
+      ) {
+        return {
+          error:
+            locale === "de"
+              ? "E-Mail-Adresse oder Passwort ist nicht korrekt. Bitte prüfen Sie Ihre Angaben und versuchen Sie es erneut."
+              : "E-mail yoki parol noto‘g‘ri. Iltimos, ma’lumotlarni tekshirib qayta urinib ko‘ring.",
+          errorField:
+            "credentials",
+        };
+      }
+
+      console.error(
+        "Public login authentication service error:",
+        error.type,
+      );
+
       return {
         error:
           locale === "de"
-            ? "E-Mail-Adresse oder Passwort ist nicht korrekt."
-            : "E-mail yoki parol noto‘g‘ri.",
+            ? "Die Anmeldung ist derzeit nicht möglich. Bitte versuchen Sie es später erneut."
+            : "Hozircha kirish amalga oshmadi. Birozdan so‘ng qayta urinib ko‘ring.",
+        errorField:
+          "service",
       };
     }
 
+    // Successful Auth.js redirects are represented by a framework redirect
+    // exception and must continue to propagate.
     throw error;
   }
 }
