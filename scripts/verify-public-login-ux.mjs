@@ -7,6 +7,10 @@ const files = {
     "app/[locale]/id/login/actions.ts",
   loginPage:
     "app/[locale]/id/login/page.tsx",
+  registerPage:
+    "app/[locale]/id/register/page.tsx",
+  registerForm:
+    "components/auth/PublicRegisterForm.tsx",
   registerAction:
     "app/[locale]/id/register/actions.ts",
   profileAction:
@@ -40,6 +44,18 @@ const assertions = [
     "Uzbek login title",
   ],
   [
+    contents.loginPage.includes(
+      "Hali hisobingiz yo‘qmi?",
+    ),
+    "Uzbek login account prompt",
+  ],
+  [
+    contents.loginPage.includes(
+      '"Hisob yaratish"',
+    ),
+    "Uzbek login registration CTA",
+  ],
+  [
     contents.loginAction.includes(
       "E-mail manzilini kiriting.",
     ),
@@ -68,6 +84,36 @@ const assertions = [
       '"public-credentials"',
     ),
     "Public credentials provider",
+  ],
+  [
+    contents.registerPage.includes(
+      '"VATANDOSHLAR.DE"',
+    ),
+    "Registration brand label",
+  ],
+  [
+    contents.registerPage.includes(
+      "Vatandoshlar.de hisobini yarating",
+    ),
+    "Uzbek registration title",
+  ],
+  [
+    contents.registerPage.includes(
+      "Bepul hisob yarating. Shahar va qiziqishlaringizni keyingi bosqichda tanlashingiz mumkin.",
+    ),
+    "Uzbek registration description",
+  ],
+  [
+    contents.registerForm.includes(
+      '"Hisob yaratish"',
+    ),
+    "Uzbek registration submit",
+  ],
+  [
+    contents.registerPage.includes(
+      "Hisobingiz bormi? Kirish",
+    ),
+    "Uzbek existing account copy",
   ],
   [
     contents.registerAction.includes(

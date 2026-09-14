@@ -53,9 +53,9 @@ export default async function VatandoshlarIdLoginPage() {
           description:
             "Melden Sie sich an, damit Vatandoshlar.de Inhalte nach Ihrem Ort und Ihren Interessen personalisieren kann.",
           newUser:
-            "Neu bei Vatandoshlar.de?",
+            "Noch kein Konto?",
           register:
-            "Vatandoshlar ID erstellen",
+            "Konto erstellen",
           back:
             "Zur Startseite",
         }
@@ -67,9 +67,9 @@ export default async function VatandoshlarIdLoginPage() {
           description:
             "Shahringiz va qiziqishlaringiz asosida portalni sizga moslashtirish uchun Vatandoshlar ID bilan kiring.",
           newUser:
-            "Vatandoshlar ID hali yo‘qmi?",
+            "Hali hisobingiz yo‘qmi?",
           register:
-            "Vatandoshlar ID yaratish",
+            "Hisob yaratish",
           back:
             "Bosh sahifaga qaytish",
         };
