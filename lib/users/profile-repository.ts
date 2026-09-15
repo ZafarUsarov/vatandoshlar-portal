@@ -2,6 +2,13 @@ import { getDb } from "@/lib/db";
 import { userInterestKeys, type UserInterestKey } from "@/lib/users/profile-options";
 import type { UserPreferredLocale, UserResidencyStage } from "@/types/user";
 
+export class InvalidHomeLocationError extends Error {
+  constructor() {
+    super("Selected home location is not a valid active city.");
+    this.name = "InvalidHomeLocationError";
+  }
+}
+
 type UpdateProfileInput = Readonly<{
   userId: string;
   displayName: string | null;
@@ -35,7 +42,7 @@ export async function updatePublicUserProfile(input: UpdateProfileInput): Promis
       );
 
       if (!locationResult.rows[0]) {
-        throw new Error("Selected home location is not a valid active city.");
+        throw new InvalidHomeLocationError();
       }
     }
 

@@ -1,7 +1,11 @@
 "use client";
 
 import { useActionState, useMemo, useState } from "react";
-import { initialProfileSetupState, saveProfileSetupAction } from "@/app/[locale]/account/profile/actions";
+import {
+  saveProfileSetupAction,
+  type ProfileSetupState,
+} from "@/app/[locale]/account/profile/actions";
+import { Link } from "@/i18n/navigation";
 import type { Location } from "@/types/location";
 import type { PublicUserContext } from "@/types/user";
 
@@ -15,6 +19,11 @@ type Props = Readonly<{
   residencyOptions: ReadonlyArray<Option>;
   interestOptions: ReadonlyArray<Option>;
 }>;
+
+const initialProfileSetupState: ProfileSetupState = {
+  error: null,
+  success: null,
+};
 
 const controlClass = "min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:disabled:bg-slate-900 dark:disabled:text-slate-600";
 
@@ -48,6 +57,7 @@ export default function ProfileSetupForm({
   const [country, setCountry] = useState<CountryCode>(initialCountry);
   const [stateCode, setStateCode] = useState(currentLocation?.stateCode ?? "");
   const [homeLocationId, setHomeLocationId] = useState(context.profile?.homeLocationId ?? "");
+  const [residencyStageTouched, setResidencyStageTouched] = useState(false);
 
   const regions = useMemo(
     () => locations.filter((location) => location.countryCode === country && location.type === "state"),
@@ -60,10 +70,10 @@ export default function ProfileSetupForm({
 
   const copy = locale === "de"
     ? {
-        name: "Name", location: "Mein Wohnort", locationHint: "Wählen Sie zuerst das Land und die Region, danach den verfügbaren kanonischen Ort.", country: "Land", countryPlaceholder: "Land auswählen", germany: "Deutschland", uzbekistan: "Usbekistan", region: "Region / Bundesland", regionPlaceholder: "Region auswählen", city: "Wohnort", cityPlaceholder: "Ort auswählen", noCities: "Für diese Region sind noch keine verifizierten Orte verfügbar.", stage: "Meine Situation", stageHint: "Diese Angabe hilft bei späterer Personalisierung.", stagePlaceholder: "Optional auswählen", interests: "Meine Interessen", interestsHint: "Wählen Sie Themen, die für Sie relevant sind.", submit: "Profil speichern", pending: "Wird gespeichert…",
+        name: "Name", location: "Mein Wohnort", locationHint: "Wählen Sie zuerst das Land und die Region, danach den verfügbaren kanonischen Ort.", country: "Land", countryPlaceholder: "Land auswählen", germany: "Deutschland", uzbekistan: "Usbekistan", region: "Region / Bundesland", regionPlaceholder: "Region auswählen", city: "Wohnort", cityPlaceholder: "Ort auswählen", noCities: "Für diese Region sind noch keine verifizierten Orte verfügbar.", stage: "Meine Situation", stageHint: "Diese Angabe hilft bei späterer Personalisierung.", stagePlaceholder: "Optional auswählen", interests: "Meine Interessen", interestsHint: "Wählen Sie Themen, die für Sie relevant sind.", submit: "Profil speichern", pending: "Wird gespeichert…", myCity: "Zu meiner Stadt →", home: "Zur Startseite",
       }
     : {
-        name: "Ism", location: "Joylashuvim", locationHint: "Avval mamlakat va regionni, keyin mavjud canonical yashash joyini tanlang.", country: "Mamlakat", countryPlaceholder: "Mamlakatni tanlang", germany: "Germaniya", uzbekistan: "O‘zbekiston", region: "Region / Bundesland / Viloyat", regionPlaceholder: "Regionni tanlang", city: "Yashash joyim", cityPlaceholder: "Joylashuvni tanlang", noCities: "Bu region uchun hali tekshirilgan shahar ma’lumotlari mavjud emas.", stage: "Mening holatim", stageHint: "Bu ma’lumot keyingi personalizatsiya uchun ishlatiladi.", stagePlaceholder: "Ixtiyoriy tanlang", interests: "Qiziqishlarim", interestsHint: "Siz uchun muhim mavzularni tanlang.", submit: "Profilni saqlash", pending: "Saqlanmoqda…",
+        name: "Ism", location: "Joylashuvim", locationHint: "Avval mamlakat va regionni, keyin mavjud canonical yashash joyini tanlang.", country: "Mamlakat", countryPlaceholder: "Mamlakatni tanlang", germany: "Germaniya", uzbekistan: "O‘zbekiston", region: "Region / Bundesland / Viloyat", regionPlaceholder: "Regionni tanlang", city: "Yashash joyim", cityPlaceholder: "Joylashuvni tanlang", noCities: "Bu region uchun hali tekshirilgan shahar ma’lumotlari mavjud emas.", stage: "Mening holatim", stageHint: "Bu ma’lumot keyingi personalizatsiya uchun ishlatiladi.", stagePlaceholder: "Ixtiyoriy tanlang", interests: "Qiziqishlarim", interestsHint: "Siz uchun muhim mavzularni tanlang.", submit: "Profilni saqlash", pending: "Saqlanmoqda…", myCity: "Mening shahrimga o‘tish →", home: "Bosh sahifaga qaytish",
       };
 
   function changeCountry(value: string) {
@@ -81,6 +91,11 @@ export default function ProfileSetupForm({
   return (
     <form action={formAction} className="space-y-5">
       <input type="hidden" name="locale" value={locale} />
+      <input
+        type="hidden"
+        name="residencyStageTouched"
+        value={residencyStageTouched ? "1" : "0"}
+      />
 
       <div>
         <label htmlFor="profile-display-name" className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">{copy.name}</label>
@@ -108,7 +123,14 @@ export default function ProfileSetupForm({
 
       <section className="rounded-3xl border border-slate-200/80 bg-slate-50/80 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950/45 sm:p-5" aria-labelledby="profile-stage-heading">
         <div className="mb-5 flex gap-3"><SectionIcon kind="stage" /><div><h2 id="profile-stage-heading" className="font-bold text-slate-950 dark:text-white">{copy.stage}</h2><p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">{copy.stageHint}</p></div></div>
-        <select id="profile-residency-stage" name="residencyStage" defaultValue={context.profile?.residencyStage ?? ""} className={controlClass} aria-label={copy.stage}><option value="">{copy.stagePlaceholder}</option>{residencyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select>
+        <select
+          id="profile-residency-stage"
+          name="residencyStage"
+          defaultValue={residencyOptions.some((option) => option.value === context.profile?.residencyStage) ? context.profile?.residencyStage ?? "" : ""}
+          onChange={() => setResidencyStageTouched(true)}
+          className={controlClass}
+          aria-label={copy.stage}
+        ><option value="">{copy.stagePlaceholder}</option>{residencyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select>
       </section>
 
       <fieldset className="rounded-3xl border border-slate-200/80 bg-slate-50/80 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950/45 sm:p-5">
@@ -124,7 +146,26 @@ export default function ProfileSetupForm({
         </div>
       </fieldset>
 
-      {state.error && <p role="alert" className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300">{state.error}</p>}
+      {state.error && <p role="alert" aria-live="polite" className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300">{state.error}</p>}
+      {state.success && (
+        <div role="status" aria-live="polite" className="rounded-3xl border border-emerald-200 bg-emerald-50/90 p-4 dark:border-emerald-500/20 dark:bg-emerald-500/10 sm:p-5">
+          <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-200">{state.success}</p>
+          <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
+            <Link
+              href="/my-city"
+              className="inline-flex min-h-11 flex-1 items-center justify-center rounded-2xl bg-emerald-600 px-4 text-center text-sm font-bold text-white shadow-sm shadow-emerald-900/10 transition duration-150 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transition-none dark:focus-visible:ring-offset-slate-900"
+            >
+              {copy.myCity}
+            </Link>
+            <Link
+              href="/"
+              className="inline-flex min-h-11 flex-1 items-center justify-center rounded-2xl border border-slate-300 bg-white px-4 text-center text-sm font-bold text-slate-700 transition duration-150 hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-900"
+            >
+              {copy.home}
+            </Link>
+          </div>
+        </div>
+      )}
       <button type="submit" disabled={pending} className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-emerald-600 px-5 text-sm font-bold text-white shadow-lg shadow-emerald-900/10 transition hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:transition-none dark:focus-visible:ring-offset-slate-900">{pending ? copy.pending : copy.submit}</button>
     </form>
   );

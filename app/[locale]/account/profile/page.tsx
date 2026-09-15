@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
+import ProfileNavigation from "@/components/account/ProfileNavigation";
 import ProfileSetupForm from "@/components/account/ProfileSetupForm";
 import { requirePublicUser } from "@/lib/auth/user";
 import { getActiveProfileLocations } from "@/lib/locations/location-repository";
@@ -38,6 +39,7 @@ export default async function AccountProfilePage() {
       </div>
 
       <div className="relative mx-auto max-w-3xl">
+        <ProfileNavigation locale={locale} />
         <div className="rounded-[2rem] border border-white/80 bg-white/90 p-5 shadow-2xl shadow-slate-900/8 backdrop-blur-sm dark:border-slate-800/90 dark:bg-slate-900/90 sm:p-9">
           <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">{copy.eyebrow}</p>
           <h1 className="mt-4 text-3xl font-black tracking-[-0.03em] text-slate-950 dark:text-white sm:text-4xl">{copy.title}</h1>
