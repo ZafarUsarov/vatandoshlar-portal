@@ -110,8 +110,22 @@ function normalizeResidencyStage(
     value === "planning_move" ||
     value === "new_arrival" ||
     value === "settling_in" ||
-    value === "long_term_resident" ||
     value === "citizen" ||
+    value === "planning_germany" ||
+    value === "au_pair" ||
+    value === "fsj_bfd" ||
+    value === "language_course" ||
+    value === "ausbildung" ||
+    value === "bachelor" ||
+    value === "master" ||
+    value === "phd" ||
+    value === "internship" ||
+    value === "skilled_worker" ||
+    value === "employed" ||
+    value === "entrepreneur" ||
+    value === "family" ||
+    value === "long_term_resident" ||
+    value === "other" ||
     value === "prefer_not_to_say"
   ) {
     return value;

@@ -885,5 +885,12 @@
       }
     },
     "privacy": "Die Zahlung erfolgt direkt über PayPal oder Taps. Vatandoshlar.de erhält und speichert keine Karten- oder Bankdaten."
+  },
+  "ErrorPage": {
+    "eyebrow": "Ein Fehler ist aufgetreten",
+    "title": "Beim Laden der Seite ist ein Fehler aufgetreten",
+    "description": "Bitte versuchen Sie es erneut. Wenn das Problem weiterhin besteht, kehren Sie zur Startseite zurück.",
+    "retry": "Erneut versuchen",
+    "home": "Startseite"
   }
 }

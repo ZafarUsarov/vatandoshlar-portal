@@ -11,13 +11,33 @@ export type UserPreferredLocale =
   | "uz"
   | "de";
 
-export type UserResidencyStage =
+export type LegacyUserResidencyStage =
   | "planning_move"
   | "new_arrival"
   | "settling_in"
+  | "citizen";
+
+export type CanonicalUserResidencyStage =
+  | "planning_germany"
+  | "au_pair"
+  | "fsj_bfd"
+  | "language_course"
+  | "ausbildung"
+  | "bachelor"
+  | "master"
+  | "phd"
+  | "internship"
+  | "skilled_worker"
+  | "employed"
+  | "entrepreneur"
+  | "family"
   | "long_term_resident"
-  | "citizen"
+  | "other"
   | "prefer_not_to_say";
+
+export type UserResidencyStage =
+  | LegacyUserResidencyStage
+  | CanonicalUserResidencyStage;
 
 export type PublicUser = Readonly<{
   id: string;
@@ -43,7 +63,6 @@ export type PublicUserProfileCompletion = Readonly<{
   isComplete: boolean;
   completedFields: number;
   totalFields: number;
-
   hasDisplayName: boolean;
   hasHomeLocation: boolean;
   hasResidencyStage: boolean;

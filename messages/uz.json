@@ -885,5 +885,12 @@
       }
     },
     "privacy": "To‘lov bevosita PayPal yoki Taps platformasida amalga oshiriladi. Vatandoshlar.de karta yoki bank ma’lumotlaringizni qabul qilmaydi va saqlamaydi."
+  },
+  "ErrorPage": {
+    "eyebrow": "Xatolik yuz berdi",
+    "title": "Sahifani yuklashda xatolik yuz berdi",
+    "description": "Iltimos, qayta urinib ko‘ring. Muammo davom etsa, bosh sahifaga qayting.",
+    "retry": "Qayta urinish",
+    "home": "Bosh sahifa"
   }
 }

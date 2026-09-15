@@ -7,7 +7,6 @@ import {
   type UserInterestKey,
 } from "@/lib/users/profile-options";
 import { updatePublicUserProfile } from "@/lib/users/profile-repository";
-
 import type { UserResidencyStage } from "@/types/user";
 
 export type ProfileSetupState = Readonly<{
@@ -18,15 +17,11 @@ export const initialProfileSetupState: ProfileSetupState = {
   error: null,
 };
 
-function getLocale(
-  formData: FormData,
-): "uz" | "de" {
-  return formData.get("locale") === "de"
-    ? "de"
-    : "uz";
+function getLocale(formData: FormData): "uz" | "de" {
+  return formData.get("locale") === "de" ? "de" : "uz";
 }
 
-function normalizeNullableString(
+function clean(
   value: FormDataEntryValue | null,
 ): string | null {
   if (typeof value !== "string") {
@@ -35,9 +30,7 @@ function normalizeNullableString(
 
   const trimmed = value.trim();
 
-  return trimmed.length > 0
-    ? trimmed
-    : null;
+  return trimmed ? trimmed : null;
 }
 
 function isResidencyStage(
@@ -47,8 +40,22 @@ function isResidencyStage(
     value === "planning_move" ||
     value === "new_arrival" ||
     value === "settling_in" ||
-    value === "long_term_resident" ||
     value === "citizen" ||
+    value === "planning_germany" ||
+    value === "au_pair" ||
+    value === "fsj_bfd" ||
+    value === "language_course" ||
+    value === "ausbildung" ||
+    value === "bachelor" ||
+    value === "master" ||
+    value === "phd" ||
+    value === "internship" ||
+    value === "skilled_worker" ||
+    value === "employed" ||
+    value === "entrepreneur" ||
+    value === "family" ||
+    value === "long_term_resident" ||
+    value === "other" ||
     value === "prefer_not_to_say"
   );
 }
@@ -65,60 +72,29 @@ export async function saveProfileSetupAction(
   _previousState: ProfileSetupState,
   formData: FormData,
 ): Promise<ProfileSetupState> {
-  const locale =
-    getLocale(
-      formData,
-    );
+  const locale = getLocale(formData);
 
-  const context =
-    await requirePublicUser(
-      locale,
-    );
+  const context = await requirePublicUser(locale);
 
-  const displayName =
-    normalizeNullableString(
-      formData.get(
-        "displayName",
-      ),
-    );
+  const displayName = clean(
+    formData.get("displayName"),
+  );
 
-  const homeLocationId =
-    normalizeNullableString(
-      formData.get(
-        "homeLocationId",
-      ),
-    );
+  const homeLocationId = clean(
+    formData.get("homeLocationId"),
+  );
 
-  const residencyStageValue =
-    normalizeNullableString(
-      formData.get(
-        "residencyStage",
-      ),
-    );
+  const residencyStageValue = clean(
+    formData.get("residencyStage"),
+  );
 
-  const residencyStage =
-    residencyStageValue === null
-      ? null
-      : isResidencyStage(
-          residencyStageValue,
-        )
-        ? residencyStageValue
-        : null;
-
-  const interests =
-    formData
-      .getAll(
-        "interests",
-      )
-      .filter(
-        (
-          value,
-        ): value is string =>
-          typeof value === "string",
-      )
-      .filter(
-        isInterestKey,
-      );
+  const interests = formData
+    .getAll("interests")
+    .filter(
+      (value): value is string =>
+        typeof value === "string",
+    )
+    .filter(isInterestKey);
 
   if (
     displayName &&
@@ -134,7 +110,7 @@ export async function saveProfileSetupAction(
 
   if (
     residencyStageValue !== null &&
-    residencyStage === null
+    !isResidencyStage(residencyStageValue)
   ) {
     return {
       error:
@@ -144,13 +120,16 @@ export async function saveProfileSetupAction(
     };
   }
 
+  const residencyStage: UserResidencyStage | null =
+    residencyStageValue === null
+      ? null
+      : residencyStageValue;
+
   try {
     await updatePublicUserProfile({
-      userId:
-        context.user.id,
+      userId: context.user.id,
       displayName,
-      preferredLocale:
-        locale,
+      preferredLocale: locale,
       homeLocationId,
       residencyStage,
       interests,
@@ -170,8 +149,7 @@ export async function saveProfileSetupAction(
   }
 
   return redirect({
-    href:
-      "/my-city",
+    href: "/account",
     locale,
   });
 }

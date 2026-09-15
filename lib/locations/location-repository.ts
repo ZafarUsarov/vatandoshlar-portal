@@ -97,8 +97,32 @@ export async function getActiveFederalStates(): Promise<
         WHERE
           status = 'active'
           AND location_type = 'state'
+          AND country_code = 'DE'
         ORDER BY
           state_name ASC,
+          id ASC
+      `,
+    );
+
+  return result.rows.map(toLocation);
+}
+
+
+export async function getActiveProfileLocations(): Promise<
+  ReadonlyArray<Location>
+> {
+  const result =
+    await getDb().query<LocationRow>(
+      `
+        ${locationSelect}
+        WHERE
+          status = 'active'
+          AND country_code IN ('DE', 'UZ')
+        ORDER BY
+          country_code ASC,
+          location_type DESC,
+          state_name ASC,
+          city_name ASC NULLS FIRST,
           id ASC
       `,
     );
