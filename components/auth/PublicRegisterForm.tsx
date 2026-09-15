@@ -7,12 +7,19 @@ import {
 } from "react";
 
 import {
+
   publicRegisterAction,
+
   type PublicRegisterState,
+
 } from "@/app/[locale]/id/register/actions";
 
 const initialPublicRegisterState: PublicRegisterState = {
+
   error: null,
+
+  success: null,
+
 };
 
 type PublicRegisterFormProps = Readonly<{
@@ -324,6 +331,14 @@ export default function PublicRegisterForm({
         />
 
       </div>
+
+      {state.success && (
+
+        <div role="status" aria-live="polite" className="space-y-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-200">
+          <p>{state.success}</p>
+          <a href={`/${locale}/id/login`} className="inline-flex font-bold underline underline-offset-4">{locale === "de" ? "Zur Anmeldung" : "Kirish sahifasiga"}</a>
+        </div>
+      )}
 
       {state.error && (
 

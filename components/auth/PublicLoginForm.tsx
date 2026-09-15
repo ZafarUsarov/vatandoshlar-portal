@@ -7,13 +7,19 @@ import {
 } from "react";
 
 import {
+
   publicLoginAction,
+
   type PublicLoginState,
+
 } from "@/app/[locale]/id/login/actions";
 
 const initialPublicLoginState: PublicLoginState = {
+
   error: null,
+
   errorField: null,
+
 };
 
 type PublicLoginFormProps = Readonly<{
@@ -269,6 +275,15 @@ export default function PublicLoginForm({
         </p>
 
       )}
+
+      <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
+        <a href={`/${locale}/id/forgot-password`} className="font-semibold text-emerald-700 hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300">
+          {locale === "de" ? "Passwort vergessen?" : "Parolni unutdingizmi?"}
+        </a>
+        <a href={`/${locale}/id/resend-verification`} className="text-slate-500 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-400 dark:hover:text-white">
+          {locale === "de" ? "Bestätigung erneut senden" : "Tasdiqlash xatini qayta yuborish"}
+        </a>
+      </div>
 
       <button
 
