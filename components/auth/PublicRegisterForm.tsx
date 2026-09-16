@@ -81,13 +81,11 @@ export default function PublicRegisterForm({
           googlePending:
             "Google wird geöffnet…",
           privacyTitle:
-            "Datenschutz und Verarbeitung Ihrer Daten",
-          privacyDescription:
-            "Lesen Sie vor der Kontoerstellung, wie Ihre personenbezogenen Daten erhoben, verwendet und geschützt werden.",
+            "Datenschutz",
           privacyRead:
             "Datenschutzerklärung lesen →",
           privacyConsent:
-            "Ich habe die Datenschutzerklärung gelesen und bestätige, dass ich die dort beschriebenen Hinweise zur Verarbeitung meiner Daten zur Kenntnis genommen habe.",
+            "Ich habe die Datenschutzerklärung gelesen.",
           privacyRequired:
             "Bitte lesen und bestätigen Sie die Datenschutzerklärung, bevor Sie mit Google fortfahren.",
           or:
@@ -115,13 +113,11 @@ export default function PublicRegisterForm({
           googlePending:
             "Google ochilmoqda…",
           privacyTitle:
-            "Maxfiylik va ma’lumotlarni qayta ishlash",
-          privacyDescription:
-            "Hisob yaratishdan oldin shaxsiy ma’lumotlaringiz qanday yig‘ilishi, ishlatilishi va himoyalanishi haqida Maxfiylik siyosati bilan tanishing.",
+            "Maxfiylik",
           privacyRead:
             "Maxfiylik siyosatini o‘qish →",
           privacyConsent:
-            "Maxfiylik siyosati bilan tanishdim va unda bayon qilingan shaxsiy ma’lumotlarimni qayta ishlashga oid ma’lumotlarni o‘qib chiqqanimni tasdiqlayman.",
+            "Maxfiylik siyosati bilan tanishdim.",
           privacyRequired:
             "Google orqali davom etishdan oldin Maxfiylik siyosatini o‘qib, tanishganingizni tasdiqlang.",
           or:
@@ -187,10 +183,6 @@ export default function PublicRegisterForm({
         >
           {copy.privacyTitle}
         </h2>
-
-        <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
-          {copy.privacyDescription}
-        </p>
 
         <a
           href={`/${locale}/privacy`}
