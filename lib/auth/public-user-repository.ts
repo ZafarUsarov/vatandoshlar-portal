@@ -40,6 +40,8 @@ type RegisterPublicUserInput = Readonly<{
 
   preferredLocale: UserPreferredLocale;
 
+  privacyVersion: string;
+
 }>;
 
 export type PublicCredentialUser = Readonly<{
@@ -408,7 +410,11 @@ export async function registerPublicUser(
 
             password_hash,
 
-            account_status
+            account_status,
+
+            privacy_accepted_at,
+
+            privacy_version
 
           )
 
@@ -418,7 +424,11 @@ export async function registerPublicUser(
 
             $2,
 
-            'active'
+            'active',
+
+            NOW(),
+
+            $3
 
           )
 
@@ -433,6 +443,8 @@ export async function registerPublicUser(
           normalizedEmail,
 
           passwordHash,
+
+          input.privacyVersion,
 
         ],
 

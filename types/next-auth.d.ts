@@ -4,7 +4,7 @@ import type {
 
 declare module "next-auth" {
   interface User {
-    role:
+    role?:
       | "admin"
       | "user";
   }

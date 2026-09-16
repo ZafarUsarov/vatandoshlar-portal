@@ -1,5 +1,11 @@
 "use server";
 
+import { signIn } from "@/auth";
+import { redirect } from "@/i18n/navigation";
+import {
+  PRIVACY_VERSION,
+  setGoogleAuthIntent,
+} from "@/lib/auth/google-auth-intent";
 import {
   registerPublicUser,
 } from "@/lib/auth/public-user-repository";
@@ -10,9 +16,17 @@ import {
   sendVerificationEmail,
 } from "@/lib/email/auth-email";
 
+export type PublicRegisterValues = Readonly<{
+  firstName: string;
+  lastName: string;
+  email: string;
+  privacyAccepted: boolean;
+}>;
+
 export type PublicRegisterState = Readonly<{
   error: string | null;
   success: string | null;
+  values: PublicRegisterValues;
 }>;
 
 function getLocale(
@@ -42,6 +56,18 @@ function isValidEmail(
   );
 }
 
+function getSafeValues(
+  formData: FormData,
+): PublicRegisterValues {
+  return {
+    firstName: getString(formData, "firstName"),
+    lastName: getString(formData, "lastName"),
+    email: getString(formData, "email"),
+    privacyAccepted:
+      formData.get("privacyAccepted") === "on",
+  };
+}
+
 export async function publicRegisterAction(
   _previousState: PublicRegisterState,
   formData: FormData,
@@ -51,23 +77,17 @@ export async function publicRegisterAction(
       formData,
     );
 
-  const firstName =
-    getString(
+  const values =
+    getSafeValues(
       formData,
-      "firstName",
     );
 
-  const lastName =
-    getString(
-      formData,
-      "lastName",
-    );
-
-  const email =
-    getString(
-      formData,
-      "email",
-    );
+  const {
+    firstName,
+    lastName,
+    email,
+    privacyAccepted,
+  } = values;
 
   const passwordValue =
     formData.get(
@@ -89,34 +109,44 @@ export async function publicRegisterAction(
       ? passwordConfirmValue
       : "";
 
+  const failure = (
+    error: string,
+  ): PublicRegisterState => ({
+    error,
+    success: null,
+    values,
+  });
+
+  if (!privacyAccepted) {
+    return failure(
+      locale === "de"
+        ? "Bitte bestätigen Sie die Datenschutzerklärung, um ein Konto zu erstellen."
+        : "Hisob yaratish uchun Maxfiylik siyosati bilan tanishganingizni tasdiqlang.",
+    );
+  }
+
   if (!firstName) {
-    return {
-      error:
-        locale === "de"
-          ? "Bitte geben Sie Ihren Vornamen ein."
-          : "Ismingizni kiriting.",
-      success: null,
-    };
+    return failure(
+      locale === "de"
+        ? "Bitte geben Sie Ihren Vornamen ein."
+        : "Ismingizni kiriting.",
+    );
   }
 
   if (!lastName) {
-    return {
-      error:
-        locale === "de"
-          ? "Bitte geben Sie Ihren Nachnamen ein."
-          : "Familiyangizni kiriting.",
-      success: null,
-    };
+    return failure(
+      locale === "de"
+        ? "Bitte geben Sie Ihren Nachnamen ein."
+        : "Familiyangizni kiriting.",
+    );
   }
 
   if (!email) {
-    return {
-      error:
-        locale === "de"
-          ? "Bitte geben Sie Ihre E-Mail-Adresse ein."
-          : "E-mail manzilini kiriting.",
-      success: null,
-    };
+    return failure(
+      locale === "de"
+        ? "Bitte geben Sie Ihre E-Mail-Adresse ein."
+        : "E-mail manzilini kiriting.",
+    );
   }
 
   if (
@@ -124,71 +154,59 @@ export async function publicRegisterAction(
       email,
     )
   ) {
-    return {
-      error:
-        locale === "de"
-          ? "Bitte geben Sie eine gültige E-Mail-Adresse ein."
-          : "To‘g‘ri e-mail manzilini kiriting.",
-      success: null,
-    };
+    return failure(
+      locale === "de"
+        ? "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+        : "To‘g‘ri e-mail manzilini kiriting.",
+    );
   }
 
   if (
     firstName.length > 40 ||
     lastName.length > 40
   ) {
-    return {
-      error:
-        locale === "de"
-          ? "Vor- und Nachname dürfen jeweils höchstens 40 Zeichen lang sein."
-          : "Ism va familiya har biri 40 ta belgidan oshmasligi kerak.",
-      success: null,
-    };
+    return failure(
+      locale === "de"
+        ? "Vor- und Nachname dürfen jeweils höchstens 40 Zeichen lang sein."
+        : "Ism va familiya har biri 40 ta belgidan oshmasligi kerak.",
+    );
   }
 
   if (!password) {
-    return {
-      error:
-        locale === "de"
-          ? "Bitte geben Sie ein Passwort ein."
-          : "Parolni kiriting.",
-      success: null,
-    };
+    return failure(
+      locale === "de"
+        ? "Bitte geben Sie ein Passwort ein."
+        : "Parolni kiriting.",
+    );
   }
 
   if (
     password.length < 8
   ) {
-    return {
-      error:
-        locale === "de"
-          ? "Das Passwort muss mindestens 8 Zeichen lang sein."
-          : "Parol kamida 8 ta belgidan iborat bo‘lishi kerak.",
-      success: null,
-    };
+    return failure(
+      locale === "de"
+        ? "Das Passwort muss mindestens 8 Zeichen lang sein."
+        : "Parol kamida 8 ta belgidan iborat bo‘lishi kerak.",
+    );
   }
 
   if (!passwordConfirm) {
-    return {
-      error:
-        locale === "de"
-          ? "Bitte wiederholen Sie das Passwort."
-          : "Parolni takrorlang.",
-      success: null,
-    };
+    return failure(
+      locale === "de"
+        ? "Bitte wiederholen Sie das Passwort."
+        : "Parolni takrorlang.",
+    );
   }
 
   if (
     password !==
     passwordConfirm
   ) {
-    return {
-      error:
-        locale === "de"
-          ? "Die Passwörter stimmen nicht überein."
-          : "Parollar bir xil emas.",
-      success: null,
-    };
+    return failure(
+      locale === "de"
+        ? "Die Passwörter stimmen nicht überein."
+        : "Parollar bir xil emas.",
+    );
   }
 
   const displayName =
@@ -201,16 +219,15 @@ export async function publicRegisterAction(
       displayName,
       preferredLocale:
         locale,
+      privacyVersion: PRIVACY_VERSION,
     });
 
   if (!result.ok) {
-    return {
-      error:
-        locale === "de"
-          ? "Für diese E-Mail-Adresse besteht bereits ein Konto."
-          : "Bu e-mail manzili bilan hisob mavjud.",
-      success: null,
-    };
+    return failure(
+      locale === "de"
+        ? "Für diese E-Mail-Adresse besteht bereits ein Konto."
+        : "Bu e-mail manzili bilan hisob mavjud.",
+    );
   }
 
   try {
@@ -241,6 +258,7 @@ export async function publicRegisterAction(
         locale === "de"
           ? "Konto erstellt. Die Bestätigungs-E-Mail konnte gerade nicht versendet werden. Bitte nutzen Sie „Bestätigungs-E-Mail erneut senden“."
           : "Hisob yaratildi. Tasdiqlash xatini hozir yuborib bo‘lmadi. “Tasdiqlash xatini qayta yuborish” orqali qayta urinib ko‘ring.",
+      values,
     };
   }
 
@@ -250,5 +268,32 @@ export async function publicRegisterAction(
       locale === "de"
         ? "Konto erstellt. Bitte prüfen Sie Ihre E-Mails und bestätigen Sie Ihre Adresse."
         : "Hisob yaratildi. E-mailingizni tekshirib, manzilni tasdiqlang.",
+    values,
   };
+}
+
+export async function googleRegisterAction(
+  formData: FormData,
+): Promise<void> {
+  const locale =
+    getLocale(formData);
+
+  if (
+    formData.get("privacyAccepted") !== "on"
+  ) {
+    return redirect({
+      href: "/id/register?privacyError=1",
+      locale,
+    });
+  }
+
+  await setGoogleAuthIntent({
+    mode: "register",
+    locale,
+    privacyAccepted: true,
+  });
+
+  await signIn("google", {
+    redirectTo: `/${locale}/account/profile`,
+  });
 }

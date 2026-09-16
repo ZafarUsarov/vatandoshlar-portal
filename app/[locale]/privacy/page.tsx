@@ -20,7 +20,7 @@ const copy = {
     intro:
       "Ushbu sahifada platformadan foydalanganda qanday texnik va shaxsiy ma’lumotlar qayta ishlanishi, nima maqsadda ishlatilishi va qanday himoya qilinishi tushuntiriladi.",
     updatedLabel: "Yangilangan sana",
-    updatedValue: "25.08.2026",
+    updatedValue: "16.09.2026",
     tocTitle: "Ushbu sahifada",
     controllerTitle: "1. Ma’lumotlarni qayta ishlash uchun mas’ul shaxs",
     controllerBody:
@@ -48,9 +48,11 @@ const copy = {
       "Raw IP va User-Agent deduplication jadvalida saqlanmaydi. Pseudonymous dedup yozuvlari qisqa muddatli bo‘lib, 48 soatdan eski yozuvlar tozalanadi. Avval ishlatilgan vatandoshlar_view_visitor persistent cookie endi qo‘llanilmaydi.",
     storageTitle: "5. Cookie va lokal browser xotirasi",
     storageBody:
-      "Sayt foydalanuvchi so‘ragan funksiyalarni taqdim etish uchun cheklangan first-party storage’dan foydalanishi mumkin. Masalan, til tanlovi NEXT_LOCALE orqali eslab qolinadi; admin loginida autentifikatsiya va sessiya cookie’lari ishlatiladi; tema va ayrim qidiruv/interfeys holatlari brauzerning localStorage xotirasida saqlanishi mumkin.",
+      "Sayt foydalanuvchi so‘ragan funksiyalarni taqdim etish uchun cheklangan first-party storage’dan foydalanishi mumkin. Masalan, til tanlovi NEXT_LOCALE orqali eslab qolinadi; Vatandoshlar ID va admin autentifikatsiyasida sessiya cookie’lari ishlatiladi; tema va ayrim qidiruv/interfeys holatlari brauzerning localStorage xotirasida saqlanishi mumkin.",
     storageTracking:
       "Bu storage reklama profili yaratish yoki cross-site tracking uchun ishlatilmaydi. Hozir Vatandoshlar.de Google Analytics, Meta Pixel yoki shunga o‘xshash third-party marketing tracking xizmatlarini ishlatmaydi.",
+    googleAuth:
+      "Agar foydalanuvchi Google orqali Vatandoshlar ID yaratish yoki tizimga kirishni tanlasa, autentifikatsiya jarayonida Google OAuth xizmati ishlatiladi. Vatandoshlar.de Google’dan tasdiqlangan e-mail manzili, ism va Google hisobining texnik identifikatorini olishi mumkin. Google paroli Vatandoshlar.de’ga uzatilmaydi va saqlanmaydi. Mavjud Vatandoshlar ID xavfsizlik sababli bir xil e-mail asosida Google hisobiga avtomatik bog‘lanmaydi.",
     externalTitle: "6. Tashqi havolalar",
     externalBody:
       "Saytda Telegram, Instagram, Facebook, PayPal yoki boshqa tashqi xizmatlarga olib boruvchi havolalar bo‘lishi mumkin. Ular odatda faqat havolani bosganingizdan keyin ochiladi. Tashqi sayt ochilgach, o‘sha xizmatning o‘z maxfiylik qoidalari amal qiladi.",
@@ -78,7 +80,7 @@ const copy = {
     intro:
       "Diese Datenschutzerklärung erläutert, welche personenbezogenen und technischen Daten bei der Nutzung der Plattform verarbeitet werden, zu welchen Zwecken dies geschieht und wie die Verarbeitung ausgestaltet ist.",
     updatedLabel: "Stand",
-    updatedValue: "25.08.2026",
+    updatedValue: "16.09.2026",
     tocTitle: "In dieser Erklärung",
     controllerTitle: "1. Verantwortlicher",
     controllerBody:
@@ -106,9 +108,11 @@ const copy = {
       "Rohe IP-Adressen und User-Agent-Daten werden nicht in der Deduplication-Tabelle gespeichert. Die pseudonymen Deduplication-Einträge sind kurzlebig; Einträge, die älter als 48 Stunden sind, werden bereinigt. Das früher eingesetzte persistente Cookie vatandoshlar_view_visitor wird nicht mehr verwendet.",
     storageTitle: "5. Cookies und lokaler Browserspeicher",
     storageBody:
-      "Für ausdrücklich genutzte Funktionen kann die Website begrenzten First-Party-Speicher einsetzen. So kann die Sprachauswahl über NEXT_LOCALE gespeichert werden; für den geschützten Admin-Login werden Authentifizierungs- und Session-Cookies verwendet; Theme- und einzelne Such- beziehungsweise Oberflächenzustände können im localStorage des Browsers gespeichert werden.",
+      "Für ausdrücklich genutzte Funktionen kann die Website begrenzten First-Party-Speicher einsetzen. So kann die Sprachauswahl über NEXT_LOCALE gespeichert werden; für Vatandoshlar ID und den geschützten Admin-Bereich werden Authentifizierungs- und Session-Cookies verwendet; Theme- und einzelne Such- beziehungsweise Oberflächenzustände können im localStorage des Browsers gespeichert werden.",
     storageTracking:
       "Diese Speichermechanismen werden nicht zur Bildung von Werbeprofilen oder für Cross-Site-Tracking eingesetzt. Vatandoshlar.de verwendet derzeit weder Google Analytics noch Meta Pixel oder vergleichbare Third-Party-Marketing-Tracker.",
+    googleAuth:
+      "Wenn Sie eine Vatandoshlar ID mit Google erstellen oder sich mit Google anmelden, wird Google OAuth für die Authentifizierung verwendet. Vatandoshlar.de kann dabei die von Google bestätigte E-Mail-Adresse, den Namen und eine technische Kennung des Google-Kontos erhalten. Ihr Google-Passwort wird nicht an Vatandoshlar.de übermittelt oder gespeichert. Eine bestehende Vatandoshlar ID wird aus Sicherheitsgründen nicht allein aufgrund einer übereinstimmenden E-Mail-Adresse automatisch mit Google verknüpft.",
     externalTitle: "6. Externe Links",
     externalBody:
       "Die Website kann Links zu Telegram, Instagram, Facebook, PayPal oder anderen externen Diensten enthalten. Diese Dienste werden in der Regel erst aufgerufen, wenn Sie den jeweiligen Link aktiv öffnen. Ab diesem Zeitpunkt gelten die Datenschutzbestimmungen des jeweiligen externen Anbieters.",
@@ -636,6 +640,10 @@ export default async function PrivacyPage() {
 
               <p>
                 {currentCopy.storageTracking}
+              </p>
+
+              <p>
+                {currentCopy.googleAuth}
               </p>
             </Section>
 

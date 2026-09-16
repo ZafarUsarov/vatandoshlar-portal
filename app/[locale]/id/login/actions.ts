@@ -11,6 +11,7 @@ import {
   signIn,
 
 } from "@/auth";
+import { setGoogleAuthIntent } from "@/lib/auth/google-auth-intent";
 
 export type PublicLoginErrorField =
 
@@ -232,4 +233,10 @@ export async function publicLoginAction(
 
   }
 
+}
+
+export async function googleLoginAction(formData: FormData): Promise<void> {
+  const locale = getLocale(formData);
+  await setGoogleAuthIntent({ mode: "login", locale, privacyAccepted: false });
+  await signIn("google", { redirectTo: `/${locale}/account` });
 }

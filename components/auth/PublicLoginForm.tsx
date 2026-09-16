@@ -8,6 +8,8 @@ import {
 
 import {
 
+  googleLoginAction,
+
   publicLoginAction,
 
   type PublicLoginState,
@@ -77,6 +79,8 @@ export default function PublicLoginForm({
           pending:
 
             "Anmeldung läuft…",
+          google: "Mit Google anmelden",
+          or: "oder",
 
         }
 
@@ -97,6 +101,8 @@ export default function PublicLoginForm({
           pending:
 
             "Kirilmoqda…",
+          google: "Google orqali kirish",
+          or: "yoki",
 
         };
 
@@ -133,6 +139,22 @@ export default function PublicLoginForm({
         value={locale}
 
       />
+
+      <button
+        type="submit"
+        formAction={googleLoginAction}
+        disabled={pending}
+        className="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl border border-slate-300 bg-white px-5 text-sm font-bold text-slate-800 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+      >
+        <span aria-hidden="true" className="text-base font-black">G</span>
+        {copy.google}
+      </button>
+
+      <div className="flex items-center gap-3" aria-hidden="true">
+        <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
+        <span className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{copy.or}</span>
+        <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
+      </div>
 
       <div>
 
