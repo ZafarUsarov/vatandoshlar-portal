@@ -119,42 +119,29 @@ export default function PublicLoginForm({
     state.errorField === "credentials";
 
   return (
+    <div className="space-y-5">
+      <form action={googleLoginAction}>
+        <input type="hidden" name="locale" value={locale} />
 
-    <form
-
-      action={formAction}
-
-      className="space-y-5"
-
-      noValidate
-
-    >
-
-      <input
-
-        type="hidden"
-
-        name="locale"
-
-        value={locale}
-
-      />
-
-      <button
-        type="submit"
-        formAction={googleLoginAction}
-        disabled={pending}
-        className="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl border border-slate-300 bg-white px-5 text-sm font-bold text-slate-800 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
-      >
-        <span aria-hidden="true" className="text-base font-black">G</span>
-        {copy.google}
-      </button>
+        <button
+          type="submit"
+          className="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl border border-slate-300 bg-white px-5 text-sm font-bold text-slate-800 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+        >
+          <span aria-hidden="true" className="text-base font-black">G</span>
+          {copy.google}
+        </button>
+      </form>
 
       <div className="flex items-center gap-3" aria-hidden="true">
         <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-        <span className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{copy.or}</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+          {copy.or}
+        </span>
         <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
       </div>
+
+      <form action={formAction} className="space-y-5" noValidate>
+        <input type="hidden" name="locale" value={locale} />
 
       <div>
 
@@ -325,8 +312,8 @@ export default function PublicLoginForm({
 
       </button>
 
-    </form>
-
+      </form>
+    </div>
   );
 
 }
