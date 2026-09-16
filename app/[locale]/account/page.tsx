@@ -44,7 +44,7 @@ export default async function AccountPage() {
   const buttonBase = "inline-flex min-h-11 items-center justify-center rounded-2xl px-5 text-sm font-bold transition duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transition-none dark:focus-visible:ring-offset-slate-950";
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-50 px-4 py-12 dark:bg-slate-950 sm:px-6 sm:py-16">
+    <main className="relative min-h-[calc(100vh-5rem)] overflow-hidden bg-slate-50 px-4 py-12 dark:bg-slate-950 sm:px-6 sm:py-16">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-[-12rem] h-[30rem] w-[48rem] -translate-x-1/2 rounded-full bg-emerald-200/30 blur-3xl dark:bg-emerald-500/10" />
         <div className="absolute -right-24 top-1/3 h-72 w-72 rounded-full bg-cyan-200/20 blur-3xl dark:bg-cyan-500/10" />
