@@ -847,24 +847,22 @@
   "SupportPage": {
     "metadata": {
       "title": "Mit einer guten Tat unterstützen | Vatandoshlar.de",
-      "description": "Unterstützen Sie Vatandoshlar.de freiwillig: Beiträge über diese Seite werden für humanitäre Hilfe zugunsten von Kindern in Gaza gespendet."
+      "description": "Unterstützen Sie Vatandoshlar.de freiwillig — Beiträge über diese Seite werden für humanitäre Hilfe zugunsten von Kindern in Gaza gespendet."
     },
     "hero": {
       "badge": "Mit einer guten Tat unterstützen",
       "title": "War Vatandoshlar.de für Sie hilfreich?",
-      "description": "Vatandoshlar.de wird mit dem Ziel weiterentwickelt, wichtige Informationen, Dienstleistungen und Möglichkeiten für Menschen aus Usbekistan, die in Deutschland leben, an einem Ort zu bündeln.",
-      "secondaryDescription": "Wenn Sie die Plattform hilfreich finden und das Projekt unterstützen möchten, können Sie Ihre Unterstützung mit einer guten Tat verbinden.",
+      "description": "Wenn Sie Vatandoshlar.de nutzen und die Plattform hilfreich finden, können Sie sie freiwillig unterstützen.",
+      "secondaryDescription": "Ihre Unterstützung wird über Vatandoshlar.de zu einer guten Tat — Beiträge, die über diese Seite eingehen, werden für humanitäre Hilfe zugunsten von Kindern in Gaza gespendet.",
       "action": "Mit einer guten Tat unterstützen"
     },
     "purpose": {
-      "title": "Ihre Unterstützung wird zu Hilfe für Kinder",
-      "description": "Beiträge, die über diese Seite als freiwillige Unterstützung eingehen, werden für humanitäre Hilfe zugunsten von Kindern in Gaza gespendet.",
-      "clarification": "Vatandoshlar.de verwendet diese Mittel nicht für Hosting, Domain oder die Weiterentwicklung der Plattform.",
-      "statement": "Vatandoshlar.de wurde für Sie geschaffen. Ihre Unterstützung wird zu Hilfe für Kinder in Gaza."
+      "title": "Ihre Unterstützung wird zu einer guten Tat",
+      "tagline": "Unterstützen Sie Vatandoshlar.de und leisten Sie damit einen Beitrag zur humanitären Hilfe für Kinder in Gaza.",
+      "description": "Beiträge, die über diese Seite eingehen, werden für humanitäre Hilfe zugunsten von Kindern in Gaza gespendet."
     },
     "trust": {
       "voluntary": "Freiwillige Unterstützung",
-      "notForPlatformCosts": "Nicht für Plattformkosten",
       "transparent": "Informationen zu Spenden werden transparent veröffentlicht"
     },
     "options": {
@@ -872,14 +870,14 @@
       "description": "Wählen Sie die für Sie passende Möglichkeit. Jede Unterstützung ist freiwillig.",
       "paypal": {
         "name": "PayPal",
-        "description": "Freiwillige Unterstützung über PayPal aus Deutschland und anderen Ländern.",
+        "description": "Freiwillige Unterstützung über PayPal aus Deutschland und anderen Ländern. Die Zahlung erfolgt auf der externen PayPal-Seite.",
         "action": "Über PayPal unterstützen",
         "noteTitle": "Zahlungsnotiz",
         "note": "Wenn Sie möchten, können Sie bei der PayPal-Zahlung als Notiz „Vatandoshlar.de – Hilfe für Kinder“ angeben."
       },
       "taps": {
         "name": "Taps",
-        "description": "Freiwillige Unterstützung aus Usbekistan über Taps.",
+        "description": "Freiwillige Unterstützung aus Usbekistan über Taps. Die Zahlung erfolgt auf der externen Taps-Seite.",
         "action": "Über Taps unterstützen"
       }
     },
@@ -896,7 +894,7 @@
       },
       "disclaimer": "Beträge, Organisationen, Transaktionen oder Belege, die noch nicht vorliegen, werden nicht angegeben. Zahlungsdienstleister oder Empfängerorganisationen können Gebühren erheben."
     },
-    "privacy": "Die Zahlung erfolgt direkt über PayPal oder Taps. Vatandoshlar.de erhält und speichert keine Karten- oder Bankdaten. Beiträge über diese Seite werden nicht für Plattformkosten verwendet, sondern für Spenden eingesetzt."
+    "privacy": "Die Zahlung erfolgt direkt über PayPal oder Taps. Vatandoshlar.de erhält und speichert keine Karten- oder Bankdaten."
   },
   "ErrorPage": {
     "eyebrow": "Ein Fehler ist aufgetreten",

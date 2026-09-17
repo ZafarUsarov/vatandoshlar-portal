@@ -99,10 +99,10 @@ export default function SupportOptions({
   return (
     <section
       id="support-options"
-      className="scroll-mt-24 bg-white py-16 text-slate-950 dark:bg-slate-950 dark:text-white sm:py-20 lg:py-24"
+      className="scroll-mt-24 bg-white py-10 text-slate-950 dark:bg-slate-950 dark:text-white sm:py-12 lg:py-14"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="">
           <div className="max-w-2xl">
             <h2 className="text-3xl font-bold tracking-[-0.035em] sm:text-4xl">
               <BrandedText text={title} />

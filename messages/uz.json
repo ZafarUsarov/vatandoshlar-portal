@@ -847,24 +847,22 @@
   "SupportPage": {
     "metadata": {
       "title": "Yaxshilik bilan qo‘llab-quvvatlash | Vatandoshlar.de",
-      "description": "Vatandoshlar.de’ni ixtiyoriy qo‘llab-quvvatlang: ushbu sahifa orqali kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam uchun xayriyaga yo‘naltiriladi."
+      "description": "Vatandoshlar.de’ni ixtiyoriy qo‘llab-quvvatlang — ushbu sahifa orqali kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam uchun xayriyaga yo‘naltiriladi."
     },
     "hero": {
       "badge": "Yaxshilik bilan qo‘llab-quvvatlang",
-      "title": "Vatandoshlar.de sizga foydali bo‘ldimi?",
-      "description": "Vatandoshlar.de Germaniyada yashayotgan o‘zbekistonliklar uchun kerakli ma’lumotlar, xizmatlar va imkoniyatlarni bir joyda jamlash maqsadida rivojlantirilmoqda.",
-      "secondaryDescription": "Agar platformani foydali deb bilsangiz va loyihani qo‘llab-quvvatlashni istasangiz, buni yaxshilik orqali amalga oshirishingiz mumkin.",
+      "title": "Vatandoshlar.de siz uchun foydalimi?",
+      "description": "Vatandoshlar.de’dan foydalanib, platformani foydali deb bilsangiz, uni ixtiyoriy ravishda qo‘llab-quvvatlashingiz mumkin.",
+      "secondaryDescription": "Sizning qo‘llab-quvvatlashingiz Vatandoshlar.de orqali yaxshilikka aylanadi — ushbu sahifa orqali kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam ko‘rsatish uchun xayriyaga yo‘naltiriladi.",
       "action": "Yaxshilik bilan qo‘llab-quvvatlash"
     },
     "purpose": {
-      "title": "Sizning qo‘llab-quvvatlashingiz — bolalar uchun yordam",
-      "description": "Ushbu sahifa orqali qo‘llab-quvvatlash sifatida kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam ko‘rsatish uchun xayriyaga yo‘naltiriladi.",
-      "clarification": "Vatandoshlar.de ushbu mablag‘larni hosting, domen yoki platformani rivojlantirish xarajatlari uchun ishlatmaydi.",
-      "statement": "Vatandoshlar.de siz uchun yaratilgan. Sizning qo‘llab-quvvatlashingiz esa G‘azodagi bolalarga yordamga aylanadi."
+      "title": "Qo‘llab-quvvatlashingiz yaxshilikka aylanadi",
+      "tagline": "Vatandoshlar.de’ni qo‘llab-quvvatlang — G‘azodagi bolalarga gumanitar yordamga hissa qo‘shing.",
+      "description": "Ushbu sahifa orqali kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam ko‘rsatish uchun xayriyaga yo‘naltiriladi."
     },
     "trust": {
       "voluntary": "Ixtiyoriy qo‘llab-quvvatlash",
-      "notForPlatformCosts": "Platforma xarajatlariga ishlatilmaydi",
       "transparent": "Xayriya ma’lumotlari ochiq e’lon qilinadi"
     },
     "options": {
@@ -872,14 +870,14 @@
       "description": "O‘zingiz uchun qulay usulni tanlashingiz mumkin. Qo‘llab-quvvatlash to‘liq ixtiyoriy.",
       "paypal": {
         "name": "PayPal",
-        "description": "Germaniya va boshqa davlatlardan PayPal orqali ixtiyoriy qo‘llab-quvvatlash.",
+        "description": "Germaniya va boshqa davlatlardan PayPal orqali ixtiyoriy qo‘llab-quvvatlash. To‘lov PayPal’ning tashqi sahifasida amalga oshiriladi.",
         "action": "PayPal orqali qo‘llab-quvvatlash",
         "noteTitle": "To‘lov izohi",
         "note": "Agar xohlasangiz, PayPal orqali yuborayotganda izohga “Vatandoshlar.de — bolalar uchun yordam” deb yozishingiz mumkin."
       },
       "taps": {
         "name": "Taps",
-        "description": "O‘zbekistondan Taps orqali ixtiyoriy qo‘llab-quvvatlash.",
+        "description": "O‘zbekistondan Taps orqali ixtiyoriy qo‘llab-quvvatlash. To‘lov Taps’ning tashqi sahifasida amalga oshiriladi.",
         "action": "Taps orqali qo‘llab-quvvatlash"
       }
     },
@@ -896,7 +894,7 @@
       },
       "disclaimer": "Hozir mavjud bo‘lmagan summa, tashkilot, tranzaksiya yoki tasdiqlovchi hujjat ko‘rsatilmaydi. To‘lov provayderi yoki yordamni qabul qiluvchi tashkilot tomonidan komissiyalar qo‘llanishi mumkin."
     },
-    "privacy": "To‘lov bevosita PayPal yoki Taps platformasida amalga oshiriladi. Vatandoshlar.de karta yoki bank ma’lumotlaringizni qabul qilmaydi va saqlamaydi. Ushbu sahifa orqali kelib tushgan mablag‘lar platforma xarajatlari uchun ishlatilmaydi va xayriyaga yo‘naltiriladi."
+    "privacy": "To‘lov bevosita PayPal yoki Taps platformasida amalga oshiriladi. Vatandoshlar.de karta yoki bank ma’lumotlaringizni qabul qilmaydi va saqlamaydi."
   },
   "ErrorPage": {
     "eyebrow": "Xatolik yuz berdi",

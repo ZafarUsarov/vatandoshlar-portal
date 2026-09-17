@@ -7,7 +7,8 @@ import {
 import Header from "@/components/Header";
 import SupportHero from "@/components/support/SupportHero";
 import SupportOptions from "@/components/support/SupportOptions";
-import SupportTransparency from "@/components/support/SupportTransparency";
+import SupporterRecognition from "@/components/support/SupporterRecognition";
+import { getPublicSupportSummary } from "@/lib/support/public-support-repository";
 
 export const dynamic = "force-dynamic";
 
@@ -53,6 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function SupportPage() {
   const t = await getTranslations("SupportPage");
   const footerT = await getTranslations("Footer");
+  const supportSummary = await getPublicSupportSummary();
 
   const options = [
     {
@@ -75,16 +77,7 @@ export default async function SupportPage() {
 
   const trustItems = [
     t("trust.voluntary"),
-    t("trust.notForPlatformCosts"),
     t("trust.transparent"),
-  ];
-
-  const transparencyFields = [
-    t("transparency.fields.collected"),
-    t("transparency.fields.donated"),
-    t("transparency.fields.date"),
-    t("transparency.fields.organization"),
-    t("transparency.fields.proof"),
   ];
 
   const currentYear = new Date().getFullYear();
@@ -101,14 +94,6 @@ export default async function SupportPage() {
           secondaryDescription={t(
             "hero.secondaryDescription",
           )}
-          purposeTitle={t("purpose.title")}
-          purposeDescription={t(
-            "purpose.description",
-          )}
-          purposeClarification={t(
-            "purpose.clarification",
-          )}
-          statement={t("purpose.statement")}
           action={t("hero.action")}
         />
 
@@ -120,19 +105,11 @@ export default async function SupportPage() {
           privacy={t("privacy")}
         />
 
-        <SupportTransparency
-          title={t("transparency.title")}
-          description={t(
-            "transparency.description",
-          )}
-          futureLabel={t(
-            "transparency.futureLabel",
-          )}
-          fields={transparencyFields}
-          disclaimer={t(
-            "transparency.disclaimer",
-          )}
+        <SupporterRecognition
+          locale={(await getLocale()) as "uz" | "de"}
+          summary={supportSummary}
         />
+
       </main>
 
       <footer className="border-t border-slate-200 bg-white py-8 dark:border-white/[0.08] dark:bg-slate-950">

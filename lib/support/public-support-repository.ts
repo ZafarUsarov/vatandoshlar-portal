@@ -2,10 +2,18 @@ import { cache } from "react";
 
 import { getDb } from "@/lib/db";
 
+export type SupportCurrency = "EUR" | "UZS";
+
+export type PublicSupportAmount = {
+  amountMinor: number;
+  currency: SupportCurrency;
+};
+
 export type PublicSupporter = {
   name: string;
-  totalEurCents: number;
+  rankingEurCents: number;
   contributionCount: number;
+  amounts: PublicSupportAmount[];
 };
 
 export type PublicSupportSummary = {
@@ -20,15 +28,14 @@ type PublicSupportStatsRow = {
   total_eur_cents: string | number;
   contribution_count: string | number;
   public_supporter_count: string | number;
-  anonymous_contribution_count:
-    | string
-    | number;
+  anonymous_contribution_count: string | number;
 };
 
 type PublicSupporterRow = {
   supporter_name: string;
-  total_eur_cents: string | number;
+  ranking_eur_cents: string | number;
   contribution_count: string | number;
+  amounts: unknown;
 };
 
 function hasDatabaseConfiguration(): boolean {
@@ -73,19 +80,63 @@ function toSafeInteger(
   return parsed;
 }
 
+function normalizeCurrency(
+  value: unknown,
+): SupportCurrency {
+  return value === "UZS" ? "UZS" : "EUR";
+}
+
+function toPublicAmounts(
+  value: unknown,
+): PublicSupportAmount[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.flatMap((item) => {
+    if (
+      typeof item !== "object" ||
+      item === null ||
+      !("amountMinor" in item) ||
+      !("currency" in item)
+    ) {
+      return [];
+    }
+
+    const rawAmount = item.amountMinor;
+    if (
+      typeof rawAmount !== "string" &&
+      typeof rawAmount !== "number"
+    ) {
+      return [];
+    }
+
+    return [
+      {
+        amountMinor: toSafeInteger(
+          rawAmount,
+          "amount_minor",
+        ),
+        currency: normalizeCurrency(item.currency),
+      },
+    ];
+  });
+}
+
 function toPublicSupporter(
   row: PublicSupporterRow,
 ): PublicSupporter {
   return {
     name: row.supporter_name,
-    totalEurCents: toSafeInteger(
-      row.total_eur_cents,
-      "total_eur_cents",
+    rankingEurCents: toSafeInteger(
+      row.ranking_eur_cents,
+      "ranking_eur_cents",
     ),
     contributionCount: toSafeInteger(
       row.contribution_count,
       "contribution_count",
     ),
+    amounts: toPublicAmounts(row.amounts),
   };
 }
 
@@ -133,32 +184,88 @@ const loadPublicSupportSummary =
           ),
           getDb().query<PublicSupporterRow>(
             `
-              SELECT
-                MIN(
+              WITH supporter_totals AS (
+                SELECT
+                  LOWER(
+                    BTRIM(supporter_name)
+                  ) AS supporter_key,
+                  MIN(
+                    BTRIM(supporter_name)
+                  ) AS supporter_name,
+                  SUM(
+                    amount_eur_cents
+                  ) AS ranking_eur_cents,
+                  COUNT(*) AS contribution_count,
+                  MIN(
+                    contributed_at
+                  ) AS first_contributed_at
+                FROM support_contributions
+                WHERE
+                  status = 'confirmed'
+                  AND visibility = 'public'
+                  AND supporter_name IS NOT NULL
+                GROUP BY LOWER(
                   BTRIM(supporter_name)
-                ) AS supporter_name,
-                SUM(
-                  amount_eur_cents
-                ) AS total_eur_cents,
-                COUNT(*) AS contribution_count
-              FROM support_contributions
-              WHERE
-                status = 'confirmed'
-                AND visibility = 'public'
-                AND supporter_name IS NOT NULL
-              GROUP BY LOWER(
-                BTRIM(supporter_name)
+                )
+              ),
+              original_amounts AS (
+                SELECT
+                  LOWER(
+                    BTRIM(supporter_name)
+                  ) AS supporter_key,
+                  currency,
+                  SUM(
+                    amount_minor
+                  ) AS amount_minor
+                FROM support_contributions
+                WHERE
+                  status = 'confirmed'
+                  AND visibility = 'public'
+                  AND supporter_name IS NOT NULL
+                GROUP BY
+                  LOWER(
+                    BTRIM(supporter_name)
+                  ),
+                  currency
               )
+              SELECT
+                totals.supporter_name,
+                totals.ranking_eur_cents,
+                totals.contribution_count,
+                COALESCE(
+                  JSON_AGG(
+                    JSON_BUILD_OBJECT(
+                      'amountMinor',
+                      amounts.amount_minor,
+                      'currency',
+                      amounts.currency
+                    )
+                    ORDER BY
+                      CASE
+                        WHEN amounts.currency = 'EUR'
+                          THEN 0
+                        ELSE 1
+                      END,
+                      amounts.currency
+                  ) FILTER (
+                    WHERE amounts.currency IS NOT NULL
+                  ),
+                  '[]'::json
+                ) AS amounts
+              FROM supporter_totals AS totals
+              LEFT JOIN original_amounts AS amounts
+                ON amounts.supporter_key =
+                  totals.supporter_key
+              GROUP BY
+                totals.supporter_key,
+                totals.supporter_name,
+                totals.ranking_eur_cents,
+                totals.contribution_count,
+                totals.first_contributed_at
               ORDER BY
-                SUM(
-                  amount_eur_cents
-                ) DESC,
-                MIN(
-                  contributed_at
-                ) ASC,
-                LOWER(
-                  BTRIM(supporter_name)
-                ) ASC
+                totals.ranking_eur_cents DESC,
+                totals.first_contributed_at ASC,
+                totals.supporter_key ASC
             `,
           ),
         ]);
