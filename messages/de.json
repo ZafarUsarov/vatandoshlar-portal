@@ -854,7 +854,8 @@
       "title": "War Vatandoshlar.de für Sie hilfreich?",
       "description": "Wenn Sie Vatandoshlar.de nutzen und die Plattform hilfreich finden, können Sie sie freiwillig unterstützen.",
       "secondaryDescription": "Ihre Unterstützung wird über Vatandoshlar.de zu einer guten Tat — Beiträge, die über diese Seite eingehen, werden für humanitäre Hilfe zugunsten von Kindern in Gaza gespendet.",
-      "action": "Mit einer guten Tat unterstützen"
+      "action": "Mit einer guten Tat unterstützen",
+      "imageAlt": "Foto zur humanitären Hilfe für Kinder in Gaza"
     },
     "purpose": {
       "title": "Ihre Unterstützung wird zu einer guten Tat",

@@ -95,6 +95,8 @@ export default async function SupportPage() {
             "hero.secondaryDescription",
           )}
           action={t("hero.action")}
+          imageSrc="/images/support/support-hero.webp"
+          imageAlt={t("hero.imageAlt")}
         />
 
         <SupportOptions

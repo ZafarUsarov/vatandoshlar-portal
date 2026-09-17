@@ -14,11 +14,11 @@ type SupporterRecognitionProps = Readonly<{
 
 const copy = {
   uz: {
-    eyebrow: "HAMJAMIYAT E’TIROFI",
-    title: "Qo‘llab-quvvatlovchilar",
+    eyebrow: "QO‘LLAB-QUVVATLASHDAN — YAXSHILIK SARI",
+    title: "Yaxshilikka hissa qo‘shganlar",
     descriptionBeforeBrand: "",
     descriptionAfterBrand:
-      " orqali yaxshilikka hissa qo‘shgan qo‘llab-quvvatlovchilar.",
+      "’ni foydali deb bilib, platformani qo‘llab-quvvatlash orqali yaxshilikka hissa qo‘shgan insonlar.",
     contributions: "Hissalar",
     first: "1-o‘rin",
     second: "2-o‘rin",
@@ -33,11 +33,11 @@ const copy = {
       "Anonim hissalar hisobga olinadi, lekin ochiq ro‘yxatda ism ko‘rsatilmaydi.",
   },
   de: {
-    eyebrow: "COMMUNITY-ANERKENNUNG",
-    title: "Unterstützer",
-    descriptionBeforeBrand: "Menschen, die über ",
+    eyebrow: "UNTERSTÜTZEN UND GUTES BEWIRKEN",
+    title: "Menschen, die Gutes bewirken",
+    descriptionBeforeBrand: "Menschen, die ",
     descriptionAfterBrand:
-      " freiwillig zu einer guten Tat beigetragen haben.",
+      " hilfreich finden und die Plattform unterstützen, um damit zugleich etwas Gutes zu bewirken.",
     contributions: "Beiträge",
     first: "1. Platz",
     second: "2. Platz",
@@ -134,9 +134,9 @@ export default function SupporterRecognition({
     summary.supporters.slice(3);
 
   return (
-    <section className="bg-white pb-14 pt-6 text-slate-950 dark:bg-slate-950 dark:text-white sm:pb-16 sm:pt-8">
+    <section className="bg-white pb-14 pt-4 text-slate-950 dark:bg-slate-950 dark:text-white sm:pb-16 sm:pt-6">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="border-t border-slate-200 pt-10 dark:border-white/[0.08]">
+        <div className="border-t border-slate-200 pt-8 dark:border-white/[0.08]">
           <div className="max-w-2xl">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
               {currentCopy.eyebrow}
@@ -153,12 +153,35 @@ export default function SupporterRecognition({
             </p>
           </div>
 
-          <div className="mt-9 grid gap-4 lg:grid-cols-3">
+          <div className="mt-8 grid items-start gap-4 lg:grid-cols-3">
             {Array.from(
               { length: 3 },
               (_, index) => {
                 const supporter =
                   topSupporters[index];
+
+                const rankStyles = [
+                  {
+                    card: "border-emerald-300/90 hover:border-emerald-400 focus-visible:border-emerald-400 focus-visible:ring-emerald-500/35 dark:border-emerald-400/30 dark:hover:border-emerald-400/55",
+                    badge: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-400/25 dark:bg-emerald-400/[0.08] dark:text-emerald-300",
+                    shadow:
+                      "hover:shadow-[0_16px_38px_-26px_rgba(5,150,105,0.5)]",
+                  },
+                  {
+                    card: "border-sky-300/90 hover:border-sky-400 focus-visible:border-sky-400 focus-visible:ring-sky-500/35 dark:border-sky-400/30 dark:hover:border-sky-400/55",
+                    badge: "border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-400/25 dark:bg-sky-400/[0.08] dark:text-sky-300",
+                    shadow:
+                      "hover:shadow-[0_16px_38px_-26px_rgba(14,165,233,0.45)]",
+                  },
+                  {
+                    card: "border-violet-300/90 hover:border-violet-400 focus-visible:border-violet-400 focus-visible:ring-violet-500/35 dark:border-violet-400/30 dark:hover:border-violet-400/55",
+                    badge: "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-400/25 dark:bg-violet-400/[0.08] dark:text-violet-300",
+                    shadow:
+                      "hover:shadow-[0_16px_38px_-26px_rgba(139,92,246,0.42)]",
+                  },
+                ] as const;
+
+                const rankStyle = rankStyles[index];
 
                 return (
                   <article
@@ -167,15 +190,18 @@ export default function SupporterRecognition({
                         ? `${index}-${supporter.name}`
                         : `open-${index}`
                     }
-                    className="rounded-[1.75rem] border border-slate-200 bg-slate-50/70 p-6 shadow-sm dark:border-white/[0.08] dark:bg-white/[0.035]"
+                    tabIndex={0}
+                    className={`group self-start rounded-[1.5rem] border bg-slate-50/70 px-5 py-4 shadow-sm outline-none transition-[transform,border-color,box-shadow,background-color] duration-300 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:ring-2 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none dark:bg-white/[0.035] dark:focus-visible:ring-offset-slate-950 ${rankStyle.card} ${rankStyle.shadow}`}
                   >
-                    <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-black text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/[0.08] dark:text-emerald-300">
+                    <span
+                      className={`inline-flex rounded-full border px-3 py-1 text-xs font-black ${rankStyle.badge}`}
+                    >
                       {rankLabels[index]}
                     </span>
 
                     {supporter ? (
                       <>
-                        <h3 className="mt-6 break-words text-xl font-black">
+                        <h3 className="mt-4 break-words text-xl font-black">
                           {supporter.name}
                         </h3>
                         <Amounts
@@ -191,10 +217,10 @@ export default function SupporterRecognition({
                       </>
                     ) : (
                       <>
-                        <h3 className="mt-6 text-xl font-black text-slate-500 dark:text-slate-300">
+                        <h3 className="mt-4 text-xl font-black text-slate-500 dark:text-slate-300">
                           {currentCopy.open}
                         </h3>
-                        <p className="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400">
+                        <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">
                           {
                             currentCopy.openDescription
                           }
