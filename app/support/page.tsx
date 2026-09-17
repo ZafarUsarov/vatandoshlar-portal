@@ -7,10 +7,7 @@ import {
 import Header from "@/components/Header";
 import SupportHero from "@/components/support/SupportHero";
 import SupportOptions from "@/components/support/SupportOptions";
-import SupporterRecognition from "@/components/support/SupporterRecognition";
-import {
-  getPublicSupportSummary,
-} from "@/lib/support/public-support-repository";
+import SupportTransparency from "@/components/support/SupportTransparency";
 
 export const dynamic = "force-dynamic";
 
@@ -22,21 +19,18 @@ const paymentLinks = {
 export async function generateMetadata(): Promise<Metadata> {
   const locale =
     (await getLocale()) as "uz" | "de";
-
   const t = await getTranslations(
     "SupportPage.metadata",
   );
 
   const title = t("title");
-  const description =
-    t("description");
+  const description = t("description");
 
   return {
     title,
     description,
     alternates: {
-      canonical:
-        `/${locale}/support`,
+      canonical: `/${locale}/support`,
       languages: {
         uz: "/uz/support",
         de: "/de/support",
@@ -48,43 +42,17 @@ export async function generateMetadata(): Promise<Metadata> {
         locale === "de"
           ? "de_DE"
           : "uz_UZ",
-      siteName:
-        "Vatandoshlar.de",
+      siteName: "Vatandoshlar.de",
       title,
       description,
-      url:
-        `/${locale}/support`,
+      url: `/${locale}/support`,
     },
   };
 }
 
 export default async function SupportPage() {
-  const locale =
-    (await getLocale()) as "uz" | "de";
-
   const t = await getTranslations("SupportPage");
   const footerT = await getTranslations("Footer");
-
-  const supportSummary =
-    await getPublicSupportSummary();
-
-  const costs = [
-    {
-      title: t("costs.items.hosting.title"),
-      description: t("costs.items.hosting.description"),
-      icon: "hosting" as const,
-    },
-    {
-      title: t("costs.items.domain.title"),
-      description: t("costs.items.domain.description"),
-      icon: "domain" as const,
-    },
-    {
-      title: t("costs.items.development.title"),
-      description: t("costs.items.development.description"),
-      icon: "development" as const,
-    },
-  ];
 
   const options = [
     {
@@ -105,6 +73,20 @@ export default async function SupportPage() {
     },
   ];
 
+  const trustItems = [
+    t("trust.voluntary"),
+    t("trust.notForPlatformCosts"),
+    t("trust.transparent"),
+  ];
+
+  const transparencyFields = [
+    t("transparency.fields.collected"),
+    t("transparency.fields.donated"),
+    t("transparency.fields.date"),
+    t("transparency.fields.organization"),
+    t("transparency.fields.proof"),
+  ];
+
   const currentYear = new Date().getFullYear();
 
   return (
@@ -116,21 +98,40 @@ export default async function SupportPage() {
           badge={t("hero.badge")}
           title={t("hero.title")}
           description={t("hero.description")}
-          voluntary={t("hero.voluntary")}
-          costsTitle={t("costs.title")}
-          costs={costs}
+          secondaryDescription={t(
+            "hero.secondaryDescription",
+          )}
+          purposeTitle={t("purpose.title")}
+          purposeDescription={t(
+            "purpose.description",
+          )}
+          purposeClarification={t(
+            "purpose.clarification",
+          )}
+          statement={t("purpose.statement")}
+          action={t("hero.action")}
         />
 
         <SupportOptions
           title={t("options.title")}
           description={t("options.description")}
           options={options}
+          trustItems={trustItems}
           privacy={t("privacy")}
         />
 
-        <SupporterRecognition
-          locale={locale}
-          summary={supportSummary}
+        <SupportTransparency
+          title={t("transparency.title")}
+          description={t(
+            "transparency.description",
+          )}
+          futureLabel={t(
+            "transparency.futureLabel",
+          )}
+          fields={transparencyFields}
+          disclaimer={t(
+            "transparency.disclaimer",
+          )}
         />
       </main>
 

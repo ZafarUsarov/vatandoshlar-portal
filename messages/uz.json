@@ -846,49 +846,57 @@
   },
   "SupportPage": {
     "metadata": {
-      "title": "Loyihaga hissa qo‘shish | Vatandoshlar.de",
-      "description": "Vatandoshlar.de hosting, domen va platformani rivojlantirish xarajatlariga ixtiyoriy hissa qo‘shish usullari."
+      "title": "Yaxshilik bilan qo‘llab-quvvatlash | Vatandoshlar.de",
+      "description": "Vatandoshlar.de’ni ixtiyoriy qo‘llab-quvvatlang: ushbu sahifa orqali kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam uchun xayriyaga yo‘naltiriladi."
     },
     "hero": {
-      "badge": "Loyihaga hissa qo‘shish",
-      "title": "Vatandoshlar.de rivojiga ixtiyoriy hissa qo‘shishingiz mumkin",
-      "description": "Agar Vatandoshlar.de loyihasini foydali deb bilsangiz, hosting, domen va platformani rivojlantirish xarajatlariga donat orqali o‘z hissangizni qo‘shishingiz mumkin.",
-      "voluntary": "Qo‘llab-quvvatlash to‘liq ixtiyoriy. Platformadagi ma’lumotlar va asosiy imkoniyatlardan foydalanish uchun hissa qo‘shish talab etilmaydi."
+      "badge": "Yaxshilik bilan qo‘llab-quvvatlang",
+      "title": "Vatandoshlar.de sizga foydali bo‘ldimi?",
+      "description": "Vatandoshlar.de Germaniyada yashayotgan o‘zbekistonliklar uchun kerakli ma’lumotlar, xizmatlar va imkoniyatlarni bir joyda jamlash maqsadida rivojlantirilmoqda.",
+      "secondaryDescription": "Agar platformani foydali deb bilsangiz va loyihani qo‘llab-quvvatlashni istasangiz, buni yaxshilik orqali amalga oshirishingiz mumkin.",
+      "action": "Yaxshilik bilan qo‘llab-quvvatlash"
     },
-    "costs": {
-      "title": "Hissa nimalarga yo‘naltiriladi?",
-      "items": {
-        "hosting": {
-          "title": "Hosting",
-          "description": "Sayt va uning xizmatlarini barqaror ishlatish xarajatlari."
-        },
-        "domain": {
-          "title": "Domen",
-          "description": "Vatandoshlar.de domeni va unga bog‘liq texnik xarajatlar."
-        },
-        "development": {
-          "title": "Platformani rivojlantirish",
-          "description": "Yangi funksiyalar, foydali kontent va texnik takomillashtirish ishlari."
-        }
-      }
+    "purpose": {
+      "title": "Sizning qo‘llab-quvvatlashingiz — bolalar uchun yordam",
+      "description": "Ushbu sahifa orqali qo‘llab-quvvatlash sifatida kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam ko‘rsatish uchun xayriyaga yo‘naltiriladi.",
+      "clarification": "Vatandoshlar.de ushbu mablag‘larni hosting, domen yoki platformani rivojlantirish xarajatlari uchun ishlatmaydi.",
+      "statement": "Vatandoshlar.de siz uchun yaratilgan. Sizning qo‘llab-quvvatlashingiz esa G‘azodagi bolalarga yordamga aylanadi."
+    },
+    "trust": {
+      "voluntary": "Ixtiyoriy qo‘llab-quvvatlash",
+      "notForPlatformCosts": "Platforma xarajatlariga ishlatilmaydi",
+      "transparent": "Xayriya ma’lumotlari ochiq e’lon qilinadi"
     },
     "options": {
-      "title": "Hissa qo‘shish usullari",
-      "description": "O‘zingiz uchun qulay bo‘lgan usulni tanlashingiz mumkin.",
+      "title": "Qo‘llab-quvvatlash usullari",
+      "description": "O‘zingiz uchun qulay usulni tanlashingiz mumkin. Qo‘llab-quvvatlash to‘liq ixtiyoriy.",
       "paypal": {
         "name": "PayPal",
-        "description": "Germaniya va boshqa davlatlardan PayPal orqali ixtiyoriy hissa qo‘shish.",
-        "action": "PayPal orqali hissa qo‘shish",
+        "description": "Germaniya va boshqa davlatlardan PayPal orqali ixtiyoriy qo‘llab-quvvatlash.",
+        "action": "PayPal orqali qo‘llab-quvvatlash",
         "noteTitle": "To‘lov izohi",
-        "note": "Agar xohlasangiz, PayPal orqali yuborayotganda izohga “Vatandoshlar.de loyihasi uchun” deb yozishingiz mumkin."
+        "note": "Agar xohlasangiz, PayPal orqali yuborayotganda izohga “Vatandoshlar.de — bolalar uchun yordam” deb yozishingiz mumkin."
       },
       "taps": {
         "name": "Taps",
-        "description": "O‘zbekistondan Taps orqali loyihaga ixtiyoriy hissa qo‘shish.",
-        "action": "O‘zbekistondan hissa qo‘shish"
+        "description": "O‘zbekistondan Taps orqali ixtiyoriy qo‘llab-quvvatlash.",
+        "action": "Taps orqali qo‘llab-quvvatlash"
       }
     },
-    "privacy": "To‘lov bevosita PayPal yoki Taps platformasida amalga oshiriladi. Vatandoshlar.de karta yoki bank ma’lumotlaringizni qabul qilmaydi va saqlamaydi."
+    "transparency": {
+      "title": "Shaffoflik",
+      "description": "Biz uchun ishonch va ochiqlik muhim. Ushbu sahifa orqali yig‘ilgan mablag‘lar va amalga oshirilgan xayriyalar haqida ma’lumotlar ochiq e’lon qilib boriladi.",
+      "futureLabel": "Shaffoflik ma’lumotlari",
+      "fields": {
+        "collected": "Yig‘ilgan mablag‘",
+        "donated": "Xayriyaga yo‘naltirilgan mablag‘",
+        "date": "Sana",
+        "organization": "Yordamni qabul qilgan tashkilot",
+        "proof": "Tasdiqlovchi ma’lumot yoki hujjat"
+      },
+      "disclaimer": "Hozir mavjud bo‘lmagan summa, tashkilot, tranzaksiya yoki tasdiqlovchi hujjat ko‘rsatilmaydi. To‘lov provayderi yoki yordamni qabul qiluvchi tashkilot tomonidan komissiyalar qo‘llanishi mumkin."
+    },
+    "privacy": "To‘lov bevosita PayPal yoki Taps platformasida amalga oshiriladi. Vatandoshlar.de karta yoki bank ma’lumotlaringizni qabul qilmaydi va saqlamaydi. Ushbu sahifa orqali kelib tushgan mablag‘lar platforma xarajatlari uchun ishlatilmaydi va xayriyaga yo‘naltiriladi."
   },
   "ErrorPage": {
     "eyebrow": "Xatolik yuz berdi",
