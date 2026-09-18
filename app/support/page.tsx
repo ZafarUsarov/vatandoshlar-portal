@@ -4,6 +4,7 @@ import {
   getTranslations,
 } from "next-intl/server";
 
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import SupportHero from "@/components/support/SupportHero";
 import SupportOptions from "@/components/support/SupportOptions";
@@ -53,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function SupportPage() {
   const t = await getTranslations("SupportPage");
-  const footerT = await getTranslations("Footer");
+  const locale = (await getLocale()) as "uz" | "de";
   const supportSummary = await getPublicSupportSummary();
 
   const options = [
@@ -79,8 +80,6 @@ export default async function SupportPage() {
     t("trust.voluntary"),
     t("trust.transparent"),
   ];
-
-  const currentYear = new Date().getFullYear();
 
   return (
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
@@ -108,25 +107,12 @@ export default async function SupportPage() {
         />
 
         <SupporterRecognition
-          locale={(await getLocale()) as "uz" | "de"}
+          locale={locale}
           summary={supportSummary}
         />
-
       </main>
 
-      <footer className="border-t border-slate-200 bg-white py-8 dark:border-white/[0.08] dark:bg-slate-950">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-          <p>
-            {footerT("bottom.copyright", {
-              year: currentYear,
-            })}
-          </p>
-
-          <p className="max-w-xl text-xs leading-5 sm:text-right">
-            {footerT("bottom.disclaimer")}
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
