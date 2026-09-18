@@ -264,10 +264,10 @@ export default async function FounderPage() {
             technologiesTitle: t(
               "technologies.title",
             ),
-            contactTitle: t("contact.title"),
-            contactDescription: t(
-              "contact.description",
-            ),
+            contactTitle:
+              locale === "de"
+                ? "Zafar Usarov in sozialen Medien"
+                : "Zafar Usarov ijtimoiy tarmoqlari",
             socials: {
               email: t("contact.socials.email"),
               telegram: t(
@@ -287,7 +287,7 @@ export default async function FounderPage() {
         />
       </main>
 
-      <Footer showSupportCta />
+      <Footer />
     </div>
   );
 }

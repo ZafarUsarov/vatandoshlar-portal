@@ -32,7 +32,6 @@ type FounderContentProps = Readonly<{
     approachItems: ReadonlyArray<string>;
     technologiesTitle: string;
     contactTitle: string;
-    contactDescription: string;
     socials: Readonly<
       Record<FounderSocialPlatform | "email", string>
     >;
@@ -200,13 +199,7 @@ export default function FounderContent({
                   {labels.contactTitle}
                 </h2>
 
-                <p className="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400">
-                  <BrandedText
-                    text={labels.contactDescription}
-                  />
-                </p>
-
-                <div className="mt-6">
+                <div className="mt-5">
                   <FounderSocials
                     email={founder.email}
                     socialLinks={founder.socialLinks}
