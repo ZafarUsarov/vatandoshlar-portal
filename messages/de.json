@@ -846,15 +846,15 @@
   },
   "SupportPage": {
     "metadata": {
-      "title": "Mit einer guten Tat unterstützen | Vatandoshlar.de",
+      "title": "Zum Projekt beitragen | Vatandoshlar.de",
       "description": "Unterstützen Sie Vatandoshlar.de freiwillig — Beiträge über diese Seite werden für humanitäre Hilfe zugunsten von Kindern in Gaza gespendet."
     },
     "hero": {
-      "badge": "Mit einer guten Tat unterstützen",
+      "badge": "Zum Projekt beitragen",
       "title": "War Vatandoshlar.de für Sie hilfreich?",
       "description": "Wenn Sie Vatandoshlar.de nutzen und die Plattform hilfreich finden, können Sie sie freiwillig unterstützen.",
       "secondaryDescription": "Ihre Unterstützung wird über Vatandoshlar.de zu einer guten Tat — Beiträge, die über diese Seite eingehen, werden für humanitäre Hilfe zugunsten von Kindern in Gaza gespendet.",
-      "action": "Mit einer guten Tat unterstützen",
+      "action": "Beitrag leisten",
       "imageAlt": "Foto zur humanitären Hilfe für Kinder in Gaza"
     },
     "purpose": {

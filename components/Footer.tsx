@@ -246,7 +246,6 @@ export default async function Footer({
   const currentYear = new Date().getFullYear();
 
   const showProjectCtas = showSupportCta || showFounderCta;
-  const showCompactSupportLink = !showSupportCta;
 
   const localCopy =
     locale === "uz"
@@ -265,12 +264,12 @@ export default async function Footer({
           telegramLabel: "Vatandoshlar.de Telegram sahifasi",
           instagramLabel: "Vatandoshlar.de Instagram sahifasi",
           facebookLabel: "Vatandoshlar.de Facebook sahifasi",
-          supportEyebrow: "Yaxshilik bilan qo‘llab-quvvatlang",
+          supportEyebrow: "Loyihaga hissa qo‘shish",
           supportTitle: "Vatandoshlar.de siz uchun foydalimi?",
           supportDescription:
             "Agar platformani foydali deb bilsangiz, uni yaxshilik bilan qo‘llab-quvvatlashingiz mumkin. Ushbu sahifa orqali kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam ko‘rsatish uchun xayriyaga yo‘naltiriladi.",
           supportAction: "Hissa qo‘shish",
-          compactSupportLink: "Yaxshilik bilan qo‘llab-quvvatlash",
+          compactSupportLink: "Hissa qo‘shish",
           privacyLink: "Maxfiylik",
           emailLabel: "Vatandoshlar.de elektron pochtasi",
           backToTop: "Yuqoriga",
@@ -295,12 +294,12 @@ export default async function Footer({
           telegramLabel: "Vatandoshlar.de auf Telegram",
           instagramLabel: "Vatandoshlar.de auf Instagram",
           facebookLabel: "Vatandoshlar.de auf Facebook",
-          supportEyebrow: "Mit einer guten Tat unterstützen",
+          supportEyebrow: "Zum Projekt beitragen",
           supportTitle: "Ist Vatandoshlar.de für Sie hilfreich?",
           supportDescription:
             "Wenn Sie die Plattform hilfreich finden, können Sie sie mit einer guten Tat unterstützen. Beiträge, die über diese Seite eingehen, werden für humanitäre Hilfe zugunsten von Kindern in Gaza gespendet.",
-          supportAction: "Mit einer guten Tat unterstützen",
-          compactSupportLink: "Mit einer guten Tat unterstützen",
+          supportAction: "Beitrag leisten",
+          compactSupportLink: "Beitrag leisten",
           privacyLink: "Datenschutz",
           emailLabel: "E-Mail an Vatandoshlar.de",
           backToTop: "Nach oben",
@@ -326,7 +325,7 @@ export default async function Footer({
       <div className="relative mx-auto max-w-7xl px-6 py-10 sm:py-12 lg:px-8 lg:py-14">
         {showHomeDetails && (
           <div className="mt-8 border-t border-slate-200/80 pt-6 dark:border-white/[0.08] sm:mt-10 sm:pt-7">
-            <div className="flex max-w-2xl items-start gap-3">
+            <div className="flex max-w-2xl items-center gap-3">
               <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
                 <ShieldCheckIcon className="size-4" />
               </span>
@@ -457,61 +456,58 @@ export default async function Footer({
               }
               className="flex w-full flex-col items-start gap-3 lg:w-auto lg:flex-row lg:items-center lg:gap-4"
             >
-              {showCompactSupportLink && (
-                <Link
-                  href="/support"
-                  className="group inline-flex min-h-10 items-center gap-2 rounded-full border border-emerald-200/80 bg-white/80 px-3.5 py-1.5 text-sm font-semibold text-slate-800 shadow-sm backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-emerald-400/20 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
-                >
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 transition-colors duration-200 group-hover:bg-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-300 dark:group-hover:bg-emerald-400/15">
-                    <HeartIcon className="size-3.5" />
+              <div className="flex flex-wrap items-center gap-2.5">
+                <div className="group/email relative">
+                  <a
+                    href="mailto:info.vatandoshlar@gmx.de"
+                    aria-label={localCopy.emailLabel}
+                    aria-describedby="footer-email-tooltip"
+                    className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-emerald-300 focus-visible:bg-emerald-50 focus-visible:text-emerald-700 focus-visible:shadow-lg focus-visible:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:border-emerald-400/30 dark:focus-visible:bg-emerald-400/10 dark:focus-visible:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                  >
+                    <MailIcon className="size-5" />
+                  </a>
+                  <span id="footer-email-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/email:opacity-100 group-focus-within/email:opacity-100 dark:bg-white dark:text-slate-950">
+                    info.vatandoshlar@gmx.de
                   </span>
-                  <span>{localCopy.compactSupportLink}</span>
-                  <ArrowUpRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Link>
-              )}
-
-              {showHomeDetails && (
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <div className="group/email relative">
-                    <a
-                      href="mailto:info.vatandoshlar@gmx.de"
-                      aria-label={localCopy.emailLabel}
-                      aria-describedby="footer-email-tooltip"
-                      className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-emerald-300 focus-visible:bg-emerald-50 focus-visible:text-emerald-700 focus-visible:shadow-lg focus-visible:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:border-emerald-400/30 dark:focus-visible:bg-emerald-400/10 dark:focus-visible:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
-                    >
-                      <MailIcon className="size-5" />
-                    </a>
-                    <span id="footer-email-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/email:opacity-100 group-focus-within/email:opacity-100 dark:bg-white dark:text-slate-950">
-                      info.vatandoshlar@gmx.de
-                    </span>
-                  </div>
-
-                  <div className="group/telegram relative">
-                    <a href="https://t.me/Vatandoshlar_de" target="_blank" rel="noopener noreferrer" aria-label={localCopy.telegramLabel} aria-describedby="footer-telegram-tooltip" className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-600 hover:shadow-lg hover:shadow-sky-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-sky-300 focus-visible:bg-sky-50 focus-visible:text-sky-600 focus-visible:shadow-lg focus-visible:shadow-sky-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-sky-400/30 dark:hover:bg-sky-400/10 dark:hover:text-sky-300 dark:focus-visible:border-sky-400/30 dark:focus-visible:bg-sky-400/10 dark:focus-visible:text-sky-300 dark:focus-visible:ring-offset-slate-950">
-                      <TelegramIcon className="size-5" />
-                    </a>
-                    <span id="footer-telegram-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/telegram:opacity-100 group-focus-within/telegram:opacity-100 dark:bg-white dark:text-slate-950">Telegram</span>
-                  </div>
-
-                  <div className="group/instagram relative">
-                    <a href="https://www.instagram.com/vatandoshlar.de" target="_blank" rel="noopener noreferrer" aria-label={localCopy.instagramLabel} aria-describedby="footer-instagram-tooltip" className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-fuchsia-300 hover:bg-fuchsia-50 hover:text-fuchsia-600 hover:shadow-lg hover:shadow-fuchsia-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-fuchsia-300 focus-visible:bg-fuchsia-50 focus-visible:text-fuchsia-600 focus-visible:shadow-lg focus-visible:shadow-fuchsia-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-fuchsia-400/30 dark:hover:bg-fuchsia-400/10 dark:hover:text-fuchsia-300 dark:focus-visible:border-fuchsia-400/30 dark:focus-visible:bg-fuchsia-400/10 dark:focus-visible:text-fuchsia-300 dark:focus-visible:ring-offset-slate-950">
-                      <InstagramIcon className="size-5" />
-                    </a>
-                    <span id="footer-instagram-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/instagram:opacity-100 group-focus-within/instagram:opacity-100 dark:bg-white dark:text-slate-950">Instagram</span>
-                  </div>
-
-                  <div className="group/facebook relative">
-                    <a href="https://facebook.com/Vatandoshlar.de" target="_blank" rel="noopener noreferrer" aria-label={localCopy.facebookLabel} aria-describedby="footer-facebook-tooltip" className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-blue-300 focus-visible:bg-blue-50 focus-visible:text-blue-600 focus-visible:shadow-lg focus-visible:shadow-blue-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-blue-400/30 dark:hover:bg-blue-400/10 dark:hover:text-blue-300 dark:focus-visible:border-blue-400/30 dark:focus-visible:bg-blue-400/10 dark:focus-visible:text-blue-300 dark:focus-visible:ring-offset-slate-950">
-                      <FacebookIcon className="size-5" />
-                    </a>
-                    <span id="footer-facebook-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/facebook:opacity-100 group-focus-within/facebook:opacity-100 dark:bg-white dark:text-slate-950">Facebook</span>
-                  </div>
                 </div>
-              )}
 
-              {showHomeDetails && (
-                <span aria-hidden="true" className="hidden h-5 w-px bg-slate-200 dark:bg-white/10 lg:block" />
-              )}
+                <div className="group/telegram relative">
+                  <a href="https://t.me/Vatandoshlar_de" target="_blank" rel="noopener noreferrer" aria-label={localCopy.telegramLabel} aria-describedby="footer-telegram-tooltip" className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-600 hover:shadow-lg hover:shadow-sky-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-sky-300 focus-visible:bg-sky-50 focus-visible:text-sky-600 focus-visible:shadow-lg focus-visible:shadow-sky-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-sky-400/30 dark:hover:bg-sky-400/10 dark:hover:text-sky-300 dark:focus-visible:border-sky-400/30 dark:focus-visible:bg-sky-400/10 dark:focus-visible:text-sky-300 dark:focus-visible:ring-offset-slate-950">
+                    <TelegramIcon className="size-5" />
+                  </a>
+                  <span id="footer-telegram-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/telegram:opacity-100 group-focus-within/telegram:opacity-100 dark:bg-white dark:text-slate-950">Telegram</span>
+                </div>
+
+                <div className="group/instagram relative">
+                  <a href="https://www.instagram.com/vatandoshlar.de" target="_blank" rel="noopener noreferrer" aria-label={localCopy.instagramLabel} aria-describedby="footer-instagram-tooltip" className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-fuchsia-300 hover:bg-fuchsia-50 hover:text-fuchsia-600 hover:shadow-lg hover:shadow-fuchsia-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-fuchsia-300 focus-visible:bg-fuchsia-50 focus-visible:text-fuchsia-600 focus-visible:shadow-lg focus-visible:shadow-fuchsia-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-fuchsia-400/30 dark:hover:bg-fuchsia-400/10 dark:hover:text-fuchsia-300 dark:focus-visible:border-fuchsia-400/30 dark:focus-visible:bg-fuchsia-400/10 dark:focus-visible:text-fuchsia-300 dark:focus-visible:ring-offset-slate-950">
+                    <InstagramIcon className="size-5" />
+                  </a>
+                  <span id="footer-instagram-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/instagram:opacity-100 group-focus-within/instagram:opacity-100 dark:bg-white dark:text-slate-950">Instagram</span>
+                </div>
+
+                <div className="group/facebook relative">
+                  <a href="https://facebook.com/Vatandoshlar.de" target="_blank" rel="noopener noreferrer" aria-label={localCopy.facebookLabel} aria-describedby="footer-facebook-tooltip" className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-blue-300 focus-visible:bg-blue-50 focus-visible:text-blue-600 focus-visible:shadow-lg focus-visible:shadow-blue-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-blue-400/30 dark:hover:bg-blue-400/10 dark:hover:text-blue-300 dark:focus-visible:border-blue-400/30 dark:focus-visible:bg-blue-400/10 dark:focus-visible:text-blue-300 dark:focus-visible:ring-offset-slate-950">
+                    <FacebookIcon className="size-5" />
+                  </a>
+                  <span id="footer-facebook-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/facebook:opacity-100 group-focus-within/facebook:opacity-100 dark:bg-white dark:text-slate-950">Facebook</span>
+                </div>
+
+                <div className="group/support relative">
+                  <Link
+                    href="/support"
+                    aria-label={localCopy.compactSupportLink}
+                    aria-describedby="footer-support-tooltip"
+                    className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-emerald-300 focus-visible:bg-emerald-50 focus-visible:text-emerald-700 focus-visible:shadow-lg focus-visible:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:border-emerald-400/30 dark:focus-visible:bg-emerald-400/10 dark:focus-visible:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
+                  >
+                    <HeartIcon className="size-5" />
+                  </Link>
+                  <span id="footer-support-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/support:opacity-100 group-focus-within/support:opacity-100 dark:bg-white dark:text-slate-950">
+                    {localCopy.compactSupportLink}
+                  </span>
+                </div>
+              </div>
+
+              <span aria-hidden="true" className="hidden h-5 w-px bg-slate-200 dark:bg-white/10 lg:block" />
 
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                 <Link href="/privacy" className="inline-flex min-h-11 items-center rounded-lg px-1 text-sm font-semibold text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-slate-300 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950">

@@ -846,15 +846,15 @@
   },
   "SupportPage": {
     "metadata": {
-      "title": "Yaxshilik bilan qo‘llab-quvvatlash | Vatandoshlar.de",
+      "title": "Loyihaga hissa qo‘shish | Vatandoshlar.de",
       "description": "Vatandoshlar.de’ni ixtiyoriy qo‘llab-quvvatlang — ushbu sahifa orqali kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam uchun xayriyaga yo‘naltiriladi."
     },
     "hero": {
-      "badge": "Yaxshilik bilan qo‘llab-quvvatlang",
+      "badge": "Loyihaga hissa qo‘shish",
       "title": "Vatandoshlar.de siz uchun foydalimi?",
       "description": "Vatandoshlar.de’dan foydalanib, platformani foydali deb bilsangiz, uni ixtiyoriy ravishda qo‘llab-quvvatlashingiz mumkin.",
       "secondaryDescription": "Sizning qo‘llab-quvvatlashingiz Vatandoshlar.de orqali yaxshilikka aylanadi — ushbu sahifa orqali kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam ko‘rsatish uchun xayriyaga yo‘naltiriladi.",
-      "action": "Yaxshilik bilan qo‘llab-quvvatlash",
+      "action": "Hissa qo‘shish",
       "imageAlt": "G‘azodagi bolalarga gumanitar yordamni ifodalovchi surat"
     },
     "purpose": {
