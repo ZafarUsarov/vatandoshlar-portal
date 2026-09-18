@@ -269,7 +269,7 @@ export default async function Footer({
           supportTitle: "Vatandoshlar.de siz uchun foydalimi?",
           supportDescription:
             "Agar platformani foydali deb bilsangiz, uni yaxshilik bilan qo‘llab-quvvatlashingiz mumkin. Ushbu sahifa orqali kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam ko‘rsatish uchun xayriyaga yo‘naltiriladi.",
-          supportAction: "Yaxshilik bilan qo‘llab-quvvatlash",
+          supportAction: "Hissa qo‘shish",
           compactSupportLink: "Yaxshilik bilan qo‘llab-quvvatlash",
           privacyLink: "Maxfiylik",
           emailLabel: "Vatandoshlar.de elektron pochtasi",
@@ -327,7 +327,7 @@ export default async function Footer({
         {showHomeDetails && (
           <div className="mt-8 border-t border-slate-200/80 pt-6 dark:border-white/[0.08] sm:mt-10 sm:pt-7">
             <div className="flex max-w-2xl items-start gap-3">
-              <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
                 <ShieldCheckIcon className="size-4" />
               </span>
               <p className="text-sm leading-6 text-slate-600 dark:text-slate-400">
