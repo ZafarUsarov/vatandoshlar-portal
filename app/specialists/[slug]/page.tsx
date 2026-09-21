@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import {
+  notFound,
+  permanentRedirect,
+} from "next/navigation";
 import {
   getLocale,
   getTranslations,
@@ -27,8 +30,22 @@ type SpecialistDetailPageProps = Readonly<{
 export const dynamic =
   "force-dynamic";
 
+const LEGACY_DONIYOR_SLUG =
+  "doniyor-tojiboyev-nigora-okhunova";
+
+const DONIYOR_SLUG =
+  "doniyor-tojiboyev";
+
 const baseUrl =
   "https://vatandoshlar.de";
+
+function getCanonicalSpecialistSlug(
+  slug: string,
+): string {
+  return slug === LEGACY_DONIYOR_SLUG
+    ? DONIYOR_SLUG
+    : slug;
+}
 
 function serializeStructuredData(
   data: object,
@@ -44,18 +61,17 @@ export async function generateMetadata({
 }: SpecialistDetailPageProps): Promise<Metadata> {
   const locale =
     (await getLocale()) as SupportedLocale;
-
   const t =
     await getTranslations(
       "SpecialistDetailPage.metadata",
     );
-
   const { slug } =
     await params;
-
+  const canonicalSlug =
+    getCanonicalSpecialistSlug(slug);
   const specialist =
     await getPublishedSpecialistBySlug(
-      slug,
+      canonicalSlug,
       locale,
     );
 
@@ -75,20 +91,16 @@ export async function generateMetadata({
       name:
         specialist.name,
     });
-
   const canonicalUrl =
     `/${locale}/specialists/${specialist.slug}`;
 
   return {
     title,
-
     description:
       specialist.shortDescription,
-
     alternates: {
       canonical:
         canonicalUrl,
-
       languages: {
         uz:
           `/uz/specialists/${specialist.slug}`,
@@ -124,14 +136,18 @@ export default async function SpecialistDetailPage({
 }: SpecialistDetailPageProps) {
   const locale =
     (await getLocale()) as SupportedLocale;
-
   const t =
     await getTranslations(
       "SpecialistDetailPage",
     );
-
   const { slug } =
     await params;
+
+  if (slug === LEGACY_DONIYOR_SLUG) {
+    permanentRedirect(
+      `/${locale}/specialists/${DONIYOR_SLUG}`,
+    );
+  }
 
   const specialist =
     await getPublishedSpecialistBySlug(
@@ -145,7 +161,6 @@ export default async function SpecialistDetailPage({
 
   const specialistUrl =
     `${baseUrl}/${locale}/specialists/${specialist.slug}`;
-
   const specialistStructuredData = {
     "@context":
       "https://schema.org",
@@ -235,9 +250,7 @@ export default async function SpecialistDetailPage({
             ),
         }}
       />
-
       <Header />
-
       <SpecialistProfile
         specialist={specialist}
         labels={{
@@ -245,138 +258,110 @@ export default async function SpecialistDetailPage({
             t(
               "backToDirectory",
             ),
-
           verified:
             t(
               "verified",
             ),
-
           notVerified:
             t(
               "notVerified",
             ),
-
           premium:
             t(
               "premium",
             ),
-
           sponsored:
             t(
               "sponsored",
             ),
-
           location:
             t(
               "location",
             ),
-
           languages:
             t(
               "languages",
             ),
-
           profile:
             t(
               "profile",
             ),
-
           education:
             t(
               "education",
             ),
-
           memberships:
             t(
               "memberships",
             ),
-
           services:
             t(
               "services",
             ),
-
           pricing:
             t(
               "pricing",
             ),
-
           contact:
             t(
               "contact.title",
             ),
-
           contactDescription:
             t(
               "contact.description",
             ),
-
           phone:
             t(
               "contact.phone",
             ),
-
           mobile:
             t(
               "contact.mobile",
             ),
-
           email:
             t(
               "contact.email",
             ),
-
           website:
             t(
               "contact.website",
             ),
-
           whatsapp:
             t(
               "contact.whatsapp",
             ),
-
           telegram:
             t(
               "contact.telegram",
             ),
-
           instagram:
             t(
               "contact.instagram",
             ),
-
           youtube:
             t(
               "contact.youtube",
             ),
-
           facebook:
             t(
               "contact.facebook",
             ),
-
           categories:
             t(
               "categoriesTitle",
             ),
-
           code:
             t(
               "code",
             ),
-
           categoriesMap,
-
           languagesMap,
         }}
       />
-
       {specialist.slug ===
         "zafar-usarov" && (
         <FounderProfilePromo />
       )}
-
       <Footer />
     </div>
   );
