@@ -8,6 +8,7 @@ export type SpecialistCategory =
   | "medical"
   | "legal"
   | "technology"
+  | "entrepreneur"
   | "automotive"
   | "home"
   | "education"

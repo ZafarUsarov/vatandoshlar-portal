@@ -153,6 +153,11 @@ export default async function FeaturedSpecialistsSection() {
         "categories.technology",
       ),
 
+    entrepreneur:
+      specialistsT(
+        "categories.entrepreneur",
+      ),
+
     automotive:
       specialistsT(
         "categories.automotive",

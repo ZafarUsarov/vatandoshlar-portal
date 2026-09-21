@@ -171,6 +171,7 @@ export default async function SpecialistDetailPage({
     "medical",
     "legal",
     "technology",
+    "entrepreneur",
     "automotive",
     "home",
     "education",

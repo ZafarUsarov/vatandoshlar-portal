@@ -172,6 +172,8 @@ export default function SpecialistProfile({
   labels,
 }: SpecialistProfileProps) {
   const locationLabel = getLocationLabel(specialist);
+  const isEntrepreneurProfile =
+    specialist.categories.includes("entrepreneur");
 
   const contactLinks = [
     specialist.contact.phone
@@ -499,12 +501,16 @@ export default function SpecialistProfile({
           <aside>
             <div className="sticky top-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
               <h2 className="text-xl font-bold text-slate-950 dark:text-white">
-                {labels.contact}
+                {isEntrepreneurProfile
+                  ? labels.website
+                  : labels.contact}
               </h2>
 
-              <p className="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400">
-                {labels.contactDescription}
-              </p>
+              {!isEntrepreneurProfile && (
+                <p className="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400">
+                  {labels.contactDescription}
+                </p>
+              )}
 
               <div className="mt-6 space-y-3">
                 {contactLinks.map((contact) => {

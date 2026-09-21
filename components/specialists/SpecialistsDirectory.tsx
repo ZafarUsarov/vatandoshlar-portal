@@ -60,6 +60,7 @@ const categoryKeys: ReadonlyArray<
   "medical",
   "legal",
   "technology",
+  "entrepreneur",
   "automotive",
   "home",
   "education",
@@ -113,9 +114,13 @@ export default function SpecialistsDirectory({
           .toLowerCase()
           .includes(query);
 
+      const isEntrepreneur =
+        specialist.categories.includes("entrepreneur");
+
       const matchesCategory =
-        category === "all" ||
-        specialist.categories.includes(category);
+        category === "all"
+          ? !isEntrepreneur
+          : specialist.categories.includes(category);
 
       const matchesBundesland =
         bundesland === "all" ||

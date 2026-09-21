@@ -9,6 +9,7 @@ export type AdminSpecialistCategory =
   | "medical"
   | "legal"
   | "technology"
+  | "entrepreneur"
   | "automotive"
   | "home"
   | "education"
@@ -172,6 +173,7 @@ const categoryKeys: ReadonlyArray<AdminSpecialistCategory> = [
   "medical",
   "legal",
   "technology",
+  "entrepreneur",
   "automotive",
   "home",
   "education",

@@ -706,7 +706,8 @@
       "creative": "Foto, video va kreativ",
       "languageTeaching": "Nemis tili o‘qituvchilari",
       "academicDocuments": "Bachelor, Master va PhD hujjatlari",
-      "beauty": "Sartaroshlik va go‘zallik"
+      "beauty": "Sartaroshlik va go‘zallik",
+      "entrepreneur": "Tadbirkorlar"
     },
     "results": {
       "title": "Mutaxassislar",
@@ -772,7 +773,8 @@
       "academic-documents": "Bachelor, Master va PhD hujjatlari",
       "beauty": "Sartaroshlik va go‘zallik",
       "finance": "Soliq va moliya",
-      "creative": "Foto, video va kreativ"
+      "creative": "Foto, video va kreativ",
+      "entrepreneur": "Tadbirkorlar"
     },
     "languagesMap": {
       "uz": "O‘zbekcha",

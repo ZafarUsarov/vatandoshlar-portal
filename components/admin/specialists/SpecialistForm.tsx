@@ -52,6 +52,11 @@ const categories: ReadonlyArray<{
     de: "Technologie",
   },
   {
+    value: "entrepreneur",
+    uz: "Tadbirkorlar",
+    de: "Unternehmerinnen und Unternehmer",
+  },
+  {
     value: "automotive",
     uz: "Avtomobil",
     de: "Automobil",

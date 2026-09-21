@@ -74,6 +74,7 @@ const categoryKeys: ReadonlyArray<SpecialistCategory> = [
   "medical",
   "legal",
   "technology",
+  "entrepreneur",
   "automotive",
   "home",
   "education",
