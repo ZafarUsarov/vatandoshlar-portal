@@ -1282,11 +1282,10 @@ export default function Header() {
 
               hidden min-w-max shrink-0 items-center gap-0.5
 
-              min-[1160px]:ml-10 min-[1160px]:flex
+              min-[1160px]:ml-auto min-[1160px]:flex
 
-              xl:ml-14 xl:gap-1
+              xl:gap-1
 
-              2xl:ml-16
 
             "
 
