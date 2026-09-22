@@ -300,6 +300,7 @@ export default function SpecialistProfile({
                     style={{
                       objectFit: specialist.imageFit ?? "cover",
                       objectPosition: specialist.imagePosition ?? "center",
+                      transform: `scale(${specialist.imageScale ?? 1})`,
                     }}
                   />
                 ) : (

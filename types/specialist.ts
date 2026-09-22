@@ -132,6 +132,8 @@ export type Specialist = Readonly<{
 
   imagePosition?: string;
 
+  imageScale?: number;
+
   yearsOfExperience?: number;
 
   rating?: number;

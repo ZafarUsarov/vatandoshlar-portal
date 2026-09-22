@@ -90,6 +90,8 @@ type PublishedSpecialistRow = {
 
   image_position: string | null;
 
+  image_scale: string | number | null;
+
   years_of_experience: number | null;
 
   rating: string | number | null;
@@ -570,6 +572,18 @@ function toPublicSpecialist(
 
       : {}),
 
+    ...(toNullableNumber(row.image_scale) !== undefined
+
+      ? {
+
+          imageScale:
+
+            toNullableNumber(row.image_scale),
+
+        }
+
+      : {}),
+
     ...(row.years_of_experience !==
 
     null
@@ -753,6 +767,8 @@ const publishedSpecialistSelect = `
     image_fit,
 
     image_position,
+
+    image_scale,
 
     years_of_experience,
 
