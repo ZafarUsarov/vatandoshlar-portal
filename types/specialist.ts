@@ -1,98 +1,183 @@
 export type SupportedLocale = "uz" | "de";
 
 export type LocalizedText = Readonly<
+
   Record<SupportedLocale, string>
+
 >;
 
 export type SpecialistCategory =
+
   | "medical"
+
   | "legal"
+
   | "technology"
+
   | "entrepreneur"
+
   | "automotive"
+
   | "home"
+
   | "education"
+
   | "language-teaching"
+
   | "academic-documents"
+
   | "beauty"
+
   | "finance"
+
   | "creative";
 
 export type SpecialistLanguage =
+
   | "uz"
+
   | "de"
+
   | "ru"
+
   | "en"
+
   | "tr";
 
 export type SpecialistStatus = Readonly<{
+
   verified: boolean;
+
   featured: boolean;
+
   premium: boolean;
+
   sponsored: boolean;
+
 }>;
 
 export type SpecialistContact = Readonly<{
+
   email?: string;
+
   phone?: string;
+
   mobile?: string;
+
   website?: string;
+
   whatsapp?: string;
+
   telegram?: string;
+
   instagram?: string;
+
   youtube?: string;
+
   facebook?: string;
+
 }>;
 
 export type SpecialistLocation = Readonly<{
+
   city?: string;
+
   bundesland?: string;
+
   postalCode?: string;
+
 }>;
 
 export type Specialist = Readonly<{
+
   id: string;
+
   code: string;
+
   slug: string;
+
   name: string;
+
   profession: LocalizedText;
+
   shortDescription: LocalizedText;
+
   profile?: ReadonlyArray<LocalizedText>;
+
   education?: ReadonlyArray<LocalizedText>;
+
   memberships?: ReadonlyArray<LocalizedText>;
+
   categories: ReadonlyArray<SpecialistCategory>;
+
   languages: ReadonlyArray<SpecialistLanguage>;
+
   services: ReadonlyArray<LocalizedText>;
+
   location?: SpecialistLocation;
+
   serviceArea?: LocalizedText;
+
   contact: SpecialistContact;
+
   status: SpecialistStatus;
+
   pricingNote?: LocalizedText;
+
   profilePublished: boolean;
+
   avatarUrl?: string;
+
+  imageFit?: "cover" | "contain";
+
+  imagePosition?: string;
+
   yearsOfExperience?: number;
+
   rating?: number;
+
   reviewCount?: number;
+
   updatedAt?: string;
+
 }>;
 
 export type LocalizedSpecialist = Omit<
+
   Specialist,
+
   | "profession"
+
   | "shortDescription"
+
   | "services"
+
   | "profile"
+
   | "education"
+
   | "memberships"
+
   | "pricingNote"
+
   | "serviceArea"
+
 > & {
+
   profession: string;
+
   shortDescription: string;
+
   services: ReadonlyArray<string>;
+
   profile?: ReadonlyArray<string>;
+
   education?: ReadonlyArray<string>;
+
   memberships?: ReadonlyArray<string>;
+
   pricingNote?: string;
+
   serviceArea?: string;
+
 };
