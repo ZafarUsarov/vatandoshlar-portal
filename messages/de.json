@@ -707,7 +707,8 @@
       "languageTeaching": "Deutschlehrerinnen und Deutschlehrer",
       "academicDocuments": "Bachelor-, Master- und Promotionsunterlagen",
       "beauty": "Friseur & Beauty",
-      "entrepreneur": "Unternehmer"
+      "entrepreneur": "Unternehmer",
+      "science": "Wissenschaft"
     },
     "results": {
       "title": "Fachkräfte",
@@ -760,7 +761,11 @@
       "instagram": "Instagram",
       "youtube": "YouTube",
       "facebook": "Facebook",
-      "mobile": "Mobiltelefon"
+      "mobile": "Mobiltelefon",
+      "googleScholar": "Google Scholar",
+      "researchGate": "ResearchGate",
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
     },
     "categories": {
       "medical": "Ärzte und Medizin",
@@ -774,7 +779,8 @@
       "beauty": "Friseur & Beauty",
       "finance": "Steuern und Finanzen",
       "creative": "Foto, Video und Kreatives",
-      "entrepreneur": "Unternehmer"
+      "entrepreneur": "Unternehmer",
+      "science": "Wissenschaft"
     },
     "languagesMap": {
       "uz": "Usbekisch",
@@ -785,7 +791,10 @@
     },
     "profile": "Berufliches Profil",
     "education": "Ausbildung",
-    "memberships": "Mitgliedschaften"
+    "memberships": "Mitgliedschaften",
+    "achievements": "Auszeichnungen und Stipendien",
+    "imageCredit": "Bild",
+    "source": "Quelle"
   },
   "FounderPage": {
     "metadata": {

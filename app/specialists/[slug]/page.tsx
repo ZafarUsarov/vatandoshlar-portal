@@ -195,6 +195,7 @@ export default async function SpecialistDetailPage({
     "beauty",
     "finance",
     "creative",
+    "science",
   ];
 
   const categoriesMap =
@@ -346,6 +347,13 @@ export default async function SpecialistDetailPage({
             t(
               "contact.facebook",
             ),
+          googleScholar: t("contact.googleScholar"),
+          researchGate: t("contact.researchGate"),
+          github: t("contact.github"),
+          linkedin: t("contact.linkedin"),
+          achievements: t("achievements"),
+          imageCredit: t("imageCredit"),
+          source: t("source"),
           categories:
             t(
               "categoriesTitle",

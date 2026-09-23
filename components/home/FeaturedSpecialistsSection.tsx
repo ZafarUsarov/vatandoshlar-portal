@@ -197,6 +197,11 @@ export default async function FeaturedSpecialistsSection() {
       specialistsT(
         "categories.creative",
       ),
+
+    science:
+      specialistsT(
+        "categories.science",
+      ),
   };
 
   const labels = {

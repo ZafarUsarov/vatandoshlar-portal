@@ -164,6 +164,18 @@ export function localizeSpecialist(
     memberships: specialist.memberships?.map(
       (item) => item[locale],
     ),
+    achievements: specialist.achievements?.map(
+      (achievement) => ({
+        year: achievement.year,
+        title: achievement.title[locale],
+        ...(achievement.award
+          ? { award: achievement.award[locale] }
+          : {}),
+        ...(achievement.sourceUrl
+          ? { sourceUrl: achievement.sourceUrl }
+          : {}),
+      }),
+    ),
     pricingNote: specialist.pricingNote?.[locale],
     serviceArea: specialist.serviceArea?.[locale],
   };

@@ -41,6 +41,7 @@ const categoryKeys: ReadonlyArray<SpecialistCategory> = [
   "beauty",
   "finance",
   "creative",
+  "science",
 ];
 
 function isSpecialistCategory(
@@ -145,6 +146,8 @@ export default async function SpecialistsPage({
       t("categories.finance"),
     creative:
       t("categories.creative"),
+    science:
+      t("categories.science"),
   };
 
   const bundeslandLabels: Record<

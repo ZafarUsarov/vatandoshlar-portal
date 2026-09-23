@@ -132,7 +132,8 @@ export default function SpecialistCard({
               <img
                 src={specialist.avatarUrl}
                 alt=""
-                className="h-full w-full object-cover"
+                className="h-full w-full"
+                style={{ objectFit: specialist.imageFit ?? "cover", objectPosition: specialist.imagePosition ?? "center", transform: `scale(${specialist.imageScale ?? 1})` }}
               />
             ) : (
               getInitials(specialist.name)

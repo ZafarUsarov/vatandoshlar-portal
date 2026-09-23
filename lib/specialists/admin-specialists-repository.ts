@@ -17,7 +17,8 @@ export type AdminSpecialistCategory =
   | "academic-documents"
   | "beauty"
   | "finance"
-  | "creative";
+  | "creative"
+  | "science";
 
 export type AdminSpecialistLanguage =
   | "uz"
@@ -25,6 +26,15 @@ export type AdminSpecialistLanguage =
   | "ru"
   | "en"
   | "tr";
+
+export type AdminSpecialistAchievement = {
+  year: string;
+  titleUz: string;
+  titleDe: string;
+  awardUz: string | null;
+  awardDe: string | null;
+  sourceUrl: string | null;
+};
 
 export type AdminSpecialistFlag =
   | "verified"
@@ -64,6 +74,13 @@ export type AdminSpecialist = {
   languages: AdminSpecialistLanguage[];
   servicesUz: string[];
   servicesDe: string[];
+  profileUz: string[];
+  profileDe: string[];
+  educationUz: string[];
+  educationDe: string[];
+  membershipsUz: string[];
+  membershipsDe: string[];
+  achievements: AdminSpecialistAchievement[];
   city: string | null;
   bundesland: string | null;
   postalCode: string | null;
@@ -77,9 +94,18 @@ export type AdminSpecialist = {
   instagram: string | null;
   youtube: string | null;
   facebook: string | null;
+  googleScholar: string | null;
+  researchGate: string | null;
+  github: string | null;
+  linkedin: string | null;
   pricingNoteUz: string | null;
   pricingNoteDe: string | null;
   avatarUrl: string | null;
+  imageFit: "cover" | "contain" | null;
+  imagePosition: string | null;
+  imageScale: number | null;
+  avatarCredit: string | null;
+  avatarSourceUrl: string | null;
   yearsOfExperience: number | null;
   rating: number | null;
   reviewCount: number | null;
@@ -104,6 +130,13 @@ export type AdminSpecialistInput = {
   languages: AdminSpecialistLanguage[];
   servicesUz: string[];
   servicesDe: string[];
+  profileUz: string[];
+  profileDe: string[];
+  educationUz: string[];
+  educationDe: string[];
+  membershipsUz: string[];
+  membershipsDe: string[];
+  achievements: AdminSpecialistAchievement[];
   city: string | null;
   bundesland: string | null;
   postalCode: string | null;
@@ -117,9 +150,18 @@ export type AdminSpecialistInput = {
   instagram: string | null;
   youtube: string | null;
   facebook: string | null;
+  googleScholar: string | null;
+  researchGate: string | null;
+  github: string | null;
+  linkedin: string | null;
   pricingNoteUz: string | null;
   pricingNoteDe: string | null;
   avatarUrl: string | null;
+  imageFit: "cover" | "contain" | null;
+  imagePosition: string | null;
+  imageScale: number | null;
+  avatarCredit: string | null;
+  avatarSourceUrl: string | null;
   yearsOfExperience: number | null;
   rating: number | null;
   reviewCount: number | null;
@@ -149,6 +191,13 @@ type DetailRow = SummaryRow & {
   short_description_de: string;
   services_uz: string[];
   services_de: string[];
+  profile_uz: string[];
+  profile_de: string[];
+  education_uz: string[];
+  education_de: string[];
+  memberships_uz: string[];
+  memberships_de: string[];
+  achievements: unknown;
   postal_code: string | null;
   service_area_uz: string | null;
   service_area_de: string | null;
@@ -160,9 +209,18 @@ type DetailRow = SummaryRow & {
   instagram: string | null;
   youtube: string | null;
   facebook: string | null;
+  google_scholar: string | null;
+  research_gate: string | null;
+  github: string | null;
+  linkedin: string | null;
   pricing_note_uz: string | null;
   pricing_note_de: string | null;
   avatar_url: string | null;
+  image_fit: "cover" | "contain" | null;
+  image_position: string | null;
+  image_scale: string | number | null;
+  avatar_credit: string | null;
+  avatar_source_url: string | null;
   years_of_experience: number | null;
   rating: string | number | null;
   review_count: number | null;
@@ -241,6 +299,23 @@ function toNullableNumber(
     : null;
 }
 
+function normalizeAchievements(value: unknown): AdminSpecialistAchievement[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item) => {
+    if (!item || typeof item !== "object") return [];
+    const row = item as Record<string, unknown>;
+    if (typeof row.year !== "string" || typeof row.title_uz !== "string" || typeof row.title_de !== "string") return [];
+    return [{
+      year: row.year,
+      titleUz: row.title_uz,
+      titleDe: row.title_de,
+      awardUz: typeof row.award_uz === "string" ? row.award_uz : null,
+      awardDe: typeof row.award_de === "string" ? row.award_de : null,
+      sourceUrl: typeof row.source_url === "string" ? row.source_url : null,
+    }];
+  });
+}
+
 function toSummary(row: SummaryRow): AdminSpecialistSummary {
   return {
     id: row.id,
@@ -269,6 +344,13 @@ function toDetail(row: DetailRow): AdminSpecialist {
     shortDescriptionDe: row.short_description_de,
     servicesUz: row.services_uz,
     servicesDe: row.services_de,
+    profileUz: row.profile_uz,
+    profileDe: row.profile_de,
+    educationUz: row.education_uz,
+    educationDe: row.education_de,
+    membershipsUz: row.memberships_uz,
+    membershipsDe: row.memberships_de,
+    achievements: normalizeAchievements(row.achievements),
     postalCode: row.postal_code,
     serviceAreaUz: row.service_area_uz,
     serviceAreaDe: row.service_area_de,
@@ -280,9 +362,18 @@ function toDetail(row: DetailRow): AdminSpecialist {
     instagram: row.instagram,
     youtube: row.youtube,
     facebook: row.facebook,
+    googleScholar: row.google_scholar,
+    researchGate: row.research_gate,
+    github: row.github,
+    linkedin: row.linkedin,
     pricingNoteUz: row.pricing_note_uz,
     pricingNoteDe: row.pricing_note_de,
     avatarUrl: row.avatar_url,
+    imageFit: row.image_fit,
+    imagePosition: row.image_position,
+    imageScale: toNullableNumber(row.image_scale),
+    avatarCredit: row.avatar_credit,
+    avatarSourceUrl: row.avatar_source_url,
     yearsOfExperience: row.years_of_experience,
     rating: toNullableNumber(row.rating),
     reviewCount: row.review_count,
@@ -338,6 +429,13 @@ export async function getAdminSpecialistById(
         languages,
         services_uz,
         services_de,
+        profile_uz,
+        profile_de,
+        education_uz,
+        education_de,
+        memberships_uz,
+        memberships_de,
+        achievements,
         city,
         bundesland,
         postal_code,
@@ -351,9 +449,18 @@ export async function getAdminSpecialistById(
         instagram,
         youtube,
         facebook,
+        google_scholar,
+        research_gate,
+        github,
+        linkedin,
         pricing_note_uz,
         pricing_note_de,
         avatar_url,
+        image_fit,
+        image_position,
+        image_scale,
+        avatar_credit,
+        avatar_source_url,
         years_of_experience,
         rating,
         review_count,
@@ -397,6 +504,13 @@ export async function createAdminSpecialist(
         languages,
         services_uz,
         services_de,
+        profile_uz,
+        profile_de,
+        education_uz,
+        education_de,
+        memberships_uz,
+        memberships_de,
+        achievements,
         city,
         bundesland,
         postal_code,
@@ -410,9 +524,18 @@ export async function createAdminSpecialist(
         instagram,
         youtube,
         facebook,
+        google_scholar,
+        research_gate,
+        github,
+        linkedin,
         pricing_note_uz,
         pricing_note_de,
         avatar_url,
+        image_fit,
+        image_position,
+        image_scale,
+        avatar_credit,
+        avatar_source_url,
         years_of_experience,
         rating,
         review_count,
@@ -426,6 +549,8 @@ export async function createAdminSpecialist(
         $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
         $11,$12,$13,$14,$15,$16,$17,$18,$19,$20,
         $21,$22,$23,$24,$25,$26,$27,$28,$29,$30,
+        $31,$32,$33,$34,$35,$36,$37,$38,$39,$40,
+        $41,$42,$43,$44,$45,$46,
         'draft',
         FALSE,
         FALSE,
@@ -446,6 +571,13 @@ export async function createAdminSpecialist(
       input.languages,
       input.servicesUz,
       input.servicesDe,
+      input.profileUz,
+      input.profileDe,
+      input.educationUz,
+      input.educationDe,
+      input.membershipsUz,
+      input.membershipsDe,
+      JSON.stringify(input.achievements.map((item) => ({ year: item.year, title_uz: item.titleUz, title_de: item.titleDe, award_uz: item.awardUz, award_de: item.awardDe, source_url: item.sourceUrl }))),
       input.city,
       input.bundesland,
       input.postalCode,
@@ -459,9 +591,18 @@ export async function createAdminSpecialist(
       input.instagram,
       input.youtube,
       input.facebook,
+      input.googleScholar,
+      input.researchGate,
+      input.github,
+      input.linkedin,
       input.pricingNoteUz,
       input.pricingNoteDe,
       input.avatarUrl,
+      input.imageFit,
+      input.imagePosition,
+      input.imageScale,
+      input.avatarCredit,
+      input.avatarSourceUrl,
       input.yearsOfExperience,
       input.rating,
       input.reviewCount,
@@ -481,78 +622,30 @@ export async function updateAdminSpecialist(
   id: string,
   input: AdminSpecialistInput,
 ): Promise<boolean> {
+  const achievements = JSON.stringify(input.achievements.map((item) => ({
+    year: item.year, title_uz: item.titleUz, title_de: item.titleDe,
+    award_uz: item.awardUz, award_de: item.awardDe, source_url: item.sourceUrl,
+  })));
+  const values = [
+    input.code, input.slug, input.name, input.professionUz, input.professionDe,
+    input.shortDescriptionUz, input.shortDescriptionDe, input.categories, input.languages,
+    input.servicesUz, input.servicesDe, input.profileUz, input.profileDe, input.educationUz, input.educationDe,
+    input.membershipsUz, input.membershipsDe, achievements, input.city, input.bundesland, input.postalCode,
+    input.serviceAreaUz, input.serviceAreaDe, input.email, input.phone, input.website, input.whatsapp, input.telegram,
+    input.instagram, input.youtube, input.facebook, input.googleScholar, input.researchGate, input.github, input.linkedin,
+    input.pricingNoteUz, input.pricingNoteDe, input.avatarUrl, input.imageFit, input.imagePosition, input.imageScale,
+    input.avatarCredit, input.avatarSourceUrl, input.yearsOfExperience, input.rating, input.reviewCount, id,
+  ];
   const result = await getDb().query(
-    `
-      UPDATE specialists
-      SET
-        code = $1,
-        slug = $2,
-        name = $3,
-        profession_uz = $4,
-        profession_de = $5,
-        short_description_uz = $6,
-        short_description_de = $7,
-        categories = $8,
-        languages = $9,
-        services_uz = $10,
-        services_de = $11,
-        city = $12,
-        bundesland = $13,
-        postal_code = $14,
-        service_area_uz = $15,
-        service_area_de = $16,
-        email = $17,
-        phone = $18,
-        website = $19,
-        whatsapp = $20,
-        telegram = $21,
-        instagram = $22,
-        youtube = $23,
-        facebook = $24,
-        pricing_note_uz = $25,
-        pricing_note_de = $26,
-        avatar_url = $27,
-        years_of_experience = $28,
-        rating = $29,
-        review_count = $30,
-        updated_at = NOW()
-      WHERE id = $31
-    `,
-    [
-      input.code,
-      input.slug,
-      input.name,
-      input.professionUz,
-      input.professionDe,
-      input.shortDescriptionUz,
-      input.shortDescriptionDe,
-      input.categories,
-      input.languages,
-      input.servicesUz,
-      input.servicesDe,
-      input.city,
-      input.bundesland,
-      input.postalCode,
-      input.serviceAreaUz,
-      input.serviceAreaDe,
-      input.email,
-      input.phone,
-      input.website,
-      input.whatsapp,
-      input.telegram,
-      input.instagram,
-      input.youtube,
-      input.facebook,
-      input.pricingNoteUz,
-      input.pricingNoteDe,
-      input.avatarUrl,
-      input.yearsOfExperience,
-      input.rating,
-      input.reviewCount,
-      id,
-    ],
+    `UPDATE specialists SET
+      code=$1, slug=$2, name=$3, profession_uz=$4, profession_de=$5, short_description_uz=$6, short_description_de=$7,
+      categories=$8, languages=$9, services_uz=$10, services_de=$11, profile_uz=$12, profile_de=$13, education_uz=$14, education_de=$15,
+      memberships_uz=$16, memberships_de=$17, achievements=$18::jsonb, city=$19, bundesland=$20, postal_code=$21, service_area_uz=$22, service_area_de=$23,
+      email=$24, phone=$25, website=$26, whatsapp=$27, telegram=$28, instagram=$29, youtube=$30, facebook=$31, google_scholar=$32, research_gate=$33,
+      github=$34, linkedin=$35, pricing_note_uz=$36, pricing_note_de=$37, avatar_url=$38, image_fit=$39, image_position=$40, image_scale=$41,
+      avatar_credit=$42, avatar_source_url=$43, years_of_experience=$44, rating=$45, review_count=$46, updated_at=NOW() WHERE id=$47`,
+    values,
   );
-
   return (result.rowCount ?? 0) > 0;
 }
 

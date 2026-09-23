@@ -96,6 +96,11 @@ const categories: ReadonlyArray<{
     uz: "Ijodiy xizmatlar",
     de: "Kreative Dienstleistungen",
   },
+  {
+    value: "science",
+    uz: "Ilm-fan",
+    de: "Wissenschaft",
+  },
 ];
 
 const languages: ReadonlyArray<{
@@ -171,6 +176,8 @@ const copy = {
     services: "Xizmatlar",
     servicesHint:
       "Har bir xizmatni yangi qatordan yozing. UZ va DE ro‘yxatlar soni teng bo‘lishi kerak.",
+    profile: "Kasbiy profil", education: "Ta’lim", memberships: "A’zoliklar",
+    achievements: "Yutuqlar va stipendiyalar (JSON)", achievementsHint: "Strukturali ro‘yxat: year, titleUz, titleDe, awardUz, awardDe, sourceUrl.",
     city: "Shahar",
     bundesland: "Bundesland",
     noBundesland: "Tanlanmagan",
@@ -184,10 +191,12 @@ const copy = {
     instagram: "Instagram URL",
     youtube: "YouTube URL",
     facebook: "Facebook URL",
+    googleScholar: "Google Scholar URL", researchGate: "ResearchGate URL", github: "GitHub URL", linkedin: "LinkedIn URL",
     pricingNote: "Narx bo‘yicha eslatma",
     avatarUrl: "Profil rasmi path / URL",
     avatarHint:
       "Masalan: /images/specialists/ali-valiyev.webp",
+    imageFit: "Rasm joylashuvi (fit)", imagePosition: "Rasm pozitsiyasi", imageScale: "Rasm masshtabi", avatarCredit: "Rasm krediti", avatarSourceUrl: "Rasm manbasi URL",
     yearsOfExperience: "Tajriba yili",
     rating: "Rating (0–5)",
     reviewCount: "Review soni",
@@ -227,6 +236,8 @@ const copy = {
     services: "Leistungen",
     servicesHint:
       "Jede Leistung in eine neue Zeile schreiben. UZ- und DE-Listen müssen gleich lang sein.",
+    profile: "Berufliches Profil", education: "Ausbildung", memberships: "Mitgliedschaften",
+    achievements: "Auszeichnungen und Stipendien (JSON)", achievementsHint: "Strukturierte Liste: year, titleUz, titleDe, awardUz, awardDe, sourceUrl.",
     city: "Stadt",
     bundesland: "Bundesland",
     noBundesland: "Nicht ausgewählt",
@@ -240,10 +251,12 @@ const copy = {
     instagram: "Instagram-URL",
     youtube: "YouTube-URL",
     facebook: "Facebook-URL",
+    googleScholar: "Google-Scholar-URL", researchGate: "ResearchGate-URL", github: "GitHub-URL", linkedin: "LinkedIn-URL",
     pricingNote: "Preishinweis",
     avatarUrl: "Profilbild-Pfad / URL",
     avatarHint:
       "Zum Beispiel: /images/specialists/ali-valiyev.webp",
+    imageFit: "Bildanpassung", imagePosition: "Bildposition", imageScale: "Bildskalierung", avatarCredit: "Bildnachweis", avatarSourceUrl: "Bildquelle-URL",
     yearsOfExperience:
       "Berufserfahrung in Jahren",
     rating: "Bewertung (0–5)",
@@ -357,6 +370,10 @@ export default function SpecialistForm({
         currentCopy.facebook,
         specialist?.facebook,
       ],
+      ["googleScholar", currentCopy.googleScholar, specialist?.googleScholar],
+      ["researchGate", currentCopy.researchGate, specialist?.researchGate],
+      ["github", currentCopy.github, specialist?.github],
+      ["linkedin", currentCopy.linkedin, specialist?.linkedin],
     ] satisfies ReadonlyArray<
       readonly [
         string,
@@ -701,6 +718,17 @@ export default function SpecialistForm({
                   </span>
                 </label>
 
+                {([
+                  ["profile", currentCopy.profile, isUz ? specialist?.profileUz : specialist?.profileDe],
+                  ["education", currentCopy.education, isUz ? specialist?.educationUz : specialist?.educationDe],
+                  ["memberships", currentCopy.memberships, isUz ? specialist?.membershipsUz : specialist?.membershipsDe],
+                ] as const).map(([key, label, values]) => (
+                  <label key={key} className="text-sm font-bold text-slate-800 dark:text-slate-100">
+                    <FieldLabel locale={locale}>{label}</FieldLabel>
+                    <textarea name={`${key}${isUz ? "Uz" : "De"}`} rows={5} disabled={pending} defaultValue={listValue(values)} className={inputClassName} />
+                  </label>
+                ))}
+
                 <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
                   <FieldLabel
                     locale={
@@ -957,6 +985,17 @@ export default function SpecialistForm({
               }
             </span>
           </label>
+
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2 lg:col-span-4">
+            <FieldLabel locale={locale}>{currentCopy.achievements}</FieldLabel>
+            <textarea name="achievementsJson" rows={10} disabled={pending} defaultValue={JSON.stringify(specialist?.achievements ?? [], null, 2)} className={inputClassName} />
+            <span className="mt-2 block text-xs font-normal leading-5 text-slate-500 dark:text-slate-400">{currentCopy.achievementsHint}</span>
+          </label>
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100"><FieldLabel locale={locale}>{currentCopy.imageFit}</FieldLabel><select name="imageFit" disabled={pending} defaultValue={specialist?.imageFit ?? ""} className={inputClassName}><option value="">—</option><option value="cover">cover</option><option value="contain">contain</option></select></label>
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100"><FieldLabel locale={locale}>{currentCopy.imagePosition}</FieldLabel><input name="imagePosition" disabled={pending} defaultValue={specialist?.imagePosition ?? ""} className={inputClassName} /></label>
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100"><FieldLabel locale={locale}>{currentCopy.imageScale}</FieldLabel><input name="imageScale" type="number" min="0.5" max="1.5" step="0.01" disabled={pending} defaultValue={specialist?.imageScale ?? ""} className={inputClassName} /></label>
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100"><FieldLabel locale={locale}>{currentCopy.avatarCredit}</FieldLabel><input name="avatarCredit" disabled={pending} defaultValue={specialist?.avatarCredit ?? ""} className={inputClassName} /></label>
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2"><FieldLabel locale={locale}>{currentCopy.avatarSourceUrl}</FieldLabel><input name="avatarSourceUrl" disabled={pending} defaultValue={specialist?.avatarSourceUrl ?? ""} className={inputClassName} /></label>
 
           <label className="text-sm font-bold text-slate-800 dark:text-slate-100">
             <FieldLabel

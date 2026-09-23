@@ -11,6 +11,7 @@ import type {
   SpecialistLanguage,
 
   SupportedLocale,
+  LocalizedSpecialistAchievement,
 
 } from "@/types/specialist";
 
@@ -43,6 +44,8 @@ type PublishedSpecialistRow = {
   memberships_uz: string[];
 
   memberships_de: string[];
+
+  achievements: unknown;
 
   categories: string[];
 
@@ -80,6 +83,14 @@ type PublishedSpecialistRow = {
 
   facebook: string | null;
 
+  google_scholar: string | null;
+
+  research_gate: string | null;
+
+  github: string | null;
+
+  linkedin: string | null;
+
   pricing_note_uz: string | null;
 
   pricing_note_de: string | null;
@@ -91,6 +102,10 @@ type PublishedSpecialistRow = {
   image_position: string | null;
 
   image_scale: string | number | null;
+
+  avatar_credit: string | null;
+
+  avatar_source_url: string | null;
 
   years_of_experience: number | null;
 
@@ -141,6 +156,8 @@ const categoryKeys: ReadonlyArray<SpecialistCategory> = [
   "finance",
 
   "creative",
+
+  "science",
 
 ];
 
@@ -292,6 +309,18 @@ function toDateTimeString(
 
 }
 
+function localizeAchievements(value: unknown, locale: SupportedLocale): LocalizedSpecialistAchievement[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item) => {
+    if (!item || typeof item !== "object") return [];
+    const row = item as Record<string, unknown>;
+    const title = row[locale === "de" ? "title_de" : "title_uz"];
+    if (typeof row.year !== "string" || typeof title !== "string") return [];
+    const award = row[locale === "de" ? "award_de" : "award_uz"];
+    return [{ year: row.year, title, ...(typeof award === "string" && award ? { award } : {}), ...(typeof row.source_url === "string" && row.source_url ? { sourceUrl: row.source_url } : {}) }];
+  });
+}
+
 function toPublicSpecialist(
 
   row: PublishedSpecialistRow,
@@ -390,6 +419,30 @@ function toPublicSpecialist(
 
         undefined,
 
+      googleScholar:
+
+        row.google_scholar ??
+
+        undefined,
+
+      researchGate:
+
+        row.research_gate ??
+
+        undefined,
+
+      github:
+
+        row.github ??
+
+        undefined,
+
+      linkedin:
+
+        row.linkedin ??
+
+        undefined,
+
     });
 
   const serviceArea =
@@ -457,6 +510,16 @@ function toPublicSpecialist(
         ? row.memberships_de
 
         : row.memberships_uz,
+
+    achievements:
+
+      localizeAchievements(
+
+        row.achievements,
+
+        locale,
+
+      ),
 
     categories:
 
@@ -581,6 +644,18 @@ function toPublicSpecialist(
             toNullableNumber(row.image_scale),
 
         }
+
+      : {}),
+
+    ...(row.avatar_credit
+
+      ? { avatarCredit: row.avatar_credit }
+
+      : {}),
+
+    ...(row.avatar_source_url
+
+      ? { avatarSourceUrl: row.avatar_source_url }
 
       : {}),
 
@@ -722,6 +797,8 @@ const publishedSpecialistSelect = `
 
     memberships_de,
 
+    achievements,
+
     categories,
 
     languages,
@@ -758,6 +835,14 @@ const publishedSpecialistSelect = `
 
     facebook,
 
+    google_scholar,
+
+    research_gate,
+
+    github,
+
+    linkedin,
+
     pricing_note_uz,
 
     pricing_note_de,
@@ -769,6 +854,10 @@ const publishedSpecialistSelect = `
     image_position,
 
     image_scale,
+
+    avatar_credit,
+
+    avatar_source_url,
 
     years_of_experience,
 

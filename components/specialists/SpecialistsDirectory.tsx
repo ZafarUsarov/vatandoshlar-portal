@@ -69,6 +69,7 @@ const categoryKeys: ReadonlyArray<
   "beauty",
   "finance",
   "creative",
+  "science",
 ];
 
 export default function SpecialistsDirectory({

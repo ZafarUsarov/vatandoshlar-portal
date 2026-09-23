@@ -707,7 +707,8 @@
       "languageTeaching": "Nemis tili o‘qituvchilari",
       "academicDocuments": "Bachelor, Master va PhD hujjatlari",
       "beauty": "Sartaroshlik va go‘zallik",
-      "entrepreneur": "Tadbirkorlar"
+      "entrepreneur": "Tadbirkorlar",
+      "science": "Ilm-fan"
     },
     "results": {
       "title": "Mutaxassislar",
@@ -760,7 +761,11 @@
       "instagram": "Instagram",
       "youtube": "YouTube",
       "facebook": "Facebook",
-      "mobile": "Mobil telefon"
+      "mobile": "Mobil telefon",
+      "googleScholar": "Google Scholar",
+      "researchGate": "ResearchGate",
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
     },
     "categories": {
       "medical": "Shifokorlar",
@@ -774,7 +779,8 @@
       "beauty": "Sartaroshlik va go‘zallik",
       "finance": "Soliq va moliya",
       "creative": "Foto, video va kreativ",
-      "entrepreneur": "Tadbirkorlar"
+      "entrepreneur": "Tadbirkorlar",
+      "science": "Ilm-fan"
     },
     "languagesMap": {
       "uz": "O‘zbekcha",
@@ -785,7 +791,10 @@
     },
     "profile": "Kasbiy profil",
     "education": "Ta’lim",
-    "memberships": "A’zoliklar"
+    "memberships": "A’zoliklar",
+    "achievements": "Yutuqlar va stipendiyalar",
+    "imageCredit": "Rasm",
+    "source": "Manba"
   },
   "FounderPage": {
     "metadata": {

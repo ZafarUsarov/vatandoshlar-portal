@@ -27,6 +27,7 @@ const categoryValues: AdminSpecialistCategory[] = [
   "beauty",
   "finance",
   "creative",
+  "science",
 ];
 
 const languageValues: AdminSpecialistLanguage[] = [
@@ -143,6 +144,23 @@ function isValidAvatarUrl(value: string): boolean {
   return value.startsWith("/") || isValidHttpUrl(value);
 }
 
+function parseAchievements(value: string): import("@/lib/specialists/admin-specialists-repository").AdminSpecialistAchievement[] | "invalid" {
+  if (!value) return [];
+  try {
+    const parsed: unknown = JSON.parse(value);
+    if (!Array.isArray(parsed)) return "invalid";
+    const result = parsed.map((item) => {
+      if (!item || typeof item !== "object") return null;
+      const row = item as Record<string, unknown>;
+      if (typeof row.year !== "string" || typeof row.titleUz !== "string" || typeof row.titleDe !== "string") return null;
+      const sourceUrl = typeof row.sourceUrl === "string" && row.sourceUrl.trim() ? row.sourceUrl.trim() : null;
+      if (sourceUrl && !isValidHttpUrl(sourceUrl)) return null;
+      return { year: row.year.trim(), titleUz: row.titleUz.trim(), titleDe: row.titleDe.trim(), awardUz: typeof row.awardUz === "string" && row.awardUz.trim() ? row.awardUz.trim() : null, awardDe: typeof row.awardDe === "string" && row.awardDe.trim() ? row.awardDe.trim() : null, sourceUrl };
+    });
+    return result.some((item) => item === null || !item.year || !item.titleUz || !item.titleDe) ? "invalid" : result as import("@/lib/specialists/admin-specialists-repository").AdminSpecialistAchievement[];
+  } catch { return "invalid"; }
+}
+
 function isUniqueViolation(error: unknown): boolean {
   return (
     typeof error === "object" &&
@@ -172,6 +190,14 @@ export async function createSpecialistAction(
   const languages = getLanguages(formData);
   const servicesUz = getLines(getString(formData, "servicesUz"));
   const servicesDe = getLines(getString(formData, "servicesDe"));
+  const profileUz = getLines(getString(formData, "profileUz"));
+  const profileDe = getLines(getString(formData, "profileDe"));
+  const educationUz = getLines(getString(formData, "educationUz"));
+  const educationDe = getLines(getString(formData, "educationDe"));
+  const membershipsUz = getLines(getString(formData, "membershipsUz"));
+  const membershipsDe = getLines(getString(formData, "membershipsDe"));
+  const achievements = parseAchievements(getString(formData, "achievementsJson"));
+
 
   const city = getNullableString(formData, "city");
   const bundesland = getNullableString(formData, "bundesland");
@@ -187,10 +213,23 @@ export async function createSpecialistAction(
   const instagram = getNullableString(formData, "instagram");
   const youtube = getNullableString(formData, "youtube");
   const facebook = getNullableString(formData, "facebook");
+  const googleScholar = getNullableString(formData, "googleScholar");
+  const researchGate = getNullableString(formData, "researchGate");
+  const github = getNullableString(formData, "github");
+  const linkedin = getNullableString(formData, "linkedin");
+
 
   const pricingNoteUz = getNullableString(formData, "pricingNoteUz");
   const pricingNoteDe = getNullableString(formData, "pricingNoteDe");
   const avatarUrl = getNullableString(formData, "avatarUrl");
+  const imageFitValue = getNullableString(formData, "imageFit");
+  const imageFit = imageFitValue === "contain" ? "contain" as const : imageFitValue === "cover" ? "cover" as const : null;
+  const imagePosition = getNullableString(formData, "imagePosition");
+  const imageScaleRaw = getNullableString(formData, "imageScale");
+  const imageScale = imageScaleRaw === null ? null : Number(imageScaleRaw);
+  const avatarCredit = getNullableString(formData, "avatarCredit");
+  const avatarSourceUrl = getNullableString(formData, "avatarSourceUrl");
+
 
   const yearsOfExperience = parseOptionalInteger(
     getString(formData, "yearsOfExperience"),
@@ -246,6 +285,12 @@ export async function createSpecialistAction(
           : "Narx eslatmasi UZ va DE tillarida ikkalasi ham to‘ldirilishi yoki ikkalasi ham bo‘sh qolishi kerak.",
     };
   }
+  if (profileUz.length !== profileDe.length || educationUz.length !== educationDe.length || membershipsUz.length !== membershipsDe.length) {
+    return { error: appLocale === "de" ? "Profil-, Ausbildungs- und Mitgliedschaftslisten müssen je Sprache gleich viele Einträge enthalten." : "Profil, ta’lim va a’zolik ro‘yxatlarining UZ/DE elementlari soni teng bo‘lishi kerak." };
+  }
+  if (achievements === "invalid") return { error: appLocale === "de" ? "Achievements-JSON ist ungültig." : "Yutuqlar JSON formati noto‘g‘ri." };
+  if (imageScale !== null && (!Number.isFinite(imageScale) || imageScale < 0.5 || imageScale > 1.5)) return { error: appLocale === "de" ? "Bildskalierung muss zwischen 0,5 und 1,5 liegen." : "Rasm masshtabi 0.5 va 1.5 oralig‘ida bo‘lishi kerak." };
+
 
   if (email && !isValidEmail(email)) {
     return {
@@ -256,7 +301,7 @@ export async function createSpecialistAction(
     };
   }
 
-  const urlFields = [website, whatsapp, telegram, instagram, youtube, facebook];
+  const urlFields = [website, whatsapp, telegram, instagram, youtube, facebook, googleScholar, researchGate, github, linkedin, avatarSourceUrl];
 
   if (
     urlFields.some(
@@ -311,6 +356,13 @@ export async function createSpecialistAction(
       languages,
       servicesUz,
       servicesDe,
+      profileUz,
+      profileDe,
+      educationUz,
+      educationDe,
+      membershipsUz,
+      membershipsDe,
+      achievements,
       city,
       bundesland,
       postalCode,
@@ -324,9 +376,18 @@ export async function createSpecialistAction(
       instagram,
       youtube,
       facebook,
+      googleScholar,
+      researchGate,
+      github,
+      linkedin,
       pricingNoteUz,
       pricingNoteDe,
       avatarUrl,
+      imageFit,
+      imagePosition,
+      imageScale,
+      avatarCredit,
+      avatarSourceUrl,
       yearsOfExperience,
       rating,
       reviewCount,

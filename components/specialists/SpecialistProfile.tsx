@@ -32,6 +32,13 @@ type SpecialistProfileProps = Readonly<{
     instagram: string;
     youtube: string;
     facebook: string;
+    googleScholar: string;
+    researchGate: string;
+    github: string;
+    linkedin: string;
+    achievements: string;
+    imageCredit: string;
+    source: string;
     categories: string;
     code: string;
     categoriesMap: Readonly<
@@ -254,6 +261,10 @@ export default function SpecialistProfile({
           href: specialist.contact.facebook,
         }
       : null,
+    specialist.contact.googleScholar ? { key: "googleScholar", label: labels.googleScholar, value: labels.googleScholar, href: specialist.contact.googleScholar } : null,
+    specialist.contact.researchGate ? { key: "researchGate", label: labels.researchGate, value: labels.researchGate, href: specialist.contact.researchGate } : null,
+    specialist.contact.github ? { key: "github", label: labels.github, value: labels.github, href: specialist.contact.github } : null,
+    specialist.contact.linkedin ? { key: "linkedin", label: labels.linkedin, value: labels.linkedin, href: specialist.contact.linkedin } : null,
   ].filter(
     (
       item,
@@ -285,7 +296,7 @@ export default function SpecialistProfile({
           <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
               <div
-                className={`flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-[2rem] text-2xl font-black text-white shadow-xl sm:size-32 lg:size-36 ${
+                className={`flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-[2rem] text-2xl font-black text-white shadow-xl sm:size-40 lg:size-48 ${
                   specialist.avatarUrl
                     ? "bg-white shadow-slate-900/10 dark:bg-slate-900"
                     : "bg-gradient-to-br from-emerald-500 to-teal-700 shadow-emerald-600/20"
@@ -343,6 +354,11 @@ export default function SpecialistProfile({
                 <p className="mt-3 text-lg font-semibold text-emerald-700 dark:text-emerald-400">
                   {specialist.profession}
                 </p>
+                {specialist.avatarCredit && (
+                  <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+                    {labels.imageCredit}: {specialist.avatarSourceUrl ? <a href={specialist.avatarSourceUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-emerald-600">{specialist.avatarCredit}</a> : specialist.avatarCredit}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -454,6 +470,20 @@ export default function SpecialistProfile({
               </article>
             )}
 
+            {specialist.achievements && specialist.achievements.length > 0 && (
+              <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
+                <h2 className="text-2xl font-bold tracking-[-0.03em] text-slate-950 dark:text-white">{labels.achievements}</h2>
+                <ol className="mt-6 space-y-4">
+                  {specialist.achievements.map((item, index) => (
+                    <li key={`${item.year}-${item.title}-${index}`} className="grid gap-2 rounded-2xl border border-slate-200/70 bg-slate-50/70 p-5 shadow-sm transition-[transform,border-color,box-shadow,background-color] duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:bg-emerald-50/60 hover:shadow-[0_18px_45px_-28px_rgba(5,150,105,0.55)] focus-within:-translate-y-1 focus-within:border-emerald-400 focus-within:bg-emerald-50/60 focus-within:ring-2 focus-within:ring-emerald-500/40 focus-within:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none dark:border-white/[0.08] dark:bg-white/[0.035] dark:hover:border-emerald-400/35 dark:hover:bg-emerald-400/[0.06] dark:focus-within:border-emerald-400/50 dark:focus-within:bg-emerald-400/[0.06] dark:focus-within:ring-offset-slate-900 sm:grid-cols-[7rem_1fr]">
+                      <span className="font-bold text-emerald-700 dark:text-emerald-400">{item.year}</span>
+                      <div><p className="font-semibold text-slate-900 dark:text-white">{item.title}</p>{item.award && <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{item.award}</p>}{item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex rounded-md text-xs font-bold text-emerald-700 underline underline-offset-2 transition-colors hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transition-none dark:text-emerald-400 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950">{labels.source}</a>}</div>
+                    </li>
+                  ))}
+                </ol>
+              </article>
+            )}
+
             <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
               <h2 className="text-2xl font-bold tracking-[-0.03em] text-slate-950 dark:text-white">
                 {labels.services}
@@ -504,7 +534,7 @@ export default function SpecialistProfile({
           </div>
 
           <aside>
-            <div className="sticky top-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div className="sticky top-28 rounded-[2rem] border border-slate-200/80 bg-white p-6 shadow-sm transition-[border-color,box-shadow,background-color] duration-300 hover:border-emerald-200 hover:shadow-[0_18px_45px_-30px_rgba(5,150,105,0.45)] motion-reduce:transition-none dark:border-white/[0.08] dark:bg-slate-900 dark:hover:border-emerald-400/20">
               <h2 className="text-xl font-bold text-slate-950 dark:text-white">
                 {isEntrepreneurProfile
                   ? labels.website
@@ -534,7 +564,7 @@ export default function SpecialistProfile({
                           ? "noopener noreferrer"
                           : undefined
                       }
-                      className="group flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 transition hover:border-emerald-300 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:bg-slate-950 dark:hover:border-emerald-500/30 dark:hover:bg-emerald-500/10"
+                      className="group flex items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 px-4 py-3.5 shadow-sm transition-[transform,border-color,box-shadow,background-color] duration-300 hover:-translate-y-0.5 hover:border-emerald-300 hover:bg-emerald-50/70 hover:shadow-[0_14px_34px_-24px_rgba(5,150,105,0.5)] focus-visible:-translate-y-0.5 focus-visible:border-emerald-400 focus-visible:bg-emerald-50/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none dark:border-white/[0.08] dark:bg-slate-950 dark:hover:border-emerald-400/35 dark:hover:bg-emerald-400/[0.07] dark:focus-visible:border-emerald-400/50 dark:focus-visible:bg-emerald-400/[0.07] dark:focus-visible:ring-offset-slate-900"
                     >
                       <span className="min-w-0">
                         <span className="block text-xs font-bold uppercase tracking-[0.12em] text-slate-400">
@@ -545,7 +575,7 @@ export default function SpecialistProfile({
                         </span>
                       </span>
 
-                      <ArrowUpRightIcon className="size-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
+                      <ArrowUpRightIcon className="size-4 shrink-0 text-slate-400 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-emerald-600 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 group-focus-visible:text-emerald-600 motion-reduce:transform-none motion-reduce:transition-none dark:group-hover:text-emerald-400 dark:group-focus-visible:text-emerald-400" />
                     </a>
                   );
                 })}

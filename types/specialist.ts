@@ -30,7 +30,9 @@ export type SpecialistCategory =
 
   | "finance"
 
-  | "creative";
+  | "creative"
+
+  | "science";
 
 export type SpecialistLanguage =
 
@@ -76,6 +78,39 @@ export type SpecialistContact = Readonly<{
 
   facebook?: string;
 
+  googleScholar?: string;
+
+  researchGate?: string;
+
+  github?: string;
+
+  linkedin?: string;
+
+}>;
+
+
+export type SpecialistAchievement = Readonly<{
+
+  year: string;
+
+  title: LocalizedText;
+
+  award?: LocalizedText;
+
+  sourceUrl?: string;
+
+}>;
+
+export type LocalizedSpecialistAchievement = Readonly<{
+
+  year: string;
+
+  title: string;
+
+  award?: string;
+
+  sourceUrl?: string;
+
 }>;
 
 export type SpecialistLocation = Readonly<{
@@ -108,6 +143,8 @@ export type Specialist = Readonly<{
 
   memberships?: ReadonlyArray<LocalizedText>;
 
+  achievements?: ReadonlyArray<SpecialistAchievement>;
+
   categories: ReadonlyArray<SpecialistCategory>;
 
   languages: ReadonlyArray<SpecialistLanguage>;
@@ -133,6 +170,10 @@ export type Specialist = Readonly<{
   imagePosition?: string;
 
   imageScale?: number;
+
+  avatarCredit?: string;
+
+  avatarSourceUrl?: string;
 
   yearsOfExperience?: number;
 
@@ -160,6 +201,8 @@ export type LocalizedSpecialist = Omit<
 
   | "memberships"
 
+  | "achievements"
+
   | "pricingNote"
 
   | "serviceArea"
@@ -177,6 +220,8 @@ export type LocalizedSpecialist = Omit<
   education?: ReadonlyArray<string>;
 
   memberships?: ReadonlyArray<string>;
+
+  achievements?: ReadonlyArray<LocalizedSpecialistAchievement>;
 
   pricingNote?: string;
 
