@@ -20,6 +20,7 @@ export type PublicGuideCategorySlug =
   | "work-and-career"
   | "after-arrival"
   | "recognition"
+  | "transport-and-driving"
   | "integration";
 
 type GuideArticleRow = {
@@ -87,6 +88,7 @@ const categorySlugs:
     "work-and-career",
     "after-arrival",
     "recognition",
+    "transport-and-driving",
     "integration",
   ];
 

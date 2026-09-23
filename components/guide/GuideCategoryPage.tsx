@@ -24,6 +24,8 @@ export default function GuideCategoryPage({
           back: "Barcha yo‘nalishlar",
           eyebrow: "Germany Guide yo‘nalishi",
           articleCount: `${articles.length} ta maqola`,
+          articlesTitle: "Maqolalar",
+          trustNote: "Rasmiy manbalar asosida · Ma’lumotlar muntazam tekshiriladi",
           status: "Maqolalar tayyorlanmoqda",
           emptyTitle:
             "Bu yo‘nalishdagi qo‘llanmalar tez orada qo‘shiladi",
@@ -47,6 +49,8 @@ export default function GuideCategoryPage({
           back: "Alle Bereiche",
           eyebrow: "Bereich im Deutschland Guide",
           articleCount: `${articles.length} Artikel`,
+          articlesTitle: "Artikel",
+          trustNote: "Auf Grundlage offizieller Quellen · Inhalte werden regelmäßig geprüft",
           status: "Artikel werden vorbereitet",
           emptyTitle:
             "Die Leitfäden für diesen Bereich erscheinen demnächst",
@@ -67,6 +71,11 @@ export default function GuideCategoryPage({
           guideHome: "Zur Guide-Startseite",
         };
 
+  const isTransportCategory = category.slug === "transport-and-driving";
+  const heroImageSrc = isTransportCategory
+    ? "/images/guide/categories/transport-and-driving.webp"
+    : "/images/guide/guide-category-master-visual.webp";
+
   return (
     <main className="min-h-screen bg-slate-50 pt-20 text-slate-950 dark:bg-slate-950 dark:text-white">
       <section className="relative isolate overflow-hidden border-b border-slate-800 bg-slate-950 text-white">
@@ -75,7 +84,7 @@ export default function GuideCategoryPage({
           className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
         >
           <Image
-            src="/images/guide/guide-category-master-visual.webp"
+            src={heroImageSrc}
             alt=""
             fill
             priority
@@ -119,18 +128,30 @@ export default function GuideCategoryPage({
                 {copy.articleCount}
               </span>
 
-              <span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-4 py-2 text-sm font-semibold text-amber-200">
-                {copy.status}
-              </span>
+              {articles.length === 0 && (
+                <span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-4 py-2 text-sm font-semibold text-amber-200">
+                  {copy.status}
+                </span>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20 sm:py-24">
+      <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           {articles.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <>
+              <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+                <h2 className="text-2xl font-bold tracking-[-0.025em] sm:text-3xl">
+                  {copy.articlesTitle}
+                </h2>
+                <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+                  {copy.articleCount}
+                </span>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {articles.map((article) => (
                 <article
                   key={article.id}
@@ -164,7 +185,8 @@ export default function GuideCategoryPage({
                   </div>
                 </article>
               ))}
-            </div>
+              </div>
+            </>
           ) : (
             <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
               <div className="grid lg:grid-cols-[0.8fr_1.2fr]">
@@ -196,40 +218,17 @@ export default function GuideCategoryPage({
             </div>
           )}
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <section className="rounded-3xl border border-slate-200 bg-white p-7 sm:p-8 dark:border-slate-800 dark:bg-slate-900">
-              <h2 className="text-2xl font-bold">
-                {copy.roadmapTitle}
-              </h2>
-
-              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                {copy.roadmapItems.map((item) => (
-                  <li
-                    key={item}
-                    className="flex gap-3 rounded-2xl bg-slate-50 p-4 text-slate-700 dark:bg-slate-950 dark:text-slate-300"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="font-bold text-emerald-600 dark:text-emerald-400"
-                    >
-                      ✓
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <aside className="rounded-3xl border border-emerald-200 bg-emerald-50 p-7 sm:p-8 dark:border-emerald-500/20 dark:bg-emerald-500/10">
-              <h2 className="text-2xl font-bold text-emerald-950 dark:text-emerald-100">
-                {copy.reliabilityTitle}
-              </h2>
-
-              <p className="mt-4 leading-7 text-emerald-900 dark:text-emerald-200">
-                {copy.reliabilityDescription}
-              </p>
+          {articles.length > 0 && (
+            <aside className="mt-8 flex items-start gap-3 border-t border-slate-200 pt-5 text-sm text-slate-600 dark:border-slate-800 dark:text-slate-400">
+              <span
+                aria-hidden="true"
+                className="font-bold text-emerald-600 dark:text-emerald-400"
+              >
+                ✓
+              </span>
+              <p>{copy.trustNote}</p>
             </aside>
-          </div>
+          )}
 
           <div className="mt-10">
             <Link

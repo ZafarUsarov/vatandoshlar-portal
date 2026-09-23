@@ -29,6 +29,7 @@ const allowedCategories = [
   "work-and-career",
   "after-arrival",
   "recognition",
+  "transport-and-driving",
   "integration",
 ];
 

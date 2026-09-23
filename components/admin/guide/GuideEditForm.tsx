@@ -125,6 +125,14 @@ const categories:
     },
     {
       value:
+        "transport-and-driving",
+      uz:
+        "Transport va haydovchilik",
+      de:
+        "Verkehr & Führerschein",
+    },
+    {
+      value:
         "integration",
       uz:
         "Integratsiya",

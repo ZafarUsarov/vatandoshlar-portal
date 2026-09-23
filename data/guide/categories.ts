@@ -143,6 +143,19 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
     status: "coming-soon",
   },
   {
+    id: "transport",
+    slug: "transport-and-driving",
+    icon: "after-arrival",
+    title: { uz: "Transport va haydovchilik", de: "Verkehr & Führerschein" },
+    description: {
+      uz: "Haydovchilik guvohnomasi, Umschreibung va Germaniyadagi transport qoidalari bo‘yicha qo‘llanmalar.",
+      de: "Leitfäden zu Führerschein, Umschreibung und Mobilität in Deutschland.",
+    },
+    articleCount: 1,
+    status: "available",
+    featured: true,
+  },
+  {
     id: "integration",
     slug: "integration",
     icon: "integration",

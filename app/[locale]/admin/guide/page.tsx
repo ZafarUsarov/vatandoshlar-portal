@@ -120,6 +120,8 @@ const copy = {
         "Tan olish",
       integration:
         "Integratsiya",
+      "transport-and-driving":
+        "Transport va haydovchilik",
     },
   },
 
@@ -211,6 +213,8 @@ const copy = {
         "Anerkennung",
       integration:
         "Integration",
+      "transport-and-driving":
+        "Verkehr & Führerschein",
     },
   },
 } as const;

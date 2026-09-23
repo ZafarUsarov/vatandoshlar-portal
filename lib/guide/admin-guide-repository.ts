@@ -19,6 +19,7 @@ export type AdminGuideCategorySlug =
   | "work-and-career"
   | "after-arrival"
   | "recognition"
+  | "transport-and-driving"
   | "integration";
 
 export type AdminGuideArticleSummary = {
@@ -210,6 +211,7 @@ export const adminGuideCategorySlugs:
     "work-and-career",
     "after-arrival",
     "recognition",
+    "transport-and-driving",
     "integration",
   ];
 

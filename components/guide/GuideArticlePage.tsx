@@ -132,7 +132,23 @@ export default function GuideArticlePage({
             { id: "guide-section-email-checklist", label: "Kontrolle vor dem Senden" },
             { id: "guide-section-email-templates", label: "Vorlagen" },
           ]
-      : [];
+      : article.slug === "uzbek-driving-licence-umschreibung"
+        ? locale === "uz"
+          ? [
+              { id: "guide-section-driving-timeline", label: "Jarayon xaritasi" },
+              { id: "guide-section-driving-checklist", label: "Hujjatlar checklisti" },
+              { id: "guide-section-driving-code-70", label: "Schlüsselzahl 70" },
+              { id: "guide-section-driving-exams", label: "Theorie va Praxis" },
+              { id: "guide-section-driving-finish", label: "Nemis Führerscheini" },
+            ]
+          : [
+              { id: "guide-section-driving-timeline", label: "Ablauf auf einen Blick" },
+              { id: "guide-section-driving-checklist", label: "Unterlagen-Checkliste" },
+              { id: "guide-section-driving-code-70", label: "Schlüsselzahl 70" },
+              { id: "guide-section-driving-exams", label: "Theorie und Praxis" },
+              { id: "guide-section-driving-finish", label: "Deutscher Führerschein" },
+            ]
+        : [];
 
   const tocItems: ReadonlyArray<GuideTableOfContentsItem> = [
     ...richTocItems,
