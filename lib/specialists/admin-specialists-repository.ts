@@ -240,6 +240,7 @@ const categoryKeys: ReadonlyArray<AdminSpecialistCategory> = [
   "beauty",
   "finance",
   "creative",
+  "science",
 ];
 
 const languageKeys: ReadonlyArray<AdminSpecialistLanguage> = [
