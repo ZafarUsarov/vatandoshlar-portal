@@ -30,6 +30,7 @@ const allowedCategories = [
   "after-arrival",
   "recognition",
   "transport-and-driving",
+  "housing-and-living",
   "integration",
 ];
 

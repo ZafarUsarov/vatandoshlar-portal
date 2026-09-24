@@ -156,6 +156,19 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
     featured: true,
   },
   {
+    id: "housing",
+    slug: "housing-and-living",
+    icon: "after-arrival",
+    title: { uz: "Uy-joy va yashash", de: "Wohnen" },
+    description: {
+      uz: "Germaniyada uy topish, ijara, vaqtinchalik turar joy, Anmeldung va xavfsiz qidiruv bo‘yicha amaliy qo‘llanmalar.",
+      de: "Praktische Leitfäden zu Wohnungssuche, Miete, vorübergehender Unterkunft, Anmeldung und sicherer Suche in Deutschland.",
+    },
+    articleCount: 1,
+    status: "available",
+    featured: true,
+  },
+  {
     id: "integration",
     slug: "integration",
     icon: "integration",

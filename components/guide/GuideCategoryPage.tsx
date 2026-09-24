@@ -71,10 +71,16 @@ export default function GuideCategoryPage({
           guideHome: "Zur Guide-Startseite",
         };
 
-  const isTransportCategory = category.slug === "transport-and-driving";
-  const heroImageSrc = isTransportCategory
-    ? "/images/guide/categories/transport-and-driving.webp"
-    : "/images/guide/guide-category-master-visual.webp";
+  const categoryHeroImages: Readonly<Record<string, string>> = {
+    "transport-and-driving":
+      "/images/guide/categories/transport-and-driving.webp",
+    "housing-and-living":
+      "/images/guide/categories/housing-and-living.webp",
+  };
+
+  const heroImageSrc =
+    categoryHeroImages[category.slug] ??
+    "/images/guide/guide-category-master-visual.webp";
 
   return (
     <main className="min-h-screen bg-slate-50 pt-20 text-slate-950 dark:bg-slate-950 dark:text-white">

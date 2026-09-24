@@ -10,26 +10,34 @@ export default function GuideStepList({
   steps,
 }: GuideStepListProps) {
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-7 sm:p-9 dark:border-slate-800 dark:bg-slate-900">
+    <section>
       <h2 className="text-2xl font-bold tracking-[-0.03em] sm:text-3xl">
         {title}
       </h2>
 
-      <ol className="mt-7 space-y-5">
+      <ol className="mt-5 grid gap-x-8 lg:grid-cols-2">
         {steps.map((step, index) => (
           <li
-            key={step.title}
-            className="grid gap-4 rounded-2xl bg-slate-50 p-5 sm:grid-cols-[48px_1fr] dark:bg-slate-950"
+            key={`${step.title}-${index}`}
+            className="group relative grid grid-cols-[36px_1fr] gap-3 pb-5 last:pb-0 lg:min-h-24"
           >
-            <span className="flex size-12 items-center justify-center rounded-2xl bg-emerald-600 font-bold text-white">
-              {String(index + 1).padStart(2, "0")}
-            </span>
+            <div className="relative flex justify-center">
+              {index < steps.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  className="absolute left-1/2 top-8 h-[calc(100%-1rem)] w-px -translate-x-1/2 bg-emerald-200 transition-colors group-hover:bg-emerald-400 motion-reduce:transition-none dark:bg-emerald-900 dark:group-hover:bg-emerald-700 lg:hidden"
+                />
+              )}
+              <span className="relative z-10 flex size-8 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white ring-4 ring-white transition-colors group-hover:bg-emerald-700 motion-reduce:transition-none dark:ring-slate-950 dark:group-hover:bg-emerald-500">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+            </div>
 
-            <div>
-              <h3 className="text-lg font-bold">
+            <div className="min-w-0 pt-0.5">
+              <h3 className="font-bold leading-6 text-slate-950 transition-colors group-hover:text-emerald-700 motion-reduce:transition-none dark:text-white dark:group-hover:text-emerald-300">
                 {step.title}
               </h3>
-              <p className="mt-2 leading-7 text-slate-600 dark:text-slate-400">
+              <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
                 {step.description}
               </p>
             </div>

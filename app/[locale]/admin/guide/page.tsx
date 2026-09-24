@@ -122,6 +122,8 @@ const copy = {
         "Integratsiya",
       "transport-and-driving":
         "Transport va haydovchilik",
+      "housing-and-living":
+        "Uy-joy va yashash",
     },
   },
 
@@ -215,6 +217,8 @@ const copy = {
         "Integration",
       "transport-and-driving":
         "Verkehr & Führerschein",
+      "housing-and-living":
+        "Wohnen",
     },
   },
 } as const;

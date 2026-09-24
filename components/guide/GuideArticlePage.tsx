@@ -21,6 +21,7 @@ import GuideTableOfContents, {
   type GuideTableOfContentsItem,
 } from "./GuideTableOfContents";
 import GuideRichContent from "./rich-content/GuideRichContent";
+import GuideAuthor from "./GuideAuthor";
 
 type GuideArticlePageProps = Readonly<{
   article: GuideArticle;
@@ -148,47 +149,49 @@ export default function GuideArticlePage({
               { id: "guide-section-driving-exams", label: "Theorie und Praxis" },
               { id: "guide-section-driving-finish", label: "Deutscher Führerschein" },
             ]
-        : [];
+        : article.slug === "housing-in-germany"
+          ? locale === "uz"
+            ? [
+                { id: "guide-section-housing-situation", label: "Vaziyatingizni tanlang" },
+                { id: "guide-section-housing-abroad", label: "Chet eldan uy qidirish" },
+                { id: "guide-section-housing-types", label: "Turar joy turlari" },
+                { id: "guide-section-housing-channels", label: "Qayerdan qidirish" },
+                { id: "guide-section-housing-contact", label: "Kontakt va Besichtigung" },
+                { id: "guide-section-housing-contract", label: "Mietvertrag va xarajatlar" },
+                { id: "guide-section-housing-scam", label: "Scam va Anmeldung" },
+              ]
+            : [
+                { id: "guide-section-housing-situation", label: "Situation wählen" },
+                { id: "guide-section-housing-abroad", label: "Aus dem Ausland suchen" },
+                { id: "guide-section-housing-types", label: "Wohnformen" },
+                { id: "guide-section-housing-channels", label: "Wo suchen" },
+                { id: "guide-section-housing-contact", label: "Kontakt und Besichtigung" },
+                { id: "guide-section-housing-contract", label: "Mietvertrag und Kosten" },
+                { id: "guide-section-housing-scam", label: "Betrug und Anmeldung" },
+              ]
+          : [];
 
-  const tocItems: ReadonlyArray<GuideTableOfContentsItem> = [
-    ...richTocItems,
-    ...sectionOrder.flatMap((key) => {
-      const section = article.sections[key];
-
-      return section
-        ? [
-            {
-              id: `guide-section-${key}`,
-              label: section.title,
-            },
-          ]
-        : [];
-    }),
-    ...(article.steps.length > 0
-      ? [
-          {
-            id: "guide-section-steps",
-            label: copy.steps,
-          },
-        ]
-      : []),
-    ...(article.faq.length > 0
-      ? [
-          {
-            id: "guide-section-faq",
-            label: copy.faqSection,
-          },
-        ]
-      : []),
-    ...(article.sources.length > 0
-      ? [
-          {
-            id: "guide-section-sources",
-            label: copy.sourcesSection,
-          },
-        ]
-      : []),
-  ];
+  const tocItems: ReadonlyArray<GuideTableOfContentsItem> =
+    article.slug === "housing-in-germany"
+      ? richTocItems
+      : [
+          ...richTocItems,
+          ...sectionOrder.flatMap((key) => {
+            const section = article.sections[key];
+            return section
+              ? [{ id: `guide-section-${key}`, label: section.title }]
+              : [];
+          }),
+          ...(article.steps.length > 0
+            ? [{ id: "guide-section-steps", label: copy.steps }]
+            : []),
+          ...(article.faq.length > 0
+            ? [{ id: "guide-section-faq", label: copy.faqSection }]
+            : []),
+          ...(article.sources.length > 0
+            ? [{ id: "guide-section-sources", label: copy.sourcesSection }]
+            : []),
+        ];
 
   const articleVisual = getGuideArticleVisual(
     category.slug,
@@ -416,8 +419,9 @@ export default function GuideArticlePage({
                 />
               </div>
             )}
+            <GuideAuthor locale={locale} />
 
-            <RelatedGuideArticles
+<RelatedGuideArticles
               articles={relatedArticles}
               locale={locale}
             />

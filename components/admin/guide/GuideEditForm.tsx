@@ -133,6 +133,14 @@ const categories:
     },
     {
       value:
+        "housing-and-living",
+      uz:
+        "Uy-joy va yashash",
+      de:
+        "Wohnen",
+    },
+    {
+      value:
         "integration",
       uz:
         "Integratsiya",
