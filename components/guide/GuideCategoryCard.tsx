@@ -1,3 +1,22 @@
+import {
+  BadgeCheck,
+  BookOpenCheck,
+  BriefcaseBusiness,
+  CarFront,
+  CircleHelp,
+  ClipboardCheck,
+  Files,
+  GraduationCap,
+  Handshake,
+  House,
+  Landmark,
+  Languages,
+  MailPlus,
+  PlaneLanding,
+  UsersRound,
+  type LucideIcon,
+} from "lucide-react";
+
 import { Link } from "../../i18n/navigation";
 import type {
   GuideCategory,
@@ -15,55 +34,37 @@ type IconProps = Readonly<{
   type: GuideCategoryIcon;
 }>;
 
-function HouseIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-5"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M3.75 10.5 12 3.75l8.25 6.75v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V10.5Z"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-      <path
-        d="M9 20.25v-6h6v6"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-    </svg>
-  );
-}
+const CATEGORY_ICONS: Readonly<
+  Partial<Record<GuideCategoryIcon, LucideIcon>>
+> = {
+  arrival: PlaneLanding,
+  visa: BookOpenCheck,
+  family: UsersRound,
+  invitation: MailPlus,
+  embassy: Landmark,
+  documents: Files,
+  language: Languages,
+  education: GraduationCap,
+  career: BriefcaseBusiness,
+  "after-arrival": ClipboardCheck,
+  recognition: BadgeCheck,
+  transport: CarFront,
+  housing: House,
+  integration: Handshake,
+};
 
 function CategoryIcon({ type }: IconProps) {
-  const labels: Readonly<Record<GuideCategoryIcon, string>> = {
-    arrival: "→",
-    visa: "▣",
-    family: "⌂",
-    invitation: "✉",
-    embassy: "▥",
-    documents: "▤",
-    language: "A",
-    education: "◇",
-    career: "▧",
-    "after-arrival": "✓",
-    recognition: "◎",
-    integration: "∞",
-    housing: "",
-  };
+  const Icon = CATEGORY_ICONS[type] ?? CircleHelp;
 
   return (
     <span
       aria-hidden="true"
-      className="flex size-12 items-center justify-center rounded-2xl bg-emerald-50 text-xl font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
+      className="flex size-12 shrink-0 items-center justify-center rounded-2xl border border-emerald-100/80 bg-emerald-50/90 text-emerald-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] transition-[background-color,border-color,color,box-shadow] duration-300 group-hover:border-emerald-200 group-hover:bg-emerald-100/80 group-hover:text-emerald-800 group-hover:shadow-sm motion-reduce:transition-none dark:border-emerald-400/15 dark:bg-emerald-500/10 dark:text-emerald-300 dark:shadow-none dark:group-hover:border-emerald-400/25 dark:group-hover:bg-emerald-500/15 dark:group-hover:text-emerald-200"
     >
-      {type === "housing" ? <HouseIcon /> : labels[type]}
+      <Icon
+        className="size-[1.35rem] transition-transform duration-300 group-hover:-translate-y-px group-hover:scale-[1.04] motion-reduce:transform-none motion-reduce:transition-none"
+        strokeWidth={1.9}
+      />
     </span>
   );
 }
@@ -72,7 +73,7 @@ function ArrowIcon() {
   return (
     <svg
       aria-hidden="true"
-      className="size-4 transition-transform duration-300 group-hover:translate-x-1"
+      className="size-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
       fill="none"
       viewBox="0 0 24 24"
     >
@@ -99,7 +100,7 @@ export default function GuideCategoryCard({
   return (
     <article
       aria-labelledby={titleId}
-      className="group relative isolate flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500/30"
+      className="group relative isolate flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl motion-reduce:transform-none motion-reduce:transition-none dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500/30"
     >
       <div
         aria-hidden="true"

@@ -145,7 +145,7 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
   {
     id: "transport",
     slug: "transport-and-driving",
-    icon: "after-arrival",
+    icon: "transport",
     title: { uz: "Transport va haydovchilik", de: "Verkehr & Führerschein" },
     description: {
       uz: "Haydovchilik guvohnomasi, Umschreibung va Germaniyadagi transport qoidalari bo‘yicha qo‘llanmalar.",

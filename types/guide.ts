@@ -12,6 +12,7 @@ export type GuideCategoryIcon =
   | "career"
   | "after-arrival"
   | "recognition"
+  | "transport"
   | "integration"
   | "housing";
 
