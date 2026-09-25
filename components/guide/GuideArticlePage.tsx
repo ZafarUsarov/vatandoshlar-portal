@@ -421,11 +421,6 @@ export default function GuideArticlePage({
             )}
             <GuideAuthor locale={locale} />
 
-<RelatedGuideArticles
-              articles={relatedArticles}
-              locale={locale}
-            />
-
             <GuideInfoBox
               title={copy.disclaimerTitle}
               variant="warning"
@@ -433,12 +428,21 @@ export default function GuideArticlePage({
               <p>{copy.disclaimer}</p>
             </GuideInfoBox>
 
-            <GuideArticleNavigation
-              category={category}
-              previous={previousArticle}
-              next={nextArticle}
+            <RelatedGuideArticles
+              articles={relatedArticles}
               locale={locale}
+              category={category}
+              compact={article.slug === "housing-in-germany"}
             />
+
+            {article.slug !== "housing-in-germany" && (
+              <GuideArticleNavigation
+                category={category}
+                previous={previousArticle}
+                next={nextArticle}
+                locale={locale}
+              />
+            )}
               </div>
             </div>
           </div>

@@ -185,7 +185,7 @@ export default async function GuideArticleRoute({
     await getRelatedPublishedGuideArticles(
       article,
       locale,
-      3,
+      4,
     );
 
   const articleUrl =
