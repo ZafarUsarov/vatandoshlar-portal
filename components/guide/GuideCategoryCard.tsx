@@ -15,6 +15,32 @@ type IconProps = Readonly<{
   type: GuideCategoryIcon;
 }>;
 
+function HouseIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="size-5"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M3.75 10.5 12 3.75l8.25 6.75v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V10.5Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+      <path
+        d="M9 20.25v-6h6v6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+    </svg>
+  );
+}
+
 function CategoryIcon({ type }: IconProps) {
   const labels: Readonly<Record<GuideCategoryIcon, string>> = {
     arrival: "→",
@@ -29,6 +55,7 @@ function CategoryIcon({ type }: IconProps) {
     "after-arrival": "✓",
     recognition: "◎",
     integration: "∞",
+    housing: "",
   };
 
   return (
@@ -36,7 +63,7 @@ function CategoryIcon({ type }: IconProps) {
       aria-hidden="true"
       className="flex size-12 items-center justify-center rounded-2xl bg-emerald-50 text-xl font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
     >
-      {labels[type]}
+      {type === "housing" ? <HouseIcon /> : labels[type]}
     </span>
   );
 }

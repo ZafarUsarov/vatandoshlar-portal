@@ -158,7 +158,7 @@ export const localizedGuideCategories: ReadonlyArray<LocalizedGuideCategory> = [
   {
     id: "housing",
     slug: "housing-and-living",
-    icon: "after-arrival",
+    icon: "housing",
     title: { uz: "Uy-joy va yashash", de: "Wohnen" },
     description: {
       uz: "Germaniyada uy topish, ijara, vaqtinchalik turar joy, Anmeldung va xavfsiz qidiruv bo‘yicha amaliy qo‘llanmalar.",

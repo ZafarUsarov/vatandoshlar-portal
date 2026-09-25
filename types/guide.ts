@@ -12,7 +12,8 @@ export type GuideCategoryIcon =
   | "career"
   | "after-arrival"
   | "recognition"
-  | "integration";
+  | "integration"
+  | "housing";
 
 export type GuideCategoryStatus =
   | "available"

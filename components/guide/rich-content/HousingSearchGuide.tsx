@@ -16,7 +16,6 @@ type Props = Readonly<{
 const images = {
   abroad: "/images/guide/housing/search-from-abroad.webp",
   types: "/images/guide/housing/housing-types.webp",
-  viewing: "/images/guide/housing/apartment-viewing.webp",
   contract: "/images/guide/housing/rental-contract-keys.webp",
   scam: "/images/guide/housing/housing-scam-warning.webp",
 } as const;
@@ -256,26 +255,41 @@ export default function HousingSearchGuide({ article, locale }: Props) {
         </p>
       </section>
 
-      <section id="guide-section-housing-contact" className="scroll-mt-28 grid gap-5 lg:grid-cols-[.9fr_1.1fr]">
-        <div className="relative min-h-72 overflow-hidden rounded-3xl">
-          <Image src={images.viewing} alt={uz ? "Germaniyada kvartirani ko‘rish jarayoni" : "Wohnungsbesichtigung in Deutschland"} fill sizes="(min-width: 1024px) 42vw, 100vw" className="object-cover" />
-        </div>
-        <div className="space-y-5">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+      <section id="guide-section-housing-contact" className="scroll-mt-28 border-y border-slate-200 py-6 dark:border-slate-800 sm:py-7">
+        <div className="grid gap-7 lg:grid-cols-2 lg:gap-0">
+          <div className="lg:pr-8">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-300">{uz ? "Birinchi kontakt" : "Erster Kontakt"}</p>
             <h2 className="mt-2 text-xl font-bold text-slate-950 dark:text-white">{uz ? "Vermieterga qisqa va aniq yozing" : "Kurz und klar an den Vermieter schreiben"}</h2>
-            <pre className="mt-4 whitespace-pre-wrap rounded-xl bg-slate-50 p-4 text-xs leading-5 text-slate-700 dark:bg-slate-950 dark:text-slate-200">{message}</pre>
-            <button type="button" onClick={copyMessage} className="mt-3 rounded-full border border-emerald-300 px-4 py-2 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transition-none dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-950">
-              {copied ? (uz ? "Nusxalandi" : "Kopiert") : (uz ? "Matnni nusxalash" : "Text kopieren")}
-            </button>
+            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+              {uz ? "Qisqa tanishtiring, qachondan va nechta kishi uchun uy qidirayotganingizni yozing." : "Stellen Sie sich kurz vor und nennen Sie Einzugsdatum sowie die Anzahl der Personen."}
+            </p>
+            <pre className="mt-4 whitespace-pre-wrap rounded-xl bg-slate-50 p-4 text-xs leading-5 text-slate-700 dark:bg-slate-900 dark:text-slate-200">{message}</pre>
+            <div className="mt-3 flex items-center gap-3">
+              <button
+                type="button"
+                onClick={copyMessage}
+                aria-describedby="housing-copy-status"
+                className="rounded-full border border-emerald-300 px-4 py-2 text-sm font-semibold text-emerald-800 transition-colors hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transition-none dark:border-emerald-700 dark:text-emerald-200 dark:hover:bg-emerald-950 dark:focus-visible:ring-offset-slate-950"
+              >
+                {copied ? (uz ? "Nusxalandi" : "Kopiert") : (uz ? "Matnni nusxalash" : "Text kopieren")}
+              </button>
+              <span id="housing-copy-status" role="status" aria-live="polite" className="text-sm text-emerald-700 dark:text-emerald-300">
+                {copied ? (uz ? "Matn clipboardga nusxalandi." : "Text wurde in die Zwischenablage kopiert.") : ""}
+              </span>
+            </div>
           </div>
+
           {documents.length > 0 ? (
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-              <h2 className="text-xl font-bold text-slate-950 dark:text-white">{uz ? "Bewerbungsmappe" : "Bewerbungsmappe"}</h2>
-              <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+            <div className="border-t border-slate-200 pt-6 dark:border-slate-800 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-300">
+                {uz ? "Hujjatlar" : "Unterlagen"}
+              </p>
+              <h2 className="mt-2 text-xl font-bold text-slate-950 dark:text-white">Bewerbungsmappe</h2>
+              <ul className="mt-4 space-y-2.5">
                 {documents.map((item) => (
-                  <li key={item} className="flex gap-2 text-sm leading-6 text-slate-700 dark:text-slate-200">
-                    <span className="mt-0.5 text-emerald-600 dark:text-emerald-400"><CheckIcon /></span><span>{item}</span>
+                  <li key={item} className="flex gap-2.5 text-sm leading-6 text-slate-700 dark:text-slate-200">
+                    <span className="mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"><CheckIcon /></span>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
