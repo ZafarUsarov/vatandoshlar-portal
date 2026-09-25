@@ -8,7 +8,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import SupportHero from "@/components/support/SupportHero";
 import SupportOptions from "@/components/support/SupportOptions";
-import SupportPurpose from "@/components/support/SupportPurpose";
 import SupporterRecognition from "@/components/support/SupporterRecognition";
 import { getPublicSupportSummary } from "@/lib/support/public-support-repository";
 
@@ -65,8 +64,6 @@ export default async function SupportPage() {
       action: t("options.paypal.action"),
       href: paymentLinks.paypal,
       variant: "paypal" as const,
-      noteTitle: t("options.paypal.noteTitle"),
-      note: t("options.paypal.note"),
     },
     {
       name: t("options.taps.name"),
@@ -75,11 +72,6 @@ export default async function SupportPage() {
       href: paymentLinks.taps,
       variant: "taps" as const,
     },
-  ];
-
-  const trustItems = [
-    t("trust.voluntary"),
-    t("trust.transparent"),
   ];
 
   return (
@@ -96,16 +88,11 @@ export default async function SupportPage() {
           imageAlt={t("hero.imageAlt")}
         />
 
-        <SupportPurpose
-          title={t("purpose.title")}
-          description={t("purpose.description")}
-        />
-
         <SupportOptions
           title={t("options.title")}
           description={t("options.description")}
+          secondaryText={t("options.secondaryText")}
           options={options}
-          trustItems={trustItems}
           privacy={t("privacy")}
         />
 

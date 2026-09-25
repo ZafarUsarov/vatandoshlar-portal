@@ -862,8 +862,8 @@
     },
     "hero": {
       "badge": "Loyihaga hissa qo‘shish",
-      "title": "Vatandoshlar.de siz uchun foydalimi?",
-      "description": "Platformani foydali deb bilsangiz, uning faoliyati va rivojlanishini ixtiyoriy qo‘llab-quvvatlashingiz mumkin. Har bir qo‘llab-quvvatlashning 20% qismi G‘azodagi bolalarni qo‘llab-quvvatlash uchun ajratiladi.",
+      "title": "Loyiha siz uchun foydalimi?",
+      "description": "Unda uning rivojlanishini ixtiyoriy qo‘llab-quvvatlashingiz mumkin. Har bir qo‘llab-quvvatlashning 20% qismi G‘azodagi bolalarni qo‘llab-quvvatlash uchun ajratiladi.",
       "secondaryDescription": "",
       "action": "Hissa qo‘shish",
       "imageAlt": "Vatandoshlar.de platformasini rivojlantirish va hamjamiyatni qo‘llab-quvvatlashni ifodalovchi surat"
@@ -879,19 +879,20 @@
     },
     "options": {
       "title": "Qo‘llab-quvvatlash usullari",
-      "description": "O‘zingiz uchun qulay usulni tanlashingiz mumkin. Qo‘llab-quvvatlash to‘liq ixtiyoriy.",
+      "description": "O‘zingizga qulay usulni tanlashingiz mumkin.",
       "paypal": {
         "name": "PayPal",
-        "description": "Germaniya va boshqa davlatlardan PayPal orqali ixtiyoriy qo‘llab-quvvatlash. To‘lov PayPal’ning tashqi sahifasida amalga oshiriladi.",
+        "description": "Germaniya va boshqa davlatlardan PayPal orqali ixtiyoriy qo‘llab-quvvatlash.",
         "action": "PayPal orqali qo‘llab-quvvatlash",
         "noteTitle": "To‘lov izohi",
         "note": "Agar xohlasangiz, PayPal orqali yuborayotganda izohga “Vatandoshlar.de” deb yozishingiz mumkin."
       },
       "taps": {
         "name": "Taps",
-        "description": "O‘zbekistondan Taps orqali ixtiyoriy qo‘llab-quvvatlash. To‘lov Taps’ning tashqi sahifasida amalga oshiriladi.",
+        "description": "O‘zbekistondan Taps orqali ixtiyoriy qo‘llab-quvvatlash.",
         "action": "Taps orqali qo‘llab-quvvatlash"
-      }
+      },
+      "secondaryText": "Qo‘llab-quvvatlash izohiga “Vatandoshlar.de” deb yozishingiz mumkin."
     },
     "transparency": {
       "title": "Shaffoflik",

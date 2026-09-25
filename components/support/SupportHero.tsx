@@ -65,8 +65,8 @@ export default function SupportHero({
       />
 
       <div className="relative mx-auto max-w-7xl px-6 py-10 sm:py-12 lg:px-8 lg:py-14">
-        <div className="grid items-stretch gap-8 lg:grid-cols-[0.82fr_1fr] lg:gap-10">
-          <div className="flex max-w-2xl flex-col justify-center py-2 lg:py-6">
+        <div className="space-y-8 sm:space-y-10">
+          <div className="max-w-3xl">
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700 shadow-sm dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
               <HeartIcon />
               {badge}
@@ -91,14 +91,14 @@ export default function SupportHero({
             </a>
           </div>
 
-          <div className="relative min-h-[280px] overflow-hidden rounded-[1.75rem] bg-slate-200 shadow-[0_28px_80px_-48px_rgba(5,150,105,0.45)] sm:min-h-[380px] dark:bg-slate-900 lg:min-h-[500px]">
+          <div className="relative h-[220px] w-full overflow-hidden rounded-[1.5rem] sm:h-[280px] lg:h-[340px] bg-slate-200 shadow-[0_28px_80px_-48px_rgba(5,150,105,0.45)] dark:bg-slate-900 sm:rounded-[1.75rem]">
             <Image
               src={imageSrc}
               alt={imageAlt}
               fill
               priority
-              sizes="(min-width: 1280px) 55vw, (min-width: 1024px) 54vw, 100vw"
-              className="object-cover object-[center_45%] sm:object-[center_42%] lg:object-[center_45%]"
+              sizes="(min-width: 1280px) 1216px, (min-width: 1024px) calc(100vw - 4rem), calc(100vw - 3rem)"
+              className="object-cover object-[center_52%] sm:object-[center_50%] lg:object-[center_48%]"
             />
           </div>
         </div>

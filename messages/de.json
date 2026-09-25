@@ -862,8 +862,8 @@
     },
     "hero": {
       "badge": "Zum Projekt beitragen",
-      "title": "Ist Vatandoshlar.de für Sie hilfreich?",
-      "description": "Wenn Sie die Plattform hilfreich finden, können Sie ihren Betrieb und ihre Weiterentwicklung freiwillig unterstützen. 20% jeder Unterstützung werden für die Unterstützung von Kindern in Gaza vorgesehen.",
+      "title": "Ist das Projekt für Sie hilfreich?",
+      "description": "Dann können Sie seine Weiterentwicklung freiwillig unterstützen. 20% jeder Unterstützung sind für die Unterstützung von Kindern in Gaza vorgesehen.",
       "secondaryDescription": "",
       "action": "Beitrag leisten",
       "imageAlt": "Bild zur Weiterentwicklung von Vatandoshlar.de und zur Unterstützung der Community"
@@ -878,20 +878,21 @@
       "transparent": "20% werden für die Unterstützung von Kindern in Gaza vorgesehen"
     },
     "options": {
-      "title": "Möglichkeiten zur Unterstützung",
-      "description": "Wählen Sie die für Sie passende Möglichkeit. Jede Unterstützung ist freiwillig.",
+      "title": "Unterstützungsmöglichkeiten",
+      "description": "Wählen Sie die für Sie passende Möglichkeit.",
       "paypal": {
         "name": "PayPal",
-        "description": "Freiwillige Unterstützung über PayPal aus Deutschland und anderen Ländern. Die Zahlung erfolgt auf der externen PayPal-Seite.",
+        "description": "Freiwillige Unterstützung aus Deutschland und anderen Ländern über PayPal.",
         "action": "Über PayPal unterstützen",
         "noteTitle": "Zahlungsnotiz",
         "note": "Wenn Sie möchten, können Sie bei der PayPal-Zahlung als Verwendungszweck „Vatandoshlar.de“ angeben."
       },
       "taps": {
         "name": "Taps",
-        "description": "Freiwillige Unterstützung aus Usbekistan über Taps. Die Zahlung erfolgt auf der externen Taps-Seite.",
+        "description": "Freiwillige Unterstützung aus Usbekistan über Taps.",
         "action": "Über Taps unterstützen"
-      }
+      },
+      "secondaryText": "Sie können „Vatandoshlar.de“ als Verwendungszweck angeben."
     },
     "transparency": {
       "title": "Transparenz",

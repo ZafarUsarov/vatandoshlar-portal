@@ -1,4 +1,3 @@
-import BrandName from "@/components/ui/BrandName";
 import type {
   PublicSupportAmount,
   PublicSupportSummary,
@@ -14,11 +13,8 @@ type SupporterRecognitionProps = Readonly<{
 
 const copy = {
   uz: {
-    eyebrow: "QO‘LLAB-QUVVATLASHDAN — YAXSHILIK SARI",
-    title: "Yaxshilikka hissa qo‘shganlar",
-    descriptionBeforeBrand: "",
-    descriptionAfterBrand:
-      "’ni foydali deb bilib, platformani qo‘llab-quvvatlash orqali yaxshilikka hissa qo‘shgan insonlar.",
+    title: "Qo‘llab-quvvatlaganlar",
+    description: "Loyiha faoliyati va rivojlanishiga hissa qo‘shgan insonlar.",
     contributions: "Hissalar",
     first: "1-o‘rin",
     second: "2-o‘rin",
@@ -30,14 +26,11 @@ const copy = {
     manyContributions: "hissa",
     others: "Boshqa qo‘llab-quvvatlovchilar",
     privacy:
-      "Anonim hissalar hisobga olinadi, lekin ochiq ro‘yxatda ism ko‘rsatilmaydi.",
+      "Anonim hissalar shaxsiy ma’lumotsiz “Anonim” nomi bilan ko‘rsatiladi.",
   },
   de: {
-    eyebrow: "UNTERSTÜTZEN UND GUTES BEWIRKEN",
-    title: "Menschen, die Gutes bewirken",
-    descriptionBeforeBrand: "Menschen, die ",
-    descriptionAfterBrand:
-      " hilfreich finden und die Plattform unterstützen, um damit zugleich etwas Gutes zu bewirken.",
+    title: "Unterstützer",
+    description: "Menschen, die zum Betrieb und zur Weiterentwicklung des Projekts beigetragen haben.",
     contributions: "Beiträge",
     first: "1. Platz",
     second: "2. Platz",
@@ -49,7 +42,7 @@ const copy = {
     manyContributions: "Beiträge",
     others: "Weitere Unterstützer",
     privacy:
-      "Anonyme Beiträge werden berücksichtigt, Namen erscheinen jedoch nicht in der öffentlichen Liste.",
+      "Anonyme Beiträge werden ohne personenbezogene Daten als „Anonym“ angezeigt.",
   },
 } as const;
 
@@ -78,6 +71,17 @@ function formatOriginalAmount(
       maximumFractionDigits: 2,
     },
   ).format(amount.amountMinor / 100);
+}
+
+function supporterDisplayName(
+  supporter: PublicSupporter,
+  locale: SupportedLocale,
+): string {
+  if (supporter.name === "__anonymous__") {
+    return locale === "de" ? "Anonym" : "Anonim";
+  }
+
+  return supporter.name;
 }
 
 function contributionLabel(
@@ -138,18 +142,11 @@ export default function SupporterRecognition({
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="border-t border-slate-200 pt-8 dark:border-white/[0.08]">
           <div className="max-w-2xl">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
-              {currentCopy.eyebrow}
-            </p>
-            <h2 className="mt-4 text-3xl font-black tracking-[-0.035em] sm:text-4xl">
+            <h2 className="text-3xl font-black tracking-[-0.035em] sm:text-4xl">
               {currentCopy.title}
             </h2>
-            <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-400">
-              {currentCopy.descriptionBeforeBrand}
-              <span className="font-semibold text-slate-800 dark:text-slate-200">
-                <BrandName />
-              </span>
-              {currentCopy.descriptionAfterBrand}
+            <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400">
+              {currentCopy.description}
             </p>
           </div>
 
@@ -202,7 +199,7 @@ export default function SupporterRecognition({
                     {supporter ? (
                       <>
                         <h3 className="mt-4 break-words text-xl font-black">
-                          {supporter.name}
+                          {supporterDisplayName(supporter, locale)}
                         </h3>
                         <Amounts
                           supporter={supporter}
@@ -250,7 +247,7 @@ export default function SupporterRecognition({
                       </span>
                       <div>
                         <p className="font-bold">
-                          {supporter.name}
+                          {supporterDisplayName(supporter, locale)}
                         </p>
                         <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                           {contributionLabel(

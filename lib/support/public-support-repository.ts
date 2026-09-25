@@ -184,49 +184,51 @@ const loadPublicSupportSummary =
           ),
           getDb().query<PublicSupporterRow>(
             `
-              WITH supporter_totals AS (
+              WITH normalized_contributions AS (
                 SELECT
-                  LOWER(
-                    BTRIM(supporter_name)
-                  ) AS supporter_key,
-                  MIN(
-                    BTRIM(supporter_name)
-                  ) AS supporter_name,
-                  SUM(
-                    amount_eur_cents
-                  ) AS ranking_eur_cents,
-                  COUNT(*) AS contribution_count,
-                  MIN(
-                    contributed_at
-                  ) AS first_contributed_at
+                  CASE
+                    WHEN visibility = 'anonymous'
+                      THEN '__anonymous__'
+                    ELSE LOWER(BTRIM(supporter_name))
+                  END AS supporter_key,
+                  CASE
+                    WHEN visibility = 'anonymous'
+                      THEN '__anonymous__'
+                    ELSE BTRIM(supporter_name)
+                  END AS supporter_name,
+                  amount_minor,
+                  currency,
+                  amount_eur_cents,
+                  contributed_at
                 FROM support_contributions
                 WHERE
                   status = 'confirmed'
-                  AND visibility = 'public'
-                  AND supporter_name IS NOT NULL
-                GROUP BY LOWER(
-                  BTRIM(supporter_name)
-                )
+                  AND (
+                    visibility = 'anonymous'
+                    OR (
+                      visibility = 'public'
+                      AND supporter_name IS NOT NULL
+                      AND BTRIM(supporter_name) <> ''
+                    )
+                  )
+              ),
+              supporter_totals AS (
+                SELECT
+                  supporter_key,
+                  MIN(supporter_name) AS supporter_name,
+                  SUM(amount_eur_cents) AS ranking_eur_cents,
+                  COUNT(*) AS contribution_count,
+                  MIN(contributed_at) AS first_contributed_at
+                FROM normalized_contributions
+                GROUP BY supporter_key
               ),
               original_amounts AS (
                 SELECT
-                  LOWER(
-                    BTRIM(supporter_name)
-                  ) AS supporter_key,
+                  supporter_key,
                   currency,
-                  SUM(
-                    amount_minor
-                  ) AS amount_minor
-                FROM support_contributions
-                WHERE
-                  status = 'confirmed'
-                  AND visibility = 'public'
-                  AND supporter_name IS NOT NULL
-                GROUP BY
-                  LOWER(
-                    BTRIM(supporter_name)
-                  ),
-                  currency
+                  SUM(amount_minor) AS amount_minor
+                FROM normalized_contributions
+                GROUP BY supporter_key, currency
               )
               SELECT
                 totals.supporter_name,

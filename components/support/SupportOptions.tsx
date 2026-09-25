@@ -6,15 +6,13 @@ type SupportOption = Readonly<{
   action: string;
   href: string;
   variant: "paypal" | "taps";
-  noteTitle?: string;
-  note?: string;
 }>;
 
 type SupportOptionsProps = Readonly<{
   title: string;
   description: string;
+  secondaryText: string;
   options: ReadonlyArray<SupportOption>;
-  trustItems: ReadonlyArray<string>;
   privacy: string;
 }>;
 
@@ -43,27 +41,6 @@ function ExternalLinkIcon({
   );
 }
 
-function CheckIcon({
-  className = "size-4",
-}: IconProps) {
-  return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="m5 12.5 4 4L19 7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 const optionStyles = {
   paypal: {
     article:
@@ -72,8 +49,6 @@ const optionStyles = {
     logo: "bg-blue-600 shadow-blue-600/20",
     button:
       "bg-blue-600 shadow-blue-600/20 hover:bg-blue-500 focus-visible:ring-blue-500",
-    note:
-      "border-blue-200/80 bg-white/80 dark:border-blue-500/20 dark:bg-white/[0.04]",
   },
   taps: {
     article:
@@ -84,22 +59,20 @@ const optionStyles = {
       "bg-emerald-600 shadow-emerald-600/20",
     button:
       "bg-emerald-600 shadow-emerald-600/20 hover:bg-emerald-500 focus-visible:ring-emerald-500",
-    note:
-      "border-emerald-200/80 bg-white/80 dark:border-emerald-500/20 dark:bg-white/[0.04]",
   },
 } as const;
 
 export default function SupportOptions({
   title,
   description,
+  secondaryText,
   options,
-  trustItems,
   privacy,
 }: SupportOptionsProps) {
   return (
     <section
       id="support-options"
-      className="scroll-mt-24 bg-white py-10 text-slate-950 dark:bg-slate-950 dark:text-white sm:py-12 lg:py-14"
+      className="scroll-mt-24 bg-white py-9 text-slate-950 dark:bg-slate-950 dark:text-white sm:py-11 lg:py-12"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="">
@@ -107,26 +80,15 @@ export default function SupportOptions({
             <h2 className="text-3xl font-bold tracking-[-0.035em] sm:text-4xl">
               <BrandedText text={title} />
             </h2>
-            <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-400">
+            <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400">
               <BrandedText text={description} />
+            </p>
+            <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">
+              <BrandedText text={secondaryText} />
             </p>
           </div>
 
-          <ul className="mt-8 grid gap-3 sm:grid-cols-3">
-            {trustItems.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-3 rounded-2xl border border-emerald-200/80 bg-emerald-50/60 px-4 py-3 text-sm font-medium leading-6 text-slate-700 dark:border-emerald-400/15 dark:bg-emerald-400/[0.05] dark:text-slate-300"
-              >
-                <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white">
-                  <CheckIcon className="size-3" />
-                </span>
-                <BrandedText text={item} />
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <div className="mt-7 grid gap-5 lg:grid-cols-2">
             {options.map((option) => {
               const styles =
                 optionStyles[option.variant];
@@ -134,7 +96,7 @@ export default function SupportOptions({
               return (
                 <article
                   key={option.name}
-                  className={`rounded-[2rem] border p-6 shadow-sm sm:p-8 ${styles.article}`}
+                  className={`flex flex-col rounded-[2rem] border p-6 shadow-sm sm:p-8 lg:h-full ${styles.article}`}
                 >
                   <div className="flex items-start justify-between gap-5">
                     <div className="min-w-0">
@@ -166,40 +128,39 @@ export default function SupportOptions({
                     href={option.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group mt-7 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold text-white shadow-lg transition-[transform,background-color,box-shadow] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none dark:focus-visible:ring-offset-slate-900 ${styles.button}`}
+                    className={`group mt-7 inline-flex min-h-12 w-full lg:mt-auto items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold text-white shadow-lg transition-[transform,background-color,box-shadow] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none dark:focus-visible:ring-offset-slate-900 ${styles.button}`}
                   >
                     <BrandedText
                       text={option.action}
                     />
                     <ExternalLinkIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none" />
                   </a>
-
-                  {option.noteTitle &&
-                    option.note && (
-                      <div
-                        className={`mt-5 rounded-2xl border p-4 ${styles.note}`}
-                      >
-                        <p
-                          className={`text-xs font-bold uppercase tracking-[0.14em] ${styles.label}`}
-                        >
-                          <BrandedText
-                            text={option.noteTitle}
-                          />
-                        </p>
-                        <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                          <BrandedText
-                            text={option.note}
-                          />
-                        </p>
-                      </div>
-                    )}
                 </article>
               );
             })}
           </div>
 
-          <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm leading-7 text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
-            <BrandedText text={privacy} />
+          <div className="mt-6 flex items-start gap-2 text-xs leading-5 text-slate-500 dark:text-slate-400">
+            <svg
+              aria-hidden="true"
+              className="mt-0.5 size-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 3 5 6v5c0 4.6 2.8 8 7 10 4.2-2 7-5.4 7-10V6l-7-3Z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="m9 12 2 2 4-4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <p><BrandedText text={privacy} /></p>
           </div>
         </div>
       </div>
