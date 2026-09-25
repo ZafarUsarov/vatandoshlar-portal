@@ -66,13 +66,13 @@ export default function SupportHero({
 
       <div className="relative mx-auto max-w-7xl px-6 py-10 sm:py-12 lg:px-8 lg:py-14">
         <div className="space-y-8 sm:space-y-10">
-          <div className="max-w-3xl">
+          <div className="max-w-5xl">
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700 shadow-sm dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
               <HeartIcon />
               {badge}
             </span>
 
-            <h1 className="mt-6 text-balance text-4xl font-extrabold tracking-[-0.045em] sm:text-5xl lg:text-[3.35rem] lg:leading-[1.05] xl:text-6xl">
+            <h1 className="mt-6 text-balance text-4xl font-extrabold tracking-[-0.045em] sm:text-5xl lg:text-[3.35rem] lg:leading-[1.05] xl:whitespace-nowrap xl:text-6xl">
               <BrandedText text={title} />
             </h1>
 
