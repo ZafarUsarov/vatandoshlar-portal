@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import SupportHero from "@/components/support/SupportHero";
 import SupportOptions from "@/components/support/SupportOptions";
+import SupportPurpose from "@/components/support/SupportPurpose";
 import SupporterRecognition from "@/components/support/SupporterRecognition";
 import { getPublicSupportSummary } from "@/lib/support/public-support-repository";
 
@@ -90,12 +91,14 @@ export default async function SupportPage() {
           badge={t("hero.badge")}
           title={t("hero.title")}
           description={t("hero.description")}
-          secondaryDescription={t(
-            "hero.secondaryDescription",
-          )}
           action={t("hero.action")}
-          imageSrc="/images/support/support-hero.webp"
+          imageSrc="/images/support/support-platform-hero.webp"
           imageAlt={t("hero.imageAlt")}
+        />
+
+        <SupportPurpose
+          title={t("purpose.title")}
+          description={t("purpose.description")}
         />
 
         <SupportOptions

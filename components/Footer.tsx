@@ -267,7 +267,7 @@ export default async function Footer({
           supportEyebrow: "Loyihaga hissa qo‘shish",
           supportTitle: "Vatandoshlar.de siz uchun foydalimi?",
           supportDescription:
-            "Agar platformani foydali deb bilsangiz, uni yaxshilik bilan qo‘llab-quvvatlashingiz mumkin. Ushbu sahifa orqali kelib tushgan mablag‘lar G‘azodagi bolalarga gumanitar yordam ko‘rsatish uchun xayriyaga yo‘naltiriladi.",
+            "Platformani rivojlantirishni qo‘llab-quvvatlang. Har bir qo‘llab-quvvatlashning 20% qismi G‘azodagi bolalarni qo‘llab-quvvatlash uchun ajratiladi.",
           supportAction: "Hissa qo‘shish",
           compactSupportLink: "Hissa qo‘shish",
           privacyLink: "Maxfiylik",
@@ -297,7 +297,7 @@ export default async function Footer({
           supportEyebrow: "Zum Projekt beitragen",
           supportTitle: "Ist Vatandoshlar.de für Sie hilfreich?",
           supportDescription:
-            "Wenn Sie die Plattform hilfreich finden, können Sie sie mit einer guten Tat unterstützen. Beiträge, die über diese Seite eingehen, werden für humanitäre Hilfe zugunsten von Kindern in Gaza gespendet.",
+            "Unterstützen Sie die Weiterentwicklung der Plattform. 20% jeder Unterstützung werden für die Unterstützung von Kindern in Gaza vorgesehen.",
           supportAction: "Beitrag leisten",
           compactSupportLink: "Beitrag leisten",
           privacyLink: "Datenschutz",

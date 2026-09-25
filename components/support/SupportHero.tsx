@@ -6,7 +6,6 @@ type SupportHeroProps = Readonly<{
   badge: string;
   title: string;
   description: string;
-  secondaryDescription: string;
   action: string;
   imageSrc: string;
   imageAlt: string;
@@ -54,7 +53,6 @@ export default function SupportHero({
   badge,
   title,
   description,
-  secondaryDescription,
   action,
   imageSrc,
   imageAlt,
@@ -81,9 +79,6 @@ export default function SupportHero({
             <div className="mt-6 max-w-xl space-y-4 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8 dark:text-slate-300">
               <p>
                 <BrandedText text={description} />
-              </p>
-              <p>
-                <BrandedText text={secondaryDescription} />
               </p>
             </div>
 
