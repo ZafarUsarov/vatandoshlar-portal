@@ -28,6 +28,7 @@ const categoryValues: AdminSpecialistCategory[] = [
   "finance",
   "creative",
   "science",
+  "translation",
 ];
 
 const languageValues: AdminSpecialistLanguage[] = [

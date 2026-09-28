@@ -196,6 +196,7 @@ export default async function SpecialistDetailPage({
     "finance",
     "creative",
     "science",
+    "translation",
   ];
 
   const categoriesMap =

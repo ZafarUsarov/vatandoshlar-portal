@@ -708,7 +708,8 @@
       "academicDocuments": "Bachelor, Master va PhD hujjatlari",
       "beauty": "Sartaroshlik va go‘zallik",
       "entrepreneur": "Tadbirkorlar",
-      "science": "Ilm-fan"
+      "science": "Ilm-fan",
+      "translation": "Tarjimonlar"
     },
     "results": {
       "title": "Mutaxassislar",
@@ -780,7 +781,8 @@
       "finance": "Soliq va moliya",
       "creative": "Foto, video va kreativ",
       "entrepreneur": "Tadbirkorlar",
-      "science": "Ilm-fan"
+      "science": "Ilm-fan",
+      "translation": "Tarjimonlar"
     },
     "languagesMap": {
       "uz": "O‘zbekcha",

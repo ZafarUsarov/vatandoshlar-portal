@@ -32,7 +32,9 @@ export type SpecialistCategory =
 
   | "creative"
 
-  | "science";
+  | "science"
+
+  | "translation";
 
 export type SpecialistLanguage =
 

@@ -423,7 +423,7 @@ export default function SpecialistProfile({
                   {labels.profile}
                 </h2>
 
-                <div className="mt-6 space-y-5 text-base leading-8 text-slate-600 dark:text-slate-300">
+                <div className="mt-4 space-y-3 text-base leading-7 text-slate-600 dark:text-slate-300">
                   {specialist.profile.map((paragraph) => (
                     <p key={paragraph}>
                       <BrandedText text={paragraph} />
@@ -442,7 +442,7 @@ export default function SpecialistProfile({
                       <h2 className="text-xl font-bold tracking-[-0.03em] text-slate-950 dark:text-white">
                         {labels.education}
                       </h2>
-                      <ul className="mt-4 space-y-3 text-slate-600 dark:text-slate-300">
+                      <ul className="mt-4 list-disc space-y-2 pl-5 text-slate-600 marker:text-emerald-500 dark:text-slate-300 dark:marker:text-emerald-400">
                         {specialist.education.map((item) => (
                           <li key={item} className="leading-7">
                             {item}

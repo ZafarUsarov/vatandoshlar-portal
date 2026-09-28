@@ -159,6 +159,8 @@ const categoryKeys: ReadonlyArray<SpecialistCategory> = [
 
   "science",
 
+  "translation",
+
 ];
 
 const languageKeys: ReadonlyArray<SpecialistLanguage> = [

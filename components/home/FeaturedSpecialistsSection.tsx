@@ -153,6 +153,11 @@ export default async function FeaturedSpecialistsSection() {
         "categories.technology",
       ),
 
+    translation:
+      specialistsT(
+        "categories.translation",
+      ),
+
     entrepreneur:
       specialistsT(
         "categories.entrepreneur",

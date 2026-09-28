@@ -60,6 +60,7 @@ const categoryKeys: ReadonlyArray<
   "medical",
   "legal",
   "technology",
+  "translation",
   "entrepreneur",
   "automotive",
   "home",

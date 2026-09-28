@@ -708,7 +708,8 @@
       "academicDocuments": "Bachelor-, Master- und Promotionsunterlagen",
       "beauty": "Friseur & Beauty",
       "entrepreneur": "Unternehmer",
-      "science": "Wissenschaft"
+      "science": "Wissenschaft",
+      "translation": "Übersetzer & Dolmetscher"
     },
     "results": {
       "title": "Fachkräfte",
@@ -780,7 +781,8 @@
       "finance": "Steuern und Finanzen",
       "creative": "Foto, Video und Kreatives",
       "entrepreneur": "Unternehmer",
-      "science": "Wissenschaft"
+      "science": "Wissenschaft",
+      "translation": "Übersetzer & Dolmetscher"
     },
     "languagesMap": {
       "uz": "Usbekisch",

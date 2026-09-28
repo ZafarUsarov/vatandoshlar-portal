@@ -152,7 +152,9 @@ try {
           'academic-documents',
           'beauty',
           'finance',
-          'creative'
+          'creative',
+          'science',
+          'translation'
         )
       )
     `),

@@ -101,6 +101,11 @@ const categories: ReadonlyArray<{
     uz: "Ilm-fan",
     de: "Wissenschaft",
   },
+  {
+    value: "translation",
+    uz: "Tarjimonlar",
+    de: "Übersetzer & Dolmetscher",
+  },
 ];
 
 const languages: ReadonlyArray<{

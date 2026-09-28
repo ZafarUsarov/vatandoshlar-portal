@@ -18,7 +18,8 @@ export type AdminSpecialistCategory =
   | "beauty"
   | "finance"
   | "creative"
-  | "science";
+  | "science"
+  | "translation";
 
 export type AdminSpecialistLanguage =
   | "uz"
@@ -241,6 +242,7 @@ const categoryKeys: ReadonlyArray<AdminSpecialistCategory> = [
   "finance",
   "creative",
   "science",
+  "translation",
 ];
 
 const languageKeys: ReadonlyArray<AdminSpecialistLanguage> = [

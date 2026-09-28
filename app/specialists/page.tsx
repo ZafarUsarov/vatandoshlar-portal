@@ -32,6 +32,7 @@ const categoryKeys: ReadonlyArray<SpecialistCategory> = [
   "medical",
   "legal",
   "technology",
+  "translation",
   "entrepreneur",
   "automotive",
   "home",
@@ -124,6 +125,8 @@ export default async function SpecialistsPage({
       t("categories.legal"),
     technology:
       t("categories.technology"),
+    translation:
+      t("categories.translation"),
     entrepreneur:
       t("categories.entrepreneur"),
     automotive:
