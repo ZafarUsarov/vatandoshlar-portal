@@ -1,8 +1,11 @@
+import { Link } from "@/i18n/navigation";
 import type { TelegramGroup } from "@/types/telegram";
 
 type TelegramCardProps = {
   group: TelegramGroup;
   index?: number;
+  detailsHref?: string;
+  detailsLabel?: string;
 };
 
 interface IconProps {
@@ -31,6 +34,8 @@ function ArrowUpRightIcon({ className }: IconProps) {
 export default function TelegramCard({
   group,
   index = 0,
+  detailsHref,
+  detailsLabel,
 }: TelegramCardProps) {
   const isActive = group.status === "active";
 
@@ -91,7 +96,26 @@ export default function TelegramCard({
         {group.description}
       </p>
 
-      {group.href ? (
+      {detailsHref ? (
+        <Link
+          href={detailsHref}
+          className="
+            mt-6 inline-flex min-h-11 items-center justify-center gap-2
+            rounded-xl bg-sky-600 px-4 py-2.5
+            text-sm font-semibold text-white
+            transition
+            hover:bg-sky-700
+            focus-visible:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-sky-500
+            focus-visible:ring-offset-2
+            dark:focus-visible:ring-offset-slate-950
+          "
+        >
+          {detailsLabel}
+          <span aria-hidden="true">→</span>
+        </Link>
+      ) : group.href ? (
         <a
           href={group.href}
           target="_blank"

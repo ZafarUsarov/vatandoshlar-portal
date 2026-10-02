@@ -108,6 +108,8 @@ function toTelegramGroup(
     row.button_type === "bot";
 
   return {
+    bundesland: row.bundesland,
+
     state:
       customName ??
       row.bundesland,

@@ -62,6 +62,12 @@ export default async function TelegramSection() {
         group.communityType === "professional",
     );
 
+  const visibleRegionalGroups =
+    regionalGroups.filter(
+      (group) =>
+        group.shortName !== "BW-STR",
+    );
+
   const copy =
     locale === "uz"
       ? {
@@ -220,11 +226,23 @@ export default async function TelegramSection() {
           </div>
 
           <div className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-4">
-            {regionalGroups.map((group, index) => (
+            {visibleRegionalGroups.map((group, index) => (
               <TelegramCard
                 key={group.shortName}
                 group={group}
                 index={index}
+                detailsHref={
+                  group.shortName === "BW"
+                    ? "/telegram/baden-wuerttemberg"
+                    : undefined
+                }
+                detailsLabel={
+                  group.shortName === "BW"
+                    ? locale === "uz"
+                      ? "Guruhlarni ko‘rish"
+                      : "Gruppen ansehen"
+                    : undefined
+                }
               />
             ))}
           </div>

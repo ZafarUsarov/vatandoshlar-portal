@@ -9,6 +9,7 @@ export type TelegramCommunityType =
   | "professional";
 
 export type TelegramGroup = {
+  bundesland: string;
   state: string;
   shortName: string;
   description: string;

@@ -461,51 +461,66 @@ function GuidePreview({
         <Link
           href="/telegram/how-to-ask"
           aria-label={copy.ariaLabel}
-          className="
-            group mt-9 grid overflow-hidden rounded-[2rem]
-            border border-sky-200/80 bg-white
-            shadow-[0_22px_70px_-48px_rgba(14,165,233,0.65)]
-            transition duration-300
-            hover:-translate-y-1 hover:border-sky-300
-            hover:shadow-[0_28px_80px_-46px_rgba(14,165,233,0.55)]
-            focus-visible:outline-none focus-visible:ring-2
-            focus-visible:ring-sky-500 focus-visible:ring-offset-4
-            motion-reduce:transform-none motion-reduce:transition-none
-            md:grid-cols-[auto_1fr_auto] md:items-center
-            dark:border-slate-800 dark:bg-slate-900
-            dark:hover:border-sky-400/30
-            dark:focus-visible:ring-offset-slate-950
-          "
+          className="group relative mt-10 block overflow-hidden rounded-[2rem] border border-sky-300/70 bg-slate-950 text-white shadow-[0_30px_90px_-45px_rgba(2,132,199,0.72)] transition duration-300 hover:-translate-y-1 hover:border-cyan-300/80 hover:shadow-[0_34px_100px_-42px_rgba(6,182,212,0.68)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-4 motion-reduce:transform-none motion-reduce:transition-none dark:border-sky-400/25 dark:focus-visible:ring-offset-slate-950"
         >
-          <div className="flex items-center justify-center border-b border-slate-200/80 bg-gradient-to-br from-sky-50 to-cyan-50 p-7 md:h-full md:border-b-0 md:border-r dark:border-slate-800 dark:from-sky-400/[0.08] dark:to-cyan-400/[0.03]">
-            <span className="flex size-14 items-center justify-center rounded-2xl border border-sky-200 bg-white text-sky-600 shadow-sm dark:border-sky-400/20 dark:bg-slate-950 dark:text-sky-300">
-              <BookIcon className="size-6" />
-            </span>
-          </div>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(14,165,233,0.34),transparent_30%),radial-gradient(circle_at_88%_75%,rgba(16,185,129,0.20),transparent_28%),linear-gradient(135deg,#07111f_0%,#0b1d32_55%,#071827_100%)]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-16 -top-20 size-72 rounded-full border border-white/10"
+          />
 
-          <div className="p-6 sm:p-7">
-            <div className="flex flex-wrap items-center gap-3">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-sky-600 dark:text-sky-400">
-                {copy.cardEyebrow}
+          <div className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-center lg:p-10">
+            <div>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full border border-sky-300/25 bg-sky-300/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-sky-200">
+                  <BookIcon className="size-4" />
+                  {copy.cardEyebrow}
+                </span>
+                <span className="text-xs font-semibold text-slate-400">
+                  {copy.meta}
+                </span>
+              </div>
+
+              <h3 className="mt-5 max-w-3xl text-2xl font-black tracking-[-0.035em] text-white sm:text-3xl">
+                {copy.cardTitle}
+              </h3>
+
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+                {copy.cardDescription}
               </p>
-              <span className="size-1 rounded-full bg-slate-300 dark:bg-slate-700" />
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-                {copy.meta}
+
+              <span className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-sky-950/20 transition duration-300 group-hover:bg-sky-50 motion-reduce:transition-none">
+                {copy.action}
+                <ArrowRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none" />
               </span>
             </div>
 
-            <h3 className="mt-3 text-xl font-bold tracking-[-0.025em] text-slate-950 sm:text-2xl dark:text-white">
-              {copy.cardTitle}
-            </h3>
-
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base dark:text-slate-400">
-              {copy.cardDescription}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 px-6 pb-7 text-sm font-bold text-sky-700 md:px-8 md:pb-0 dark:text-sky-300">
-            {copy.action}
-            <ArrowRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none" />
+            <div aria-hidden="true" className="relative hidden min-h-48 lg:block">
+              <div className="absolute left-0 top-1 w-[88%] rounded-2xl rounded-bl-md border border-white/10 bg-white/[0.08] p-4 shadow-2xl backdrop-blur">
+                <div className="flex items-center gap-2">
+                  <span className="size-2 rounded-full bg-sky-400" />
+                  <span className="h-2 w-16 rounded-full bg-white/25" />
+                </div>
+                <div className="mt-4 space-y-2">
+                  <span className="block h-2 w-full rounded-full bg-white/18" />
+                  <span className="block h-2 w-3/4 rounded-full bg-white/12" />
+                </div>
+              </div>
+              <div className="absolute bottom-0 right-0 w-[82%] rounded-2xl rounded-br-md border border-emerald-300/20 bg-emerald-300/[0.10] p-4 shadow-2xl backdrop-blur">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex-1 space-y-2">
+                    <span className="block h-2 w-full rounded-full bg-emerald-100/35" />
+                    <span className="block h-2 w-2/3 rounded-full bg-emerald-100/20" />
+                  </div>
+                  <span className="flex size-8 items-center justify-center rounded-full bg-emerald-300 text-sm font-black text-emerald-950">
+                    ✓
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </Link>
       </div>
@@ -514,43 +529,24 @@ function GuidePreview({
 }
 
 function ArticleSection({ section }: { section: GuideSection }) {
-  const isAccent =
-    section.number === "06" ||
-    section.number === "07" ||
-    section.number === "08";
-
   return (
     <section
-      className={`
-        group relative border-t
-        border-slate-200/80 py-10
-        first:border-t-0 first:pt-0
-        sm:py-12
-        dark:border-slate-800
-        ${
-          isAccent
-            ? "before:absolute before:-left-4 before:top-10 before:bottom-10 before:w-px before:bg-gradient-to-b before:from-transparent before:via-cyan-400/55 before:to-transparent sm:before:-left-6"
-            : ""
-        }
-      `}
+      className="group relative my-3 overflow-hidden rounded-[1.5rem] border border-slate-200/90 bg-white/88 p-5 shadow-[0_14px_42px_-38px_rgba(15,23,42,0.5)] transition duration-300 before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-gradient-to-b before:from-sky-400 before:via-cyan-400 before:to-emerald-400 hover:-translate-y-0.5 hover:border-sky-200 hover:shadow-[0_20px_52px_-40px_rgba(14,165,233,0.34)] sm:p-6 dark:border-slate-800 dark:bg-slate-900/72 dark:hover:border-sky-400/20 motion-reduce:transform-none motion-reduce:transition-none"
     >
-      <div className="grid gap-5 sm:grid-cols-[4rem_1fr]">
+      <div className="grid gap-4 sm:grid-cols-[3.5rem_1fr] sm:gap-5">
         <div className="relative">
-          <span className="relative z-10 flex size-12 items-center justify-center rounded-2xl border border-sky-200/90 bg-gradient-to-br from-white to-sky-50 text-xs font-black tracking-[0.12em] text-sky-700 shadow-[0_10px_30px_-22px_rgba(14,165,233,0.9)] transition duration-200 group-hover:-translate-y-0.5 group-hover:border-sky-300 group-hover:shadow-[0_16px_34px_-20px_rgba(14,165,233,0.75)] motion-reduce:transform-none motion-reduce:transition-none dark:border-sky-400/20 dark:from-slate-900 dark:to-sky-950/30 dark:text-sky-300">
+          <span className="relative z-10 flex size-11 items-center justify-center rounded-xl border border-sky-200/90 bg-gradient-to-br from-white to-sky-50 text-xs font-black tracking-[0.12em] text-sky-700 shadow-[0_10px_30px_-22px_rgba(14,165,233,0.9)] transition duration-200 group-hover:-translate-y-0.5 group-hover:border-sky-300 group-hover:shadow-[0_16px_34px_-20px_rgba(14,165,233,0.75)] motion-reduce:transform-none motion-reduce:transition-none dark:border-sky-400/20 dark:from-slate-900 dark:to-sky-950/30 dark:text-sky-300">
             {section.number}
           </span>
-          <span
-            aria-hidden="true"
-            className="absolute left-6 top-12 hidden h-[calc(100%+2.7rem)] w-px bg-gradient-to-b from-sky-200/80 via-slate-200/70 to-transparent sm:block dark:from-sky-400/15 dark:via-slate-800"
-          />
+
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold tracking-[-0.025em] text-slate-950 dark:text-white">
+          <h2 className="text-xl font-bold tracking-[-0.025em] text-slate-950 sm:text-[1.35rem] dark:text-white">
             {section.title}
           </h2>
 
-          <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-400">
+          <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400">
             {section.description}
           </p>
 
@@ -704,9 +700,9 @@ function GuideArticle({
         </div>
       </header>
 
-      <div className="relative mx-auto grid max-w-6xl gap-12 px-6 py-14 lg:grid-cols-[minmax(0,1fr)_18rem] lg:px-8 lg:py-20">
+      <div className="relative mx-auto grid max-w-7xl gap-8 px-6 py-12 lg:grid-cols-[minmax(0,1fr)_17rem] lg:px-8 lg:py-16 xl:grid-cols-[minmax(0,1fr)_16rem] xl:gap-10">
         <div className="min-w-0">
-          <section className="relative mb-14 overflow-hidden rounded-[2rem] border border-sky-200/80 bg-gradient-to-br from-sky-50/85 via-white to-cyan-50/55 p-6 shadow-[0_22px_58px_-42px_rgba(14,165,233,0.55)] sm:p-8 dark:border-sky-400/15 dark:from-sky-400/[0.055] dark:via-slate-900/80 dark:to-cyan-400/[0.025]">
+          <section className="relative mb-8 overflow-hidden rounded-[2rem] border border-sky-200/80 bg-gradient-to-br from-sky-50/85 via-white to-cyan-50/55 p-6 shadow-[0_22px_58px_-42px_rgba(14,165,233,0.55)] sm:p-8 dark:border-sky-400/15 dark:from-sky-400/[0.055] dark:via-slate-900/80 dark:to-cyan-400/[0.025]">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute -right-16 -top-20 size-52 rounded-full border border-sky-200/45 dark:border-sky-400/[0.08]"
@@ -715,19 +711,19 @@ function GuideArticle({
               {copy.principlesLabel}
             </p>
 
-            <ul className="mt-5 grid gap-4">
+            <ul className="mt-6 grid gap-3 sm:grid-cols-3">
               {copy.principles.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-3 text-sm font-semibold leading-7 text-slate-700 sm:text-base dark:text-slate-300"
+                  className="rounded-2xl border border-white/90 bg-white/75 p-4 text-sm font-semibold leading-6 text-slate-700 shadow-sm dark:border-white/10 dark:bg-white/[0.035] dark:text-slate-300"
                 >
                   <span
                     aria-hidden="true"
-                    className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-white text-sky-700 shadow-sm dark:bg-slate-900 dark:text-sky-300"
+                    className="mb-3 flex size-8 items-center justify-center rounded-xl bg-sky-100 text-sky-700 dark:bg-sky-400/[0.08] dark:text-sky-300"
                   >
                     ✓
                   </span>
-                  {item}
+                  <span className="block">{item}</span>
                 </li>
               ))}
             </ul>
@@ -739,7 +735,7 @@ function GuideArticle({
             ))}
           </div>
 
-          <section className="my-14 overflow-hidden rounded-[2rem] border border-cyan-200/75 bg-gradient-to-br from-white via-cyan-50/35 to-sky-50/45 shadow-[0_22px_64px_-48px_rgba(6,182,212,0.48)] dark:border-cyan-400/15 dark:from-slate-900 dark:via-cyan-950/10 dark:to-sky-950/10">
+          <section className="my-8 overflow-hidden rounded-[2rem] border border-cyan-200/75 bg-gradient-to-br from-white via-cyan-50/35 to-sky-50/45 shadow-[0_22px_64px_-48px_rgba(6,182,212,0.48)] dark:border-cyan-400/15 dark:from-slate-900 dark:via-cyan-950/10 dark:to-sky-950/10">
             <div className="border-b border-slate-200 p-6 sm:p-8 dark:border-slate-800">
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-sky-600 dark:text-sky-400">
                 {copy.groupCulture.eyebrow}
@@ -796,7 +792,7 @@ function GuideArticle({
             ))}
           </div>
 
-          <section className="my-14 overflow-hidden rounded-[2rem] border border-slate-200/90 bg-white shadow-[0_28px_80px_-52px_rgba(15,23,42,0.45)] dark:border-slate-800 dark:bg-slate-900">
+          <section className="my-8 overflow-hidden rounded-[2rem] border border-slate-200/90 bg-white shadow-[0_28px_80px_-52px_rgba(15,23,42,0.45)] dark:border-slate-800 dark:bg-slate-900">
             <div className="border-b border-slate-200 p-6 sm:p-8 dark:border-slate-800">
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-sky-600 dark:text-sky-400">
                 {copy.example.eyebrow}
