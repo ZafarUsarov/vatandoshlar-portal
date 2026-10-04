@@ -154,7 +154,8 @@ try {
           'finance',
           'creative',
           'science',
-          'translation'
+          'translation',
+          'entrepreneur'
         )
       )
     `),

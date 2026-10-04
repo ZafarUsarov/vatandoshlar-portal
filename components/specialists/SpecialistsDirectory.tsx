@@ -116,13 +116,9 @@ export default function SpecialistsDirectory({
           .toLowerCase()
           .includes(query);
 
-      const isEntrepreneur =
-        specialist.categories.includes("entrepreneur");
-
       const matchesCategory =
-        category === "all"
-          ? !isEntrepreneur
-          : specialist.categories.includes(category);
+        category === "all" ||
+        specialist.categories.includes(category);
 
       const matchesBundesland =
         bundesland === "all" ||
