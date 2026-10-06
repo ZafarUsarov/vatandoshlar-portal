@@ -30,6 +30,7 @@ const copy = {
     read: "Savolni ko‘rish",
     languageUz: "O‘zbekcha",
     languageDe: "Nemischa",
+    ask: "Savol berish",
   },
   de: {
     metadataTitle: "Fragen & Antworten | Vatandoshlar.de",
@@ -46,6 +47,7 @@ const copy = {
     read: "Frage ansehen",
     languageUz: "Usbekisch",
     languageDe: "Deutsch",
+    ask: "Frage stellen",
   },
 } as const;
 
@@ -123,6 +125,12 @@ export default async function SavolPage() {
             <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
               {t.description}
             </p>
+            <Link
+              href="/savol/new"
+              className="mt-7 inline-flex min-h-12 items-center justify-center rounded-2xl bg-emerald-700 px-6 text-sm font-bold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:focus-visible:ring-offset-slate-900"
+            >
+              {t.ask}
+            </Link>
           </div>
         </section>
 

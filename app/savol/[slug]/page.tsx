@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import CreateAnswerForm from "@/components/savol/CreateAnswerForm";
 import { Link } from "@/i18n/navigation";
 import {
   getActiveQuestionCategories,
@@ -28,6 +29,7 @@ const copy = {
     noAnswers: "Hozircha javob yo‘q.",
     back: "Barcha savollar",
     questionLabel: "Savol",
+    yourAnswer: "Javob yozish",
   },
   de: {
     notFound: "Frage nicht gefunden | Vatandoshlar.de",
@@ -35,6 +37,7 @@ const copy = {
     noAnswers: "Noch keine Antworten.",
     back: "Alle Fragen",
     questionLabel: "Frage",
+    yourAnswer: "Antwort schreiben",
   },
 } as const;
 
@@ -157,6 +160,19 @@ export default async function SavolDetailPage({
             <div className="whitespace-pre-line text-base leading-8 text-slate-700 dark:text-slate-200">
               {question.body}
             </div>
+
+            <section
+              aria-labelledby="answer-form-heading"
+              className="mt-14 border-t border-slate-200 pt-10 dark:border-slate-800"
+            >
+              <h2
+                id="answer-form-heading"
+                className="text-2xl font-bold tracking-tight"
+              >
+                {t.yourAnswer}
+              </h2>
+              <CreateAnswerForm locale={locale} slug={question.slug} />
+            </section>
 
             <section
               aria-labelledby="answers-heading"
