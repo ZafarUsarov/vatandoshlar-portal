@@ -33,6 +33,10 @@ type PublicUserProfileRow = {
   preferred_locale: string;
   home_location_id: string | null;
   residency_stage: string | null;
+  public_slug: string | null;
+  bio: string | null;
+  avatar_url: string | null;
+  public_profile_enabled: boolean;
   created_at: string | Date;
   updated_at: string | Date;
 };
@@ -44,6 +48,10 @@ type PublicUserContextRow =
     preferred_locale: string | null;
     home_location_id: string | null;
     residency_stage: string | null;
+    public_slug: string | null;
+    bio: string | null;
+    avatar_url: string | null;
+    public_profile_enabled: boolean | null;
     profile_created_at: string | Date | null;
     profile_updated_at: string | Date | null;
 
@@ -227,6 +235,18 @@ function toPublicUserProfile(
         row.residency_stage,
       ),
 
+    publicSlug:
+      row.public_slug,
+
+    bio:
+      row.bio,
+
+    avatarUrl:
+      row.avatar_url,
+
+    publicProfileEnabled:
+      row.public_profile_enabled,
+
     createdAt:
       toDateTimeString(
         row.created_at,
@@ -317,6 +337,10 @@ const publicUserProfileSelect = `
     preferred_locale,
     home_location_id::text,
     residency_stage,
+    public_slug,
+    bio,
+    avatar_url,
+    public_profile_enabled,
     created_at,
     updated_at
   FROM user_profiles
@@ -420,6 +444,10 @@ export async function getPublicUserContext(
           p.preferred_locale,
           p.home_location_id::text,
           p.residency_stage,
+          p.public_slug,
+          p.bio,
+          p.avatar_url,
+          p.public_profile_enabled,
           p.created_at AS profile_created_at,
           p.updated_at AS profile_updated_at,
 
@@ -494,6 +522,14 @@ export async function getPublicUserContext(
             row.home_location_id,
           residency_stage:
             row.residency_stage,
+          public_slug:
+            row.public_slug,
+          bio:
+            row.bio,
+          avatar_url:
+            row.avatar_url,
+          public_profile_enabled:
+            row.public_profile_enabled ?? false,
           created_at:
             row.profile_created_at,
           updated_at:

@@ -18,6 +18,14 @@ type UpdateProfileInput = Readonly<{
   interests: ReadonlyArray<UserInterestKey>;
 }>;
 
+type UpdatePublicProfileInput = Readonly<{
+  userId: string;
+  publicSlug: string | null;
+  bio: string | null;
+  avatarUrl: string | null;
+  publicProfileEnabled: boolean;
+}>;
+
 function isAllowedInterest(value: string): value is UserInterestKey {
   return (userInterestKeys as readonly string[]).includes(value);
 }
@@ -90,4 +98,28 @@ export async function updatePublicUserProfile(input: UpdateProfileInput): Promis
   } finally {
     client.release();
   }
+}
+
+export async function updatePublicCommunityProfile(
+  input: UpdatePublicProfileInput,
+): Promise<void> {
+  await getDb().query(
+    `
+      UPDATE user_profiles
+      SET
+        public_slug = $2,
+        bio = $3,
+        avatar_url = $4,
+        public_profile_enabled = $5,
+        updated_at = NOW()
+      WHERE user_id = $1
+    `,
+    [
+      input.userId,
+      input.publicSlug,
+      input.bio,
+      input.avatarUrl,
+      input.publicProfileEnabled,
+    ],
+  );
 }

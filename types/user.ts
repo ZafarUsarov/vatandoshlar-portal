@@ -55,6 +55,10 @@ export type PublicUserProfile = Readonly<{
   preferredLocale: UserPreferredLocale;
   homeLocationId: string | null;
   residencyStage: UserResidencyStage | null;
+  publicSlug: string | null;
+  bio: string | null;
+  avatarUrl: string | null;
+  publicProfileEnabled: boolean;
   createdAt: string;
   updatedAt: string;
 }>;
