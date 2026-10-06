@@ -363,3 +363,175 @@ export async function createAnswer(
 
   return toAnswer(answer);
 }
+
+export async function getAnswerHelpfulCounts(
+  answerIds: ReadonlyArray<string>,
+): Promise<ReadonlyMap<string, number>> {
+  const uniqueAnswerIds = [...new Set(answerIds)];
+
+  if (uniqueAnswerIds.length === 0) {
+    return new Map();
+  }
+
+  const result = await getDb().query<{
+    answer_id: string;
+    helpful_count: number;
+  }>(
+    `
+      SELECT
+        answer_id::text,
+        COUNT(*)::int AS helpful_count
+      FROM answer_helpful_votes
+      WHERE answer_id = ANY($1::bigint[])
+      GROUP BY answer_id
+    `,
+    [uniqueAnswerIds],
+  );
+
+  return new Map(
+    result.rows.map((row) => [row.answer_id, row.helpful_count] as const),
+  );
+}
+
+export async function hasUserMarkedAnswerHelpful(
+  answerId: string,
+  userId: string,
+): Promise<boolean> {
+  const result = await getDb().query<{ exists: boolean }>(
+    `
+      SELECT EXISTS (
+        SELECT 1
+        FROM answer_helpful_votes
+        WHERE answer_id = $1
+          AND user_id = $2
+      ) AS exists
+    `,
+    [answerId, userId],
+  );
+
+  return result.rows[0]?.exists ?? false;
+}
+
+export async function toggleAnswerHelpfulVote(
+  answerId: string,
+  userId: string,
+): Promise<boolean> {
+  const client = await getDb().connect();
+
+  try {
+    await client.query("BEGIN");
+
+    const deleted = await client.query(
+      `
+        DELETE FROM answer_helpful_votes
+        WHERE answer_id = $1
+          AND user_id = $2
+        RETURNING answer_id
+      `,
+      [answerId, userId],
+    );
+
+    if ((deleted.rowCount ?? 0) > 0) {
+      await client.query("COMMIT");
+      return false;
+    }
+
+    await client.query(
+      `
+        INSERT INTO answer_helpful_votes (answer_id, user_id)
+        VALUES ($1, $2)
+        ON CONFLICT (answer_id, user_id) DO NOTHING
+      `,
+      [answerId, userId],
+    );
+
+    await client.query("COMMIT");
+    return true;
+  } catch (error) {
+    try {
+      await client.query("ROLLBACK");
+    } catch {}
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+export async function getQuestionFollowCount(
+  questionId: string,
+): Promise<number> {
+  const result = await getDb().query<{ follow_count: number }>(
+    `
+      SELECT COUNT(*)::int AS follow_count
+      FROM question_follows
+      WHERE question_id = $1
+    `,
+    [questionId],
+  );
+
+  return result.rows[0]?.follow_count ?? 0;
+}
+
+export async function isQuestionFollowedByUser(
+  questionId: string,
+  userId: string,
+): Promise<boolean> {
+  const result = await getDb().query<{ exists: boolean }>(
+    `
+      SELECT EXISTS (
+        SELECT 1
+        FROM question_follows
+        WHERE question_id = $1
+          AND user_id = $2
+      ) AS exists
+    `,
+    [questionId, userId],
+  );
+
+  return result.rows[0]?.exists ?? false;
+}
+
+export async function toggleQuestionFollow(
+  questionId: string,
+  userId: string,
+): Promise<boolean> {
+  const client = await getDb().connect();
+
+  try {
+    await client.query("BEGIN");
+
+    const deleted = await client.query(
+      `
+        DELETE FROM question_follows
+        WHERE question_id = $1
+          AND user_id = $2
+        RETURNING question_id
+      `,
+      [questionId, userId],
+    );
+
+    if ((deleted.rowCount ?? 0) > 0) {
+      await client.query("COMMIT");
+      return false;
+    }
+
+    await client.query(
+      `
+        INSERT INTO question_follows (question_id, user_id)
+        VALUES ($1, $2)
+        ON CONFLICT (question_id, user_id) DO NOTHING
+      `,
+      [questionId, userId],
+    );
+
+    await client.query("COMMIT");
+    return true;
+  } catch (error) {
+    try {
+      await client.query("ROLLBACK");
+    } catch {}
+    throw error;
+  } finally {
+    client.release();
+  }
+}

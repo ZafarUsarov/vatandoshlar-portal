@@ -5,7 +5,10 @@ import { revalidatePath } from "next/cache";
 import { requirePublicUser } from "@/lib/auth/user";
 import {
   createAnswer,
+  getPublishedAnswersForQuestion,
   getPublishedQuestionBySlug,
+  toggleAnswerHelpfulVote,
+  toggleQuestionFollow,
 } from "@/lib/savol/savol-repository";
 import type { UserPreferredLocale } from "@/types/user";
 
@@ -57,4 +60,47 @@ export async function createAnswerAction(
 
   revalidatePath(`/${locale}/savol/${slug}`);
   return { error: null };
+}
+
+export async function toggleHelpfulAction(formData: FormData): Promise<void> {
+  const locale = resolveLocale(formData.get("locale"));
+  const context = await requirePublicUser(locale);
+  const slug = textValue(formData.get("slug"));
+  const answerId = textValue(formData.get("targetId"));
+
+  if (!slug || !/^\d+$/.test(answerId)) {
+    return;
+  }
+
+  const question = await getPublishedQuestionBySlug(slug);
+  if (!question) {
+    return;
+  }
+
+  const answers = await getPublishedAnswersForQuestion(question.id);
+  if (!answers.some((answer) => answer.id === answerId)) {
+    return;
+  }
+
+  await toggleAnswerHelpfulVote(answerId, context.user.id);
+  revalidatePath(`/${locale}/savol/${slug}`);
+}
+
+export async function toggleFollowAction(formData: FormData): Promise<void> {
+  const locale = resolveLocale(formData.get("locale"));
+  const context = await requirePublicUser(locale);
+  const slug = textValue(formData.get("slug"));
+  const questionId = textValue(formData.get("targetId"));
+
+  if (!slug || !/^\d+$/.test(questionId)) {
+    return;
+  }
+
+  const question = await getPublishedQuestionBySlug(slug);
+  if (!question || question.id !== questionId) {
+    return;
+  }
+
+  await toggleQuestionFollow(questionId, context.user.id);
+  revalidatePath(`/${locale}/savol/${slug}`);
 }

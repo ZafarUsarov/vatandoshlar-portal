@@ -113,7 +113,7 @@ export default async function SavolPage() {
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
       <Header />
 
-      <main>
+      <main className="pt-20 sm:pt-24">
         <section className="border-b border-slate-200/80 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/40">
           <div className="mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-8">
             <p className="text-sm font-semibold tracking-wide text-emerald-700 dark:text-emerald-400">

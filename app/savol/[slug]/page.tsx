@@ -5,11 +5,14 @@ import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import CreateAnswerForm from "@/components/savol/CreateAnswerForm";
+import SavolInteractions from "@/components/savol/SavolInteractions";
 import { Link } from "@/i18n/navigation";
 import {
   getActiveQuestionCategories,
+  getAnswerHelpfulCounts,
   getPublishedAnswersForQuestion,
   getPublishedQuestionBySlug,
+  getQuestionFollowCount,
 } from "@/lib/savol/savol-repository";
 
 type SavolDetailPageProps = Readonly<{
@@ -107,10 +110,15 @@ export default async function SavolDetailPage({
     notFound();
   }
 
-  const [answers, categories] = await Promise.all([
+  const [answers, categories, followCount] = await Promise.all([
     getPublishedAnswersForQuestion(question.id),
     getActiveQuestionCategories(),
+    getQuestionFollowCount(question.id),
   ]);
+
+  const helpfulCounts = await getAnswerHelpfulCounts(
+    answers.map((answer) => answer.id),
+  );
 
   const category = categories.find((item) => item.id === question.categoryId);
   const categoryLabel = category
@@ -123,7 +131,7 @@ export default async function SavolDetailPage({
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
       <Header />
 
-      <main>
+      <main className="pt-20 sm:pt-24">
         <article>
           <header className="border-b border-slate-200/80 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/40">
             <div className="mx-auto max-w-4xl px-6 py-14 sm:py-16 lg:px-8">
@@ -161,6 +169,16 @@ export default async function SavolDetailPage({
               {question.body}
             </div>
 
+            <div className="mt-8">
+              <SavolInteractions
+                kind="follow"
+                locale={locale}
+                slug={question.slug}
+                targetId={question.id}
+                count={followCount}
+              />
+            </div>
+
             <section
               aria-labelledby="answer-form-heading"
               className="mt-14 border-t border-slate-200 pt-10 dark:border-slate-800"
@@ -196,6 +214,15 @@ export default async function SavolDetailPage({
                       <p className="whitespace-pre-line text-sm leading-7 text-slate-700 dark:text-slate-200">
                         {answer.body}
                       </p>
+                      <div className="mt-4">
+                        <SavolInteractions
+                          kind="helpful"
+                          locale={locale}
+                          slug={question.slug}
+                          targetId={answer.id}
+                          count={helpfulCounts.get(answer.id) ?? 0}
+                        />
+                      </div>
                       <time
                         dateTime={answer.createdAt}
                         className="mt-4 block text-xs text-slate-500 dark:text-slate-400"
