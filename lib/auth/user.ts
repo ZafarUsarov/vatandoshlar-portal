@@ -12,8 +12,7 @@ import type {
 export async function getCurrentPublicUser(): Promise<
   PublicUserContext | null
 > {
-  const session =
-    await auth();
+  const session = await auth();
 
   if (
     !session?.user?.id ||
@@ -29,14 +28,18 @@ export async function getCurrentPublicUser(): Promise<
 
 export async function requirePublicUser(
   locale: UserPreferredLocale,
+  returnTo?: string,
 ): Promise<PublicUserContext> {
   const user =
     await getCurrentPublicUser();
 
   if (!user) {
+    const href = returnTo
+      ? `/id/login?returnTo=${encodeURIComponent(returnTo)}`
+      : "/id/login";
+
     return redirect({
-      href:
-        "/id/login",
+      href,
       locale,
     });
   }

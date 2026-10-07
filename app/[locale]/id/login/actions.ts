@@ -1,242 +1,190 @@
 "use server";
 
 import {
-
   AuthError,
-
 } from "next-auth";
 
 import {
-
   signIn,
-
 } from "@/auth";
 import { setGoogleAuthIntent } from "@/lib/auth/google-auth-intent";
 
 export type PublicLoginErrorField =
-
   | "email"
-
   | "password"
-
   | "credentials"
-
   | "service"
-
   | null;
 
 export type PublicLoginState = Readonly<{
-
   error: string | null;
-
   errorField: PublicLoginErrorField;
-
 }>;
 
 function getLocale(
-
   formData: FormData,
-
 ): "uz" | "de" {
-
   return formData.get("locale") === "de"
-
     ? "de"
-
     : "uz";
+}
 
+function getSafeReturnTo(
+  formData: FormData,
+): string {
+  const value =
+    formData.get("returnTo");
+
+  if (
+    typeof value !== "string" ||
+    !value.startsWith("/") ||
+    value.startsWith("//") ||
+    value.includes("\\")
+  ) {
+    return "/account";
+  }
+
+  return value;
+}
+
+function getLocalizedRedirectTo(
+  locale: "uz" | "de",
+  returnTo: string,
+): string {
+  if (returnTo === "/account") {
+    return `/${locale}/account`;
+  }
+
+  return `/${locale}${returnTo}`;
 }
 
 export async function publicLoginAction(
-
   _previousState: PublicLoginState,
-
   formData: FormData,
-
 ): Promise<PublicLoginState> {
-
   const locale =
+    getLocale(formData);
 
-    getLocale(
-
-      formData,
-
-    );
+  const returnTo =
+    getSafeReturnTo(formData);
 
   const emailValue =
-
-    formData.get(
-
-      "email",
-
-    );
+    formData.get("email");
 
   const passwordValue =
-
-    formData.get(
-
-      "password",
-
-    );
+    formData.get("password");
 
   const email =
-
     typeof emailValue === "string"
-
       ? emailValue.trim()
-
       : "";
 
   const password =
-
     typeof passwordValue === "string"
-
       ? passwordValue
-
       : "";
 
   if (!email) {
-
     return {
-
       error:
-
         locale === "de"
-
           ? "Bitte geben Sie Ihre E-Mail-Adresse ein."
-
           : "E-mail manzilini kiriting.",
-
-      errorField:
-
-        "email",
-
+      errorField: "email",
     };
-
   }
 
   if (!password) {
-
     return {
-
       error:
-
         locale === "de"
-
           ? "Bitte geben Sie Ihr Passwort ein."
-
           : "Parolni kiriting.",
-
-      errorField:
-
-        "password",
-
+      errorField: "password",
     };
-
   }
 
   try {
-
     await signIn(
-
       "public-credentials",
-
       {
-
         email,
-
         password,
-
         redirectTo:
-
-          `/${locale}/account`,
-
+          getLocalizedRedirectTo(
+            locale,
+            returnTo,
+          ),
       },
-
     );
 
     return {
-
       error: null,
-
       errorField: null,
-
     };
-
   } catch (error) {
-
     if (
-
       error instanceof
-
       AuthError
-
     ) {
-
       if (
-
         error.type ===
-
         "CredentialsSignin"
-
       ) {
-
         return {
-
           error:
-
             locale === "de"
-
               ? "E-Mail-Adresse oder Passwort ist nicht korrekt. Bitte prüfen Sie Ihre Angaben und versuchen Sie es erneut."
-
               : "E-mail yoki parol noto‘g‘ri. Iltimos, ma’lumotlarni tekshirib qayta urinib ko‘ring.",
-
           errorField:
-
             "credentials",
-
         };
-
       }
 
       console.error(
-
         "Public login authentication service error:",
-
         error.type,
-
       );
 
       return {
-
         error:
-
           locale === "de"
-
             ? "Die Anmeldung ist derzeit nicht möglich. Bitte versuchen Sie es später erneut."
-
             : "Hozircha kirish amalga oshmadi. Birozdan so‘ng qayta urinib ko‘ring.",
-
         errorField:
-
           "service",
-
       };
-
     }
 
-    // Successful Auth.js redirects are represented by a framework redirect
-
-    // exception and must continue to propagate.
-
+    // Successful Auth.js redirects are represented by a
+    // framework redirect exception and must continue to propagate.
     throw error;
-
   }
-
 }
 
-export async function googleLoginAction(formData: FormData): Promise<void> {
-  const locale = getLocale(formData);
-  await setGoogleAuthIntent({ mode: "login", locale, privacyAccepted: false });
-  await signIn("google", { redirectTo: `/${locale}/account` });
+export async function googleLoginAction(
+  formData: FormData,
+): Promise<void> {
+  const locale =
+    getLocale(formData);
+
+  const returnTo =
+    getSafeReturnTo(formData);
+
+  await setGoogleAuthIntent({
+    mode: "login",
+    locale,
+    privacyAccepted: false,
+  });
+
+  await signIn(
+    "google",
+    {
+      redirectTo:
+        getLocalizedRedirectTo(
+          locale,
+          returnTo,
+        ),
+    },
+  );
 }

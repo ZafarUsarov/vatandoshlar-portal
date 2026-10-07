@@ -49,30 +49,37 @@ export default async function NewSavolPage() {
   const locale = resolveLocale(await getLocale());
   const t = copy[locale];
 
-  await requirePublicUser(locale);
+  await requirePublicUser(locale, "/savol/new");
+
   const categories = await getActiveQuestionCategories();
 
   return (
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
       <Header />
 
-      <main className="mx-auto max-w-3xl px-6 py-12 sm:py-16 lg:px-8">
-        <Link
-          href="/savol"
-          className="text-sm font-semibold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
-        >
-          ← {t.back}
-        </Link>
+      <main className="pt-20 sm:pt-24">
+        <div className="mx-auto max-w-3xl px-6 py-12 sm:py-16 lg:px-8">
+          <Link
+            href="/savol"
+            className="text-sm font-semibold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+          >
+            ← {t.back}
+          </Link>
 
-        <h1 className="mt-7 text-3xl font-bold tracking-tight sm:text-4xl">
-          {t.heading}
-        </h1>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">
-          {t.description}
-        </p>
+          <h1 className="mt-7 text-3xl font-bold tracking-tight sm:text-4xl">
+            {t.heading}
+          </h1>
 
-        <div className="mt-10 rounded-3xl border border-slate-200 bg-slate-50 p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900/50">
-          <CreateQuestionForm locale={locale} categories={categories} />
+          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">
+            {t.description}
+          </p>
+
+          <div className="mt-10 rounded-3xl border border-slate-200 bg-slate-50 p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900/50">
+            <CreateQuestionForm
+              locale={locale}
+              categories={categories}
+            />
+          </div>
         </div>
       </main>
 
