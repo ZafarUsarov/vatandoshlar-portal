@@ -869,3 +869,67 @@ export async function getRelatedPublishedGuideArticles(
     normalizedLimit,
   );
 }
+
+
+function normalizeKnowledgeSearchTerms(value: string): string[] {
+  const stopWords = new Set([
+    "bilan", "uchun", "haqida", "qanday", "nima", "qayerda", "qachon", "kerak",
+    "oder", "aber", "auch", "eine", "einen", "einer", "einem", "eines", "für",
+    "mit", "wie", "was", "wann", "wo", "der", "die", "das", "den", "dem", "des",
+    "und", "ich", "wir", "sie", "ist", "sind", "kann", "können",
+  ]);
+
+  return [...new Set(
+    value
+      .toLocaleLowerCase("de-DE")
+      .normalize("NFKC")
+      .split(/[^\p{L}\p{N}]+/u)
+      .map((term) => term.trim())
+      .filter((term) => term.length >= 3 && !stopWords.has(term)),
+  )].slice(0, 16);
+}
+
+function scoreGuideArticleForQuestion(article: GuideArticle, terms: ReadonlyArray<string>): number {
+  const title = article.title.toLocaleLowerCase("de-DE");
+  const excerpt = article.excerpt.toLocaleLowerCase("de-DE");
+  const intro = article.intro.toLocaleLowerCase("de-DE");
+
+  return terms.reduce((score, term) => {
+    if (title.includes(term)) return score + 6;
+    if (excerpt.includes(term)) return score + 3;
+    if (intro.includes(term)) return score + 2;
+    return score;
+  }, 0);
+}
+
+export async function getPublishedGuideArticlesForQuestion(
+  query: string,
+  locale: SupportedGuideLocale,
+  limit = 3,
+): Promise<ReadonlyArray<GuideArticle>> {
+  const terms = normalizeKnowledgeSearchTerms(query);
+  if (terms.length === 0) return [];
+
+  const normalizedLimit = Number.isInteger(limit) && limit > 0 ? Math.min(limit, 6) : 3;
+  assertDatabaseAvailable();
+  if (canSkipDatabaseDuringCi()) return [];
+
+  const result = await getDb().query<GuideArticleRow>(
+    `
+      ${publishedGuideSelect}
+      WHERE status = 'published'
+      ORDER BY featured DESC, last_reviewed_at DESC, id ASC
+    `,
+  );
+  const articles = result.rows.flatMap((row) => {
+    const article = toGuideArticle(row, locale);
+    return article ? [article] : [];
+  });
+
+  return articles
+    .map((article) => ({ article, score: scoreGuideArticleForQuestion(article, terms) }))
+    .filter(({ score }) => score > 0)
+    .sort((left, right) => right.score - left.score || Number(right.article.featured) - Number(left.article.featured))
+    .slice(0, normalizedLimit)
+    .map(({ article }) => article);
+}

@@ -8,6 +8,8 @@ import CreateAnswerForm from "@/components/savol/CreateAnswerForm";
 import SavolInteractions from "@/components/savol/SavolInteractions";
 import ReportContentForm from "@/components/savol/ReportContentForm";
 import { Link } from "@/i18n/navigation";
+import { getPublishedGuideArticlesForQuestion } from "@/lib/guide/public-guide-repository";
+import { getPublishedSpecialistsForQuestion } from "@/lib/specialists/public-specialists-repository";
 import {
   getActiveQuestionCategories,
   getAnswerHelpfulCounts,
@@ -34,6 +36,13 @@ const copy = {
     back: "Barcha savollar",
     questionLabel: "Savol",
     yourAnswer: "Javob yozish",
+    relatedKnowledge: "Foydali qo‘llanmalar",
+    relatedKnowledgeHint: "Savolingizga aloqador Vatandoshlar.de qo‘llanmalari.",
+    relatedSpecialists: "Mos mutaxassislar",
+    relatedSpecialistsHint: "Savol mavzusiga mos Vatandoshlar.de mutaxassislari.",
+    openGuide: "Qo‘llanmani ochish",
+    openSpecialist: "Profilni ochish",
+    verified: "Tasdiqlangan",
   },
   de: {
     notFound: "Frage nicht gefunden | Vatandoshlar.de",
@@ -42,6 +51,13 @@ const copy = {
     back: "Alle Fragen",
     questionLabel: "Frage",
     yourAnswer: "Antwort schreiben",
+    relatedKnowledge: "Hilfreiche Ratgeber",
+    relatedKnowledgeHint: "Passende Ratgeber von Vatandoshlar.de zu dieser Frage.",
+    relatedSpecialists: "Passende Fachleute",
+    relatedSpecialistsHint: "Fachleute auf Vatandoshlar.de, die zum Thema passen.",
+    openGuide: "Ratgeber öffnen",
+    openSpecialist: "Profil öffnen",
+    verified: "Verifiziert",
   },
 } as const;
 
@@ -111,22 +127,25 @@ export default async function SavolDetailPage({
     notFound();
   }
 
-  const [answers, categories, followCount] = await Promise.all([
-    getPublishedAnswersForQuestion(question.id),
-    getActiveQuestionCategories(),
-    getQuestionFollowCount(question.id),
-  ]);
-
-  const helpfulCounts = await getAnswerHelpfulCounts(
-    answers.map((answer) => answer.id),
-  );
-
+  const categories = await getActiveQuestionCategories();
   const category = categories.find((item) => item.id === question.categoryId);
   const categoryLabel = category
     ? locale === "de"
       ? category.labelDe
       : category.labelUz
     : null;
+  const knowledgeQuery = [question.title, question.body, categoryLabel].filter(Boolean).join(" ");
+
+  const [answers, followCount, relatedGuides, relatedSpecialists] = await Promise.all([
+    getPublishedAnswersForQuestion(question.id),
+    getQuestionFollowCount(question.id),
+    getPublishedGuideArticlesForQuestion(knowledgeQuery, locale, 3),
+    getPublishedSpecialistsForQuestion(knowledgeQuery, locale, 3),
+  ]);
+
+  const helpfulCounts = await getAnswerHelpfulCounts(
+    answers.map((answer) => answer.id),
+  );
 
   return (
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
@@ -185,6 +204,58 @@ export default async function SavolDetailPage({
                 targetId={question.id}
               />
             </div>
+
+            {(relatedGuides.length > 0 || relatedSpecialists.length > 0) ? (
+              <section
+                aria-labelledby="knowledge-heading"
+                className="mt-14 border-t border-slate-200 pt-10 dark:border-slate-800"
+              >
+                <h2 id="knowledge-heading" className="text-2xl font-bold tracking-tight">
+                  {t.relatedKnowledge}
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                  {t.relatedKnowledgeHint}
+                </p>
+
+                {relatedGuides.length > 0 ? (
+                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                    {relatedGuides.map((guide) => (
+                      <article key={guide.id} className="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900/50">
+                        <h3 className="font-bold leading-6">{guide.title}</h3>
+                        <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{guide.excerpt}</p>
+                        <Link href={`/guide/${guide.categorySlug}/${guide.slug}`} className="mt-4 inline-flex text-sm font-semibold text-emerald-700 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300">
+                          {t.openGuide} →
+                        </Link>
+                      </article>
+                    ))}
+                  </div>
+                ) : null}
+
+                {relatedSpecialists.length > 0 ? (
+                  <div className="mt-10">
+                    <h3 className="text-lg font-bold">{t.relatedSpecialists}</h3>
+                    <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{t.relatedSpecialistsHint}</p>
+                    <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                      {relatedSpecialists.map((specialist) => (
+                        <article key={specialist.id} className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/50">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <h4 className="font-bold">{specialist.name}</h4>
+                            {specialist.status.verified ? (
+                              <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">{t.verified}</span>
+                            ) : null}
+                          </div>
+                          <p className="mt-1 text-sm font-medium text-slate-700 dark:text-slate-200">{specialist.profession}</p>
+                          <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{specialist.shortDescription}</p>
+                          <Link href={`/specialists/${specialist.slug}`} className="mt-4 inline-flex text-sm font-semibold text-emerald-700 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300">
+                            {t.openSpecialist} →
+                          </Link>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </section>
+            ) : null}
 
             <section
               aria-labelledby="answer-form-heading"

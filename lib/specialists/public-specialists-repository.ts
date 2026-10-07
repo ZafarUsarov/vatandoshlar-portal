@@ -1402,3 +1402,63 @@ export async function getPublishedSpecialistsByLocationId(
   );
 
 }
+
+
+function normalizeSpecialistSearchTerms(value: string): string[] {
+  const stopWords = new Set([
+    "bilan", "uchun", "haqida", "qanday", "nima", "qayerda", "qachon", "kerak",
+    "oder", "aber", "auch", "eine", "einen", "einer", "einem", "eines", "für",
+    "mit", "wie", "was", "wann", "wo", "der", "die", "das", "den", "dem", "des",
+    "und", "ich", "wir", "sie", "ist", "sind", "kann", "können",
+  ]);
+
+  return [...new Set(
+    value
+      .toLocaleLowerCase("de-DE")
+      .normalize("NFKC")
+      .split(/[^\p{L}\p{N}]+/u)
+      .map((term) => term.trim())
+      .filter((term) => term.length >= 3 && !stopWords.has(term)),
+  )].slice(0, 16);
+}
+
+function scoreSpecialistForQuestion(
+  specialist: LocalizedSpecialist,
+  terms: ReadonlyArray<string>,
+): number {
+  const profession = specialist.profession.toLocaleLowerCase("de-DE");
+  const services = specialist.services.join(" ").toLocaleLowerCase("de-DE");
+  const description = specialist.shortDescription.toLocaleLowerCase("de-DE");
+  const categories = specialist.categories.join(" ").toLocaleLowerCase("de-DE");
+
+  return terms.reduce((score, term) => {
+    if (profession.includes(term)) return score + 6;
+    if (services.includes(term)) return score + 4;
+    if (categories.includes(term)) return score + 3;
+    if (description.includes(term)) return score + 2;
+    return score;
+  }, 0);
+}
+
+export async function getPublishedSpecialistsForQuestion(
+  query: string,
+  locale: SupportedLocale,
+  limit = 3,
+): Promise<LocalizedSpecialist[]> {
+  const terms = normalizeSpecialistSearchTerms(query);
+  if (terms.length === 0) return [];
+
+  const normalizedLimit = Number.isInteger(limit) && limit > 0 ? Math.min(limit, 6) : 3;
+  const specialists = await getPublishedSpecialistsCached(locale);
+
+  return specialists
+    .map((specialist) => ({ specialist, score: scoreSpecialistForQuestion(specialist, terms) }))
+    .filter(({ score }) => score > 0)
+    .sort((left, right) =>
+      right.score - left.score ||
+      Number(right.specialist.status.verified) - Number(left.specialist.status.verified) ||
+      Number(right.specialist.status.featured) - Number(left.specialist.status.featured),
+    )
+    .slice(0, normalizedLimit)
+    .map(({ specialist }) => specialist);
+}
