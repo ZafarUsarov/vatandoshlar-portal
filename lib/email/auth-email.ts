@@ -1,3 +1,5 @@
+import { getSiteUrl, sendTransactionalEmail } from "@/lib/email/email-client";
+
 type Locale = "uz" | "de";
 
 type TemplateInput = Readonly<{
@@ -11,16 +13,6 @@ type TemplateInput = Readonly<{
   securityNote: string;
 }>;
 
-function requireEnv(name: string): string {
-  const value = process.env[name]?.trim();
-  if (!value) throw new Error(`Missing required email environment variable: ${name}`);
-  return value;
-}
-
-function siteUrl(): string {
-  return requireEnv("APP_URL").replace(/\/$/, "");
-}
-
 function escapeHtml(value: string): string {
   return value.replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -28,7 +20,7 @@ function escapeHtml(value: string): string {
 }
 
 function renderEmailTemplate(input: TemplateInput): string {
-  const logoUrl = `${siteUrl()}/images/brand/Logo_New_Transparent.png`;
+  const logoUrl = `${getSiteUrl()}/images/brand/Logo_New_Transparent.png`;
   const footer = input.locale === "de"
     ? "Diese E-Mail wurde automatisch von Vatandoshlar.de gesendet."
     : "Ushbu xat Vatandoshlar.de tomonidan avtomatik yuborildi.";
@@ -66,7 +58,7 @@ function renderEmailTemplate(input: TemplateInput): string {
 </td></tr>
 <tr><td style="padding:22px 32px;background:#f8fafc;border-top:1px solid #eef2f6;border-radius:0 0 20px 20px;text-align:center;">
 <p style="margin:0 0 6px;font-size:12px;line-height:18px;color:#64748b;">${escapeHtml(footer)}</p>
-<p style="margin:0;font-size:12px;line-height:18px;"><a href="${escapeHtml(siteUrl())}" style="color:#0f766e;text-decoration:none;font-weight:700;">vatandoshlar.de</a></p>
+<p style="margin:0;font-size:12px;line-height:18px;"><a href="${escapeHtml(getSiteUrl())}" style="color:#0f766e;text-decoration:none;font-weight:700;">vatandoshlar.de</a></p>
 </td></tr>
 </table>
 </td></tr>
@@ -75,33 +67,15 @@ function renderEmailTemplate(input: TemplateInput): string {
 </html>`;
 }
 
-async function sendEmail(input: { to: string; subject: string; html: string; text: string }) {
-  const apiKey = requireEnv("RESEND_API_KEY");
-  const from = requireEnv("EMAIL_FROM");
-
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from, to: [input.to], subject: input.subject, html: input.html, text: input.text }),
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    const body = await response.text().catch(() => "");
-    console.error("Auth email delivery failed", { status: response.status, body: body.slice(0, 500) });
-    throw new Error("Auth email delivery failed.");
-  }
-}
-
 export async function sendVerificationEmail(email: string, token: string, locale: Locale) {
-  const url = `${siteUrl()}/${locale}/id/verify-email?token=${encodeURIComponent(token)}`;
+  const url = `${getSiteUrl()}/${locale}/id/verify-email?token=${encodeURIComponent(token)}`;
   const subject = locale === "de" ? "E-Mail-Adresse bestätigen – Vatandoshlar.de" : "E-mail manzilingizni tasdiqlang – Vatandoshlar.de";
   const intro = locale === "de" ? "Bestätigen Sie Ihre E-Mail-Adresse, um Ihr Vatandoshlar.de Konto zu aktivieren." : "Vatandoshlar.de hisobingizni faollashtirish uchun e-mail manzilingizni tasdiqlang.";
   const actionLabel = locale === "de" ? "E-Mail bestätigen" : "E-mailni tasdiqlash";
   const expiry = locale === "de" ? "Dieser Bestätigungslink ist 24 Stunden gültig." : "Ushbu tasdiqlash havolasi 24 soat amal qiladi.";
   const securityNote = locale === "de" ? "Falls Sie kein Vatandoshlar.de Konto erstellt haben, können Sie diese E-Mail ignorieren." : "Agar siz Vatandoshlar.de hisobini yaratmagan bo‘lsangiz, ushbu xatni e’tiborsiz qoldirishingiz mumkin.";
 
-  await sendEmail({
+  await sendTransactionalEmail({
     to: email,
     subject,
     text: `${intro}\n\n${actionLabel}: ${url}\n\n${expiry}\n\n${securityNote}`,
@@ -115,14 +89,14 @@ export async function sendVerificationEmail(email: string, token: string, locale
 }
 
 export async function sendPasswordResetEmail(email: string, token: string, locale: Locale) {
-  const url = `${siteUrl()}/${locale}/id/reset-password?token=${encodeURIComponent(token)}`;
+  const url = `${getSiteUrl()}/${locale}/id/reset-password?token=${encodeURIComponent(token)}`;
   const subject = locale === "de" ? "Passwort zurücksetzen – Vatandoshlar.de" : "Parolni tiklash – Vatandoshlar.de";
   const intro = locale === "de" ? "Sie haben eine Zurücksetzung Ihres Vatandoshlar.de Passworts angefordert." : "Siz Vatandoshlar.de hisobingiz parolini tiklashni so‘radingiz.";
   const actionLabel = locale === "de" ? "Neues Passwort festlegen" : "Yangi parol o‘rnatish";
   const expiry = locale === "de" ? "Dieser Link ist 60 Minuten gültig." : "Ushbu havola 60 daqiqa amal qiladi.";
   const securityNote = locale === "de" ? "Falls Sie diese Passwort-Zurücksetzung nicht angefordert haben, können Sie diese E-Mail ignorieren. Ihr Passwort bleibt unverändert." : "Agar siz parolni tiklashni so‘ramagan bo‘lsangiz, ushbu xatni e’tiborsiz qoldirishingiz mumkin. Parolingiz o‘zgarmaydi.";
 
-  await sendEmail({
+  await sendTransactionalEmail({
     to: email,
     subject,
     text: `${intro}\n\n${actionLabel}: ${url}\n\n${expiry}\n\n${securityNote}`,

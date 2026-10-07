@@ -11,6 +11,8 @@ import {
   toggleQuestionFollow,
 } from "@/lib/savol/savol-repository";
 import { createContentReport, type SavolReportReason } from "@/lib/savol/moderation-repository";
+import { createNewAnswerNotifications } from "@/lib/notifications/notification-repository";
+import { sendSavolNewAnswerEmail } from "@/lib/email/savol-email";
 import type { UserPreferredLocale } from "@/types/user";
 
 export type CreateAnswerState = Readonly<{
@@ -53,11 +55,36 @@ export async function createAnswerAction(
     };
   }
 
-  await createAnswer({
+  const answer = await createAnswer({
     questionId: question.id,
     authorUserId: context.user.id,
     body,
   });
+
+  try {
+    const recipients = await createNewAnswerNotifications({
+      questionId: question.id,
+      answerId: answer.id,
+      actorUserId: context.user.id,
+    });
+
+    await Promise.allSettled(
+      recipients.map((recipient) =>
+        sendSavolNewAnswerEmail({
+          to: recipient.email,
+          locale: recipient.locale,
+          questionSlug: question.slug,
+          questionTitle: question.title,
+        }),
+      ),
+    );
+  } catch (notificationError) {
+    console.error("Savol notification creation failed", {
+      questionId: question.id,
+      answerId: answer.id,
+      notificationError,
+    });
+  }
 
   revalidatePath(`/${locale}/savol/${slug}`);
   return { error: null };
