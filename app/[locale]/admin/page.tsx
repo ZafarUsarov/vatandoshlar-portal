@@ -64,6 +64,10 @@ const copy = {
       "PayPal va Taps orqali kelgan real contributionlarni, public ko‘rinishni va transaction holatini boshqaring.",
     supportAction: "Supportni boshqarish",
 
+    savolTitle: "Savol moderatsiyasi",
+    savolDescription: "Foydalanuvchilar yuborgan savol va javob shikoyatlarini tekshiring, kontentni yashiring, olib tashlang yoki tiklang.",
+    savolAction: "Shikoyatlarni ko‘rish",
+
     analyticsTitle: "Sayt analitikasi",
     analyticsDescription:
       "Sahifa ko‘rishlari, davlatlar, tillar, eng ko‘p ko‘rilgan sahifalar va oxirgi 30 kunlik trafikni kuzating.",
@@ -126,6 +130,10 @@ const copy = {
       "Verwalten Sie reale PayPal- und Taps-Beiträge, öffentliche Sichtbarkeit und Transaktionsstatus.",
     supportAction: "Unterstützung verwalten",
 
+    savolTitle: "Savol-Moderation",
+    savolDescription: "Prüfen Sie Meldungen zu Fragen und Antworten und blenden, entfernen oder veröffentlichen Sie Inhalte wieder.",
+    savolAction: "Meldungen prüfen",
+
     analyticsTitle: "Website-Analyse",
     analyticsDescription:
       "Beobachten Sie Seitenaufrufe, Länder, Sprachen, meistbesuchte Seiten und den Traffic der letzten 30 Tage.",
@@ -148,6 +156,7 @@ type AdminModuleHref =
   | "/admin/guide"
   | "/admin/telegram"
   | "/admin/support"
+  | "/admin/savol"
   | "/admin/analytics";
 
 type AdminModuleTone =
@@ -432,6 +441,14 @@ export default async function AdminPage() {
                   description={currentCopy.supportDescription}
                   action={currentCopy.supportAction}
                   tone="emerald"
+                />
+
+                <AdminModuleCard
+                  href="/admin/savol"
+                  title={currentCopy.savolTitle}
+                  description={currentCopy.savolDescription}
+                  action={currentCopy.savolAction}
+                  tone="orange"
                 />
 
                 <AdminModuleCard

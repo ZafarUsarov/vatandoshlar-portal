@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import CreateAnswerForm from "@/components/savol/CreateAnswerForm";
 import SavolInteractions from "@/components/savol/SavolInteractions";
+import ReportContentForm from "@/components/savol/ReportContentForm";
 import { Link } from "@/i18n/navigation";
 import {
   getActiveQuestionCategories,
@@ -169,13 +170,19 @@ export default async function SavolDetailPage({
               {question.body}
             </div>
 
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap items-start gap-4">
               <SavolInteractions
                 kind="follow"
                 locale={locale}
                 slug={question.slug}
                 targetId={question.id}
                 count={followCount}
+              />
+              <ReportContentForm
+                locale={locale}
+                slug={question.slug}
+                targetType="question"
+                targetId={question.id}
               />
             </div>
 
@@ -214,13 +221,19 @@ export default async function SavolDetailPage({
                       <p className="whitespace-pre-line text-sm leading-7 text-slate-700 dark:text-slate-200">
                         {answer.body}
                       </p>
-                      <div className="mt-4">
+                      <div className="mt-4 flex flex-wrap items-start gap-4">
                         <SavolInteractions
                           kind="helpful"
                           locale={locale}
                           slug={question.slug}
                           targetId={answer.id}
                           count={helpfulCounts.get(answer.id) ?? 0}
+                        />
+                        <ReportContentForm
+                          locale={locale}
+                          slug={question.slug}
+                          targetType="answer"
+                          targetId={answer.id}
                         />
                       </div>
                       <time

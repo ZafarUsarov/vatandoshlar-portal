@@ -10,6 +10,7 @@ import {
   toggleAnswerHelpfulVote,
   toggleQuestionFollow,
 } from "@/lib/savol/savol-repository";
+import { createContentReport, type SavolReportReason } from "@/lib/savol/moderation-repository";
 import type { UserPreferredLocale } from "@/types/user";
 
 export type CreateAnswerState = Readonly<{
@@ -103,4 +104,52 @@ export async function toggleFollowAction(formData: FormData): Promise<void> {
 
   await toggleQuestionFollow(questionId, context.user.id);
   revalidatePath(`/${locale}/savol/${slug}`);
+}
+
+
+export type ReportContentState = Readonly<{
+  status: "idle" | "success" | "duplicate" | "error";
+  message: string | null;
+}>;
+
+export async function reportContentAction(
+  _previousState: ReportContentState,
+  formData: FormData,
+): Promise<ReportContentState> {
+  const locale = resolveLocale(formData.get("locale"));
+  const context = await requirePublicUser(locale);
+  const slug = textValue(formData.get("slug"));
+  const targetType = formData.get("targetType") === "answer" ? "answer" : "question";
+  const targetId = textValue(formData.get("targetId"));
+  const rawReason = textValue(formData.get("reason"));
+  const details = textValue(formData.get("details"));
+  const reasons = ["spam", "abuse", "misinformation", "other"] as const;
+
+  if (!slug || !/^\d+$/.test(targetId) || !reasons.includes(rawReason as SavolReportReason) || details.length > 1000) {
+    return { status: "error", message: locale === "de" ? "Die Meldung ist ungültig." : "Shikoyat ma’lumotlari noto‘g‘ri." };
+  }
+
+  const question = await getPublishedQuestionBySlug(slug);
+  if (!question) {
+    return { status: "error", message: locale === "de" ? "Dieser Inhalt ist nicht mehr verfügbar." : "Bu kontent endi mavjud emas." };
+  }
+
+  if (targetType === "question") {
+    if (question.id !== targetId) return { status: "error", message: locale === "de" ? "Die Meldung ist ungültig." : "Shikoyat ma’lumotlari noto‘g‘ri." };
+  } else {
+    const answers = await getPublishedAnswersForQuestion(question.id);
+    if (!answers.some((answer) => answer.id === targetId)) return { status: "error", message: locale === "de" ? "Die Antwort ist nicht mehr verfügbar." : "Bu javob endi mavjud emas." };
+  }
+
+  const result = await createContentReport({
+    reporterUserId: context.user.id,
+    targetType,
+    targetId,
+    reason: rawReason as SavolReportReason,
+    details: details || null,
+  });
+
+  return result === "duplicate"
+    ? { status: "duplicate", message: locale === "de" ? "Sie haben diesen Inhalt bereits gemeldet." : "Siz bu kontent haqida avval shikoyat qilgansiz." }
+    : { status: "success", message: locale === "de" ? "Danke. Die Meldung wurde zur Prüfung gesendet." : "Rahmat. Shikoyat tekshiruvga yuborildi." };
 }
