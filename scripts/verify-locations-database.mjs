@@ -42,6 +42,7 @@ try {
       COUNT(*)::int AS count
     FROM locations
     WHERE location_type = 'state'
+      AND country_code = 'DE'
   `);
 
   const duplicateSlugResult = await client.query(`
