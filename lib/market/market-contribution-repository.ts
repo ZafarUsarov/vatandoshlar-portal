@@ -59,3 +59,68 @@ export async function getOwnMarketListings(userId: string): Promise<ReadonlyArra
     createdAt: row.created_at instanceof Date ? row.created_at.toISOString() : row.created_at,
   }));
 }
+
+export async function changeOwnMarketListingStatus(input: {
+  listingId: string;
+  authorUserId: string;
+  from: "draft" | "published";
+  to: "published" | "closed";
+}): Promise<boolean> {
+  if (!/^[1-9]\d*$/.test(input.listingId) || !/^[1-9]\d*$/.test(input.authorUserId)) return false;
+  if (!((input.from === "draft" && input.to === "published") ||
+    (input.from === "published" && input.to === "closed"))) return false;
+  const result = await getDb().query(
+    `UPDATE market_listings m
+     SET status = $4, updated_at = NOW(),
+         published_at = CASE WHEN $4 = 'published' THEN NOW() ELSE published_at END
+     WHERE m.id = $1::bigint AND m.author_user_id = $2::bigint
+       AND m.status = $3
+       AND EXISTS (
+         SELECT 1 FROM locations l WHERE l.id = m.location_id
+           AND l.status = 'active' AND l.country_code = 'DE'
+           AND l.location_type = 'city'
+       )
+     RETURNING m.id`,
+    [input.listingId, input.authorUserId, input.from, input.to],
+  );
+  return result.rowCount === 1;
+}
+
+export type EditableMarketListing = Readonly<{
+  id: string; listingType: MarketListingType; locationId: string;
+  title: string; description: string; priceAmount: string;
+  status: "draft" | "published";
+}>;
+
+export async function getEditableOwnMarketListing(id: string, userId: string): Promise<EditableMarketListing | null> {
+  if (!/^[1-9]\d*$/.test(id)) return null;
+  const result = await getDb().query<{
+    id: string; listing_type: MarketListingType; location_id: string;
+    title: string; description: string; price_amount: string | null;
+    status: "draft" | "published";
+  }>(`SELECT id::text, listing_type, location_id::text, title, description,
+            price_amount::text, status FROM market_listings
+      WHERE id = $1::bigint AND author_user_id = $2::bigint
+        AND status IN ('draft', 'published')`, [id, userId]);
+  const row = result.rows[0];
+  return row ? { id: row.id, listingType: row.listing_type,
+    locationId: row.location_id, title: row.title, description: row.description,
+    priceAmount: row.price_amount ?? "", status: row.status } : null;
+}
+
+export async function updateOwnMarketListing(input: {
+  id: string; authorUserId: string; listingType: MarketListingType;
+  locationId: string; title: string; description: string; priceAmount: string | null;
+}): Promise<boolean> {
+  if (!/^[1-9]\d*$/.test(input.id) || !/^[1-9]\d*$/.test(input.locationId)) return false;
+  const result = await getDb().query(`UPDATE market_listings m
+    SET listing_type = $3, location_id = $4::bigint, title = $5,
+        description = $6, price_amount = $7::numeric, updated_at = NOW()
+    WHERE m.id = $1::bigint AND m.author_user_id = $2::bigint
+      AND m.status IN ('draft', 'published')
+      AND EXISTS (SELECT 1 FROM locations l WHERE l.id = $4::bigint
+        AND l.country_code = 'DE' AND l.location_type = 'city' AND l.status = 'active')
+    RETURNING m.id`, [input.id, input.authorUserId, input.listingType,
+      input.locationId, input.title, input.description, input.priceAmount]);
+  return result.rowCount === 1;
+}
