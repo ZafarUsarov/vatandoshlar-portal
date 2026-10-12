@@ -17,7 +17,7 @@ const copy = {
     filter: "Filtrlash", create: "E’lon joylash", empty: "Hozircha mos e’lonlar yo‘q.",
     open: "E’lonni ko‘rish", price: "Narx kelishiladi", free: "Bepul",
     search: "Qidiruv", searchPlaceholder: "E’lonlarni qidirish...", previous: "Oldingi",
-    next: "Keyingi", page: "Sahifa", of: "/", results: "ta e’lon",
+    next: "Keyingi", page: "Sahifa", of: "/", results: "ta e’lon", reset: "Filtrlarni tozalash",
   },
   de: {
     title: "Vatandosh Market", description: "Anzeigen der usbekischen Community in Deutschland.",
@@ -25,7 +25,7 @@ const copy = {
     filter: "Filtern", create: "Anzeige aufgeben", empty: "Noch keine passenden Anzeigen.",
     open: "Anzeige ansehen", price: "Preis auf Anfrage", free: "Kostenlos",
     search: "Suche", searchPlaceholder: "Anzeigen durchsuchen...", previous: "Zurück",
-    next: "Weiter", page: "Seite", of: "von", results: "Anzeigen",
+    next: "Weiter", page: "Seite", of: "von", results: "Anzeigen", reset: "Filter zurücksetzen",
   },
 } as const;
 const types: MarketListingType[] = ["sell", "buy", "giveaway"];
@@ -69,7 +69,6 @@ export default async function MarketPage({ searchParams }: {
     page: requestedPage,
   });
   const { listings, total, page, totalPages } = result;
-
   const pageHref = (target: number) => {
     const search = new URLSearchParams();
     if (selectedType) search.set("type", selectedType);
@@ -78,7 +77,6 @@ export default async function MarketPage({ searchParams }: {
     search.set("page", String(target));
     return `/market?${search.toString()}`;
   };
-
   const formatPrice = (amount: string | null, type: MarketListingType) =>
     type === "giveaway" ? t.free : amount === null ? t.price
       : new Intl.NumberFormat(locale === "de" ? "de-DE" : "uz-UZ", {
@@ -94,18 +92,21 @@ export default async function MarketPage({ searchParams }: {
             <h1 className="text-4xl font-bold">{t.title}</h1>
             <p className="mt-4 text-slate-600 dark:text-slate-300">{t.description}</p>
           </div>
-          <Link href="/market/new" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-5 font-semibold text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500">
+          <Link href="/market/new" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-5 font-semibold !text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500">
             {t.create}
           </Link>
         </div>
 
-        <form className="mt-10 flex flex-wrap items-end gap-3" method="get">
-          <label className="flex w-full min-w-0 flex-col gap-2 text-sm sm:min-w-48 sm:flex-1">
+        <form className="mt-10 grid grid-cols-1 items-end gap-4 md:grid-cols-2 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1.4fr)_minmax(0,1fr)_auto]" method="get">
+          <label className="flex min-w-0 flex-col gap-2 text-sm">
             {t.search}
             <input name="q" type="search" maxLength={100} defaultValue={query} placeholder={t.searchPlaceholder}
-              className="min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-slate-950 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+              className="min-h-11 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 text-slate-950 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
           </label>
-          <label className="flex min-w-40 flex-1 flex-col gap-2 text-sm sm:flex-none">
+          <div className="min-w-0">
+            <MarketCityCombobox initialId={selectedCity?.id ?? ""} locale={locale} disabled={false} />
+          </div>
+          <label className="flex min-w-0 flex-col gap-2 text-sm">
             {t.all}
             <span className="relative block">
               <select name="type" defaultValue={selectedType ?? ""} className="min-h-11 w-full appearance-none rounded-xl border border-slate-300 bg-white py-2 pl-3 pr-11 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
@@ -117,16 +118,18 @@ export default async function MarketPage({ searchParams }: {
               </svg>
             </span>
           </label>
-          <div className="w-full min-w-0 flex-1 sm:min-w-64">
-            <MarketCityCombobox initialId={selectedCity?.id ?? ""} locale={locale} disabled={false} />
-          </div>
-          <button type="submit" className="min-h-11 rounded-xl bg-emerald-700 px-5 font-semibold text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500">
+          <button type="submit" className="min-h-11 w-full rounded-xl bg-emerald-700 px-5 font-semibold !text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 lg:w-auto">
             {t.filter}
           </button>
         </form>
 
         {listings.length === 0 ? (
-          <div className="mt-10 rounded-2xl border border-slate-200 p-8 text-slate-600 dark:border-slate-800 dark:text-slate-300">{t.empty}</div>
+          <div className="mt-10 rounded-2xl border border-slate-200 p-8 text-slate-600 dark:border-slate-800 dark:text-slate-300">
+            <p>{t.empty}</p>
+            {(query || selectedType || selectedCity) && (
+              <Link href="/market" className="mt-4 inline-block font-semibold text-emerald-700 underline underline-offset-4 dark:text-emerald-400">{t.reset}</Link>
+            )}
+          </div>
         ) : (
           <>
             <p className="mt-8 text-sm text-slate-600 dark:text-slate-300">{total} {t.results}</p>
