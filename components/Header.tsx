@@ -1114,14 +1114,14 @@ export default function Header() {
       {/* Desktop ecosystem shortcuts: anchored to the right edge, labels expand left. */}
       <nav aria-label={locale === "de" ? "Weitere Angebote" : "Qo‘shimcha xizmatlar"} className="fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-1.5 lg:flex">
         {[
-          { href: "/savol" as const, label: locale === "de" ? "Vatandosh Fragen & Antworten" : "Vatandosh Savol", Icon: MessagesSquare },
+          { href: "/savol" as const, label: locale === "de" ? "Vatandosh Q&A" : "Vatandosh Savol", Icon: MessagesSquare },
           { href: "/market" as const, label: "Vatandosh Market", Icon: ShoppingBag },
         ].map(({ href, label, Icon }) => (
           <div key={href} className="relative h-12 w-12">
             <Link
               href={href}
               aria-label={label}
-              className="group absolute right-0 top-0 flex h-12 w-12 items-center overflow-hidden rounded-l-xl border border-r-0 border-slate-200 bg-white/95 text-slate-900 shadow-md backdrop-blur-sm transition-[width,background-color] duration-300 ease-out hover:w-72 hover:bg-emerald-50 focus-visible:w-72 focus-visible:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:border-slate-700 dark:bg-slate-900/95 dark:text-white dark:hover:bg-slate-800 dark:focus-visible:bg-slate-800"
+              className="group absolute right-0 top-0 flex h-12 w-12 items-center overflow-hidden rounded-l-xl border border-r-0 border-slate-200 bg-white/95 text-slate-900 shadow-md backdrop-blur-sm transition-[width,background-color] duration-300 ease-out hover:w-52 hover:bg-emerald-50 focus-visible:w-52 focus-visible:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:border-slate-700 dark:bg-slate-900/95 dark:text-white dark:hover:bg-slate-800 dark:focus-visible:bg-slate-800"
             >
               <span className="absolute right-12 whitespace-nowrap pl-4 pr-3 text-sm font-semibold opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">{label}</span>
               <span className="absolute right-0 flex h-12 w-12 items-center justify-center text-emerald-700 dark:text-emerald-400">
@@ -2074,7 +2074,7 @@ export default function Header() {
                 <div className="space-y-1">
                   <Link href="/savol" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
                     <MessagesSquare aria-hidden="true" className="h-5 w-5 shrink-0" />
-                    {locale === "de" ? "Vatandosh Fragen & Antworten" : "Vatandosh Savol"}
+                    {locale === "de" ? "Vatandosh Q&A" : "Vatandosh Savol"}
                   </Link>
                   <Link href="/market" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
                     <ShoppingBag aria-hidden="true" className="h-5 w-5 shrink-0" />
