@@ -1,9 +1,11 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "@/i18n/navigation";
+import { getReadyMarketImagesForPublishedListing } from "@/lib/market/market-image-repository";
 import { getPublishedMarketListingBySlug } from "@/lib/market/market-repository";
 
 export const dynamic = "force-dynamic";
@@ -23,6 +25,7 @@ export default async function MarketDetailPage({ params }: Props) {
   const t = copy[locale];
   const item = await getPublishedMarketListingBySlug((await params).slug);
   if (!item) notFound();
+  const images = await getReadyMarketImagesForPublishedListing(item.id);
   const price = item.listingType === "giveaway" ? t.free : item.priceAmount === null ? t.negotiable : new Intl.NumberFormat(locale === "de" ? "de-DE" : "uz-UZ", { style: "currency", currency: "EUR" }).format(Number(item.priceAmount));
-  return <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white"><Header /><main className="mx-auto max-w-4xl px-5 pb-20 pt-32 sm:px-8"><Link href="/market" className="text-sm font-semibold text-emerald-700 hover:underline dark:text-emerald-400">← {t.back}</Link><p className="mt-10 text-sm font-semibold text-emerald-700 dark:text-emerald-400">{t[item.listingType]} · {item.cityName}, {item.stateName}</p><h1 className="mt-3 text-3xl font-bold sm:text-4xl">{item.title}</h1><p className="mt-5 text-xl font-semibold">{price}</p><p className="mt-8 whitespace-pre-line break-words leading-8 text-slate-700 dark:text-slate-200">{item.description}</p></main><Footer /></div>;
+  return <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white"><Header /><main className="mx-auto max-w-4xl px-5 pb-20 pt-32 sm:px-8"><Link href="/market" className="text-sm font-semibold text-emerald-700 hover:underline dark:text-emerald-400">← {t.back}</Link><p className="mt-10 text-sm font-semibold text-emerald-700 dark:text-emerald-400">{t[item.listingType]} · {item.cityName}, {item.stateName}</p><h1 className="mt-3 text-3xl font-bold sm:text-4xl">{item.title}</h1><p className="mt-5 text-xl font-semibold">{price}</p>{images.length > 0 && <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">{images.map((image, index) => <a key={image.id} href={`/api/market/images/${image.id}`} target="_blank" rel="noopener noreferrer" className={index === 0 ? "col-span-2 sm:col-span-2" : ""}><div className="relative aspect-square w-full overflow-hidden rounded-xl"><Image unoptimized fill sizes={index === 0 ? "(max-width: 640px) 100vw, 66vw" : "(max-width: 640px) 50vw, 33vw"} src={`/api/market/images/${image.id}`} alt={`${item.title} — ${index + 1}`} className="object-cover" /></div></a>)}</div>}<p className="mt-8 whitespace-pre-line break-words leading-8 text-slate-700 dark:text-slate-200">{item.description}</p></main><Footer /></div>;
 }

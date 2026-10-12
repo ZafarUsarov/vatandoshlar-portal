@@ -70,6 +70,7 @@
       "news": "Yangiliklar",
       "services": "Xizmatlar",
       "jobs": "Ish",
+      "market": "Market",
       "telegram": "Telegram",
       "events": "Tadbirlar",
       "guide": "Qo‘llanma"
@@ -79,6 +80,7 @@
       "news": "Rasmiy va tekshirilgan ma’lumotlar",
       "services": "Mutaxassis va xizmatlar katalogi",
       "jobs": "Ish qidirish va karyera qo‘llanmalari",
+      "market": "E’lonlarni ko‘rish va joylashtirish",
       "telegram": "Bundeslandlar bo‘yicha guruhlar",
       "events": "Tekshirilgan uchrashuv va tadbirlar",
       "guide": "Germaniya bo‘yicha qo‘llanmalar"
@@ -917,5 +919,12 @@
     "description": "Iltimos, qayta urinib ko‘ring. Muammo davom etsa, bosh sahifaga qayting.",
     "retry": "Qayta urinish",
     "home": "Bosh sahifa"
+  },
+  "NotFoundPage": {
+    "eyebrow": "404 — Sahifa topilmadi",
+    "title": "Sahifa topilmadi",
+    "description": "Siz izlayotgan sahifa mavjud emas yoki uning manzili o‘zgargan.",
+    "home": "Bosh sahifaga qaytish",
+    "guide": "Qo‘llanmani ko‘rish"
   }
 }
