@@ -16,6 +16,17 @@ export type MarketListing = Readonly<{
   stateName: string;
 }>;
 
+export type MarketListingWithCover = MarketListing & Readonly<{
+  coverImageId: string | null;
+}>;
+
+export type MarketListingPage = Readonly<{
+  listings: ReadonlyArray<MarketListingWithCover>;
+  total: number;
+  page: number;
+  totalPages: number;
+}>;
+
 type ListingRow = {
   id: string;
   slug: string;
@@ -59,18 +70,70 @@ const select = `
     AND l.location_type = 'city'
 `;
 
+/** Public market catalogue: keyword search, cover image and 12 listings per page. */
 export async function getPublishedMarketListings(filters: {
   type?: MarketListingType;
   locationId?: string;
-} = {}): Promise<ReadonlyArray<MarketListing>> {
-  const result = await getDb().query<ListingRow>(`
-    ${select}
+  query?: string;
+  page?: number;
+} = {}): Promise<MarketListingPage> {
+  const pageSize = 12;
+  const requestedPage = typeof filters.page === "number" && Number.isSafeInteger(filters.page) && filters.page > 0
+    ? Math.min(filters.page, 10000)
+    : 1;
+  const query = filters.query?.trim().slice(0, 100) || null;
+  const params = [filters.type ?? null, filters.locationId ?? null, query];
+
+  const where = `
     AND ($1::text IS NULL OR m.listing_type = $1)
     AND ($2::bigint IS NULL OR m.location_id = $2::bigint)
+    AND ($3::text IS NULL OR m.title ILIKE '%' || $3 || '%' OR m.description ILIKE '%' || $3 || '%')
+  `;
+
+  const db = getDb();
+  const countResult = await db.query<{ total: string }>(`
+    SELECT COUNT(*)::text AS total
+    FROM market_listings m
+    JOIN locations l ON l.id = m.location_id
+    WHERE m.status = 'published' AND m.published_at IS NOT NULL
+      AND l.status = 'active' AND l.country_code = 'DE'
+      AND l.location_type = 'city'
+      ${where}
+  `, params);
+
+  const total = Number(countResult.rows[0]?.total ?? 0);
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const page = Math.min(requestedPage, totalPages);
+
+  const selectWithCover = `
+    SELECT m.id::text, m.slug, m.listing_type, m.title, m.description,
+           m.content_language, m.price_amount::text, m.currency,
+           m.published_at, m.location_id::text, l.city_name, l.state_name,
+           (SELECT i.id::text
+            FROM market_listing_images i
+            WHERE i.listing_id = m.id AND i.status = 'ready'
+            ORDER BY i.position ASC, i.id ASC
+            LIMIT 1) AS cover_image_id
+    FROM market_listings m
+    JOIN locations l ON l.id = m.location_id
+    WHERE m.status = 'published' AND m.published_at IS NOT NULL
+      AND l.status = 'active' AND l.country_code = 'DE'
+      AND l.location_type = 'city'
+  `;
+
+  const result = await db.query<ListingRow & { cover_image_id: string | null }>(`
+    ${selectWithCover}
+    ${where}
     ORDER BY m.published_at DESC, m.id DESC
-    LIMIT 60
-  `, [filters.type ?? null, filters.locationId ?? null]);
-  return result.rows.map(mapListing);
+    LIMIT $4 OFFSET $5
+  `, [...params, pageSize, (page - 1) * pageSize]);
+
+  return {
+    listings: result.rows.map(row => ({ ...mapListing(row), coverImageId: row.cover_image_id })),
+    total,
+    page,
+    totalPages,
+  };
 }
 
 export async function getPublishedMarketListingBySlug(slug: string): Promise<MarketListing | null> {
