@@ -18,6 +18,7 @@ export default function MarketCityCombobox({ initialId, locale, disabled }: Prop
   const [message, setMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const listId = useId();
+  const inputId = useId();
   const de = locale === "de";
   const show = open && results.length > 0 && !selectedId;
 
@@ -77,10 +78,10 @@ export default function MarketCityCombobox({ initialId, locale, disabled }: Prop
   }
 
   return <div className="relative">
-    <label htmlFor="market-city-search" className="mb-2 block font-semibold">{de ? "Stadt oder PLZ" : "Shahar yoki PLZ"}</label>
+    <label htmlFor={inputId} className="mb-2 block text-sm">{de ? "Stadt oder PLZ" : "Shahar yoki PLZ"}</label>
     <input type="hidden" name="locationId" value={selectedId} />
     <div className="relative flex items-center">
-      <input ref={inputRef} id="market-city-search" role="combobox" aria-autocomplete="list" aria-expanded={show} aria-controls={show ? listId : undefined} aria-activedescendant={show ? `${listId}-${active}` : undefined} autoComplete="off" placeholder={de ? "Stadt oder Postleitzahl…" : "Shahar yoki pochta indeksi…"} value={query} disabled={disabled || locating}
+      <input ref={inputRef} id={inputId} role="combobox" aria-autocomplete="list" aria-expanded={show} aria-controls={show ? listId : undefined} aria-activedescendant={show ? `${listId}-${active}` : undefined} autoComplete="off" placeholder={de ? "Stadt oder Postleitzahl…" : "Shahar yoki pochta indeksi…"} value={query} disabled={disabled || locating}
         onChange={e => { setQuery(e.target.value); setSelectedId(""); setResults([]); setBusy(false); setOpen(true); setActive(0); setMessage(""); }}
         onFocus={() => { if (!selectedId) setOpen(true); }} onBlur={() => setOpen(false)}
         onKeyDown={e => {
@@ -90,8 +91,8 @@ export default function MarketCityCombobox({ initialId, locale, disabled }: Prop
           if (e.key === "ArrowUp") { e.preventDefault(); setActive(v => (v - 1 + results.length) % results.length); }
           if (e.key === "Enter") { e.preventDefault(); select(results[active]); }
         }}
-        className="min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 pr-14 text-slate-950 focus-visible:outline-2 focus-visible:outline-emerald-600 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
-      <button type="button" disabled={disabled || locating} onClick={() => void locate()} title={de ? "Meinen Standort ermitteln" : "Turgan joyimni aniqlash"} aria-label={de ? "Meinen Standort ermitteln" : "Turgan joyimni aniqlash"} className="absolute right-2 flex size-10 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-emerald-600 disabled:opacity-50 dark:text-slate-300 dark:hover:bg-slate-800"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-5"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
+        className="min-h-11 w-full rounded-xl border border-slate-300 bg-white px-4 py-2 pr-14 text-slate-950 focus-visible:outline-2 focus-visible:outline-emerald-600 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+      <button type="button" disabled={disabled || locating} onClick={() => void locate()} title={de ? "Meinen Standort ermitteln" : "Turgan joyimni aniqlash"} aria-label={de ? "Meinen Standort ermitteln" : "Turgan joyimni aniqlash"} className="absolute right-2 flex size-9 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-emerald-600 disabled:opacity-50 dark:text-slate-300 dark:hover:bg-slate-800"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-5"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
     </div>
     {(locating || busy) && <p role="status" className="mt-2 text-sm text-slate-600 dark:text-slate-300">{locating ? (de ? "Standort wird ermittelt…" : "Joylashuv aniqlanmoqda…") : (de ? "Suche…" : "Qidirilmoqda…")}</p>}
     {message && <p role="status" className="mt-2 text-sm text-amber-700 dark:text-amber-300">{message}</p>}
