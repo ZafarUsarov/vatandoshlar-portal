@@ -28,7 +28,8 @@ export async function getReadyMarketImagesForPublishedListing(listingId: string)
   if (!validId(listingId)) return [];
   const result = await getDb().query<ImageRow>(`${select}
     WHERE listing_id = $1::bigint AND status = 'ready'
-      AND EXISTS (SELECT 1 FROM market_listings m WHERE m.id = listing_id AND m.status = 'published')
+      AND EXISTS (SELECT 1 FROM market_listings m WHERE m.id = listing_id AND m.status = 'published'
+        AND (m.expires_at IS NULL OR m.expires_at > NOW()))
     ORDER BY position ASC`, [listingId]);
   return result.rows.map(map);
 }

@@ -9,6 +9,7 @@ export async function findMarketImage(imageId: string, userId?: string) {
   const result = await getDb().query<Row>(`SELECT i.id::text, i.listing_id::text, i.storage_key, i.content_type, i.byte_size, i.position, i.status
     FROM market_listing_images i JOIN market_listings m ON m.id = i.listing_id
     WHERE i.id = $1::bigint AND ($2::text IS NULL AND i.status = 'ready' AND m.status = 'published'
+      AND (m.expires_at IS NULL OR m.expires_at > NOW())
       OR $2::text IS NOT NULL AND m.author_user_id::text = $2 AND m.status IN ('draft','published'))`, [imageId, userId ?? null]);
   return result.rows[0] ? toRecord(result.rows[0]) : null;
 }

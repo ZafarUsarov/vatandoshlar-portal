@@ -72,7 +72,14 @@ export async function changeOwnMarketListingStatus(input: {
   const result = await getDb().query(
     `UPDATE market_listings m
      SET status = $4, updated_at = NOW(),
-         published_at = CASE WHEN $4 = 'published' THEN NOW() ELSE published_at END
+         published_at = CASE WHEN $4 = 'published' THEN NOW() ELSE published_at END,
+         expires_at = CASE
+           WHEN $4 = 'published' THEN NOW() + CASE
+             WHEN m.plan_type = 'pro' THEN INTERVAL '60 days'
+             ELSE INTERVAL '21 days'
+           END
+           ELSE m.expires_at
+         END
      WHERE m.id = $1::bigint AND m.author_user_id = $2::bigint
        AND m.status = $3
        AND EXISTS (

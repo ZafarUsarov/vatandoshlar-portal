@@ -66,6 +66,7 @@ const select = `
   FROM market_listings m
   JOIN locations l ON l.id = m.location_id
   WHERE m.status = 'published' AND m.published_at IS NOT NULL
+    AND (m.expires_at IS NULL OR m.expires_at > NOW())
     AND l.status = 'active' AND l.country_code = 'DE'
     AND l.location_type = 'city'
 `;
@@ -96,6 +97,7 @@ export async function getPublishedMarketListings(filters: {
     FROM market_listings m
     JOIN locations l ON l.id = m.location_id
     WHERE m.status = 'published' AND m.published_at IS NOT NULL
+    AND (m.expires_at IS NULL OR m.expires_at > NOW())
       AND l.status = 'active' AND l.country_code = 'DE'
       AND l.location_type = 'city'
       ${where}
@@ -117,6 +119,7 @@ export async function getPublishedMarketListings(filters: {
     FROM market_listings m
     JOIN locations l ON l.id = m.location_id
     WHERE m.status = 'published' AND m.published_at IS NOT NULL
+    AND (m.expires_at IS NULL OR m.expires_at > NOW())
       AND l.status = 'active' AND l.country_code = 'DE'
       AND l.location_type = 'city'
   `;
