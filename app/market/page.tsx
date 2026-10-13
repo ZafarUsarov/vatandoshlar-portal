@@ -1,13 +1,13 @@
 import { marketCategories, marketCategoryLabels, isMarketCategory } from "@/lib/market/market-category";
 import type { Metadata } from "next";
-import Image from "next/image";
+import MarketListingResults from "@/components/market/MarketListingResults";
 import { getLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MarketCityCombobox from "@/components/market/MarketCityCombobox";
 import { Link } from "@/i18n/navigation";
 import { getActiveCities } from "@/lib/locations/location-repository";
-import { getPublishedMarketListings, type MarketListingType } from "@/lib/market/market-repository";
+import { getPublishedMarketListings, type MarketListingSort, type MarketListingType } from "@/lib/market/market-repository";
 
 export const dynamic = "force-dynamic";
 type Locale = "uz" | "de";
@@ -31,6 +31,17 @@ const copy = {
 } as const;
 const types: MarketListingType[] = ["sell", "buy", "giveaway"];
 function localeOf(value: string): Locale { return value === "de" ? "de" : "uz"; }
+function Glyph({ name, className = "size-5" }: { name: "search" | "grid" | "list" | "filter" | "plus"; className?: string }) {
+  const paths = {
+    search: <><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></>,
+    grid: <><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></>,
+    list: <><path d="M4 6h16M4 12h11M4 18h7" /></>,
+    filter: <><path d="M4 7h16M7 12h10M10 17h4" /><path d="M16 4v6M8 10v5" /></>,
+    plus: <><circle cx="12" cy="12" r="9" /><path d="M12 8v8M8 12h8" /></>,
+  };
+  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>{paths[name]}</svg>;
+}
+
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = localeOf(await getLocale());
@@ -45,13 +56,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function MarketPage({ searchParams }: {
-  searchParams: Promise<{ type?: string; category?: string; locationId?: string; city?: string; q?: string; page?: string }>;
+  searchParams: Promise<{ type?: string; category?: string; locationId?: string; city?: string; q?: string; page?: string; sort?: string }>;
 }) {
   const locale = localeOf(await getLocale());
   const t = copy[locale];
   const params = await searchParams;
   const selectedCategory = typeof params.category === "string" && isMarketCategory(params.category) ? params.category : undefined;
   const selectedType = types.find(type => type === params.type);
+  const sort: MarketListingSort = params.sort === "oldest" || params.sort === "price_asc" || params.sort === "price_desc" ? params.sort : "newest";
   const requestedLocationId = typeof params.locationId === "string" && /^[1-9]\d{0,18}$/.test(params.locationId)
     ? params.locationId : undefined;
   const legacyCity = typeof params.city === "string" ? params.city : undefined;
@@ -70,6 +82,7 @@ export default async function MarketPage({ searchParams }: {
     locationId: selectedCity?.id,
     query,
     page: requestedPage,
+    sort,
   });
   const { listings, total, page, totalPages } = result;
   const pageHref = (target: number) => {
@@ -79,13 +92,9 @@ export default async function MarketPage({ searchParams }: {
     if (selectedCity) search.set("locationId", selectedCity.id);
     if (query) search.set("q", query);
     search.set("page", String(target));
+    if (sort !== "newest") search.set("sort", sort);
     return `/market?${search.toString()}`;
   };
-  const formatPrice = (amount: string | null, type: MarketListingType) =>
-    type === "giveaway" ? t.free : amount === null ? t.price
-      : new Intl.NumberFormat(locale === "de" ? "de-DE" : "uz-UZ", {
-          style: "currency", currency: "EUR",
-        }).format(Number(amount));
 
   return (
     <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
@@ -97,23 +106,30 @@ export default async function MarketPage({ searchParams }: {
             <p className="mt-4 text-slate-600 dark:text-slate-300">{t.description}</p>
           </div>
           <Link href="/market/new" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-5 font-semibold !text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500">
-            {t.create}
+            <Glyph name="plus" className="mr-2 size-5" />{t.create}
           </Link>
         </div>
 
         <form className="mt-10 grid grid-cols-1 items-end gap-4 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1.3fr)_minmax(0,1.05fr)_minmax(0,1.05fr)_auto]" method="get">
           <label className="flex min-w-0 flex-col gap-2 text-sm">
             {t.search}
-            <input name="q" type="search" maxLength={100} defaultValue={query} placeholder={t.searchPlaceholder}
-              className="min-h-12 w-full min-w-0 rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+            <span className="relative block">
+              <Glyph name="search" className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
+              <input name="q" type="search" maxLength={100} defaultValue={query} placeholder={t.searchPlaceholder}
+                className="min-h-12 w-full min-w-0 rounded-2xl border border-slate-300 bg-white py-2 pl-12 pr-4 text-slate-950 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+            </span>
           </label>
-          <div className="min-w-0 [&_input[role=combobox]]:min-h-12 [&_input[role=combobox]]:rounded-2xl">
+          <div className="min-w-0 [&_input[role=combobox]]:min-h-12 [&_input[role=combobox]]:rounded-2xl [&_input[role=combobox]]:pl-11">
+            <div className="relative">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute left-3 top-[42px] z-10 size-5 text-slate-500"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
             <MarketCityCombobox initialId={selectedCity?.id ?? ""} locale={locale} disabled={false} />
+            </div>
           </div>
-          <label className="flex min-w-0 flex-col gap-2 text-sm">
+          <label className="order-4 flex min-w-0 flex-col gap-2 text-sm xl:order-4">
             {t.typeLabel}
             <span className="relative block">
-              <select name="type" defaultValue={selectedType ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-4 pr-11 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+              <Glyph name="list" className="pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
+              <select name="type" defaultValue={selectedType ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-11 pr-11 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
                 <option value="">{t.all}</option>
                 {types.map(type => <option key={type} value={type}>{t[type]}</option>)}
               </select>
@@ -122,10 +138,11 @@ export default async function MarketPage({ searchParams }: {
               </svg>
             </span>
           </label>
-          <label className="flex min-w-0 flex-col gap-2 text-sm">
+          <label className="order-3 flex min-w-0 flex-col gap-2 text-sm xl:order-3">
             {locale === "de" ? "Kategorie" : "Kategoriya"}
             <span className="relative block">
-              <select name="category" defaultValue={selectedCategory ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-4 pr-11 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+              <Glyph name="grid" className="pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
+              <select name="category" defaultValue={selectedCategory ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-11 pr-11 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
                 <option value="">{locale === "de" ? "Alle Kategorien" : "Barcha kategoriyalar"}</option>
                 {marketCategories.map(category => <option key={category} value={category}>{marketCategoryLabels[locale][category]}</option>)}
               </select>
@@ -134,8 +151,8 @@ export default async function MarketPage({ searchParams }: {
               </svg>
             </span>
           </label>
-          <button type="submit" className="min-h-12 w-full rounded-2xl bg-emerald-700 px-6 font-semibold !text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 sm:col-span-2 xl:col-span-1 xl:w-auto">
-            {t.filter}
+          <button type="submit" className="order-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-emerald-700 px-6 font-semibold !text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 sm:col-span-2 xl:col-span-1 xl:w-auto">
+            <Glyph name="filter" />{t.filter}
           </button>
         </form>
 
@@ -148,28 +165,18 @@ export default async function MarketPage({ searchParams }: {
           </div>
         ) : (
           <>
-            <p className="mt-8 text-sm text-slate-600 dark:text-slate-300">{total} {t.results}</p>
-            <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-              {listings.map(item => (
-                <article key={item.id} className="group flex h-full w-full max-w-[340px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900">
-                  {item.coverImageId ? (
-                    <Link href={`/market/${item.slug}`} className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500">
-                      <div className="relative aspect-[16/10] w-full bg-slate-100 dark:bg-slate-900">
-                        <Image unoptimized fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          src={`/api/market/images/${item.coverImageId}`} alt={item.title} className="object-cover" />
-                      </div>
-                    </Link>
-                  ) : <Link href={`/market/${item.slug}`} className="flex aspect-[16/10] items-center justify-center bg-slate-100 text-slate-500 dark:bg-slate-800" aria-label={item.title}><span className="text-sm">{locale === "de" ? "Kein Bild" : "Rasm mavjud emas"}</span></Link>}
-                  <div className="flex flex-1 flex-col p-5">
-                    <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">{marketCategoryLabels[locale][item.category]} · {t[item.listingType]} · {item.cityName}</p>
-                    <h2 className="mt-2 line-clamp-2 text-xl font-bold">{item.title}</h2>
-                    <p className="mt-2 line-clamp-2 whitespace-pre-line text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
-                    <p className="mt-4 text-lg font-bold">{formatPrice(item.priceAmount, item.listingType)}</p>
-                    <Link href={`/market/${item.slug}`} className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-emerald-100 px-4 text-center font-semibold text-emerald-950 transition-colors hover:bg-emerald-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:bg-emerald-800 dark:text-white dark:hover:bg-emerald-700">{t.open}<span aria-hidden="true">→</span></Link>
-                  </div>
-                </article>
-              ))}
-            </div>
+            <MarketListingResults
+              listings={listings}
+              locale={locale}
+              total={total}
+              resultsLabel={t.results}
+              openLabel={t.open}
+              freeLabel={t.free}
+              priceLabel={t.price}
+              typeLabels={{ sell: t.sell, buy: t.buy, giveaway: t.giveaway }}
+              categoryLabels={marketCategoryLabels[locale]}
+              initialSort={sort}
+            />
           </>
         )}
 

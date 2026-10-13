@@ -2,6 +2,7 @@ import type { MarketCategory } from "@/lib/market/market-category";
 import type { MarketContact } from "@/lib/market/market-contact";
 import { getDb } from "@/lib/db";
 
+export type MarketListingSort = "newest" | "oldest" | "price_asc" | "price_desc";
 export type MarketListingType = "sell" | "buy" | "giveaway";
 export type MarketListing = Readonly<{
   id: string;
@@ -87,6 +88,7 @@ export async function getPublishedMarketListings(filters: {
   locationId?: string;
   query?: string;
   page?: number;
+  sort?: MarketListingSort;
 } = {}): Promise<MarketListingPage> {
   const pageSize = 12;
   const requestedPage = typeof filters.page === "number" && Number.isSafeInteger(filters.page) && filters.page > 0
@@ -102,6 +104,13 @@ export async function getPublishedMarketListings(filters: {
     AND ($4::text IS NULL OR m.category = $4)
   `;
 
+  const sort = filters.sort ?? "newest";
+  const orderBy = {
+    newest: "m.published_at DESC, m.id DESC",
+    oldest: "m.published_at ASC, m.id ASC",
+    price_asc: "m.price_amount ASC NULLS LAST, m.published_at DESC, m.id DESC",
+    price_desc: "m.price_amount DESC NULLS LAST, m.published_at DESC, m.id DESC",
+  }[sort] ?? "m.published_at DESC, m.id DESC";
   const db = getDb();
   const countResult = await db.query<{ total: string }>(`
     SELECT COUNT(*)::text AS total
@@ -140,7 +149,7 @@ export async function getPublishedMarketListings(filters: {
   const result = await db.query<ListingRow & { cover_image_id: string | null }>(`
     ${selectWithCover}
     ${where}
-    ORDER BY m.published_at DESC, m.id DESC
+    ORDER BY ${orderBy}
     LIMIT $5 OFFSET $6
   `, [...params, pageSize, (page - 1) * pageSize]);
 
