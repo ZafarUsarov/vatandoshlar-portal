@@ -14,7 +14,7 @@ type Locale = "uz" | "de";
 const copy = {
   uz: {
     title: "Vatandosh Market", description: "Germaniyadagi vatandoshlar e’lonlari.",
-    all: "Barcha turlar", sell: "Sotaman", buy: "Sotib olaman", giveaway: "Bepul beraman",
+    all: "Barcha turlar", typeLabel: "E’lon turi", sell: "Sotaman", buy: "Sotib olaman", giveaway: "Bepul beraman",
     filter: "Filtrlash", create: "E’lon joylash", empty: "Hozircha mos e’lonlar yo‘q.",
     open: "E’lonni ko‘rish", price: "Narx kelishiladi", free: "Bepul",
     search: "Qidiruv", searchPlaceholder: "E’lonlarni qidirish...", previous: "Oldingi",
@@ -22,7 +22,7 @@ const copy = {
   },
   de: {
     title: "Vatandosh Market", description: "Anzeigen der usbekischen Community in Deutschland.",
-    all: "Alle Arten", sell: "Verkaufen", buy: "Suche", giveaway: "Verschenken",
+    all: "Alle Arten", typeLabel: "Anzeigenart", sell: "Verkaufen", buy: "Suche", giveaway: "Verschenken",
     filter: "Filtern", create: "Anzeige aufgeben", empty: "Noch keine passenden Anzeigen.",
     open: "Anzeige ansehen", price: "Preis auf Anfrage", free: "Kostenlos",
     search: "Suche", searchPlaceholder: "Anzeigen durchsuchen...", previous: "Zurück",
@@ -101,19 +101,19 @@ export default async function MarketPage({ searchParams }: {
           </Link>
         </div>
 
-        <form className="mt-10 grid grid-cols-1 items-end gap-4 md:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_auto]" method="get">
+        <form className="mt-10 grid grid-cols-1 items-end gap-4 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1.3fr)_minmax(0,1.05fr)_minmax(0,1.05fr)_auto]" method="get">
           <label className="flex min-w-0 flex-col gap-2 text-sm">
             {t.search}
             <input name="q" type="search" maxLength={100} defaultValue={query} placeholder={t.searchPlaceholder}
-              className="min-h-11 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 text-slate-950 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+              className="min-h-12 w-full min-w-0 rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
           </label>
-          <div className="min-w-0">
+          <div className="min-w-0 [&_input[role=combobox]]:min-h-12 [&_input[role=combobox]]:rounded-2xl">
             <MarketCityCombobox initialId={selectedCity?.id ?? ""} locale={locale} disabled={false} />
           </div>
           <label className="flex min-w-0 flex-col gap-2 text-sm">
-            {t.all}
+            {t.typeLabel}
             <span className="relative block">
-              <select name="type" defaultValue={selectedType ?? ""} className="min-h-11 w-full appearance-none rounded-xl border border-slate-300 bg-white py-2 pl-3 pr-11 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+              <select name="type" defaultValue={selectedType ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-4 pr-11 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
                 <option value="">{t.all}</option>
                 {types.map(type => <option key={type} value={type}>{t[type]}</option>)}
               </select>
@@ -122,12 +122,19 @@ export default async function MarketPage({ searchParams }: {
               </svg>
             </span>
           </label>
-          <label className="flex min-w-0 flex-col gap-2 text-sm">{locale === "de" ? "Kategorie" : "Kategoriya"}
-            <select name="category" defaultValue={selectedCategory ?? ""} className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
-              <option value="">{locale === "de" ? "Alle Kategorien" : "Barcha kategoriyalar"}</option>
-              {marketCategories.map(category => <option key={category} value={category}>{marketCategoryLabels[locale][category]}</option>)}
-            </select></label>
-          <button type="submit" className="min-h-11 w-full rounded-xl bg-emerald-700 px-5 font-semibold !text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 lg:w-auto">
+          <label className="flex min-w-0 flex-col gap-2 text-sm">
+            {locale === "de" ? "Kategorie" : "Kategoriya"}
+            <span className="relative block">
+              <select name="category" defaultValue={selectedCategory ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-4 pr-11 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+                <option value="">{locale === "de" ? "Alle Kategorien" : "Barcha kategoriyalar"}</option>
+                {marketCategories.map(category => <option key={category} value={category}>{marketCategoryLabels[locale][category]}</option>)}
+              </select>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-600 dark:text-slate-300">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </span>
+          </label>
+          <button type="submit" className="min-h-12 w-full rounded-2xl bg-emerald-700 px-6 font-semibold !text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 sm:col-span-2 xl:col-span-1 xl:w-auto">
             {t.filter}
           </button>
         </form>
@@ -142,23 +149,23 @@ export default async function MarketPage({ searchParams }: {
         ) : (
           <>
             <p className="mt-8 text-sm text-slate-600 dark:text-slate-300">{total} {t.results}</p>
-            <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
               {listings.map(item => (
-                <article key={item.id} className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-lg dark:border-slate-800 dark:bg-slate-900">
+                <article key={item.id} className="group flex h-full w-full max-w-[340px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900">
                   {item.coverImageId ? (
                     <Link href={`/market/${item.slug}`} className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500">
-                      <div className="relative aspect-[4/3] w-full bg-slate-100 dark:bg-slate-900">
+                      <div className="relative aspect-[16/10] w-full bg-slate-100 dark:bg-slate-900">
                         <Image unoptimized fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           src={`/api/market/images/${item.coverImageId}`} alt={item.title} className="object-cover" />
                       </div>
                     </Link>
-                  ) : <Link href={`/market/${item.slug}`} className="flex aspect-[4/3] items-center justify-center bg-slate-100 text-slate-400 dark:bg-slate-800" aria-label={item.title}><span className="text-sm">{locale === "de" ? "Kein Bild" : "Rasm mavjud emas"}</span></Link>}
-                  <div className="p-6">
+                  ) : <Link href={`/market/${item.slug}`} className="flex aspect-[16/10] items-center justify-center bg-slate-100 text-slate-500 dark:bg-slate-800" aria-label={item.title}><span className="text-sm">{locale === "de" ? "Kein Bild" : "Rasm mavjud emas"}</span></Link>}
+                  <div className="flex flex-1 flex-col p-5">
                     <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">{marketCategoryLabels[locale][item.category]} · {t[item.listingType]} · {item.cityName}</p>
-                    <h2 className="mt-3 text-xl font-bold">{item.title}</h2>
-                    <p className="mt-2 line-clamp-3 whitespace-pre-line text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
-                    <p className="mt-4 font-semibold">{formatPrice(item.priceAmount, item.listingType)}</p>
-                    <Link href={`/market/${item.slug}`} className="mt-5 inline-block font-semibold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-2 dark:text-emerald-400">{t.open}</Link>
+                    <h2 className="mt-2 line-clamp-2 text-xl font-bold">{item.title}</h2>
+                    <p className="mt-2 line-clamp-2 whitespace-pre-line text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
+                    <p className="mt-4 text-lg font-bold">{formatPrice(item.priceAmount, item.listingType)}</p>
+                    <Link href={`/market/${item.slug}`} className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-emerald-100 px-4 text-center font-semibold text-emerald-950 transition-colors hover:bg-emerald-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:bg-emerald-800 dark:text-white dark:hover:bg-emerald-700">{t.open}<span aria-hidden="true">→</span></Link>
                   </div>
                 </article>
               ))}
