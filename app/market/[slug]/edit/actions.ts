@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "@/i18n/navigation";
 import { requirePublicUser } from "@/lib/auth/user";
 import { updateOwnMarketListing } from "@/lib/market/market-contribution-repository";
+import { contactError, validateMarketContact } from "@/lib/market/market-contact";
 import type { MarketListingType } from "@/lib/market/market-repository";
 import type { MarketFormValues } from "@/app/market/new/actions";
 
@@ -15,6 +16,7 @@ export async function editMarketAction(previous: EditMarketState, data: FormData
   const values: MarketFormValues = {
     listingType: get(data, "listingType"), locationId: get(data, "locationId"),
     title: get(data, "title"), description: get(data, "description"), priceAmount: get(data, "priceAmount"),
+    telegram: get(data, "telegram"), whatsapp: get(data, "whatsapp"), phone: get(data, "phone"), email: get(data, "email"),
   };
   const fail = (uz: string, de: string): EditMarketState => ({
     error: locale === "de" ? de : uz, values, revision: previous.revision + 1,
@@ -32,9 +34,11 @@ export async function editMarketAction(previous: EditMarketState, data: FormData
     priceAmount = normalized;
   }
   if (values.listingType === "sell" && priceAmount === null) return fail("Sotish narxini kiriting.", "Bitte Verkaufspreis eingeben.");
+  const contactIssue = validateMarketContact(values);
+  if (contactIssue) return fail(contactError(contactIssue, "uz"), contactError(contactIssue, "de"));
   const saved = await updateOwnMarketListing({
     id, authorUserId: context.user.id, listingType: values.listingType as MarketListingType,
-    locationId: values.locationId, title: values.title, description: values.description, priceAmount,
+    locationId: values.locationId, title: values.title, description: values.description, priceAmount, contact: values,
   });
   if (!saved) return fail("E’lonni tahrirlab bo‘lmadi.", "Anzeige konnte nicht bearbeitet werden.");
   revalidatePath(`/${locale}/market`);

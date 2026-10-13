@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import MarketContactFields from "@/components/market/MarketContactFields";
 import MarketCityCombobox from "@/components/market/MarketCityCombobox";
 import { createMarketDraftAction, type CreateMarketState } from "@/app/market/new/actions";
 
@@ -9,7 +10,7 @@ type Props = Readonly<{
 }>;
 const initialState: CreateMarketState = {
   error: null,
-  values: { listingType: "", locationId: "", title: "", description: "", priceAmount: "" },
+  values: { listingType: "", locationId: "", title: "", description: "", priceAmount: "", telegram: "", whatsapp: "", phone: "", email: "" },
   revision: 0,
 };
 const control = "min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 focus-visible:outline-2 focus-visible:outline-emerald-600 dark:border-slate-700 dark:bg-slate-900 dark:text-white";
@@ -29,6 +30,7 @@ export default function CreateMarketForm({ locale }: Props) {
     <div><label htmlFor="market-title" className="mb-2 block font-semibold">{t.title}</label><input id="market-title" name="title" defaultValue={state.values.title} required disabled={pending} className={control} /></div>
     <div><label htmlFor="market-description" className="mb-2 block font-semibold">{t.description}</label><textarea id="market-description" name="description" defaultValue={state.values.description} minLength={20} maxLength={10000} rows={7} required disabled={pending} className={control} /></div>
     <div><label htmlFor="market-price" className="mb-2 block font-semibold">{t.price}</label><input id="market-price" name="priceAmount" defaultValue={state.values.priceAmount} inputMode="decimal" placeholder="0.00" disabled={pending} className={control} /></div>
+    <MarketContactFields locale={locale} values={state.values} disabled={pending} />
     <p className="text-sm text-slate-600 dark:text-slate-300">{t.note}</p>
     <button disabled={pending} className="min-h-12 rounded-xl bg-emerald-700 px-6 font-semibold text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50">{pending ? t.saving : t.save}</button>
   </form>;

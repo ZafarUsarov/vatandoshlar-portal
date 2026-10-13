@@ -1,6 +1,7 @@
 "use client";
 import { useActionState } from "react";
 import MarketImageManager from "@/components/market/MarketImageManager";
+import MarketContactFields from "@/components/market/MarketContactFields";
 import MarketCityCombobox from "@/components/market/MarketCityCombobox";
 import { editMarketAction, type EditMarketState } from "@/app/market/[slug]/edit/actions";
 import type { EditableMarketListing } from "@/lib/market/market-contribution-repository";
@@ -9,6 +10,7 @@ export default function EditMarketForm({ locale, listing, initialImages }: { loc
   const initial: EditMarketState = { error: null, revision: 0, values: {
     listingType: listing.listingType, locationId: listing.locationId, title: listing.title,
     description: listing.description, priceAmount: listing.priceAmount,
+    telegram: listing.telegram, whatsapp: listing.whatsapp, phone: listing.phone, email: listing.email,
   }};
   const [state, action, pending] = useActionState(editMarketAction, initial);
   const de = locale === "de";
@@ -20,6 +22,7 @@ export default function EditMarketForm({ locale, listing, initialImages }: { loc
     <div><label htmlFor="market-edit-title" className="mb-2 block font-semibold">{de ? "Titel" : "Sarlavha"}</label><input id="market-edit-title" name="title" defaultValue={state.values.title} required disabled={pending} className={control} /></div>
     <div><label htmlFor="market-edit-description" className="mb-2 block font-semibold">{de ? "Beschreibung" : "Tavsif"}</label><textarea id="market-edit-description" name="description" defaultValue={state.values.description} minLength={20} maxLength={10000} rows={7} required disabled={pending} className={control} /></div>
     <div><label htmlFor="market-edit-price" className="mb-2 block font-semibold">{de ? "Preis in EUR" : "Narx (EUR)"}</label><input id="market-edit-price" name="priceAmount" defaultValue={state.values.priceAmount} inputMode="decimal" placeholder="0.00" disabled={pending} className={control} /></div>
+    <MarketContactFields locale={locale} values={state.values} disabled={pending} />
     <p className="text-sm text-slate-600 dark:text-slate-300">{de ? "Änderungen an veröffentlichten Anzeigen werden sofort öffentlich sichtbar." : "Nashr qilingan e’londagi o‘zgarishlar darhol ommaga ko‘rinadi."}</p>
   </form>
     <MarketImageManager locale={locale} listingId={listing.id} initialImages={initialImages} />

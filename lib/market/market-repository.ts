@@ -1,3 +1,4 @@
+import type { MarketContact } from "@/lib/market/market-contact";
 import { getDb } from "@/lib/db";
 
 export type MarketListingType = "sell" | "buy" | "giveaway";
@@ -14,7 +15,7 @@ export type MarketListing = Readonly<{
   locationId: string;
   cityName: string;
   stateName: string;
-}>;
+}> & MarketContact;
 
 export type MarketListingWithCover = MarketListing & Readonly<{
   coverImageId: string | null;
@@ -40,6 +41,7 @@ type ListingRow = {
   location_id: string;
   city_name: string;
   state_name: string;
+  contact_telegram: string | null; contact_whatsapp: string | null; contact_phone: string | null; contact_email: string | null;
 };
 
 function mapListing(row: ListingRow): MarketListing {
@@ -56,13 +58,16 @@ function mapListing(row: ListingRow): MarketListing {
     locationId: row.location_id,
     cityName: row.city_name,
     stateName: row.state_name,
+    telegram: row.contact_telegram ?? "", whatsapp: row.contact_whatsapp ?? "",
+    phone: row.contact_phone ?? "", email: row.contact_email ?? "",
   };
 }
 
 const select = `
   SELECT m.id::text, m.slug, m.listing_type, m.title, m.description,
          m.content_language, m.price_amount::text, m.currency,
-         m.published_at, m.location_id::text, l.city_name, l.state_name
+         m.published_at, m.location_id::text, l.city_name, l.state_name,
+         m.contact_telegram, m.contact_whatsapp, m.contact_phone, m.contact_email
   FROM market_listings m
   JOIN locations l ON l.id = m.location_id
   WHERE m.status = 'published' AND m.published_at IS NOT NULL
@@ -111,6 +116,8 @@ export async function getPublishedMarketListings(filters: {
     SELECT m.id::text, m.slug, m.listing_type, m.title, m.description,
            m.content_language, m.price_amount::text, m.currency,
            m.published_at, m.location_id::text, l.city_name, l.state_name,
+           NULL::text AS contact_telegram, NULL::text AS contact_whatsapp,
+           NULL::text AS contact_phone, NULL::text AS contact_email,
            (SELECT i.id::text
             FROM market_listing_images i
             WHERE i.listing_id = m.id AND i.status = 'ready'

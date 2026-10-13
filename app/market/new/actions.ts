@@ -6,6 +6,7 @@ import { redirect } from "@/i18n/navigation";
 import { requirePublicUser } from "@/lib/auth/user";
 import { getActiveCities } from "@/lib/locations/location-repository";
 import { createMarketDraft } from "@/lib/market/market-contribution-repository";
+import { contactError, validateMarketContact, type MarketContact } from "@/lib/market/market-contact";
 import type { MarketListingType } from "@/lib/market/market-repository";
 
 export type MarketFormValues = Readonly<{
@@ -14,7 +15,7 @@ export type MarketFormValues = Readonly<{
   title: string;
   description: string;
   priceAmount: string;
-}>;
+}> & MarketContact;
 export type CreateMarketState = Readonly<{
   error: string | null;
   values: MarketFormValues;
@@ -43,6 +44,8 @@ export async function createMarketDraftAction(
     title,
     description,
     priceAmount: priceRaw,
+    telegram: text(formData, "telegram"), whatsapp: text(formData, "whatsapp"),
+    phone: text(formData, "phone"), email: text(formData, "email"),
   };
   const error = (uz: string, de: string): CreateMarketState => ({
     error: locale === "de" ? de : uz,
@@ -70,6 +73,9 @@ export async function createMarketDraftAction(
     return error("Sotish narxini kiriting.", "Bitte geben Sie einen Verkaufspreis ein.");
   }
 
+  const contactIssue = validateMarketContact(values);
+  if (contactIssue) return error(contactError(contactIssue, "uz"), contactError(contactIssue, "de"));
+
   const base = title.normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
     .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 72).replace(/-+$/g, "");
   await createMarketDraft({
@@ -81,6 +87,7 @@ export async function createMarketDraftAction(
     description,
     contentLanguage: locale,
     priceAmount,
+    contact: values,
   });
   revalidatePath(`/${locale}/market/mine`);
   return redirect({ href: "/market/mine", locale });
