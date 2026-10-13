@@ -3,8 +3,6 @@ import { NextResponse } from "next/server";
 import { getCurrentPublicUser } from "@/lib/auth/user";
 import { reserveOwnMarketImage } from "@/lib/market/market-image-repository";
 import { validateMarketImageMetadata } from "@/lib/market/market-image-policy";
-import { signMarketImagePut } from "@/lib/market/market-r2";
-import { deleteOwnMarketImageRow } from "@/lib/market/market-image-access";
 import { consumeMarketImageUploadQuota } from "@/lib/market/market-image-rate-limit";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,11 +32,5 @@ export async function POST(request: Request, { params }: { params: Promise<{ lis
   try { image = await reserveOwnMarketImage({ listingId, authorUserId: user.user.id, storageKey: key, contentType: policy.contentType, byteSize: policy.byteSize }); }
   catch { return NextResponse.json({ error: "Image limit or slot conflict" }, { status: 409 }); }
   if (!image) return NextResponse.json({ error: "Listing not editable or image limit reached" }, { status: 403 });
-  try {
-    const uploadUrl = await signMarketImagePut(key, policy.contentType, policy.byteSize);
-    return NextResponse.json({ imageId: image.id, uploadUrl, headers: { "Content-Type": policy.contentType }, expiresIn: 300 }, { headers: { "Cache-Control": "no-store" } });
-  } catch {
-    await deleteOwnMarketImageRow(image.id, listingId, user.user.id).catch(() => undefined);
-    return NextResponse.json({ error: "Storage unavailable" }, { status: 503 });
-  }
+  return NextResponse.json({ imageId: image.id }, { headers: { "Cache-Control": "no-store" } });
 }

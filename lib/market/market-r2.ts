@@ -6,6 +6,10 @@ function config() {
   if (!R2_ACCOUNT_ID || !R2_BUCKET_NAME || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY) throw new Error("R2 is not configured");
   return { bucket: R2_BUCKET_NAME, client: new S3Client({ region: "auto", endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`, credentials: { accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY } }) };
 }
+export async function putMarketImageObject(key: string, type: string, data: Uint8Array) {
+  const { bucket, client } = config();
+  await client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: data, ContentType: type, ContentLength: data.byteLength }));
+}
 export async function signMarketImagePut(key: string, type: string, bytes: number) {
   const { bucket, client } = config();
   return getSignedUrl(client, new PutObjectCommand({ Bucket: bucket, Key: key, ContentType: type, ContentLength: bytes }), { expiresIn: 300 });

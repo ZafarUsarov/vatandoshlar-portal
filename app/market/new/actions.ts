@@ -1,4 +1,6 @@
 "use server";
+import { isMarketCategory, type MarketCategory } from "@/lib/market/market-category";
+
 
 import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
@@ -11,6 +13,7 @@ import type { MarketListingType } from "@/lib/market/market-repository";
 
 export type MarketFormValues = Readonly<{
   listingType: string;
+  category: string;
   locationId: string;
   title: string;
   description: string;
@@ -40,6 +43,7 @@ export async function createMarketDraftAction(
   const priceRaw = text(formData, "priceAmount");
   const values: MarketFormValues = {
     listingType,
+    category: text(formData, "category"),
     locationId,
     title,
     description,
@@ -54,6 +58,7 @@ export async function createMarketDraftAction(
   });
 
   if (!validTypes.includes(listingType)) return error("E’lon turini tanlang.", "Bitte wählen Sie eine Anzeigenart.");
+  if (!isMarketCategory(values.category)) return error("Kategoriyani tanlang.", "Bitte Kategorie auswählen.");
   const cities = (await getActiveCities()).filter((city) => city.countryCode === "DE");
   if (!cities.some((city) => city.id === locationId)) return error("Faol shaharni tanlang.", "Bitte wählen Sie eine verfügbare Stadt.");
   if (!title) return error("Sarlavha kiritilishi shart.", "Der Titel darf nicht leer sein.");
@@ -78,11 +83,12 @@ export async function createMarketDraftAction(
 
   const base = title.normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
     .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 72).replace(/-+$/g, "");
-  await createMarketDraft({
+  const createdId = await createMarketDraft({
     authorUserId: context.user.id,
     locationId,
     slug: `${base || "market"}-${randomUUID()}`,
     listingType,
+    category: values.category as MarketCategory,
     title,
     description,
     contentLanguage: locale,
@@ -90,5 +96,5 @@ export async function createMarketDraftAction(
     contact: values,
   });
   revalidatePath(`/${locale}/market/mine`);
-  return redirect({ href: "/market/mine", locale });
+  return redirect({ href: `/market/${createdId}/edit`, locale });
 }

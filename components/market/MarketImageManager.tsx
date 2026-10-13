@@ -62,10 +62,10 @@ export default function MarketImageManager({ listingId, initialImages, locale }:
       for (const file of files) {
         const reserved = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ contentType: file.type, byteSize: file.size }) });
         if (!reserved.ok) throw new Error(de ? "Upload konnte nicht vorbereitet werden." : "Yuklashni boshlash imkonsiz.");
-        const data = await reserved.json() as { imageId: string; uploadUrl: string; headers: Record<string, string> };
+        const data = await reserved.json() as { imageId: string };
         try {
-          const put = await fetch(data.uploadUrl, { method: "PUT", headers: data.headers, body: file });
-          if (!put.ok) throw new Error(de ? "Speicher-Upload fehlgeschlagen." : "Rasmni saqlashda xatolik.");
+          const put = await fetch(`${endpoint}/${data.imageId}/upload`, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
+          if (!put.ok) throw new Error(`${de ? "Speicher-Upload fehlgeschlagen" : "Rasmni saqlashda xatolik"} (HTTP ${put.status}).`);
           const confirmed = await fetch(`${endpoint}/${data.imageId}/confirm`, { method: "POST" });
           if (!confirmed.ok) throw new Error(de ? "Bild konnte nicht bestätigt werden." : "Rasm tasdiqlanmadi.");
           setImages(current => [...current, { id: data.imageId, position: current.length, status: "ready" }]);

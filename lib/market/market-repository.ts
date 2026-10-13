@@ -1,3 +1,4 @@
+import type { MarketCategory } from "@/lib/market/market-category";
 import type { MarketContact } from "@/lib/market/market-contact";
 import { getDb } from "@/lib/db";
 
@@ -6,6 +7,7 @@ export type MarketListing = Readonly<{
   id: string;
   slug: string;
   listingType: MarketListingType;
+  category: MarketCategory;
   title: string;
   description: string;
   contentLanguage: "uz" | "de";
@@ -32,6 +34,7 @@ type ListingRow = {
   id: string;
   slug: string;
   listing_type: MarketListingType;
+  category: MarketCategory;
   title: string;
   description: string;
   content_language: "uz" | "de";
@@ -49,6 +52,7 @@ function mapListing(row: ListingRow): MarketListing {
     id: row.id,
     slug: row.slug,
     listingType: row.listing_type,
+    category: row.category,
     title: row.title,
     description: row.description,
     contentLanguage: row.content_language,
@@ -64,7 +68,7 @@ function mapListing(row: ListingRow): MarketListing {
 }
 
 const select = `
-  SELECT m.id::text, m.slug, m.listing_type, m.title, m.description,
+  SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
          m.content_language, m.price_amount::text, m.currency,
          m.published_at, m.location_id::text, l.city_name, l.state_name,
          m.contact_telegram, m.contact_whatsapp, m.contact_phone, m.contact_email
@@ -79,6 +83,7 @@ const select = `
 /** Public market catalogue: keyword search, cover image and 12 listings per page. */
 export async function getPublishedMarketListings(filters: {
   type?: MarketListingType;
+  category?: MarketCategory;
   locationId?: string;
   query?: string;
   page?: number;
@@ -88,12 +93,13 @@ export async function getPublishedMarketListings(filters: {
     ? Math.min(filters.page, 10000)
     : 1;
   const query = filters.query?.trim().slice(0, 100) || null;
-  const params = [filters.type ?? null, filters.locationId ?? null, query];
+  const params = [filters.type ?? null, filters.locationId ?? null, query, filters.category ?? null];
 
   const where = `
     AND ($1::text IS NULL OR m.listing_type = $1)
     AND ($2::bigint IS NULL OR m.location_id = $2::bigint)
     AND ($3::text IS NULL OR m.title ILIKE '%' || $3 || '%' OR m.description ILIKE '%' || $3 || '%')
+    AND ($4::text IS NULL OR m.category = $4)
   `;
 
   const db = getDb();
@@ -113,7 +119,7 @@ export async function getPublishedMarketListings(filters: {
   const page = Math.min(requestedPage, totalPages);
 
   const selectWithCover = `
-    SELECT m.id::text, m.slug, m.listing_type, m.title, m.description,
+    SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
            m.content_language, m.price_amount::text, m.currency,
            m.published_at, m.location_id::text, l.city_name, l.state_name,
            NULL::text AS contact_telegram, NULL::text AS contact_whatsapp,
@@ -135,7 +141,7 @@ export async function getPublishedMarketListings(filters: {
     ${selectWithCover}
     ${where}
     ORDER BY m.published_at DESC, m.id DESC
-    LIMIT $4 OFFSET $5
+    LIMIT $5 OFFSET $6
   `, [...params, pageSize, (page - 1) * pageSize]);
 
   return {

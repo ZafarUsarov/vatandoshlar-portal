@@ -1,3 +1,4 @@
+import { marketCategories, marketCategoryLabels, isMarketCategory } from "@/lib/market/market-category";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
@@ -44,11 +45,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function MarketPage({ searchParams }: {
-  searchParams: Promise<{ type?: string; locationId?: string; city?: string; q?: string; page?: string }>;
+  searchParams: Promise<{ type?: string; category?: string; locationId?: string; city?: string; q?: string; page?: string }>;
 }) {
   const locale = localeOf(await getLocale());
   const t = copy[locale];
   const params = await searchParams;
+  const selectedCategory = typeof params.category === "string" && isMarketCategory(params.category) ? params.category : undefined;
   const selectedType = types.find(type => type === params.type);
   const requestedLocationId = typeof params.locationId === "string" && /^[1-9]\d{0,18}$/.test(params.locationId)
     ? params.locationId : undefined;
@@ -64,6 +66,7 @@ export default async function MarketPage({ searchParams }: {
 
   const result = await getPublishedMarketListings({
     type: selectedType,
+    category: selectedCategory,
     locationId: selectedCity?.id,
     query,
     page: requestedPage,
@@ -71,6 +74,7 @@ export default async function MarketPage({ searchParams }: {
   const { listings, total, page, totalPages } = result;
   const pageHref = (target: number) => {
     const search = new URLSearchParams();
+    if (selectedCategory) search.set("category", selectedCategory);
     if (selectedType) search.set("type", selectedType);
     if (selectedCity) search.set("locationId", selectedCity.id);
     if (query) search.set("q", query);
@@ -97,7 +101,7 @@ export default async function MarketPage({ searchParams }: {
           </Link>
         </div>
 
-        <form className="mt-10 grid grid-cols-1 items-end gap-4 md:grid-cols-2 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1.4fr)_minmax(0,1fr)_auto]" method="get">
+        <form className="mt-10 grid grid-cols-1 items-end gap-4 md:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_auto]" method="get">
           <label className="flex min-w-0 flex-col gap-2 text-sm">
             {t.search}
             <input name="q" type="search" maxLength={100} defaultValue={query} placeholder={t.searchPlaceholder}
@@ -118,6 +122,11 @@ export default async function MarketPage({ searchParams }: {
               </svg>
             </span>
           </label>
+          <label className="flex min-w-0 flex-col gap-2 text-sm">{locale === "de" ? "Kategorie" : "Kategoriya"}
+            <select name="category" defaultValue={selectedCategory ?? ""} className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+              <option value="">{locale === "de" ? "Alle Kategorien" : "Barcha kategoriyalar"}</option>
+              {marketCategories.map(category => <option key={category} value={category}>{marketCategoryLabels[locale][category]}</option>)}
+            </select></label>
           <button type="submit" className="min-h-11 w-full rounded-xl bg-emerald-700 px-5 font-semibold !text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 lg:w-auto">
             {t.filter}
           </button>
@@ -126,7 +135,7 @@ export default async function MarketPage({ searchParams }: {
         {listings.length === 0 ? (
           <div className="mt-10 rounded-2xl border border-slate-200 p-8 text-slate-600 dark:border-slate-800 dark:text-slate-300">
             <p>{t.empty}</p>
-            {(query || selectedType || selectedCity) && (
+            {(query || selectedType || selectedCategory || selectedCity) && (
               <Link href="/market" className="mt-4 inline-block font-semibold text-emerald-700 underline underline-offset-4 dark:text-emerald-400">{t.reset}</Link>
             )}
           </div>
@@ -135,17 +144,17 @@ export default async function MarketPage({ searchParams }: {
             <p className="mt-8 text-sm text-slate-600 dark:text-slate-300">{total} {t.results}</p>
             <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {listings.map(item => (
-                <article key={item.id} className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-                  {item.coverImageId && (
+                <article key={item.id} className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-lg dark:border-slate-800 dark:bg-slate-900">
+                  {item.coverImageId ? (
                     <Link href={`/market/${item.slug}`} className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500">
                       <div className="relative aspect-[4/3] w-full bg-slate-100 dark:bg-slate-900">
                         <Image unoptimized fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           src={`/api/market/images/${item.coverImageId}`} alt={item.title} className="object-cover" />
                       </div>
                     </Link>
-                  )}
+                  ) : <Link href={`/market/${item.slug}`} className="flex aspect-[4/3] items-center justify-center bg-slate-100 text-slate-400 dark:bg-slate-800" aria-label={item.title}><span className="text-sm">{locale === "de" ? "Kein Bild" : "Rasm mavjud emas"}</span></Link>}
                   <div className="p-6">
-                    <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">{t[item.listingType]} · {item.cityName}</p>
+                    <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">{marketCategoryLabels[locale][item.category]} · {t[item.listingType]} · {item.cityName}</p>
                     <h2 className="mt-3 text-xl font-bold">{item.title}</h2>
                     <p className="mt-2 line-clamp-3 whitespace-pre-line text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
                     <p className="mt-4 font-semibold">{formatPrice(item.priceAmount, item.listingType)}</p>
