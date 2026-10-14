@@ -28,6 +28,7 @@ export default async function AccountPage() {
         profile: profileComplete ? "Profil bearbeiten" : "Profil einrichten",
         myCity: "Meine Stadt",
         notifications: "Benachrichtigungen",
+        myListings: "Meine Anzeigen",
         myCityDisabled: "Wählen Sie zuerst einen Wohnort in Ihrem Profil aus.",
         home: "Zur Startseite",
       }
@@ -39,6 +40,7 @@ export default async function AccountPage() {
         profile: profileComplete ? "Profilni tahrirlash" : "Profilni sozlash",
         myCity: "Mening shahrim",
         notifications: "Bildirishnomalar",
+        myListings: "Mening e’lonlarim",
         myCityDisabled: "Avval profilingizda yashash joyingizni tanlang.",
         home: "Bosh sahifaga qaytish",
       };
@@ -78,6 +80,10 @@ export default async function AccountPage() {
 
           <Link href="/account/profile" className={`${buttonBase} border border-emerald-200 bg-emerald-50 text-emerald-800 hover:border-emerald-300 hover:bg-emerald-100 dark:border-emerald-800/70 dark:bg-emerald-950/30 dark:text-emerald-200 dark:hover:bg-emerald-950/50`}>
             {copy.profile}
+          </Link>
+
+          <Link href="/market/mine" className={`${buttonBase} border border-emerald-200 bg-emerald-50 text-emerald-800 hover:border-emerald-300 hover:bg-emerald-100 dark:border-emerald-800/70 dark:bg-emerald-950/30 dark:text-emerald-200 dark:hover:bg-emerald-950/50`}>
+            {copy.myListings}
           </Link>
 
           <Link href="/account/notifications" className={`${buttonBase} border border-slate-200 bg-white text-slate-700 shadow-sm hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800`}>

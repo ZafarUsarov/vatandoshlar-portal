@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { Link } from "@/i18n/navigation";
 import { requirePublicUser } from "@/lib/auth/user";
 import { getOwnMarketListings } from "@/lib/market/market-contribution-repository";
-import { changeMarketStatusAction } from "./actions";
+import { changeMarketStatusAction, removeMarketListingAction } from "./actions";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Market | My listings", robots: { index: false, follow: false } };
@@ -16,11 +16,11 @@ export default async function MyMarketPage() {
   const listings = await getOwnMarketListings(context.user.id);
   const t = locale === "de" ? {
     heading: "Meine Anzeigen", back: "Zum Marktplatz", total: "Anzeigen insgesamt", create: "Neue Anzeige", empty: "Sie haben noch keine Anzeigen.",
-    publish: "Veröffentlichen", close: "Schließen", view: "Anzeige ansehen", edit: "Bearbeiten",
+    publish: "Veröffentlichen", close: "Schließen", view: "Anzeige ansehen", edit: "Bearbeiten", remove: "Entfernen", confirmRemove: "Anzeige wirklich entfernen?", confirmYes: "Ja, entfernen", cancel: "Abbrechen",
     draft: "Entwurf", published: "Veröffentlicht", closed: "Geschlossen", hidden: "Ausgeblendet", removed: "Entfernt",
   } : {
     heading: "Mening e’lonlarim", back: "Marketga qaytish", total: "Jami e’lonlar", create: "Yangi e’lon", empty: "Hozircha e’lonlaringiz yo‘q.",
-    publish: "Nashr qilish", close: "Yopish", view: "E’lonni ko‘rish", edit: "Tahrirlash",
+    publish: "Nashr qilish", close: "Yopish", view: "E’lonni ko‘rish", edit: "Tahrirlash", remove: "O‘chirish", confirmRemove: "E’lonni rostdan ham o‘chirmoqchimisiz?", confirmYes: "Ha, o‘chirish", cancel: "Bekor qilish",
     draft: "Qoralama", published: "Nashr qilingan", closed: "Yopilgan", hidden: "Yashirilgan", removed: "O‘chirilgan",
   };
   return <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
@@ -45,6 +45,17 @@ export default async function MyMarketPage() {
                     {item.status === "draft" ? t.publish : t.close}
                   </button>
                 </form>}
+              {(item.status === "draft" || item.status === "published" || item.status === "closed") &&
+                <details className="group rounded-xl border border-red-200 dark:border-red-900">
+                  <summary className="flex min-h-11 cursor-pointer list-none items-center px-4 font-semibold text-red-700 marker:hidden dark:text-red-300">{t.remove}</summary>
+                  <div className="border-t border-red-200 p-4 dark:border-red-900">
+                    <p className="mb-3 text-sm">{t.confirmRemove}</p>
+                    <form action={removeMarketListingAction}>
+                      <input type="hidden" name="listingId" value={item.id} />
+                      <button type="submit" className="min-h-11 rounded-lg bg-red-700 px-4 font-semibold text-white hover:bg-red-800">{t.confirmYes}</button>
+                    </form>
+                  </div>
+                </details>}
             </div>
           </li>)}</ul>}
     </main><Footer />

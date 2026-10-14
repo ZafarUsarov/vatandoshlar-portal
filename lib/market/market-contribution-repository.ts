@@ -146,3 +146,25 @@ export async function updateOwnMarketListing(input: {
       input.contact.telegram || null, input.contact.whatsapp || null, input.contact.phone || null, input.contact.email || null, input.category]);
   return result.rowCount === 1;
 }
+
+/**
+ * Soft-delete a listing owned by the authenticated user.
+ * The row is retained for auditability and to preserve dependent records.
+ */
+export async function removeOwnMarketListing(input: {
+  listingId: string;
+  authorUserId: string;
+}): Promise<boolean> {
+  if (!/^[1-9]\\d*$/.test(input.listingId) || !/^[1-9]\\d*$/.test(input.authorUserId)) return false;
+
+  const result = await getDb().query(
+    `UPDATE market_listings
+     SET status = 'removed', updated_at = NOW()
+     WHERE id = $1::bigint
+       AND author_user_id = $2::bigint
+       AND status IN ('draft', 'published', 'closed')
+     RETURNING id`,
+    [input.listingId, input.authorUserId],
+  );
+  return result.rowCount === 1;
+}
