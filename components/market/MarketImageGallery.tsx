@@ -57,7 +57,7 @@ export default function MarketImageGallery({ images, title, locale }: Props) {
   return (
     <section className="mt-8" aria-label={labels.gallery}>
       <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900" onTouchStart={swipeStart} onTouchEnd={swipeEnd}>
-        <button ref={trigger} type="button" onClick={() => setOpen(true)} aria-label={labels.enlarge} className="relative block h-[280px] w-full cursor-zoom-in sm:h-[400px] lg:h-[460px]">
+        <button ref={trigger} type="button" onClick={() => setOpen(true)} aria-label={labels.enlarge} className="relative block h-[280px] w-full cursor-zoom-in sm:h-[400px] lg:h-[390px]">
           <Image unoptimized fill sizes="(max-width: 640px) 100vw, 900px" src={src(active)} alt={alt(active)} className="object-contain" priority={active === 0} />
         </button>
         {count > 1 && <>

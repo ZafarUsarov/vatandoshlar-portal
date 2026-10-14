@@ -167,3 +167,24 @@ export async function getPublishedMarketListingBySlug(slug: string): Promise<Mar
   `, [slug]);
   return result.rows[0] ? mapListing(result.rows[0]) : null;
 }
+
+
+export type MarketSeller = Readonly<{ displayName: string | null; joinedAt: string }>;
+
+/** Only public profile data; never expose login email or private account fields. */
+export async function getMarketSellerForPublishedListing(listingId: string): Promise<MarketSeller | null> {
+  const result = await getDb().query<{ display_name: string | null; joined_at: Date | string }>(`
+    SELECT NULLIF(BTRIM(p.display_name), '') AS display_name, u.created_at AS joined_at
+    FROM market_listings m
+    JOIN public_users u ON u.id = m.author_user_id
+    LEFT JOIN user_profiles p ON p.user_id = u.id
+    WHERE m.id = $1::bigint AND m.status = 'published'
+      AND m.published_at IS NOT NULL
+      AND (m.expires_at IS NULL OR m.expires_at > NOW())
+      AND u.account_status = 'active'
+    LIMIT 1
+  `, [listingId]);
+  const row = result.rows[0];
+  if (!row) return null;
+  return { displayName: row.display_name, joinedAt: row.joined_at instanceof Date ? row.joined_at.toISOString() : row.joined_at };
+}
