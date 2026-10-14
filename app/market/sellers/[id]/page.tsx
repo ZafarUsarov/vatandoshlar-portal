@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { auth } from "@/auth";
+import MarketSellerRatingForm from "@/components/market/MarketSellerRatingForm";
+import { getMarketSellerRatingSummary, getMyMarketSellerRating } from "@/lib/market/market-seller-ratings";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
@@ -18,6 +21,12 @@ export default async function SellerMarketPage({ params, searchParams }: Props) 
   const id = (await params).id;
   const seller = await getPublicMarketSeller(id);
   if (!seller) notFound();
+  const session = await auth();
+  const viewerId = session?.user?.role === "user" ? session.user.id : undefined;
+  const [ratingSummary, myRating] = await Promise.all([
+    getMarketSellerRatingSummary(id),
+    viewerId && viewerId !== id ? getMyMarketSellerRating(id, viewerId) : Promise.resolve(null),
+  ]);
   const requested = Number((await searchParams).page ?? 1);
   const totalPages = Math.max(1, Math.ceil(seller.total / 12));
   const page = Number.isSafeInteger(requested) ? Math.max(1, Math.min(requested, totalPages)) : 1;
@@ -30,6 +39,16 @@ export default async function SellerMarketPage({ params, searchParams }: Props) 
       <section className="mt-7 rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-emerald-50/60 p-6 shadow-sm dark:border-slate-700 dark:from-slate-900 dark:to-slate-950">
         <div className="flex items-center gap-4"><div aria-hidden="true" className="flex size-16 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-2xl font-bold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">{name.slice(0,1).toUpperCase()}</div>
           <div><h1 className="text-2xl font-bold sm:text-3xl">{name}</h1><p className="mt-2 flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300"><MarketDetailIcon name="calendar" className="size-4 text-emerald-700" />{locale === "de" ? "Mitglied seit" : "Ro‘yxatdan o‘tgan"}: {joined}</p></div></div>
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <span className="text-amber-500" aria-hidden="true">★</span>
+          <span className="font-bold">{ratingSummary.average === null ? "—" : ratingSummary.average.toFixed(1)}</span>
+          <span className="text-sm text-slate-600 dark:text-slate-300">({ratingSummary.count} {locale === "de" ? "Bewertungen" : "ta baho"})</span>
+        </div>
+        {viewerId && viewerId !== id
+          ? <MarketSellerRatingForm sellerId={id} initialRating={myRating} locale={locale} />
+          : <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{viewerId === id
+              ? (locale === "de" ? "Sie können sich nicht selbst bewerten." : "O‘zingizga baho bera olmaysiz.")
+              : (locale === "de" ? "Melden Sie sich an, um den Anbieter zu bewerten." : "Sotuvchini baholash uchun tizimga kiring.")}</p>}
         <p className="mt-5 font-semibold text-emerald-700 dark:text-emerald-400">{seller.total} {locale === "de" ? "aktive Anzeigen" : "ta faol e’lon"}</p>
       </section>
       <h2 className="mt-9 text-xl font-bold">{locale === "de" ? "Anzeigen dieses Anbieters" : "Sotuvchining e’lonlari"}</h2>
