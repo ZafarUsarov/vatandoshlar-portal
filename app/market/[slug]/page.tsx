@@ -58,7 +58,10 @@ export default async function MarketDetailPage({ params }: Props) {
       <p className="mt-7 text-sm font-semibold text-emerald-700 dark:text-emerald-400">{marketCategoryLabels[locale][item.category]} · {t[item.listingType]} · {item.cityName}, {item.stateName}</p>
       <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{item.title}</h1>
       <p className="mt-3 inline-flex items-center gap-2 text-2xl font-bold text-emerald-700 dark:text-emerald-400"><MarketDetailIcon name="tag" className="h-6 w-6" />{price}</p>
-      <p className="mt-3 text-sm text-slate-500 dark:text-slate-400"><MarketDetailIcon name="calendar" className="inline-block h-4 w-4 align-[-3px] text-emerald-600" /> {locale === "de" ? "Veröffentlicht am" : "Joylangan sana"}: {published}</p>
+      <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600 dark:text-slate-300">
+        <span className="inline-flex items-center gap-2"><MarketDetailIcon name="calendar" className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />{locale === "de" ? "Veröffentlicht am" : "Joylangan sana"}: {published}</span>
+        <span className="inline-flex items-center gap-2"><MarketDetailIcon name="pin" className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />{item.cityName}, {item.stateName}</span>
+      </div>
       <div className="mt-7 grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div className="min-w-0">
           <div className="[&>section]:mt-0">

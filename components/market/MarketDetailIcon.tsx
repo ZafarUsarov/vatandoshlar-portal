@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-type Name = "tag" | "calendar" | "pin" | "user" | "shield" | "share" | "file" | "message" | "link" | "phone" | "mail" | "heart" | "eye";
+type Name = "tag" | "calendar" | "pin" | "user" | "shield" | "share" | "file" | "message" | "link" | "phone" | "mail" | "heart" | "eye" | "send" | "whatsapp" | "instagram";
 const paths: Record<Name, ReactNode> = {
   tag: <><path d="M20 13 13 20a2 2 0 0 1-2.8 0L3 12.8V4a1 1 0 0 1 1-1h8.8L20 10.2a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1"/></>,
   calendar: <><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></>,
@@ -14,6 +14,9 @@ const paths: Record<Name, ReactNode> = {
   phone: <path d="M7 3h4l1 5-3 2a14 14 0 0 0 5 5l2-3 5 1v4a4 4 0 0 1-4 4A15 15 0 0 1 3 7a4 4 0 0 1 4-4Z"/>,
   mail: <><rect x="2" y="5" width="20" height="14" rx="2"/><path d="m3 7 9 7 9-7"/></>,
   heart: <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>,
+  send: <><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></>,
+  whatsapp: <><path d="M20.5 11.6a8.6 8.6 0 0 1-12.8 7.5L3 20l1-4.5A8.6 8.6 0 1 1 20.5 11.6Z"/><path d="M8.2 8.5c.3-.6.7-.6 1-.6.3 0 .5.1.7.5l.7 1.5c.1.3 0 .5-.2.7l-.5.6c.6 1.2 1.5 2 2.7 2.6l.7-.8c.2-.2.4-.2.7-.1l1.5.7c.4.2.5.4.4.8-.2 1.1-1.1 1.6-2 1.6-3.4-.2-6.2-2.9-6.6-6.3Z"/></>,
+  instagram: <><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/></>,
   eye: <><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>,
 };
 export default function MarketDetailIcon({ name, className = "h-5 w-5" }: { name: Name; className?: string }) {
