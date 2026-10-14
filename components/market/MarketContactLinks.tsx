@@ -10,7 +10,7 @@ export default function MarketContactLinks({ contact, title, locale }: { contact
   ].filter((link): link is NonNullable<typeof link> => link !== null);
   if (!links.length) return null;
   return <section className="mt-10 rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-emerald-50/40 p-5 shadow-sm ring-1 ring-slate-100 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950 dark:ring-slate-800">
-    <h2 className="flex items-center gap-2 text-lg font-bold"><MarketDetailIcon name="send" className="h-5 w-5 text-emerald-700" />{locale === "de" ? "Anbieter kontaktieren" : "E’lon egasi bilan bog‘lanish"}</h2>
+    <h2 className="flex items-center gap-2 text-lg font-bold"><MarketDetailIcon name="message" className="h-5 w-5 shrink-0 text-emerald-700" />{locale === "de" ? "Anbieter kontaktieren" : "E’lon egasi bilan bog‘lanish"}</h2>
     <div className="mt-4 grid gap-3 sm:grid-cols-2">{links.map(link => <a key={link.label} href={link.href} target={link.href.startsWith("https:") ? "_blank" : undefined} rel={link.href.startsWith("https:") ? "noopener noreferrer" : undefined} className="flex min-h-12 items-center justify-center gap-2 rounded-xl border border-emerald-600 bg-white px-4 py-3 text-center font-semibold text-emerald-800 shadow-sm hover:bg-emerald-50 dark:bg-slate-900 dark:text-emerald-300 dark:hover:bg-slate-800"><MarketDetailIcon name={link.icon} className={`h-5 w-5 ${link.icon === "send" ? "text-sky-500" : link.icon === "whatsapp" ? "text-green-600" : "text-emerald-700"}`} />{link.label}</a>)}</div>
   </section>;
 }
