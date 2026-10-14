@@ -15,7 +15,7 @@ const copy = {
   uz: {
     title: "Vatandosh Market", description: "Germaniyadagi vatandoshlar e’lonlari.",
     all: "Barcha turlar", typeLabel: "E’lon turi", sell: "Sotaman", buy: "Sotib olaman", giveaway: "Bepul beraman",
-    filter: "Filtrlash", create: "E’lon joylash", empty: "Hozircha mos e’lonlar yo‘q.",
+    filter: "Filtrlash", create: "E’lon joylash", mine: "Mening e’lonlarim", empty: "Hozircha mos e’lonlar yo‘q.",
     open: "E’lonni ko‘rish", price: "Narx kelishiladi", free: "Bepul",
     search: "Qidiruv", searchPlaceholder: "E’lonlarni qidirish...", previous: "Oldingi",
     next: "Keyingi", page: "Sahifa", of: "/", results: "ta e’lon", reset: "Filtrlarni tozalash",
@@ -23,7 +23,7 @@ const copy = {
   de: {
     title: "Vatandosh Market", description: "Anzeigen der usbekischen Community in Deutschland.",
     all: "Alle Arten", typeLabel: "Anzeigenart", sell: "Verkaufen", buy: "Suche", giveaway: "Verschenken",
-    filter: "Filtern", create: "Anzeige aufgeben", empty: "Noch keine passenden Anzeigen.",
+    filter: "Filtern", create: "Anzeige aufgeben", mine: "Meine Anzeigen", empty: "Noch keine passenden Anzeigen.",
     open: "Anzeige ansehen", price: "Preis auf Anfrage", free: "Kostenlos",
     search: "Suche", searchPlaceholder: "Anzeigen durchsuchen...", previous: "Zurück",
     next: "Weiter", page: "Seite", of: "von", results: "Anzeigen", reset: "Filter zurücksetzen",
@@ -105,9 +105,12 @@ export default async function MarketPage({ searchParams }: {
             <h1 className="text-4xl font-bold">{t.title}</h1>
             <p className="mt-4 text-slate-600 dark:text-slate-300">{t.description}</p>
           </div>
+          <div className="flex flex-wrap items-center gap-3">
+          <Link href="/market/mine" className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 px-4 text-sm font-semibold text-slate-800 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-900">{t.mine}</Link>
           <Link href="/market/new" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-5 font-semibold !text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500">
             <Glyph name="plus" className="mr-2 size-5" />{t.create}
           </Link>
+          </div>
         </div>
 
         <form className="mt-10 grid grid-cols-1 items-end gap-4 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1.3fr)_minmax(0,1.05fr)_minmax(0,1.05fr)_auto]" method="get">

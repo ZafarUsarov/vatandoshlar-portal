@@ -15,18 +15,19 @@ export default async function MyMarketPage() {
   const context = await requirePublicUser(locale, "/market/mine");
   const listings = await getOwnMarketListings(context.user.id);
   const t = locale === "de" ? {
-    heading: "Meine Anzeigen", create: "Neue Anzeige", empty: "Sie haben noch keine Anzeigen.",
+    heading: "Meine Anzeigen", back: "Zum Marktplatz", total: "Anzeigen insgesamt", create: "Neue Anzeige", empty: "Sie haben noch keine Anzeigen.",
     publish: "Veröffentlichen", close: "Schließen", view: "Anzeige ansehen", edit: "Bearbeiten",
     draft: "Entwurf", published: "Veröffentlicht", closed: "Geschlossen", hidden: "Ausgeblendet", removed: "Entfernt",
   } : {
-    heading: "Mening e’lonlarim", create: "Yangi e’lon", empty: "Hozircha e’lonlaringiz yo‘q.",
+    heading: "Mening e’lonlarim", back: "Marketga qaytish", total: "Jami e’lonlar", create: "Yangi e’lon", empty: "Hozircha e’lonlaringiz yo‘q.",
     publish: "Nashr qilish", close: "Yopish", view: "E’lonni ko‘rish", edit: "Tahrirlash",
     draft: "Qoralama", published: "Nashr qilingan", closed: "Yopilgan", hidden: "Yashirilgan", removed: "O‘chirilgan",
   };
   return <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
     <Header />
     <main className="mx-auto max-w-4xl px-5 pb-20 pt-32 sm:px-8">
-      <h1 className="text-3xl font-bold">{t.heading}</h1>
+      <Link href="/market" className="text-sm font-semibold text-emerald-700 hover:underline dark:text-emerald-400">← {t.back}</Link>
+      <div className="mt-6 flex flex-wrap items-end justify-between gap-4"><div><h1 className="text-3xl font-bold">{t.heading}</h1><p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{t.total}: {listings.length}</p></div></div>
       <Link href="/market/new" className="mt-6 inline-flex min-h-11 items-center rounded-xl bg-emerald-700 px-5 font-semibold text-white hover:bg-emerald-800">{t.create}</Link>
       {listings.length === 0 ? <p className="mt-8 rounded-xl border border-slate-200 p-6 dark:border-slate-800">{t.empty}</p> :
         <ul className="mt-8 space-y-4">{listings.map(item =>
