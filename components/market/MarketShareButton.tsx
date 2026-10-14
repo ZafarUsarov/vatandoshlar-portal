@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import MarketDetailIcon from "./MarketDetailIcon";
 
 type Props = { locale: "uz" | "de"; title: string };
 export default function MarketShareButton({ locale, title }: Props) {
@@ -23,14 +24,15 @@ export default function MarketShareButton({ locale, title }: Props) {
       try { await navigator.share({ title, url }); } catch { /* User cancelled. */ }
     } else await copy();
   }
-  return <div className="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
+  return <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-emerald-50/40 p-5 shadow-sm ring-1 ring-slate-100 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950 dark:ring-slate-800">
+    <h2 className="mb-3 flex items-center gap-2 text-lg font-bold"><MarketDetailIcon name="share" className="h-5 w-5 text-emerald-700" />{locale === "de" ? "Anzeige teilen" : "E’lonni ulashish"}</h2>
     <button type="button" aria-expanded={open} onClick={() => setOpen(v => !v)} className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-slate-100 px-4 font-semibold hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700">
-      <span aria-hidden="true">↗</span>{locale === "de" ? "Anzeige teilen" : "E’lonni ulashish"}
+      <MarketDetailIcon name="share" className="h-4 w-4" />{open ? (locale === "de" ? "Optionen schließen" : "Variantlarni yopish") : (locale === "de" ? "Teilen auswählen" : "Ulashish usulini tanlash")}
     </button>
     {open && <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
-      {channels.map(channel => <a key={channel.label} href={channel.href} target={channel.href.startsWith("https") ? "_blank" : undefined} rel={channel.href.startsWith("https") ? "noopener noreferrer" : undefined} className="flex min-h-11 items-center justify-center rounded-xl border border-slate-200 px-2 font-medium hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800">{channel.label}</a>)}
-      <button type="button" onClick={instagram} className="min-h-11 rounded-xl border border-slate-200 px-2 font-medium hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800">Instagram</button>
-      <button type="button" onClick={copy} className="col-span-2 min-h-11 rounded-xl border border-emerald-600 px-2 font-semibold text-emerald-700 dark:text-emerald-300">{copied ? (locale === "de" ? "Link kopiert" : "Havola nusxalandi") : (locale === "de" ? "Link kopieren" : "Havolani nusxalash")}</button>
+      {channels.map(channel => <a key={channel.label} href={channel.href} target={channel.href.startsWith("https") ? "_blank" : undefined} rel={channel.href.startsWith("https") ? "noopener noreferrer" : undefined} className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl border border-slate-200 bg-white px-2 font-medium shadow-sm hover:border-emerald-400 dark:border-slate-700 dark:bg-slate-900"><span aria-hidden="true" className={`flex h-8 w-8 items-center justify-center rounded-full text-lg font-bold text-white ${channel.label === "Telegram" ? "bg-sky-500" : channel.label === "WhatsApp" ? "bg-green-500" : "bg-slate-600"}`}>{channel.label === "Telegram" ? "➤" : channel.label === "WhatsApp" ? "☎" : "✉"}</span>{channel.label}</a>)}
+      <button type="button" onClick={instagram} className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl border border-slate-200 bg-white px-2 font-medium shadow-sm hover:border-emerald-400 dark:border-slate-700 dark:bg-slate-900"><span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-amber-400 via-pink-500 to-purple-600 text-xl font-bold text-white">◎</span>Instagram</button>
+      <button type="button" onClick={copy} className="col-span-2 min-h-11 rounded-xl border border-emerald-600 px-2 font-semibold text-emerald-700 dark:text-emerald-300"><MarketDetailIcon name="link" className="inline-block h-4 w-4 align-[-3px]" /> {copied ? (locale === "de" ? "Link kopiert" : "Havola nusxalandi") : (locale === "de" ? "Link kopieren" : "Havolani nusxalash")}</button>
     </div>}
   </div>;
 }
