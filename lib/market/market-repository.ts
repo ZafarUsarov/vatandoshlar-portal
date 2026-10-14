@@ -22,6 +22,7 @@ export type MarketListing = Readonly<{
 
 export type MarketListingWithCover = MarketListing & Readonly<{
   coverImageId: string | null;
+  viewCount?: number;
 }>;
 
 export type MarketListingPage = Readonly<{
@@ -137,7 +138,8 @@ export async function getPublishedMarketListings(filters: {
             FROM market_listing_images i
             WHERE i.listing_id = m.id AND i.status = 'ready'
             ORDER BY i.position ASC, i.id ASC
-            LIMIT 1) AS cover_image_id
+            LIMIT 1) AS cover_image_id,
+           (SELECT COUNT(*)::text FROM market_listing_views v WHERE v.listing_id = m.id) AS view_count
     FROM market_listings m
     JOIN locations l ON l.id = m.location_id
     WHERE m.status = 'published' AND m.published_at IS NOT NULL
@@ -146,7 +148,7 @@ export async function getPublishedMarketListings(filters: {
       AND l.location_type = 'city'
   `;
 
-  const result = await db.query<ListingRow & { cover_image_id: string | null }>(`
+  const result = await db.query<ListingRow & { cover_image_id: string | null; view_count: string }>(`
     ${selectWithCover}
     ${where}
     ORDER BY ${orderBy}
@@ -154,7 +156,7 @@ export async function getPublishedMarketListings(filters: {
   `, [...params, pageSize, (page - 1) * pageSize]);
 
   return {
-    listings: result.rows.map(row => ({ ...mapListing(row), coverImageId: row.cover_image_id })),
+    listings: result.rows.map(row => ({ ...mapListing(row), coverImageId: row.cover_image_id, viewCount: Number(row.view_count) })),
     total,
     page,
     totalPages,

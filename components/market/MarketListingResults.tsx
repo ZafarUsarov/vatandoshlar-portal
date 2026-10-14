@@ -32,13 +32,14 @@ function subscribe(callback: () => void) {
 }
 function getSnapshot() { return window.localStorage.getItem(favoritesKey) ?? "[]"; }
 function getServerSnapshot() { return "[]"; }
-function Icon({ name, filled = false }: { name: "heart" | "grid" | "list" | "pin" | "tag" | "arrow"; filled?: boolean }) {
+function Icon({ name, filled = false }: { name: "heart" | "grid" | "list" | "pin" | "tag" | "eye" | "arrow"; filled?: boolean }) {
   const paths = {
     heart: <path d="M20.8 8.5c0 4.3-8.8 10.2-8.8 10.2S3.2 12.8 3.2 8.5a4.8 4.8 0 0 1 8.8-2.6 4.8 4.8 0 0 1 8.8 2.6Z" />,
     grid: <><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></>,
     list: <><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h1M3 12h1M3 18h1"/></>,
     pin: <><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></>,
     tag: <><path d="M3 4h9l9 9-8 8-10-10V4Z"/><circle cx="8" cy="9" r="1"/></>,
+    eye: <><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></>,
     arrow: <><path d="M4 12h16m-7-7 7 7-7 7"/></>,
   };
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="size-5 shrink-0">{paths[name]}</svg>;
@@ -116,6 +117,7 @@ export default function MarketListingResults({ listings, locale, total, resultsL
             <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
               <span className="inline-flex items-center gap-1 font-bold"><Icon name="tag"/>{formatPrice(item.priceAmount, item.listingType)}</span>
               <span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300"><Icon name="pin"/>{item.cityName}</span>
+              <span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300" title={locale === "de" ? "Aufrufe" : "Ko‘rishlar"} aria-label={`${locale === "de" ? "Aufrufe" : "Ko‘rishlar"}: ${item.viewCount ?? 0}`}><Icon name="eye"/>{new Intl.NumberFormat(locale === "de" ? "de-DE" : "uz-UZ").format(item.viewCount ?? 0)}</span>
             </div>
             <a href={href} className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-100 px-3 text-center text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:bg-emerald-800 dark:text-white dark:hover:bg-emerald-700">{openLabel}<Icon name="arrow"/></a>
           </div>
