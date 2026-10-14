@@ -1,4 +1,5 @@
 import { marketCategoryLabels } from "@/lib/market/market-category";
+import MarketViewTracker from "@/components/market/MarketViewTracker";
 import MarketImageGallery from "@/components/market/MarketImageGallery";
 import MarketContactLinks from "@/components/market/MarketContactLinks";
 import MarketShareButton from "@/components/market/MarketShareButton";
@@ -11,7 +12,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "@/i18n/navigation";
 import { getReadyMarketImagesForPublishedListing } from "@/lib/market/market-image-repository";
-import { getPublishedMarketListingBySlug, getMarketSellerForPublishedListing, getRelatedMarketListings } from "@/lib/market/market-repository";
+import { getPublishedMarketListingBySlug, getMarketSellerForPublishedListing, getRelatedMarketListings, getMarketListingViewCount } from "@/lib/market/market-repository";
 
 export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ slug: string }> };
@@ -42,10 +43,11 @@ export default async function MarketDetailPage({ params }: Props) {
   const t = copy[locale];
   const item = await getPublishedMarketListingBySlug((await params).slug);
   if (!item) notFound();
-  const [images, seller, related] = await Promise.all([
+  const [images, seller, related, views] = await Promise.all([
     getReadyMarketImagesForPublishedListing(item.id),
     getMarketSellerForPublishedListing(item.id),
     getRelatedMarketListings(item.id, item.category),
+    getMarketListingViewCount(item.id),
   ]);
   const dateFormat = new Intl.DateTimeFormat(locale === "de" ? "de-DE" : "uz-UZ", { day: "numeric", month: "long", year: "numeric" });
   const published = dateFormat.format(new Date(item.publishedAt));
@@ -53,6 +55,7 @@ export default async function MarketDetailPage({ params }: Props) {
   const price = item.listingType === "giveaway" ? t.free : item.priceAmount === null ? t.negotiable : new Intl.NumberFormat(locale === "de" ? "de-DE" : "uz-UZ", { style: "currency", currency: "EUR" }).format(Number(item.priceAmount));
   return <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
     <Header />
+    <MarketViewTracker listingId={item.id} />
     <main className="mx-auto max-w-6xl px-5 pb-20 pt-32 sm:px-8">
       <Link href="/market" className="text-sm font-semibold text-emerald-700 hover:underline dark:text-emerald-400">← {t.back}</Link>
       <p className="mt-7 text-sm font-semibold text-emerald-700 dark:text-emerald-400">{marketCategoryLabels[locale][item.category]} · {t[item.listingType]} · {item.cityName}, {item.stateName}</p>
@@ -61,6 +64,7 @@ export default async function MarketDetailPage({ params }: Props) {
       <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600 dark:text-slate-300">
         <span className="inline-flex items-center gap-2"><MarketDetailIcon name="calendar" className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />{locale === "de" ? "Veröffentlicht am" : "Joylangan sana"}: {published}</span>
         <span className="inline-flex items-center gap-2"><MarketDetailIcon name="pin" className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />{item.cityName}, {item.stateName}</span>
+        <span className="inline-flex items-center gap-2"><MarketDetailIcon name="eye" className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />{views.toLocaleString(locale === "de" ? "de-DE" : "uz-UZ")} {locale === "de" ? "Aufrufe" : "marta ko‘rilgan"}</span>
       </div>
       <div className="mt-7 grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div className="min-w-0">
@@ -75,7 +79,7 @@ export default async function MarketDetailPage({ params }: Props) {
         <aside className="space-y-4 lg:sticky lg:top-28" aria-label={locale === "de" ? "Anbieter und Aktionen" : "Sotuvchi va amallar"}>
           <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-emerald-50/50 p-5 shadow-sm ring-1 ring-slate-100 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950 dark:ring-slate-800">
             <h2 className="flex items-center gap-2 text-lg font-bold"><MarketDetailIcon name="user" className="h-5 w-5 text-emerald-700" />{locale === "de" ? "Anbieter" : "E’lon egasi"}</h2>
-            <div className="mt-4 flex items-center gap-3"><div aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-emerald-100 font-bold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">{(seller?.displayName?.trim().slice(0, 1) || "S").toUpperCase()}</div><p className="font-semibold">{seller?.displayName ?? (locale === "de" ? "Privater Anbieter" : "Shaxsiy sotuvchi")}</p></div>
+            {seller ? <Link href={`/market/sellers/${seller.userId}`} className="mt-4 flex items-center gap-3 rounded-xl transition hover:bg-emerald-50 dark:hover:bg-slate-800" aria-label={locale === "de" ? "Alle Anzeigen dieses Anbieters" : "Sotuvchining barcha e’lonlari"}><div aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-emerald-100 font-bold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">{(seller?.displayName?.trim().slice(0, 1) || "S").toUpperCase()}</div><p className="font-semibold">{seller?.displayName ?? (locale === "de" ? "Privater Anbieter" : "Shaxsiy sotuvchi")}</p><span className="ml-auto text-emerald-700">→</span></Link> : <div className="mt-4 text-sm text-slate-500">{locale === "de" ? "Anbieter nicht verfügbar" : "Sotuvchi ma’lumoti mavjud emas"}</div>}
             {joined && <p className="mt-3 flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300"><MarketDetailIcon name="calendar" className="h-4 w-4 text-emerald-700" />{locale === "de" ? "Mitglied seit" : "Ro‘yxatdan o‘tgan"}: {joined}</p>}
             <p className="mt-3 flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300"><MarketDetailIcon name="pin" className="h-4 w-4 text-emerald-700" />{item.cityName}, {item.stateName}</p>
           </section>

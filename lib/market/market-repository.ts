@@ -169,12 +169,12 @@ export async function getPublishedMarketListingBySlug(slug: string): Promise<Mar
 }
 
 
-export type MarketSeller = Readonly<{ displayName: string | null; joinedAt: string }>;
+export type MarketSeller = Readonly<{ userId: string; displayName: string | null; joinedAt: string }>;
 
 /** Only public profile data; never expose login email or private account fields. */
 export async function getMarketSellerForPublishedListing(listingId: string): Promise<MarketSeller | null> {
-  const result = await getDb().query<{ display_name: string | null; joined_at: Date | string }>(`
-    SELECT NULLIF(BTRIM(p.display_name), '') AS display_name, u.created_at AS joined_at
+  const result = await getDb().query<{ user_id: string; display_name: string | null; joined_at: Date | string }>(`
+    SELECT u.id::text AS user_id, NULLIF(BTRIM(p.display_name), '') AS display_name, u.created_at AS joined_at
     FROM market_listings m
     JOIN public_users u ON u.id = m.author_user_id
     LEFT JOIN user_profiles p ON p.user_id = u.id
@@ -186,7 +186,7 @@ export async function getMarketSellerForPublishedListing(listingId: string): Pro
   `, [listingId]);
   const row = result.rows[0];
   if (!row) return null;
-  return { displayName: row.display_name, joinedAt: row.joined_at instanceof Date ? row.joined_at.toISOString() : row.joined_at };
+  return { userId: row.user_id, displayName: row.display_name, joinedAt: row.joined_at instanceof Date ? row.joined_at.toISOString() : row.joined_at };
 }
 
 /** Related public listings, excluding the current item. */
@@ -206,4 +206,53 @@ export async function getRelatedMarketListings(listingId: string, category: Mark
     ORDER BY m.published_at DESC, m.id DESC LIMIT $3
   `, [listingId, category, Math.min(8, Math.max(1, limit))]);
   return result.rows.map(row => ({ ...mapListing(row), coverImageId: row.cover_image_id }));
+}
+
+/** Seller profile is intentionally restricted to active accounts and public listings. */
+export async function getPublicMarketSeller(userId: string) {
+  if (!/^[1-9]\d{0,17}$/.test(userId)) return null;
+  const result = await getDb().query<{ user_id: string; display_name: string | null; joined_at: Date | string; total: string }>(`
+    SELECT u.id::text AS user_id, NULLIF(BTRIM(p.display_name), '') AS display_name,
+           u.created_at AS joined_at, COUNT(m.id)::text AS total
+    FROM public_users u
+    LEFT JOIN user_profiles p ON p.user_id = u.id
+    JOIN market_listings m ON m.author_user_id = u.id AND m.status = 'published'
+      AND m.published_at IS NOT NULL AND (m.expires_at IS NULL OR m.expires_at > NOW())
+    JOIN locations l ON l.id = m.location_id AND l.status = 'active'
+      AND l.country_code = 'DE' AND l.location_type = 'city'
+    WHERE u.id = $1::bigint AND u.account_status = 'active'
+    GROUP BY u.id, p.display_name
+  `, [userId]);
+  const row = result.rows[0];
+  return row ? { userId: row.user_id, displayName: row.display_name,
+    joinedAt: row.joined_at instanceof Date ? row.joined_at.toISOString() : row.joined_at,
+    total: Number(row.total) } : null;
+}
+
+export async function getPublicMarketSellerListings(userId: string, page = 1) {
+  const current = Math.min(10000, Math.max(1, Math.floor(page) || 1));
+  const result = await getDb().query<ListingRow & { cover_image_id: string | null }>(`
+    SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
+      m.content_language, m.price_amount::text, m.currency, m.published_at,
+      m.location_id::text, l.city_name, l.state_name,
+      NULL::text AS contact_telegram, NULL::text AS contact_whatsapp,
+      NULL::text AS contact_phone, NULL::text AS contact_email,
+      (SELECT i.id::text FROM market_listing_images i WHERE i.listing_id = m.id
+       AND i.status = 'ready' ORDER BY i.position, i.id LIMIT 1) AS cover_image_id
+    FROM market_listings m JOIN public_users u ON u.id = m.author_user_id
+    JOIN locations l ON l.id = m.location_id
+    WHERE m.author_user_id = $1::bigint AND u.account_status = 'active'
+      AND m.status = 'published' AND m.published_at IS NOT NULL
+      AND (m.expires_at IS NULL OR m.expires_at > NOW())
+      AND l.status = 'active' AND l.country_code = 'DE' AND l.location_type = 'city'
+    ORDER BY m.published_at DESC, m.id DESC LIMIT 12 OFFSET $2
+  `, [userId, (current - 1) * 12]);
+  return result.rows.map(row => ({ ...mapListing(row), coverImageId: row.cover_image_id }));
+}
+
+export async function getMarketListingViewCount(listingId: string): Promise<number> {
+  const result = await getDb().query<{ total: string }>(`
+    SELECT COUNT(*)::text AS total FROM market_listing_views WHERE listing_id = $1::bigint
+  `, [listingId]);
+  return Number(result.rows[0]?.total ?? 0);
 }
