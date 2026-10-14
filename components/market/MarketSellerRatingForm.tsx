@@ -7,6 +7,7 @@ export default function MarketSellerRatingForm({
   sellerId, initialRating, locale,
 }: { sellerId: string; initialRating: number | null; locale: "uz" | "de" }) {
   const [rating, setRating] = useState(initialRating ?? 0);
+  const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [state, action, pending] = useActionState<SellerRatingState, FormData>(
     rateMarketSellerAction, { ok: false, message: "" },
   );
@@ -15,12 +16,12 @@ export default function MarketSellerRatingForm({
     <p className="font-semibold">{de ? "Anbieter bewerten" : "Sotuvchini baholash"}</p>
     <input type="hidden" name="sellerId" value={sellerId} />
     <input type="hidden" name="rating" value={rating} />
-    <div role="group" aria-label={de ? "Bewertung von 1 bis 5 Sternen" : "1 dan 5 gacha yulduz bilan baholash"} className="mt-3 flex gap-1">
+    <div role="group" aria-label={de ? "Bewertung von 1 bis 5 Sternen" : "1 dan 5 gacha yulduz bilan baholash"} onMouseLeave={() => setHoverRating(null)} className="mt-3 flex gap-1">
       {[1, 2, 3, 4, 5].map(value =>
-        <button key={value} type="button" disabled={pending} onClick={() => setRating(value)}
+        <button key={value} type="button" disabled={pending} onClick={() => setRating(value)} onMouseEnter={() => setHoverRating(value)} onFocus={() => setHoverRating(value)} onBlur={() => setHoverRating(null)}
           aria-label={`${value} ${de ? "Sterne" : "yulduz"}`}
           aria-pressed={rating === value}
-          className={`rounded-lg p-1 text-3xl transition hover:scale-110 focus-visible:outline-2 focus-visible:outline-emerald-600 ${value <= rating ? "text-amber-500" : "text-slate-300 dark:text-slate-600"}`}>
+          className={`rounded-lg p-1 text-3xl transition hover:scale-110 focus-visible:outline-2 focus-visible:outline-emerald-600 ${value <= (hoverRating ?? rating) ? "text-amber-500" : "text-slate-300 dark:text-slate-600"}`}>
           <span aria-hidden="true">★</span>
         </button>)}
     </div>

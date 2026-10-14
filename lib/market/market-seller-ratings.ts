@@ -1,6 +1,6 @@
 import { getDb } from "@/lib/db";
 
-const validId = (value: string) => /^[1-9]\\d{0,17}$/.test(value);
+const validId = (value: string) => /^[1-9]\d{0,17}$/.test(value);
 
 export async function getMarketSellerRatingSummary(sellerId: string) {
   if (!validId(sellerId)) return { average: null as number | null, count: 0 };
