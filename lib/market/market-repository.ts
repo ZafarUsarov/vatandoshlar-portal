@@ -188,3 +188,22 @@ export async function getMarketSellerForPublishedListing(listingId: string): Pro
   if (!row) return null;
   return { displayName: row.display_name, joinedAt: row.joined_at instanceof Date ? row.joined_at.toISOString() : row.joined_at };
 }
+
+/** Related public listings, excluding the current item. */
+export async function getRelatedMarketListings(listingId: string, category: MarketCategory, limit = 4): Promise<ReadonlyArray<MarketListingWithCover>> {
+  const result = await getDb().query<ListingRow & { cover_image_id: string | null }>(`
+    SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
+           m.content_language, m.price_amount::text, m.currency, m.published_at,
+           m.location_id::text, l.city_name, l.state_name,
+           NULL::text AS contact_telegram, NULL::text AS contact_whatsapp,
+           NULL::text AS contact_phone, NULL::text AS contact_email,
+           (SELECT i.id::text FROM market_listing_images i WHERE i.listing_id = m.id AND i.status = 'ready'
+            ORDER BY i.position, i.id LIMIT 1) AS cover_image_id
+    FROM market_listings m JOIN locations l ON l.id = m.location_id
+    WHERE m.id <> $1::bigint AND m.category = $2 AND m.status = 'published'
+      AND m.published_at IS NOT NULL AND (m.expires_at IS NULL OR m.expires_at > NOW())
+      AND l.status = 'active' AND l.country_code = 'DE' AND l.location_type = 'city'
+    ORDER BY m.published_at DESC, m.id DESC LIMIT $3
+  `, [listingId, category, Math.min(8, Math.max(1, limit))]);
+  return result.rows.map(row => ({ ...mapListing(row), coverImageId: row.cover_image_id }));
+}

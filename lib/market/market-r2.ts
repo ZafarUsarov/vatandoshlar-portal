@@ -29,3 +29,10 @@ export async function deleteMarketImageObject(key: string) {
   const { bucket, client } = config();
   await client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));
 }
+
+/** Read public listing images for crawler-friendly Open Graph responses. */
+export async function getMarketImageObject(key: string) {
+  const { bucket, client } = config();
+  const result = await client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));
+  return result.Body?.transformToByteArray();
+}
