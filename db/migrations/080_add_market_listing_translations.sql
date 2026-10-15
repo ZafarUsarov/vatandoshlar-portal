@@ -1,3 +1,5 @@
+BEGIN;
+
 -- M14.3: Market listing translations
 -- Original content remains in market_listings.
 
@@ -33,3 +35,5 @@ CREATE TABLE IF NOT EXISTS market_listing_translations (
 CREATE INDEX IF NOT EXISTS
     idx_market_listing_translations_status
     ON market_listing_translations (status, updated_at);
+
+COMMIT;
