@@ -135,19 +135,63 @@ export async function updateOwnMarketListing(input: {
   contentLanguage: "uz" | "de";
   contact: MarketContact;
 }): Promise<boolean> {
-  if (!/^[1-9]\d*$/.test(input.id) || !/^[1-9]\d*$/.test(input.locationId)) return false;
-  const result = await getDb().query(`UPDATE market_listings m
-    SET listing_type = $3, location_id = $4::bigint, title = $5,
-        description = $6, price_amount = $7::numeric,
-        contact_telegram = $8, contact_whatsapp = $9, contact_phone = $10, contact_email = $11, category = $12, content_language = $13, updated_at = NOW()
-    WHERE m.id = $1::bigint AND m.author_user_id = $2::bigint
-      AND m.status IN ('draft', 'published')
-      AND EXISTS (SELECT 1 FROM locations l WHERE l.id = $4::bigint
-        AND l.country_code = 'DE' AND l.location_type = 'city' AND l.status = 'active')
-    RETURNING m.id`, [input.id, input.authorUserId, input.listingType,
-      input.locationId, input.title, input.description, input.priceAmount,
-      input.contact.telegram || null, input.contact.whatsapp || null, input.contact.phone || null, input.contact.email || null, input.category, input.contentLanguage]);
-  return result.rowCount === 1;
+  if (!/^[1-9]\d*$/.test(input.id) || !/^[1-9]\d*$/.test(input.authorUserId) ||
+      !/^[1-9]\d*$/.test(input.locationId) || !["uz", "de"].includes(input.contentLanguage)) return false;
+
+  const client = await getDb().connect();
+  try {
+    await client.query("BEGIN");
+    const original = await client.query<{
+      title: string; description: string; content_language: "uz" | "de";
+    }>(`SELECT title, description, content_language FROM market_listings
+       WHERE id = $1::bigint AND author_user_id = $2::bigint
+         AND status IN ('draft', 'published') FOR UPDATE`, [input.id, input.authorUserId]);
+    if (original.rowCount !== 1) {
+      await client.query("ROLLBACK");
+      return false;
+    }
+
+    const previous = original.rows[0];
+    const contentChanged = previous.title !== input.title ||
+      previous.description !== input.description ||
+      previous.content_language !== input.contentLanguage;
+
+    const result = await client.query(`UPDATE market_listings m
+      SET listing_type = $3, location_id = $4::bigint, title = $5,
+          description = $6, price_amount = $7::numeric,
+          contact_telegram = $8, contact_whatsapp = $9, contact_phone = $10,
+          contact_email = $11, category = $12, content_language = $13,
+          updated_at = NOW()
+      WHERE m.id = $1::bigint AND m.author_user_id = $2::bigint
+        AND m.status IN ('draft', 'published')
+        AND EXISTS (SELECT 1 FROM locations l WHERE l.id = $4::bigint
+          AND l.country_code = 'DE' AND l.location_type = 'city' AND l.status = 'active')
+      RETURNING m.id`, [input.id, input.authorUserId, input.listingType,
+        input.locationId, input.title, input.description, input.priceAmount,
+        input.contact.telegram || null, input.contact.whatsapp || null,
+        input.contact.phone || null, input.contact.email || null,
+        input.category, input.contentLanguage]);
+    if (result.rowCount !== 1) {
+      await client.query("ROLLBACK");
+      return false;
+    }
+
+    if (contentChanged) {
+      await client.query(`UPDATE market_listing_translations
+        SET status = 'pending', title = NULL, description = NULL,
+            source_updated_at = NULL, translated_at = NULL,
+            error_message = NULL, updated_at = NOW()
+        WHERE listing_id = $1::bigint`, [input.id]);
+    }
+
+    await client.query("COMMIT");
+    return true;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 }
 
 /**
