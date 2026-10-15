@@ -12,6 +12,7 @@ export default function EditMarketForm({ locale, listing, initialImages }: { loc
   const initial: EditMarketState = { error: null, revision: 0, values: {
     listingType: listing.listingType, category: listing.category, locationId: listing.locationId, title: listing.title,
     description: listing.description, priceAmount: listing.priceAmount,
+    contentLanguage: listing.contentLanguage,
     telegram: listing.telegram, whatsapp: listing.whatsapp, phone: listing.phone, email: listing.email,
   }};
   const [state, action, pending] = useActionState(editMarketAction, initial);
@@ -20,6 +21,7 @@ export default function EditMarketForm({ locale, listing, initialImages }: { loc
     <input type="hidden" name="locale" value={locale} /><input type="hidden" name="listingId" value={listing.id} />
     {state.error && <p role="alert" className="rounded-xl border border-red-300 p-3 text-red-700 dark:text-red-300">{state.error}</p>}
     <div><label htmlFor="market-edit-type" className="mb-2 block font-semibold">{de ? "Anzeigenart" : "E’lon turi"}</label><div className="relative"><select id="market-edit-type" name="listingType" defaultValue={state.values.listingType} disabled={pending} required className={`${control} appearance-none pr-14`}><option value="sell">{de ? "Verkaufen" : "Sotaman"}</option><option value="buy">{de ? "Suche" : "Sotib olaman"}</option><option value="giveaway">{de ? "Verschenken" : "Bepul beraman"}</option></select><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute right-5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-600 dark:text-slate-300"><path d="m6 9 6 6 6-6" /></svg></div></div>
+    <div><label htmlFor="market-edit-language" className="mb-2 block font-semibold">{de ? "Sprache der Anzeige" : "E’lon tili"}</label><select id="market-edit-language" name="contentLanguage" defaultValue={state.values.contentLanguage} required disabled={pending} className={control}><option value="uz">O‘zbekcha</option><option value="de">Deutsch</option></select></div>
     <MarketCategoryField locale={locale} value={state.values.category as import("@/lib/market/market-category").MarketCategory} disabled={pending} />
     <MarketCityCombobox initialId={state.values.locationId} locale={locale} disabled={pending} />
     <div><label htmlFor="market-edit-title" className="mb-2 block font-semibold">{de ? "Titel" : "Sarlavha"}</label><input id="market-edit-title" name="title" defaultValue={state.values.title} required disabled={pending} className={control} /></div>

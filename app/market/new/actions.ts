@@ -18,6 +18,7 @@ export type MarketFormValues = Readonly<{
   title: string;
   description: string;
   priceAmount: string;
+  contentLanguage: string;
 }> & MarketContact;
 export type CreateMarketState = Readonly<{
   error: string | null;
@@ -48,6 +49,7 @@ export async function createMarketDraftAction(
     title,
     description,
     priceAmount: priceRaw,
+    contentLanguage: text(formData, "contentLanguage"),
     telegram: text(formData, "telegram"), whatsapp: text(formData, "whatsapp"),
     phone: text(formData, "phone"), email: text(formData, "email"),
   };
@@ -61,6 +63,7 @@ export async function createMarketDraftAction(
   if (!isMarketCategory(values.category)) return error("Kategoriyani tanlang.", "Bitte Kategorie auswählen.");
   const cities = (await getActiveCities()).filter((city) => city.countryCode === "DE");
   if (!cities.some((city) => city.id === locationId)) return error("Faol shaharni tanlang.", "Bitte wählen Sie eine verfügbare Stadt.");
+  if (!["uz", "de"].includes(values.contentLanguage)) return error("E’lon tilini tanlang.", "Bitte Anzeigensprache wählen.");
   if (!title) return error("Sarlavha kiritilishi shart.", "Der Titel darf nicht leer sein.");
   if (description.length < 20 || description.length > 10000) return error("Tavsif 20–10000 belgidan iborat bo‘lsin.", "Die Beschreibung muss 20–10000 Zeichen lang sein.");
 
@@ -91,7 +94,7 @@ export async function createMarketDraftAction(
     category: values.category as MarketCategory,
     title,
     description,
-    contentLanguage: locale,
+    contentLanguage: values.contentLanguage as "uz" | "de",
     priceAmount,
     contact: values,
   });

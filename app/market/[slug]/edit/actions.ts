@@ -18,6 +18,7 @@ export async function editMarketAction(previous: EditMarketState, data: FormData
   const values: MarketFormValues = {
     listingType: get(data, "listingType"), category: get(data, "category"), locationId: get(data, "locationId"),
     title: get(data, "title"), description: get(data, "description"), priceAmount: get(data, "priceAmount"),
+    contentLanguage: get(data, "contentLanguage"),
     telegram: get(data, "telegram"), whatsapp: get(data, "whatsapp"), phone: get(data, "phone"), email: get(data, "email"),
   };
   const fail = (uz: string, de: string): EditMarketState => ({
@@ -27,6 +28,7 @@ export async function editMarketAction(previous: EditMarketState, data: FormData
   if (!["sell", "buy", "giveaway"].includes(values.listingType)) return fail("E’lon turini tanlang.", "Bitte Anzeigenart wählen.");
   if (!isMarketCategory(values.category)) return fail("Kategoriyani tanlang.", "Bitte Kategorie auswählen.");
   if (!/^[1-9]\d*$/.test(values.locationId)) return fail("Shaharni tanlang.", "Bitte Stadt wählen.");
+  if (!["uz", "de"].includes(values.contentLanguage)) return fail("E’lon tilini tanlang.", "Bitte Anzeigensprache wählen.");
   if (!values.title) return fail("Sarlavha kiritilishi shart.", "Titel darf nicht leer sein.");
   if (values.description.length < 20 || values.description.length > 10000) return fail("Tavsif 20–10000 belgidan iborat bo‘lsin.", "Beschreibung muss 20–10000 Zeichen lang sein.");
   let priceAmount: string | null = null;
@@ -41,7 +43,7 @@ export async function editMarketAction(previous: EditMarketState, data: FormData
   if (contactIssue) return fail(contactError(contactIssue, "uz"), contactError(contactIssue, "de"));
   const saved = await updateOwnMarketListing({
     id, authorUserId: context.user.id, listingType: values.listingType as MarketListingType, category: values.category as import("@/lib/market/market-category").MarketCategory,
-    locationId: values.locationId, title: values.title, description: values.description, priceAmount, contact: values,
+    locationId: values.locationId, title: values.title, description: values.description, priceAmount, contentLanguage: values.contentLanguage as "uz" | "de", contact: values,
   });
   if (!saved) return fail("E’lonni tahrirlab bo‘lmadi.", "Anzeige konnte nicht bearbeitet werden.");
   revalidatePath(`/${locale}/market`);

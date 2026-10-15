@@ -105,6 +105,7 @@ export async function changeOwnMarketListingStatus(input: {
 export type EditableMarketListing = Readonly<{
   id: string; listingType: MarketListingType; category: MarketCategory; locationId: string;
   title: string; description: string; priceAmount: string;
+  contentLanguage: "uz" | "de";
   status: "draft" | "published";
 }> & MarketContact;
 
@@ -113,16 +114,17 @@ export async function getEditableOwnMarketListing(id: string, userId: string): P
   const result = await getDb().query<{
     id: string; listing_type: MarketListingType; category: MarketCategory; location_id: string;
     title: string; description: string; price_amount: string | null;
+    content_language: "uz" | "de";
     status: "draft" | "published";
     contact_telegram: string | null; contact_whatsapp: string | null; contact_phone: string | null; contact_email: string | null;
   }>(`SELECT id::text, listing_type, category, location_id::text, title, description,
-            price_amount::text, status, contact_telegram, contact_whatsapp, contact_phone, contact_email FROM market_listings
+            price_amount::text, content_language, status, contact_telegram, contact_whatsapp, contact_phone, contact_email FROM market_listings
       WHERE id = $1::bigint AND author_user_id = $2::bigint
         AND status IN ('draft', 'published')`, [id, userId]);
   const row = result.rows[0];
   return row ? { id: row.id, listingType: row.listing_type, category: row.category,
     locationId: row.location_id, title: row.title, description: row.description,
-    priceAmount: row.price_amount ?? "", status: row.status,
+    priceAmount: row.price_amount ?? "", contentLanguage: row.content_language, status: row.status,
     telegram: row.contact_telegram ?? "", whatsapp: row.contact_whatsapp ?? "",
     phone: row.contact_phone ?? "", email: row.contact_email ?? "" } : null;
 }
@@ -130,20 +132,21 @@ export async function getEditableOwnMarketListing(id: string, userId: string): P
 export async function updateOwnMarketListing(input: {
   id: string; authorUserId: string; listingType: MarketListingType; category: MarketCategory;
   locationId: string; title: string; description: string; priceAmount: string | null;
+  contentLanguage: "uz" | "de";
   contact: MarketContact;
 }): Promise<boolean> {
   if (!/^[1-9]\d*$/.test(input.id) || !/^[1-9]\d*$/.test(input.locationId)) return false;
   const result = await getDb().query(`UPDATE market_listings m
     SET listing_type = $3, location_id = $4::bigint, title = $5,
         description = $6, price_amount = $7::numeric,
-        contact_telegram = $8, contact_whatsapp = $9, contact_phone = $10, contact_email = $11, category = $12, updated_at = NOW()
+        contact_telegram = $8, contact_whatsapp = $9, contact_phone = $10, contact_email = $11, category = $12, content_language = $13, updated_at = NOW()
     WHERE m.id = $1::bigint AND m.author_user_id = $2::bigint
       AND m.status IN ('draft', 'published')
       AND EXISTS (SELECT 1 FROM locations l WHERE l.id = $4::bigint
         AND l.country_code = 'DE' AND l.location_type = 'city' AND l.status = 'active')
     RETURNING m.id`, [input.id, input.authorUserId, input.listingType,
       input.locationId, input.title, input.description, input.priceAmount,
-      input.contact.telegram || null, input.contact.whatsapp || null, input.contact.phone || null, input.contact.email || null, input.category]);
+      input.contact.telegram || null, input.contact.whatsapp || null, input.contact.phone || null, input.contact.email || null, input.category, input.contentLanguage]);
   return result.rowCount === 1;
 }
 
