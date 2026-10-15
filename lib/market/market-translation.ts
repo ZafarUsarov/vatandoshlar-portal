@@ -3,6 +3,23 @@ import type { MarketListing } from "@/lib/market/market-repository";
 
 type Language = "uz" | "de";
 const enabled = () => process.env.GEMINI_TRANSLATION_ENABLED === "true";
+// Conservative application-side budget. The provider measures tokens and may
+// count more than source characters; this is NOT a guaranteed cost ceiling.
+const MONTHLY_CHARACTER_BUDGET = 100_000;
+const MAX_INPUT_CHARACTERS = 10_250;
+
+async function reserveMonthlyCharacters(characters: number): Promise<boolean> {
+  if (!Number.isSafeInteger(characters) || characters < 1 || characters > MAX_INPUT_CHARACTERS) return false;
+  const result = await getDb().query(`
+    INSERT INTO market_translation_monthly_usage (month_utc, reserved_characters)
+    VALUES (date_trunc('month', NOW() AT TIME ZONE 'UTC')::date, $1)
+    ON CONFLICT (month_utc) DO UPDATE SET
+      reserved_characters = market_translation_monthly_usage.reserved_characters + EXCLUDED.reserved_characters,
+      updated_at = NOW()
+    WHERE market_translation_monthly_usage.reserved_characters + EXCLUDED.reserved_characters <= $2
+    RETURNING reserved_characters`, [characters, MONTHLY_CHARACTER_BUDGET]);
+  return result.rowCount === 1;
+}
 
 /** Translations are read only; page views never invoke Gemini. */
 export async function localizeMarketListings<T extends MarketListing>(items: readonly T[], language: Language): Promise<T[]> {
@@ -35,7 +52,10 @@ export async function translateMarketListing(listingId: string): Promise<void> {
     const existing = await db.query<{ status: string }>(
       `SELECT status FROM market_listing_translations WHERE listing_id = $1::bigint AND language = $2`, [listingId, target]);
     if (existing.rows[0]?.status === "ready") return;
-    // Fixed free-tier guard: one call per listing save, limited payload and output.
+    // Reserve BEFORE sending data; failed requests still count conservatively.
+    // This cap is global across Railway instances and resets by UTC month.
+    if (!(await reserveMonthlyCharacters(source.title.length + source.description.length))) return;
+    // One bounded API call per listing save; no translation on page views.
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
     let response: Response;
