@@ -60,7 +60,7 @@ export async function translateMarketListing(listingId: string): Promise<void> {
     const timeout = setTimeout(() => controller.abort(), 8000);
     let response: Response;
     try {
-      response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent", {
+      response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent", {
         method: "POST", signal: controller.signal, cache: "no-store",
         headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
         body: JSON.stringify({
