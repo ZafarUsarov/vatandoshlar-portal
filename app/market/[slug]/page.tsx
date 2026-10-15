@@ -17,7 +17,7 @@ import { getReadyMarketImagesForPublishedListing } from "@/lib/market/market-ima
 import { getPublishedMarketListingBySlug, getMarketSellerForPublishedListing, getRelatedMarketListings, getMarketListingViewCount } from "@/lib/market/market-repository";
 
 export const dynamic = "force-dynamic";
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ slug: string }>; searchParams?: Promise<{ original?: string }> };
 const copy = {
   uz: { back: "Barcha e’lonlar", sell: "Sotaman", buy: "Sotib olaman", giveaway: "Bepul beraman", free: "Bepul", negotiable: "Narx kelishiladi" },
   de: { back: "Alle Anzeigen", sell: "Verkaufen", buy: "Suche", giveaway: "Verschenken", free: "Kostenlos", negotiable: "Preis auf Anfrage" },
@@ -41,12 +41,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...(imageUrl ? { images: [imageUrl] } : {}) },
   };
 }
-export default async function MarketDetailPage({ params }: Props) {
+export default async function MarketDetailPage({ params, searchParams }: Props) {
   const locale = (await getLocale()) === "de" ? "de" : "uz";
   const t = copy[locale];
   const original = await getPublishedMarketListingBySlug((await params).slug);
-  const item = original ? (await localizeMarketListings([original], locale))[0] : null;
-  if (!item) notFound();
+  const localized = original ? (await localizeMarketListings([original], locale))[0] : null;
+  if (!original || !localized) notFound();
+  const translated = original.contentLanguage !== locale && (localized.title !== original.title || localized.description !== original.description);
+  const showOriginal = (await searchParams)?.original === "1";
+  const item = translated && showOriginal ? original : localized;
   const [images, seller, relatedOriginal, views] = await Promise.all([
     getReadyMarketImagesForPublishedListing(item.id),
     getMarketSellerForPublishedListing(item.id),
@@ -66,6 +69,17 @@ export default async function MarketDetailPage({ params }: Props) {
       <Link href="/market" className="text-sm font-semibold text-emerald-700 hover:underline dark:text-emerald-400">← {t.back}</Link>
       <p className="mt-7 text-sm font-semibold text-emerald-700 dark:text-emerald-400">{marketCategoryLabels[locale][item.category]} · {t[item.listingType]} · {item.cityName}, {item.stateName}</p>
       <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{item.title}</h1>
+      {translated && <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+        <span className="text-slate-600 dark:text-slate-300">{showOriginal
+          ? (locale === "de" ? "Originaltext" : "Asl matn")
+          : (locale === "de" ? "Automatisch übersetzt" : "Avtomatik tarjima")}</span>
+        <Link href={showOriginal ? `/market/${item.slug}` : `/market/${item.slug}?original=1`}
+          className="font-semibold text-emerald-700 underline underline-offset-4 hover:text-emerald-800 dark:text-emerald-400">
+          {showOriginal
+            ? (locale === "de" ? "Übersetzung anzeigen" : "Tarjimani ko‘rsatish")
+            : (locale === "de" ? "Original anzeigen" : "Asl matnni ko‘rsatish")}
+        </Link>
+      </div>}
       <p className="mt-3 inline-flex items-center gap-2 text-2xl font-bold text-emerald-700 dark:text-emerald-400"><MarketDetailIcon name="tag" className="h-6 w-6" />{price}</p>
       <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600 dark:text-slate-300">
         <span className="inline-flex items-center gap-2"><MarketDetailIcon name="calendar" className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />{locale === "de" ? "Veröffentlicht am" : "Joylangan sana"}: {published}</span>
