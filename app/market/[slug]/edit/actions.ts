@@ -1,4 +1,5 @@
 "use server";
+import { translateMarketListing } from "@/lib/market/market-translation";
 import { isMarketCategory } from "@/lib/market/market-category";
 
 import { revalidatePath } from "next/cache";
@@ -46,6 +47,7 @@ export async function editMarketAction(previous: EditMarketState, data: FormData
     locationId: values.locationId, title: values.title, description: values.description, priceAmount, contentLanguage: values.contentLanguage as "uz" | "de", contact: values,
   });
   if (!saved) return fail("E’lonni tahrirlab bo‘lmadi.", "Anzeige konnte nicht bearbeitet werden.");
+  await translateMarketListing(id);
   revalidatePath(`/${locale}/market`);
   revalidatePath(`/${locale}/market/mine`);
   revalidatePath(`/${locale}/market/[slug]`, "page");

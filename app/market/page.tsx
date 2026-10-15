@@ -1,3 +1,4 @@
+import { localizeMarketListings } from "@/lib/market/market-translation";
 import { marketCategories, marketCategoryLabels, isMarketCategory } from "@/lib/market/market-category";
 import type { Metadata } from "next";
 import MarketListingResults from "@/components/market/MarketListingResults";
@@ -84,7 +85,8 @@ export default async function MarketPage({ searchParams }: {
     page: requestedPage,
     sort,
   });
-  const { listings, total, page, totalPages } = result;
+  const { total, page, totalPages } = result;
+  const listings = await localizeMarketListings(result.listings, locale);
   const pageHref = (target: number) => {
     const search = new URLSearchParams();
     if (selectedCategory) search.set("category", selectedCategory);

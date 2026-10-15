@@ -1,3 +1,4 @@
+import { localizeMarketListings } from "@/lib/market/market-translation";
 import { getMarketSellerRatingSummary } from "@/lib/market/market-seller-ratings";
 import { marketCategoryLabels } from "@/lib/market/market-category";
 import MarketViewTracker from "@/components/market/MarketViewTracker";
@@ -23,7 +24,8 @@ const copy = {
 } as const;
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = (await getLocale()) === "de" ? "de" : "uz";
-  const item = await getPublishedMarketListingBySlug((await params).slug);
+  const original = await getPublishedMarketListingBySlug((await params).slug);
+  const item = original ? (await localizeMarketListings([original], locale))[0] : null;
   if (!item) return { title: "Market", robots: { index: false, follow: false } };
   const images = await getReadyMarketImagesForPublishedListing(item.id);
   const url = `https://vatandoshlar.de/${locale}/market/${item.slug}`;
@@ -42,9 +44,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function MarketDetailPage({ params }: Props) {
   const locale = (await getLocale()) === "de" ? "de" : "uz";
   const t = copy[locale];
-  const item = await getPublishedMarketListingBySlug((await params).slug);
+  const original = await getPublishedMarketListingBySlug((await params).slug);
+  const item = original ? (await localizeMarketListings([original], locale))[0] : null;
   if (!item) notFound();
-  const [images, seller, related, views] = await Promise.all([
+  const [images, seller, relatedOriginal, views] = await Promise.all([
     getReadyMarketImagesForPublishedListing(item.id),
     getMarketSellerForPublishedListing(item.id),
     getRelatedMarketListings(item.id, item.category),
@@ -54,6 +57,7 @@ export default async function MarketDetailPage({ params }: Props) {
   const dateFormat = new Intl.DateTimeFormat(locale === "de" ? "de-DE" : "uz-UZ", { day: "numeric", month: "long", year: "numeric" });
   const published = dateFormat.format(new Date(item.publishedAt));
   const joined = seller ? dateFormat.format(new Date(seller.joinedAt)) : null;
+  const related = await localizeMarketListings(relatedOriginal, locale);
   const price = item.listingType === "giveaway" ? t.free : item.priceAmount === null ? t.negotiable : new Intl.NumberFormat(locale === "de" ? "de-DE" : "uz-UZ", { style: "currency", currency: "EUR" }).format(Number(item.priceAmount));
   return <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
     <Header />

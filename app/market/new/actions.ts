@@ -2,6 +2,7 @@
 import { isMarketCategory, type MarketCategory } from "@/lib/market/market-category";
 
 
+import { translateMarketListing } from "@/lib/market/market-translation";
 import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { redirect } from "@/i18n/navigation";
@@ -98,6 +99,7 @@ export async function createMarketDraftAction(
     priceAmount,
     contact: values,
   });
+  await translateMarketListing(createdId);
   revalidatePath(`/${locale}/market/mine`);
   return redirect({ href: `/market/${createdId}/edit`, locale });
 }
