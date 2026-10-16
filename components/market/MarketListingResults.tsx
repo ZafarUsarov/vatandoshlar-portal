@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import { formatMarketPrice, marketPriceCaption } from "@/lib/market/market-display";
 import type { MarketListingSort, MarketListingType, MarketListingWithCover } from "@/lib/market/market-repository";
 import type { MarketCategory } from "@/lib/market/market-category";
@@ -50,6 +51,13 @@ export default function MarketListingResults({ listings, locale, total, resultsL
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [desktopTarget, setDesktopTarget] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      setDesktopTarget(document.getElementById("market-desktop-toolbar"));
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
   const [view, setView] = useState<"grid" | "list">("grid");
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const saved = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
@@ -74,28 +82,35 @@ export default function MarketListingResults({ listings, locale, total, resultsL
     next.delete("page");
     router.push(`${pathname}${next.size ? `?${next.toString()}` : ""}`);
   }
-  return <>
-    <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
-      <p className="text-sm text-slate-600 dark:text-slate-300">{total} {resultsLabel}</p>
+  const renderToolbar = (sortId: string) => (
       <div className="flex flex-wrap items-center gap-2">
         <button type="button" aria-pressed={onlyFavorites} onClick={() => setOnlyFavorites(v => !v)}
-          className={`inline-flex h-11 items-center justify-center gap-2 rounded-xl border px-3 text-sm font-medium leading-none transition-colors ${onlyFavorites ? "border-emerald-600 bg-emerald-50 text-emerald-800 dark:bg-emerald-900 dark:text-white" : "border-slate-200 dark:border-slate-700"}`}>
+          className={`inline-flex h-11 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-sm font-medium leading-none transition-colors dark:border-slate-700 dark:bg-slate-900 ${onlyFavorites ? "border-emerald-600 bg-emerald-50 text-emerald-800 dark:bg-emerald-900 dark:text-white" : ""}`}>
           <Icon name="heart" filled={onlyFavorites} />{locale === "de" ? "Merkliste" : "Sevimlilar"}
         </button>
-        <label className="sr-only" htmlFor="market-sort">{locale === "de" ? "Sortierung" : "Saralash"}</label>
-        <select id="market-sort" value={initialSort} onChange={event => setSort(event.target.value as MarketListingSort)}
-          className="h-11 max-w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium leading-none text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+        <label className="sr-only" htmlFor={sortId}>{locale === "de" ? "Sortierung" : "Saralash"}</label>
+        <div className="relative">
+        <select id={sortId} value={initialSort} onChange={event => setSort(event.target.value as MarketListingSort)}
+          className="h-11 max-w-full appearance-none rounded-full border border-slate-200 bg-white py-0 pl-4 pr-9 text-sm font-medium leading-none text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
           <option value="newest">{locale === "de" ? "Neueste zuerst" : "Eng yangilari"}</option>
           <option value="oldest">{locale === "de" ? "Älteste zuerst" : "Eng eskilari"}</option>
           <option value="price_asc">{locale === "de" ? "Preis aufsteigend" : "Narx: arzonidan"}</option>
           <option value="price_desc">{locale === "de" ? "Preis absteigend" : "Narx: qimmatidan"}</option>
         </select>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-600 dark:text-slate-300"><path d="m6 9 6 6 6-6" /></svg>
+        </div>
         <div className="inline-flex overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
           <button type="button" aria-label={locale === "de" ? "Kachelansicht" : "Kartochka ko‘rinishi"} aria-pressed={view === "grid"} onClick={() => setView("grid")} className={`flex min-h-11 min-w-11 items-center justify-center ${view === "grid" ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-800 dark:text-white" : ""}`}><Icon name="grid"/></button>
           <button type="button" aria-label={locale === "de" ? "Listenansicht" : "Ro‘yxat ko‘rinishi"} aria-pressed={view === "list"} onClick={() => setView("list")} className={`flex min-h-11 min-w-11 items-center justify-center ${view === "list" ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-800 dark:text-white" : ""}`}><Icon name="list"/></button>
         </div>
       </div>
+  );
+  return <>
+    <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
+      <p className="text-sm text-slate-600 dark:text-slate-300">{total} {resultsLabel}</p>
+      <div className="xl:hidden">{renderToolbar("market-sort-mobile")}</div>
     </div>
+    {desktopTarget && createPortal(renderToolbar("market-sort-desktop"), desktopTarget)}
     {visible.length === 0 && <p className="mt-6 rounded-xl border border-slate-200 p-5 text-sm dark:border-slate-700">{locale === "de" ? "Keine gespeicherten Anzeigen auf dieser Seite." : "Ushbu sahifada saqlangan e’lonlar yo‘q."}</p>}
     <div className={view === "grid" ? "mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" : "mt-4 flex flex-col gap-4"}>
       {visible.map(item => {

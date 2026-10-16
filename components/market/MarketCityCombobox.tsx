@@ -81,7 +81,7 @@ export default function MarketCityCombobox({ initialId, locale, disabled }: Prop
     <label htmlFor={inputId} className="mb-2 block text-sm">{de ? "Stadt oder PLZ" : "Shahar yoki PLZ"}</label>
     <input type="hidden" name="locationId" value={selectedId} />
     <div className="relative flex items-center">
-      <input ref={inputRef} id={inputId} role="combobox" aria-autocomplete="list" aria-expanded={show} aria-controls={show ? listId : undefined} aria-activedescendant={show ? `${listId}-${active}` : undefined} autoComplete="off" placeholder={de ? "Stadt oder Postleitzahl…" : "Shahar yoki pochta indeksi…"} value={query} disabled={disabled || locating}
+      <input ref={inputRef} id={inputId} role="combobox" aria-autocomplete="list" aria-expanded={show} aria-controls={show ? listId : undefined} aria-activedescendant={show ? `${listId}-${active}` : undefined} autoComplete="off" placeholder={de ? "Stadt oder Postleitzahl…" : "Shahar yoki PLZ…"} value={query} disabled={disabled || locating}
         onChange={e => { setQuery(e.target.value); setSelectedId(""); setResults([]); setBusy(false); setOpen(true); setActive(0); setMessage(""); }}
         onFocus={() => { if (!selectedId) setOpen(true); }} onBlur={() => setOpen(false)}
         onKeyDown={e => {

@@ -37,7 +37,7 @@ function Glyph({ name, className = "size-5" }: { name: "search" | "grid" | "list
     search: <><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></>,
     grid: <><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></>,
     list: <><path d="M4 6h16M4 12h11M4 18h7" /></>,
-    filter: <><path d="M4 7h16M4 17h16M4 12h16" /><circle cx="9" cy="7" r="2" fill="currentColor" stroke="none" /><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none" /><circle cx="11" cy="17" r="2" fill="currentColor" stroke="none" /></>,
+    filter: <><path d="M4 7h16M4 12h16M4 17h16" /><circle cx="9" cy="7" r="2" fill="white" /><circle cx="16" cy="12" r="2" fill="white" /><circle cx="11" cy="17" r="2" fill="white" /></>,
     plus: <><circle cx="12" cy="12" r="9" /><path d="M12 8v8M8 12h8" /></>,
   };
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>{paths[name]}</svg>;
@@ -109,7 +109,7 @@ export default async function MarketPage({ searchParams }: {
           </div>
           <div className="flex flex-wrap items-center gap-3">
           <Link href="/market/mine" className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 px-4 text-sm font-semibold text-slate-800 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-900">{t.mine}</Link>
-          <Link href="/market/new" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-5 font-semibold !text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500">
+          <Link href="/market/new" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-5 text-sm font-semibold !text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500">
             <Glyph name="plus" className="mr-2 size-5" />{t.create}
           </Link>
           </div>
@@ -156,26 +156,26 @@ export default async function MarketPage({ searchParams }: {
           </button>
         </form>
 
-        <form className="mt-10 hidden sm:grid grid-cols-1 items-end gap-4 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1.3fr)_minmax(0,1.05fr)_minmax(0,1.05fr)_auto]" method="get">
-          <label className="flex min-w-0 flex-col gap-2 text-sm">
+        <form className="mt-10 hidden sm:grid grid-cols-1 items-end gap-4 text-sm sm:grid-cols-2 xl:grid-cols-12" method="get">
+          <label className="flex min-w-0 flex-col gap-2 text-sm xl:col-span-4">
             {t.search}
             <span className="relative block">
               <Glyph name="search" className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
               <input name="q" type="search" maxLength={100} defaultValue={query} placeholder={t.searchPlaceholder}
-                className="min-h-12 w-full min-w-0 rounded-2xl border border-slate-300 bg-white py-2 pl-12 pr-4 text-slate-950 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+                className="min-h-12 w-full min-w-0 rounded-2xl border border-slate-300 bg-white py-2 pl-12 pr-4 text-sm text-slate-950 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
             </span>
           </label>
-          <div className="min-w-0 [&_input[role=combobox]]:min-h-12 [&_input[role=combobox]]:rounded-2xl [&_input[role=combobox]]:pl-11">
+          <div className="min-w-0 xl:col-span-4 [&_input[role=combobox]]:min-h-12 [&_input[role=combobox]]:rounded-2xl [&_input[role=combobox]]:pl-11 [&_input[role=combobox]]:text-sm">
             <div className="relative">
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute left-3 top-[42px] z-10 size-5 text-slate-500"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
             <MarketCityCombobox initialId={selectedCity?.id ?? ""} locale={locale} disabled={false} />
             </div>
           </div>
-          <label className="order-4 flex min-w-0 flex-col gap-2 text-sm xl:order-4">
+          <label className="order-4 flex min-w-0 flex-col gap-2 text-sm xl:col-span-3">
             {t.typeLabel}
             <span className="relative block">
               <Glyph name="list" className="pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
-              <select name="type" defaultValue={selectedType ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-11 pr-11 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+              <select name="type" defaultValue={selectedType ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-10 pr-8 text-sm text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
                 <option value="">{t.all}</option>
                 {types.map(type => <option key={type} value={type}>{t[type]}</option>)}
               </select>
@@ -184,11 +184,11 @@ export default async function MarketPage({ searchParams }: {
               </svg>
             </span>
           </label>
-          <label className="order-3 flex min-w-0 flex-col gap-2 text-sm xl:order-3">
+          <label className="order-3 flex min-w-0 flex-col gap-2 text-sm xl:col-span-4">
             {locale === "de" ? "Kategorie" : "Kategoriya"}
             <span className="relative block">
               <Glyph name="grid" className="pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
-              <select name="category" defaultValue={selectedCategory ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-11 pr-11 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+              <select name="category" defaultValue={selectedCategory ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-10 pr-8 text-sm text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
                 <option value="">{locale === "de" ? "Alle Kategorien" : "Barcha kategoriyalar"}</option>
                 {marketCategories.map(category => <option key={category} value={category}>{marketCategoryLabels[locale][category]}</option>)}
               </select>
@@ -197,9 +197,11 @@ export default async function MarketPage({ searchParams }: {
               </svg>
             </span>
           </label>
-          <button type="submit" className="order-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-emerald-700 px-6 font-semibold !text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 sm:col-span-2 xl:col-span-1 xl:w-auto">
+          <button type="submit" className="order-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-emerald-700 px-6 font-semibold !text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 sm:col-span-2 xl:col-span-2 xl:w-full">
             <Glyph name="filter" />{t.filter}
           </button>
+          {/* Client-side listing controls are mounted here on desktop only. */}
+          <div id="market-desktop-toolbar" className="hidden min-w-0 xl:order-6 xl:col-span-7 xl:flex xl:items-end xl:justify-end" />
         </form>
 
         {listings.length === 0 ? (
