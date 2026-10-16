@@ -5,23 +5,36 @@ export type MarketModerationReport = {
   listingStatus: "published" | "hidden" | "closed" | "removed" | "draft";
   reporterUserId: string; reason: "spam" | "abuse" | "misinformation" | "other";
   details: string | null; createdAt: string;
+  reportStatus: "open" | "resolved"; resolvedAt: string | null;
 };
 
-export async function getOpenMarketReports(): Promise<MarketModerationReport[]> {
+export type MarketReportFilters = {
+  status: "open" | "resolved" | "all";
+  reason: "all" | MarketModerationReport["reason"];
+};
+
+export async function getMarketReports(filters: MarketReportFilters): Promise<MarketModerationReport[]> {
   const result = await getDb().query<{
     id: string; listing_id: string; slug: string; title: string; description: string;
     listing_status: MarketModerationReport["listingStatus"]; reporter_user_id: string;
-    reason: MarketModerationReport["reason"]; details: string | null; created_at: Date | string;
+    reason: MarketModerationReport["reason"]; details: string | null;
+    report_status: MarketModerationReport["reportStatus"];
+    created_at: Date | string; resolved_at: Date | string | null;
   }>(`SELECT r.id::text, m.id::text AS listing_id, m.slug, m.title, m.description,
-          m.status AS listing_status, r.reporter_user_id::text, r.reason, r.details, r.created_at
+          m.status AS listing_status, r.reporter_user_id::text, r.reason, r.details,
+          r.status AS report_status, r.created_at, r.resolved_at
      FROM content_reports r JOIN market_listings m ON m.id = r.market_listing_id
-     WHERE r.status = 'open' AND r.market_listing_id IS NOT NULL
-     ORDER BY r.created_at ASC, r.id ASC LIMIT 200`);
+     WHERE r.market_listing_id IS NOT NULL
+       AND ($1::text = 'all' OR r.status = $1::text)
+       AND ($2::text = 'all' OR r.reason = $2::text)
+     ORDER BY r.created_at DESC, r.id DESC LIMIT 200`, [filters.status, filters.reason]);
   return result.rows.map(r => ({
     id: r.id, listingId: r.listing_id, slug: r.slug, title: r.title,
     description: r.description, listingStatus: r.listing_status,
     reporterUserId: r.reporter_user_id, reason: r.reason, details: r.details,
+    reportStatus: r.report_status,
     createdAt: r.created_at instanceof Date ? r.created_at.toISOString() : r.created_at,
+    resolvedAt: r.resolved_at instanceof Date ? r.resolved_at.toISOString() : r.resolved_at,
   }));
 }
 
