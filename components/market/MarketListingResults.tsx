@@ -107,19 +107,19 @@ export default function MarketListingResults({ listings, locale, total, resultsL
       {visible.map(item => {
         const href = `/${locale}/market/${item.slug}`;
         const selected = favorites.has(item.id);
-        return <article key={item.id} className={`group relative flex overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900 ${view === "grid" ? "w-full max-w-[340px] flex-col" : "w-full flex-row"}`}>
-          <a href={href} className={`relative block shrink-0 overflow-hidden bg-slate-100 dark:bg-slate-800 ${view === "grid" ? "aspect-[16/10] w-full" : "w-28 self-stretch sm:w-48"}`} aria-label={item.title}>
+        return <article key={item.id} className={`group relative flex overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900 ${view === "grid" ? "w-full flex-col" : "w-full flex-col sm:flex-row"}`}>
+          <a href={href} className={`relative block shrink-0 overflow-hidden bg-slate-100 dark:bg-slate-800 ${view === "grid" ? "aspect-[16/10] w-full" : "aspect-[16/10] w-full sm:aspect-auto sm:w-48 sm:self-stretch"}`} aria-label={item.title}>
             {item.coverImageId ? <Image unoptimized fill sizes={view === "grid" ? "(max-width: 640px) 100vw, 340px" : "192px"} src={`/api/market/images/${item.coverImageId}`} alt={item.title} className="object-cover"/> : <span className="absolute inset-0 flex items-center justify-center p-2 text-center text-xs text-slate-500">{locale === "de" ? "Kein Bild" : "Rasm mavjud emas"}</span>}
           </a>
           <button type="button" aria-label={selected ? (locale === "de" ? "Aus Merkliste entfernen" : "Sevimlilardan olib tashlash") : (locale === "de" ? "Zur Merkliste hinzufügen" : "Sevimlilarga qo‘shish")} aria-pressed={selected} onClick={() => toggleFavorite(item.id)}
-            className={`absolute z-10 flex size-10 items-center justify-center rounded-full bg-white shadow-sm focus-visible:outline-2 focus-visible:outline-emerald-600 dark:bg-slate-950 ${view === "grid" ? "right-3 top-3" : "left-2 top-2"} ${selected ? "text-rose-600" : "text-slate-800 dark:text-white"}`}><Icon name="heart" filled={selected}/></button>
-          <div className={`flex min-w-0 flex-1 flex-col ${view === "grid" ? "p-5" : "p-3 sm:p-5"}`}>
+            className={`absolute z-10 flex size-10 items-center justify-center rounded-full bg-white shadow-sm focus-visible:outline-2 focus-visible:outline-emerald-600 dark:bg-slate-950 right-3 top-3 ${selected ? "text-rose-600" : "text-slate-800 dark:text-white"}`}><Icon name="heart" filled={selected}/></button>
+          <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-5">
             <p className="line-clamp-2 text-xs font-semibold text-emerald-700 dark:text-emerald-400">{categoryLabels[item.category]} · {typeLabels[item.listingType]} · {item.cityName}</p>
             <h2 className="mt-2 line-clamp-2 text-lg font-bold sm:text-xl">{item.title}</h2>
-            <p className="mt-2 line-clamp-2 text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
-            <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
-              <span className="inline-flex items-center gap-1 font-bold"><Icon name="tag"/>{marketPriceCaption(item, locale) ? `${marketPriceCaption(item, locale)}: ` : ""}{formatMarketPrice(item, locale)}</span>
-              <span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300"><Icon name="pin"/>{item.cityName}</span>
+            <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{item.description}</p>
+            <div className="mt-3 flex flex-col gap-2 text-sm">
+              <span className="inline-flex min-w-0 flex-wrap items-center gap-1 font-bold text-slate-950 dark:text-white"><Icon name="tag"/>{marketPriceCaption(item, locale) ? `${marketPriceCaption(item, locale)}: ` : ""}{formatMarketPrice(item, locale)}</span>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2"><span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300"><Icon name="pin"/>{item.cityName}</span>
               <span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300" title={locale === "de" ? "Aufrufe" : "Ko‘rishlar"} aria-label={`${locale === "de" ? "Aufrufe" : "Ko‘rishlar"}: ${item.viewCount ?? 0}`}><Icon name="eye"/>{new Intl.NumberFormat(locale === "de" ? "de-DE" : "uz-UZ").format(item.viewCount ?? 0)}</span>
               {(item.sellerRatingCount ?? 0) > 0 && item.sellerRatingAverage !== null && item.sellerRatingAverage !== undefined && (
                 <span className="inline-flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400"
@@ -128,8 +128,9 @@ export default function MarketListingResults({ listings, locale, total, resultsL
                   <Icon name="star" filled />
                   {item.sellerRatingAverage.toFixed(1)} <span className="text-slate-500 dark:text-slate-400">({item.sellerRatingCount})</span>
                 </span>
-              )}
+              )}</div>
             </div>
+            <div className="min-h-4 flex-1" aria-hidden="true" />
             <a href={href} className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-100 px-3 text-center text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:bg-emerald-800 dark:text-white dark:hover:bg-emerald-700">{openLabel}<Icon name="arrow"/></a>
           </div>
         </article>;
