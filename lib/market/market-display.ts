@@ -15,7 +15,7 @@ export function formatMarketPrice(item: DisplayListing, locale: Locale): string 
   if (item.listingType === "giveaway") return locale === "de" ? "Kostenlos" : "Bepul";
   if (item.priceAmount === null) return locale === "de" ? "Preis auf Anfrage" : "Narx kelishiladi";
   const amount = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(Number(item.priceAmount));
-  return item.priceType === "negotiable" ? `${amount} · VB` : amount;
+  return item.priceType === "negotiable" ? `${amount} · ${locale === "de" ? "VB" : "Kelishiladi"}` : amount;
 }
 
 export function marketPriceCaption(item: DisplayListing, locale: Locale): string {
