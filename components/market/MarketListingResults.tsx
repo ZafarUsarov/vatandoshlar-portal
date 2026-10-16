@@ -79,12 +79,12 @@ export default function MarketListingResults({ listings, locale, total, resultsL
       <p className="text-sm text-slate-600 dark:text-slate-300">{total} {resultsLabel}</p>
       <div className="flex flex-wrap items-center gap-2">
         <button type="button" aria-pressed={onlyFavorites} onClick={() => setOnlyFavorites(v => !v)}
-          className={`inline-flex min-h-11 items-center gap-2 rounded-xl border px-3 text-sm font-medium transition-colors ${onlyFavorites ? "border-emerald-600 bg-emerald-50 text-emerald-800 dark:bg-emerald-900 dark:text-white" : "border-slate-200 dark:border-slate-700"}`}>
+          className={`inline-flex h-11 items-center justify-center gap-2 rounded-xl border px-3 text-sm font-medium leading-none transition-colors ${onlyFavorites ? "border-emerald-600 bg-emerald-50 text-emerald-800 dark:bg-emerald-900 dark:text-white" : "border-slate-200 dark:border-slate-700"}`}>
           <Icon name="heart" filled={onlyFavorites} />{locale === "de" ? "Merkliste" : "Sevimlilar"}
         </button>
         <label className="sr-only" htmlFor="market-sort">{locale === "de" ? "Sortierung" : "Saralash"}</label>
         <select id="market-sort" value={initialSort} onChange={event => setSort(event.target.value as MarketListingSort)}
-          className="min-h-11 max-w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+          className="h-11 max-w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium leading-none text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
           <option value="newest">{locale === "de" ? "Neueste zuerst" : "Eng yangilari"}</option>
           <option value="oldest">{locale === "de" ? "Älteste zuerst" : "Eng eskilari"}</option>
           <option value="price_asc">{locale === "de" ? "Preis aufsteigend" : "Narx: arzonidan"}</option>

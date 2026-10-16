@@ -37,7 +37,7 @@ function Glyph({ name, className = "size-5" }: { name: "search" | "grid" | "list
     search: <><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></>,
     grid: <><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></>,
     list: <><path d="M4 6h16M4 12h11M4 18h7" /></>,
-    filter: <><path d="M4 7h16M7 12h10M10 17h4" /><path d="M16 4v6M8 10v5" /></>,
+    filter: <><path d="M4 7h16M4 17h16M4 12h16" /><circle cx="9" cy="7" r="2" fill="currentColor" stroke="none" /><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none" /><circle cx="11" cy="17" r="2" fill="currentColor" stroke="none" /></>,
     plus: <><circle cx="12" cy="12" r="9" /><path d="M12 8v8M8 12h8" /></>,
   };
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>{paths[name]}</svg>;
@@ -115,7 +115,48 @@ export default async function MarketPage({ searchParams }: {
           </div>
         </div>
 
-        <form className="mt-10 grid grid-cols-1 items-end gap-4 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1.3fr)_minmax(0,1.05fr)_minmax(0,1.05fr)_auto]" method="get">
+        {/* Mobile: search stays visible; secondary filters are collapsible. */}
+        <form className="mt-8 space-y-4 sm:hidden" method="get">
+          <label className="flex flex-col gap-2 text-sm">
+            {t.search}
+            <span className="relative block">
+              <Glyph name="search" className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
+              <input name="q" type="search" maxLength={100} defaultValue={query} placeholder={t.searchPlaceholder}
+                className="min-h-12 w-full rounded-2xl border border-slate-300 bg-white py-2 pl-12 pr-4 text-slate-950 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+            </span>
+          </label>
+          <details className="group rounded-2xl border border-slate-200 dark:border-slate-700" open={Boolean(selectedCity || selectedCategory || selectedType)}>
+            <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-2 px-4 font-semibold marker:hidden [&::-webkit-details-marker]:hidden">
+              <span className="inline-flex items-center gap-2"><Glyph name="filter" />{locale === "de" ? "Weitere Filter" : "Filtrlar"}</span>
+              <span aria-hidden="true" className="text-slate-500 transition-transform group-open:rotate-180">⌄</span>
+            </summary>
+            <div className="space-y-4 border-t border-slate-200 p-4 dark:border-slate-700">
+              <div className="relative min-w-0 [&_input[role=combobox]]:min-h-12 [&_input[role=combobox]]:rounded-2xl [&_input[role=combobox]]:pl-11">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute left-3 top-[42px] z-10 size-5 text-slate-500"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                <MarketCityCombobox initialId={selectedCity?.id ?? ""} locale={locale} disabled={false} />
+              </div>
+              <label className="flex flex-col gap-2 text-sm">
+                {locale === "de" ? "Kategorie" : "Kategoriya"}
+                <select name="category" defaultValue={selectedCategory ?? ""} className="min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+                  <option value="">{locale === "de" ? "Alle Kategorien" : "Barcha kategoriyalar"}</option>
+                  {marketCategories.map(category => <option key={category} value={category}>{marketCategoryLabels[locale][category]}</option>)}
+                </select>
+              </label>
+              <label className="flex flex-col gap-2 text-sm">
+                {t.typeLabel}
+                <select name="type" defaultValue={selectedType ?? ""} className="min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+                  <option value="">{t.all}</option>
+                  {types.map(type => <option key={type} value={type}>{t[type]}</option>)}
+                </select>
+              </label>
+            </div>
+          </details>
+          <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-emerald-700 px-6 font-semibold !text-white hover:bg-emerald-800">
+            <Glyph name="filter" />{t.filter}
+          </button>
+        </form>
+
+        <form className="mt-10 hidden sm:grid grid-cols-1 items-end gap-4 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1.3fr)_minmax(0,1.05fr)_minmax(0,1.05fr)_auto]" method="get">
           <label className="flex min-w-0 flex-col gap-2 text-sm">
             {t.search}
             <span className="relative block">
