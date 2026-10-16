@@ -157,6 +157,7 @@ type AdminModuleHref =
   | "/admin/telegram"
   | "/admin/support"
   | "/admin/savol"
+  | "/admin/market"
   | "/admin/analytics";
 
 type AdminModuleTone =
@@ -448,6 +449,14 @@ export default async function AdminPage() {
                   title={currentCopy.savolTitle}
                   description={currentCopy.savolDescription}
                   action={currentCopy.savolAction}
+                  tone="orange"
+                />
+
+                <AdminModuleCard
+                  href="/admin/market"
+                  title={locale === "de" ? "Market-Moderation" : "Market moderatsiyasi"}
+                  description={locale === "de" ? "Gemeldete Anzeigen prüfen und moderieren." : "Shikoyat qilingan e’lonlarni tekshirish va boshqarish."}
+                  action={locale === "de" ? "Meldungen prüfen" : "Shikoyatlarni ko‘rish"}
                   tone="orange"
                 />
 

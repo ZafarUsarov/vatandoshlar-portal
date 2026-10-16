@@ -6,6 +6,7 @@ import MarketViewTracker from "@/components/market/MarketViewTracker";
 import MarketImageGallery from "@/components/market/MarketImageGallery";
 import MarketContactLinks from "@/components/market/MarketContactLinks";
 import MarketShareButton from "@/components/market/MarketShareButton";
+import MarketReportForm from "@/components/market/MarketReportForm";
 import Image from "next/image";
 import MarketDetailIcon from "@/components/market/MarketDetailIcon";
 import type { Metadata } from "next";
@@ -115,6 +116,7 @@ export default async function MarketDetailPage({ params, searchParams }: Props) 
           </section>
           <div className="[&>section]:mt-0"><MarketContactLinks contact={item} title={item.title} locale={locale} /></div>
           <MarketShareButton locale={locale} title={item.title} />
+          <MarketReportForm locale={locale} slug={item.slug} listingId={item.id} />
         </aside>
       </div>
       {related.length > 0 && <section className="mt-14 border-t border-slate-200 pt-8 dark:border-slate-800">
