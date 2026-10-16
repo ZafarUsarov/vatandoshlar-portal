@@ -149,11 +149,11 @@ export default async function MarketPage({ searchParams }: {
                   {types.map(type => <option key={type} value={type}>{t[type]}</option>)}
                 </select>
               </label>
+              <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-emerald-700 px-6 font-semibold !text-white hover:bg-emerald-800">
+                <Glyph name="filter" />{t.filter}
+              </button>
             </div>
           </details>
-          <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-emerald-700 px-6 font-semibold !text-white hover:bg-emerald-800">
-            <Glyph name="filter" />{t.filter}
-          </button>
         </form>
 
         <form className="mt-10 hidden sm:grid grid-cols-1 items-end gap-4 text-sm sm:grid-cols-2 xl:grid-cols-12" method="get">
