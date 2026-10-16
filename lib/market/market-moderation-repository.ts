@@ -39,9 +39,10 @@ export async function getMarketReports(filters: MarketReportFilters): Promise<Ma
 }
 
 export async function moderateMarketReport(input: {
-  reportId: string; listingId: string; operation: "hide" | "restore" | "remove" | "dismiss";
+  reportId: string; listingId: string; adminUserId: string; operation: "hide" | "restore" | "remove" | "dismiss";
 }): Promise<boolean> {
-  if (!/^[1-9]\d*$/.test(input.reportId) || !/^[1-9]\d*$/.test(input.listingId)) return false;
+  if (!/^[1-9]\d*$/.test(input.reportId) || !/^[1-9]\d*$/.test(input.listingId) ||
+      !/^[1-9]\d*$/.test(input.adminUserId)) return false;
   const client = await getDb().connect();
   try {
     await client.query("BEGIN");
@@ -72,6 +73,15 @@ export async function moderateMarketReport(input: {
          WHERE market_listing_id = $1::bigint AND status = 'open' AND ($2::text <> 'dismiss' OR id = $3::bigint)`,
         [input.listingId, input.operation, input.reportId]);
     }
+    const nextStatus = input.operation === "dismiss" ? status :
+      input.operation === "hide" ? "hidden" :
+      input.operation === "restore" ? "published" : "removed";
+    await client.query(
+      `INSERT INTO market_moderation_audit
+        (admin_user_id, market_listing_id, report_id, operation, previous_status, new_status)
+       VALUES ($1::bigint, $2::bigint, $3::bigint, $4, $5, $6)`,
+      [input.adminUserId, input.listingId, input.reportId, input.operation, status, nextStatus],
+    );
     await client.query("COMMIT");
     return true;
   } catch (error) {
