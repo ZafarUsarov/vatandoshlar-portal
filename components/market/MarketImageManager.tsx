@@ -11,7 +11,6 @@ const allowed = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 export default function MarketImageManager({ listingId, initialImages, locale }: Props) {
   const [images, setImages] = useState(initialImages);
-  const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const previewUrls = useRef<string[]>([]);
   const [busy, setBusy] = useState(false);
@@ -37,7 +36,6 @@ export default function MarketImageManager({ listingId, initialImages, locale }:
 
   function clearSelection() {
     clearPreviews();
-    setFiles([]);
     if (input.current) input.current.value = "";
   }
 
@@ -52,14 +50,14 @@ export default function MarketImageManager({ listingId, initialImages, locale }:
     const urls = selected.map(file => URL.createObjectURL(file));
     previewUrls.current = urls;
     setPreviews(urls);
-    setFiles(selected);
+    void upload(selected);
   }
 
-  async function upload() {
+  async function upload(selected: File[]) {
     setBusy(true); setError(""); setMessage("");
     try {
 
-      for (const file of files) {
+      for (const file of selected) {
         const reserved = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ contentType: file.type, byteSize: file.size }) });
         if (!reserved.ok) throw new Error(de ? "Upload konnte nicht vorbereitet werden." : "Yuklashni boshlash imkonsiz.");
         const data = await reserved.json() as { imageId: string };
@@ -126,7 +124,8 @@ export default function MarketImageManager({ listingId, initialImages, locale }:
       </div><button type="button" disabled={busy} onClick={() => remove(item.id)} className="min-h-10 rounded-lg px-2 font-semibold text-red-700 underline disabled:opacity-50 dark:text-red-300">{de ? "Entfernen" : "O‘chirish"}</button></div>
     </div>)}</div>}
     {slots > 0 && <div className="mt-5"><label htmlFor="market-image-files" className="mb-2 block font-semibold">{de ? "Bilder auswählen" : "Rasm tanlash"}</label><input ref={input} id="market-image-files" type="file" multiple accept="image/jpeg,image/png,image/webp" disabled={busy} onChange={selectFiles} className="block w-full rounded-xl border border-slate-300 p-3 text-sm dark:border-slate-700" />
-      {files.length > 0 && <><div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">{previews.map((url, index) => <div key={url} className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700"><div className="relative aspect-square"><Image unoptimized fill sizes="(max-width: 640px) 50vw, 33vw" src={url} alt={`${de ? "Vorschau" : "Oldindan ko‘rish"} ${index + 1}`} className="object-cover" /></div><p className="truncate p-2 text-xs" title={files[index]?.name}>{files[index]?.name}</p></div>)}</div><div className="mt-3 flex flex-wrap gap-2">{files.map((file, index) => <span key={`${file.name}-${index}`} className="max-w-full truncate rounded-lg bg-slate-100 px-3 py-2 text-xs dark:bg-slate-800">{file.name}</span>)}</div><button type="button" disabled={busy} onClick={upload} className="mt-4 min-h-11 rounded-xl bg-emerald-700 px-5 font-semibold text-white disabled:opacity-50">{busy ? (de ? "Wird hochgeladen…" : "Yuklanmoqda…") : (de ? "Bilder hochladen" : "Rasmlarni yuklash")}</button></>}
+      {busy && <p role="status" className="mt-3 text-sm font-medium text-emerald-700 dark:text-emerald-300">{de ? "Bilder werden automatisch hochgeladen…" : "Rasmlar avtomatik yuklanmoqda…"}</p>}
+      {previews.length > 0 && <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">{previews.map((url, index) => <div key={url} className="relative aspect-square overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700"><Image unoptimized fill sizes="(max-width: 640px) 50vw, 33vw" src={url} alt={`${de ? "Vorschau" : "Oldindan ko‘rish"} ${index + 1}`} className="object-cover" /></div>)}</div>}
     </div>}
     {error && <p role="alert" className="mt-3 text-sm text-red-700 dark:text-red-300">{error}</p>}{message && <p role="status" className="mt-3 text-sm text-emerald-700 dark:text-emerald-300">{message}</p>}
   </section>;

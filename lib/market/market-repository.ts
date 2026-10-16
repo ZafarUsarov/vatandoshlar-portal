@@ -13,6 +13,7 @@ export type MarketListing = Readonly<{
   description: string;
   contentLanguage: "uz" | "de";
   priceAmount: string | null;
+  priceType: "fixed" | "negotiable";
   currency: "EUR";
   publishedAt: string;
   locationId: string;
@@ -43,6 +44,7 @@ type ListingRow = {
   description: string;
   content_language: "uz" | "de";
   price_amount: string | null;
+  price_type: "fixed" | "negotiable";
   currency: "EUR";
   published_at: Date | string;
   location_id: string;
@@ -61,6 +63,7 @@ function mapListing(row: ListingRow): MarketListing {
     description: row.description,
     contentLanguage: row.content_language,
     priceAmount: row.price_amount,
+    priceType: row.price_type,
     currency: row.currency,
     publishedAt: row.published_at instanceof Date ? row.published_at.toISOString() : row.published_at,
     locationId: row.location_id,
@@ -73,7 +76,7 @@ function mapListing(row: ListingRow): MarketListing {
 
 const select = `
   SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
-         m.content_language, m.price_amount::text, m.currency,
+         m.content_language, m.price_amount::text, m.price_type, m.currency,
          m.published_at, m.location_id::text, l.city_name, l.state_name,
          m.contact_telegram, m.contact_whatsapp, m.contact_phone, m.contact_email
   FROM market_listings m
@@ -132,7 +135,7 @@ export async function getPublishedMarketListings(filters: {
 
   const selectWithCover = `
     SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
-           m.content_language, m.price_amount::text, m.currency,
+           m.content_language, m.price_amount::text, m.price_type, m.currency,
            m.published_at, m.location_id::text, l.city_name, l.state_name,
            NULL::text AS contact_telegram, NULL::text AS contact_whatsapp,
            NULL::text AS contact_phone, NULL::text AS contact_email,
@@ -199,21 +202,22 @@ export async function getMarketSellerForPublishedListing(listingId: string): Pro
 
 /** Related public listings, excluding the current item. */
 export async function getRelatedMarketListings(listingId: string, category: MarketCategory, limit = 4): Promise<ReadonlyArray<MarketListingWithCover>> {
-  const result = await getDb().query<ListingRow & { cover_image_id: string | null }>(`
+  const result = await getDb().query<ListingRow & { cover_image_id: string | null; view_count: string }>(`
     SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
-           m.content_language, m.price_amount::text, m.currency, m.published_at,
+           m.content_language, m.price_amount::text, m.price_type, m.currency, m.published_at,
            m.location_id::text, l.city_name, l.state_name,
            NULL::text AS contact_telegram, NULL::text AS contact_whatsapp,
            NULL::text AS contact_phone, NULL::text AS contact_email,
            (SELECT i.id::text FROM market_listing_images i WHERE i.listing_id = m.id AND i.status = 'ready'
-            ORDER BY i.position, i.id LIMIT 1) AS cover_image_id
+            ORDER BY i.position, i.id LIMIT 1) AS cover_image_id,
+           (SELECT COUNT(*)::text FROM market_listing_views v WHERE v.listing_id = m.id) AS view_count
     FROM market_listings m JOIN locations l ON l.id = m.location_id
     WHERE m.id <> $1::bigint AND m.category = $2 AND m.status = 'published'
       AND m.published_at IS NOT NULL AND (m.expires_at IS NULL OR m.expires_at > NOW())
       AND l.status = 'active' AND l.country_code = 'DE' AND l.location_type = 'city'
     ORDER BY m.published_at DESC, m.id DESC LIMIT $3
   `, [listingId, category, Math.min(8, Math.max(1, limit))]);
-  return result.rows.map(row => ({ ...mapListing(row), coverImageId: row.cover_image_id }));
+  return result.rows.map(row => ({ ...mapListing(row), coverImageId: row.cover_image_id, viewCount: Number(row.view_count) }));
 }
 
 /** Seller profile is intentionally restricted to active accounts and public listings. */
@@ -241,7 +245,7 @@ export async function getPublicMarketSellerListings(userId: string, page = 1) {
   const current = Math.min(10000, Math.max(1, Math.floor(page) || 1));
   const result = await getDb().query<ListingRow & { cover_image_id: string | null }>(`
     SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
-      m.content_language, m.price_amount::text, m.currency, m.published_at,
+      m.content_language, m.price_amount::text, m.price_type, m.currency, m.published_at,
       m.location_id::text, l.city_name, l.state_name,
       NULL::text AS contact_telegram, NULL::text AS contact_whatsapp,
       NULL::text AS contact_phone, NULL::text AS contact_email,

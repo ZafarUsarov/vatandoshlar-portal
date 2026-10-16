@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState, useSyncExternalStore } from "react";
+import { formatMarketPrice, marketPriceCaption } from "@/lib/market/market-display";
 import type { MarketListingSort, MarketListingType, MarketListingWithCover } from "@/lib/market/market-repository";
 import type { MarketCategory } from "@/lib/market/market-category";
 
@@ -45,7 +46,7 @@ function Icon({ name, filled = false }: { name: "heart" | "grid" | "list" | "pin
   };
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="size-5 shrink-0">{paths[name]}</svg>;
 }
-export default function MarketListingResults({ listings, locale, total, resultsLabel, openLabel, freeLabel, priceLabel, typeLabels, categoryLabels, initialSort }: Props) {
+export default function MarketListingResults({ listings, locale, total, resultsLabel, openLabel, typeLabels, categoryLabels, initialSort }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -72,11 +73,6 @@ export default function MarketListingResults({ listings, locale, total, resultsL
     if (value === "newest") next.delete("sort"); else next.set("sort", value);
     next.delete("page");
     router.push(`${pathname}${next.size ? `?${next.toString()}` : ""}`);
-  }
-  function formatPrice(amount: string | null, type: MarketListingType) {
-    if (type === "giveaway") return freeLabel;
-    if (amount === null) return priceLabel;
-    return new Intl.NumberFormat(locale === "de" ? "de-DE" : "uz-UZ", { style: "currency", currency: "EUR" }).format(Number(amount));
   }
   return <>
     <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
@@ -116,7 +112,7 @@ export default function MarketListingResults({ listings, locale, total, resultsL
             <h2 className="mt-2 line-clamp-2 text-lg font-bold sm:text-xl">{item.title}</h2>
             <p className="mt-2 line-clamp-2 text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
             <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
-              <span className="inline-flex items-center gap-1 font-bold"><Icon name="tag"/>{formatPrice(item.priceAmount, item.listingType)}</span>
+              <span className="inline-flex items-center gap-1 font-bold"><Icon name="tag"/>{marketPriceCaption(item, locale) ? `${marketPriceCaption(item, locale)}: ` : ""}{formatMarketPrice(item, locale)}</span>
               <span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300"><Icon name="pin"/>{item.cityName}</span>
               <span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300" title={locale === "de" ? "Aufrufe" : "Ko‘rishlar"} aria-label={`${locale === "de" ? "Aufrufe" : "Ko‘rishlar"}: ${item.viewCount ?? 0}`}><Icon name="eye"/>{new Intl.NumberFormat(locale === "de" ? "de-DE" : "uz-UZ").format(item.viewCount ?? 0)}</span>
               {(item.sellerRatingCount ?? 0) > 0 && item.sellerRatingAverage !== null && item.sellerRatingAverage !== undefined && (

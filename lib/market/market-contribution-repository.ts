@@ -1,3 +1,4 @@
+import type { MarketPriceType } from "@/lib/market/market-price";
 import type { MarketCategory } from "@/lib/market/market-category";
 import { getDb } from "@/lib/db";
 import type { MarketContact } from "@/lib/market/market-contact";
@@ -23,22 +24,23 @@ export async function createMarketDraft(input: {
   description: string;
   contentLanguage: "uz" | "de";
   priceAmount: string | null;
+  priceType: MarketPriceType;
   contact: MarketContact;
 }): Promise<string> {
   const result = await getDb().query<{ id: string }>(
     `INSERT INTO market_listings (
       author_user_id, location_id, slug, listing_type, title,
       description, content_language, price_amount, currency, status,
-      contact_telegram, contact_whatsapp, contact_phone, contact_email, category
+      contact_telegram, contact_whatsapp, contact_phone, contact_email, category, price_type
     )
-    SELECT $1::bigint, l.id, $2, $3, $4, $5, $6, $7::numeric, 'EUR', 'draft', $9, $10, $11, $12, $13
+    SELECT $1::bigint, l.id, $2, $3, $4, $5, $6, $7::numeric, 'EUR', 'draft', $9, $10, $11, $12, $13, $14
     FROM locations l
     WHERE l.id = $8::bigint AND l.status = 'active'
       AND l.country_code = 'DE' AND l.location_type = 'city'
     RETURNING id::text`,
     [input.authorUserId, input.slug, input.listingType, input.title,
       input.description, input.contentLanguage, input.priceAmount, input.locationId,
-      input.contact.telegram || null, input.contact.whatsapp || null, input.contact.phone || null, input.contact.email || null, input.category],
+      input.contact.telegram || null, input.contact.whatsapp || null, input.contact.phone || null, input.contact.email || null, input.category, input.priceType],
   );
   if (result.rowCount !== 1) {
     throw new Error("Selected city is unavailable.");
@@ -104,7 +106,7 @@ export async function changeOwnMarketListingStatus(input: {
 
 export type EditableMarketListing = Readonly<{
   id: string; listingType: MarketListingType; category: MarketCategory; locationId: string;
-  title: string; description: string; priceAmount: string;
+  title: string; description: string; priceAmount: string; priceType: MarketPriceType;
   contentLanguage: "uz" | "de";
   status: "draft" | "published";
 }> & MarketContact;
@@ -113,18 +115,18 @@ export async function getEditableOwnMarketListing(id: string, userId: string): P
   if (!/^[1-9]\d*$/.test(id)) return null;
   const result = await getDb().query<{
     id: string; listing_type: MarketListingType; category: MarketCategory; location_id: string;
-    title: string; description: string; price_amount: string | null;
+    title: string; description: string; price_amount: string | null; price_type: MarketPriceType;
     content_language: "uz" | "de";
     status: "draft" | "published";
     contact_telegram: string | null; contact_whatsapp: string | null; contact_phone: string | null; contact_email: string | null;
   }>(`SELECT id::text, listing_type, category, location_id::text, title, description,
-            price_amount::text, content_language, status, contact_telegram, contact_whatsapp, contact_phone, contact_email FROM market_listings
+            price_amount::text, price_type, content_language, status, contact_telegram, contact_whatsapp, contact_phone, contact_email FROM market_listings
       WHERE id = $1::bigint AND author_user_id = $2::bigint
         AND status IN ('draft', 'published')`, [id, userId]);
   const row = result.rows[0];
   return row ? { id: row.id, listingType: row.listing_type, category: row.category,
     locationId: row.location_id, title: row.title, description: row.description,
-    priceAmount: row.price_amount ?? "", contentLanguage: row.content_language, status: row.status,
+    priceAmount: row.price_amount ?? "", priceType: row.price_type, contentLanguage: row.content_language, status: row.status,
     telegram: row.contact_telegram ?? "", whatsapp: row.contact_whatsapp ?? "",
     phone: row.contact_phone ?? "", email: row.contact_email ?? "" } : null;
 }
@@ -132,6 +134,7 @@ export async function getEditableOwnMarketListing(id: string, userId: string): P
 export async function updateOwnMarketListing(input: {
   id: string; authorUserId: string; listingType: MarketListingType; category: MarketCategory;
   locationId: string; title: string; description: string; priceAmount: string | null;
+  priceType: MarketPriceType;
   contentLanguage: "uz" | "de";
   contact: MarketContact;
 }): Promise<boolean> {
@@ -160,7 +163,7 @@ export async function updateOwnMarketListing(input: {
       SET listing_type = $3, location_id = $4::bigint, title = $5,
           description = $6, price_amount = $7::numeric,
           contact_telegram = $8, contact_whatsapp = $9, contact_phone = $10,
-          contact_email = $11, category = $12, content_language = $13,
+          contact_email = $11, category = $12, content_language = $13, price_type = $14,
           updated_at = NOW()
       WHERE m.id = $1::bigint AND m.author_user_id = $2::bigint
         AND m.status IN ('draft', 'published')
@@ -170,7 +173,7 @@ export async function updateOwnMarketListing(input: {
         input.locationId, input.title, input.description, input.priceAmount,
         input.contact.telegram || null, input.contact.whatsapp || null,
         input.contact.phone || null, input.contact.email || null,
-        input.category, input.contentLanguage]);
+        input.category, input.contentLanguage, input.priceType]);
     if (result.rowCount !== 1) {
       await client.query("ROLLBACK");
       return false;

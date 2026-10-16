@@ -1,4 +1,5 @@
 "use server";
+import { parseMarketPrice, type MarketPriceType } from "@/lib/market/market-price";
 import { translateMarketListing } from "@/lib/market/market-translation";
 import { isMarketCategory } from "@/lib/market/market-category";
 
@@ -18,7 +19,7 @@ export async function editMarketAction(previous: EditMarketState, data: FormData
   const id = get(data, "listingId");
   const values: MarketFormValues = {
     listingType: get(data, "listingType"), category: get(data, "category"), locationId: get(data, "locationId"),
-    title: get(data, "title"), description: get(data, "description"), priceAmount: get(data, "priceAmount"),
+    title: get(data, "title"), description: get(data, "description"), priceAmount: get(data, "priceAmount"), priceType: get(data, "priceType") || "fixed",
     contentLanguage: get(data, "contentLanguage"),
     telegram: get(data, "telegram"), whatsapp: get(data, "whatsapp"), phone: get(data, "phone"), email: get(data, "email"),
   };
@@ -35,16 +36,17 @@ export async function editMarketAction(previous: EditMarketState, data: FormData
   let priceAmount: string | null = null;
   if (values.listingType === "giveaway") priceAmount = "0.00";
   else if (values.priceAmount) {
-    const normalized = values.priceAmount.replace(",", ".");
-    if (!/^(?:0|[1-9]\d{0,9})(?:\.\d{1,2})?$/.test(normalized)) return fail("Narx noto‘g‘ri.", "Ungültiger Preis.");
+    const normalized = parseMarketPrice(values.priceAmount);
+    if (normalized === null) return fail("Narxni 9,99 yoki 999 shaklida kiriting. Kasr uchun vergul ishlating.", "Preis z. B. 9,99 oder 999 eingeben. Dezimalstellen mit Komma.");
     priceAmount = normalized;
   }
   if (values.listingType === "sell" && priceAmount === null) return fail("Sotish narxini kiriting.", "Bitte Verkaufspreis eingeben.");
+  if (!["fixed", "negotiable"].includes(values.priceType)) return fail("Narx turini tanlang.", "Bitte Preisart wählen.");
   const contactIssue = validateMarketContact(values);
   if (contactIssue) return fail(contactError(contactIssue, "uz"), contactError(contactIssue, "de"));
   const saved = await updateOwnMarketListing({
     id, authorUserId: context.user.id, listingType: values.listingType as MarketListingType, category: values.category as import("@/lib/market/market-category").MarketCategory,
-    locationId: values.locationId, title: values.title, description: values.description, priceAmount, contentLanguage: values.contentLanguage as "uz" | "de", contact: values,
+    locationId: values.locationId, title: values.title, description: values.description, priceAmount, priceType: (values.listingType === "giveaway" ? "fixed" : values.priceType) as MarketPriceType, contentLanguage: values.contentLanguage as "uz" | "de", contact: values,
   });
   if (!saved) return fail("E’lonni tahrirlab bo‘lmadi.", "Anzeige konnte nicht bearbeitet werden.");
   await translateMarketListing(id);
