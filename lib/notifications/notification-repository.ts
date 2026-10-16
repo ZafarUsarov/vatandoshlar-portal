@@ -70,12 +70,15 @@ export async function getNotificationsForUser(
   const safeLimit = Math.min(Math.max(limit, 1), 100);
   const result = await getDb().query<{
     id: string;
-    type: "savol_new_answer";
-    question_id: string;
-    question_slug: string;
-    question_title: string;
-    answer_id: string;
+    type: Notification["type"];
+    question_id: string | null;
+    question_slug: string | null;
+    question_title: string | null;
+    answer_id: string | null;
     actor_display_name: string | null;
+    market_listing_id: string | null;
+    market_listing_slug: string | null;
+    market_listing_title: string | null;
     read_at: string | Date | null;
     created_at: string | Date;
   }>(
@@ -87,11 +90,15 @@ export async function getNotificationsForUser(
         q.slug AS question_slug,
         q.title AS question_title,
         n.answer_id::text,
+        n.market_listing_id::text,
+        m.slug AS market_listing_slug,
+        m.title AS market_listing_title,
         actor_profile.display_name AS actor_display_name,
         n.read_at,
         n.created_at
       FROM notifications n
-      JOIN questions q ON q.id = n.question_id
+      LEFT JOIN questions q ON q.id = n.question_id
+      LEFT JOIN market_listings m ON m.id = n.market_listing_id
       LEFT JOIN user_profiles actor_profile ON actor_profile.user_id = n.actor_user_id
       WHERE n.user_id = $1
       ORDER BY n.created_at DESC, n.id DESC
@@ -108,6 +115,9 @@ export async function getNotificationsForUser(
     questionTitle: row.question_title,
     answerId: row.answer_id,
     actorDisplayName: row.actor_display_name,
+    marketListingId: row.market_listing_id,
+    marketListingSlug: row.market_listing_slug,
+    marketListingTitle: row.market_listing_title,
     readAt: row.read_at === null ? null : toIso(row.read_at),
     createdAt: toIso(row.created_at),
   }));

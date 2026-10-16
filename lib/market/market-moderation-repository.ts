@@ -46,8 +46,8 @@ export async function moderateMarketReport(input: {
   const client = await getDb().connect();
   try {
     await client.query("BEGIN");
-    const found = await client.query<{ listing_status: string; can_restore: boolean }>(
-      `SELECT m.status AS listing_status,
+    const found = await client.query<{ listing_status: string; can_restore: boolean; author_user_id: string }>(
+      `SELECT m.status AS listing_status, m.author_user_id::text,
               (m.published_at IS NOT NULL AND (m.expires_at IS NULL OR m.expires_at > NOW())) AS can_restore
        FROM content_reports r
        JOIN market_listings m ON m.id = r.market_listing_id
@@ -82,6 +82,16 @@ export async function moderateMarketReport(input: {
        VALUES ($1::bigint, $2::bigint, $3::bigint, $4, $5, $6)`,
       [input.adminUserId, input.listingId, input.reportId, input.operation, status, nextStatus],
     );
+    if (input.operation === "hide" || input.operation === "remove") {
+      await client.query(
+        `INSERT INTO notifications (user_id, market_listing_id, type)
+         SELECT pu.id, $2::bigint, $3::text
+         FROM public_users pu
+         WHERE pu.id = $1::bigint AND pu.account_status = 'active'`,
+        [found.rows[0].author_user_id, input.listingId,
+          input.operation === "hide" ? "market_listing_hidden" : "market_listing_removed"],
+      );
+    }
     await client.query("COMMIT");
     return true;
   } catch (error) {

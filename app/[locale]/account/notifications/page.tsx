@@ -24,7 +24,8 @@ export default async function NotificationsPage() {
     ? {
         eyebrow: "VATANDOSHLAR ID",
         title: "Benachrichtigungen",
-        description: "Neue Aktivitäten zu Fragen, denen Sie folgen oder die Sie gestellt haben.",
+        description: "Aktuelles zu Ihren Fragen und Market-Anzeigen.",
+        marketHidden: "Anzeige ausgeblendet", marketRemoved: "Anzeige entfernt", marketOpen: "Anzeige öffnen", marketMissing: "Anzeige nicht mehr verfügbar",
         empty: "Noch keine Benachrichtigungen.",
         newAnswer: "Neue Antwort",
         open: "Frage öffnen",
@@ -35,7 +36,8 @@ export default async function NotificationsPage() {
     : {
         eyebrow: "VATANDOSHLAR ID",
         title: "Bildirishnomalar",
-        description: "Siz kuzatayotgan yoki bergan savollardagi yangi faollik.",
+        description: "Savollaringiz va Market e’lonlaringiz haqidagi bildirishnomalar.",
+        marketHidden: "E’lon yashirildi", marketRemoved: "E’lon olib tashlandi", marketOpen: "E’lonni ochish", marketMissing: "E’lon endi mavjud emas",
         empty: "Hozircha bildirishnoma yo‘q.",
         newAnswer: "Yangi javob",
         open: "Savolni ochish",
@@ -70,14 +72,14 @@ export default async function NotificationsPage() {
             <article key={notification.id} className={`rounded-2xl border p-5 ${notification.readAt === null ? "border-emerald-200 bg-emerald-50/60 dark:border-emerald-900 dark:bg-emerald-950/20" : "border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"}`}>
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
-                  <p className="text-xs font-black uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">{copy.newAnswer}</p>
-                  <h2 className="mt-2 font-bold text-slate-950 dark:text-white">{notification.questionTitle}</h2>
+                  <p className="text-xs font-black uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">{notification.type === "savol_new_answer" ? copy.newAnswer : notification.type === "market_listing_hidden" ? copy.marketHidden : copy.marketRemoved}</p>
+                  <h2 className="mt-2 font-bold text-slate-950 dark:text-white">{notification.type === "savol_new_answer" ? notification.questionTitle : notification.marketListingTitle ?? copy.marketMissing}</h2>
                   {notification.actorDisplayName ? <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{notification.actorDisplayName}</p> : null}
                 </div>
-                {notification.readAt === null ? <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500" aria-label={copy.newAnswer} /> : null}
+                {notification.readAt === null ? <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500" aria-label={notification.type === "savol_new_answer" ? copy.newAnswer : notification.type === "market_listing_hidden" ? copy.marketHidden : copy.marketRemoved} /> : null}
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
-                <Link href={`/savol/${notification.questionSlug}`} className="inline-flex min-h-10 items-center rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950">{copy.open}</Link>
+                {notification.type === "savol_new_answer" && notification.questionSlug ? <Link href={`/savol/${notification.questionSlug}`} className="inline-flex min-h-10 items-center rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950">{copy.open}</Link> : notification.type !== "savol_new_answer" && notification.marketListingSlug && notification.type === "market_listing_hidden" ? <Link href={`/market/${notification.marketListingSlug}`} className="inline-flex min-h-10 items-center rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white hover:bg-emerald-500">{copy.marketOpen}</Link> : null}
                 {notification.readAt === null ? (
                   <form action={markNotificationReadAction}>
                     <input type="hidden" name="locale" value={locale} />
