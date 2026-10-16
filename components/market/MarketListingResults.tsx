@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
-import { createPortal } from "react-dom";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import { formatMarketPrice, marketPriceCaption } from "@/lib/market/market-display";
 import type { MarketListingSort, MarketListingType, MarketListingWithCover } from "@/lib/market/market-repository";
 import type { MarketCategory } from "@/lib/market/market-category";
@@ -51,13 +50,6 @@ export default function MarketListingResults({ listings, locale, total, resultsL
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [desktopTarget, setDesktopTarget] = useState<HTMLElement | null>(null);
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      setDesktopTarget(document.getElementById("market-desktop-toolbar"));
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
   const [view, setView] = useState<"grid" | "list">("grid");
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const saved = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
@@ -108,9 +100,8 @@ export default function MarketListingResults({ listings, locale, total, resultsL
   return <>
     <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
       <p className="text-sm text-slate-600 dark:text-slate-300">{total} {resultsLabel}</p>
-      <div className="xl:hidden">{renderToolbar("market-sort-mobile")}</div>
+      {renderToolbar("market-sort")}
     </div>
-    {desktopTarget && createPortal(renderToolbar("market-sort-desktop"), desktopTarget)}
     {visible.length === 0 && <p className="mt-6 rounded-xl border border-slate-200 p-5 text-sm dark:border-slate-700">{locale === "de" ? "Keine gespeicherten Anzeigen auf dieser Seite." : "Ushbu sahifada saqlangan e’lonlar yo‘q."}</p>}
     <div className={view === "grid" ? "mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" : "mt-4 flex flex-col gap-4"}>
       {visible.map(item => {

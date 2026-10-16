@@ -3,11 +3,11 @@
 import { useEffect, useId, useRef, useState } from "react";
 
 type City = { id: string; cityName: string; stateName: string; postalCode: string | null };
-type Props = Readonly<{ initialId: string; locale: "uz" | "de"; disabled: boolean }>;
+type Props = Readonly<{ initialId: string; locale: "uz" | "de"; disabled: boolean; autoSubmit?: boolean }>;
 const label = (city: City) => `${city.postalCode ? `${city.postalCode} — ` : ""}${city.cityName} — ${city.stateName}`;
 const norm = (s: string) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("de-DE").trim();
 
-export default function MarketCityCombobox({ initialId, locale, disabled }: Props) {
+export default function MarketCityCombobox({ initialId, locale, disabled, autoSubmit = false }: Props) {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(initialId);
   const [results, setResults] = useState<City[]>([]);
@@ -51,8 +51,13 @@ export default function MarketCityCombobox({ initialId, locale, disabled }: Prop
     return () => { clearTimeout(timer); controller.abort(); };
   }, [query, selectedId, de]);
 
+  function notifySelection() {
+    if (autoSubmit) window.setTimeout(() => window.dispatchEvent(new Event("market-desktop-city-selected")), 0);
+  }
+
   function select(city: City) {
     setSelectedId(city.id); setQuery(label(city)); setOpen(false); setResults([]); setActive(0); setMessage("");
+    notifySelection();
   }
 
   async function locate() {
@@ -82,7 +87,7 @@ export default function MarketCityCombobox({ initialId, locale, disabled }: Prop
     <input type="hidden" name="locationId" value={selectedId} />
     <div className="relative flex items-center">
       <input ref={inputRef} id={inputId} role="combobox" aria-autocomplete="list" aria-expanded={show} aria-controls={show ? listId : undefined} aria-activedescendant={show ? `${listId}-${active}` : undefined} autoComplete="off" placeholder={de ? "Stadt oder Postleitzahl…" : "Shahar yoki PLZ…"} value={query} disabled={disabled || locating}
-        onChange={e => { setQuery(e.target.value); setSelectedId(""); setResults([]); setBusy(false); setOpen(true); setActive(0); setMessage(""); }}
+        onChange={e => { setQuery(e.target.value); if (selectedId && !e.target.value.trim()) notifySelection(); setSelectedId(""); setResults([]); setBusy(false); setOpen(true); setActive(0); setMessage(""); }}
         onFocus={() => { if (!selectedId) setOpen(true); }} onBlur={() => setOpen(false)}
         onKeyDown={e => {
           if (e.key === "Escape") { setOpen(false); return; }

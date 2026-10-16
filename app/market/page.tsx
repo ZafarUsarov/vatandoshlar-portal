@@ -6,6 +6,7 @@ import { getLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MarketCityCombobox from "@/components/market/MarketCityCombobox";
+import DesktopMarketFilterForm from "@/components/market/DesktopMarketFilterForm";
 import { Link } from "@/i18n/navigation";
 import { getActiveCities } from "@/lib/locations/location-repository";
 import { getPublishedMarketListings, type MarketListingSort, type MarketListingType } from "@/lib/market/market-repository";
@@ -156,8 +157,8 @@ export default async function MarketPage({ searchParams }: {
           </details>
         </form>
 
-        <form className="mt-10 hidden sm:grid grid-cols-1 items-end gap-4 text-sm sm:grid-cols-2 xl:grid-cols-12" method="get">
-          <label className="flex min-w-0 flex-col gap-2 text-sm xl:col-span-4">
+        <DesktopMarketFilterForm className="mt-10 hidden grid-cols-1 items-end gap-4 text-sm sm:grid sm:grid-cols-2 xl:grid-cols-4">
+          <label className="flex min-w-0 flex-col gap-2 text-sm">
             {t.search}
             <span className="relative block">
               <Glyph name="search" className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
@@ -165,26 +166,13 @@ export default async function MarketPage({ searchParams }: {
                 className="min-h-12 w-full min-w-0 rounded-2xl border border-slate-300 bg-white py-2 pl-12 pr-4 text-sm text-slate-950 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
             </span>
           </label>
-          <div className="min-w-0 xl:col-span-4 [&_input[role=combobox]]:min-h-12 [&_input[role=combobox]]:rounded-2xl [&_input[role=combobox]]:pl-11 [&_input[role=combobox]]:text-sm">
+          <div className="min-w-0 [&_input[role=combobox]]:min-h-12 [&_input[role=combobox]]:rounded-2xl [&_input[role=combobox]]:pl-11 [&_input[role=combobox]]:text-sm">
             <div className="relative">
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute left-3 top-[42px] z-10 size-5 text-slate-500"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-            <MarketCityCombobox initialId={selectedCity?.id ?? ""} locale={locale} disabled={false} />
+            <MarketCityCombobox initialId={selectedCity?.id ?? ""} locale={locale} disabled={false} autoSubmit />
             </div>
           </div>
-          <label className="order-4 flex min-w-0 flex-col gap-2 text-sm xl:col-span-3">
-            {t.typeLabel}
-            <span className="relative block">
-              <Glyph name="list" className="pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
-              <select name="type" defaultValue={selectedType ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-10 pr-8 text-sm text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
-                <option value="">{t.all}</option>
-                {types.map(type => <option key={type} value={type}>{t[type]}</option>)}
-              </select>
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-600 dark:text-slate-300">
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </span>
-          </label>
-          <label className="order-3 flex min-w-0 flex-col gap-2 text-sm xl:col-span-4">
+          <label className="flex min-w-0 flex-col gap-2 text-sm">
             {locale === "de" ? "Kategorie" : "Kategoriya"}
             <span className="relative block">
               <Glyph name="grid" className="pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
@@ -197,12 +185,20 @@ export default async function MarketPage({ searchParams }: {
               </svg>
             </span>
           </label>
-          <button type="submit" className="order-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-emerald-700 px-6 font-semibold !text-white transition-colors hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 sm:col-span-2 xl:col-span-2 xl:w-full">
-            <Glyph name="filter" />{t.filter}
-          </button>
-          {/* Client-side listing controls are mounted here on desktop only. */}
-          <div id="market-desktop-toolbar" className="hidden min-w-0 xl:order-6 xl:col-span-7 xl:flex xl:items-end xl:justify-end" />
-        </form>
+          <label className="flex min-w-0 flex-col gap-2 text-sm">
+            {t.typeLabel}
+            <span className="relative block">
+              <Glyph name="list" className="pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2 text-slate-500" />
+              <select name="type" defaultValue={selectedType ?? ""} className="min-h-12 w-full appearance-none rounded-2xl border border-slate-300 bg-white py-2 pl-10 pr-8 text-sm text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+                <option value="">{t.all}</option>
+                {types.map(type => <option key={type} value={type}>{t[type]}</option>)}
+              </select>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-600 dark:text-slate-300">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </span>
+          </label>
+        </DesktopMarketFilterForm>
 
         {listings.length === 0 ? (
           <div className="mt-10 rounded-2xl border border-slate-200 p-8 text-slate-600 dark:border-slate-800 dark:text-slate-300">
