@@ -108,12 +108,12 @@ export default function MarketListingResults({ listings, locale, total, resultsL
         const href = `/${locale}/market/${item.slug}`;
         const selected = favorites.has(item.id);
         return <article key={item.id} className={`group relative flex overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900 ${view === "grid" ? "w-full flex-col" : "w-full flex-col sm:flex-row"}`}>
-          <a href={href} className={`relative block shrink-0 overflow-hidden bg-slate-100 dark:bg-slate-800 ${view === "grid" ? "aspect-[16/10] w-full" : "aspect-[16/10] w-full sm:aspect-auto sm:w-48 sm:self-stretch"}`} aria-label={item.title}>
-            {item.coverImageId ? <Image unoptimized fill sizes={view === "grid" ? "(max-width: 640px) 100vw, 340px" : "192px"} src={`/api/market/images/${item.coverImageId}`} alt={item.title} className="object-cover"/> : <span className="absolute inset-0 flex items-center justify-center p-2 text-center text-xs text-slate-500">{locale === "de" ? "Kein Bild" : "Rasm mavjud emas"}</span>}
+          <a href={href} className={`relative block shrink-0 overflow-hidden bg-slate-100 dark:bg-slate-800 ${view === "grid" ? "aspect-[16/10] w-full" : "aspect-[16/10] w-full sm:aspect-auto sm:w-[38%] sm:min-h-[240px] sm:self-stretch"}`} aria-label={item.title}>
+            {item.coverImageId ? <Image unoptimized fill sizes={view === "grid" ? "(max-width: 640px) 100vw, 340px" : "(max-width: 640px) 100vw, 38vw"} src={`/api/market/images/${item.coverImageId}`} alt={item.title} className={view === "grid" ? "object-cover" : "object-contain"}/> : <span className="absolute inset-0 flex items-center justify-center p-2 text-center text-xs text-slate-500">{locale === "de" ? "Kein Bild" : "Rasm mavjud emas"}</span>}
           </a>
           <button type="button" aria-label={selected ? (locale === "de" ? "Aus Merkliste entfernen" : "Sevimlilardan olib tashlash") : (locale === "de" ? "Zur Merkliste hinzufügen" : "Sevimlilarga qo‘shish")} aria-pressed={selected} onClick={() => toggleFavorite(item.id)}
             className={`absolute z-10 flex size-10 items-center justify-center rounded-full bg-white shadow-sm focus-visible:outline-2 focus-visible:outline-emerald-600 dark:bg-slate-950 right-3 top-3 ${selected ? "text-rose-600" : "text-slate-800 dark:text-white"}`}><Icon name="heart" filled={selected}/></button>
-          <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-5">
+          <div className={`flex min-w-0 flex-1 flex-col p-4 sm:p-5 ${view === "list" ? "sm:pl-6" : ""}`}>
             <p className="line-clamp-2 text-xs font-semibold text-emerald-700 dark:text-emerald-400">{categoryLabels[item.category]} · {typeLabels[item.listingType]} · {item.cityName}</p>
             <h2 className="mt-2 line-clamp-2 text-lg font-bold sm:text-xl">{item.title}</h2>
             <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{item.description}</p>
