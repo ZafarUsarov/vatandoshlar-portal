@@ -30,7 +30,7 @@ export async function removeMarketListingAction(formData: FormData): Promise<voi
   const locale = (await getLocale()) === "de" ? "de" : "uz";
   const context = await requirePublicUser(locale, "/market/mine");
   const listingId = formData.get("listingId");
-  if (typeof listingId !== "string" || !/^[1-9]\\d*$/.test(listingId)) {
+  if (typeof listingId !== "string" || !/^[1-9]\d*$/.test(listingId)) {
     throw new Error("Invalid listing ID.");
   }
   const removed = await removeOwnMarketListing({

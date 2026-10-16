@@ -205,7 +205,7 @@ export async function removeOwnMarketListing(input: {
   listingId: string;
   authorUserId: string;
 }): Promise<boolean> {
-  if (!/^[1-9]\\d*$/.test(input.listingId) || !/^[1-9]\\d*$/.test(input.authorUserId)) return false;
+  if (!/^[1-9]\d*$/.test(input.listingId) || !/^[1-9]\d*$/.test(input.authorUserId)) return false;
 
   const result = await getDb().query(
     `UPDATE market_listings
