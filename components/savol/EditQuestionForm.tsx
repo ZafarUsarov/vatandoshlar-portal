@@ -1,11 +1,14 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import QuestionAttachmentManager from "@/components/savol/QuestionAttachmentManager";
 import { editQuestionAction, type EditQuestionState } from "@/app/savol/[slug]/edit/actions";
 import type { Question, QuestionCategory } from "@/types/savol";
 
-export default function EditQuestionForm({ question, categories, locale }: {
-  question: Question; categories: ReadonlyArray<QuestionCategory>; locale: "uz" | "de";
+type Attachment = { id: string; fileName: string; contentType: string; byteSize: number };
+
+export default function EditQuestionForm({ question, categories, locale, attachments }: {
+  question: Question; categories: ReadonlyArray<QuestionCategory>; locale: "uz" | "de"; attachments: Attachment[];
 }) {
   const [title, setTitle] = useState(question.title);
   const [body, setBody] = useState(question.body);
@@ -25,6 +28,7 @@ export default function EditQuestionForm({ question, categories, locale }: {
         <input id="edit-title" name="title" minLength={10} maxLength={180} required value={title} onChange={e => setTitle(e.target.value)} className={field} /></div>
       <div><label htmlFor="edit-body" className="mb-2 block font-semibold">{de ? "Frage" : "Savol matni"}</label>
         <textarea id="edit-body" name="body" minLength={20} maxLength={10000} required rows={9} value={body} onChange={e => setBody(e.target.value)} className={field} /></div>
+      <QuestionAttachmentManager questionId={question.id} locale={locale} initial={attachments} />
       <button type="submit" disabled={pending} className="rounded-xl bg-emerald-700 px-6 py-3 font-semibold text-white hover:bg-emerald-800 disabled:opacity-60">
         {pending ? (de ? "Speichern…" : "Saqlanmoqda…") : (de ? "Änderungen speichern" : "O‘zgarishlarni saqlash")}
       </button>

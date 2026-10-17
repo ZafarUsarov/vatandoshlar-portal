@@ -75,14 +75,15 @@ export async function createAnswerReplyNotification(input: Readonly<{
     preferred_locale: string | null;
   }>(`WITH inserted AS (
       INSERT INTO notifications (user_id, actor_user_id, question_id, answer_id, reply_id, type)
-      SELECT a.author_user_id, $4::bigint, $1::bigint, a.id, r.id, 'savol_answer_reply'
+      SELECT COALESCE(parent.author_user_id, a.author_user_id), $4::bigint, $1::bigint, a.id, r.id, 'savol_answer_reply'
       FROM answers a
       JOIN answer_replies r ON r.answer_id = a.id
+      LEFT JOIN answer_replies parent ON parent.id = r.parent_reply_id
       JOIN questions q ON q.id = a.question_id
-      JOIN public_users pu ON pu.id = a.author_user_id
+      JOIN public_users pu ON pu.id = COALESCE(parent.author_user_id, a.author_user_id)
       WHERE a.id = $2::bigint AND a.question_id = $1::bigint
         AND r.id = $3::bigint AND r.author_user_id = $4::bigint
-        AND a.author_user_id <> $4::bigint
+        AND COALESCE(parent.author_user_id, a.author_user_id) <> $4::bigint
         AND a.status = 'published' AND r.status = 'published' AND q.status = 'published'
         AND pu.account_status = 'active'
       ON CONFLICT DO NOTHING RETURNING user_id

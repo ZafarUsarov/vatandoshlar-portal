@@ -18,6 +18,7 @@ import type { UserPreferredLocale } from "@/types/user";
 
 export type CreateAnswerState = Readonly<{
   error: string | null;
+  answerId?: string;
 }>;
 
 function resolveLocale(value: FormDataEntryValue | null): UserPreferredLocale {
@@ -96,7 +97,7 @@ export async function createAnswerAction(
   }
 
   revalidatePath(`/${locale}/savol/${slug}`);
-  return { error: null };
+  return { error: null, answerId: answer.id };
 }
 
 export async function toggleHelpfulAction(formData: FormData): Promise<void> {
@@ -217,11 +218,12 @@ export async function createReplyAction(_previousState: CreateReplyState, formDa
   const slug = textValue(formData.get("slug"));
   const answerId = textValue(formData.get("answerId"));
   const body = textValue(formData.get("body"));
+  const parentId = textValue(formData.get("parentId")) || null;
   const invalid = locale === "de" ? "Bitte schreiben Sie 2–3000 Zeichen." : "Izoh 2–3000 belgidan iborat bo‘lsin.";
-  if (!slug || !/^\d+$/.test(answerId) || body.length < 2 || body.length > 3000) return { error: invalid, success: false };
+  if (!slug || !/^\d+$/.test(answerId) || (parentId !== null && !/^\d+$/.test(parentId)) || body.length < 2 || body.length > 3000) return { error: invalid, success: false };
   const question = await getPublishedQuestionBySlug(slug);
   if (!question) return { error: locale === "de" ? "Frage nicht gefunden." : "Savol topilmadi.", success: false };
-  const replyId = await createAnswerReply({ answerId, questionId: question.id, authorUserId: context.user.id, body });
+  const replyId = await createAnswerReply({ answerId, questionId: question.id, authorUserId: context.user.id, body, parentId });
   if (!replyId) return { error: locale === "de" ? "Antwort nicht verfügbar." : "Javob mavjud emas.", success: false };
   try {
     const recipient = await createAnswerReplyNotification({

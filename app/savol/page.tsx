@@ -1,202 +1,29 @@
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
-
+import { Link } from "@/i18n/navigation";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { Link } from "@/i18n/navigation";
-import {
-  getActiveQuestionCategories,
-  getPublishedQuestions,
-} from "@/lib/savol/savol-repository";
-import type { SavolContentLanguage } from "@/types/savol";
+import { getActiveQuestionCategories, getPublishedQuestions } from "@/lib/savol/savol-repository";
+import { getSavolAuthorNames } from "@/lib/savol/savol-author-names";
+import SavolCategoryFilter from "@/components/savol/SavolCategoryFilter";
+import { ArrowRight, MessageCircle, MessagesSquare, Plus, ShieldCheck, Users, SquarePen, Handshake } from "lucide-react";
 
 export const dynamic = "force-dynamic";
-
-type SupportedLocale = "uz" | "de";
-
-const copy = {
-  uz: {
-    metadataTitle: "Savol-javob | Vatandoshlar.de",
-    metadataDescription:
-      "Germaniyadagi o‘zbeklar uchun amaliy savollar va hamjamiyat javoblari.",
-    eyebrow: "Vatandosh Savol",
-    title: "Savolingizga javob toping",
-    description:
-      "Germaniyadagi hayot, hujjatlar, ish, o‘qish va kundalik masalalar bo‘yicha hamjamiyat savollari.",
-    questions: "So‘nggi savollar",
-    emptyTitle: "Hozircha savollar yo‘q",
-    emptyDescription:
-      "Birinchi savollar qo‘shilgach, ular shu yerda ko‘rinadi.",
-    read: "Savolni ko‘rish",
-    languageUz: "O‘zbekcha",
-    languageDe: "Nemischa",
-    ask: "Savol berish",
-  },
-  de: {
-    metadataTitle: "Fragen & Antworten | Vatandoshlar.de",
-    metadataDescription:
-      "Praktische Fragen und Community-Antworten für Usbeken in Deutschland.",
-    eyebrow: "Vatandosh Savol",
-    title: "Antworten auf Ihre Fragen finden",
-    description:
-      "Community-Fragen zum Leben in Deutschland, zu Dokumenten, Arbeit, Studium und Alltag.",
-    questions: "Neueste Fragen",
-    emptyTitle: "Noch keine Fragen",
-    emptyDescription:
-      "Sobald die ersten Fragen veröffentlicht werden, erscheinen sie hier.",
-    read: "Frage ansehen",
-    languageUz: "Usbekisch",
-    languageDe: "Deutsch",
-    ask: "Frage stellen",
-  },
-} as const;
-
-function resolveLocale(locale: string): SupportedLocale {
-  return locale === "de" ? "de" : "uz";
-}
-
-function formatDate(value: string, locale: SupportedLocale): string {
-  return new Intl.DateTimeFormat(locale === "de" ? "de-DE" : "uz-UZ", {
-    dateStyle: "medium",
-  }).format(new Date(value));
-}
-
-function languageLabel(
-  language: SavolContentLanguage,
-  locale: SupportedLocale,
-): string {
-  return language === "de" ? copy[locale].languageDe : copy[locale].languageUz;
-}
-
-export async function generateMetadata(): Promise<Metadata> {
-  const locale = resolveLocale(await getLocale());
-  const t = copy[locale];
-
-  return {
-    title: t.metadataTitle,
-    description: t.metadataDescription,
-    alternates: {
-      canonical: `/${locale}/savol`,
-      languages: {
-        uz: "/uz/savol",
-        de: "/de/savol",
-      },
-    },
-    openGraph: {
-      type: "website",
-      siteName: "Vatandoshlar.de",
-      title: t.metadataTitle,
-      description: t.metadataDescription,
-      url: `/${locale}/savol`,
-      locale: locale === "de" ? "de_DE" : "uz_UZ",
-    },
-  };
-}
-
-export default async function SavolPage() {
-  const locale = resolveLocale(await getLocale());
-  const t = copy[locale];
-
-  const [questions, categories] = await Promise.all([
-    getPublishedQuestions(),
-    getActiveQuestionCategories(),
-  ]);
-
-  const categoryById = new Map(
-    categories.map((category) => [
-      category.id,
-      locale === "de" ? category.labelDe : category.labelUz,
-    ]),
-  );
-
-  return (
-    <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
-      <Header />
-
-      <main className="pt-20 sm:pt-24">
-        <section className="border-b border-slate-200/80 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/40">
-          <div className="mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-8">
-            <p className="text-sm font-semibold tracking-wide text-emerald-700 dark:text-emerald-400">
-              {t.eyebrow}
-            </p>
-            <h1 className="mt-3 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
-              {t.title}
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
-              {t.description}
-            </p>
-            <Link
-              href="/savol/new"
-              className="mt-7 inline-flex min-h-12 items-center justify-center rounded-2xl bg-emerald-700 px-6 text-sm font-bold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:focus-visible:ring-offset-slate-900"
-            >
-              {t.ask}
-            </Link>
-          </div>
-        </section>
-
-        <section className="py-14 sm:py-16">
-          <div className="mx-auto max-w-5xl px-6 lg:px-8">
-            <h2 className="text-2xl font-bold tracking-tight">{t.questions}</h2>
-
-            {questions.length === 0 ? (
-              <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-8 dark:border-slate-800 dark:bg-slate-900/50">
-                <h3 className="text-lg font-semibold">{t.emptyTitle}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
-                  {t.emptyDescription}
-                </p>
-              </div>
-            ) : (
-              <div className="mt-8 space-y-4">
-                {questions.map((question) => {
-                  const category = categoryById.get(question.categoryId);
-
-                  return (
-                    <article
-                      key={question.id}
-                      className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
-                    >
-                      <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
-                        {category ? (
-                          <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
-                            {category}
-                          </span>
-                        ) : null}
-                        <span>{languageLabel(question.contentLanguage, locale)}</span>
-                        <span aria-hidden="true">·</span>
-                        <time dateTime={question.createdAt}>
-                          {formatDate(question.createdAt, locale)}
-                        </time>
-                      </div>
-
-                      <h3 className="mt-3 text-xl font-semibold tracking-tight">
-                        <Link
-                          href={`/savol/${question.slug}`}
-                          className="transition-colors hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:hover:text-emerald-400 dark:focus-visible:ring-offset-slate-900"
-                        >
-                          {question.title}
-                        </Link>
-                      </h3>
-
-                      <p className="mt-3 line-clamp-3 whitespace-pre-line text-sm leading-6 text-slate-600 dark:text-slate-300">
-                        {question.body}
-                      </p>
-
-                      <Link
-                        href={`/savol/${question.slug}`}
-                        className="mt-5 inline-flex text-sm font-semibold text-emerald-700 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-emerald-400 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-900"
-                      >
-                        {t.read}
-                      </Link>
-                    </article>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </section>
-      </main>
-
-      <Footer />
-    </div>
-  );
+export async function generateMetadata(): Promise<Metadata> { const de=(await getLocale())==="de";return {title:de?"Fragen & Antworten | Vatandoshlar.de":"Savollar | Vatandoshlar.de",description:de?"Fragen und Antworten aus der Community.":"Vatandoshlar hamjamiyatida savol bering va javob toping."}; }
+export default async function SavolPage(){
+ const de=(await getLocale())==="de";
+ const [questions,categories]=await Promise.all([getPublishedQuestions(),getActiveQuestionCategories()]);
+ const authors=await getSavolAuthorNames(questions.map(q=>q.authorUserId));
+ const count=new Map<string,number>();for(const q of questions)count.set(q.categoryId,(count.get(q.categoryId)??0)+1);
+ const labels=new Map(categories.map(c=>[c.id,de?c.labelDe:c.labelUz]));
+ return <div className="min-h-screen bg-slate-50 text-slate-950 dark:bg-slate-950 dark:text-white"><Header/><main className="pt-20 sm:pt-24">
+ <style>{`
+.savol-hero-layout { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1024px) { .savol-hero-layout { grid-template-columns: minmax(0, 1fr) 340px; } }
+`}</style>
+ <section className="overflow-hidden border-b border-slate-200 bg-gradient-to-br from-white via-emerald-50/50 to-sky-50 py-12 sm:py-16 sm:pb-8 dark:border-slate-800 dark:from-slate-900 dark:via-emerald-950/20 dark:to-slate-900"><div className="savol-hero-layout mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:items-center lg:px-8"><div><p className="text-xs font-semibold tracking-wide text-emerald-700 dark:text-emerald-400">{de?"Startseite / Fragen":"Bosh sahifa / Savollar"}</p><h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">{de?"Fragen & Antworten":"Savollar"}</h1><p className="mt-3 text-lg text-slate-600 dark:text-slate-300">{de?"Stellen Sie Ihre Frage – die Community hilft.":"Savollaringizni bering, tajribali vatandoshlar javob beradi."}</p><div className="mt-8 grid max-w-2xl grid-cols-3 gap-3"><div className="flex flex-col gap-2 text-sm font-semibold"><span className="w-fit rounded-2xl bg-emerald-100 p-3 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"><MessagesSquare size={22}/></span>{de?"Erfahrungen":"Hamjamiyat tajribasi"}</div><div className="flex flex-col gap-2 text-sm font-semibold"><span className="w-fit rounded-2xl bg-blue-100 p-3 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"><ShieldCheck size={22}/></span>{de?"Hilfreiche Antworten":"Ishonchli javoblar"}</div><div className="flex flex-col gap-2 text-sm font-semibold"><span className="w-fit rounded-2xl bg-violet-100 p-3 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300"><Handshake size={22}/></span>{de?"Gemeinsam helfen":"Bir-birimizga yordam"}</div></div></div><div aria-hidden="true" className="hidden items-center justify-center lg:flex"><div className="relative flex h-56 w-64 items-center justify-center rounded-[3rem] bg-emerald-100/70 dark:bg-emerald-900/30"><span className="relative rounded-[2rem] bg-emerald-600 p-10 text-white shadow-xl shadow-emerald-900/15"><MessagesSquare size={86} strokeWidth={1.5}/></span></div></div></div></section>
+ <div className="mx-auto max-w-7xl px-4 pb-7 sm:px-6 lg:px-8" style={{ paddingTop: 36 }}>
+ <SavolCategoryFilter de={de} categories={categories.map(c=>({id:c.id,label:de?c.labelDe:c.labelUz,count:count.get(c.id)??0}))} />
+ <div id="savol-results" className="mt-5 scroll-mt-28 sm:scroll-mt-32"><h2 className="text-xl font-bold">{de?"Neueste Fragen":"So‘nggi savollar"}</h2></div>
+ <div className="mt-5 grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px]"><section aria-label={de?"Fragen":"Savollar"} className="min-w-0 space-y-3">{questions.length===0?<div className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600 dark:border-slate-800 dark:bg-slate-900">{de?"Noch keine Fragen.":"Hozircha savollar yo‘q."}</div>:questions.map(q=><article key={q.id} data-savol-category={q.categoryId} data-savol-search={`${q.title} ${q.body}`.toLocaleLowerCase()} className="savol-filter-item group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-emerald-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900"><div className="flex gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400"><MessageCircle size={22}/></span><div className="min-w-0 flex-1"><h3 className="text-base font-bold leading-6"><Link href={`/savol/${q.slug}`} className="hover:text-emerald-700 dark:hover:text-emerald-400">{q.title}</Link></h3><p className="mt-2 line-clamp-2 whitespace-pre-line text-sm leading-6 text-slate-600 dark:text-slate-300">{q.body}</p><div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500"><span className="rounded-full bg-blue-50 px-2.5 py-1 font-medium text-blue-700 dark:bg-blue-950/40 dark:text-blue-300">{labels.get(q.categoryId)??(de?"Allgemein":"Boshqa")}</span><span>{authors.get(q.authorUserId)??(de?"Mitglied":"Foydalanuvchi")}</span><span>·</span><time dateTime={q.createdAt}>{new Intl.DateTimeFormat(de?"de-DE":"uz-UZ",{dateStyle:"medium",timeStyle:"short",timeZone:"Europe/Berlin"}).format(new Date(q.createdAt))}</time></div></div><Link href={`/savol/${q.slug}`} aria-label={de?"Frage öffnen":"Savolni ochish"} className="shrink-0 self-start text-slate-400 transition group-hover:text-emerald-600"><ArrowRight size={18}/></Link></div></article>)}</section><aside className="space-y-4 lg:sticky lg:top-28"><div className="rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-6 dark:border-emerald-900/40 dark:from-emerald-950/30 dark:to-slate-900"><span className="inline-flex rounded-xl bg-white p-3 text-emerald-700 dark:bg-slate-800 dark:text-emerald-400"><SquarePen size={26}/></span><h3 className="mt-4 text-lg font-bold">{de?"Haben Sie eine Frage?":"Savolingiz bormi?"}</h3><p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{de?"Teilen Sie Ihre Frage mit der Community.":"Hamjamiyatga savol bering, tajribali vatandoshlar yordam beradi."}</p><Link href="/savol/new" className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800"><Plus size={19}/>{de?"Frage stellen":"Yangi savol berish"}</Link></div><div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"><h3 className="flex items-center gap-2 font-bold"><Users size={19} className="text-emerald-600"/>{de?"Community":"Hamjamiyat"}</h3><p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{de?"Erfahrungen teilen und gemeinsam Antworten finden.":"Tajriba ulashing va birgalikda yechim toping."}</p></div></aside></div></div></main><div aria-hidden="true" className="h-12 sm:h-16"/><Footer/></div>;
 }

@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
+import { ImagePlus, Paperclip, X } from "lucide-react";
+import { useRouter } from "@/i18n/navigation";
 
 import {
   createQuestionAction,
@@ -18,7 +20,37 @@ type Props = Readonly<{
   categories: ReadonlyArray<QuestionCategory>;
 }>;
 
+const allowedTypes = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
+const maxBytes = 5 * 1024 * 1024;
+type SelectedFile = { file: File; preview?: string };
+
 export default function CreateQuestionForm({ locale, categories }: Props) {
+  const router = useRouter();
+  const imageInput = useRef<HTMLInputElement>(null);
+  const fileInput = useRef<HTMLInputElement>(null);
+  const queuedRef = useRef<SelectedFile[]>([]);
+  const handled = useRef<string | null>(null);
+  const [files, setFiles] = useState<SelectedFile[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState("");
+  function addFiles(list: FileList | null) {
+    if (!list) return;
+    const incoming = Array.from(list);
+    if (queuedRef.current.length + incoming.length > 3 || incoming.some(f => !allowedTypes.includes(f.type) || f.size < 1 || f.size > maxBytes)) {
+      setUploadMessage(locale === "de" ? "Maximal 3 Dateien, je 5 MB (JPG, PNG, WebP, PDF)." : "Ko‘pi bilan 3 ta fayl, har biri 5 MB (JPG, PNG, WebP, PDF).");
+      return;
+    }
+    setUploadMessage("");
+    const next = [...queuedRef.current, ...incoming.map(file => ({ file, preview: file.type.startsWith("image/") ? URL.createObjectURL(file) : undefined }))];
+    queuedRef.current = next;
+    setFiles(next);
+  }
+  function removeFile(index: number) {
+    const next = queuedRef.current.filter((entry, i) => { if (i === index && entry.preview) URL.revokeObjectURL(entry.preview); return i !== index; });
+    queuedRef.current = next;
+    setFiles(next);
+  }
+
   const [categoryId, setCategoryId] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -27,6 +59,45 @@ export default function CreateQuestionForm({ locale, categories }: Props) {
     createQuestionAction,
     initialState,
   );
+
+  useEffect(() => {
+    if (!state.created || handled.current === state.created.id) return;
+    handled.current = state.created.id;
+    const { id: questionId, slug } = state.created;
+    const selected = [...queuedRef.current];
+    if (!selected.length) { router.push(`/savol/${slug}`); return; }
+    let active = true;
+    async function uploadAll() {
+      setUploading(true);
+      const failed: string[] = [];
+      for (const { file } of selected) {
+        let attachmentId: string | undefined;
+        try {
+          const reserved = await fetch(`/api/savol/questions/${questionId}/attachments`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ fileName: file.name, contentType: file.type, byteSize: file.size }) });
+          const data = await reserved.json();
+          if (!reserved.ok || !data.attachmentId) throw new Error(data.error || "Reservation failed");
+          attachmentId = data.attachmentId;
+          const sent = await fetch(`/api/savol/attachments/${attachmentId}/upload`, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
+          if (!sent.ok) throw new Error("Upload failed");
+          const confirmed = await fetch(`/api/savol/attachments/${attachmentId}/confirm`, { method: "POST" });
+          if (!confirmed.ok || (await confirmed.json()).ok !== true) throw new Error("Confirmation failed");
+        } catch {
+          failed.push(file.name);
+          if (attachmentId) await fetch(`/api/savol/attachments/${attachmentId}`, { method: "DELETE" }).catch(() => {});
+        }
+      }
+      if (!active) return;
+      setUploading(false);
+      if (failed.length) {
+        setUploadMessage(`${locale === "de" ? "Frage veröffentlicht, aber Dateien konnten nicht hochgeladen werden" : "Savol e’lon qilindi, ammo fayllar yuklanmadi"}: ${failed.join(", ")}`);
+      } else {
+        selected.forEach(item => { if (item.preview) URL.revokeObjectURL(item.preview); });
+        router.push(`/savol/${slug}`);
+      }
+    }
+    void uploadAll();
+    return () => { active = false; };
+  }, [state.created, router, locale]);
 
   const copy =
     locale === "de"
@@ -66,6 +137,7 @@ export default function CreateQuestionForm({ locale, categories }: Props) {
 
   return (
     <form action={formAction} className="space-y-5">
+      {uploadMessage && <p role="alert" className="text-sm text-amber-700 dark:text-amber-300">{uploadMessage}{state.created && <a className="ml-2 underline" href={`/${locale}/savol/${state.created.slug}`}>{locale === "de" ? "Frage öffnen" : "Savolni ochish"}</a>}</p>}
       <input type="hidden" name="locale" value={locale} />
 
       {state.error ? (
@@ -157,6 +229,17 @@ export default function CreateQuestionForm({ locale, categories }: Props) {
         </div>
       </div>
 
+      <div className="space-y-3">
+        <p className="text-xs text-slate-500 dark:text-slate-400">JPG, PNG, WebP, PDF · {locale === "de" ? "max. 3 Dateien, je 5 MB" : "3 ta faylgacha, har biri 5 MB"}</p>
+        {files.length > 0 && <ul className="flex flex-wrap gap-2">{files.map((entry, index) => <li key={`${entry.file.name}-${index}`} className="flex items-center gap-2 rounded-xl border border-slate-200 p-2 text-xs dark:border-slate-700">{entry.preview ? <span className="inline-block size-12 rounded-lg bg-cover bg-center" style={{backgroundImage: `url("${entry.preview}")`}} aria-label={entry.file.name} /> : <Paperclip size={20}/>}<span className="max-w-32 truncate">{entry.file.name}</span><button type="button" disabled={pending || uploading || !!state.created} onClick={() => removeFile(index)} aria-label={locale === "de" ? "Entfernen" : "O‘chirish"}><X size={16}/></button></li>)}</ul>}
+        <div className="flex items-center gap-2">
+          <input ref={imageInput} type="file" accept="image/jpeg,image/png,image/webp" multiple className="sr-only" onChange={e => {addFiles(e.target.files); e.target.value = "";}} />
+          <input ref={fileInput} type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple className="sr-only" onChange={e => {addFiles(e.target.files); e.target.value = "";}} />
+          <button type="button" disabled={pending || uploading || !!state.created || files.length >= 3} onClick={() => imageInput.current?.click()} className="rounded-xl p-2 text-emerald-700 hover:bg-emerald-50 disabled:opacity-40 dark:text-emerald-400" aria-label={locale === "de" ? "Bild anhängen" : "Rasm biriktirish"}><ImagePlus size={21}/></button>
+          <button type="button" disabled={pending || uploading || !!state.created || files.length >= 3} onClick={() => fileInput.current?.click()} className="rounded-xl p-2 text-emerald-700 hover:bg-emerald-50 disabled:opacity-40 dark:text-emerald-400" aria-label={locale === "de" ? "Datei anhängen" : "Fayl biriktirish"}><Paperclip size={21}/></button>
+        </div>
+      </div>
+
       {categories.length === 0 ? (
         <p className="text-sm text-slate-600 dark:text-slate-300">{copy.empty}</p>
       ) : null}
@@ -165,11 +248,11 @@ export default function CreateQuestionForm({ locale, categories }: Props) {
         <span aria-hidden="true" />
       <button
         type="submit"
-        disabled={pending || categories.length === 0}
+        disabled={pending || uploading || !!state.created || categories.length === 0}
         className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:focus-visible:ring-offset-slate-950"
       >
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4"><path d="m22 2-7 20-4-9-9-4 20-7ZM22 2 11 13"/></svg>
-        {pending ? copy.pending : copy.submit}
+        {pending || uploading ? copy.pending : copy.submit}
       </button>
       </div>
     </form>

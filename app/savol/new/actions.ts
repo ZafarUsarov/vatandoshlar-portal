@@ -4,7 +4,6 @@ import { randomUUID } from "node:crypto";
 
 import { revalidatePath } from "next/cache";
 
-import { redirect } from "@/i18n/navigation";
 import { requirePublicUser } from "@/lib/auth/user";
 import {
   createQuestion,
@@ -15,6 +14,7 @@ import type { UserPreferredLocale } from "@/types/user";
 export type CreateQuestionState = Readonly<{
   error: string | null;
   errorField: "categoryId" | "title" | "body" | null;
+  created?: { id: string; slug: string };
 }>;
 
 function resolveLocale(value: FormDataEntryValue | null): UserPreferredLocale {
@@ -91,8 +91,5 @@ export async function createQuestionAction(
 
   revalidatePath(`/${locale}/savol`);
 
-  return redirect({
-    href: `/savol/${question.slug}`,
-    locale,
-  });
+  return { error: null, errorField: null, created: { id: question.id, slug: question.slug } };
 }

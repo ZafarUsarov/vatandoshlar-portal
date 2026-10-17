@@ -1304,3 +1304,21 @@ html.dark .soft-gradient {
     box-shadow: none;
   }
 }
+
+/* Savol category grid — Safari / Chromium */
+.savol-category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media screen and (min-width: 640px) {
+  .savol-category-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .savol-category-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
