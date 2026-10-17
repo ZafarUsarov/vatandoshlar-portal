@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateOwnReplyAction, removeOwnReplyAction } from "@/app/savol/[slug]/actions";
 import { ChevronRight, Minus } from "lucide-react";
+import OwnerActionDropdown from "@/components/savol/OwnerActionDropdown";
 import AnswerReplyForm from "@/components/savol/AnswerReplyForm";
 import type { AnswerReply } from "@/lib/savol/answer-replies-repository";
 
@@ -103,9 +104,13 @@ function CommentItem({ node, props, last }: { node: CommentNode; props: Props; l
           {node.authorInitials}
         </span>
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+          <div className="relative flex min-h-9 flex-wrap items-center gap-x-3 gap-y-1 pr-11 text-xs">
             <span className="font-semibold text-slate-900 dark:text-white">{node.authorName}</span>
             <time dateTime={node.createdAt} className="text-slate-500 dark:text-slate-400">{node.formattedDate}</time>
+            {isOwner && !editing && <div className="absolute right-0 top-0">
+              <OwnerActionDropdown locale={props.locale} label={props.locale === "de" ? "Kommentar verwalten" : "Izohni boshqarish"} disabled={pending}
+                onEdit={() => { setEditing(true); setError(null); }} onRemove={remove} />
+            </div>}
           </div>
           {node.status === "removed" ? (
             <p className="mt-1 text-sm italic text-slate-500 dark:text-slate-400">{props.locale === "de" ? "Kommentar gelöscht" : "Izoh o‘chirilgan"}</p>
@@ -121,10 +126,6 @@ function CommentItem({ node, props, last }: { node: CommentNode; props: Props; l
             <p className="mt-1 whitespace-pre-wrap break-words text-sm font-normal leading-[1.55rem] text-slate-800 dark:text-slate-200">{node.body}</p>
           )}
           {error && <p role="alert" className="mt-1 text-xs text-red-600">{error}</p>}
-          {isOwner && !editing && <div className="mt-1 flex gap-3 text-xs">
-            <button type="button" disabled={pending} onClick={() => setEditing(true)} className="text-emerald-700 hover:underline dark:text-emerald-400">{props.locale === "de" ? "Bearbeiten" : "Tahrirlash"}</button>
-            <button type="button" disabled={pending} onClick={remove} className="text-red-600 hover:underline dark:text-red-400">{props.locale === "de" ? "Löschen" : "O‘chirish"}</button>
-          </div>}
           <div className="flex flex-wrap items-center gap-2">
             {node.status === "published" && <AnswerReplyForm locale={props.locale} slug={props.slug} answerId={props.answerId} parentId={node.id} />}
             {count > 0 && (

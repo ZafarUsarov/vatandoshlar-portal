@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import OwnerActionDropdown from "@/components/savol/OwnerActionDropdown";
 import { removeOwnAnswerAction, updateOwnAnswerAction } from "@/app/savol/[slug]/actions";
 
 type Props = Readonly<{
@@ -68,15 +68,10 @@ export default function OwnAnswerControls({ locale, slug, answerId, body, isOwne
         <p className="whitespace-pre-wrap break-words text-sm leading-[1.55rem] font-normal text-slate-800 dark:text-slate-200">{body}</p>
       )}
       {isOwner && !editing && (
-        <details className="relative mt-2 inline-block text-sm">
-          <summary className="inline-flex cursor-pointer list-none items-center gap-1 rounded-lg border border-slate-200 px-2.5 py-1.5 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800" aria-label={de ? "Antwort verwalten" : "Javobni boshqarish"}>
-            <MoreHorizontal size={17} /> <span>{de ? "Optionen" : "Amallar"}</span>
-          </summary>
-          <div className="mt-1 flex flex-wrap gap-2 rounded-xl border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900">
-            <button type="button" disabled={pending} onClick={(event) => { setEditing(true); setError(null); event.currentTarget.closest("details")?.removeAttribute("open"); }} className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-emerald-700 hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-slate-800"><Pencil size={15} />{de ? "Bearbeiten" : "Tahrirlash"}</button>
-            <button type="button" disabled={pending} onClick={remove} className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-slate-800"><Trash2 size={15} />{de ? "Entfernen" : "O‘chirish"}</button>
-          </div>
-        </details>
+        <div className="absolute right-0 top-4">
+          <OwnerActionDropdown locale={locale} label={de ? "Antwort verwalten" : "Javobni boshqarish"} disabled={pending}
+            onEdit={() => { setEditing(true); setError(null); }} onRemove={remove} />
+        </div>
       )}
       {error && <p role="alert" className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>}
     </div>

@@ -199,11 +199,11 @@ export default async function SavolDetailPage({
               <div className="mb-5 flex items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-slate-800"><h2 id="answers-heading" className="text-xl font-bold">{t.answers} ({answers.length})</h2><MessageCircle size={19} className="text-emerald-600" /></div>
               {answers.length === 0 && <p className="py-5 text-sm text-slate-500 dark:text-slate-400">{t.noAnswers}</p>}
               <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                {answers.map((answer) => <article key={answer.id} id={`answer-${answer.id}`} className="py-4 first:pt-1">
+                {answers.map((answer) => <article key={answer.id} id={`answer-${answer.id}`} className="relative py-4 first:pt-1">
                   <div className="flex items-start gap-2.5">
                     <div className="w-9 shrink-0">{avatar(answer.authorUserId)}</div>
                     <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs"><span className="font-semibold text-slate-900 dark:text-white">{authorLabel(answer.authorUserId)}</span><time dateTime={answer.createdAt} className="text-slate-500 dark:text-slate-400">{formatDate(answer.createdAt, locale)}</time></div>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pr-11 text-xs"><span className="font-semibold text-slate-900 dark:text-white">{authorLabel(answer.authorUserId)}</span><time dateTime={answer.createdAt} className="text-slate-500 dark:text-slate-400">{formatDate(answer.createdAt, locale)}</time></div>
                       <OwnAnswerControls locale={locale} slug={question.slug} answerId={answer.id} body={answer.body} isOwner={currentUser?.user.id === answer.authorUserId} />
                       <SavolAttachmentGallery locale={locale} items={(answerAttachments.get(answer.id) ?? []).map(a => ({id:a.id,fileName:a.fileName,contentType:a.contentType,byteSize:a.byteSize}))} endpoint="answer" compact />
                       <div className="mt-2 flex flex-wrap items-center gap-2"><AnswerVoteButtons locale={locale} slug={question.slug} answerId={answer.id} upCount={helpfulCounts.get(answer.id) ?? 0} downCount={downvoteCounts.get(answer.id) ?? 0} /></div>
