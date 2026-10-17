@@ -13,7 +13,7 @@ const value = (data: FormData, key: string) => {
 };
 const optional = (v: string) => v || null;
 const iso = (v: string): string | null => {
-  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})$/.test(v)) return null;
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,3})?)?(?:Z|[+-]\d{2}:\d{2})$/.test(v)) return null;
   const time = Date.parse(v);
   return Number.isFinite(time) ? new Date(time).toISOString() : null;
 };
