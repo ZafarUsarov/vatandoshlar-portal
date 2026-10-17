@@ -71,7 +71,9 @@ export async function createTravelDraftAction(
   if (priceRaw && (!/^\d{1,10}(?:\.\d{1,2})?$/.test(priceRaw) || !/^[A-Z]{3}$/.test(priceCurrency)))
     return fail("Narx formati noto‘g‘ri.", "Ungültiges Preisformat.");
   if (!priceRaw && priceCurrency) return fail("Narxni ham kiriting.", "Bitte geben Sie auch den Preis ein.");
-  const createdId = await createTravelDraft({
+  let createdId: string;
+  try {
+    createdId = await createTravelDraft({
     authorUserId: user.user.id, kind: kind as TravelListingKind,
     contentLanguage: locale, title, description, transportMode: mode as TravelTransportMode,
     originCountryCode, originCity, destinationCountryCode, destinationCity,
@@ -79,7 +81,11 @@ export async function createTravelDraftAction(
     transitDetails: optional(transitDetails), seatsAvailable: seats,
     assistanceDetails: optional(assistanceDetails), parcelDetails: optional(parcelDetails),
     priceAmount: optional(priceRaw), priceCurrency: priceRaw ? priceCurrency : null,
-  });
+    });
+  } catch (error) {
+    console.error("Travel draft creation failed", error);
+    return fail("E’lonni saqlab bo‘lmadi. Qayta urinib ko‘ring.", "Die Anzeige konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.");
+  }
   revalidatePath(`/${locale}/travel/mine`);
   return { error: null, createdId };
 }
