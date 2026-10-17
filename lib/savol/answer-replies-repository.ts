@@ -7,6 +7,7 @@ export type AnswerReply = Readonly<{
   authorUserId: string;
   body: string;
   createdAt: string;
+  status: "published" | "removed";
 }>;
 
 type ReplyRow = {
@@ -16,21 +17,22 @@ type ReplyRow = {
   author_user_id: string;
   body: string;
   created_at: string | Date;
+  status: "published" | "removed";
 };
 
 export async function getPublishedAnswerReplies(answerIds: ReadonlyArray<string>): Promise<Map<string, AnswerReply[]>> {
   const result = new Map<string, AnswerReply[]>();
   if (answerIds.length === 0) return result;
   const rows = await getDb().query<ReplyRow>(
-    `SELECT id::text, answer_id::text, parent_reply_id::text, author_user_id::text, body, created_at
+    `SELECT id::text, answer_id::text, parent_reply_id::text, author_user_id::text, body, created_at, status
      FROM answer_replies
-     WHERE answer_id = ANY($1::bigint[]) AND status = 'published'
+     WHERE answer_id = ANY($1::bigint[]) AND status IN ('published', 'removed')
      ORDER BY created_at ASC, id ASC`, [answerIds],
   );
   for (const row of rows.rows) {
     const reply = {
       id: row.id, answerId: row.answer_id, parentId: row.parent_reply_id, authorUserId: row.author_user_id,
-      body: row.body, createdAt: row.created_at instanceof Date ? row.created_at.toISOString() : row.created_at,
+      body: row.status === "removed" ? "" : row.body, status: row.status, createdAt: row.created_at instanceof Date ? row.created_at.toISOString() : row.created_at,
     };
     const list = result.get(row.answer_id) ?? [];
     list.push(reply);
@@ -52,4 +54,28 @@ export async function createAnswerReply(input: { answerId: string; questionId: s
      RETURNING id::text`, [input.answerId, input.questionId, input.authorUserId, input.body, input.parentId ?? null],
   );
   return result.rows[0]?.id ?? null;
+}
+
+export async function updateOwnPublishedReply(input: { replyId: string; answerId: string; questionId: string; authorUserId: string; body: string }): Promise<boolean> {
+  const result = await getDb().query(
+    `UPDATE answer_replies r SET body = $5, updated_at = NOW()
+     FROM answers a JOIN questions q ON q.id = a.question_id
+     WHERE r.id = $1::bigint AND r.answer_id = $2::bigint AND a.id = r.answer_id
+       AND q.id = $3::bigint AND r.author_user_id = $4::bigint
+       AND r.status = 'published' AND a.status = 'published' AND q.status = 'published'`,
+    [input.replyId, input.answerId, input.questionId, input.authorUserId, input.body],
+  );
+  return result.rowCount === 1;
+}
+
+export async function removeOwnPublishedReply(input: { replyId: string; answerId: string; questionId: string; authorUserId: string }): Promise<boolean> {
+  const result = await getDb().query(
+    `UPDATE answer_replies r SET status = 'removed', body = '[removed]', updated_at = NOW()
+     FROM answers a JOIN questions q ON q.id = a.question_id
+     WHERE r.id = $1::bigint AND r.answer_id = $2::bigint AND a.id = r.answer_id
+       AND q.id = $3::bigint AND r.author_user_id = $4::bigint
+       AND r.status = 'published' AND a.status = 'published' AND q.status = 'published'`,
+    [input.replyId, input.answerId, input.questionId, input.authorUserId],
+  );
+  return result.rowCount === 1;
 }

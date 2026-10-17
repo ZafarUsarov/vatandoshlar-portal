@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { updateOwnReplyAction, removeOwnReplyAction } from "@/app/savol/[slug]/actions";
 import { ChevronRight, Minus } from "lucide-react";
 import AnswerReplyForm from "@/components/savol/AnswerReplyForm";
 import type { AnswerReply } from "@/lib/savol/answer-replies-repository";
@@ -37,11 +39,40 @@ type Props = {
   slug: string;
   answerId: string;
   replies: DisplayReply[];
+  currentUserId?: string;
 };
 
 function CommentItem({ node, props, last }: { node: CommentNode; props: Props; last: boolean }) {
   const [expanded, setExpanded] = useState(true);
   const count = node.children.length;
+  const isOwner = node.status === "published" && !!props.currentUserId && props.currentUserId === node.authorUserId;
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(node.body);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
+  const router = useRouter();
+  const actionInput = { locale: props.locale, slug: props.slug, answerId: props.answerId, replyId: node.id };
+  function save() {
+    setError(null);
+    startTransition(async () => {
+      try {
+        const result = await updateOwnReplyAction({ ...actionInput, body: draft });
+        if (result.error) setError(result.error);
+        else { setEditing(false); router.refresh(); }
+      } catch { setError(props.locale === "de" ? "Speichern fehlgeschlagen." : "Saqlashda xatolik yuz berdi."); }
+    });
+  }
+  function remove() {
+    if (!window.confirm(props.locale === "de" ? "Diesen Kommentar löschen?" : "Ushbu izohni o‘chirasizmi?")) return;
+    setError(null);
+    startTransition(async () => {
+      try {
+        const result = await removeOwnReplyAction(actionInput);
+        if (result.error) setError(result.error);
+        else router.refresh();
+      } catch { setError(props.locale === "de" ? "Löschen fehlgeschlagen." : "O‘chirishda xatolik yuz berdi."); }
+    });
+  }
   return (
     <li
       className="relative grid min-w-0 list-none"
@@ -76,9 +107,26 @@ function CommentItem({ node, props, last }: { node: CommentNode; props: Props; l
             <span className="font-semibold text-slate-900 dark:text-white">{node.authorName}</span>
             <time dateTime={node.createdAt} className="text-slate-500 dark:text-slate-400">{node.formattedDate}</time>
           </div>
-          <p className="mt-1 whitespace-pre-wrap break-words text-sm font-normal leading-[1.55rem] text-slate-800 dark:text-slate-200">{node.body}</p>
+          {node.status === "removed" ? (
+            <p className="mt-1 text-sm italic text-slate-500 dark:text-slate-400">{props.locale === "de" ? "Kommentar gelöscht" : "Izoh o‘chirilgan"}</p>
+          ) : editing ? (
+            <div className="mt-2 space-y-2">
+              <textarea aria-label={props.locale === "de" ? "Kommentar bearbeiten" : "Izohni tahrirlash"} value={draft} onChange={e => setDraft(e.target.value)} maxLength={3000} rows={3} disabled={pending} className="w-full rounded-lg border border-slate-300 bg-white p-2 text-sm text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-white" />
+              <div className="flex gap-2">
+                <button type="button" onClick={save} disabled={pending} className="rounded-lg bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50">{props.locale === "de" ? "Speichern" : "Saqlash"}</button>
+                <button type="button" onClick={() => { setEditing(false); setDraft(node.body); setError(null); }} disabled={pending} className="rounded-lg border px-3 py-1.5 text-xs dark:border-slate-600">{props.locale === "de" ? "Abbrechen" : "Bekor qilish"}</button>
+              </div>
+            </div>
+          ) : (
+            <p className="mt-1 whitespace-pre-wrap break-words text-sm font-normal leading-[1.55rem] text-slate-800 dark:text-slate-200">{node.body}</p>
+          )}
+          {error && <p role="alert" className="mt-1 text-xs text-red-600">{error}</p>}
+          {isOwner && !editing && <div className="mt-1 flex gap-3 text-xs">
+            <button type="button" disabled={pending} onClick={() => setEditing(true)} className="text-emerald-700 hover:underline dark:text-emerald-400">{props.locale === "de" ? "Bearbeiten" : "Tahrirlash"}</button>
+            <button type="button" disabled={pending} onClick={remove} className="text-red-600 hover:underline dark:text-red-400">{props.locale === "de" ? "Löschen" : "O‘chirish"}</button>
+          </div>}
           <div className="flex flex-wrap items-center gap-2">
-            <AnswerReplyForm locale={props.locale} slug={props.slug} answerId={props.answerId} parentId={node.id} />
+            {node.status === "published" && <AnswerReplyForm locale={props.locale} slug={props.slug} answerId={props.answerId} parentId={node.id} />}
             {count > 0 && (
               <button type="button" aria-expanded={expanded} onClick={() => setExpanded(v => !v)} className="mt-4 inline-flex items-center gap-1 rounded-md px-1 text-xs text-slate-500 hover:text-emerald-700 dark:text-slate-400">
                 <span>{expanded ? <Minus size={13} /> : <ChevronRight size={13} />}</span>

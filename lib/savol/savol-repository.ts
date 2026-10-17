@@ -555,3 +555,92 @@ export async function updateOwnPublishedQuestion(input: {
   );
   return (result.rowCount ?? 0) === 1;
 }
+
+/** Only the published answer's author may update it, while its question remains published. */
+export async function updateOwnPublishedAnswer(input: {
+  answerId: string;
+  questionId: string;
+  authorUserId: string;
+  body: string;
+}): Promise<boolean> {
+  const result = await getDb().query(
+    `UPDATE answers a
+     SET body = $4, updated_at = NOW()
+     FROM questions q
+     WHERE a.id = $1::bigint
+       AND a.question_id = $2::bigint
+       AND a.author_user_id = $3::bigint
+       AND a.status = 'published'
+       AND q.id = a.question_id
+       AND q.status = 'published'
+     RETURNING a.id`,
+    [input.answerId, input.questionId, input.authorUserId, input.body],
+  );
+  return (result.rowCount ?? 0) === 1;
+}
+
+/** Soft removal retains related replies, votes and attachment records. */
+export async function removeOwnPublishedAnswer(input: {
+  answerId: string;
+  questionId: string;
+  authorUserId: string;
+}): Promise<boolean> {
+  const result = await getDb().query(
+    `UPDATE answers a
+     SET status = 'removed', updated_at = NOW()
+     FROM questions q
+     WHERE a.id = $1::bigint
+       AND a.question_id = $2::bigint
+       AND a.author_user_id = $3::bigint
+       AND a.status = 'published'
+       AND q.id = a.question_id
+       AND q.status = 'published'
+     RETURNING a.id`,
+    [input.answerId, input.questionId, input.authorUserId],
+  );
+  return (result.rowCount ?? 0) === 1;
+}
+
+
+/** Remove a question and all of its answers/replies from public view atomically.
+ * Records remain for audit and relational integrity; no physical deletion occurs.
+ */
+export async function removeOwnPublishedQuestion(input: {
+  questionId: string;
+  authorUserId: string;
+}): Promise<boolean> {
+  const client = await getDb().connect();
+  try {
+    await client.query("BEGIN");
+    const result = await client.query(
+      `UPDATE questions SET status = 'removed', updated_at = NOW()
+       WHERE id = $1::bigint AND author_user_id = $2::bigint
+         AND status = 'published' RETURNING id`,
+      [input.questionId, input.authorUserId],
+    );
+    if (result.rowCount !== 1) {
+      await client.query("ROLLBACK");
+      return false;
+    }
+    await client.query(
+      `UPDATE answer_replies SET status = 'removed', body = '[removed]', updated_at = NOW()
+       WHERE answer_id IN (SELECT id FROM answers WHERE question_id = $1::bigint)
+         AND status <> 'removed'`,
+      [input.questionId],
+    );
+    await client.query(
+      `UPDATE answers SET status = 'removed', updated_at = NOW()
+       WHERE question_id = $1::bigint AND status <> 'removed'`,
+      [input.questionId],
+    );
+    // Avoid stale in-app notifications linking to a removed question.
+    await client.query(`DELETE FROM notifications WHERE question_id = $1::bigint`, [input.questionId]);
+    await client.query("COMMIT");
+    return true;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
+}

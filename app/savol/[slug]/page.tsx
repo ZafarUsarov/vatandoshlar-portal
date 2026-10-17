@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import CreateAnswerForm from "@/components/savol/CreateAnswerForm";
+import OwnAnswerControls from "@/components/savol/OwnAnswerControls";
+import OwnQuestionMenu from "@/components/savol/OwnQuestionMenu";
 import { getPublishedAnswerReplies } from "@/lib/savol/answer-replies-repository";
 import ShareQuestionButton from "@/components/savol/ShareQuestionButton";
 import SavolAttachmentGallery from "@/components/savol/SavolAttachmentGallery";
@@ -16,7 +18,7 @@ import ThreadBranch from "@/components/savol/ThreadBranch";
 import CommentThread from "@/components/savol/CommentThread";
 import { getAnswerDownvoteCounts } from "@/lib/savol/answer-votes-repository";
 import { Link } from "@/i18n/navigation";
-import { ArrowLeft, MessageCircle, Pencil, Plus, SquarePen } from "lucide-react";
+import { ArrowLeft, MessageCircle, Plus, SquarePen } from "lucide-react";
 import { getCurrentPublicUser } from "@/lib/auth/user";
 import { getSavolAuthorNames } from "@/lib/savol/savol-author-names";
 import { getQuestionAttachments } from "@/lib/savol/savol-attachment-repository";
@@ -175,11 +177,14 @@ export default async function SavolDetailPage({
         <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_270px]">
           <div className="min-w-0 space-y-5">
             <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7 dark:border-slate-800 dark:bg-slate-900">
+              <div className="flex items-start justify-between gap-3">
               <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
                 {avatar(question.authorUserId)}
                 <span className="font-semibold text-slate-900 dark:text-white">{authorLabel(question.authorUserId)}</span>
                 <time dateTime={question.createdAt}>{formatDate(question.createdAt, locale)}</time>
                 {categoryLabel && <span className="rounded-full bg-emerald-50 px-2.5 py-1 font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">{categoryLabel}</span>}
+              </div>
+              {isOwner && <OwnQuestionMenu locale={locale} slug={question.slug} />}
               </div>
               <h1 className="mt-5 break-words text-2xl font-bold leading-tight tracking-tight sm:text-3xl">{question.title}</h1>
               <div className="mt-4 whitespace-pre-wrap break-words text-sm leading-[1.55rem] font-normal text-slate-800 dark:text-slate-200">{question.body}</div>
@@ -187,7 +192,7 @@ export default async function SavolDetailPage({
               <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-5 dark:border-slate-800">
                 <ShareQuestionButton locale={locale} />
                 <SavolInteractions kind="follow" locale={locale} slug={question.slug} targetId={question.id} count={followCount} />
-                {isOwner ? <Link href={`/savol/${question.slug}/edit`} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 dark:border-slate-700 dark:text-emerald-400 dark:hover:bg-slate-800"><Pencil size={15} />{t.edit}</Link> : <ReportContentForm locale={locale} slug={question.slug} targetType="question" targetId={question.id} />}
+                {!isOwner && <ReportContentForm locale={locale} slug={question.slug} targetType="question" targetId={question.id} />}
               </div>
             </article>
             <section aria-labelledby="answers-heading" className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7 dark:border-slate-800 dark:bg-slate-900">
@@ -199,7 +204,7 @@ export default async function SavolDetailPage({
                     <div className="w-9 shrink-0">{avatar(answer.authorUserId)}</div>
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs"><span className="font-semibold text-slate-900 dark:text-white">{authorLabel(answer.authorUserId)}</span><time dateTime={answer.createdAt} className="text-slate-500 dark:text-slate-400">{formatDate(answer.createdAt, locale)}</time></div>
-                      <p className="mt-1.5 whitespace-pre-wrap break-words text-sm leading-[1.55rem] font-normal text-slate-800 dark:text-slate-200">{answer.body}</p>
+                      <OwnAnswerControls locale={locale} slug={question.slug} answerId={answer.id} body={answer.body} isOwner={currentUser?.user.id === answer.authorUserId} />
                       <SavolAttachmentGallery locale={locale} items={(answerAttachments.get(answer.id) ?? []).map(a => ({id:a.id,fileName:a.fileName,contentType:a.contentType,byteSize:a.byteSize}))} endpoint="answer" compact />
                       <div className="mt-2 flex flex-wrap items-center gap-2"><AnswerVoteButtons locale={locale} slug={question.slug} answerId={answer.id} upCount={helpfulCounts.get(answer.id) ?? 0} downCount={downvoteCounts.get(answer.id) ?? 0} /></div>
                     </div>
@@ -208,6 +213,7 @@ export default async function SavolDetailPage({
                     <div className="ml-[18px] mt-2 min-w-0">
                       <ThreadBranch locale={locale} count={(repliesByAnswer.get(answer.id) ?? []).length}>
                         <CommentThread
+                          currentUserId={currentUser?.user.id}
                           locale={locale}
                           slug={question.slug}
                           answerId={answer.id}

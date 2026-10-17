@@ -1,13 +1,16 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createAnswerReply } from "@/lib/savol/answer-replies-repository";
+import { createAnswerReply, updateOwnPublishedReply, removeOwnPublishedReply } from "@/lib/savol/answer-replies-repository";
 
 import { requirePublicUser } from "@/lib/auth/user";
 import {
   createAnswer,
   getPublishedAnswersForQuestion,
   getPublishedQuestionBySlug,
+  updateOwnPublishedAnswer,
+  removeOwnPublishedAnswer,
+  removeOwnPublishedQuestion,
   toggleAnswerHelpfulVote,
   toggleQuestionFollow,
 } from "@/lib/savol/savol-repository";
@@ -240,4 +243,109 @@ export async function createReplyAction(_previousState: CreateReplyState, formDa
   }
   revalidatePath(`/${locale}/savol/${slug}`);
   return { error: null, success: true };
+}
+
+
+export type ManageAnswerResult = Readonly<{ error: string | null }>;
+
+export async function updateOwnAnswerAction(input: Readonly<{
+  locale: UserPreferredLocale;
+  slug: string;
+  answerId: string;
+  body: string;
+}>): Promise<ManageAnswerResult> {
+  const locale = input.locale === "de" ? "de" : "uz";
+  const context = await requirePublicUser(locale);
+  const slug = input.slug.trim();
+  const body = input.body.trim();
+  if (!slug || !/^[1-9]\d*$/.test(input.answerId) || body.length < 10 || body.length > 10000) {
+    return { error: locale === "de" ? "Die Antwort muss 10–10000 Zeichen enthalten." : "Javob 10–10000 belgidan iborat bo‘lishi kerak." };
+  }
+  const question = await getPublishedQuestionBySlug(slug);
+  if (!question) return { error: locale === "de" ? "Frage nicht gefunden." : "Savol topilmadi." };
+  const updated = await updateOwnPublishedAnswer({
+    answerId: input.answerId, questionId: question.id, authorUserId: context.user.id, body,
+  });
+  if (!updated) return { error: locale === "de" ? "Diese Antwort kann nicht bearbeitet werden." : "Bu javobni tahrirlab bo‘lmaydi." };
+  revalidatePath(`/${locale}/savol/${slug}`);
+  return { error: null };
+}
+
+export async function removeOwnAnswerAction(input: Readonly<{
+  locale: UserPreferredLocale;
+  slug: string;
+  answerId: string;
+}>): Promise<ManageAnswerResult> {
+  const locale = input.locale === "de" ? "de" : "uz";
+  const context = await requirePublicUser(locale);
+  const slug = input.slug.trim();
+  if (!slug || !/^[1-9]\d*$/.test(input.answerId)) {
+    return { error: locale === "de" ? "Ungültige Antwort." : "Javob ma’lumotlari noto‘g‘ri." };
+  }
+  const question = await getPublishedQuestionBySlug(slug);
+  if (!question) return { error: locale === "de" ? "Frage nicht gefunden." : "Savol topilmadi." };
+  const removed = await removeOwnPublishedAnswer({
+    answerId: input.answerId, questionId: question.id, authorUserId: context.user.id,
+  });
+  if (!removed) return { error: locale === "de" ? "Diese Antwort kann nicht entfernt werden." : "Bu javobni o‘chirib bo‘lmaydi." };
+  revalidatePath(`/${locale}/savol/${slug}`);
+  return { error: null };
+}
+
+export type ManageReplyResult = Readonly<{ error: string | null }>;
+type ReplyActionInput = Readonly<{ locale: UserPreferredLocale; slug: string; answerId: string; replyId: string }>;
+
+export async function updateOwnReplyAction(input: ReplyActionInput & { body: string }): Promise<ManageReplyResult> {
+  const locale = input.locale === "de" ? "de" : "uz";
+  const context = await requirePublicUser(locale);
+  const slug = input.slug.trim();
+  const body = input.body.trim();
+  if (!slug || !/^[1-9]\d*$/.test(input.answerId) || !/^[1-9]\d*$/.test(input.replyId) || body.length < 2 || body.length > 3000) {
+    return { error: locale === "de" ? "Der Kommentar muss 2–3000 Zeichen enthalten." : "Izoh 2–3000 belgidan iborat bo‘lishi kerak." };
+  }
+  const question = await getPublishedQuestionBySlug(slug);
+  if (!question) return { error: locale === "de" ? "Frage nicht gefunden." : "Savol topilmadi." };
+  const updated = await updateOwnPublishedReply({ replyId: input.replyId, answerId: input.answerId, questionId: question.id, authorUserId: context.user.id, body });
+  if (!updated) return { error: locale === "de" ? "Kommentar kann nicht bearbeitet werden." : "Izohni tahrirlab bo‘lmaydi." };
+  revalidatePath(`/${locale}/savol/${slug}`);
+  return { error: null };
+}
+
+export async function removeOwnReplyAction(input: ReplyActionInput): Promise<ManageReplyResult> {
+  const locale = input.locale === "de" ? "de" : "uz";
+  const context = await requirePublicUser(locale);
+  const slug = input.slug.trim();
+  if (!slug || !/^[1-9]\d*$/.test(input.answerId) || !/^[1-9]\d*$/.test(input.replyId)) {
+    return { error: locale === "de" ? "Ungültiger Kommentar." : "Izoh ma’lumotlari noto‘g‘ri." };
+  }
+  const question = await getPublishedQuestionBySlug(slug);
+  if (!question) return { error: locale === "de" ? "Frage nicht gefunden." : "Savol topilmadi." };
+  const removed = await removeOwnPublishedReply({ replyId: input.replyId, answerId: input.answerId, questionId: question.id, authorUserId: context.user.id });
+  if (!removed) return { error: locale === "de" ? "Kommentar kann nicht gelöscht werden." : "Izohni o‘chirib bo‘lmaydi." };
+  revalidatePath(`/${locale}/savol/${slug}`);
+  return { error: null };
+}
+
+
+/** Only the signed-in question author can remove their published question. */
+export async function removeOwnQuestionAction(input: Readonly<{
+  slug: string;
+  locale: UserPreferredLocale;
+}>): Promise<{ error: string | null }> {
+  const locale = input.locale === "de" ? "de" : "uz";
+  const context = await requirePublicUser(locale);
+  const slug = input.slug.trim();
+  if (!slug) return { error: locale === "de" ? "Ungültige Frage." : "Savol noto‘g‘ri." };
+  const question = await getPublishedQuestionBySlug(slug);
+  if (!question || question.authorUserId !== context.user.id) {
+    return { error: locale === "de" ? "Keine Berechtigung." : "Bu savolni o‘chirish huquqi yo‘q." };
+  }
+  const removed = await removeOwnPublishedQuestion({
+    questionId: question.id,
+    authorUserId: context.user.id,
+  });
+  if (!removed) return { error: locale === "de" ? "Die Frage konnte nicht gelöscht werden." : "Savolni o‘chirib bo‘lmadi." };
+  revalidatePath(`/${locale}/savol/${slug}`);
+  revalidatePath(`/${locale}/savol`);
+  return { error: null };
 }
