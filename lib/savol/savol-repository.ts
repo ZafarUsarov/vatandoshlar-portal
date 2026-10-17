@@ -535,3 +535,23 @@ export async function toggleQuestionFollow(
     client.release();
   }
 }
+
+
+/** Update only a published question belonging to the signed-in public user. */
+export async function updateOwnPublishedQuestion(input: {
+  questionId: string;
+  authorUserId: string;
+  categoryId: string;
+  title: string;
+  body: string;
+}): Promise<boolean> {
+  const result = await getDb().query(
+    `UPDATE questions
+     SET category_id = $3::bigint, title = $4, body = $5, updated_at = NOW()
+     WHERE id = $1::bigint AND author_user_id = $2::bigint
+       AND status = 'published'
+     RETURNING id`,
+    [input.questionId, input.authorUserId, input.categoryId, input.title, input.body],
+  );
+  return (result.rowCount ?? 0) === 1;
+}

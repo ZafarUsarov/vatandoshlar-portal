@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { createAnswerReply } from "@/lib/savol/answer-replies-repository";
 
 import { requirePublicUser } from "@/lib/auth/user";
 import {
@@ -11,8 +12,8 @@ import {
   toggleQuestionFollow,
 } from "@/lib/savol/savol-repository";
 import { createContentReport, type SavolReportReason } from "@/lib/savol/moderation-repository";
-import { createNewAnswerNotifications } from "@/lib/notifications/notification-repository";
-import { sendSavolNewAnswerEmail } from "@/lib/email/savol-email";
+import { createAnswerReplyNotification, createNewAnswerNotifications } from "@/lib/notifications/notification-repository";
+import { sendSavolAnswerReplyEmail, sendSavolNewAnswerEmail } from "@/lib/email/savol-email";
 import type { UserPreferredLocale } from "@/types/user";
 
 export type CreateAnswerState = Readonly<{
@@ -52,6 +53,14 @@ export async function createAnswerAction(
         locale === "de"
           ? "Diese Frage ist nicht mehr verfügbar."
           : "Bu savol endi mavjud emas.",
+    };
+  }
+
+  if (question.authorUserId === context.user.id) {
+    return {
+      error: locale === "de"
+        ? "Sie können Ihre eigene Frage nicht beantworten. Antworten Sie stattdessen auf Beiträge anderer Nutzer."
+        : "O‘z savolingizga javob yoza olmaysiz. Boshqa foydalanuvchilarning javoblariga munosabat bildiring.",
     };
   }
 
@@ -168,6 +177,26 @@ export async function reportContentAction(
     if (!answers.some((answer) => answer.id === targetId)) return { status: "error", message: locale === "de" ? "Die Antwort ist nicht mehr verfügbar." : "Bu javob endi mavjud emas." };
   }
 
+  if (targetType === "question" && question.authorUserId === context.user.id) {
+    return {
+      status: "error",
+      message: locale === "de"
+        ? "Sie können Ihre eigene Frage nicht melden."
+        : "O‘z savolingiz ustidan shikoyat yubora olmaysiz.",
+    };
+  }
+  if (targetType === "answer") {
+    const answers = await getPublishedAnswersForQuestion(question.id);
+    if (answers.some((answer) => answer.id === targetId && answer.authorUserId === context.user.id)) {
+      return {
+        status: "error",
+        message: locale === "de"
+          ? "Sie können Ihre eigene Antwort nicht melden."
+          : "O‘z javobingiz ustidan shikoyat yubora olmaysiz.",
+      };
+    }
+  }
+
   const result = await createContentReport({
     reporterUserId: context.user.id,
     targetType,
@@ -179,4 +208,34 @@ export async function reportContentAction(
   return result === "duplicate"
     ? { status: "duplicate", message: locale === "de" ? "Sie haben diesen Inhalt bereits gemeldet." : "Siz bu kontent haqida avval shikoyat qilgansiz." }
     : { status: "success", message: locale === "de" ? "Danke. Die Meldung wurde zur Prüfung gesendet." : "Rahmat. Shikoyat tekshiruvga yuborildi." };
+}
+
+export type CreateReplyState = Readonly<{ error: string | null; success: boolean }>;
+export async function createReplyAction(_previousState: CreateReplyState, formData: FormData): Promise<CreateReplyState> {
+  const locale = resolveLocale(formData.get("locale"));
+  const context = await requirePublicUser(locale);
+  const slug = textValue(formData.get("slug"));
+  const answerId = textValue(formData.get("answerId"));
+  const body = textValue(formData.get("body"));
+  const invalid = locale === "de" ? "Bitte schreiben Sie 2–3000 Zeichen." : "Izoh 2–3000 belgidan iborat bo‘lsin.";
+  if (!slug || !/^\d+$/.test(answerId) || body.length < 2 || body.length > 3000) return { error: invalid, success: false };
+  const question = await getPublishedQuestionBySlug(slug);
+  if (!question) return { error: locale === "de" ? "Frage nicht gefunden." : "Savol topilmadi.", success: false };
+  const replyId = await createAnswerReply({ answerId, questionId: question.id, authorUserId: context.user.id, body });
+  if (!replyId) return { error: locale === "de" ? "Antwort nicht verfügbar." : "Javob mavjud emas.", success: false };
+  try {
+    const recipient = await createAnswerReplyNotification({
+      questionId: question.id, answerId, replyId, actorUserId: context.user.id,
+    });
+    if (recipient) {
+      await sendSavolAnswerReplyEmail({
+        to: recipient.email, locale: recipient.locale,
+        questionSlug: question.slug, questionTitle: question.title,
+      });
+    }
+  } catch (notificationError) {
+    console.error('Savol reply notification failed', { questionId: question.id, answerId, replyId, notificationError });
+  }
+  revalidatePath(`/${locale}/savol/${slug}`);
+  return { error: null, success: true };
 }

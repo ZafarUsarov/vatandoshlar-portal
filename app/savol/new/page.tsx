@@ -58,7 +58,7 @@ export default async function NewSavolPage() {
       <Header />
 
       <main className="pt-20 sm:pt-24">
-        <div className="mx-auto max-w-3xl px-6 py-12 sm:py-16 lg:px-8">
+        <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           <Link
             href="/savol"
             className="text-sm font-semibold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
@@ -74,7 +74,7 @@ export default async function NewSavolPage() {
             {t.description}
           </p>
 
-          <div className="mt-10 rounded-3xl border border-slate-200 bg-slate-50 p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900/50">
+          <div className="mt-8 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-8 dark:border-slate-800 dark:bg-slate-900/50">
             <CreateQuestionForm
               locale={locale}
               categories={categories}

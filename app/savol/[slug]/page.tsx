@@ -5,9 +5,13 @@ import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import CreateAnswerForm from "@/components/savol/CreateAnswerForm";
+import AnswerReplyForm from "@/components/savol/AnswerReplyForm";
+import { getPublishedAnswerReplies } from "@/lib/savol/answer-replies-repository";
 import SavolInteractions from "@/components/savol/SavolInteractions";
 import ReportContentForm from "@/components/savol/ReportContentForm";
 import { Link } from "@/i18n/navigation";
+import { getCurrentPublicUser } from "@/lib/auth/user";
+import { getSavolAuthorNames } from "@/lib/savol/savol-author-names";
 import { getPublishedGuideArticlesForQuestion } from "@/lib/guide/public-guide-repository";
 import { getPublishedSpecialistsForQuestion } from "@/lib/specialists/public-specialists-repository";
 import {
@@ -43,6 +47,7 @@ const copy = {
     openGuide: "Qo‘llanmani ochish",
     openSpecialist: "Profilni ochish",
     verified: "Tasdiqlangan",
+    edit: "Tahrirlash",
   },
   de: {
     notFound: "Frage nicht gefunden | Vatandoshlar.de",
@@ -58,6 +63,7 @@ const copy = {
     openGuide: "Ratgeber öffnen",
     openSpecialist: "Profil öffnen",
     verified: "Verifiziert",
+    edit: "Bearbeiten",
   },
 } as const;
 
@@ -68,6 +74,8 @@ function resolveLocale(locale: string): SupportedLocale {
 function formatDate(value: string, locale: SupportedLocale): string {
   return new Intl.DateTimeFormat(locale === "de" ? "de-DE" : "uz-UZ", {
     dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: "Europe/Berlin",
   }).format(new Date(value));
 }
 
@@ -127,6 +135,8 @@ export default async function SavolDetailPage({
     notFound();
   }
 
+  const currentUser = await getCurrentPublicUser();
+  const isOwner = currentUser?.user.id === question.authorUserId;
   const categories = await getActiveQuestionCategories();
   const category = categories.find((item) => item.id === question.categoryId);
   const categoryLabel = category
@@ -143,6 +153,15 @@ export default async function SavolDetailPage({
     getPublishedSpecialistsForQuestion(knowledgeQuery, locale, 3),
   ]);
 
+  const repliesByAnswer = await getPublishedAnswerReplies(answers.map((answer) => answer.id));
+  const authorNames = await getSavolAuthorNames([
+    question.authorUserId,
+    ...answers.map((answer) => answer.authorUserId),
+    ...Array.from(repliesByAnswer.values()).flat().map((reply) => reply.authorUserId),
+  ]);
+  const authorLabel = (id: string) =>
+    authorNames.get(id) ?? (locale === "de" ? "Mitglied" : "Foydalanuvchi");
+
   const helpfulCounts = await getAnswerHelpfulCounts(
     answers.map((answer) => answer.id),
   );
@@ -154,7 +173,7 @@ export default async function SavolDetailPage({
       <main className="pt-20 sm:pt-24">
         <article>
           <header className="border-b border-slate-200/80 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/40">
-            <div className="mx-auto max-w-4xl px-6 py-14 sm:py-16 lg:px-8">
+            <div className="mx-auto max-w-4xl px-4 py-9 sm:px-6 sm:py-12 lg:px-8">
               <Link
                 href="/savol"
                 className="inline-flex text-sm font-semibold text-emerald-700 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-emerald-400 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-900"
@@ -164,6 +183,8 @@ export default async function SavolDetailPage({
 
               <div className="mt-7 flex flex-wrap items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
                 <span>{t.questionLabel}</span>
+                <span aria-hidden="true">·</span>
+                <span className="font-semibold text-slate-700 dark:text-slate-200">{authorLabel(question.authorUserId)}</span>
                 {categoryLabel ? (
                   <>
                     <span aria-hidden="true">·</span>
@@ -184,8 +205,8 @@ export default async function SavolDetailPage({
             </div>
           </header>
 
-          <div className="mx-auto max-w-4xl px-6 py-12 lg:px-8">
-            <div className="whitespace-pre-line text-base leading-8 text-slate-700 dark:text-slate-200">
+          <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+            <div className="whitespace-pre-wrap break-words rounded-2xl border border-slate-200 bg-white p-5 text-[15px] leading-7 text-slate-700 shadow-sm sm:p-7 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-200">
               {question.body}
             </div>
 
@@ -197,18 +218,89 @@ export default async function SavolDetailPage({
                 targetId={question.id}
                 count={followCount}
               />
-              <ReportContentForm
-                locale={locale}
-                slug={question.slug}
-                targetType="question"
-                targetId={question.id}
-              />
+              {isOwner ? (
+                <Link href={`/savol/${question.slug}/edit`} className="inline-flex items-center rounded-xl border border-emerald-300 px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 dark:border-emerald-700 dark:text-emerald-300 dark:hover:bg-emerald-950">
+                  ✎ {t.edit}
+                </Link>
+              ) : (
+                <ReportContentForm locale={locale} slug={question.slug} targetType="question" targetId={question.id} />
+              )}
             </div>
 
+            {!isOwner ? <section
+              aria-labelledby="answer-form-heading"
+              className="mt-10 border-t border-slate-200 pt-8 dark:border-slate-800"
+            >
+              <h2
+                id="answer-form-heading"
+                className="text-2xl font-bold tracking-tight"
+              >
+                {t.yourAnswer}
+              </h2>
+              <CreateAnswerForm locale={locale} slug={question.slug} />
+            </section> : null}
+
+            <section
+              aria-labelledby="answers-heading"
+              className="mt-10 border-t border-slate-200 pt-8 dark:border-slate-800"
+            >
+              <h2 id="answers-heading" className="text-2xl font-bold tracking-tight">
+                {t.answers}
+              </h2>
+
+              {answers.length === 0 ? (
+                <p className="mt-5 text-sm text-slate-600 dark:text-slate-300">
+                  {t.noAnswers}
+                </p>
+              ) : (
+                <div className="mt-6 space-y-4">
+                  {answers.map((answer) => (
+                    <article
+                      key={answer.id}
+                      className="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/50"
+                    >
+                      <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
+                        <span className="font-semibold text-slate-800 dark:text-slate-100">{authorLabel(answer.authorUserId)}</span>
+                        <time dateTime={answer.createdAt}>{formatDate(answer.createdAt, locale)}</time>
+                      </div>
+                      <p className="whitespace-pre-line text-sm leading-7 text-slate-700 dark:text-slate-200">
+                        {answer.body}
+                      </p>
+                      <div className="mt-4 flex flex-wrap items-start gap-4">
+                        <SavolInteractions
+                          kind="helpful"
+                          locale={locale}
+                          slug={question.slug}
+                          targetId={answer.id}
+                          count={helpfulCounts.get(answer.id) ?? 0}
+                        />
+                        {currentUser?.user.id !== answer.authorUserId ? (
+                          <ReportContentForm locale={locale} slug={question.slug} targetType="answer" targetId={answer.id} />
+                        ) : null}
+                      </div>
+                      {(repliesByAnswer.get(answer.id) ?? []).length > 0 ? (
+                        <div className="mt-5 space-y-3 border-l-2 border-emerald-200 pl-4 dark:border-emerald-900" aria-label={locale === "de" ? "Kommentare" : "Izohlar"}>
+                          {(repliesByAnswer.get(answer.id) ?? []).map((reply) => (
+                            <div key={reply.id} className="rounded-xl bg-white p-3 dark:bg-slate-950/70">
+                              <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
+                                <span className="font-semibold text-slate-800 dark:text-slate-100">{authorLabel(reply.authorUserId)}</span>
+                                <time dateTime={reply.createdAt}>{formatDate(reply.createdAt, locale)}</time>
+                              </div>
+                              <p className="whitespace-pre-wrap break-words text-sm leading-6 text-slate-700 dark:text-slate-200">{reply.body}</p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : null}
+                      <AnswerReplyForm locale={locale} slug={question.slug} answerId={answer.id} />
+                    </article>
+                  ))}
+                </div>
+              )}
+            </section>
             {(relatedGuides.length > 0 || relatedSpecialists.length > 0) ? (
               <section
                 aria-labelledby="knowledge-heading"
-                className="mt-14 border-t border-slate-200 pt-10 dark:border-slate-800"
+                className="mt-10 border-t border-slate-200 pt-8 dark:border-slate-800"
               >
                 <h2 id="knowledge-heading" className="text-2xl font-bold tracking-tight">
                   {t.relatedKnowledge}
@@ -257,67 +349,6 @@ export default async function SavolDetailPage({
               </section>
             ) : null}
 
-            <section
-              aria-labelledby="answer-form-heading"
-              className="mt-14 border-t border-slate-200 pt-10 dark:border-slate-800"
-            >
-              <h2
-                id="answer-form-heading"
-                className="text-2xl font-bold tracking-tight"
-              >
-                {t.yourAnswer}
-              </h2>
-              <CreateAnswerForm locale={locale} slug={question.slug} />
-            </section>
-
-            <section
-              aria-labelledby="answers-heading"
-              className="mt-14 border-t border-slate-200 pt-10 dark:border-slate-800"
-            >
-              <h2 id="answers-heading" className="text-2xl font-bold tracking-tight">
-                {t.answers}
-              </h2>
-
-              {answers.length === 0 ? (
-                <p className="mt-5 text-sm text-slate-600 dark:text-slate-300">
-                  {t.noAnswers}
-                </p>
-              ) : (
-                <div className="mt-6 space-y-4">
-                  {answers.map((answer) => (
-                    <article
-                      key={answer.id}
-                      className="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/50"
-                    >
-                      <p className="whitespace-pre-line text-sm leading-7 text-slate-700 dark:text-slate-200">
-                        {answer.body}
-                      </p>
-                      <div className="mt-4 flex flex-wrap items-start gap-4">
-                        <SavolInteractions
-                          kind="helpful"
-                          locale={locale}
-                          slug={question.slug}
-                          targetId={answer.id}
-                          count={helpfulCounts.get(answer.id) ?? 0}
-                        />
-                        <ReportContentForm
-                          locale={locale}
-                          slug={question.slug}
-                          targetType="answer"
-                          targetId={answer.id}
-                        />
-                      </div>
-                      <time
-                        dateTime={answer.createdAt}
-                        className="mt-4 block text-xs text-slate-500 dark:text-slate-400"
-                      >
-                        {formatDate(answer.createdAt, locale)}
-                      </time>
-                    </article>
-                  ))}
-                </div>
-              )}
-            </section>
           </div>
         </article>
       </main>

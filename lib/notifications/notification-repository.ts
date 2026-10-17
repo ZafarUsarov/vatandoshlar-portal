@@ -63,6 +63,38 @@ export async function createNewAnswerNotifications(input: Readonly<{
   }));
 }
 
+export async function createAnswerReplyNotification(input: Readonly<{
+  questionId: string;
+  answerId: string;
+  replyId: string;
+  actorUserId: string;
+}>): Promise<NotificationRecipient | null> {
+  const result = await getDb().query<{
+    user_id: string;
+    email: string;
+    preferred_locale: string | null;
+  }>(`WITH inserted AS (
+      INSERT INTO notifications (user_id, actor_user_id, question_id, answer_id, reply_id, type)
+      SELECT a.author_user_id, $4::bigint, $1::bigint, a.id, r.id, 'savol_answer_reply'
+      FROM answers a
+      JOIN answer_replies r ON r.answer_id = a.id
+      JOIN questions q ON q.id = a.question_id
+      JOIN public_users pu ON pu.id = a.author_user_id
+      WHERE a.id = $2::bigint AND a.question_id = $1::bigint
+        AND r.id = $3::bigint AND r.author_user_id = $4::bigint
+        AND a.author_user_id <> $4::bigint
+        AND a.status = 'published' AND r.status = 'published' AND q.status = 'published'
+        AND pu.account_status = 'active'
+      ON CONFLICT DO NOTHING RETURNING user_id
+    )
+    SELECT pu.id::text AS user_id, pu.email, up.preferred_locale
+    FROM inserted i JOIN public_users pu ON pu.id = i.user_id
+    LEFT JOIN user_profiles up ON up.user_id = pu.id`,
+    [input.questionId, input.answerId, input.replyId, input.actorUserId]);
+  const recipient = result.rows[0];
+  return recipient ? {userId: recipient.user_id, email: recipient.email, locale: recipient.preferred_locale === 'de' ? 'de' : 'uz'} : null;
+}
+
 export async function getNotificationsForUser(
   userId: string,
   limit = 50,
