@@ -117,3 +117,11 @@ export async function removeOwnTravelListing(listingId: string, authorUserId: st
     RETURNING id::text`, [listingId, authorUserId]);
   return result.rows.length > 0;
 }
+
+export async function getPublishedTravelBySlug(slug: string): Promise<TravelListing | null> {
+  if (!/^safar-[a-f0-9-]{36}$/.test(slug)) return null;
+  const result = await getDb().query<TravelRow>(`SELECT ${columns} FROM travel_listings
+    WHERE slug=$1 AND status='published' AND departure_at >= NOW()
+      AND (expires_at IS NULL OR expires_at > NOW()) LIMIT 1`, [slug]);
+  return result.rows[0] ? mapTravel(result.rows[0]) : null;
+}
