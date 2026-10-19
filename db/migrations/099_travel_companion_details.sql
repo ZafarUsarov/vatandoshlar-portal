@@ -1,3 +1,5 @@
+BEGIN;
+
 -- M18.11: structured flight companion details; existing listings remain valid.
 ALTER TABLE public.travel_listings
   ADD COLUMN IF NOT EXISTS companion_details jsonb;
@@ -7,3 +9,5 @@ DO $$ BEGIN
     CHECK (companion_details IS NULL OR jsonb_typeof(companion_details)='object');
  END IF;
 END $$;
+
+COMMIT;

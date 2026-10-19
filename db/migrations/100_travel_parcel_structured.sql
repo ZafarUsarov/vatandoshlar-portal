@@ -1,3 +1,5 @@
+BEGIN;
+
 -- M18.13: additive parcel metadata. No existing rows are rewritten.
 ALTER TABLE public.travel_listings ADD COLUMN IF NOT EXISTS parcel_structured jsonb;
 DO $$ BEGIN
@@ -6,3 +8,5 @@ DO $$ BEGIN
  END IF;
 END $$;
 CREATE INDEX IF NOT EXISTS travel_parcel_cargo_payment_idx ON public.travel_listings ((parcel_structured->>'cargoType'),(parcel_structured->>'paymentType')) WHERE kind IN ('parcel_offer','parcel_request') AND status='published';
+
+COMMIT;
