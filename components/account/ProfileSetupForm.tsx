@@ -6,6 +6,7 @@ import {
   type ProfileSetupState,
 } from "@/app/[locale]/account/profile/actions";
 import { Link } from "@/i18n/navigation";
+import ProfileAvatarUpload from "@/components/account/ProfileAvatarUpload";
 import type { Location } from "@/types/location";
 import type { PublicUserContext } from "@/types/user";
 
@@ -91,6 +92,7 @@ export default function ProfileSetupForm({
   return (
     <form action={formAction} className="space-y-5">
       <input type="hidden" name="locale" value={locale} />
+      <ProfileAvatarUpload locale={locale} initialUrl={context.profile?.avatarUrl ?? null} />
       <input
         type="hidden"
         name="residencyStageTouched"
