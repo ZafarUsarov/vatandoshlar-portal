@@ -2,7 +2,9 @@
 
 import {
   useActionState,
+  useState,
 } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 import {
   googleLoginAction,
@@ -33,6 +35,10 @@ export default function PublicLoginForm({
       publicLoginAction,
       initialPublicLoginState,
     );
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const copy =
     locale === "de"
@@ -126,6 +132,8 @@ export default function PublicLoginForm({
 
           <input
             id="public-login-email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             name="email"
             type="email"
             autoComplete="email"
@@ -157,10 +165,13 @@ export default function PublicLoginForm({
             {copy.password}
           </label>
 
-          <input
+          <div className="relative">
+<input
             id="public-login-password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
             name="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             autoComplete="current-password"
             aria-invalid={
               passwordInvalid
@@ -172,13 +183,27 @@ export default function PublicLoginForm({
                 ? "public-login-error"
                 : undefined
             }
-            className={[
+            className={["pr-12",
               "min-h-12 w-full rounded-2xl border bg-white px-4 text-slate-950 outline-none transition focus:ring-4 dark:bg-slate-900 dark:text-white",
               passwordInvalid
                 ? "border-red-400 focus:border-red-500 focus:ring-red-500/10 dark:border-red-500/60"
                 : "border-slate-300 focus:border-emerald-500 focus:ring-emerald-500/10 dark:border-slate-700",
             ].join(" ")}
           />
+            <button
+              type="button"
+              onClick={() => setShowPassword((current) => !current)}
+              aria-label={
+                showPassword
+                  ? "Hide password"
+                  : "Show password"
+              }
+              aria-pressed={showPassword}
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-slate-500 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-400 dark:hover:text-white"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
         </div>
 
         {state.error && (
