@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { MessagesSquare, ShoppingBag } from "lucide-react";
+import { Plane, MessagesSquare, ShoppingBag } from "lucide-react";
 
 import { useLocale, useTranslations } from "next-intl";
 
@@ -1116,6 +1116,7 @@ export default function Header() {
         {[
           { href: "/savol" as const, label: locale === "de" ? "Vatandosh Q&A" : "Vatandosh Savol", Icon: MessagesSquare },
           { href: "/market" as const, label: "Vatandosh Market", Icon: ShoppingBag },
+          { href: "/safar" as const, label: "Vatandosh Safarlar", Icon: Plane },
         ].map(({ href, label, Icon }) => (
           <div key={href} className="relative h-12 w-12">
             <Link

@@ -1,0 +1,152 @@
+// Shared country catalog for travel creation and discovery.
+// A missing region catalog means the region field is optional, not that the country is unavailable.
+export const travelCountryData = {
+  DE: { uz: "Germaniya", de: "Deutschland", timezone: "Europe/Berlin" },
+  BE: { uz: "Belgiya", de: "Belgien", timezone: "Europe/Brussels" },
+  NL: { uz: "Niderlandiya", de: "Niederlande", timezone: "Europe/Amsterdam" },
+  FR: { uz: "Fransiya", de: "Frankreich", timezone: "Europe/Paris" },
+  LU: { uz: "Lyuksemburg", de: "Luxemburg", timezone: "Europe/Luxembourg" },
+  AT: { uz: "Avstriya", de: "Österreich", timezone: "Europe/Vienna" },
+  CH: { uz: "Shveytsariya", de: "Schweiz", timezone: "Europe/Zurich" },
+  PL: { uz: "Polsha", de: "Polen", timezone: "Europe/Warsaw" },
+  CZ: { uz: "Chexiya", de: "Tschechien", timezone: "Europe/Prague" },
+  IT: { uz: "Italiya", de: "Italien", timezone: "Europe/Rome" },
+  ES: { uz: "Ispaniya", de: "Spanien", timezone: "Europe/Madrid" },
+  DK: { uz: "Daniya", de: "Dänemark", timezone: "Europe/Copenhagen" },
+  SE: { uz: "Shvetsiya", de: "Schweden", timezone: "Europe/Stockholm" },
+  NO: { uz: "Norvegiya", de: "Norwegen", timezone: "Europe/Oslo" },
+  FI: { uz: "Finlandiya", de: "Finnland", timezone: "Europe/Helsinki" },
+  GB: { uz: "Buyuk Britaniya", de: "Vereinigtes Königreich", timezone: "Europe/London" },
+  IE: { uz: "Irlandiya", de: "Irland", timezone: "Europe/Dublin" },
+  PT: { uz: "Portugaliya", de: "Portugal", timezone: "Europe/Lisbon" },
+  HU: { uz: "Vengriya", de: "Ungarn", timezone: "Europe/Budapest" },
+  SK: { uz: "Slovakiya", de: "Slowakei", timezone: "Europe/Bratislava" },
+  SI: { uz: "Sloveniya", de: "Slowenien", timezone: "Europe/Ljubljana" },
+  HR: { uz: "Xorvatiya", de: "Kroatien", timezone: "Europe/Zagreb" },
+  RO: { uz: "Ruminiya", de: "Rumänien", timezone: "Europe/Bucharest" },
+  BG: { uz: "Bolgariya", de: "Bulgarien", timezone: "Europe/Sofia" },
+  GR: { uz: "Gretsiya", de: "Griechenland", timezone: "Europe/Athens" },
+  EE: { uz: "Estoniya", de: "Estland", timezone: "Europe/Tallinn" },
+  LV: { uz: "Latviya", de: "Lettland", timezone: "Europe/Riga" },
+  LT: { uz: "Litva", de: "Litauen", timezone: "Europe/Vilnius" },
+  UZ: { uz: "O‘zbekiston", de: "Usbekistan", timezone: "Asia/Tashkent" },
+} as const;
+export type TravelCountry = keyof typeof travelCountryData;
+export const travelCountries = Object.keys(travelCountryData) as TravelCountry[];
+export const europeanTravelCountries = travelCountries.filter(c => c !== "UZ");
+export const countryLabel = (code: TravelCountry, locale: "uz" | "de") => travelCountryData[code][locale];
+export const countryTimezone = (code: TravelCountry) => travelCountryData[code].timezone;
+export const isTravelCountry = (code: string): code is TravelCountry => Object.prototype.hasOwnProperty.call(travelCountryData, code);
+export type TravelRegion = {code:string;uz:string;de:string};
+export const travelRegions: Partial<Record<TravelCountry, ReadonlyArray<TravelRegion>>> = {
+  UZ: [
+    {code:"andijon",uz:"Andijon",de:"Andijon"},
+    {code:"buxoro",uz:"Buxoro",de:"Buchara"},
+    {code:"fargona",uz:"Farg‘ona",de:"Fergana"},
+    {code:"jizzax",uz:"Jizzax",de:"Dschizzax"},
+    {code:"namangan",uz:"Namangan",de:"Namangan"},
+    {code:"navoiy",uz:"Navoiy",de:"Navoiy"},
+    {code:"qashqadaryo",uz:"Qashqadaryo",de:"Kaschkadarja"},
+    {code:"samarqand",uz:"Samarqand",de:"Samarkand"},
+    {code:"sirdaryo",uz:"Sirdaryo",de:"Syrdarja"},
+    {code:"surxondaryo",uz:"Surxondaryo",de:"Surxondarja"},
+    {code:"toshkent-viloyati",uz:"Toshkent viloyati",de:"Region Taschkent"},
+    {code:"xorazm",uz:"Xorazm",de:"Choresm"},
+    {code:"toshkent-shahri",uz:"Toshkent shahri",de:"Stadt Taschkent"},
+    {code:"qoraqalpogiston",uz:"Qoraqalpog‘iston Respublikasi",de:"Republik Karakalpakstan"},
+  ],
+  DE: [
+    {code:"baden-wuerttemberg",uz:"Baden-Württemberg",de:"Baden-Württemberg"},
+    {code:"bayern",uz:"Bayern",de:"Bayern"},
+    {code:"berlin",uz:"Berlin",de:"Berlin"},
+    {code:"brandenburg",uz:"Brandenburg",de:"Brandenburg"},
+    {code:"bremen",uz:"Bremen",de:"Bremen"},
+    {code:"hamburg",uz:"Hamburg",de:"Hamburg"},
+    {code:"hessen",uz:"Hessen",de:"Hessen"},
+    {code:"mecklenburg-vorpommern",uz:"Mecklenburg-Vorpommern",de:"Mecklenburg-Vorpommern"},
+    {code:"niedersachsen",uz:"Niedersachsen",de:"Niedersachsen"},
+    {code:"nordrhein-westfalen",uz:"Nordrhein-Westfalen",de:"Nordrhein-Westfalen"},
+    {code:"rheinland-pfalz",uz:"Rheinland-Pfalz",de:"Rheinland-Pfalz"},
+    {code:"saarland",uz:"Saarland",de:"Saarland"},
+    {code:"sachsen",uz:"Sachsen",de:"Sachsen"},
+    {code:"sachsen-anhalt",uz:"Sachsen-Anhalt",de:"Sachsen-Anhalt"},
+    {code:"schleswig-holstein",uz:"Schleswig-Holstein",de:"Schleswig-Holstein"},
+    {code:"thueringen",uz:"Thüringen",de:"Thüringen"},
+  ],
+  BE: [
+    {code:"brussels",uz:"Bryussel poytaxt hududi",de:"Brüssel-Hauptstadt"},
+    {code:"flanders",uz:"Flandriya",de:"Flandern"},
+    {code:"wallonia",uz:"Valloniya",de:"Wallonien"},
+  ],
+  NL: [
+    {code:"drenthe",uz:"Drenthe",de:"Drenthe"},
+    {code:"flevoland",uz:"Flevoland",de:"Flevoland"},
+    {code:"friesland",uz:"Frisland",de:"Friesland"},
+    {code:"gelderland",uz:"Gelderland",de:"Gelderland"},
+    {code:"groningen",uz:"Groningen",de:"Groningen"},
+    {code:"limburg",uz:"Limburg",de:"Limburg"},
+    {code:"noord-brabant",uz:"Shimoliy Brabant",de:"Nordbrabant"},
+    {code:"noord-holland",uz:"Shimoliy Gollandiya",de:"Nordholland"},
+    {code:"overijssel",uz:"Overeyssel",de:"Overijssel"},
+    {code:"utrecht",uz:"Utrext",de:"Utrecht"},
+    {code:"zeeland",uz:"Zeland",de:"Zeeland"},
+    {code:"zuid-holland",uz:"Janubiy Gollandiya",de:"Südholland"},
+  ],
+  AT: [
+    {code:"burgenland",uz:"Burgenland",de:"Burgenland"},
+    {code:"kaernten",uz:"Karintiya",de:"Kärnten"},
+    {code:"niederoesterreich",uz:"Quyi Avstriya",de:"Niederösterreich"},
+    {code:"oberoesterreich",uz:"Yuqori Avstriya",de:"Oberösterreich"},
+    {code:"salzburg",uz:"Zaltsburg",de:"Salzburg"},
+    {code:"steiermark",uz:"Shtiriya",de:"Steiermark"},
+    {code:"tirol",uz:"Tirol",de:"Tirol"},
+    {code:"vorarlberg",uz:"Forarlberg",de:"Vorarlberg"},
+    {code:"wien",uz:"Vena",de:"Wien"},
+  ],
+  FR: [
+    {code:"auvergne-rhone-alpes",uz:"Overn-Rona-Alp",de:"Auvergne-Rhône-Alpes"},
+    {code:"bourgogne-franche-comte",uz:"Burgundiya-Fransh-Konte",de:"Bourgogne-Franche-Comté"},
+    {code:"bretagne",uz:"Bretan",de:"Bretagne"},
+    {code:"centre-val-de-loire",uz:"Markaziy Luara vodiysi",de:"Centre-Val de Loire"},
+    {code:"corse",uz:"Korsika",de:"Korsika"},
+    {code:"grand-est",uz:"Grand Est",de:"Grand Est"},
+    {code:"hauts-de-france",uz:"O-de-Frans",de:"Hauts-de-France"},
+    {code:"ile-de-france",uz:"Il-de-Frans",de:"Île-de-France"},
+    {code:"normandie",uz:"Normandiya",de:"Normandie"},
+    {code:"nouvelle-aquitaine",uz:"Yangi Akvitaniya",de:"Nouvelle-Aquitaine"},
+    {code:"occitanie",uz:"Oksitaniya",de:"Okzitanien"},
+    {code:"pays-de-la-loire",uz:"Luara o‘lkasi",de:"Pays de la Loire"},
+    {code:"provence-alpes-cote-dazur",uz:"Provans-Alp-Lazur sohil",de:"Provence-Alpes-Côte d’Azur"},
+  ],
+  LU: [
+    {code:"luxembourg",uz:"Lyuksemburg",de:"Luxemburg"},
+    {code:"esch-sur-alzette",uz:"Esh-syur-Alzett",de:"Esch-sur-Alzette"},
+    {code:"diekirch",uz:"Dikirx",de:"Diekirch"},
+  ],
+  PL: [
+    {code:"dolnoslaskie",uz:"Quyi Sileziya",de:"Niederschlesien"},
+    {code:"kujawsko-pomorskie",uz:"Kuyaviya-Pomeraniya",de:"Kujawien-Pommern"},
+    {code:"lubelskie",uz:"Lyublin",de:"Lublin"},
+    {code:"lubuskie",uz:"Lubush",de:"Lebus"},
+    {code:"lodzkie",uz:"Lodz",de:"Łódź"},
+    {code:"malopolskie",uz:"Kichik Polsha",de:"Kleinpolen"},
+    {code:"mazowieckie",uz:"Mazoviya",de:"Masowien"},
+    {code:"opolskie",uz:"Opole",de:"Oppeln"},
+    {code:"podkarpackie",uz:"Karpatorti",de:"Karpatenvorland"},
+    {code:"podlaskie",uz:"Podlyaskiye",de:"Podlachien"},
+    {code:"pomorskie",uz:"Pomeraniya",de:"Pommern"},
+    {code:"slaskie",uz:"Sileziya",de:"Schlesien"},
+    {code:"swietokrzyskie",uz:"Sventokshisk",de:"Heiligkreuz"},
+    {code:"warminsko-mazurskie",uz:"Varmiya-Mazuriya",de:"Ermland-Masuren"},
+    {code:"wielkopolskie",uz:"Buyuk Polsha",de:"Großpolen"},
+    {code:"zachodniopomorskie",uz:"G‘arbiy Pomeraniya",de:"Westpommern"},
+  ],
+};
+export const regionsForCountry = (code: TravelCountry): ReadonlyArray<TravelRegion> => travelRegions[code] ?? [];
+export function isTravelRegion(country: string, region: string): boolean {
+  return isTravelCountry(country) && regionsForCountry(country).some(item => item.code === region);
+}
+export function regionLabel(country: string, region: string | null, locale: "uz" | "de"): string | null {
+  if (!region || !isTravelCountry(country)) return null;
+  return regionsForCountry(country).find(r => r.code === region)?.[locale] ?? null;
+}

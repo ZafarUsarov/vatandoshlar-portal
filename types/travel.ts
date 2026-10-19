@@ -24,9 +24,12 @@ export type TravelListing = Readonly<{
   contentLanguage: "uz" | "de";
   title: string;
   description: string;
+  womenOnly: boolean;
   transportMode: TravelTransportMode;
   originCountryCode: string;
   originCity: string;
+  originRegionCode: string | null;
+  destinationRegionCode: string | null;
   destinationCountryCode: string;
   destinationCity: string;
   departureAt: string;
@@ -35,10 +38,15 @@ export type TravelListing = Readonly<{
   flightNumber: string | null;
   transitDetails: string | null;
   seatsAvailable: number | null;
+  passengerCount: number | null;
+  parcelStructured: import("@/lib/travel/parcel-details").ParcelDetails | null;
+  companionDetails: import("@/lib/travel/companion-details").CompanionDetails | null;
   assistanceDetails: string | null;
   parcelDetails: string | null;
   priceAmount: string | null;
   priceCurrency: string | null;
+  imageKey: string | null;
+  imageThumbKey: string | null;
   publishedAt: string | null;
   expiresAt: string | null;
   createdAt: string;
