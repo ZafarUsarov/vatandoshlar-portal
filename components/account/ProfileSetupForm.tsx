@@ -7,6 +7,7 @@ import {
 } from "@/app/[locale]/account/profile/actions";
 import { Link } from "@/i18n/navigation";
 import ProfileAvatarUpload from "@/components/account/ProfileAvatarUpload";
+import ProfileCitySearch from "@/components/account/ProfileCitySearch";
 import type { Location } from "@/types/location";
 import type { PublicUserContext } from "@/types/user";
 
@@ -27,6 +28,23 @@ const initialProfileSetupState: ProfileSetupState = {
 };
 
 const controlClass = "min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:disabled:bg-slate-900 dark:disabled:text-slate-600";
+
+function ProfileSelectArrow() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="pointer-events-none absolute right-5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 dark:text-slate-400"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
 
 function SectionIcon({ kind }: Readonly<{ kind: "location" | "stage" | "interests" }>) {
   const path = kind === "location"
@@ -110,29 +128,85 @@ export default function ProfileSetupForm({
           <div><h2 id="profile-location-heading" className="font-bold text-slate-950 dark:text-white">{copy.location}</h2><p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">{copy.locationHint}</p></div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          <div><label htmlFor="profile-country" className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">{copy.country}</label><select id="profile-country" value={country} onChange={(event) => changeCountry(event.target.value)} className={controlClass}><option value="DE">{copy.germany}</option><option value="UZ">{copy.uzbekistan}</option></select></div>
-          <div><label htmlFor="profile-region" className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">{copy.region}</label><select id="profile-region" value={stateCode} onChange={(event) => changeRegion(event.target.value)} className={controlClass}><option value="">{copy.regionPlaceholder}</option>{regions.map((region) => <option key={region.id} value={region.stateCode}>{region.stateName}</option>)}</select></div>
+          <div><label htmlFor="profile-country" className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">{copy.country}</label><div className="relative">
+<select id="profile-country" value={country} onChange={(event) => changeCountry(event.target.value)} className={`${controlClass} pr-14`} style={{ appearance: "none", WebkitAppearance: "none", MozAppearance: "none" }}><option value="DE">{copy.germany}</option><option value="UZ">{copy.uzbekistan}</option></select>
+<ProfileSelectArrow />
+</div></div>
+          <div><label htmlFor="profile-region" className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">{copy.region}</label><div className="relative">
+<select id="profile-region" value={stateCode} onChange={(event) => changeRegion(event.target.value)} className={`${controlClass} pr-14`} style={{ appearance: "none", WebkitAppearance: "none", MozAppearance: "none" }}><option value="">{copy.regionPlaceholder}</option>{regions.map((region) => <option key={region.id} value={region.stateCode}>{region.stateName}</option>)}</select>
+<ProfileSelectArrow />
+</div></div>
         </div>
         <div className="mt-4">
-          <label htmlFor="profile-home-location" className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">{copy.city}</label>
-          <select id="profile-home-location" name="homeLocationId" value={homeLocationId} onChange={(event) => setHomeLocationId(event.target.value)} disabled={!stateCode || cities.length === 0} className={controlClass}>
-            <option value="">{copy.cityPlaceholder}</option>
-            {cities.map((city) => <option key={city.id} value={city.id}>{city.cityName}</option>)}
-          </select>
-          {stateCode && cities.length === 0 && <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{copy.noCities}</p>}
+          {country === "DE" ? (
+            <ProfileCitySearch
+              key={country}
+              locale={locale}
+              value={homeLocationId}
+              initialCity={
+                currentLocation?.countryCode === "DE"
+                  ? currentLocation.cityName ?? ""
+                  : ""
+              }
+              initialState={
+                currentLocation?.countryCode === "DE"
+                  ? currentLocation.stateName
+                  : ""
+              }
+              onChange={(id, selectedStateName) => {
+                setHomeLocationId(id);
+                const region = regions.find(
+                  (item) => item.stateName === selectedStateName,
+                );
+                if (region) setStateCode(region.stateCode);
+              }}
+            />
+          ) : (
+            <>
+              <label
+                htmlFor="profile-home-location"
+                className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200"
+              >
+                {copy.city}
+              </label>
+              <select
+                id="profile-home-location"
+                name="homeLocationId"
+                value={homeLocationId}
+                onChange={(event) => setHomeLocationId(event.target.value)}
+                disabled={!stateCode || cities.length === 0}
+                className={`${controlClass} pr-12`}
+              >
+                <option value="">{copy.cityPlaceholder}</option>
+                {cities.map((city) => (
+                  <option key={city.id} value={city.id}>
+                    {city.cityName}
+                  </option>
+                ))}
+              </select>
+              {stateCode && cities.length === 0 && (
+                <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                  {copy.noCities}
+                </p>
+              )}
+            </>
+          )}
         </div>
       </section>
 
       <section className="rounded-3xl border border-slate-200/80 bg-slate-50/80 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950/45 sm:p-5" aria-labelledby="profile-stage-heading">
         <div className="mb-5 flex gap-3"><SectionIcon kind="stage" /><div><h2 id="profile-stage-heading" className="font-bold text-slate-950 dark:text-white">{copy.stage}</h2><p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">{copy.stageHint}</p></div></div>
-        <select
+        <div className="relative">
+<select
           id="profile-residency-stage"
           name="residencyStage"
           defaultValue={residencyOptions.some((option) => option.value === context.profile?.residencyStage) ? context.profile?.residencyStage ?? "" : ""}
           onChange={() => setResidencyStageTouched(true)}
-          className={controlClass}
+          className={`${controlClass} pr-14`} style={{ appearance: "none", WebkitAppearance: "none", MozAppearance: "none" }}
           aria-label={copy.stage}
         ><option value="">{copy.stagePlaceholder}</option>{residencyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select>
+<ProfileSelectArrow />
+</div>
       </section>
 
       <fieldset className="rounded-3xl border border-slate-200/80 bg-slate-50/80 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950/45 sm:p-5">
