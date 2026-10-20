@@ -309,7 +309,7 @@ export default function SpecialistProfile({
                     alt=""
                     className="h-full w-full"
                     style={{
-                      objectFit: specialist.imageFit ?? "cover",
+                      objectFit: specialist.slug === "nigora-okhunova" ? "contain" : (specialist.imageFit ?? "cover"),
                       objectPosition: specialist.imagePosition ?? "center",
                       transform: `scale(${specialist.imageScale ?? 1})`,
                     }}
