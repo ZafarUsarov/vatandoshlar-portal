@@ -24,6 +24,7 @@ import {
 import { Link, usePathname } from "../i18n/navigation";
 
 import LanguageSwitcher from "./LanguageSwitcher";
+import HeaderAccountMenu from "./account/HeaderAccountMenu";
 
 import BrandName from "./ui/BrandName";
 
@@ -1648,7 +1649,9 @@ export default function Header() {
 
             </button>
 
-            {authState === "loading" ? (
+            {authState === "user" ? (
+              <HeaderAccountMenu locale={locale} />
+            ) : authState === "loading" ? (
               <span
                 aria-hidden="true"
                 className={
@@ -1660,11 +1663,9 @@ export default function Header() {
             ) : (
               <Link
                 href={
-                  authState === "user"
-                    ? "/account"
-                    : authState === "admin"
-                      ? "/admin"
-                      : "/id/login"
+                  authState === "admin"
+                    ? "/admin"
+                    : "/id/login"
                 }
                 className={`
 
@@ -1709,11 +1710,9 @@ export default function Header() {
               `}
               >
                 {
-                  authState === "user"
-                    ? authCopy.account
-                    : authState === "admin"
-                      ? authCopy.admin
-                      : authCopy.login
+                  authState === "admin"
+                    ? authCopy.admin
+                    : authCopy.login
                 }
               </Link>
             )}
@@ -1779,6 +1778,14 @@ export default function Header() {
               <SearchIcon />
 
             </button>
+
+            {authState === "user" && (
+              <HeaderAccountMenu
+                locale={locale}
+                compact
+                onNavigate={closeMobileMenu}
+              />
+            )}
 
             <button
 
@@ -2138,33 +2145,19 @@ export default function Header() {
 
               </button>
 
-              {authState === "user" && (
-                <Link
-                  href="/my-city"
-                  onClick={closeMobileMenu}
-                  className="mt-3 flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 py-3.5 font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-950"
-                >
-                  {authCopy.myCity}
-                </Link>
-              )}
-
-              {authState !== "loading" && (
+              {authState !== "user" && authState !== "loading" && (
                 <Link
                   href={
-                    authState === "user"
-                      ? "/account"
-                      : authState === "admin"
-                        ? "/admin"
-                        : "/id/login"
+                    authState === "admin"
+                      ? "/admin"
+                      : "/id/login"
                   }
                   onClick={closeMobileMenu}
                   className="mt-3 flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-4 font-bold text-white shadow-lg shadow-emerald-600/20 transition hover:shadow-xl hover:shadow-emerald-600/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
                 >
-                  {authState === "user"
-                    ? authCopy.account
-                    : authState === "admin"
-                      ? authCopy.admin
-                      : authCopy.login}
+                  {authState === "admin"
+                    ? authCopy.admin
+                    : authCopy.login}
                 </Link>
               )}
 
