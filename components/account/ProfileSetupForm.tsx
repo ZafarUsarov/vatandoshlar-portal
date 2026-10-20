@@ -1,11 +1,11 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import {
   saveProfileSetupAction,
   type ProfileSetupState,
 } from "@/app/[locale]/account/profile/actions";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import ProfileAvatarUpload from "@/components/account/ProfileAvatarUpload";
 import ProfileCitySearch from "@/components/account/ProfileCitySearch";
 import type { Location } from "@/types/location";
@@ -70,6 +70,14 @@ export default function ProfileSetupForm({
   interestOptions,
 }: Props) {
   const [state, formAction, pending] = useActionState(saveProfileSetupAction, initialProfileSetupState);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state.success) {
+      router.replace("/account");
+      router.refresh();
+    }
+  }, [state.success, router]);
   const selectedInterests = new Set(context.interests);
   const currentLocation = context.homeLocation;
   const initialCountry: CountryCode = currentLocation?.countryCode === "UZ" ? "UZ" : "DE";
@@ -89,10 +97,10 @@ export default function ProfileSetupForm({
 
   const copy = locale === "de"
     ? {
-        name: "Name", location: "Mein Wohnort", locationHint: "Wählen Sie zuerst das Land und die Region, danach den verfügbaren kanonischen Ort.", country: "Land", countryPlaceholder: "Land auswählen", germany: "Deutschland", uzbekistan: "Usbekistan", region: "Region / Bundesland", regionPlaceholder: "Region auswählen", city: "Wohnort", cityPlaceholder: "Ort auswählen", noCities: "Für diese Region sind noch keine verifizierten Orte verfügbar.", stage: "Meine Situation", stageHint: "Diese Angabe hilft bei späterer Personalisierung.", stagePlaceholder: "Optional auswählen", interests: "Meine Interessen", interestsHint: "Wählen Sie Themen, die für Sie relevant sind.", submit: "Profil speichern", pending: "Wird gespeichert…", myCity: "Zu meiner Stadt →", home: "Zur Startseite",
+        name: "Vor- und Nachname", location: "Mein Wohnort", locationHint: "Wählen Sie zuerst das Land und die Region, danach den verfügbaren kanonischen Ort.", country: "Land", countryPlaceholder: "Land auswählen", germany: "Deutschland", uzbekistan: "Usbekistan", region: "Region / Bundesland", regionPlaceholder: "Region auswählen", city: "Wohnort", cityPlaceholder: "Ort auswählen", noCities: "Für diese Region sind noch keine verifizierten Orte verfügbar.", stage: "Meine Situation", stageHint: "Diese Angabe hilft bei späterer Personalisierung.", stagePlaceholder: "Optional auswählen", interests: "Meine Interessen", interestsHint: "Wählen Sie Themen, die für Sie relevant sind.", submit: "Profil speichern", pending: "Wird gespeichert…", myCity: "Zu meiner Stadt →", home: "Zur Startseite",
       }
     : {
-        name: "Ism", location: "Joylashuvim", locationHint: "Avval mamlakat va regionni, keyin mavjud canonical yashash joyini tanlang.", country: "Mamlakat", countryPlaceholder: "Mamlakatni tanlang", germany: "Germaniya", uzbekistan: "O‘zbekiston", region: "Region / Bundesland / Viloyat", regionPlaceholder: "Regionni tanlang", city: "Yashash joyim", cityPlaceholder: "Joylashuvni tanlang", noCities: "Bu region uchun hali tekshirilgan shahar ma’lumotlari mavjud emas.", stage: "Mening holatim", stageHint: "Bu ma’lumot keyingi personalizatsiya uchun ishlatiladi.", stagePlaceholder: "Ixtiyoriy tanlang", interests: "Qiziqishlarim", interestsHint: "Siz uchun muhim mavzularni tanlang.", submit: "Profilni saqlash", pending: "Saqlanmoqda…", myCity: "Mening shahrimga o‘tish →", home: "Bosh sahifaga qaytish",
+        name: "Ism va familiya", location: "Joylashuvim", locationHint: "Avval mamlakat va regionni, keyin mavjud canonical yashash joyini tanlang.", country: "Mamlakat", countryPlaceholder: "Mamlakatni tanlang", germany: "Germaniya", uzbekistan: "O‘zbekiston", region: "Region / Bundesland / Viloyat", regionPlaceholder: "Regionni tanlang", city: "Yashash joyim", cityPlaceholder: "Joylashuvni tanlang", noCities: "Bu region uchun hali tekshirilgan shahar ma’lumotlari mavjud emas.", stage: "Mening holatim", stageHint: "Bu ma’lumot keyingi personalizatsiya uchun ishlatiladi.", stagePlaceholder: "Ixtiyoriy tanlang", interests: "Qiziqishlarim", interestsHint: "Siz uchun muhim mavzularni tanlang.", submit: "Profilni saqlash", pending: "Saqlanmoqda…", myCity: "Mening shahrimga o‘tish →", home: "Bosh sahifaga qaytish",
       };
 
   function changeCountry(value: string) {
@@ -119,7 +127,7 @@ export default function ProfileSetupForm({
 
       <div>
         <label htmlFor="profile-display-name" className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">{copy.name}</label>
-        <input id="profile-display-name" name="displayName" type="text" defaultValue={context.profile?.displayName ?? ""} maxLength={80} autoComplete="name" className={controlClass} />
+        <input id="profile-display-name" name="displayName" type="text" defaultValue={context.profile?.displayName ?? ""} maxLength={80} autoComplete="name" required className={`${controlClass} invalid:border-red-500 invalid:ring-2 invalid:ring-red-500/20 focus:invalid:border-red-500 focus:invalid:ring-red-500/20`} />
       </div>
 
       <section className="rounded-3xl border border-slate-200/80 bg-slate-50/80 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950/45 sm:p-5" aria-labelledby="profile-location-heading">

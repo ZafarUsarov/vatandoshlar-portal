@@ -70,7 +70,16 @@ export async function saveProfileSetupAction(
       .filter((value): value is string => typeof value === "string")
       .filter(isInterestKey);
 
-    if (displayName && displayName.length > 80) {
+    if (!displayName || displayName.split(/\s+/u).length < 2) {
+      return {
+        error: locale === "de"
+          ? "Bitte geben Sie Ihren Vor- und Nachnamen ein."
+          : "Ism va familiyangizni kiriting.",
+        success: null,
+      };
+    }
+
+    if (displayName.length > 80) {
       return {
         error: locale === "de"
           ? "Der Name darf höchstens 80 Zeichen lang sein."

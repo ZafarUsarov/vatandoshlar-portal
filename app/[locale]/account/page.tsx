@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { getLocale } from "next-intl/server";
 import AccountSignOutButton from "@/components/account/AccountSignOutButton";
+import AccountActionsMenu from "@/components/account/AccountActionsMenu";
 import { Link } from "@/i18n/navigation";
 import { requirePublicUser } from "@/lib/auth/user";
 
@@ -72,22 +73,28 @@ export default async function AccountPage() {
       </div>
 
       <div className="relative mx-auto max-w-2xl rounded-[2rem] border border-white/80 bg-white/90 p-6 shadow-2xl shadow-slate-900/8 backdrop-blur-sm dark:border-slate-800/90 dark:bg-slate-900/90 sm:p-9">
-        <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">{copy.eyebrow}</p>
+        <div className="flex items-center justify-between gap-4">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">{copy.eyebrow}</p>
+            <AccountActionsMenu locale={locale}>
+              <AccountSignOutButton locale={locale} />
+            </AccountActionsMenu>
+          </div>
         <h1 className="mt-4 text-3xl font-black tracking-[-0.03em] text-slate-950 dark:text-white sm:text-4xl">{copy.title}</h1>
         <p className="mt-3 max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-300">{copy.description}</p>
 
-        <dl className="mt-8 flex flex-col gap-3 rounded-[1.5rem] border border-slate-200/90 bg-slate-50/80 p-4 shadow-inner shadow-slate-900/[0.02] dark:border-slate-700 dark:bg-slate-800/50 sm:flex-row sm:items-center sm:p-5">
-          <div className="flex min-w-0 flex-1 items-center gap-3">
-            <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-slate-200/70 text-slate-700 dark:bg-slate-700 dark:text-slate-100"><AccountIcon name="mail" /></span>
-            <div className="min-w-0">
-              <dt className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{copy.email}</dt>
-              <dd className="mt-1 break-all font-semibold text-slate-950 dark:text-white">{context.user.email}</dd>
-            </div>
+        <div className="mt-8 flex items-center gap-4 rounded-[1.5rem] border border-slate-200/90 bg-slate-50/80 p-4 shadow-inner shadow-slate-900/[0.02] dark:border-slate-700 dark:bg-slate-800/50 sm:p-5">
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300">
+            <AccountIcon name="user" />
+          </span>
+          <div className="min-w-0">
+            <p className="break-words text-lg font-bold text-slate-950 dark:text-white">
+              {context.profile?.displayName || context.user.email}
+            </p>
+            <p className="mt-1 break-all text-sm text-slate-600 dark:text-slate-300">
+              {context.user.email}
+            </p>
           </div>
-          <Link href="/account/profile" className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 self-start rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-800 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800 sm:self-auto">
-            <AccountIcon name="pencil" size={17} />{copy.editEmail}
-          </Link>
-        </dl>
+        </div>
 
         <nav aria-label={locale === "de" ? "Kontobereiche" : "Akkaunt bo‘limlari"} className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {hasHomeLocation ? (
@@ -128,9 +135,7 @@ export default async function AccountPage() {
           </Link>
         </nav>
 
-        <div className="mt-5 border-t border-slate-200/80 pt-5 dark:border-slate-800">
-          <AccountSignOutButton locale={locale} />
-        </div>
+
       </div>
     </main>
   );
