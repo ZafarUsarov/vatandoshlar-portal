@@ -59,10 +59,6 @@ export default function LanguageSwitcher({
         className={`rounded-2xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-900 ${className}`}
         role="group"
       >
-        <p className="px-2 pb-2 pt-1 text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
-          {t("title")}
-        </p>
-
         <div className="grid grid-cols-2 gap-2">
           {locales.map((item) => {
             const isActive = locale === item.code;
