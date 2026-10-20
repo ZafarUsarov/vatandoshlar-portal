@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Plane, MessagesSquare, ShoppingBag } from "lucide-react";
+import { Plane, MessagesSquare, ShoppingBag, ChevronRight } from "lucide-react";
 
 import { useLocale, useTranslations } from "next-intl";
 
@@ -2083,14 +2083,17 @@ export default function Header() {
                   <Link href="/safar" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
                     <Plane aria-hidden="true" className="h-5 w-5 shrink-0" />
                     {locale === "de" ? "Vatandosh Reisen" : "Vatandosh Safar"}
+                    <ChevronRight aria-hidden="true" className="ml-auto h-5 w-5 shrink-0 text-slate-300 dark:text-slate-600" />
                   </Link>
                   <Link href="/savol" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
                     <MessagesSquare aria-hidden="true" className="h-5 w-5 shrink-0" />
                     {locale === "de" ? "Vatandosh Q&A" : "Vatandosh Savol"}
+                    <ChevronRight aria-hidden="true" className="ml-auto h-5 w-5 shrink-0 text-slate-300 dark:text-slate-600" />
                   </Link>
                   <Link href="/market" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
                     <ShoppingBag aria-hidden="true" className="h-5 w-5 shrink-0" />
                     {t("navigation.market")}
+                    <ChevronRight aria-hidden="true" className="ml-auto h-5 w-5 shrink-0 text-slate-300 dark:text-slate-600" />
                   </Link>
                 </div>
               </div>
