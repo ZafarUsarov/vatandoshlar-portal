@@ -296,7 +296,11 @@ export default function SpecialistProfile({
           <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
               <div
-                className={`flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-[2rem] text-2xl font-black text-white shadow-xl sm:size-40 lg:size-48 ${
+                className={`flex shrink-0 items-center justify-center overflow-hidden rounded-[2rem] text-2xl font-black text-white shadow-xl ${
+                  specialist.slug === "nigora-okhunova"
+                    ? "h-36 w-28 sm:h-52 sm:w-40 lg:h-64 lg:w-48"
+                    : "size-28 sm:size-40 lg:size-48"
+                } ${
                   specialist.avatarUrl
                     ? "bg-white shadow-slate-900/10 dark:bg-slate-900"
                     : "bg-gradient-to-br from-emerald-500 to-teal-700 shadow-emerald-600/20"

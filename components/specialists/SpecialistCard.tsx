@@ -126,14 +126,22 @@ export default function SpecialistCard({
 
       <div className="flex w-full flex-col">
         <div className="flex items-center gap-4">
-          <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-lg font-black text-white shadow-lg shadow-emerald-600/20">
+          <div className={`flex shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-lg font-black text-white shadow-lg shadow-emerald-600/20 ${
+              specialist.slug === "nigora-okhunova"
+                ? "size-16 bg-white"
+                : "size-16"
+            }`}>
             {specialist.avatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={specialist.avatarUrl}
                 alt=""
                 className="h-full w-full"
-                style={{ objectFit: specialist.imageFit ?? "cover", objectPosition: specialist.imagePosition ?? "center", transform: `scale(${specialist.imageScale ?? 1})` }}
+                style={{
+                  objectFit: specialist.slug === "nigora-okhunova" ? "contain" : (specialist.imageFit ?? "cover"),
+                  objectPosition: specialist.imagePosition ?? "center",
+                  transform: specialist.slug === "nigora-okhunova" ? "scale(0.88)" : `scale(${specialist.imageScale ?? 1})`,
+                }}
               />
             ) : (
               getInitials(specialist.name)
