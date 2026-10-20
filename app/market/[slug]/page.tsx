@@ -9,6 +9,7 @@ import MarketShareButton from "@/components/market/MarketShareButton";
 import MarketReportForm from "@/components/market/MarketReportForm";
 import Image from "next/image";
 import MarketDetailIcon from "@/components/market/MarketDetailIcon";
+import PublicUserAvatar from "@/components/account/PublicUserAvatar";
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -101,7 +102,7 @@ export default async function MarketDetailPage({ params, searchParams }: Props) 
         <aside className="space-y-4 lg:sticky lg:top-28" aria-label={locale === "de" ? "Anbieter und Aktionen" : "Sotuvchi va amallar"}>
           <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-emerald-50/50 p-5 shadow-sm ring-1 ring-slate-100 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950 dark:ring-slate-800">
             <h2 className="flex items-center gap-2 text-lg font-bold"><MarketDetailIcon name="user" className="h-5 w-5 text-emerald-700" />{locale === "de" ? "Anbieter" : "E’lon egasi"}</h2>
-            {seller ? <Link href={`/market/sellers/${seller.userId}`} className="mt-4 flex items-center gap-3 rounded-xl transition hover:bg-emerald-50 dark:hover:bg-slate-800" aria-label={locale === "de" ? "Alle Anzeigen dieses Anbieters" : "Sotuvchining barcha e’lonlari"}><div aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-emerald-100 font-bold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">{(seller?.displayName?.trim().slice(0, 1) || "S").toUpperCase()}</div><p className="font-semibold">{seller?.displayName ?? (locale === "de" ? "Privater Anbieter" : "Shaxsiy sotuvchi")}</p><span className="ml-auto text-emerald-700">→</span></Link> : <div className="mt-4 text-sm text-slate-500">{locale === "de" ? "Anbieter nicht verfügbar" : "Sotuvchi ma’lumoti mavjud emas"}</div>}
+            {seller ? <Link href={`/market/sellers/${seller.userId}`} className="mt-4 flex items-center gap-3 rounded-xl transition hover:bg-emerald-50 dark:hover:bg-slate-800" aria-label={locale === "de" ? "Alle Anzeigen dieses Anbieters" : "Sotuvchining barcha e’lonlari"}><PublicUserAvatar name={seller.displayName} avatarUrl={seller.avatarUrl} size="md" /><p className="font-semibold">{seller?.displayName ?? (locale === "de" ? "Privater Anbieter" : "Shaxsiy sotuvchi")}</p><span className="ml-auto text-emerald-700">→</span></Link> : <div className="mt-4 text-sm text-slate-500">{locale === "de" ? "Anbieter nicht verfügbar" : "Sotuvchi ma’lumoti mavjud emas"}</div>}
             {seller && sellerRating && <div className="mt-3 flex items-center gap-2 text-sm" aria-label={locale === "de" ? "Anbieterbewertung" : "Sotuvchi reytingi"}>
               <span className="text-amber-500" aria-hidden="true">★</span>
               {sellerRating.average === null

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import PublicUserAvatar from "@/components/account/PublicUserAvatar";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { formatMarketPrice, marketPriceCaption } from "@/lib/market/market-display";
@@ -129,6 +130,10 @@ export default function MarketListingResults({ listings, locale, total, resultsL
                   {item.sellerRatingAverage.toFixed(1)} <span className="text-slate-500 dark:text-slate-400">({item.sellerRatingCount})</span>
                 </span>
               )}</div>
+            </div>
+            <div className="mt-3 flex min-w-0 items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+              <PublicUserAvatar name={item.sellerDisplayName} avatarUrl={item.sellerAvatarUrl} size="sm" />
+              <span className="min-w-0 truncate">{item.sellerDisplayName ?? (locale === "de" ? "Privater Anbieter" : "Shaxsiy sotuvchi")}</span>
             </div>
             <div className="min-h-4 flex-1" aria-hidden="true" />
             <a href={href} className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-100 px-3 text-center text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:bg-emerald-800 dark:text-white dark:hover:bg-emerald-700">{openLabel}<Icon name="arrow"/></a>

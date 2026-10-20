@@ -9,6 +9,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "@/i18n/navigation";
 import MarketDetailIcon from "@/components/market/MarketDetailIcon";
+import PublicUserAvatar from "@/components/account/PublicUserAvatar";
 import { getPublicMarketSeller, getPublicMarketSellerListings } from "@/lib/market/market-repository";
 export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ id: string }>; searchParams: Promise<{ page?: string }> };
@@ -37,7 +38,7 @@ export default async function SellerMarketPage({ params, searchParams }: Props) 
     <main className="mx-auto max-w-6xl px-5 pb-20 pt-32 sm:px-8">
       <Link href="/market" className="text-sm font-semibold text-emerald-700 hover:underline dark:text-emerald-400">← {locale === "de" ? "Zum Marktplatz" : "Barcha e’lonlar"}</Link>
       <section className="mt-7 rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-emerald-50/60 p-6 shadow-sm dark:border-slate-700 dark:from-slate-900 dark:to-slate-950">
-        <div className="flex items-center gap-4"><div aria-hidden="true" className="flex size-16 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-2xl font-bold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">{name.slice(0,1).toUpperCase()}</div>
+        <div className="flex items-center gap-4"><PublicUserAvatar name={name} avatarUrl={seller.avatarUrl} size="lg" />
           <div><h1 className="text-2xl font-bold sm:text-3xl">{name}</h1><p className="mt-2 flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300"><MarketDetailIcon name="calendar" className="size-4 text-emerald-700" />{locale === "de" ? "Mitglied seit" : "Ro‘yxatdan o‘tgan"}: {joined}</p></div></div>
         <div className="mt-5 flex flex-wrap items-center gap-2">
           <span className="text-amber-500" aria-hidden="true">★</span>

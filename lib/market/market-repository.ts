@@ -26,6 +26,8 @@ export type MarketListingWithCover = MarketListing & Readonly<{
   viewCount?: number;
   sellerRatingAverage?: number | null;
   sellerRatingCount?: number;
+  sellerDisplayName?: string | null;
+  sellerAvatarUrl?: string | null;
 }>;
 
 export type MarketListingPage = Readonly<{
@@ -148,16 +150,20 @@ export async function getPublishedMarketListings(filters: {
            (SELECT ROUND(AVG(r.rating)::numeric, 1)::text
             FROM market_seller_ratings r WHERE r.seller_user_id = m.author_user_id) AS seller_rating_average,
            (SELECT COUNT(*)::text
-            FROM market_seller_ratings r WHERE r.seller_user_id = m.author_user_id) AS seller_rating_count
+            FROM market_seller_ratings r WHERE r.seller_user_id = m.author_user_id) AS seller_rating_count,
+           NULLIF(BTRIM(p.display_name), '') AS seller_display_name,
+           p.avatar_url AS seller_avatar_url
     FROM market_listings m
     JOIN locations l ON l.id = m.location_id
+    LEFT JOIN public_users u ON u.id = m.author_user_id AND u.account_status = 'active'
+    LEFT JOIN user_profiles p ON p.user_id = u.id
     WHERE m.status = 'published' AND m.published_at IS NOT NULL
     AND (m.expires_at IS NULL OR m.expires_at > NOW())
       AND l.status = 'active' AND l.country_code = 'DE'
       AND l.location_type = 'city'
   `;
 
-  const result = await db.query<ListingRow & { cover_image_id: string | null; view_count: string; seller_rating_average: string | null; seller_rating_count: string }>(`
+  const result = await db.query<ListingRow & { cover_image_id: string | null; view_count: string; seller_rating_average: string | null; seller_rating_count: string; seller_display_name: string | null; seller_avatar_url: string | null }>(`
     ${selectWithCover}
     ${where}
     ORDER BY ${orderBy}
@@ -165,7 +171,7 @@ export async function getPublishedMarketListings(filters: {
   `, [...params, pageSize, (page - 1) * pageSize]);
 
   return {
-    listings: result.rows.map(row => ({ ...mapListing(row), coverImageId: row.cover_image_id, viewCount: Number(row.view_count), sellerRatingAverage: row.seller_rating_average === null ? null : Number(row.seller_rating_average), sellerRatingCount: Number(row.seller_rating_count) })),
+    listings: result.rows.map(row => ({ ...mapListing(row), coverImageId: row.cover_image_id, viewCount: Number(row.view_count), sellerRatingAverage: row.seller_rating_average === null ? null : Number(row.seller_rating_average), sellerRatingCount: Number(row.seller_rating_count), sellerDisplayName: row.seller_display_name, sellerAvatarUrl: row.seller_avatar_url })),
     total,
     page,
     totalPages,
@@ -180,12 +186,12 @@ export async function getPublishedMarketListingBySlug(slug: string): Promise<Mar
 }
 
 
-export type MarketSeller = Readonly<{ userId: string; displayName: string | null; joinedAt: string }>;
+export type MarketSeller = Readonly<{ userId: string; displayName: string | null; avatarUrl: string | null; joinedAt: string }>;
 
 /** Only public profile data; never expose login email or private account fields. */
 export async function getMarketSellerForPublishedListing(listingId: string): Promise<MarketSeller | null> {
-  const result = await getDb().query<{ user_id: string; display_name: string | null; joined_at: Date | string }>(`
-    SELECT u.id::text AS user_id, NULLIF(BTRIM(p.display_name), '') AS display_name, u.created_at AS joined_at
+  const result = await getDb().query<{ user_id: string; display_name: string | null; avatar_url: string | null; joined_at: Date | string }>(`
+    SELECT u.id::text AS user_id, NULLIF(BTRIM(p.display_name), '') AS display_name, p.avatar_url, u.created_at AS joined_at
     FROM market_listings m
     JOIN public_users u ON u.id = m.author_user_id
     LEFT JOIN user_profiles p ON p.user_id = u.id
@@ -197,7 +203,7 @@ export async function getMarketSellerForPublishedListing(listingId: string): Pro
   `, [listingId]);
   const row = result.rows[0];
   if (!row) return null;
-  return { userId: row.user_id, displayName: row.display_name, joinedAt: row.joined_at instanceof Date ? row.joined_at.toISOString() : row.joined_at };
+  return { userId: row.user_id, displayName: row.display_name, avatarUrl: row.avatar_url, joinedAt: row.joined_at instanceof Date ? row.joined_at.toISOString() : row.joined_at };
 }
 
 /** Related public listings, excluding the current item. */
@@ -223,9 +229,9 @@ export async function getRelatedMarketListings(listingId: string, category: Mark
 /** Seller profile is intentionally restricted to active accounts and public listings. */
 export async function getPublicMarketSeller(userId: string) {
   if (!/^[1-9]\d{0,17}$/.test(userId)) return null;
-  const result = await getDb().query<{ user_id: string; display_name: string | null; joined_at: Date | string; total: string }>(`
+  const result = await getDb().query<{ user_id: string; display_name: string | null; avatar_url: string | null; joined_at: Date | string; total: string }>(`
     SELECT u.id::text AS user_id, NULLIF(BTRIM(p.display_name), '') AS display_name,
-           u.created_at AS joined_at, COUNT(m.id)::text AS total
+           p.avatar_url, u.created_at AS joined_at, COUNT(m.id)::text AS total
     FROM public_users u
     LEFT JOIN user_profiles p ON p.user_id = u.id
     JOIN market_listings m ON m.author_user_id = u.id AND m.status = 'published'
@@ -233,10 +239,10 @@ export async function getPublicMarketSeller(userId: string) {
     JOIN locations l ON l.id = m.location_id AND l.status = 'active'
       AND l.country_code = 'DE' AND l.location_type = 'city'
     WHERE u.id = $1::bigint AND u.account_status = 'active'
-    GROUP BY u.id, p.display_name
+    GROUP BY u.id, p.display_name, p.avatar_url
   `, [userId]);
   const row = result.rows[0];
-  return row ? { userId: row.user_id, displayName: row.display_name,
+  return row ? { userId: row.user_id, displayName: row.display_name, avatarUrl: row.avatar_url,
     joinedAt: row.joined_at instanceof Date ? row.joined_at.toISOString() : row.joined_at,
     total: Number(row.total) } : null;
 }

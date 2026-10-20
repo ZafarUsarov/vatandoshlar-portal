@@ -1,7 +1,7 @@
 type Props = {
   name?: string | null;
   avatarUrl?: string | null;
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
 };
 
 function initials(name?: string | null): string {
@@ -17,7 +17,7 @@ export default function PublicUserAvatar({
   avatarUrl,
   size = "sm",
 }: Props) {
-  const dimensions = size === "md" ? "h-12 w-12 text-sm" : "h-9 w-9 text-xs";
+  const dimensions = size === "lg" ? "h-16 w-16 text-xl" : size === "md" ? "h-12 w-12 text-sm" : "h-9 w-9 text-xs";
   return (
     <span
       aria-hidden="true"
