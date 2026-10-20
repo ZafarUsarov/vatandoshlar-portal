@@ -156,6 +156,8 @@ export async function createNewsAction(
   const sourceUrl =
     getString(formData, "sourceUrl");
 
+  const imageUrl = getString(formData, "imageUrl");
+
   const sourceLanguageUz =
     getString(
       formData,
@@ -228,6 +230,24 @@ export async function createNewsAction(
     };
   }
 
+  if (imageUrl && !(
+    /^\/images\/news\/[a-zA-Z0-9/_-]+\.(?:webp|png|jpe?g|avif)$/.test(imageUrl) ||
+    (() => {
+      try {
+        const url = new URL(imageUrl);
+        return url.protocol === "https:" && !url.username && !url.password;
+      } catch {
+        return false;
+      }
+    })()
+  )) {
+    return {
+      error: appLocale === "de"
+        ? "Bitte geben Sie eine gültige Bild-URL ein."
+        : "To‘g‘ri rasm URL manzilini kiriting.",
+    };
+  }
+
   if (!isValidDate(verifiedAt)) {
     return {
       error:
@@ -254,6 +274,7 @@ export async function createNewsAction(
       sourceNameUz,
       sourceNameDe,
       sourceUrl,
+      imageUrl: imageUrl || null,
       sourceLanguageUz,
       sourceLanguageDe,
       locationUz:

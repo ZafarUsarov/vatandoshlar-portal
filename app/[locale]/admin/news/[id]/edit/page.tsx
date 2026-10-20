@@ -173,6 +173,7 @@ export default async function AdminNewsEditPage({
                 article.sourceNameDe,
               sourceUrl:
                 article.sourceUrl,
+              imageUrl: article.imageUrl,
               sourceLanguageUz:
                 article.sourceLanguageUz,
               sourceLanguageDe:

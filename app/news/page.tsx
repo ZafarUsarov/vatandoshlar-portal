@@ -366,24 +366,36 @@ export default async function NewsPage() {
             </div>
 
             {allNews.length > 0 ? (
-              <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-                {allNews.map(
-                  (
-                    item,
-                    index,
-                  ) => (
-                    <NewsCard
-                      key={
-                        item.slug
-                      }
-                      item={
-                        item
-                      }
-                      index={
-                        index
-                      }
-                    />
-                  ),
+              <div className="mt-10 space-y-7">
+                <div className="grid items-stretch gap-7 lg:grid-cols-[1.35fr_1fr]">
+                  <div className="min-w-0">
+                    <NewsCard item={allNews[0]} index={0} lead />
+                  </div>
+
+                  {allNews.length > 1 && (
+                    <div className="grid min-w-0 content-start items-start gap-7 sm:grid-cols-2 lg:grid-cols-1">
+                      {allNews.slice(1, 3).map((item, index) => (
+                        <NewsCard
+                          key={item.slug}
+                          item={item}
+                          index={index + 1}
+                          compact
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {allNews.length > 3 && (
+                  <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+                    {allNews.slice(3).map((item, index) => (
+                      <NewsCard
+                        key={item.slug}
+                        item={item}
+                        index={index + 3}
+                      />
+                    ))}
+                  </div>
                 )}
               </div>
             ) : (

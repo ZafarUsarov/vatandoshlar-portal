@@ -33,6 +33,7 @@ type PublishedNewsSummaryRow = {
   published_at: string | Date | null;
   updated_at: string | Date;
   featured: boolean;
+  image_url: string | null;
   view_count: string | number;
 };
 
@@ -179,6 +180,7 @@ function toPublicNewsSummary(
           undefined
         : row.location_uz ??
           undefined,
+    imageUrl: row.image_url,
     featured:
       row.featured,
     viewCount:
@@ -268,6 +270,7 @@ const loadPublishedNews =
               published_at,
               updated_at,
               featured,
+              image_url,
               view_count
             FROM news_articles
             WHERE status = 'published'
@@ -339,6 +342,7 @@ const loadPublishedNewsBySlug =
               published_at,
               updated_at,
               featured,
+              image_url,
               view_count
             FROM news_articles
             WHERE
@@ -402,6 +406,7 @@ const loadRelatedPublishedNews =
               published_at,
               updated_at,
               featured,
+              image_url,
               view_count
             FROM news_articles
             WHERE
@@ -469,6 +474,7 @@ const loadFeaturedPublishedNews =
               published_at,
               updated_at,
               featured,
+              image_url,
               view_count
             FROM news_articles
             WHERE

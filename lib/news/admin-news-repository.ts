@@ -41,6 +41,7 @@ export type AdminNewsArticle = {
   sourceNameUz: string;
   sourceNameDe: string;
   sourceUrl: string;
+  imageUrl?: string | null;
   sourceLanguageUz: string;
   sourceLanguageDe: string;
   locationUz: string | null;
@@ -69,6 +70,7 @@ export type AdminNewsArticleInput = {
   sourceNameUz: string;
   sourceNameDe: string;
   sourceUrl: string;
+  imageUrl?: string | null;
   sourceLanguageUz: string;
   sourceLanguageDe: string;
   locationUz?: string;
@@ -108,6 +110,7 @@ type AdminNewsArticleRow = {
   source_name_uz: string;
   source_name_de: string;
   source_url: string;
+  image_url: string | null;
   source_language_uz: string;
   source_language_de: string;
   location_uz: string | null;
@@ -211,6 +214,7 @@ function toAdminNewsArticle(
     sourceNameUz: row.source_name_uz,
     sourceNameDe: row.source_name_de,
     sourceUrl: row.source_url,
+    imageUrl: row.image_url,
     sourceLanguageUz:
       row.source_language_uz,
     sourceLanguageDe:
@@ -288,6 +292,7 @@ export async function getAdminNewsArticleById(
           source_name_uz,
           source_name_de,
           source_url,
+          image_url,
           source_language_uz,
           source_language_de,
           location_uz,
@@ -341,7 +346,8 @@ export async function createAdminNewsArticle(
         location_de,
         verified_at,
         status,
-        featured
+        featured,
+        image_url
       )
       VALUES (
         $1,
@@ -365,7 +371,8 @@ export async function createAdminNewsArticle(
         $19,
         $20,
         'draft',
-        FALSE
+        FALSE,
+        $21
       )
       RETURNING id::text
     `,
@@ -390,6 +397,7 @@ export async function createAdminNewsArticle(
       input.locationUz ?? null,
       input.locationDe ?? null,
       input.verifiedAt,
+      input.imageUrl ?? null,
     ],
   );
 
@@ -432,6 +440,7 @@ export async function updateAdminNewsArticle(
         location_uz = $18,
         location_de = $19,
         verified_at = $20,
+        image_url = $22,
         updated_at = NOW()
       WHERE id = $21
     `,
@@ -457,6 +466,7 @@ export async function updateAdminNewsArticle(
       input.locationDe ?? null,
       input.verifiedAt,
       id,
+      input.imageUrl ?? null,
     ],
   );
 

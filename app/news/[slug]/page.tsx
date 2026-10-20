@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import { ArrowUpRight, BookOpen, ExternalLink, Info, Clock3 } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import NewsShareActions from "../../../components/news/NewsShareActions";
 import Header from "../../../components/Header";
 import ContentViewTracker from "../../../components/content-views/ContentViewTracker";
 import ViewCount from "../../../components/content-views/ViewCount";
 import NewsCard from "../../../components/cards/NewsCard";
 import BrandName from "../../../components/ui/BrandName";
-import BrandedText from "../../../components/ui/BrandedText";
 import { Link } from "../../../i18n/navigation";
 import { formatNewsDate } from "../../../lib/news/format-news-date";
 import {
@@ -80,6 +82,10 @@ export async function generateMetadata({
   const canonicalUrl =
     `/${locale}/news/${article.slug}`;
 
+  const imageUrl = article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026"
+    ? `${baseUrl}/images/news/medical-recognition-2026.webp`
+    : article.imageUrl ? new URL(article.imageUrl, baseUrl).toString() : null;
+
   return {
     title,
     description:
@@ -110,6 +116,7 @@ export async function generateMetadata({
           : "uz_UZ",
       modifiedTime:
         article.updatedAt,
+      ...(imageUrl ? { images: [{ url: imageUrl, alt: article.title }] } : {}),
       ...(article.publishedAt
         ? {
             publishedTime:
@@ -118,7 +125,8 @@ export async function generateMetadata({
         : {}),
     },
     twitter: {
-      card: "summary",
+      card: imageUrl ? "summary_large_image" : "summary",
+      ...(imageUrl ? { images: [imageUrl] } : {}),
       title:
         article.title,
       description:
@@ -177,6 +185,7 @@ export default async function NewsDetailPage({
       article.title,
     description:
       article.excerpt,
+    ...(article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? { image: `${baseUrl}/images/news/medical-recognition-2026.webp` } : article.imageUrl ? { image: new URL(article.imageUrl, baseUrl).toString() } : {}),
     url:
       articleUrl,
     mainEntityOfPage: {
@@ -233,207 +242,84 @@ export default async function NewsDetailPage({
       />
 
       <main className="min-h-screen bg-white pt-20 text-slate-950 transition-colors dark:bg-slate-950 dark:text-white">
-        <article>
-          <header className="border-b border-slate-200 bg-slate-50 transition-colors dark:border-slate-800 dark:bg-slate-900/60">
-            <div className="mx-auto max-w-4xl px-6 py-14 sm:py-20 lg:px-8">
-              <Link
-                href="/news"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-4 dark:text-blue-400 dark:hover:text-blue-300 dark:focus-visible:ring-offset-slate-900"
-              >
-                ←{" "}
-                {t(
-                  "backToAll",
-                )}
-              </Link>
+        <article className="mx-auto max-w-5xl px-5 pb-10 pt-5 sm:px-7 sm:pt-7 lg:px-8">
+          <Link href="/news" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition hover:text-emerald-700 dark:text-slate-300">
+            ← {t("backToAll")}
+          </Link>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3 text-sm">
-                <span className="rounded-full bg-blue-100 px-4 py-2 font-semibold text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">
-                  {
-                    article.category
-                  }
-                </span>
+          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-slate-500 sm:text-sm dark:text-slate-400">
+            <span className="rounded-full bg-blue-50 px-3 py-1 font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-300">{article.category}</span>
+            <span className="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">{article.contentType}</span>
+            <span className="inline-flex items-center gap-1"><Clock3 size={15} aria-hidden="true" />{article.readingTime}</span>
+            <ViewCount count={article.viewCount} locale={locale} />
+            <time className="ml-auto hidden sm:inline" dateTime={article.verifiedAt}>{formatNewsDate(article.verifiedAt, locale)}</time>
+          </div>
 
-                <span className="rounded-full bg-emerald-100 px-4 py-2 font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
-                  {
-                    article.contentType
-                  }
-                </span>
+          <h1 className="mt-4 max-w-4xl text-[clamp(1.9rem,3.6vw,3rem)] font-bold leading-[1.13] tracking-tight">{article.title}</h1>
+          <p className="mt-3 max-w-4xl text-base leading-7 text-slate-600 sm:text-lg dark:text-slate-300">{article.excerpt}</p>
 
-                <span className="text-slate-500 dark:text-slate-400">
-                  {
-                    article.readingTime
-                  }
-                </span>
-
-                <ViewCount
-                  count={article.viewCount}
-                  locale={locale}
-                  className="text-slate-500 dark:text-slate-400"
-                />
-
-                {article.location && (
-                  <>
-                    <span
-                      className="text-slate-300 dark:text-slate-700"
-                      aria-hidden="true"
-                    >
-                      •
-                    </span>
-
-                    <span className="text-slate-500 dark:text-slate-400">
-                      {
-                        article.location
-                      }
-                    </span>
-                  </>
-                )}
-              </div>
-
-              <h1 className="mt-7 text-4xl font-bold tracking-tight sm:text-5xl sm:leading-tight">
-                {
-                  article.title
-                }
-              </h1>
-
-              <p className="mt-7 text-xl leading-8 text-slate-600 dark:text-slate-300">
-                {
-                  article.excerpt
-                }
-              </p>
-
-              <div className="mt-8 border-t border-slate-200 pt-6 dark:border-slate-800">
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  {t(
-                    "lastVerified",
-                    {
-                      date:
-                        formatNewsDate(
-                          article.verifiedAt,
-                          locale,
-                        ),
-                    },
-                  )}
-                </p>
-              </div>
+          {(article.imageUrl || article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026") && (
+            <div className="relative mt-5 aspect-[16/9] overflow-hidden rounded-2xl bg-slate-100 sm:aspect-[16/7] dark:bg-slate-800">
+              <Image
+                src={article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : article.imageUrl!}
+                alt={article.title}
+                fill
+                unoptimized
+                priority
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                className="object-cover"
+              />
             </div>
-          </header>
+          )}
 
-          <div className="mx-auto max-w-3xl px-6 py-14 lg:px-8">
-            <div className="space-y-7">
-              {article.content.map(
-                (
-                  paragraph,
-                  index,
-                ) => (
-                  <p
-                    key={`${article.slug}-${index}`}
-                    className="text-lg leading-9 text-slate-700 dark:text-slate-300"
-                  >
-                    {
-                      paragraph
-                    }
-                  </p>
-                ),
-              )}
-            </div>
+          <div className="mt-4 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 px-3 py-3 dark:border-slate-800 sm:px-4">
+            <span className="text-xs font-semibold text-slate-600 sm:text-sm dark:text-slate-300">{appLocale === "de" ? "Artikel teilen:" : "Maqolani ulashish:"}</span>
+            <NewsShareActions locale={appLocale} title={article.title} url={articleUrl} />
+          </div>
 
-            <section className="mt-12 rounded-3xl border border-emerald-200 bg-emerald-50 p-7 sm:p-8 dark:border-emerald-500/20 dark:bg-emerald-500/10">
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">
-                {t(
-                  "source.eyebrow",
-                )}
-              </p>
-
-              <h2 className="mt-3 text-xl font-bold text-emerald-950 dark:text-emerald-100">
-                {
-                  article.sourceName
-                }
-              </h2>
-
-              <dl className="mt-5 space-y-3 text-sm text-emerald-900 dark:text-emerald-200">
-                <div className="flex flex-col gap-1 sm:flex-row sm:gap-3">
-                  <dt className="font-semibold">
-                    {t(
-                      "source.language",
-                    )}
-                  </dt>
-
-                  <dd>
-                    {
-                      article.sourceLanguage
-                    }
-                  </dd>
+          <div className="mx-auto mt-7 max-w-4xl">
+            {article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? (
+              <>
+                <p className="text-base leading-7 text-slate-700 sm:text-[17px] dark:text-slate-300">{article.content[0]}</p>
+                <div className="mt-5 rounded-2xl border border-emerald-100 bg-emerald-50/70 p-5 dark:border-emerald-900 dark:bg-emerald-950/30">
+                  <h2 className="text-lg font-bold text-emerald-950 dark:text-emerald-100">{appLocale === "de" ? "Das Wichtigste auf einen Blick" : "Asosiy yangilik"}</h2>
+                  <p className="mt-2 text-[15px] leading-7 text-slate-700 dark:text-slate-300">{article.content[2] ?? article.content[1]}</p>
                 </div>
-
-                <div className="flex flex-col gap-1 sm:flex-row sm:gap-3">
-                  <dt className="font-semibold">
-                    {t(
-                      "source.verified",
-                    )}
-                  </dt>
-
-                  <dd>
-                    <time
-                      dateTime={
-                        article.verifiedAt
-                      }
-                    >
-                      {formatNewsDate(
-                        article.verifiedAt,
-                        locale,
-                      )}
-                    </time>
-                  </dd>
+                <h2 className="mt-7 text-2xl font-bold tracking-tight">{appLocale === "de" ? "Was ändert sich?" : "Nimalar o‘zgaradi?"}</h2>
+                <div className="mt-4 space-y-4">
+                  {article.content.slice(1).filter((_, i) => i !== 1).map((paragraph, index) => (
+                    <div key={`${article.slug}-${index}`} className="flex items-start gap-3">
+                      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">{index + 1}</span>
+                      <p className="pt-1 text-[15px] leading-7 text-slate-700 sm:text-base dark:text-slate-300">{paragraph}</p>
+                    </div>
+                  ))}
                 </div>
-              </dl>
+              </>
+            ) : (
+              <div className="space-y-4">
+                {article.content.map((paragraph, index) => <p key={`${article.slug}-${index}`} className="text-base leading-7 text-slate-700 dark:text-slate-300">{paragraph}</p>)}
+              </div>
+            )}
 
-              <a
-                href={
-                  article.sourceUrl
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 inline-flex rounded-full bg-emerald-700 px-6 py-3 font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-4 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:focus-visible:ring-offset-slate-950"
-              >
-                {t(
-                  "source.open",
-                )}{" "}
-                ↗
-              </a>
-            </section>
-
-            <aside className="mt-8 rounded-3xl border border-amber-200 bg-amber-50 p-7 dark:border-amber-500/20 dark:bg-amber-500/10">
-              <p className="font-semibold text-amber-950 dark:text-amber-100">
-                {t(
-                  "disclaimer.title",
-                )}
-              </p>
-
-              <p className="mt-3 leading-7 text-amber-900 dark:text-amber-200">
-                {t(
-                  "disclaimer.description",
-                )}
-              </p>
-            </aside>
-
-            <div className="mt-12 flex flex-col gap-5 border-t border-slate-200 pt-8 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                <BrandedText
-                  text={t(
-                    "preparedNote",
-                  )}
-                />
-              </p>
-
-              <Link
-                href="/news"
-                className="shrink-0 font-semibold text-blue-600 transition hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-4 dark:text-blue-400 dark:hover:text-blue-300 dark:focus-visible:ring-offset-slate-950"
-              >
-                {t(
-                  "backToAll",
-                )}{" "}
-                →
+            {article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" && (
+              <Link href="/guide/recognition/regulated-professions" className="mt-7 flex items-center gap-3 rounded-2xl border border-blue-200 bg-blue-50/70 px-4 py-4 text-blue-950 transition hover:border-blue-400 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-100">
+                <BookOpen className="size-7 shrink-0 text-blue-600" aria-hidden="true" />
+                <span className="min-w-0 flex-1"><span className="block text-xs font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-300">{appLocale === "de" ? "Hilfreicher Ratgeber" : "Foydali qo‘llanma"}</span><span className="block text-sm font-bold sm:text-base">{appLocale === "de" ? "Anerkennung reglementierter Berufe" : "Shifokorlar uchun qo‘llanma: diplomni tan oldirish"}</span></span>
+                <ArrowUpRight className="size-5 shrink-0" aria-hidden="true" />
               </Link>
+            )}
+
+            <div className="mt-7 grid gap-4 border-t border-slate-200 pt-4 sm:grid-cols-[1fr_auto] dark:border-slate-800">
+              <div className="text-sm">
+                <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:underline dark:text-blue-400">
+                  {appLocale === "de" ? "Offizielle Quelle:" : "Rasmiy manba:"} {article.sourceName}<ExternalLink className="size-4" aria-hidden="true" />
+                </a>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{t("lastVerified", { date: formatNewsDate(article.verifiedAt, locale) })}</p>
+              </div>
+              <aside className="flex max-w-sm items-start gap-2 rounded-xl bg-amber-50 px-3 py-2.5 text-xs leading-5 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
+                <Info className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                <p><strong>{t("disclaimer.title")}:</strong> {t("disclaimer.description")}</p>
+              </aside>
             </div>
           </div>
         </article>

@@ -1,4 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
+import Image from "next/image";
 
 import { Link } from "@/i18n/navigation";
 import { formatNewsDate } from "@/lib/news/format-news-date";
@@ -10,6 +11,8 @@ import { Badge, Card } from "../ui";
 type NewsCardProps = {
   item: NewsItem;
   index?: number;
+  compact?: boolean;
+  lead?: boolean;
 };
 
 type IconProps = {
@@ -90,6 +93,8 @@ function CalendarCheckIcon({ className }: IconProps) {
 export default async function NewsCard({
   item,
   index = 0,
+  compact = false,
+  lead = false,
 }: NewsCardProps) {
   const locale = await getLocale();
   const t = await getTranslations("NewsCard");
@@ -102,7 +107,7 @@ export default async function NewsCard({
       variant="interactive"
       padding="none"
       aria-labelledby={titleId}
-      className="group relative isolate flex min-h-[390px] overflow-hidden rounded-[2rem] bg-surface animate-fade-in-up"
+      className={`group relative isolate flex flex-col overflow-hidden rounded-[1.5rem] bg-surface animate-fade-in-up ${compact ? "h-auto" : "h-full"}`}
       style={{ animationDelay: `${index * 70}ms` }}
     >
       <div
@@ -120,7 +125,20 @@ export default async function NewsCard({
         className="pointer-events-none absolute -bottom-28 -left-24 size-56 rounded-full bg-brand/5 blur-3xl transition-transform duration-700 group-hover:scale-125"
       />
 
-      <div className="relative z-10 flex w-full flex-col p-6 sm:p-7">
+      {item.imageUrl && (
+        <div className={`relative z-10 w-full overflow-hidden ${lead ? "min-h-[220px] flex-1" : "aspect-[2/1] shrink-0"}`}>
+          <Image
+            src={item.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : item.imageUrl}
+            alt={item.title}
+            fill
+            unoptimized
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          />
+        </div>
+      )}
+
+      <div className={`relative z-10 flex w-full flex-col ${lead ? "shrink-0 p-4 sm:p-5" : compact ? "flex-1 p-4 sm:p-5" : "flex-1 p-5 sm:p-6"}`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Badge variant="primary">
             {item.category}
@@ -139,14 +157,14 @@ export default async function NewsCard({
           </div>
         </div>
 
-        <div className="mt-7">
+        <div className={compact || lead ? "mt-3" : "mt-5"}>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">
             {item.contentType}
           </p>
 
           <h3
             id={titleId}
-            className="mt-3 text-xl font-bold leading-8 tracking-[-0.025em] text-text-primary sm:text-2xl"
+            className={`mt-2 font-bold leading-snug tracking-tight text-text-primary ${compact ? "text-lg" : "text-xl sm:text-[22px]"}`}
           >
             <Link
               href={newsHref}
@@ -160,12 +178,12 @@ export default async function NewsCard({
             </Link>
           </h3>
 
-          <p className="mt-4 truncate-lines-3 text-[15px] leading-7 text-text-secondary">
+          <p className={`mt-3 text-sm leading-6 text-text-secondary ${compact ? "line-clamp-2" : "truncate-lines-3"}`}>
             {item.excerpt}
           </p>
         </div>
 
-        <div className="mt-auto pt-8">
+        <div className={compact || lead ? "mt-4" : "mt-auto pt-5"}>
           <div className="flex items-end justify-between gap-5 border-t border-border-default pt-5">
             <div className="min-w-0">
               <div className="flex items-center gap-2 text-xs font-medium text-text-muted">

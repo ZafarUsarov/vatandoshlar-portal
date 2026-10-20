@@ -34,6 +34,7 @@ export type NewsArticleFormValues = {
   sourceNameUz: string;
   sourceNameDe: string;
   sourceUrl: string;
+  imageUrl?: string | null;
   sourceLanguageUz: string;
   sourceLanguageDe: string;
   locationUz: string;
@@ -83,6 +84,7 @@ const copy = {
     contentType: "Kontent turi",
     sourceName: "Manba nomi",
     sourceUrl: "Manba URL",
+    imageUrl: "Maqola rasmi (URL)",
     verifiedAt: "Oxirgi tekshiruv sanasi",
     createNote: "Yangi maqola avtomatik ravishda qoralama holatida saqlanadi va hozircha public News sahifasiga chiqmaydi.",
     editNote: "Bu bosqich faqat maqola kontentini yangilaydi. Publish va archive boshqaruvi keyingi bosqichda qo‘shiladi.",
@@ -109,6 +111,7 @@ const copy = {
     contentType: "Inhaltstyp",
     sourceName: "Name der Quelle",
     sourceUrl: "Quellen-URL",
+    imageUrl: "Artikelbild (URL)",
     verifiedAt: "Zuletzt geprüft am",
     createNote: "Neue Beiträge werden automatisch als Entwurf gespeichert und erscheinen vorerst nicht im öffentlichen Nachrichtenbereich.",
     editNote: "In dieser Phase wird ausschließlich der Inhalt des Beitrags aktualisiert. Veröffentlichen und Archivieren folgen im nächsten Schritt.",
@@ -199,6 +202,18 @@ export default function NewsArticleForm({
               required
               disabled={pending}
               defaultValue={initialValues?.verifiedAt ?? ""}
+              className={inputClassName}
+            />
+          </label>
+
+          <label className="text-sm font-bold text-slate-800 dark:text-slate-100 md:col-span-2">
+            <FieldLabel locale={locale} optional>{currentCopy.imageUrl}</FieldLabel>
+            <input
+              name="imageUrl"
+              type="text"
+              disabled={pending}
+              defaultValue={initialValues?.imageUrl ?? ""}
+              placeholder="/images/news/article-photo.webp"
               className={inputClassName}
             />
           </label>
