@@ -95,7 +95,7 @@ export default async function ServicesSection() {
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="relative isolate overflow-hidden bg-white py-16 sm:py-20 lg:py-24 dark:bg-slate-950"
+      className="relative isolate overflow-hidden bg-white py-8 sm:py-10 lg:py-10 dark:bg-slate-950"
     >
       <div
         aria-hidden="true"

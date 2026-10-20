@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Plane, MessagesSquare, ShoppingBag, ChevronRight } from "lucide-react";
+import { Plane, MessagesSquare, MessageCircleQuestion, ShoppingBag, MapPin, ChevronRight } from "lucide-react";
 
 import { useLocale, useTranslations } from "next-intl";
 
@@ -1112,26 +1112,84 @@ export default function Header() {
 
     <>
 
-      {/* Desktop ecosystem shortcuts: anchored to the right edge, labels expand left. */}
-      <nav aria-label={locale === "de" ? "Weitere Angebote" : "Qo‘shimcha xizmatlar"} className="fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-1.5 lg:flex">
+      {/* Desktop ecosystem shortcuts */}
+      <nav
+        aria-label={locale === "de" ? "Weitere Angebote" : "Qo‘shimcha xizmatlar"}
+        className="fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-1.5 lg:flex"
+      >
         {[
-          { href: "/savol" as const, label: locale === "de" ? "Vatandosh Q&A" : "Vatandosh Savol", Icon: MessagesSquare },
-          { href: "/market" as const, label: "Vatandosh Market", Icon: ShoppingBag },
-          { href: "/safar" as const, label: "Vatandosh Safarlar", Icon: Plane },
-        ].map(({ href, label, Icon }) => (
-          <div key={href} className="relative h-12 w-12">
-            <Link
-              href={href}
-              aria-label={label}
-              className="group absolute right-0 top-0 flex h-12 w-12 items-center overflow-hidden rounded-l-xl border border-r-0 border-slate-200 bg-white/95 text-slate-900 shadow-md backdrop-blur-sm transition-[width,background-color] duration-300 ease-out hover:w-52 hover:bg-emerald-50 focus-visible:w-52 focus-visible:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:border-slate-700 dark:bg-slate-900/95 dark:text-white dark:hover:bg-slate-800 dark:focus-visible:bg-slate-800"
-            >
-              <span className="absolute right-12 whitespace-nowrap pl-4 pr-3 text-sm font-semibold opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">{label}</span>
-              <span className="absolute right-0 flex h-12 w-12 items-center justify-center text-emerald-700 dark:text-emerald-400">
-                <Icon aria-hidden="true" className="h-5 w-5" />
+          {
+            href: "/savol" as const,
+            label: locale === "de" ? "Fragen & Antworten" : "Savol-javob",
+            Icon: MessageCircleQuestion,
+            color: "text-emerald-600 dark:text-emerald-400",
+            hover: "hover:bg-emerald-50 focus-visible:bg-emerald-50",
+            available: true,
+          },
+          {
+            href: "/market" as const,
+            label: locale === "de" ? "Marktplatz" : "Market",
+            Icon: ShoppingBag,
+            color: "text-amber-600 dark:text-amber-400",
+            hover: "hover:bg-amber-50 focus-visible:bg-amber-50",
+            available: true,
+          },
+          {
+            href: "/travel" as const,
+            label: locale === "de" ? "Reisen" : "Sayohat",
+            Icon: Plane,
+            color: "text-blue-600 dark:text-blue-400",
+            hover: "hover:bg-blue-100 focus-visible:bg-blue-100 dark:hover:bg-blue-950 dark:focus-visible:bg-blue-950",
+            available: true,
+          },
+          {
+            href: "/places" as const,
+            label: locale === "de" ? "Standorte – Demnächst" : "Maskanlar – Tez kunda",
+            Icon: MapPin,
+            color: "text-violet-600 dark:text-violet-400",
+            hover: "",
+            available: false,
+          },
+        ].map(({ href, label, Icon, color, hover, available }) => {
+          const content = (
+            <>
+              <span className="absolute right-12 whitespace-nowrap px-3 text-sm font-semibold opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+                {label}
               </span>
-            </Link>
-          </div>
-        ))}
+              <span className={`absolute right-0 flex h-12 w-12 items-center justify-center ${color}`}>
+                <Icon aria-hidden="true" className="h-6 w-6" strokeWidth={2.2} />
+              </span>
+            </>
+          );
+
+          const baseClass =
+            "group absolute right-0 top-0 flex h-12 w-12 items-center overflow-hidden rounded-l-xl border border-r-0 border-slate-200 bg-white/95 text-slate-900 shadow-md backdrop-blur-sm transition-[width,background-color] duration-300 ease-out dark:border-slate-700 dark:bg-slate-900/95 dark:text-white";
+
+          return (
+            <div key={href} className="relative h-12 w-12">
+              {available ? (
+                <Link
+                  href={href}
+                  aria-label={label}
+                  style={{ "--shortcut-width": "170px" } as React.CSSProperties}
+                  className={`${baseClass} hover:w-[var(--shortcut-width)] focus-visible:w-[var(--shortcut-width)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:hover:bg-slate-800 ${hover}`}
+                >
+                  {content}
+                </Link>
+              ) : (
+                <div
+                  aria-label={label}
+                  title={label}
+                  className={`${baseClass} cursor-not-allowed opacity-75`}
+                >
+                  <span className={`absolute right-0 flex h-12 w-12 items-center justify-center ${color}`}>
+                    <Icon aria-hidden="true" className="h-6 w-6" strokeWidth={2.2} />
+                  </span>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </nav>
 
       <header

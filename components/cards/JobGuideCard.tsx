@@ -82,7 +82,7 @@ export default function JobGuideCard({
       aria-labelledby={
         titleId
       }
-      className="group relative isolate flex min-h-[430px] overflow-hidden rounded-[2rem] bg-surface animate-fade-in-up"
+      className="group relative isolate flex min-h-[340px] overflow-hidden rounded-[2rem] bg-surface animate-fade-in-up"
       style={{
         animationDelay:
           `${index * 70}ms`,
@@ -93,7 +93,7 @@ export default function JobGuideCard({
         className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-brand/15 via-brand/5 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100"
       />
 
-      <div className="relative z-10 flex w-full flex-col p-6 sm:p-7">
+      <div className="relative z-10 flex w-full flex-col p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4">
           <div
             aria-hidden="true"
@@ -112,7 +112,7 @@ export default function JobGuideCard({
           </Badge>
         </div>
 
-        <div className="mt-7">
+        <div className="mt-4">
           <h3
             id={titleId}
             className="text-xl font-bold leading-8 tracking-[-0.02em] text-text-primary sm:text-2xl"
@@ -131,7 +131,7 @@ export default function JobGuideCard({
             </Link>
           </h3>
 
-          <p className="mt-4 text-[15px] leading-7 text-text-secondary">
+          <p className="mt-2 text-[15px] leading-7 text-text-secondary">
             {
               guide.description
             }
@@ -144,7 +144,7 @@ export default function JobGuideCard({
             aria-label={
               labels.highlightsAria
             }
-            className="mt-7 space-y-3"
+            className="mt-4 space-y-2"
           >
             {guide.highlights
               .slice(
@@ -179,8 +179,8 @@ export default function JobGuideCard({
           </ul>
         )}
 
-        <div className="mt-auto pt-8">
-          <div className="flex items-end justify-between gap-5 border-t border-border-default pt-5">
+        <div className="mt-auto pt-4">
+          <div className="flex items-end justify-between gap-5 border-t border-border-default pt-3">
             <div className="min-w-0">
               <p className="text-xs font-medium uppercase tracking-[0.12em] text-text-muted">
                 {

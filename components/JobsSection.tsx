@@ -135,7 +135,7 @@ export default async function JobsSection() {
     <section
       id="jobs"
       aria-labelledby="jobs-heading"
-      className="relative isolate overflow-hidden bg-slate-950 py-16 sm:py-20 lg:py-24"
+      className="relative isolate overflow-hidden bg-slate-950 py-8 sm:py-10 lg:py-10"
     >
       <div
         aria-hidden="true"

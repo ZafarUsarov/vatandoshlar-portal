@@ -228,7 +228,7 @@ export default function SearchSection() {
   return (
     <section
       id="search"
-      className="relative overflow-hidden border-b border-slate-200 bg-white py-14 sm:py-20 lg:py-24 dark:border-slate-800 dark:bg-slate-950"
+      className="relative overflow-hidden border-b border-slate-200 bg-white pt-5 pb-14 sm:pt-6 sm:pb-20 lg:pt-8 lg:pb-24 dark:border-slate-800 dark:bg-slate-950"
     >
       <div
         className="absolute inset-0 overflow-hidden"

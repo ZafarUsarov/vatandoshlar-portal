@@ -55,35 +55,6 @@ function ArrowUpRightIcon({ className }: IconProps) {
   );
 }
 
-function MailIcon({ className }: IconProps) {
-  return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <rect
-        x="3.5"
-        y="5.5"
-        width="17"
-        height="13"
-        rx="2.5"
-        stroke="currentColor"
-        strokeWidth="1.7"
-      />
-
-      <path
-        d="m5 7 7 5 7-5"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.7"
-      />
-    </svg>
-  );
-}
-
 function ShieldCheckIcon({ className }: IconProps) {
   return (
     <svg
@@ -322,7 +293,7 @@ export default async function Footer({
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(52,211,153,0.7),rgba(34,211,238,0.5),transparent)]"
       />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-10 sm:py-12 lg:px-8 lg:py-14">
+      <div className="relative mx-auto max-w-7xl px-6 py-6 sm:py-8 lg:px-8 lg:py-10">
         {showHomeDetails && (
           <div className="mt-8 border-t border-slate-200/80 pt-6 dark:border-white/[0.08] sm:mt-10 sm:pt-7">
             <div className="flex max-w-2xl items-center gap-3">
@@ -457,20 +428,6 @@ export default async function Footer({
               className="flex w-full flex-col items-start gap-3 lg:w-auto lg:flex-row lg:items-center lg:gap-4"
             >
               <div className="flex flex-wrap items-center gap-2.5">
-                <div className="group/email relative">
-                  <a
-                    href="mailto:info.vatandoshlar@gmx.de"
-                    aria-label={localCopy.emailLabel}
-                    aria-describedby="footer-email-tooltip"
-                    className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-emerald-300 focus-visible:bg-emerald-50 focus-visible:text-emerald-700 focus-visible:shadow-lg focus-visible:shadow-emerald-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300 dark:focus-visible:border-emerald-400/30 dark:focus-visible:bg-emerald-400/10 dark:focus-visible:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
-                  >
-                    <MailIcon className="size-5" />
-                  </a>
-                  <span id="footer-email-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/email:opacity-100 group-focus-within/email:opacity-100 dark:bg-white dark:text-slate-950">
-                    info.vatandoshlar@gmx.de
-                  </span>
-                </div>
-
                 <div className="group/telegram relative">
                   <a href="https://t.me/Vatandoshlar_de" target="_blank" rel="noopener noreferrer" aria-label={localCopy.telegramLabel} aria-describedby="footer-telegram-tooltip" className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-600 hover:shadow-lg hover:shadow-sky-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-sky-300 focus-visible:bg-sky-50 focus-visible:text-sky-600 focus-visible:shadow-lg focus-visible:shadow-sky-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-sky-400/30 dark:hover:bg-sky-400/10 dark:hover:text-sky-300 dark:focus-visible:border-sky-400/30 dark:focus-visible:bg-sky-400/10 dark:focus-visible:text-sky-300 dark:focus-visible:ring-offset-slate-950">
                     <TelegramIcon className="size-5" />
