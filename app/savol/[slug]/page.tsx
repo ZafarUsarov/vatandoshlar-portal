@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import PublicUserAvatar from "@/components/account/PublicUserAvatar";
 import CreateAnswerForm from "@/components/savol/CreateAnswerForm";
 import OwnAnswerControls from "@/components/savol/OwnAnswerControls";
 import OwnQuestionMenu from "@/components/savol/OwnQuestionMenu";
@@ -20,7 +21,7 @@ import { getAnswerDownvoteCounts } from "@/lib/savol/answer-votes-repository";
 import { Link } from "@/i18n/navigation";
 import { ArrowLeft, MessageCircle, Plus, SquarePen } from "lucide-react";
 import { getCurrentPublicUser } from "@/lib/auth/user";
-import { getSavolAuthorNames } from "@/lib/savol/savol-author-names";
+import { getSavolAuthorProfiles } from "@/lib/savol/savol-author-names";
 import { getQuestionAttachments } from "@/lib/savol/savol-attachment-repository";
 import {
   getActiveQuestionCategories,
@@ -146,13 +147,13 @@ export default async function SavolDetailPage({
   const attachments = await getQuestionAttachments(question.id);
   const answerAttachments = await listAnswerAttachments(answers.map((answer) => answer.id));
   const repliesByAnswer = await getPublishedAnswerReplies(answers.map((answer) => answer.id));
-  const authorNames = await getSavolAuthorNames([
+  const authorProfiles = await getSavolAuthorProfiles([
     question.authorUserId,
     ...answers.map((answer) => answer.authorUserId),
     ...Array.from(repliesByAnswer.values()).flat().map((reply) => reply.authorUserId),
   ]);
   const authorLabel = (id: string) =>
-    authorNames.get(id) ?? (locale === "de" ? "Mitglied" : "Foydalanuvchi");
+    authorProfiles.get(id)?.displayName ?? (locale === "de" ? "Mitglied" : "Foydalanuvchi");
 
   const helpfulCounts = await getAnswerHelpfulCounts(
     answers.map((answer) => answer.id),
@@ -163,7 +164,10 @@ export default async function SavolDetailPage({
   const readyAttachments = attachments.filter((attachment) => attachment.status === "ready");
   const initials = (id: string) => authorLabel(id).split(/\s+/).slice(0, 2).map((word) => word.charAt(0)).join("").toUpperCase();
   const avatar = (id: string) => (
-    <span aria-hidden="true" className="inline-flex size-9 min-h-9 min-w-9 max-h-9 max-w-9 shrink-0 flex-none items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-emerald-100 to-sky-100 text-xs font-bold text-emerald-800 ring-1 ring-slate-200 dark:from-emerald-900 dark:to-slate-800 dark:text-emerald-100 dark:ring-slate-700">{initials(id)}</span>
+    <PublicUserAvatar
+      name={authorLabel(id)}
+      avatarUrl={authorProfiles.get(id)?.avatarUrl}
+    />
   );
 
   return (
@@ -217,7 +221,7 @@ export default async function SavolDetailPage({
                           locale={locale}
                           slug={question.slug}
                           answerId={answer.id}
-                          replies={(repliesByAnswer.get(answer.id) ?? []).map((reply) => ({ ...reply, authorName: authorLabel(reply.authorUserId), authorInitials: initials(reply.authorUserId), formattedDate: formatDate(reply.createdAt, locale) }))}
+                          replies={(repliesByAnswer.get(answer.id) ?? []).map((reply) => ({ ...reply, authorName: authorLabel(reply.authorUserId), authorInitials: initials(reply.authorUserId), authorAvatarUrl: authorProfiles.get(reply.authorUserId)?.avatarUrl ?? null, formattedDate: formatDate(reply.createdAt, locale) }))}
                         />
                       </ThreadBranch>
                     </div>

@@ -6,9 +6,10 @@ import { updateOwnReplyAction, removeOwnReplyAction } from "@/app/savol/[slug]/a
 import { ChevronRight, Minus } from "lucide-react";
 import OwnerActionDropdown from "@/components/savol/OwnerActionDropdown";
 import AnswerReplyForm from "@/components/savol/AnswerReplyForm";
+import PublicUserAvatar from "@/components/account/PublicUserAvatar";
 import type { AnswerReply } from "@/lib/savol/answer-replies-repository";
 
-type DisplayReply = AnswerReply & { authorName: string; authorInitials: string; formattedDate: string };
+type DisplayReply = AnswerReply & { authorName: string; authorInitials: string; authorAvatarUrl: string | null; formattedDate: string };
 export type CommentNode = DisplayReply & { children: CommentNode[] };
 
 export function buildCommentTree(replies: ReadonlyArray<DisplayReply>): CommentNode[] {
@@ -96,13 +97,7 @@ function CommentItem({ node, props, last }: { node: CommentNode; props: Props; l
         <path d="M 0 0 V 3 Q 0 19 16 19 H 25" stroke="currentColor" strokeWidth="1" fill="none" />
       </svg>
       <div className="col-start-2 row-start-1 flex min-w-0 items-start gap-2.5">
-        <span
-          aria-hidden="true"
-          className="inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-emerald-100 text-xs font-bold text-emerald-800 ring-1 ring-slate-200 dark:bg-emerald-900 dark:text-emerald-100 dark:ring-slate-700"
-          style={{ width: 36, height: 36, minWidth: 36, minHeight: 36, maxWidth: 36, maxHeight: 36, flex: "0 0 36px", borderRadius: "50%" }}
-        >
-          {node.authorInitials}
-        </span>
+        <PublicUserAvatar name={node.authorName} avatarUrl={node.authorAvatarUrl} />
         <div className="min-w-0 flex-1">
           <div className="relative flex min-h-9 flex-wrap items-center gap-x-3 gap-y-1 pr-11 text-xs">
             <span className="font-semibold text-slate-900 dark:text-white">{node.authorName}</span>

@@ -1,6 +1,7 @@
 import { parcelCargoLabels, parcelPaymentLabels } from "@/lib/travel/parcel-details";
-import { ArrowRight, CalendarDays, CarFront, Weight, CheckCircle2, ChevronRight, Clock3, Package, Plane, Route, UserRound, UsersRound, Star } from "lucide-react";
+import { ArrowRight, CalendarDays, CarFront, Weight, CheckCircle2, ChevronRight, Clock3, Package, Plane, Route, Star } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import PublicUserAvatar from "@/components/account/PublicUserAvatar";
 import type { TravelListing } from "@/types/travel";
 import type { TravelAuthorProfile } from "@/lib/travel/travel-author-profiles";
 import { companionHelpLabels } from "@/lib/travel/companion-details";
@@ -52,7 +53,7 @@ export default function TravelListingCard({ listing, locale, author }: { listing
             {(description || (parcel && listing.parcelDetails)) && <p className="line-clamp-2 break-words text-xs leading-5 text-slate-500 dark:text-slate-400">{parcel ? [listing.parcelDetails, description].filter(Boolean).filter((v,i,a) => a.indexOf(v) === i).join(" · ") : description}</p>}
           </div>
           <div className="flex min-w-0 items-center gap-2.5 border-t border-slate-100 pt-3 dark:border-slate-800 sm:col-start-2 lg:col-auto lg:border-0 lg:pt-0">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-slate-100 ring-2 ring-emerald-400/60 shadow-[0_3px_12px_rgba(5,150,105,0.18)] dark:border-slate-900 dark:ring-emerald-400/50 text-slate-500 dark:bg-slate-800 dark:text-slate-300">{author?.avatarUrl ? <img src={author.avatarUrl} alt="" loading="lazy" className="h-full w-full object-cover" referrerPolicy="no-referrer" /> : <UserRound size={19} aria-hidden="true"/>}</div>
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-slate-100 ring-2 ring-emerald-400/60 shadow-[0_3px_12px_rgba(5,150,105,0.18)] dark:border-slate-900 dark:ring-emerald-400/50 text-slate-500 dark:bg-slate-800 dark:text-slate-300"><PublicUserAvatar name={author?.displayName} avatarUrl={author?.avatarUrl} /></div>
             <div className="min-w-0"><p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">{name}</p>{author?.ratingAverage !== null && author?.ratingAverage !== undefined && (author.ratingCount ?? 0) > 0 ? <p className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400"><Star size={12} className="text-amber-500" fill="currentColor" aria-hidden="true"/>{author.ratingAverage.toFixed(1)} ({author.ratingCount})</p> : <p className="text-xs text-slate-500 dark:text-slate-400">{de ? "Noch nicht bewertet" : "Hali baholanmagan"}</p>}</div>
             <span className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-full border border-emerald-200 px-3 py-1.5 text-xs font-semibold transition-colors group-hover:bg-emerald-50 text-emerald-800 dark:border-emerald-800 dark:text-emerald-300 lg:hidden">{de ? "Details" : "Batafsil"}<ChevronRight size={14} aria-hidden="true"/></span>
           </div>
