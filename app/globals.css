@@ -389,6 +389,19 @@ hr {
   background-color: var(--text-soft);
 }
 
+
+/* Ultrawide displays: preserve existing layouts below 2560px. */
+@media (min-width: 2560px) {
+  :root {
+    --container-width: 137.5rem;
+  }
+
+  .max-w-7xl,
+  .max-w-6xl {
+    max-width: 137.5rem;
+  }
+}
+
 /* =========================================================
    GLOBAL LAYOUT
    ========================================================= */

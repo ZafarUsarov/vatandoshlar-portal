@@ -135,7 +135,7 @@ export default async function PopularCategoriesSection() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(16,185,129,0.10),transparent_28%),radial-gradient(circle_at_88%_20%,rgba(59,130,246,0.10),transparent_26%)]"
       />
 
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl min-[1921px]:max-w-[1680px] min-[2560px]:max-w-[2200px] px-6 lg:px-8">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700 shadow-sm backdrop-blur dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
             <span className="size-2 rounded-full bg-emerald-500" />

@@ -66,16 +66,16 @@ export default async function MarketHomeEntry() {
   };
 
   const cardClass =
-    "group flex min-h-[165px] flex-col items-center rounded-2xl border border-slate-200 bg-slate-50/60 px-3 py-3 text-center transition-colors dark:border-slate-800 dark:bg-slate-900 sm:min-h-[175px] sm:px-5";
+    "group flex min-h-[165px] flex-col items-center rounded-2xl border border-slate-200 bg-slate-50/60 px-3 py-3 text-center transition-colors dark:border-slate-800 dark:bg-slate-900 sm:min-h-[175px] sm:px-5 min-[2560px]:min-h-[210px] min-[2560px]:px-8 min-[2560px]:py-6";
 
   return (
     <section
       aria-labelledby="ecosystem-services-title"
-      className="mx-auto max-w-7xl px-5 pt-8 pb-3 sm:px-8 sm:pt-10 sm:pb-4"
+      className="mx-auto max-w-7xl min-[1921px]:max-w-[1680px] min-[2560px]:max-w-[2200px] px-5 pt-8 pb-3 sm:px-8 sm:pt-10 sm:pb-4"
     >
       <h2
         id="ecosystem-services-title"
-        className="mb-5 text-2xl font-bold tracking-tight sm:text-3xl"
+        className="mb-5 text-2xl font-bold tracking-tight sm:text-3xl min-[2560px]:text-4xl"
       >
         {de ? "Unsere Angebote" : "Vatandoshlar xizmatlari"}
       </h2>

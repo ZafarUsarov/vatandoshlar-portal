@@ -239,12 +239,12 @@ export default function SearchSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto max-w-4xl min-[2560px]:max-w-[1400px] text-center">
           <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-bold uppercase tracking-[0.16em] text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
             {t("badge")}
           </span>
 
-          <h2 className="mt-5 text-balance text-3xl font-extrabold tracking-tight text-slate-950 sm:mt-6 sm:text-5xl dark:text-white">
+          <h2 className="mt-5 text-balance text-3xl font-extrabold tracking-tight text-slate-950 sm:mt-6 sm:text-5xl min-[2560px]:text-6xl dark:text-white">
             {t("title")}
           </h2>
 
@@ -255,7 +255,7 @@ export default function SearchSection() {
           </p>
         </div>
 
-        <div className="mx-auto mt-8 max-w-5xl sm:mt-10 lg:mt-12">
+        <div className="mx-auto mt-8 max-w-5xl min-[2560px]:max-w-[1800px] sm:mt-10 lg:mt-12">
           <div className="relative overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white p-3 shadow-xl shadow-slate-950/5 sm:rounded-[2rem] sm:p-6 sm:shadow-2xl dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/20">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-500" />
 

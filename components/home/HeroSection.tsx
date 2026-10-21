@@ -220,21 +220,21 @@ export default async function HeroSection() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:56px_56px]" />
       </div>
 
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:py-18 lg:px-8 lg:py-22 xl:grid-cols-[1.02fr_0.98fr] xl:items-center xl:gap-14 xl:py-28 2xl:gap-16">
+      <div className="mx-auto grid max-w-7xl min-[1921px]:max-w-[1680px] min-[2560px]:max-w-[2200px] gap-10 px-6 py-14 sm:py-18 lg:px-8 lg:py-22 xl:grid-cols-[1.02fr_0.98fr] xl:items-center xl:gap-14 xl:py-28 2xl:gap-16">
         <div className="max-w-3xl xl:max-w-none">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-xs font-semibold text-emerald-300 backdrop-blur sm:text-sm">
             <span className="h-2 w-2 rounded-full bg-emerald-400" />
             {t("hero.badge")}
           </div>
 
-          <h1 className="mt-5 max-w-4xl text-balance text-4xl font-extrabold tracking-tight leading-[1.03] sm:text-5xl md:text-6xl xl:text-[3.7rem] 2xl:text-7xl">
+          <h1 className="mt-5 max-w-4xl text-balance text-4xl font-extrabold tracking-tight leading-[1.03] sm:text-5xl md:text-6xl xl:text-[3.7rem] 2xl:text-7xl min-[2560px]:text-[5.5rem]">
             {t("hero.title")}
             <span className="block bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
               {t("hero.highlight")}
             </span>
           </h1>
 
-          <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-slate-300 sm:text-lg sm:leading-8 xl:text-xl">
+          <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-slate-300 sm:text-lg sm:leading-8 xl:text-xl min-[2560px]:text-2xl">
             {t("hero.description")}
           </p>
 

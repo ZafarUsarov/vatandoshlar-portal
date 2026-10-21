@@ -1224,7 +1224,7 @@ export default function Header() {
 
           className={`
 
-            mx-auto flex w-full max-w-[1440px]
+            mx-auto flex w-full max-w-[1440px] min-[1921px]:max-w-[1680px] min-[2560px]:max-w-[2200px]
 
             items-center gap-3 px-4
 
