@@ -12,6 +12,7 @@ import MarketDetailIcon from "@/components/market/MarketDetailIcon";
 import PublicUserAvatar from "@/components/account/PublicUserAvatar";
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
+import { getCurrentPublicUser } from "@/lib/auth/user";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -59,6 +60,8 @@ export default async function MarketDetailPage({ params, searchParams }: Props) 
     getRelatedMarketListings(item.id, item.category),
     getMarketListingViewCount(item.id),
   ]);
+  const currentUser = await getCurrentPublicUser();
+  const isOwnListing = Boolean(seller && currentUser?.user.id === seller.userId);
   const sellerRating = seller ? await getMarketSellerRatingSummary(seller.userId) : null;
   const dateFormat = new Intl.DateTimeFormat(locale === "de" ? "de-DE" : "uz-UZ", { day: "numeric", month: "long", year: "numeric" });
   const published = dateFormat.format(new Date(item.publishedAt));
@@ -115,7 +118,13 @@ export default async function MarketDetailPage({ params, searchParams }: Props) 
             {joined && <p className="mt-3 flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300"><MarketDetailIcon name="calendar" className="h-4 w-4 text-emerald-700" />{locale === "de" ? "Mitglied seit" : "Ro‘yxatdan o‘tgan"}: {joined}</p>}
             <p className="mt-3 flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300"><MarketDetailIcon name="pin" className="h-4 w-4 text-emerald-700" />{formatMarketLocation(item.cityName, item.stateName)}</p>
           </section>
-          <div className="[&>section]:mt-0"><MarketContactLinks contact={item} title={item.title} locale={locale} /></div>
+          {isOwnListing ? (
+            <Link href={`/market/${item.id}/edit`} className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-emerald-700 px-5 py-3 font-semibold text-white hover:bg-emerald-800">
+              {locale === "de" ? "Anzeige bearbeiten" : "E’lonni tahrirlash"}
+            </Link>
+          ) : (
+            <div className="[&>section]:mt-0"><MarketContactLinks contact={item} title={item.title} locale={locale} messaging={seller ? { listingId: item.id } : undefined} /></div>
+          )}
           <MarketShareButton locale={locale} title={item.title} />
           <MarketReportForm locale={locale} slug={item.slug} listingId={item.id} />
         </aside>

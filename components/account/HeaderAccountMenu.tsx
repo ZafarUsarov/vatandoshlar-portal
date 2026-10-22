@@ -34,6 +34,7 @@ export default function HeaderAccountMenu({
 }: Props) {
   const [account, setAccount] = useState<AccountInfo | null>(null);
   const [open, setOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [confirming, setConfirming] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -63,6 +64,52 @@ export default function HeaderAccountMenu({
     void load();
     return () => controller.abort();
   }, [pathname]);
+
+  useEffect(() => {
+    let disposed = false;
+    let inFlight = false;
+    const controller = new AbortController();
+
+    async function refreshUnread() {
+      if (disposed || inFlight || document.visibilityState !== "visible") return;
+      inFlight = true;
+      try {
+        const response = await fetch("/api/messages/unread-count", {
+          cache: "no-store",
+          credentials: "same-origin",
+          signal: controller.signal,
+        });
+        if (response.status === 401) {
+          if (!disposed) setUnreadCount(0);
+          return;
+        }
+        if (!response.ok) return;
+        const data: { unreadCount?: unknown } = await response.json();
+        if (!disposed && typeof data.unreadCount === "number" && Number.isFinite(data.unreadCount)) {
+          setUnreadCount(Math.max(0, data.unreadCount));
+        }
+      } catch {
+        // Keep the last known count on transient network errors.
+      } finally {
+        inFlight = false;
+      }
+    }
+
+    function onVisible() {
+      if (document.visibilityState === "visible") void refreshUnread();
+    }
+    void refreshUnread();
+    const interval = window.setInterval(() => void refreshUnread(), 5000);
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("focus", onVisible);
+    return () => {
+      disposed = true;
+      controller.abort();
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("focus", onVisible);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -141,7 +188,20 @@ export default function HeaderAccountMenu({
             compact ? "size-10" : "size-11"
           }`}
         >
-          {avatar}
+          <span className="relative inline-flex size-10 shrink-0">
+            {avatar}
+            {unreadCount > 0 && (
+              <span
+                aria-hidden="true"
+                className="absolute -right-0.5 -top-0.5 size-3 rounded-full border-2 border-white bg-emerald-500 dark:border-slate-950"
+              />
+            )}
+          </span>
+          {unreadCount > 0 && (
+            <span className="sr-only">
+              {de ? `${unreadCount} ungelesene Nachrichten` : `${unreadCount} ta o‘qilmagan xabar`}
+            </span>
+          )}
         </button>
 
         {open && (
@@ -173,7 +233,15 @@ export default function HeaderAccountMenu({
               </Link>
               <Link href="/account/messages" onClick={closeAndNavigate} className={itemClass}>
                 <MessageCircle size={18} aria-hidden="true" />
-                {de ? "Nachrichten" : "Xabarlar"}
+                <span className="flex-1">{de ? "Nachrichten" : "Xabarlar"}</span>
+                {unreadCount > 0 && (
+                  <span
+                    aria-label={de ? `${unreadCount} ungelesene Nachrichten` : `${unreadCount} ta o‘qilmagan xabar`}
+                    className="inline-flex min-h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 px-1.5 text-[11px] font-bold leading-none text-white dark:bg-emerald-500 dark:text-slate-950"
+                  >
+                    {unreadCount >= 100 ? "99+" : unreadCount}
+                  </span>
+                )}
               </Link>
               <Link href="/account/profile" onClick={closeAndNavigate} className={itemClass}>
                 <Pencil size={18} aria-hidden="true" />

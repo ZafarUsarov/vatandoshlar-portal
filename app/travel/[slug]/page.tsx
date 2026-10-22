@@ -4,6 +4,7 @@ import { companionHelpLabels, companionRelationshipLabels } from "@/lib/travel/c
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
+import { getCurrentPublicUser } from "@/lib/auth/user";
 import { CalendarDays, Clock3, Armchair, CarFront, UsersRound, Package, ArrowLeft, Wallet, Plane, MapPin, CheckCircle2, ShieldCheck, UserRound, Building2, Hash, Route, ArrowRight, Weight, Ruler, Handshake, FileText, CreditCard } from "lucide-react";
 import Header from "@/components/Header";
 import PublicUserAvatar from "@/components/account/PublicUserAvatar";
@@ -14,6 +15,7 @@ import { travelKinds, travelModes } from "@/lib/travel/travel-labels";
 import TravelRouteSummary from "@/components/travel/TravelRouteSummary";
 import { readableTravelDescription } from "@/lib/travel/travel-description";
 import CompanionShareButton from "@/components/travel/CompanionShareButton";
+import StartConversationButton from "@/components/messaging/StartConversationButton";
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Safarlar | E’lon" };
 export default async function TravelDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -34,6 +36,8 @@ export default async function TravelDetailPage({ params }: { params: Promise<{ s
       </main><Footer /></div>;
   }
   const de = locale === "de";
+  const currentUser = await getCurrentPublicUser();
+  const isOwnListing = currentUser?.user.id === item.authorUserId;
   const date = new Date(item.departureAt);
   const formattedDate = date.toLocaleDateString(de ? "de-DE" : "uz-UZ", { timeZone: item.departureTimezone, dateStyle: "long" });
   const formattedTime = date.toLocaleTimeString(de ? "de-DE" : "uz-UZ", { timeZone: item.departureTimezone, hour: "2-digit", minute: "2-digit" });
@@ -73,7 +77,11 @@ export default async function TravelDetailPage({ params }: { params: Promise<{ s
           {notes.length > 0 && <section className={card}><h2 className="flex items-center gap-2 text-base font-bold sm:text-lg"><FileText size={19} className="text-emerald-700"/>{de ? "Weitere Angaben" : "Qo‘shimcha ma’lumot"}</h2><div className="mt-3 space-y-2">{notes.map((note,i) => <p key={i} className="whitespace-pre-wrap break-words text-sm leading-7 text-slate-700 dark:text-slate-300">{note}</p>)}</div></section>}
           <section className="rounded-3xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-900 dark:bg-emerald-950/30 sm:p-5"><h2 className="flex items-center gap-2 text-sm font-bold text-emerald-900 dark:text-emerald-200"><ShieldCheck size={18}/>{de ? "Sicherheitshinweise" : "Xavfsizlik bo‘yicha tavsiyalar"}</h2><p className="mt-2 text-xs leading-6 text-emerald-900/80 dark:text-emerald-200/80">{de ? "Versenden Sie keine verbotenen Gegenstände. Veröffentlichen Sie keine Passnummern oder persönlichen Dokumente. Vereinbaren Sie die Übergabe nur mit vertrauenswürdigen Personen." : "Taqiqlangan buyumlarni jo‘natmang. Pasport raqamlari va shaxsiy hujjatlarni ommaga joylamang. Topshirish shartlarini ishonchli odamlar bilan kelishing."}</p></section>
         </div>
-        <aside className="min-w-0 space-y-4 lg:sticky lg:top-24"><section className={card}><h2 className="text-base font-bold">{de ? "Inserent" : "E’lon beruvchi"}</h2><div className="mt-4 flex min-w-0 items-center gap-3"><div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-slate-100 ring-2 ring-emerald-400/60 shadow-[0_3px_12px_rgba(5,150,105,0.18)] dark:border-slate-900 dark:ring-emerald-400/50 text-slate-500 dark:bg-slate-800"><PublicUserAvatar name={author?.displayName} avatarUrl={author?.avatarUrl} size="md" /></div><div className="min-w-0"><p className="truncate text-sm font-bold">{author?.displayName || (de ? "Mitglied" : "Foydalanuvchi")}</p><p className="mt-1 text-xs text-slate-500">{author?.ratingAverage != null && author.ratingCount > 0 ? `${author.ratingAverage.toFixed(1)} (${author.ratingCount})` : (de ? "Noch nicht bewertet" : "Hali baholanmagan")}</p></div></div><div className="mt-4 rounded-2xl bg-emerald-50 px-4 py-3 dark:bg-emerald-950"><p className="text-xs text-emerald-800 dark:text-emerald-300">{de ? "Preis" : "Narx"}</p><p className="mt-1 text-xl font-extrabold text-emerald-800 dark:text-emerald-300">{cost}</p>{parcel && <p className="mt-1 text-xs text-emerald-800/75 dark:text-emerald-300/75">{parcelPaymentLabels[parcel.paymentType][locale]}</p>}</div><p className="mt-4 text-xs leading-5 text-slate-500 dark:text-slate-400">{de ? "Direkte Kontaktaufnahme ist derzeit nicht verfügbar." : "Bevosita bog‘lanish hozircha mavjud emas."}</p></section><section className={card}><h2 className="text-sm font-bold">{de ? "Anzeige teilen" : "E’lonni ulashish"}</h2><div className="mt-3"><CompanionShareButton de={de} title={`${purpose} — ${item.originCity} → ${item.destinationCity}`}/></div></section></aside>
+        <aside className="min-w-0 space-y-4 lg:sticky lg:top-24"><section className={card}><h2 className="text-base font-bold">{de ? "Inserent" : "E’lon beruvchi"}</h2><div className="mt-4 flex min-w-0 items-center gap-3"><div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-slate-100 ring-2 ring-emerald-400/60 shadow-[0_3px_12px_rgba(5,150,105,0.18)] dark:border-slate-900 dark:ring-emerald-400/50 text-slate-500 dark:bg-slate-800"><PublicUserAvatar name={author?.displayName} avatarUrl={author?.avatarUrl} size="md" /></div><div className="min-w-0"><p className="truncate text-sm font-bold">{author?.displayName || (de ? "Mitglied" : "Foydalanuvchi")}</p><p className="mt-1 text-xs text-slate-500">{author?.ratingAverage != null && author.ratingCount > 0 ? `${author.ratingAverage.toFixed(1)} (${author.ratingCount})` : (de ? "Noch nicht bewertet" : "Hali baholanmagan")}</p></div></div><div className="mt-4 rounded-2xl bg-emerald-50 px-4 py-3 dark:bg-emerald-950"><p className="text-xs text-emerald-800 dark:text-emerald-300">{de ? "Preis" : "Narx"}</p><p className="mt-1 text-xl font-extrabold text-emerald-800 dark:text-emerald-300">{cost}</p>{parcel && <p className="mt-1 text-xs text-emerald-800/75 dark:text-emerald-300/75">{parcelPaymentLabels[parcel.paymentType][locale]}</p>}</div><div className="mt-4">{isOwnListing ? (
+                  <Link href={`/travel/mine/${item.id}/edit`} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-emerald-700 px-5 py-3 font-semibold text-white hover:bg-emerald-800">
+                    {de ? "Anzeige bearbeiten" : "E’lonni tahrirlash"}
+                  </Link>
+                ) : <StartConversationButton kind="travel" listingId={item.id} de={de} />}</div></section><section className={card}><h2 className="text-sm font-bold">{de ? "Anzeige teilen" : "E’lonni ulashish"}</h2><div className="mt-3"><CompanionShareButton de={de} title={`${purpose} — ${item.originCity} → ${item.destinationCity}`}/></div></section></aside>
       </div>
     </main><Footer/></div>;
   }
@@ -121,6 +129,11 @@ export default async function TravelDetailPage({ params }: { params: Promise<{ s
               <div className="flex flex-wrap items-center gap-3"><h2 className="text-base font-bold">{de ? "Anzeige" : "E’lon"}</h2>{money && <span className="inline-flex items-baseline gap-1.5"><span className="text-sm font-medium text-slate-700 dark:text-slate-300">{de ? "Preis:" : "Narx:"}</span><span className="text-base font-bold text-emerald-700 dark:text-emerald-400">{money}</span></span>}</div>
               {item.publishedAt && <p className="mt-2 flex items-center gap-2 text-xs text-slate-500"><CalendarDays size={15}/>{de ? "Veröffentlicht:" : "E’lon sanasi:"} {datum(item.publishedAt)}</p>}
               <div className="mt-4 border-t border-slate-100 pt-4 dark:border-slate-800"><h3 className="flex items-center gap-2 text-sm font-semibold"><UserRound size={18}/>{de ? "Inserent" : "E’lon beruvchi"}</h3><div className="mt-3 flex min-w-0 items-center gap-3"><PublicUserAvatar name={companionAuthor?.displayName} avatarUrl={companionAuthor?.avatarUrl} size="md" /><span className="min-w-0 truncate text-sm font-semibold">{companionAuthor?.displayName || (de ? "Mitglied" : "Foydalanuvchi")}</span></div></div>
+              <div className="mt-4">{isOwnListing ? (
+                  <Link href={`/travel/mine/${item.id}/edit`} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-emerald-700 px-5 py-3 font-semibold text-white hover:bg-emerald-800">
+                    {de ? "Anzeige bearbeiten" : "E’lonni tahrirlash"}
+                  </Link>
+                ) : <StartConversationButton kind="travel" listingId={item.id} de={de} />}</div>
               <div className="mt-4 border-t border-slate-100 pt-3 dark:border-slate-800"><CompanionShareButton de={de} title={`${isRequest ? (de ? "Begleitung gesucht" : "Hamroh izlayapman") : (de ? "Begleitung angeboten" : "Hamroh bo‘la olaman")} — ${item.originCity} → ${item.destinationCity}`} /></div>
             </section>
             <section className="rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-800 dark:bg-slate-900"><h2 className="flex items-center gap-2 text-sm font-semibold"><ShieldCheck size={18} className="text-amber-600"/>{de ? "Sicherheitshinweis" : "Xavfsizlik tavsiyasi"}</h2><p className="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-300">{de ? "Teilen Sie keine vertraulichen Reisedokumente öffentlich. Klären Sie Details vor der Reise." : "Maxfiy sayohat hujjatlarini ommaga ulashmang. Safardan oldin barcha tafsilotlarni aniqlashtiring."}</p></section>
@@ -158,7 +171,12 @@ export default async function TravelDetailPage({ params }: { params: Promise<{ s
       {item.parcelDetails && <p className="mb-3 whitespace-pre-wrap break-words text-sm leading-7 text-slate-700 dark:text-slate-200">{item.parcelDetails}</p>}
       {description && <p className="whitespace-pre-wrap break-words text-sm leading-7 text-slate-700 dark:text-slate-300">{description}</p>}
     </section>}
-    <p className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-xs leading-6 text-slate-600 dark:bg-slate-900 dark:text-slate-300">{de ? "Direkte Kontaktaufnahme ist noch nicht verfügbar. Teilen Sie keine sensiblen Reisedokumente öffentlich." : "Muallif bilan bevosita bog‘lanish hozircha mavjud emas. Maxfiy sayohat hujjatlarini ommaga ulashmang."}</p>
+    <div className="mt-5">{isOwnListing ? (
+                  <Link href={`/travel/mine/${item.id}/edit`} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-emerald-700 px-5 py-3 font-semibold text-white hover:bg-emerald-800">
+                    {de ? "Anzeige bearbeiten" : "E’lonni tahrirlash"}
+                  </Link>
+                ) : <StartConversationButton kind="travel" listingId={item.id} de={de} />}</div>
+    <p className="mt-3 text-xs text-slate-600 dark:text-slate-300">{de ? "Teilen Sie keine sensiblen Reisedokumente öffentlich." : "Maxfiy sayohat hujjatlarini ommaga ulashmang."}</p>
     {item.imageKey && <img src={`/api/travel/images/${item.id}`} alt={`${item.originCity} → ${item.destinationCity}`} className="mt-5 max-h-[460px] w-full rounded-2xl object-cover" />}
   </main><Footer /></div>;
 }

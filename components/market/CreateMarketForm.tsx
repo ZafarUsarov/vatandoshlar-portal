@@ -17,6 +17,36 @@ const initialState: CreateMarketState = {
   values: { category: "items", listingType: "", locationId: "", title: "", description: "", priceAmount: "", priceType: "fixed", contentLanguage: "uz", telegram: "", whatsapp: "", phone: "", email: "" },
   revision: 0,
 };
+const MARKET_ORIGINAL_MAX_BYTES = 30 * 1024 * 1024;
+const MARKET_ALLOWED_TYPES = new Set([
+  "image/jpeg", "image/png", "image/webp", "image/heic", "image/heif",
+]);
+
+async function optimizeMarketUpload(file: File): Promise<Blob> {
+  const response = await fetch("/api/market/images/optimize", {
+    method: "POST",
+    headers: { "Content-Type": file.type || "application/octet-stream" },
+    body: file,
+  });
+
+  if (!response.ok) {
+    const result = await response.json().catch(() => null) as { error?: string } | null;
+    throw new Error(`Image optimization failed: ${result?.error ?? response.status}`);
+  }
+
+  if (response.headers.get("content-type") !== "image/webp") {
+    throw new Error("Invalid optimized image format");
+  }
+
+  const optimized = await response.blob();
+
+  if (optimized.size < 1 || optimized.size > 5 * 1024 * 1024) {
+    throw new Error("Invalid optimized image size");
+  }
+
+  return optimized;
+}
+
 const control = "min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 focus-visible:outline-2 focus-visible:outline-emerald-600 dark:border-slate-700 dark:bg-slate-900 dark:text-white";
 
 export default function CreateMarketForm({ locale }: Props) {
@@ -43,11 +73,12 @@ export default function CreateMarketForm({ locale }: Props) {
           if (!active) return;
           setProgress(`${i + 1}/${files.length}`);
           const endpoint = `/api/market/listings/${id}/images`;
-          const reserved = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ contentType: file.type, byteSize: file.size }) });
+          const optimized = await optimizeMarketUpload(file);
+            const reserved = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ contentType: "image/webp", byteSize: optimized.size }) });
           if (!reserved.ok) throw new Error(`Image reservation failed (${reserved.status})`);
           const { imageId } = await reserved.json() as { imageId: string };
           try {
-            const uploaded = await fetch(`${endpoint}/${imageId}/upload`, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
+            const uploaded = await fetch(`${endpoint}/${imageId}/upload`, { method: "PUT", headers: { "Content-Type": "image/webp" }, body: optimized });
             if (!uploaded.ok) throw new Error(`Image upload failed (${uploaded.status})`);
             const confirmed = await fetch(`${endpoint}/${imageId}/confirm`, { method: "POST" });
             if (!confirmed.ok) throw new Error(`Image confirmation failed (${confirmed.status})`);
@@ -85,15 +116,15 @@ export default function CreateMarketForm({ locale }: Props) {
     <fieldset id="market-price-type" className="space-y-2"><legend className="font-semibold">{locale === "de" ? "Preisart" : "Narx turi"}</legend><div className="flex flex-wrap gap-4"><label><input type="radio" name="priceType" value="fixed" defaultChecked={state.values.priceType !== "negotiable"} /> {locale === "de" ? "Festpreis" : "Qat’iy narx (Festpreis)"}</label><label><input type="radio" name="priceType" value="negotiable" defaultChecked={state.values.priceType === "negotiable"} /> {locale === "de" ? "VB (verhandelbar)" : "Kelishiladi"}</label></div></fieldset>
     <MarketContactFields locale={locale} values={state.values} disabled={pending} />
     <div><label htmlFor="market-new-images" className="mb-2 block font-semibold">{locale === "de" ? "Bilder" : "Rasmlar"}</label>
-      <input id="market-new-images" type="file" multiple accept="image/jpeg,image/png,image/webp" disabled={pending || working || Boolean(state.createdId)} onChange={event => {
+      <input id="market-new-images" type="file" multiple accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif" disabled={pending || working || Boolean(state.createdId)} onChange={event => {
         const next = Array.from(event.target.files ?? []);
-        if (next.length > 5 || next.some(file => !["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size < 1 || file.size > 5 * 1024 * 1024)) {
-          setUploadError(locale === "de" ? "Maximal 5 Bilder, JPEG/PNG/WebP, je 5 MB." : "5 tagacha JPG/PNG/WebP rasm, har biri 5 MB gacha.");
+        if (next.length > 5 || next.some(file => !(MARKET_ALLOWED_TYPES.has(file.type) || /\.(heic|heif)$/i.test(file.name)) || file.size < 1 || file.size > MARKET_ORIGINAL_MAX_BYTES)) {
+          setUploadError(locale === "de" ? "Maximal 5 Bilder, JPEG/PNG/WebP/HEIC, je 30 MiB." : "5 tagacha JPG/PNG/WebP/HEIC rasm, har biri 30 MiB gacha.");
           event.target.value = ""; return;
         }
         setUploadError(""); setFiles(next); setPreviews(next.map(file => URL.createObjectURL(file)));
       }} className={control} />
-      <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">JPG, PNG, WebP · 5 {locale === "de" ? "Bilder" : "tagacha rasm"} · 5 MB</p>
+      <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">JPG, PNG, WebP, HEIC · 5 {locale === "de" ? "Bilder" : "tagacha rasm"} · 30 MiB</p>
     </div>
     {previews.length > 0 && <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">{previews.map((src, i) => <div key={src} className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700"><Image src={src} alt={`${locale === "de" ? "Bild" : "Rasm"} ${i + 1}`} width={160} height={160} unoptimized className="aspect-square w-full object-cover" /><p className="truncate px-2 py-1 text-xs">{files[i]?.name}</p></div>)}</div>}
     {progress && <p role="status">{locale === "de" ? "Bilder werden hochgeladen" : "Rasmlar yuklanmoqda"}: {progress}</p>}
