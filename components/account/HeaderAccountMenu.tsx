@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { signOut } from "next-auth/react";
-import { LogOut, MessageCircle, Pencil, ShoppingBag } from "lucide-react";
+import { LogOut, MapPin, MessageCircle, Pencil, ShoppingBag } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 
 type AccountInfo = {
@@ -242,6 +242,10 @@ export default function HeaderAccountMenu({
                     {unreadCount >= 100 ? "99+" : unreadCount}
                   </span>
                 )}
+              </Link>
+              <Link href="/my-city" onClick={closeAndNavigate} className={itemClass}>
+                <MapPin size={18} aria-hidden="true" />
+                {de ? "Meine Stadt" : "Mening shahrim"}
               </Link>
               <Link href="/account/profile" onClick={closeAndNavigate} className={itemClass}>
                 <Pencil size={18} aria-hidden="true" />
