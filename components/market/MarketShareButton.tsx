@@ -28,7 +28,10 @@ export default function MarketShareButton({ locale, title }: Props) {
         rel={channel.href.startsWith("https") ? "noopener noreferrer" : undefined}
         className="flex min-w-0 min-h-[68px] flex-col items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-1.5 py-2 text-center font-medium shadow-sm hover:border-emerald-400 dark:border-slate-700 dark:bg-slate-900"
       >
-        <Image src={channel.icon} alt="" width={20} height={20} className="h-5 w-5 object-contain" />
+        {channel.label === "Email"
+          ? <MarketDetailIcon name="mail" className="h-5 w-5 text-sky-600" />
+          : <Image src={channel.icon} alt="" width={20} height={20} className="h-5 w-5 object-contain" />
+        }
         <span className="max-w-full truncate text-[11px] leading-tight">{channel.label}</span>
       </a>)}
       <button type="button" onClick={copy} className="col-span-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-emerald-600 px-3 text-center font-semibold text-emerald-700 dark:text-emerald-300"><MarketDetailIcon name="link" className="h-4 w-4 shrink-0" /> {copied ? (locale === "de" ? "Link kopiert" : "Havola nusxalandi") : (locale === "de" ? "Link kopieren" : "Havolani nusxalash")}</button>
