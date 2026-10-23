@@ -1,3 +1,4 @@
+import MyCityMapLoader from "./MyCityMapLoader";
 import type {
   ReactNode,
 } from "react";
@@ -5,6 +6,15 @@ import type {
 import {
   Link,
 } from "@/i18n/navigation";
+
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  CalendarDays,
+  Map,
+  MapPin,
+  UsersRound,
+} from "lucide-react";
 
 import MyCityNavigation from "@/components/my-city/MyCityNavigation";
 
@@ -20,29 +30,31 @@ type SectionTone = "mint" | "cyan" | "violet";
 
 const sectionToneClasses: Record<SectionTone, { shell: string; badge: string; empty: string }> = {
   mint: {
-    shell: "border-emerald-200/70 bg-gradient-to-br from-emerald-50/85 via-white/90 to-teal-50/65 dark:border-emerald-900/60 dark:from-emerald-950/25 dark:via-slate-900/90 dark:to-teal-950/15",
+    shell: "border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900",
     badge: "border-emerald-200/80 bg-emerald-50/90 text-emerald-700 dark:border-emerald-900/70 dark:bg-emerald-950/40 dark:text-emerald-300",
     empty: "border-emerald-200/80 bg-emerald-50/55 dark:border-emerald-900/60 dark:bg-emerald-950/20",
   },
   cyan: {
-    shell: "border-cyan-200/70 bg-gradient-to-br from-cyan-50/85 via-white/90 to-sky-50/60 dark:border-cyan-900/60 dark:from-cyan-950/25 dark:via-slate-900/90 dark:to-sky-950/15",
+    shell: "border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900",
     badge: "border-cyan-200/80 bg-cyan-50/90 text-cyan-700 dark:border-cyan-900/70 dark:bg-cyan-950/40 dark:text-cyan-300",
     empty: "border-cyan-200/80 bg-cyan-50/55 dark:border-cyan-900/60 dark:bg-cyan-950/20",
   },
   violet: {
-    shell: "border-violet-200/70 bg-gradient-to-br from-violet-50/80 via-white/90 to-fuchsia-50/45 dark:border-violet-900/60 dark:from-violet-950/20 dark:via-slate-900/90 dark:to-fuchsia-950/10",
+    shell: "border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900",
     badge: "border-violet-200/80 bg-violet-50/90 text-violet-700 dark:border-violet-900/70 dark:bg-violet-950/40 dark:text-violet-300",
     empty: "border-violet-200/80 bg-violet-50/50 dark:border-violet-900/60 dark:bg-violet-950/20",
   },
 };
 
 function SectionShell({
+  id,
   title,
   description,
   badge,
   tone = "mint",
   children,
 }: Readonly<{
+  id?: string;
   title: string;
   description: string;
   badge: string;
@@ -52,10 +64,10 @@ function SectionShell({
   const classes = sectionToneClasses[tone];
 
   return (
-    <section className={`rounded-[2rem] border p-5 shadow-lg shadow-slate-900/[0.045] backdrop-blur-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-xl motion-reduce:transform-none motion-reduce:transition-none sm:p-6 ${classes.shell}`}>
+    <section id={id} className={`scroll-mt-28 rounded-2xl border p-5 shadow-sm shadow-slate-900/[0.035] sm:p-6 ${classes.shell}`}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 className="text-xl font-black tracking-tight text-slate-950 dark:text-white">
+          <h2 className="text-lg font-bold tracking-tight text-slate-950 dark:text-white">
             {title}
           </h2>
 
@@ -314,11 +326,7 @@ export default function MyCityDashboard({
 
   if (!location) {
     return (
-      <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.11),_transparent_34%),radial-gradient(circle_at_top_right,_rgba(6,182,212,0.09),_transparent_30%),linear-gradient(to_bottom,_#f8fafc,_#ffffff_45%,_#f8fafc)] px-4 py-12 dark:bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.10),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(6,182,212,0.08),_transparent_28%),linear-gradient(to_bottom,_#020617,_#0f172a_48%,_#020617)] sm:px-6">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-[-12rem] h-[30rem] w-[48rem] -translate-x-1/2 rounded-full bg-emerald-200/30 blur-3xl dark:bg-emerald-500/10" />
-          <div className="absolute -right-24 top-1/3 h-72 w-72 rounded-full bg-cyan-200/20 blur-3xl dark:bg-cyan-500/10" />
-        </div>
+      <main className="min-h-screen bg-[#F8FAFC] px-4 py-8 dark:bg-slate-950 sm:px-6 sm:py-10">
         <div className="relative mx-auto max-w-3xl">
           <div className="mb-4 sm:mb-5">
             <MyCityNavigation locale={locale} />
@@ -349,63 +357,184 @@ export default function MyCityDashboard({
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.12),_transparent_32%),radial-gradient(circle_at_top_right,_rgba(6,182,212,0.10),_transparent_30%),radial-gradient(circle_at_55%_62%,_rgba(139,92,246,0.055),_transparent_34%),linear-gradient(to_bottom,_#f8fafc,_#ffffff_42%,_#f8fafc)] px-4 py-8 dark:bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.10),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(6,182,212,0.08),_transparent_28%),radial-gradient(circle_at_55%_62%,_rgba(139,92,246,0.05),_transparent_32%),linear-gradient(to_bottom,_#020617,_#0f172a_45%,_#020617)] sm:px-6 sm:py-10">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-[-14rem] h-[34rem] w-[56rem] -translate-x-1/2 rounded-full bg-emerald-200/30 blur-3xl dark:bg-emerald-500/10" />
-        <div className="absolute -left-32 top-[38rem] h-80 w-80 rounded-full bg-teal-200/20 blur-3xl dark:bg-teal-500/[0.08]" />
-        <div className="absolute -right-32 top-1/3 h-80 w-80 rounded-full bg-cyan-200/20 blur-3xl dark:bg-cyan-500/[0.08]" />
-      </div>
+    <main className="min-h-screen bg-[#F8FAFC] px-4 py-8 dark:bg-slate-950 sm:px-6 sm:py-10">
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-4 sm:mb-5">
           <MyCityNavigation locale={locale} />
         </div>
-        <header className="relative overflow-hidden rounded-[2rem] border border-emerald-200/70 bg-gradient-to-br from-emerald-50/90 via-white/90 to-cyan-50/70 p-6 shadow-2xl shadow-slate-900/[0.06] backdrop-blur-sm dark:border-emerald-900/60 dark:from-emerald-950/30 dark:via-slate-900/90 dark:to-cyan-950/20 sm:p-8">
-          <div aria-hidden="true" className="absolute right-0 top-0 h-32 w-32 rounded-bl-full bg-gradient-to-bl from-emerald-100/70 to-transparent dark:from-emerald-900/20" />
-          <p className="relative text-xs font-black uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">
-            {copy.eyebrow}
-          </p>
+        <header className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
+            <div className="flex flex-col justify-center p-6 sm:p-9 lg:p-10">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-400">
+                {copy.eyebrow}
+              </p>
 
-          <h1 className="relative mt-4 text-3xl font-black tracking-[-0.035em] text-slate-950 dark:text-white sm:text-4xl">
-            {locale === "de"
-              ? `Meine Stadt — ${location.cityName ?? location.stateName}`
-              : `Mening shahrim — ${location.cityName ?? location.stateName}`}
-          </h1>
+              <h1 className="mt-4 break-words text-4xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+                {location.cityName ?? location.stateName}
+              </h1>
 
-          <p className="relative mt-3 inline-flex rounded-full border border-emerald-100 bg-emerald-50/70 px-3 py-1.5 text-sm font-semibold text-emerald-800 dark:border-emerald-900/70 dark:bg-emerald-950/30 dark:text-emerald-200">
-            {copy.state}: {location.stateName}
-          </p>
+              <p className="mt-3 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+                <MapPin size={16} aria-hidden="true" />
+                {location.stateName}, {location.countryCode === "DE" ? (locale === "de" ? "Deutschland" : "Germaniya") : location.countryCode}
+              </p>
+
+              <p className="mt-6 max-w-lg text-sm leading-7 text-slate-600 dark:text-slate-300">
+                {locale === "de"
+                  ? "Entdecken Sie Communities, Veranstaltungen und Fachkräfte in Ihrer Stadt und Region."
+                  : "Shahringiz va hududingizdagi hamjamiyatlar, tadbirlar hamda mutaxassislarni bir joyda toping."}
+              </p>
+
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link
+                  href="/account/profile"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 text-sm font-semibold text-white transition hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                >
+                  {locale === "de" ? "Stadt ändern" : "Shaharni o‘zgartirish"}
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                </Link>
+
+                <a
+                  href="#my-city-map"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+                >
+                  <Map size={17} aria-hidden="true" />
+                  {locale === "de" ? "Karte ansehen" : "Xaritada ko‘rish"}
+                </a>
+              </div>
+            </div>
+
+            <div
+              id="my-city-map"
+              className="scroll-mt-28 border-t border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/50 sm:p-6 lg:flex lg:flex-col lg:justify-center lg:border-l lg:border-t-0"
+            >
+              <div className="mb-4">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-400">
+                  {locale === "de" ? "Ihre Stadt auf der Karte" : "Shahringiz xaritada"}
+                </p>
+                <h2 className="mt-2 text-lg font-bold text-slate-900 dark:text-white">
+                  {location.cityName ?? location.stateName}
+                </h2>
+              </div>
+
+              {location.latitude !== null &&
+              location.longitude !== null &&
+              Number.isFinite(Number(location.latitude)) &&
+              Number.isFinite(Number(location.longitude)) ? (
+                <MyCityMapLoader
+                  cityName={location.cityName ?? location.stateName}
+                  stateName={location.stateName}
+                  latitude={Number(location.latitude)}
+                  longitude={Number(location.longitude)}
+                  locale={locale}
+                />
+              ) : (
+                <EmptyState>
+                  {locale === "de"
+                    ? "Für diesen Standort sind noch keine Kartenkoordinaten verfügbar."
+                    : "Bu hudud uchun xarita koordinatalari hozircha mavjud emas."}
+                </EmptyState>
+              )}
+            </div>
+          </div>
         </header>
 
+        <section
+          aria-labelledby="my-city-opportunities"
+          className="mt-8"
+        >
+          <div className="mb-5">
+            <h2
+              id="my-city-opportunities"
+              className="text-2xl font-black tracking-tight text-slate-950 dark:text-white"
+            >
+              {locale === "de"
+                ? "Möglichkeiten in Ihrer Stadt"
+                : "Shahringizdagi imkoniyatlar"}
+            </h2>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+              {locale === "de"
+                ? "Entdecken Sie verfügbare Angebote in Ihrer Stadt und Region."
+                : "Shahringiz va hududingizdagi mavjud imkoniyatlarni kashf eting."}
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                id: "my-city-community",
+                Icon: UsersRound,
+                title: locale === "de" ? "Community" : "Hamjamiyatlar",
+                description: region.communities.length > 0
+                  ? locale === "de" ? "Regionale Gruppen ansehen" : "Hududiy guruhlarni ko‘rish"
+                  : locale === "de" ? "Keine regionalen Gruppen" : "Hozircha guruhlar yo‘q",
+              },
+              {
+                id: "my-city-events",
+                Icon: CalendarDays,
+                title: locale === "de" ? "Veranstaltungen" : "Tadbirlar",
+                description: city.events.length > 0
+                  ? locale === "de" ? "Kommende Veranstaltungen" : "Yaqin tadbirlarni ko‘rish"
+                  : locale === "de" ? "Keine lokalen Veranstaltungen" : "Hozircha tadbirlar yo‘q",
+              },
+              {
+                id: "my-city-specialists",
+                Icon: BriefcaseBusiness,
+                title: locale === "de" ? "Fachkräfte" : "Mutaxassislar",
+                description: city.specialists.length > 0
+                  ? locale === "de" ? "Lokale Fachkräfte ansehen" : "Mahalliy mutaxassislar"
+                  : locale === "de" ? "Keine lokalen Fachkräfte" : "Hozircha mutaxassis yo‘q",
+              },
+            ].map(({ id, Icon, title, description }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                className="group flex min-h-28 items-center gap-3 rounded-2xl border border-slate-200 bg-white/85 p-4 shadow-sm transition hover:border-emerald-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-800 dark:bg-slate-900/85 dark:hover:border-emerald-700"
+              >
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                  <Icon size={22} strokeWidth={1.8} aria-hidden="true" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-sm font-bold text-slate-950 dark:text-white">
+                    {title}
+                  </span>
+                  <span className="mt-1 block text-xs leading-5 text-slate-500 dark:text-slate-400">
+                    {description}
+                  </span>
+                </span>
+              </a>
+            ))}
+
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                `Moschee near ${location.cityName ?? location.stateName}, Germany`,
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-28 items-center gap-3 rounded-2xl border border-slate-200 bg-white/85 p-4 transition hover:border-emerald-300 hover:shadow-md dark:border-slate-700 dark:bg-slate-900/70 dark:hover:border-emerald-700"
+            >
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300">
+                <span aria-hidden="true" className="text-2xl leading-none">🕌</span>
+              </span>
+              <div className="min-w-0">
+                <h3 className="text-sm font-bold text-slate-700 dark:text-slate-200">
+                  {locale === "de" ? "Moscheen" : "Masjidlar"}
+                </h3>
+                <p className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">
+                  {locale === "de"
+                    ? "Moscheen in Google Maps finden ↗"
+                    : "Google Maps orqali masjidlarni topish ↗"}
+                </p>
+              </div>
+            </a>
+          </div>
+        </section>
+
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <SectionShell
-            title={copy.localInfo}
-            description={copy.localInfoDescription}
-            badge={copy.cityBadge}
-            tone="mint"
-          >
-            <dl className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-emerald-100/90 bg-white/65 p-4 shadow-sm dark:border-emerald-900/50 dark:bg-slate-950/35">
-                <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
-                  {locale === "de" ? "Stadt" : "Shahar"}
-                </dt>
-                <dd className="mt-2 font-bold text-slate-950 dark:text-white">
-                  {location.cityName ?? "—"}
-                </dd>
-              </div>
 
-              <div className="rounded-2xl border border-teal-100/90 bg-white/65 p-4 shadow-sm dark:border-teal-900/50 dark:bg-slate-950/35">
-                <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
-                  {copy.state}
-                </dt>
-                <dd className="mt-2 font-bold text-slate-950 dark:text-white">
-                  {location.stateName}
-                </dd>
-              </div>
-            </dl>
-          </SectionShell>
 
           <SectionShell
-            title={copy.community}
+            id="my-city-community"
+              title={copy.community}
             description={copy.communityDescription}
             badge={copy.regionBadge}
             tone="cyan"
@@ -448,7 +577,8 @@ export default function MyCityDashboard({
           </SectionShell>
 
           <SectionShell
-            title={copy.cityEvents}
+            id="my-city-events"
+              title={copy.cityEvents}
             description={copy.cityEventsDescription}
             badge={copy.cityBadge}
             tone="violet"
@@ -466,7 +596,8 @@ export default function MyCityDashboard({
           </SectionShell>
 
           <SectionShell
-            title={copy.citySpecialists}
+            id="my-city-specialists"
+              title={copy.citySpecialists}
             description={copy.citySpecialistsDescription}
             badge={copy.cityBadge}
             tone="mint"
