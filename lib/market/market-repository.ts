@@ -16,6 +16,7 @@ export type MarketListing = Readonly<{
   priceType: "fixed" | "negotiable";
   currency: "EUR";
   publishedAt: string;
+  status: "published" | "reserved";
   locationId: string;
   cityName: string;
   stateName: string;
@@ -49,6 +50,7 @@ type ListingRow = {
   price_type: "fixed" | "negotiable";
   currency: "EUR";
   published_at: Date | string;
+  status: "published" | "reserved";
   location_id: string;
   city_name: string;
   state_name: string;
@@ -68,6 +70,7 @@ function mapListing(row: ListingRow): MarketListing {
     priceType: row.price_type,
     currency: row.currency,
     publishedAt: row.published_at instanceof Date ? row.published_at.toISOString() : row.published_at,
+    status: row.status,
     locationId: row.location_id,
     cityName: row.city_name,
     stateName: row.state_name,
@@ -79,7 +82,7 @@ function mapListing(row: ListingRow): MarketListing {
 const select = `
   SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
          m.content_language, m.price_amount::text, m.price_type, m.currency,
-         m.published_at, m.location_id::text, l.city_name, l.state_name,
+         m.published_at, m.status, m.location_id::text, l.city_name, l.state_name,
          m.contact_telegram, m.contact_whatsapp, m.contact_phone, m.contact_email
   FROM market_listings m
   JOIN locations l ON l.id = m.location_id
@@ -138,7 +141,7 @@ export async function getPublishedMarketListings(filters: {
   const selectWithCover = `
     SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
            m.content_language, m.price_amount::text, m.price_type, m.currency,
-           m.published_at, m.location_id::text, l.city_name, l.state_name,
+           m.published_at, m.status, m.location_id::text, l.city_name, l.state_name,
            NULL::text AS contact_telegram, NULL::text AS contact_whatsapp,
            NULL::text AS contact_phone, NULL::text AS contact_email,
            (SELECT i.id::text
@@ -180,7 +183,7 @@ export async function getPublishedMarketListings(filters: {
 
 export async function getPublishedMarketListingBySlug(slug: string): Promise<MarketListing | null> {
   const result = await getDb().query<ListingRow>(`
-    ${select} AND m.slug = $1 LIMIT 1
+    ${select.replace("m.status = 'published'", "m.status IN ('published', 'reserved')")} AND m.slug = $1 LIMIT 1
   `, [slug]);
   return result.rows[0] ? mapListing(result.rows[0]) : null;
 }
@@ -195,7 +198,7 @@ export async function getMarketSellerForPublishedListing(listingId: string): Pro
     FROM market_listings m
     JOIN public_users u ON u.id = m.author_user_id
     LEFT JOIN user_profiles p ON p.user_id = u.id
-    WHERE m.id = $1::bigint AND m.status = 'published'
+    WHERE m.id = $1::bigint AND m.status IN ('published', 'reserved')
       AND m.published_at IS NOT NULL
       AND (m.expires_at IS NULL OR m.expires_at > NOW())
       AND u.account_status = 'active'
@@ -210,7 +213,7 @@ export async function getMarketSellerForPublishedListing(listingId: string): Pro
 export async function getRelatedMarketListings(listingId: string, category: MarketCategory, limit = 4): Promise<ReadonlyArray<MarketListingWithCover>> {
   const result = await getDb().query<ListingRow & { cover_image_id: string | null; view_count: string }>(`
     SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
-           m.content_language, m.price_amount::text, m.price_type, m.currency, m.published_at,
+           m.content_language, m.price_amount::text, m.price_type, m.currency, m.published_at, m.status,
            m.location_id::text, l.city_name, l.state_name,
            NULL::text AS contact_telegram, NULL::text AS contact_whatsapp,
            NULL::text AS contact_phone, NULL::text AS contact_email,
@@ -251,7 +254,7 @@ export async function getPublicMarketSellerListings(userId: string, page = 1) {
   const current = Math.min(10000, Math.max(1, Math.floor(page) || 1));
   const result = await getDb().query<ListingRow & { cover_image_id: string | null }>(`
     SELECT m.id::text, m.slug, m.listing_type, m.category, m.title, m.description,
-      m.content_language, m.price_amount::text, m.price_type, m.currency, m.published_at,
+      m.content_language, m.price_amount::text, m.price_type, m.currency, m.published_at, m.status,
       m.location_id::text, l.city_name, l.state_name,
       NULL::text AS contact_telegram, NULL::text AS contact_whatsapp,
       NULL::text AS contact_phone, NULL::text AS contact_email,

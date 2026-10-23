@@ -11,14 +11,14 @@ export async function changeMarketStatusAction(formData: FormData): Promise<void
   const listingId = formData.get("listingId");
   const operation = formData.get("operation");
   if (typeof listingId !== "string" ||
-      (operation !== "publish" && operation !== "close")) {
+      (operation !== "publish" && operation !== "reserve" && operation !== "reactivate")) {
     throw new Error("Invalid market action.");
   }
   const changed = await changeOwnMarketListingStatus({
     listingId,
     authorUserId: context.user.id,
-    from: operation === "publish" ? "draft" : "published",
-    to: operation === "publish" ? "published" : "closed",
+    from: operation === "publish" ? "draft" : operation === "reserve" ? "published" : "reserved",
+    to: operation === "reserve" ? "reserved" : "published",
   });
   if (!changed) throw new Error("Listing unavailable or its status has changed.");
   revalidatePath(`/${locale}/market`);

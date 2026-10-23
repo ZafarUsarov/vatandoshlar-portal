@@ -75,6 +75,7 @@ export default async function MarketDetailPage({ params, searchParams }: Props) 
       <Link href="/market" className="text-sm font-semibold text-emerald-700 hover:underline dark:text-emerald-400">← {t.back}</Link>
       <p className="mt-7 text-sm font-semibold text-emerald-700 dark:text-emerald-400">{marketCategoryLabels[locale][item.category]} · {t[item.listingType]} · {formatMarketLocation(item.cityName, item.stateName)}</p>
       <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{item.title}</h1>
+      {item.status === "reserved" && <p className="mt-3 inline-flex rounded-lg bg-amber-100 px-3 py-2 text-sm font-bold text-amber-900 dark:bg-amber-900/30 dark:text-amber-200">{locale === "de" ? "Reserviert" : "Band qilingan"}</p>}
       {translated && <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
         <span className="text-slate-600 dark:text-slate-300">{showOriginal
           ? (locale === "de" ? "Originaltext" : "Asl matn")
@@ -99,7 +100,7 @@ export default async function MarketDetailPage({ params, searchParams }: Props) 
           </div>
           <section className="mt-7 rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-6 shadow-sm ring-1 ring-slate-100 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950 dark:ring-slate-800">
             <h2 className="flex items-center gap-2 text-lg font-bold"><MarketDetailIcon name="file" className="h-5 w-5 text-emerald-700" />{locale === "de" ? "Beschreibung" : "Tavsif"}</h2>
-            <p className="mt-3 whitespace-pre-line break-words leading-8 text-slate-700 dark:text-slate-200">{item.description}</p>
+            <p className="mt-3 whitespace-pre-line break-words leading-normal text-slate-700 dark:text-slate-200">{item.description}</p>
           </section>
         </div>
         <aside className="space-y-4 lg:sticky lg:top-28" aria-label={locale === "de" ? "Anbieter und Aktionen" : "Sotuvchi va amallar"}>
@@ -123,7 +124,7 @@ export default async function MarketDetailPage({ params, searchParams }: Props) 
               {locale === "de" ? "Anzeige bearbeiten" : "E’lonni tahrirlash"}
             </Link>
           ) : (
-            <div className="[&>section]:mt-0"><MarketContactLinks contact={item} title={item.title} locale={locale} messaging={seller ? { listingId: item.id } : undefined} /></div>
+            item.status === "reserved" ? <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-900 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-200">{locale === "de" ? "Diese Anzeige ist derzeit reserviert." : "Bu e’lon hozir band qilingan."}</p> : <div className="[&>section]:mt-0"><MarketContactLinks contact={item} title={item.title} locale={locale} messaging={seller ? { listingId: item.id } : undefined} /></div>
           )}
           <MarketShareButton locale={locale} title={item.title} />
           <MarketReportForm locale={locale} slug={item.slug} listingId={item.id} />

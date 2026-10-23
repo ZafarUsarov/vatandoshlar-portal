@@ -16,12 +16,12 @@ export default async function MyMarketPage() {
   const listings = await getOwnMarketListings(context.user.id);
   const t = locale === "de" ? {
     heading: "Meine Anzeigen", back: "Zum Marktplatz", total: "Anzeigen insgesamt", create: "Neue Anzeige", empty: "Sie haben noch keine Anzeigen.",
-    publish: "Veröffentlichen", close: "Schließen", view: "Anzeige ansehen", edit: "Bearbeiten", remove: "Entfernen", confirmRemove: "Anzeige wirklich entfernen?", confirmYes: "Ja, entfernen", cancel: "Abbrechen",
-    draft: "Entwurf", published: "Veröffentlicht", closed: "Geschlossen", hidden: "Ausgeblendet", removed: "Entfernt",
+    publish: "Veröffentlichen", reserve: "Reservieren", reactivate: "Wieder aktivieren", view: "Anzeige ansehen", edit: "Bearbeiten", remove: "Entfernen", confirmRemove: "Anzeige wirklich entfernen?", confirmYes: "Ja, entfernen", cancel: "Abbrechen",
+    draft: "Entwurf", published: "Veröffentlicht", reserved: "Reserviert", closed: "Geschlossen", hidden: "Ausgeblendet", removed: "Entfernt",
   } : {
     heading: "Mening e’lonlarim", back: "Marketga qaytish", total: "Jami e’lonlar", create: "Yangi e’lon", empty: "Hozircha e’lonlaringiz yo‘q.",
-    publish: "Nashr qilish", close: "Yopish", view: "E’lonni ko‘rish", edit: "Tahrirlash", remove: "O‘chirish", confirmRemove: "E’lonni rostdan ham o‘chirmoqchimisiz?", confirmYes: "Ha, o‘chirish", cancel: "Bekor qilish",
-    draft: "Qoralama", published: "Nashr qilingan", closed: "Yopilgan", hidden: "Yashirilgan", removed: "O‘chirilgan",
+    publish: "Nashr qilish", reserve: "Band qilish", reactivate: "Qayta faollashtirish", view: "E’lonni ko‘rish", edit: "Tahrirlash", remove: "O‘chirish", confirmRemove: "E’lonni rostdan ham o‘chirmoqchimisiz?", confirmYes: "Ha, o‘chirish", cancel: "Bekor qilish",
+    draft: "Qoralama", published: "Nashr qilingan", reserved: "Band qilingan", closed: "Yopilgan", hidden: "Yashirilgan", removed: "O‘chirilgan",
   };
   return <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
     <Header />
@@ -34,19 +34,19 @@ export default async function MyMarketPage() {
           <li key={item.id} className="rounded-xl border border-slate-200 p-5 dark:border-slate-800">
             <h2 className="break-words font-semibold">{item.title}</h2>
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{item.cityName} · {t[item.status]}</p>
-            <div className="mt-4 flex flex-wrap gap-3">
+            <div className="mt-4 flex flex-wrap items-start gap-3">
               {(item.status === "draft" || item.status === "published") && <Link href={`/market/${item.id}/edit`} className="inline-flex min-h-11 items-center rounded-xl border border-slate-300 px-4 font-semibold dark:border-slate-700">{t.edit}</Link>}
-              {item.status === "published" && <Link href={`/market/${item.slug}`} className="inline-flex min-h-11 items-center rounded-xl border border-slate-300 px-4 font-semibold dark:border-slate-700">{t.view}</Link>}
-              {(item.status === "draft" || item.status === "published") &&
+              {(item.status === "published" || item.status === "reserved") && <Link href={`/market/${item.slug}`} className="inline-flex min-h-11 items-center rounded-xl border border-slate-300 px-4 font-semibold dark:border-slate-700">{t.view}</Link>}
+              {(item.status === "draft" || item.status === "published" || item.status === "reserved") &&
                 <form action={changeMarketStatusAction}>
                   <input type="hidden" name="listingId" value={item.id} />
-                  <input type="hidden" name="operation" value={item.status === "draft" ? "publish" : "close"} />
+                  <input type="hidden" name="operation" value={item.status === "draft" ? "publish" : item.status === "published" ? "reserve" : "reactivate"} />
                   <button type="submit" className="min-h-11 rounded-xl bg-emerald-700 px-4 font-semibold text-white hover:bg-emerald-800">
-                    {item.status === "draft" ? t.publish : t.close}
+                    {item.status === "draft" ? t.publish : item.status === "published" ? t.reserve : t.reactivate}
                   </button>
                 </form>}
-              {(item.status === "draft" || item.status === "published" || item.status === "closed") &&
-                <details className="group rounded-xl border border-red-200 dark:border-red-900">
+              {(item.status === "draft" || item.status === "published" || item.status === "reserved" || item.status === "closed") &&
+                <details className="group w-fit max-w-full self-start rounded-xl border border-red-200 dark:border-red-900">
                   <summary className="flex min-h-11 cursor-pointer list-none items-center px-4 font-semibold text-red-700 marker:hidden dark:text-red-300">{t.remove}</summary>
                   <div className="border-t border-red-200 p-4 dark:border-red-900">
                     <p className="mb-3 text-sm">{t.confirmRemove}</p>

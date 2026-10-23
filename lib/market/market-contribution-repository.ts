@@ -9,7 +9,7 @@ export type OwnMarketListing = Readonly<{
   slug: string;
   title: string;
   listingType: MarketListingType;
-  status: "draft" | "published" | "hidden" | "closed" | "removed";
+  status: "draft" | "published" | "reserved" | "hidden" | "closed" | "removed";
   cityName: string;
   createdAt: string;
 }>;
@@ -57,7 +57,7 @@ export async function getOwnMarketListings(userId: string): Promise<ReadonlyArra
             l.city_name, m.created_at
      FROM market_listings m
      JOIN locations l ON l.id = m.location_id
-     WHERE m.author_user_id = $1::bigint
+     WHERE m.author_user_id = $1::bigint AND m.status <> 'removed'
      ORDER BY m.created_at DESC, m.id DESC LIMIT 100`,
     [userId],
   );
@@ -72,12 +72,13 @@ export async function getOwnMarketListings(userId: string): Promise<ReadonlyArra
 export async function changeOwnMarketListingStatus(input: {
   listingId: string;
   authorUserId: string;
-  from: "draft" | "published";
-  to: "published" | "closed";
+  from: "draft" | "published" | "reserved";
+  to: "published" | "reserved";
 }): Promise<boolean> {
   if (!/^[1-9]\d*$/.test(input.listingId) || !/^[1-9]\d*$/.test(input.authorUserId)) return false;
   if (!((input.from === "draft" && input.to === "published") ||
-    (input.from === "published" && input.to === "closed"))) return false;
+    (input.from === "published" && input.to === "reserved") ||
+    (input.from === "reserved" && input.to === "published"))) return false;
   const result = await getDb().query(
     `UPDATE market_listings m
      SET status = $4, updated_at = NOW(),
@@ -85,7 +86,7 @@ export async function changeOwnMarketListingStatus(input: {
          expires_at = CASE
            WHEN $4 = 'published' THEN NOW() + CASE
              WHEN m.plan_type = 'pro' THEN INTERVAL '60 days'
-             ELSE INTERVAL '21 days'
+             ELSE INTERVAL '30 days'
            END
            ELSE m.expires_at
          END
@@ -210,7 +211,7 @@ export async function removeOwnMarketListing(input: {
      SET status = 'removed', updated_at = NOW()
      WHERE id = $1::bigint
        AND author_user_id = $2::bigint
-       AND status IN ('draft', 'published', 'closed')
+       AND status IN ('draft', 'published', 'reserved', 'closed')
      RETURNING id`,
     [input.listingId, input.authorUserId],
   );
