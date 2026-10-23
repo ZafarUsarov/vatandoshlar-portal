@@ -11,7 +11,6 @@ import {
   ArrowUpRight,
   BriefcaseBusiness,
   CalendarDays,
-  Map,
   MapPin,
   UsersRound,
 } from "lucide-react";
@@ -393,13 +392,6 @@ export default function MyCityDashboard({
                   <ArrowUpRight size={16} aria-hidden="true" />
                 </Link>
 
-                <a
-                  href="#my-city-map"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-                >
-                  <Map size={17} aria-hidden="true" />
-                  {locale === "de" ? "Karte ansehen" : "Xaritada ko‘rish"}
-                </a>
               </div>
             </div>
 
@@ -506,7 +498,10 @@ export default function MyCityDashboard({
 
             <a
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                `Moschee near ${location.cityName ?? location.stateName}, Germany`,
+                location.latitude !== null && location.longitude !== null &&
+                Number.isFinite(Number(location.latitude)) && Number.isFinite(Number(location.longitude))
+                  ? `Moschee near ${location.latitude},${location.longitude}`
+                  : `Moschee near ${location.cityName ?? location.stateName}, Germany`,
               )}`}
               target="_blank"
               rel="noopener noreferrer"
