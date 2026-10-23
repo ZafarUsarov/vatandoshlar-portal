@@ -91,8 +91,6 @@ export async function changeOwnMarketListingStatus(input: {
          END
      WHERE m.id = $1::bigint AND m.author_user_id = $2::bigint
        AND m.status = $3
-       AND (m.contact_telegram IS NOT NULL OR m.contact_whatsapp IS NOT NULL
-         OR m.contact_phone IS NOT NULL OR m.contact_email IS NOT NULL OR $4 <> 'published')
        AND EXISTS (
          SELECT 1 FROM locations l WHERE l.id = m.location_id
            AND l.status = 'active' AND l.country_code = 'DE'

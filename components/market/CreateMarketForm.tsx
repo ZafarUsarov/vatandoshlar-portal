@@ -47,6 +47,11 @@ async function optimizeMarketUpload(file: File): Promise<Blob> {
   return optimized;
 }
 
+async function marketRequestError(response: Response, step: string): Promise<Error> {
+  const body = await response.json().catch(() => null) as { error?: string } | null;
+  return new Error(`${step}: ${body?.error ?? `HTTP ${response.status}`} (${response.status})`);
+}
+
 const control = "min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 focus-visible:outline-2 focus-visible:outline-emerald-600 dark:border-slate-700 dark:bg-slate-900 dark:text-white";
 
 export default function CreateMarketForm({ locale }: Props) {
@@ -75,20 +80,20 @@ export default function CreateMarketForm({ locale }: Props) {
           const endpoint = `/api/market/listings/${id}/images`;
           const optimized = await optimizeMarketUpload(file);
             const reserved = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ contentType: "image/webp", byteSize: optimized.size }) });
-          if (!reserved.ok) throw new Error(`Image reservation failed (${reserved.status})`);
+          if (!reserved.ok) throw await marketRequestError(reserved, "Image reservation");
           const { imageId } = await reserved.json() as { imageId: string };
           try {
             const uploaded = await fetch(`${endpoint}/${imageId}/upload`, { method: "PUT", headers: { "Content-Type": "image/webp" }, body: optimized });
-            if (!uploaded.ok) throw new Error(`Image upload failed (${uploaded.status})`);
+            if (!uploaded.ok) throw await marketRequestError(uploaded, "Image upload");
             const confirmed = await fetch(`${endpoint}/${imageId}/confirm`, { method: "POST" });
-            if (!confirmed.ok) throw new Error(`Image confirmation failed (${confirmed.status})`);
+            if (!confirmed.ok) throw await marketRequestError(confirmed, "Image confirmation");
           } catch (error) {
             await fetch(`${endpoint}/${imageId}`, { method: "DELETE" }).catch(() => undefined);
             throw error;
           }
         }
         const published = await publishCreatedMarketListing(id, locale);
-        if (!published) throw new Error(locale === "de" ? "Veröffentlichung fehlgeschlagen." : "E’lonni nashr qilib bo‘lmadi.");
+        if (!published) throw new Error(locale === "de" ? "Der Entwurf wurde erstellt, aber nicht veröffentlicht. Bitte über den Link unten fortfahren." : "Qoralama yaratildi, ammo nashr qilinmadi. Quyidagi havola orqali davom eting.");
         router.push("/market/mine");
       } catch (error) {
         if (active) setUploadError(error instanceof Error ? error.message : "Upload failed");
@@ -151,8 +156,24 @@ export default function CreateMarketForm({ locale }: Props) {
       }} className={control} />
       <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">JPG, PNG, WebP, HEIC · {files.length}/5 {locale === "de" ? "Bilder ausgewählt" : "rasm tanlandi"} · 30 MiB</p>
     </div>
-    {previews.length > 0 && <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">{previews.map((src, i) => <div key={src} className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700"><Image src={src} alt={`${locale === "de" ? "Bild" : "Rasm"} ${i + 1}`} width={160} height={160} unoptimized className="aspect-square w-full object-cover" /><p className="truncate px-2 py-1 text-xs">{files[i]?.name}</p></div>)}</div>}
-    {progress && <p role="status">{locale === "de" ? "Bilder werden hochgeladen" : "Rasmlar yuklanmoqda"}: {progress}</p>}
+    {previews.length > 0 && <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">{previews.map((src, i) =>
+      <div key={src} className="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
+        <Image src={src} alt={`${locale === "de" ? "Bild" : "Rasm"} ${i + 1}`} width={160} height={160} unoptimized className="aspect-square w-full object-cover" />
+        <p className="truncate px-2 py-1 text-xs">{files[i]?.name}</p>
+        {!pending && !working && !state.createdId && <button
+          type="button"
+          aria-label={locale === "de" ? `Bild ${i + 1} entfernen` : `${i + 1}-rasmni o‘chirish`}
+          title={locale === "de" ? "Bild entfernen" : "Rasmni o‘chirish"}
+          className="absolute right-1 top-1 flex h-8 w-8 items-center justify-center rounded-full bg-slate-950/85 text-xl font-bold text-white shadow-sm hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          onClick={() => {
+            setFiles(previous => previous.filter((_, index) => index !== i));
+            setPreviews(previous => previous.filter((_, index) => index !== i));
+            setUploadError("");
+          }}
+        >×</button>}
+      </div>
+    )}</div>}
+    {progress && <p role="status">{locale === "de" ? "Bild wird verarbeitet" : "Rasm qayta ishlanmoqda"}: {progress}</p>}
     {uploadError && <p role="alert" className="text-red-700 dark:text-red-300">{uploadError} {state.createdId && <a className="underline" href={`/market/${state.createdId}/edit`}>{locale === "de" ? "Entwurf bearbeiten und fortsetzen" : "Qoralamani tahrirlab davom etish"}</a>}</p>}
     <p role="status" aria-live="polite">{pending ? (locale === "de" ? "Anzeige wird geprüft…" : "E’lon tekshirilmoqda…") : working ? (locale === "de" ? "Bilder werden hochgeladen und Anzeige veröffentlicht…" : "Rasmlar yuklanmoqda va e’lon joylashtirilmoqda…") : null}</p>
     <button disabled={pending || working || Boolean(state.createdId)} className="min-h-12 rounded-xl bg-emerald-700 px-6 font-semibold text-white hover:bg-emerald-800 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50">{pending ? t.saving : t.save}</button>
