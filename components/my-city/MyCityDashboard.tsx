@@ -195,6 +195,9 @@ export default function MyCityDashboard({
 
   const location =
     context.homeLocation;
+  const mapLocation = data.mapLocation;
+  const mapLatitude = mapLocation?.latitude;
+  const mapLongitude = mapLocation?.longitude;
 
   const copy =
     locale === "de"
@@ -408,15 +411,15 @@ export default function MyCityDashboard({
                 </h2>
               </div>
 
-              {location.latitude !== null &&
-              location.longitude !== null &&
-              Number.isFinite(Number(location.latitude)) &&
-              Number.isFinite(Number(location.longitude)) ? (
+              {mapLatitude != null &&
+              mapLongitude != null &&
+              Number.isFinite(mapLatitude) &&
+              Number.isFinite(mapLongitude) ? (
                 <MyCityMapLoader
                   cityName={location.cityName ?? location.stateName}
                   stateName={location.stateName}
-                  latitude={Number(location.latitude)}
-                  longitude={Number(location.longitude)}
+                  latitude={mapLatitude}
+                  longitude={mapLongitude}
                   locale={locale}
                 />
               ) : (

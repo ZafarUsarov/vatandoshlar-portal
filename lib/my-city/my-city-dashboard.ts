@@ -1,3 +1,4 @@
+import { getMapLocationForProfile } from "@/lib/locations/location-repository";
 import {
   getUpcomingPublishedEventsByLocationId,
 } from "@/lib/events/public-events-repository";
@@ -25,6 +26,7 @@ import type {
 
 export type MyCityDashboardData = Readonly<{
   context: MyCityUserContext;
+  mapLocation: MyCityUserContext["homeLocation"];
 
   city: Readonly<{
     events: ReadonlyArray<PublicEventItem>;
@@ -52,6 +54,7 @@ export async function getMyCityDashboardData(
   if (!location) {
     return {
       context,
+      mapLocation: null,
 
       city: {
         events: [],
@@ -72,6 +75,8 @@ export async function getMyCityDashboardData(
       },
     };
   }
+
+  const mapLocation = await getMapLocationForProfile(location);
 
   const locale =
     context.locale as SupportedLocale;
@@ -129,6 +134,7 @@ export async function getMyCityDashboardData(
 
   return {
     context,
+    mapLocation,
 
     city: {
       events:

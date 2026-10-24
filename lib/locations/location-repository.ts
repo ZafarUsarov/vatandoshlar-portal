@@ -192,3 +192,57 @@ export async function getActiveLocationBySlug(
     ? toLocation(row)
     : null;
 }
+
+
+/** Resolve fresh coordinates for a selected profile location without changing profile data. */
+export async function getMapLocationForProfile(
+  selected: Location,
+): Promise<Location> {
+  const db = getDb();
+  const exact = await db.query<LocationRow>(
+    `${locationSelect} WHERE id = $1 AND status = 'active' LIMIT 1`,
+    [selected.id],
+  );
+  const current = exact.rows[0] ? toLocation(exact.rows[0]) : selected;
+  const hasCoordinates = (item: Location) =>
+    item.latitude !== null && item.longitude !== null &&
+    Number.isFinite(item.latitude) && Number.isFinite(item.longitude) &&
+    item.latitude >= -90 && item.latitude <= 90 &&
+    item.longitude >= -180 && item.longitude <= 180;
+
+  if (hasCoordinates(current)) return current;
+
+  // A child locality may have no coordinates: use its canonical parent city.
+  if (current.parentId) {
+    const parent = await db.query<LocationRow>(
+      `${locationSelect} WHERE id = $1 AND status = 'active' LIMIT 1`,
+      [current.parentId],
+    );
+    if (parent.rows[0]) {
+      const candidate = toLocation(parent.rows[0]);
+      if (candidate.countryCode === current.countryCode &&
+          candidate.stateCode === current.stateCode && hasCoordinates(candidate)) {
+        return candidate;
+      }
+    }
+  }
+
+  // Legacy profile records may point to a locality without coordinates.
+  // Match the canonical city in the same state, never another Hamburg etc.
+  if (current.cityName) {
+    const city = await db.query<LocationRow>(
+      `${locationSelect} WHERE status = 'active' AND location_type = 'city'
+        AND country_code = $1 AND state_code = $2
+        AND lower(city_name) = lower($3)
+        AND latitude IS NOT NULL AND longitude IS NOT NULL
+        ORDER BY id ASC LIMIT 1`,
+      [current.countryCode, current.stateCode, current.cityName],
+    );
+    if (city.rows[0]) {
+      const candidate = toLocation(city.rows[0]);
+      if (hasCoordinates(candidate)) return candidate;
+    }
+  }
+
+  return current;
+}
