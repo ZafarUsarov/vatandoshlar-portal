@@ -411,24 +411,14 @@ export default function MyCityDashboard({
                 </h2>
               </div>
 
-              {mapLatitude != null &&
-              mapLongitude != null &&
-              Number.isFinite(mapLatitude) &&
-              Number.isFinite(mapLongitude) ? (
-                <MyCityMapLoader
-                  cityName={location.cityName ?? location.stateName}
-                  stateName={location.stateName}
-                  latitude={mapLatitude}
-                  longitude={mapLongitude}
-                  locale={locale}
-                />
-              ) : (
-                <EmptyState>
-                  {locale === "de"
-                    ? "Für diesen Standort sind noch keine Kartenkoordinaten verfügbar."
-                    : "Bu hudud uchun xarita koordinatalari hozircha mavjud emas."}
-                </EmptyState>
-              )}
+              <MyCityMapLoader
+                cityName={location.cityName ?? location.stateName}
+                stateName={location.stateName}
+                countryCode={location.countryCode}
+                latitude={mapLatitude ?? null}
+                longitude={mapLongitude ?? null}
+                locale={locale}
+              />
             </div>
           </div>
         </header>

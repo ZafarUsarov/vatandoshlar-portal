@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 type Props = {
   cityName: string;
   stateName: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
+  countryCode: string;
   locale: string;
 };
 
@@ -15,11 +16,20 @@ export default function MyCityMapLoader({
   stateName,
   latitude,
   longitude,
+  countryCode,
   locale,
 }: Props) {
   const [attempt, setAttempt] = useState(0);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
-  const query = encodeURIComponent(`${latitude},${longitude}`);
+  const hasCoordinates = latitude !== null && longitude !== null &&
+    Number.isFinite(latitude) && Number.isFinite(longitude) &&
+    latitude >= -90 && latitude <= 90 &&
+    longitude >= -180 && longitude <= 180;
+  const locationQuery = hasCoordinates
+    ? `${latitude},${longitude}`
+    : [cityName, stateName, countryCode === "DE" ? "Germany" : countryCode === "UZ" ? "Uzbekistan" : countryCode]
+        .filter(Boolean).join(", ");
+  const query = encodeURIComponent(locationQuery);
   const mapUrl = `https://www.google.com/maps?q=${query}&z=12&output=embed`;
   const externalUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
   const isGerman = locale === "de";
@@ -40,7 +50,7 @@ export default function MyCityMapLoader({
       <div className="relative h-[220px] bg-slate-100 dark:bg-slate-800 sm:h-[260px]">
         {status !== "error" && (
           <iframe
-            key={`${latitude}-${longitude}-${attempt}`}
+            key={`${locationQuery}-${attempt}`}
             title={`${cityName}, ${stateName} — Google Maps`}
             src={mapUrl}
             loading="eager"
