@@ -1144,11 +1144,11 @@ export default function Header() {
           },
           {
             href: "/places" as const,
-            label: locale === "de" ? "Standorte – Demnächst" : "Maskanlar – Tez kunda",
+            label: locale === "de" ? "Organisationen" : "Tashkilotlar",
             Icon: MapPin,
             color: "text-violet-600 dark:text-violet-400",
-            hover: "",
-            available: false,
+            hover: "hover:bg-violet-50 focus-visible:bg-violet-50 dark:hover:bg-violet-950",
+            available: true,
           },
         ].map(({ href, label, Icon, color, hover, available }) => {
           const content = (

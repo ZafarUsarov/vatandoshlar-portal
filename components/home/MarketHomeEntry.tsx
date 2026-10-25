@@ -45,12 +45,12 @@ export default async function MarketHomeEntry() {
     {
       href: "/places" as const,
       icon: MapPin,
-      title: de ? "Standorte" : "Maskanlar",
+      title: de ? "Unternehmen & Organisationen" : "Biznes va tashkilotlar",
       description: de
         ? "Restaurants, Praxen, Geschäfte und Dienstleistungen"
         : "Restoranlar, klinikalar, do‘konlar va xizmatlar",
       color: "violet",
-      available: false,
+      available: true,
     },
   ];
 

@@ -158,7 +158,8 @@ type AdminModuleHref =
   | "/admin/support"
   | "/admin/savol"
   | "/admin/market"
-  | "/admin/analytics";
+  | "/admin/analytics"
+  | "/admin/places";
 
 type AdminModuleTone =
   | "emerald"
@@ -281,15 +282,15 @@ function AdminModuleCard({
   return (
     <Link
       href={href}
-      className={styles.card}
+      className={`${styles.card} flex h-full min-w-0 flex-col !rounded-2xl !p-4 sm:!p-5`}
     >
-      <div className="flex items-start justify-between gap-5">
+      <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className={styles.title}>
+          <h2 className={`${styles.title} !text-lg`}>
             {title}
           </h2>
 
-          <p className="mt-3 max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
             {description}
           </p>
         </div>
@@ -302,7 +303,7 @@ function AdminModuleCard({
         </span>
       </div>
 
-      <p className={styles.action}>
+      <p className={`${styles.action} !mt-auto pt-4`}>
         {action} →
       </p>
     </Link>
@@ -328,9 +329,100 @@ export default async function AdminPage() {
       appLocale,
     );
 
+  const modules: AdminModuleCardProps[] = [
+    {
+      href: "/admin/news",
+      title: currentCopy.newsTitle,
+      description: currentCopy.newsDescription,
+      action: currentCopy.newsAction,
+      tone: "emerald",
+    },
+    {
+      href: "/admin/jobs",
+      title: currentCopy.jobsTitle,
+      description: currentCopy.jobsDescription,
+      action: currentCopy.jobsAction,
+      tone: "blue",
+    },
+    {
+      href: "/admin/services",
+      title: currentCopy.servicesTitle,
+      description: currentCopy.servicesDescription,
+      action: currentCopy.servicesAction,
+      tone: "violet",
+    },
+    {
+      href: "/admin/places",
+      title: appLocale === "de" ? "Unternehmen & Organisationen" : "Biznes va tashkilotlar",
+      description: appLocale === "de" ? "Unternehmen und Organisationen verwalten." : "Biznes va tashkilotlar katalogini boshqarish.",
+      action: appLocale === "de" ? "Einträge verwalten" : "Tashkilotlarni boshqarish",
+      tone: "violet",
+    },
+    {
+      href: "/admin/specialists",
+      title: currentCopy.specialistsTitle,
+      description: currentCopy.specialistsDescription,
+      action: currentCopy.specialistsAction,
+      tone: "fuchsia",
+    },
+    {
+      href: "/admin/events",
+      title: currentCopy.eventsTitle,
+      description: currentCopy.eventsDescription,
+      action: currentCopy.eventsAction,
+      tone: "orange",
+    },
+    {
+      href: "/admin/guide",
+      title: currentCopy.guideTitle,
+      description: currentCopy.guideDescription,
+      action: currentCopy.guideAction,
+      tone: "teal",
+    },
+    {
+      href: "/admin/telegram",
+      title: currentCopy.telegramTitle,
+      description: currentCopy.telegramDescription,
+      action: currentCopy.telegramAction,
+      tone: "sky",
+    },
+    {
+      href: "/admin/support",
+      title: currentCopy.supportTitle,
+      description: currentCopy.supportDescription,
+      action: currentCopy.supportAction,
+      tone: "emerald",
+    },
+    {
+      href: "/admin/savol",
+      title: currentCopy.savolTitle,
+      description: currentCopy.savolDescription,
+      action: currentCopy.savolAction,
+      tone: "orange",
+    },
+    {
+      href: "/admin/market",
+      title: locale === "de" ? "Market-Moderation" : "Market moderatsiyasi",
+      description: locale === "de" ? "Gemeldete Anzeigen prüfen und moderieren." : "Shikoyat qilingan e’lonlarni tekshirish va boshqarish.",
+      action: locale === "de" ? "Meldungen prüfen" : "Shikoyatlarni ko‘rish",
+      tone: "orange",
+    },
+    {
+      href: "/admin/analytics",
+      title: currentCopy.analyticsTitle,
+      description: currentCopy.analyticsDescription,
+      action: currentCopy.analyticsAction,
+      tone: "cyan",
+    },
+  ];
+
+  modules.sort((a, b) =>
+    a.title.localeCompare(b.title, appLocale === "de" ? "de" : "uz"),
+  );
+
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 dark:bg-slate-950 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-7xl">
         <header className="flex flex-col gap-5 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
@@ -364,7 +456,7 @@ export default async function AdminPage() {
           </div>
         </header>
 
-        <section className="mt-6 grid gap-6 lg:grid-cols-[1.4fr_0.6fr]">
+        <section className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1fr)_260px]">
           <div className="rounded-[2rem] border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900 sm:p-8">
             <p className="text-sm leading-7 text-slate-600 dark:text-slate-400">
               {currentCopy.description}
@@ -379,94 +471,10 @@ export default async function AdminPage() {
                 {currentCopy.modulesDescription}
               </p>
 
-              <div className="mt-6 grid gap-4">
-                <AdminModuleCard
-                  href="/admin/news"
-                  title={currentCopy.newsTitle}
-                  description={currentCopy.newsDescription}
-                  action={currentCopy.newsAction}
-                  tone="emerald"
-                />
-
-                <AdminModuleCard
-                  href="/admin/jobs"
-                  title={currentCopy.jobsTitle}
-                  description={currentCopy.jobsDescription}
-                  action={currentCopy.jobsAction}
-                  tone="blue"
-                />
-
-                <AdminModuleCard
-                  href="/admin/services"
-                  title={currentCopy.servicesTitle}
-                  description={currentCopy.servicesDescription}
-                  action={currentCopy.servicesAction}
-                  tone="violet"
-                />
-
-                <AdminModuleCard
-                  href="/admin/specialists"
-                  title={currentCopy.specialistsTitle}
-                  description={currentCopy.specialistsDescription}
-                  action={currentCopy.specialistsAction}
-                  tone="fuchsia"
-                />
-
-                <AdminModuleCard
-                  href="/admin/events"
-                  title={currentCopy.eventsTitle}
-                  description={currentCopy.eventsDescription}
-                  action={currentCopy.eventsAction}
-                  tone="orange"
-                />
-
-                <AdminModuleCard
-                  href="/admin/guide"
-                  title={currentCopy.guideTitle}
-                  description={currentCopy.guideDescription}
-                  action={currentCopy.guideAction}
-                  tone="teal"
-                />
-
-                <AdminModuleCard
-                  href="/admin/telegram"
-                  title={currentCopy.telegramTitle}
-                  description={currentCopy.telegramDescription}
-                  action={currentCopy.telegramAction}
-                  tone="sky"
-                />
-
-                <AdminModuleCard
-                  href="/admin/support"
-                  title={currentCopy.supportTitle}
-                  description={currentCopy.supportDescription}
-                  action={currentCopy.supportAction}
-                  tone="emerald"
-                />
-
-                <AdminModuleCard
-                  href="/admin/savol"
-                  title={currentCopy.savolTitle}
-                  description={currentCopy.savolDescription}
-                  action={currentCopy.savolAction}
-                  tone="orange"
-                />
-
-                <AdminModuleCard
-                  href="/admin/market"
-                  title={locale === "de" ? "Market-Moderation" : "Market moderatsiyasi"}
-                  description={locale === "de" ? "Gemeldete Anzeigen prüfen und moderieren." : "Shikoyat qilingan e’lonlarni tekshirish va boshqarish."}
-                  action={locale === "de" ? "Meldungen prüfen" : "Shikoyatlarni ko‘rish"}
-                  tone="orange"
-                />
-
-                <AdminModuleCard
-                  href="/admin/analytics"
-                  title={currentCopy.analyticsTitle}
-                  description={currentCopy.analyticsDescription}
-                  action={currentCopy.analyticsAction}
-                  tone="cyan"
-                />
+              <div className="mt-5 grid gap-3 md:grid-cols-2">
+                {modules.map((module) => (
+                  <AdminModuleCard key={module.href} {...module} />
+                ))}
               </div>
             </div>
           </div>
