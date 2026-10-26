@@ -145,14 +145,13 @@ export default async function VatandoshlarIdLoginPage({
             />
           </div>
 
-          <div className="mt-7 border-t border-slate-200 pt-6 text-center dark:border-slate-800">
-            <p className="text-sm text-slate-500 dark:text-slate-400">
+          <div className="mt-7 border-t border-slate-200 pt-6 dark:border-slate-800">
+            <p className="mb-3 text-center text-sm text-slate-600 dark:text-slate-300">
               {copy.newUser}
             </p>
-
             <Link
               href="/id/register"
-              className="mt-2 inline-flex font-bold text-emerald-700 hover:text-emerald-600 dark:text-emerald-300"
+              className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-emerald-600 bg-emerald-50 px-5 py-3 text-center text-sm font-bold text-emerald-800 transition-colors hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/20 dark:border-emerald-500 dark:bg-emerald-500/10 dark:text-emerald-200 dark:hover:bg-emerald-500/20"
             >
               {copy.register}
             </Link>

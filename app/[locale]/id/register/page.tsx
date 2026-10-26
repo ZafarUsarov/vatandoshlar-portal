@@ -22,6 +22,7 @@ export default async function VatandoshlarIdRegisterPage({ searchParams }: Reado
         privacyError: "Bitte bestätigen Sie die Datenschutzerklärung, bevor Sie fortfahren.",
         emailConflict: "Für diese E-Mail-Adresse besteht bereits eine Vatandoshlar ID. Aus Sicherheitsgründen wird sie nicht automatisch mit Google verknüpft.",
         googleUnverified: "Google konnte keine bestätigte E-Mail-Adresse bereitstellen.",
+        googleNotLinked: "Die Google-Anmeldung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
       }
     : {
         eyebrow: "VATANDOSHLAR ID",
@@ -31,6 +32,7 @@ export default async function VatandoshlarIdRegisterPage({ searchParams }: Reado
         privacyError: "Davom etishdan oldin Maxfiylik siyosati bilan tanishganingizni tasdiqlang.",
         emailConflict: "Bu e-mail bilan Vatandoshlar ID mavjud. Xavfsizlik uchun u Google hisobiga avtomatik bog‘lanmaydi.",
         googleUnverified: "Google tasdiqlangan e-mail manzilini taqdim etmadi.",
+        googleNotLinked: "Google orqali ro‘yxatdan o‘tish yakunlanmadi. Qayta urinib ko‘ring.",
       };
 
   const oauthMessage = query.privacyError === "1"
@@ -39,7 +41,9 @@ export default async function VatandoshlarIdRegisterPage({ searchParams }: Reado
       ? copy.emailConflict
       : query.oauthError === "google_unverified"
         ? copy.googleUnverified
-        : null;
+        : query.oauthError === "not_linked"
+          ? copy.googleNotLinked
+          : null;
 
   return (
     <main className="relative min-h-[calc(100vh-5rem)] overflow-hidden bg-slate-50 px-4 py-10 dark:bg-slate-950 sm:px-6 sm:py-14">

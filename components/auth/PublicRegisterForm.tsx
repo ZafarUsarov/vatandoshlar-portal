@@ -6,6 +6,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import {
   googleRegisterAction,
   publicRegisterAction,
@@ -41,6 +42,9 @@ export default function PublicRegisterForm({
       publicRegisterAction,
       initialPublicRegisterState,
     );
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
   const formRef =
     useRef<HTMLFormElement>(null);
@@ -80,12 +84,9 @@ export default function PublicRegisterForm({
             "Mit Google registrieren",
           googlePending:
             "Google wird geöffnet…",
-          privacyTitle:
-            "Datenschutz",
-          privacyRead:
-            "Datenschutzerklärung lesen →",
-          privacyConsent:
-            "Ich habe die Datenschutzerklärung gelesen.",
+          privacyBefore: "Ich habe die ",
+          privacyLink: "Datenschutzerklärung",
+          privacyAfter: " gelesen und stimme ihr zu.",
           privacyRequired:
             "Bitte lesen und bestätigen Sie die Datenschutzerklärung, bevor Sie mit Google fortfahren.",
           or:
@@ -112,12 +113,9 @@ export default function PublicRegisterForm({
             "Google orqali ro‘yxatdan o‘tish",
           googlePending:
             "Google ochilmoqda…",
-          privacyTitle:
-            "Maxfiylik",
-          privacyRead:
-            "Maxfiylik siyosatini o‘qish →",
-          privacyConsent:
-            "Maxfiylik siyosati bilan tanishdim.",
+          privacyBefore: "",
+          privacyLink: "Maxfiylik siyosati",
+          privacyAfter: " bilan tanishdim va roziman.",
           privacyRequired:
             "Google orqali davom etishdan oldin Maxfiylik siyosatini o‘qib, tanishganingizni tasdiqlang.",
           or:
@@ -174,43 +172,37 @@ export default function PublicRegisterForm({
       />
 
       <section
-        aria-labelledby="register-privacy-title"
-        className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 dark:border-slate-700 dark:bg-slate-950/50"
+        aria-label={copy.privacyLink}
+        className="rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 dark:border-slate-700 dark:bg-slate-950/50"
       >
-        <h2
-          id="register-privacy-title"
-          className="text-sm font-bold text-slate-900 dark:text-white"
-        >
-          {copy.privacyTitle}
-        </h2>
-
-        <a
-          href={`/${locale}/privacy`}
-          className="mt-2 inline-flex text-sm font-bold text-emerald-700 underline decoration-emerald-300 underline-offset-4 transition hover:text-emerald-600 focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300 dark:decoration-emerald-700"
-        >
-          {copy.privacyRead}
-        </a>
-
-        <div className="mt-4 border-t border-slate-200 pt-4 dark:border-slate-700">
-          <label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-slate-700 dark:text-slate-200">
-            <input
-              name="privacyAccepted"
-              type="checkbox"
-              required
-              defaultChecked={
-                state.values.privacyAccepted
+        <div className="flex min-h-11 items-center gap-3 text-sm leading-6 text-slate-700 dark:text-slate-200">
+          <input
+            id="public-register-privacy-accepted"
+            name="privacyAccepted"
+            type="checkbox"
+            required
+            defaultChecked={state.values.privacyAccepted}
+            onChange={() => {
+              if (googlePrivacyError) {
+                setGooglePrivacyError(null);
               }
-              onChange={() => {
-                if (googlePrivacyError) {
-                  setGooglePrivacyError(null);
-                }
-              }}
-              className="mt-[3px] h-4 w-4 shrink-0 accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-            />
-            <span>
-              {copy.privacyConsent}
-            </span>
-          </label>
+            }}
+            className="h-5 w-5 shrink-0 cursor-pointer accent-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+          />
+          <span className="min-w-0 flex-1">
+            <label htmlFor="public-register-privacy-accepted" className="cursor-pointer">
+              {copy.privacyBefore}
+            </label>
+            <a
+              href={`/${locale}/privacy`}
+              className="font-semibold text-emerald-700 underline decoration-emerald-300 underline-offset-4 hover:text-emerald-600 focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300 dark:decoration-emerald-700"
+            >
+              {copy.privacyLink}
+            </a>
+            <label htmlFor="public-register-privacy-accepted" className="cursor-pointer">
+              {copy.privacyAfter}
+            </label>
+          </span>
         </div>
       </section>
 
@@ -305,6 +297,7 @@ export default function PublicRegisterForm({
           id="public-register-email"
           name="email"
           type="email"
+          inputMode="email"
           autoComplete="email"
           required
           defaultValue={
@@ -321,15 +314,23 @@ export default function PublicRegisterForm({
         >
           {copy.password}
         </label>
-        <input
+        <div className="relative">
+          <input
           id="public-register-password"
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           autoComplete="new-password"
           minLength={8}
           required
-          className={inputClassName}
+          className={`${inputClassName} pr-12`}
         />
+        <button type="button" onClick={() => setShowPassword((current) => !current)}
+          aria-label={showPassword ? (locale === "de" ? "Passwort verbergen" : "Parolni yashirish") : (locale === "de" ? "Passwort anzeigen" : "Parolni ko‘rsatish")}
+          aria-pressed={showPassword}
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-400">
+          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+        </button>
+        </div>
         <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
           {copy.passwordHint}
         </p>
@@ -342,15 +343,23 @@ export default function PublicRegisterForm({
         >
           {copy.passwordConfirm}
         </label>
-        <input
+        <div className="relative">
+          <input
           id="public-register-password-confirm"
           name="passwordConfirm"
-          type="password"
+          type={showPasswordConfirm ? "text" : "password"}
           autoComplete="new-password"
           minLength={8}
           required
-          className={inputClassName}
+          className={`${inputClassName} pr-12`}
         />
+        <button type="button" onClick={() => setShowPasswordConfirm((current) => !current)}
+          aria-label={showPasswordConfirm ? (locale === "de" ? "Passwort verbergen" : "Parolni yashirish") : (locale === "de" ? "Passwort anzeigen" : "Parolni ko‘rsatish")}
+          aria-pressed={showPasswordConfirm}
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-400">
+          {showPasswordConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+        </button>
+        </div>
       </div>
 
       {state.success && (

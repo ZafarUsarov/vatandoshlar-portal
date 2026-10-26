@@ -195,8 +195,8 @@ export default function PublicLoginForm({
               onClick={() => setShowPassword((current) => !current)}
               aria-label={
                 showPassword
-                  ? "Hide password"
-                  : "Show password"
+                  ? (locale === "de" ? "Passwort verbergen" : "Parolni yashirish")
+                  : (locale === "de" ? "Passwort anzeigen" : "Parolni ko‘rsatish")
               }
               aria-pressed={showPassword}
               className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-slate-500 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-400 dark:hover:text-white"
