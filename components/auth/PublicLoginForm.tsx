@@ -48,6 +48,7 @@ export default function PublicLoginForm({
           submit: "Anmelden",
           pending: "Anmeldung läuft…",
           google: "Mit Google anmelden",
+          googleHint: "Neu hier? Erstellen Sie zuerst ein Konto, um Google zu verbinden.",
           or: "oder",
         }
       : {
@@ -56,6 +57,7 @@ export default function PublicLoginForm({
           submit: "Kirish",
           pending: "Kirilmoqda…",
           google: "Google orqali kirish",
+          googleHint: "Yangi foydalanuvchimisiz? Google bilan hisob yaratish uchun avval ro‘yxatdan o‘ting.",
           or: "yoki",
         };
 
@@ -93,6 +95,7 @@ export default function PublicLoginForm({
           </span>
           {copy.google}
         </button>
+        <p className="mt-2 text-center text-xs leading-5 text-slate-500 dark:text-slate-400">{copy.googleHint}</p>
       </form>
 
       <div

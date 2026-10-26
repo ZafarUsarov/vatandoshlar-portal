@@ -76,7 +76,7 @@ export default async function VatandoshlarIdLoginPage({
           back:
             "Zur Startseite",
           notLinked:
-            "Dieses Google-Konto ist noch nicht mit einer Vatandoshlar ID verbunden. Erstellen Sie zuerst ein Konto.",
+            "Dieses Google-Konto ist noch nicht registriert. Erstellen Sie zuerst ein Konto und wählen Sie dort Google.",
           googleUnverified:
             "Google konnte keine bestätigte E-Mail-Adresse bereitstellen.",
         }
@@ -93,7 +93,7 @@ export default async function VatandoshlarIdLoginPage({
           back:
             "Bosh sahifaga qaytish",
           notLinked:
-            "Bu Google hisobi hali Vatandoshlar ID bilan bog‘lanmagan. Avval hisob yarating.",
+            "Bu Google hisobi hali ro‘yxatdan o‘tmagan. Avval «Hisob yaratish» sahifasida Google orqali ro‘yxatdan o‘ting.",
           googleUnverified:
             "Google tasdiqlangan e-mail manzilini taqdim etmadi.",
         };

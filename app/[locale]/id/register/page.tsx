@@ -22,7 +22,7 @@ export default async function VatandoshlarIdRegisterPage({ searchParams }: Reado
         privacyError: "Bitte bestätigen Sie die Datenschutzerklärung, bevor Sie fortfahren.",
         emailConflict: "Für diese E-Mail-Adresse besteht bereits eine Vatandoshlar ID. Aus Sicherheitsgründen wird sie nicht automatisch mit Google verknüpft.",
         googleUnverified: "Google konnte keine bestätigte E-Mail-Adresse bereitstellen.",
-        googleNotLinked: "Die Google-Anmeldung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
+        googleNotLinked: "Dieses Google-Konto ist noch nicht bei Vatandoshlar.de registriert. Bestätigen Sie die Datenschutzerklärung und wählen Sie anschließend „Mit Google registrieren“. Sie müssen die E-Mail- und Passwortfelder nicht ausfüllen.",
       }
     : {
         eyebrow: "VATANDOSHLAR ID",
@@ -32,7 +32,7 @@ export default async function VatandoshlarIdRegisterPage({ searchParams }: Reado
         privacyError: "Davom etishdan oldin Maxfiylik siyosati bilan tanishganingizni tasdiqlang.",
         emailConflict: "Bu e-mail bilan Vatandoshlar ID mavjud. Xavfsizlik uchun u Google hisobiga avtomatik bog‘lanmaydi.",
         googleUnverified: "Google tasdiqlangan e-mail manzilini taqdim etmadi.",
-        googleNotLinked: "Google orqali ro‘yxatdan o‘tish yakunlanmadi. Qayta urinib ko‘ring.",
+        googleNotLinked: "Bu Google hisobi hali Vatandoshlar.de’da ro‘yxatdan o‘tmagan. Maxfiylik siyosatiga rozilik bildiring va «Google orqali ro‘yxatdan o‘tish» tugmasini bosing. E-mail va parol maydonlarini to‘ldirish shart emas.",
       };
 
   const oauthMessage = query.privacyError === "1"
