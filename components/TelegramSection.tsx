@@ -188,7 +188,7 @@ export default async function TelegramSection() {
             </div>
 
             <a
-              href="https://t.me/Vatandoshlar_de"
+              href="https://t.me/UzDe_de"
               target="_blank"
               rel="noopener noreferrer"
               aria-label={copy.groups.officialChannelAria}
@@ -249,7 +249,7 @@ export default async function TelegramSection() {
 
           <div className="mt-10 flex justify-center lg:hidden">
             <a
-              href="https://t.me/Vatandoshlar_de"
+              href="https://t.me/UzDe_de"
               target="_blank"
               rel="noopener noreferrer"
               aria-label={copy.groups.officialChannelAria}

@@ -8,9 +8,9 @@ const organizationStructuredData = {
   url: baseUrl,
   logo: `${baseUrl}/images/brand/uzde/uzde-icon-512.png`,
   sameAs: [
-    "https://t.me/Vatandoshlar_de",
-    "https://www.instagram.com/vatandoshlar.de",
-    "https://facebook.com/Vatandoshlar.de",
+    "https://t.me/UzDe_de",
+    "https://www.instagram.com/uzde_de",
+    "https://www.facebook.com/uzde.dee",
   ],
 };
 
