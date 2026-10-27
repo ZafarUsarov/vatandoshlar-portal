@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const locale = (await getLocale()) === "de" ? "de" : "uz";
   const place = await getPublicPlace(locale, slug);
-  return { title: place ? `${place.name} | Vatandoshlar.de` : "Places | Vatandoshlar.de", robots: place ? undefined : { index: false } };
+  return { title: place ? `${place.name} | UzDe` : "Places | UzDe", robots: place ? undefined : { index: false } };
 }
 
 export default async function PlaceDetail({ params }: Props) {

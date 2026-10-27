@@ -18,8 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
     locale === "de";
 
   const title = isGerman
-    ? "Wie stellt man eine gute Frage in der Gruppe? | Vatandoshlar.de"
-    : "Guruhda qanday qilib to‘g‘ri savol berish kerak? | Vatandoshlar.de";
+    ? "Wie stellt man eine gute Frage in der Gruppe? | UzDe"
+    : "Guruhda qanday qilib to‘g‘ri savol berish kerak? | UzDe";
 
   const description = isGerman
     ? "Praktischer Leitfaden für klare, sichere und hilfreiche Fragen in Telegram-Gruppen."
@@ -49,7 +49,7 @@ export async function generateMetadata(): Promise<Metadata> {
           ? "de_DE"
           : "uz_UZ",
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       url: canonical,
       title,
       description,

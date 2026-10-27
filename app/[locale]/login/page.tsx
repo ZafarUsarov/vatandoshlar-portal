@@ -28,10 +28,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const copy = {
   uz: {
-    eyebrow: "VATANDOSHLAR.DE · ADMIN",
+    eyebrow: "UZDE · ADMIN",
     title: "Boshqaruv paneliga kirish",
     description:
-      "Bu kirish sahifasi Vatandoshlar.de boshqaruv paneli uchun mo‘ljallangan.",
+      "Bu kirish sahifasi UzDe boshqaruv paneli uchun mo‘ljallangan.",
     emailLabel: "E-mail",
     emailPlaceholder: "admin@vatandoshlar.de",
     passwordLabel: "Parol",
@@ -44,10 +44,10 @@ const copy = {
   },
 
   de: {
-    eyebrow: "VATANDOSHLAR.DE · ADMIN",
+    eyebrow: "UZDE · ADMIN",
     title: "Im Verwaltungsbereich anmelden",
     description:
-      "Diese Anmeldung ist für den Verwaltungsbereich von Vatandoshlar.de vorgesehen.",
+      "Diese Anmeldung ist für den Verwaltungsbereich von UzDe vorgesehen.",
     emailLabel: "E-Mail",
     emailPlaceholder: "admin@vatandoshlar.de",
     passwordLabel: "Passwort",
@@ -112,24 +112,21 @@ export default async function LoginPage() {
       >
         <Link
           href="/"
-          aria-label="Vatandoshlar.de"
+          aria-label="UzDe"
           className="inline-flex items-center gap-2"
         >
           <Image
-            src="/images/brand/Logo_New_Transparent.png"
+            src="/images/brand/uzde/uzde-logo-original-transparent.webp"
             alt=""
             aria-hidden="true"
             width={44}
             height={44}
             priority
-            className="size-10 object-contain"
+            className="size-10 rounded-lg bg-slate-950 p-1 object-contain"
           />
 
           <span className="font-extrabold tracking-tight text-slate-950 dark:text-white">
-            Vatandoshlar
-            <span className="text-emerald-600 dark:text-emerald-400">
-              .de
-            </span>
+            UzDe
           </span>
         </Link>
 

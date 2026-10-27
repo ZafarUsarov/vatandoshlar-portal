@@ -109,7 +109,7 @@ export async function generateMetadata({
       url:
         canonicalUrl,
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       locale:
         locale === "de"
           ? "de_DE"
@@ -210,14 +210,14 @@ export default async function NewsDetailPage({
       "@type":
         "Organization",
       name:
-        "Vatandoshlar.de",
+        "UzDe",
       url:
         baseUrl,
       logo: {
         "@type":
           "ImageObject",
         url:
-          `${baseUrl}/images/brand/Logo_New_Transparent.png`,
+          `${baseUrl}/images/brand/uzde/uzde-icon-512.png`,
       },
     },
   };

@@ -76,7 +76,7 @@ const organizerTypes: ReadonlyArray<{
   uz: string;
   de: string;
 }> = [
-  { value: "vatandoshlar", uz: "Vatandoshlar.de", de: "Vatandoshlar.de" },
+  { value: "vatandoshlar", uz: "UzDe", de: "UzDe" },
   { value: "external", uz: "Tashqi tashkilotchi", de: "Externer Veranstalter" },
 ];
 
@@ -717,7 +717,7 @@ export default function EventForm({
               name="organizerName"
               required
               disabled={pending}
-              defaultValue={event?.organizerName ?? "Vatandoshlar.de"}
+              defaultValue={event?.organizerName ?? "UzDe"}
               className={inputClassName}
             />
           </label>

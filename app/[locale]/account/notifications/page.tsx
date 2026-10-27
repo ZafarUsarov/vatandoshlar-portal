@@ -9,7 +9,7 @@ import {
 } from "./actions";
 
 export const metadata: Metadata = {
-  title: "Notifications | Vatandoshlar.de",
+  title: "Notifications | UzDe",
   robots: { index: false, follow: false },
 };
 
@@ -22,7 +22,7 @@ export default async function NotificationsPage() {
   const unreadCount = notifications.filter((item) => item.readAt === null).length;
   const copy = locale === "de"
     ? {
-        eyebrow: "VATANDOSHLAR ID",
+        eyebrow: "UZDE ID",
         title: "Benachrichtigungen",
         description: "Aktuelles zu Ihren Fragen und Market-Anzeigen.",
         marketHidden: "Anzeige ausgeblendet", marketRemoved: "Anzeige entfernt", marketOpen: "Anzeige öffnen", marketMissing: "Anzeige nicht mehr verfügbar",
@@ -35,7 +35,7 @@ export default async function NotificationsPage() {
         back: "Zurück zum Konto",
       }
     : {
-        eyebrow: "VATANDOSHLAR ID",
+        eyebrow: "UZDE ID",
         title: "Bildirishnomalar",
         description: "Savollaringiz va Market e’lonlaringiz haqidagi bildirishnomalar.",
         marketHidden: "E’lon yashirildi", marketRemoved: "E’lon olib tashlandi", marketOpen: "E’lonni ochish", marketMissing: "E’lon endi mavjud emas",

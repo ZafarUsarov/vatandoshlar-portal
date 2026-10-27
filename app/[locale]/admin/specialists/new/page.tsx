@@ -24,14 +24,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const copy = {
   uz: {
-    eyebrow: "VATANDOSHLAR.DE · ADMIN · MUTAXASSISLAR",
+    eyebrow: "UZDE · ADMIN · MUTAXASSISLAR",
     title: "Yangi mutaxassis",
     description:
       "Profilning o‘zbekcha va nemischa asosiy ma’lumotlarini, kategoriyalarini, xizmatlarini va ixtiyoriy aloqa ma’lumotlarini kiriting. Yangi profil avtomatik draft holatida saqlanadi.",
     back: "Mutaxassislar boshqaruviga qaytish",
   },
   de: {
-    eyebrow: "VATANDOSHLAR.DE · ADMIN · FACHKRÄFTE",
+    eyebrow: "UZDE · ADMIN · FACHKRÄFTE",
     title: "Neue Fachkraft",
     description:
       "Erfassen Sie die usbekischen und deutschen Profildaten, Kategorien, Leistungen und optionalen Kontaktdaten. Das neue Profil wird automatisch als Entwurf gespeichert.",

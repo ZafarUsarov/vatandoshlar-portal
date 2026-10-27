@@ -24,7 +24,7 @@ export const dynamic =
 
 export const metadata: Metadata = {
   title:
-    "Guide Admin | Vatandoshlar.de",
+    "Guide Admin | UzDe",
   robots: {
     index: false,
     follow: false,
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 const copy = {
   uz: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · GERMANIYA QO‘LLANMASI",
+      "UZDE · ADMIN · GERMANIYA QO‘LLANMASI",
     title:
       "Guide maqolalarini boshqarish",
     description:
@@ -129,7 +129,7 @@ const copy = {
 
   de: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · DEUTSCHLAND-RATGEBER",
+      "UZDE · ADMIN · DEUTSCHLAND-RATGEBER",
     title:
       "Guide-Artikel verwalten",
     description:

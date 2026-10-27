@@ -20,8 +20,8 @@ export async function sendSavolNewAnswerEmail(input: Readonly<{
   const url = `${getSiteUrl()}/${input.locale}/savol/${encodeURIComponent(input.questionSlug)}`;
   const isGerman = input.locale === "de";
   const subject = isGerman
-    ? `Neue Antwort: ${input.questionTitle} – Vatandoshlar.de`
-    : `Yangi javob: ${input.questionTitle} – Vatandoshlar.de`;
+    ? `Neue Antwort: ${input.questionTitle} – UzDe`
+    : `Yangi javob: ${input.questionTitle} – UzDe`;
   const title = isGerman ? "Neue Antwort auf eine Frage" : "Savolga yangi javob";
   const intro = isGerman
     ? `Zu „${input.questionTitle}“ wurde eine neue Antwort veröffentlicht.`
@@ -44,7 +44,7 @@ export async function sendSavolAnswerReplyEmail(input: Readonly<{
 }>): Promise<void> {
   const url = `${getSiteUrl()}/${input.locale}/savol/${encodeURIComponent(input.questionSlug)}`;
   const de = input.locale === 'de';
-  const subject = de ? `Neue Reaktion auf Ihre Antwort – Vatandoshlar.de` : `Javobingizga yangi izoh – Vatandoshlar.de`;
+  const subject = de ? `Neue Reaktion auf Ihre Antwort – UzDe` : `Javobingizga yangi izoh – UzDe`;
   const intro = de ? `Zu Ihrer Antwort auf „${input.questionTitle}“ gibt es eine neue Reaktion.` : `“${input.questionTitle}” savolidagi javobingizga yangi izoh yozildi.`;
   const action = de ? 'Reaktion ansehen' : 'Izohni ko‘rish';
   await sendTransactionalEmail({

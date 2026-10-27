@@ -1,36 +1,12 @@
-import { Fragment } from "react";
 import {
   getLocale,
   getTranslations,
 } from "next-intl/server";
 
 import { Link } from "../i18n/navigation";
-import BrandName from "./ui/BrandName";
+import BrandedText from "./ui/BrandedText";
 
 type SupportedFooterLocale = "uz" | "de";
-
-function BrandedText({
-  text,
-}: Readonly<{
-  text: string;
-}>) {
-  const parts = text.split("Vatandoshlar.de");
-
-  if (parts.length === 1) {
-    return text;
-  }
-
-  return (
-    <>
-      {parts.map((part, index) => (
-        <Fragment key={`${part}-${index}`}>
-          {index > 0 && <BrandName />}
-          {part}
-        </Fragment>
-      ))}
-    </>
-  );
-}
 
 type IconProps = Readonly<{
   className?: string;
@@ -231,23 +207,23 @@ export default async function Footer({
             "Savollaringiz, takliflaringiz yoki hamkorlik bo‘yicha biz bilan elektron pochta orqali bog‘lanishingiz mumkin.",
           followUs: "Bizni kuzating",
           followDescription:
-            "Vatandoshlar.de yangiliklari va foydali e’lonlarini rasmiy sahifalarimiz orqali kuzating.",
-          telegramLabel: "Vatandoshlar.de Telegram sahifasi",
-          instagramLabel: "Vatandoshlar.de Instagram sahifasi",
-          facebookLabel: "Vatandoshlar.de Facebook sahifasi",
+            "UzDe yangiliklari va foydali e’lonlarini rasmiy sahifalarimiz orqali kuzating.",
+          telegramLabel: "UzDe Telegram sahifasi",
+          instagramLabel: "UzDe Instagram sahifasi",
+          facebookLabel: "UzDe Facebook sahifasi",
           supportEyebrow: "Loyihaga hissa qo‘shish",
-          supportTitle: "Vatandoshlar.de siz uchun foydalimi?",
+          supportTitle: "UzDe siz uchun foydalimi?",
           supportDescription:
             "Platformani rivojlantirishni qo‘llab-quvvatlang. Har bir qo‘llab-quvvatlashning 20% qismi G‘azodagi bolalarni qo‘llab-quvvatlash uchun ajratiladi.",
           supportAction: "Hissa qo‘shish",
           compactSupportLink: "Hissa qo‘shish",
           privacyLink: "Maxfiylik",
-          emailLabel: "Vatandoshlar.de elektron pochtasi",
+          emailLabel: "UzDe elektron pochtasi",
           backToTop: "Yuqoriga",
           founderEyebrow: "Loyiha ortidagi inson",
           founderTitle: "Loyiha asoschisi",
           founderDescription:
-            "Vatandoshlar.de asoschisi va dasturchisi Zafar Usarov haqida batafsil ma’lumot oling.",
+            "UzDe asoschisi va dasturchisi Zafar Usarov haqida batafsil ma’lumot oling.",
           founderAction: "Zafar Usarov haqida",
         }
       : {
@@ -261,23 +237,23 @@ export default async function Footer({
             "Bei Fragen, Vorschlägen oder Kooperationsanfragen können Sie uns gerne per E-Mail kontaktieren.",
           followUs: "Folgen Sie uns",
           followDescription:
-            "Folgen Sie den offiziellen Vatandoshlar.de-Seiten für Neuigkeiten und wichtige Hinweise.",
-          telegramLabel: "Vatandoshlar.de auf Telegram",
-          instagramLabel: "Vatandoshlar.de auf Instagram",
-          facebookLabel: "Vatandoshlar.de auf Facebook",
+            "Folgen Sie den offiziellen UzDe-Seiten für Neuigkeiten und wichtige Hinweise.",
+          telegramLabel: "UzDe auf Telegram",
+          instagramLabel: "UzDe auf Instagram",
+          facebookLabel: "UzDe auf Facebook",
           supportEyebrow: "Zum Projekt beitragen",
-          supportTitle: "Ist Vatandoshlar.de für Sie hilfreich?",
+          supportTitle: "Ist UzDe für Sie hilfreich?",
           supportDescription:
             "Unterstützen Sie die Weiterentwicklung der Plattform. 20% jeder Unterstützung werden für die Unterstützung von Kindern in Gaza vorgesehen.",
           supportAction: "Beitrag leisten",
           compactSupportLink: "Beitrag leisten",
           privacyLink: "Datenschutz",
-          emailLabel: "E-Mail an Vatandoshlar.de",
+          emailLabel: "E-Mail an UzDe",
           backToTop: "Nach oben",
           founderEyebrow: "Die Person hinter dem Projekt",
           founderTitle: "Projektgründer",
           founderDescription:
-            "Erfahren Sie mehr über Zafar Usarov, Gründer und Entwickler von Vatandoshlar.de.",
+            "Erfahren Sie mehr über Zafar Usarov, Gründer und Entwickler von UzDe.",
           founderAction: "Über Zafar Usarov",
         };
 

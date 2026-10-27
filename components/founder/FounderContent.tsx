@@ -1,7 +1,6 @@
-import { Fragment } from "react";
 
 import FounderSocials from "@/components/founder/FounderSocials";
-import BrandName from "@/components/ui/BrandName";
+import BrandedText from "@/components/ui/BrandedText";
 import type {
   FounderProfile,
   FounderSocialPlatform,
@@ -37,29 +36,6 @@ type FounderContentProps = Readonly<{
     >;
   }>;
 }>;
-
-function BrandedText({
-  text,
-}: Readonly<{
-  text: string;
-}>) {
-  const parts = text.split("Vatandoshlar.de");
-
-  if (parts.length === 1) {
-    return text;
-  }
-
-  return (
-    <>
-      {parts.map((part, index) => (
-        <Fragment key={`${part}-${index}`}>
-          {index > 0 && <BrandName />}
-          {part}
-        </Fragment>
-      ))}
-    </>
-  );
-}
 
 function getCompetencyStyles(
   accent: "emerald" | "sky" | "violet" | "amber",

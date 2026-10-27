@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const copy = {
   uz: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · YANGILIKLAR",
+      "UZDE · ADMIN · YANGILIKLAR",
     title: "Yangi maqola yaratish",
     description:
       "O‘zbek va nemis tillaridagi kontentni bir joyda kiriting. Ushbu bosqichda maqola faqat qoralama sifatida PostgreSQL’ga saqlanadi.",
@@ -31,7 +31,7 @@ const copy = {
   },
   de: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · NACHRICHTEN",
+      "UZDE · ADMIN · NACHRICHTEN",
     title: "Neue Nachricht erstellen",
     description:
       "Erfassen Sie den usbekischen und deutschen Inhalt an einer Stelle. In dieser Phase wird der Beitrag ausschließlich als Entwurf in PostgreSQL gespeichert.",

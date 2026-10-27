@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const copy = {
   uz: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · SUPPORT",
+      "UZDE · ADMIN · SUPPORT",
     title: "Contributionni tahrirlash",
     description:
       "Transaction ma’lumotlari, public ko‘rinish va holatni yangilang.",
@@ -45,7 +45,7 @@ const copy = {
   },
   de: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · UNTERSTÜTZUNG",
+      "UZDE · ADMIN · UNTERSTÜTZUNG",
     title: "Beitrag bearbeiten",
     description:
       "Aktualisieren Sie Transaktionsdaten, öffentliche Sichtbarkeit und Status.",

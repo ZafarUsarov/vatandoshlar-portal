@@ -14,8 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: {
       absolute: isGerman
-        ? "Baden-Württemberg Telegram-Communitys | Vatandoshlar.de"
-        : "Baden-Württemberg Telegram guruhlari | Vatandoshlar.de",
+        ? "Baden-Württemberg Telegram-Communitys | UzDe"
+        : "Baden-Württemberg Telegram guruhlari | UzDe",
     },
     description: isGerman
       ? "Usbekische Telegram-Communitys in Baden-Württemberg."

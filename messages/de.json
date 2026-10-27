@@ -57,7 +57,7 @@
       }
     },
     "finalCta": {
-      "badge": "Vatandoshlar-Community",
+      "badge": "UzDe-Community",
       "title": "Erleichtern Sie Ihr Leben in Deutschland mit verlässlichen Informationen",
       "description": "Finden Sie Dienstleistungen, Jobangebote, offizielle Informationen und Communities in Ihrer Region mit wenigen Klicks.",
       "telegramButton": "Telegram-Gruppen ansehen",
@@ -103,7 +103,7 @@
       "navigationDescription": "Wählen Sie einen Portalbereich"
     },
     "accessibility": {
-      "homeLink": "Zur Startseite von Vatandoshlar.de",
+      "homeLink": "Zur Startseite von UzDe",
       "mainNavigation": "Hauptnavigation",
       "openSearch": "Schnellsuche öffnen",
       "enableLightMode": "Hellen Modus aktivieren",
@@ -205,7 +205,7 @@
   "FeaturesSection": {
     "badge": "Funktionen der Plattform",
     "title": "Wichtige Angebote für Ihr Leben in Deutschland an einem Ort",
-    "description": "Von der Jobsuche über verlässliche Dienstleistungen und Veranstaltungen bis zu lokalen Communities hilft Ihnen Vatandoshlar.de, passende Informationen schnell und einfach zu finden.",
+    "description": "Von der Jobsuche über verlässliche Dienstleistungen und Veranstaltungen bis zu lokalen Communities hilft Ihnen UzDe, passende Informationen schnell und einfach zu finden.",
     "viewAll": "Alle Bereiche ansehen",
     "items": {
       "telegramGroups": {
@@ -268,7 +268,7 @@
   },
   "NewsPage": {
     "metadata": {
-      "title": "Nachrichten und nützliche Informationen | Vatandoshlar.de",
+      "title": "Nachrichten und nützliche Informationen | UzDe",
       "description": "Offizielle und geprüfte Informationen zu Integration, Arbeit, Bildung und konsularischen Themen für Usbeken in Deutschland."
     },
     "hero": {
@@ -347,8 +347,8 @@
   },
   "NewsDetailPage": {
     "metadata": {
-      "notFound": "Information nicht gefunden | Vatandoshlar.de",
-      "title": "{title} | Vatandoshlar.de"
+      "notFound": "Information nicht gefunden | UzDe",
+      "title": "{title} | UzDe"
     },
     "backToAll": "Alle Beiträge",
     "lastVerified": "Die Informationen wurden zuletzt am {date} geprüft.",
@@ -362,7 +362,7 @@
       "title": "Wichtiger Hinweis",
       "description": "Gesetze, Gebühren, Antragsvoraussetzungen, Fristen und behördliche Abläufe können sich ändern. Prüfen Sie vor verbindlichen Schritten stets erneut die oben genannte Primärquelle."
     },
-    "preparedNote": "Dieser Beitrag wurde auf Grundlage einer offiziellen Quelle für Vatandoshlar.de verständlich aufbereitet.",
+    "preparedNote": "Dieser Beitrag wurde auf Grundlage einer offiziellen Quelle für UzDe verständlich aufbereitet.",
     "related": {
       "eyebrow": "Nützliche Informationen",
       "title": "Weitere Beiträge"
@@ -507,7 +507,7 @@
     "commands": {
       "home": {
         "title": "Startseite",
-        "description": "Zur Startseite von Vatandoshlar.de"
+        "description": "Zur Startseite von UzDe"
       },
       "news": {
         "title": "Offizielle Nachrichten",
@@ -586,13 +586,13 @@
       }
     },
     "bottom": {
-      "copyright": "© {year} Vatandoshlar.de. Alle Rechte vorbehalten.",
+      "copyright": "© {year} UzDe. Alle Rechte vorbehalten.",
       "disclaimer": "Das Portal ersetzt keine Rechts-, Steuer- oder Migrationsberatung.",
       "backToTop": "Nach oben",
       "support": "Projekt unterstützen"
     },
     "accessibility": {
-      "homeLink": "Zur Startseite von Vatandoshlar.de",
+      "homeLink": "Zur Startseite von UzDe",
       "navigation": "Footer-Navigation"
     }
   },
@@ -675,7 +675,7 @@
   },
   "SpecialistsPage": {
     "metadata": {
-      "title": "Verzeichnis usbekischer Fachkräfte | Vatandoshlar.de",
+      "title": "Verzeichnis usbekischer Fachkräfte | UzDe",
       "description": "Verzeichnis usbekischer Ärzte, Anwälte, IT-Fachkräfte, Handwerker und weiterer Dienstleister in Deutschland."
     },
     "hero": {
@@ -741,7 +741,7 @@
   },
   "SpecialistDetailPage": {
     "metadata": {
-      "notFound": "Fachkraft nicht gefunden | Vatandoshlar.de",
+      "notFound": "Fachkraft nicht gefunden | UzDe",
       "title": "{name} | Fachkräfteverzeichnis"
     },
     "backToDirectory": "Alle Fachkräfte",
@@ -804,26 +804,26 @@
   },
   "FounderPage": {
     "metadata": {
-      "title": "Projektgründer und Entwickler | Vatandoshlar.de",
-      "description": "Professionelle Informationen über Zafar Usarov, Gründer und Entwickler von Vatandoshlar.de."
+      "title": "Projektgründer und Entwickler | UzDe",
+      "description": "Professionelle Informationen über Zafar Usarov, Gründer und Entwickler von UzDe."
     },
     "hero": {
       "badge": "Projektgründer",
       "profession": "Projektgründer und Softwareentwickler",
       "title": "Entwickler einer verlässlichen digitalen Plattform für Usbeken in Deutschland",
-      "description": "Vatandoshlar.de ist ein langfristiges Projekt mit dem Ziel, Usbeken in Deutschland geprüfte Informationen, Dienstleistungen und hilfreiche Orientierung an einem Ort bereitzustellen.",
+      "description": "UzDe ist ein langfristiges Projekt mit dem Ziel, Usbeken in Deutschland geprüfte Informationen, Dienstleistungen und hilfreiche Orientierung an einem Ort bereitzustellen.",
       "contactButton": "Kontakt aufnehmen",
       "specialistButton": "Fachkräfteprofil ansehen"
     },
     "story": {
       "title": "Über mich",
       "paragraphs": {
-        "0": "Ich bin Zafar Usarov, Gründer und Entwickler von Vatandoshlar.de. Ich entwickle produktionsreife Webanwendungen mit sauberer Architektur, strengem TypeScript und einem Ansatz, der auf langfristige Weiterentwicklung ausgelegt ist.",
-        "1": "Vatandoshlar.de ist für mich keine einfache Website. Ziel ist eine unabhängige, moderne und verantwortungsvolle Plattform, die Usbeken in Deutschland hilft, relevante Informationen und verlässliche Fachkräfte schneller zu finden."
+        "0": "Ich bin Zafar Usarov, Gründer und Entwickler von UzDe. Ich entwickle produktionsreife Webanwendungen mit sauberer Architektur, strengem TypeScript und einem Ansatz, der auf langfristige Weiterentwicklung ausgelegt ist.",
+        "1": "UzDe ist für mich keine einfache Website. Ziel ist eine unabhängige, moderne und verantwortungsvolle Plattform, die Usbeken in Deutschland hilft, relevante Informationen und verlässliche Fachkräfte schneller zu finden."
       }
     },
     "mission": {
-      "title": "Die Mission von Vatandoshlar.de",
+      "title": "Die Mission von UzDe",
       "description": "Die Plattform soll verständliche und überprüfbare Informationen ohne unnötige Komplexität bereitstellen.",
       "items": {
         "0": "Informationen auf Basis offizieller und überprüfbarer Quellen",
@@ -851,7 +851,7 @@
     },
     "contact": {
       "title": "Kontakt",
-      "description": "Nutzen Sie für berufliche Fragen, Zusammenarbeit oder Anliegen zu Vatandoshlar.de einen der folgenden Kanäle.",
+      "description": "Nutzen Sie für berufliche Fragen, Zusammenarbeit oder Anliegen zu UzDe einen der folgenden Kanäle.",
       "socials": {
         "email": "E-Mail",
         "telegram": "Telegram",
@@ -863,21 +863,21 @@
   },
   "SupportPage": {
     "metadata": {
-      "title": "Zum Projekt beitragen | Vatandoshlar.de",
-      "description": "Unterstützen Sie Vatandoshlar.de freiwillig. 20% jeder Unterstützung werden für die Unterstützung von Kindern in Gaza vorgesehen."
+      "title": "Zum Projekt beitragen | UzDe",
+      "description": "Unterstützen Sie UzDe freiwillig. 20% jeder Unterstützung werden für die Unterstützung von Kindern in Gaza vorgesehen."
     },
     "hero": {
       "badge": "Zum Projekt beitragen",
-      "title": "Ist das Projekt für Sie hilfreich?",
-      "description": "Dann können Sie seine Weiterentwicklung freiwillig unterstützen. 20% jeder Unterstützung sind für die Unterstützung von Kindern in Gaza vorgesehen.",
+      "title": "Finden Sie unser Projekt hilfreich?",
+      "description": "Dann können Sie uns freiwillig dabei unterstützen, das Projekt weiterzuentwickeln und die Kosten für Domain, Hosting und Technik zu decken. 20 % jedes Unterstützungsbeitrags werden zum Jahresende berechnet und für die Unterstützung von Kindern im Gazastreifen bereitgestellt. Wir bedanken uns herzlich bei allen, die unser Projekt unterstützen.",
       "secondaryDescription": "",
       "action": "Beitrag leisten",
-      "imageAlt": "Bild zur Weiterentwicklung von Vatandoshlar.de und zur Unterstützung der Community"
+      "imageAlt": "Bild zur Weiterentwicklung von UzDe und zur Unterstützung der Community"
     },
     "purpose": {
       "title": "Wofür wird Ihre Unterstützung verwendet?",
       "tagline": "Gemeinsam die Plattform weiterentwickeln und einen guten Zweck unterstützen.",
-      "description": "Mit Ihrer Unterstützung tragen Sie zur Weiterentwicklung von Vatandoshlar.de und zugleich zu einem guten Zweck bei. 20% jeder Unterstützung werden für die Unterstützung von Kindern in Gaza vorgesehen. Der verbleibende Teil wird für Domain, Hosting, technische Kosten und die Weiterentwicklung der Plattform verwendet."
+      "description": "Mit Ihrer Unterstützung tragen Sie zur Weiterentwicklung von UzDe und zugleich zu einem guten Zweck bei. 20% jeder Unterstützung werden für die Unterstützung von Kindern in Gaza vorgesehen. Der verbleibende Teil wird für Domain, Hosting, technische Kosten und die Weiterentwicklung der Plattform verwendet."
     },
     "trust": {
       "voluntary": "Freiwillige Unterstützung",
@@ -891,14 +891,14 @@
         "description": "Freiwillige Unterstützung aus Deutschland und anderen Ländern über PayPal.",
         "action": "Über PayPal unterstützen",
         "noteTitle": "Zahlungsnotiz",
-        "note": "Wenn Sie möchten, können Sie bei der PayPal-Zahlung als Verwendungszweck „Vatandoshlar.de“ angeben."
+        "note": "Wenn Sie möchten, können Sie bei der PayPal-Zahlung als Verwendungszweck „UzDe“ angeben."
       },
       "taps": {
         "name": "Taps",
         "description": "Freiwillige Unterstützung aus Usbekistan über Taps.",
         "action": "Über Taps unterstützen"
       },
-      "secondaryText": "Sie können „Vatandoshlar.de“ als Verwendungszweck angeben."
+      "secondaryText": "Sie können „UzDe“ als Verwendungszweck angeben."
     },
     "transparency": {
       "title": "Transparenz",
@@ -913,7 +913,7 @@
       },
       "disclaimer": "Beträge, Organisationen, Transaktionen oder Belege, die noch nicht vorliegen, werden nicht angegeben. Zahlungsdienstleister oder Empfängerorganisationen können Gebühren erheben."
     },
-    "privacy": "Die Zahlung erfolgt direkt über PayPal oder Taps. Vatandoshlar.de erhält und speichert keine Karten- oder Bankdaten."
+    "privacy": "Die Zahlung erfolgt direkt über PayPal oder Taps. UzDe erhält und speichert keine Karten- oder Bankdaten."
   },
   "ErrorPage": {
     "eyebrow": "Ein Fehler ist aufgetreten",

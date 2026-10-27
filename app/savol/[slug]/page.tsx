@@ -43,7 +43,7 @@ type SupportedLocale = "uz" | "de";
 
 const copy = {
   uz: {
-    notFound: "Savol topilmadi | Vatandoshlar.de",
+    notFound: "Savol topilmadi | UzDe",
     answers: "Javoblar",
     noAnswers: "Hozircha javob yo‘q.",
     back: "Barcha savollar",
@@ -52,7 +52,7 @@ const copy = {
     edit: "Tahrirlash",
   },
   de: {
-    notFound: "Frage nicht gefunden | Vatandoshlar.de",
+    notFound: "Frage nicht gefunden | UzDe",
     answers: "Antworten",
     noAnswers: "Noch keine Antworten.",
     back: "Alle Fragen",
@@ -97,7 +97,7 @@ export async function generateMetadata({
       : question.body;
 
   return {
-    title: `${question.title} | Vatandoshlar.de`,
+    title: `${question.title} | UzDe`,
     description,
     alternates: {
       canonical: `/${locale}/savol/${question.slug}`,
@@ -108,7 +108,7 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "article",
-      siteName: "Vatandoshlar.de",
+      siteName: "UzDe",
       title: question.title,
       description,
       url: `/${locale}/savol/${question.slug}`,

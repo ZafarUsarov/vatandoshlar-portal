@@ -1,4 +1,3 @@
-import Image from "next/image";
 
 import BrandedText from "@/components/ui/BrandedText";
 
@@ -7,8 +6,6 @@ type SupportHeroProps = Readonly<{
   title: string;
   description: string;
   action: string;
-  imageSrc: string;
-  imageAlt: string;
 }>;
 
 function HeartIcon() {
@@ -54,8 +51,6 @@ export default function SupportHero({
   title,
   description,
   action,
-  imageSrc,
-  imageAlt,
 }: SupportHeroProps) {
   return (
     <section className="relative isolate overflow-hidden border-b border-slate-200/80 bg-slate-50 text-slate-950 dark:border-white/[0.08] dark:bg-slate-950 dark:text-white">
@@ -76,7 +71,7 @@ export default function SupportHero({
               <BrandedText text={title} />
             </h1>
 
-            <div className="mt-6 max-w-xl space-y-4 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8 dark:text-slate-300">
+            <div className="mt-6 w-full max-w-5xl space-y-4 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8 dark:text-slate-300">
               <p>
                 <BrandedText text={description} />
               </p>
@@ -91,16 +86,7 @@ export default function SupportHero({
             </a>
           </div>
 
-          <div className="relative h-[220px] w-full overflow-hidden rounded-[1.5rem] sm:h-[280px] lg:h-[340px] bg-slate-200 shadow-[0_28px_80px_-48px_rgba(5,150,105,0.45)] dark:bg-slate-900 sm:rounded-[1.75rem]">
-            <Image
-              src={imageSrc}
-              alt={imageAlt}
-              fill
-              priority
-              sizes="(min-width: 1280px) 1216px, (min-width: 1024px) calc(100vw - 4rem), calc(100vw - 3rem)"
-              className="object-cover object-[center_52%] sm:object-[center_50%] lg:object-[center_48%]"
-            />
-          </div>
+
         </div>
       </div>
     </section>

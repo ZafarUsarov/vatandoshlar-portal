@@ -9,7 +9,7 @@ type BrandedTextProps = Readonly<{
 export default function BrandedText({
   text,
 }: BrandedTextProps) {
-  const parts = text.split("Vatandoshlar.de");
+  const parts = text.split("UzDe");
 
   if (parts.length === 1) {
     return text;

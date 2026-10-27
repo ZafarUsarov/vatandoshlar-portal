@@ -26,12 +26,12 @@ export default function Loading() {
 
           <div className="relative flex h-20 w-20 items-center justify-center">
             <Image
-              src="/images/brand/Logo_New_Transparent.png"
+              src="/images/brand/uzde/uzde-logo-original-transparent.webp"
               alt=""
               width={80}
               height={80}
               priority
-              className="h-20 w-20 object-contain"
+              className="h-20 w-20 rounded-2xl bg-slate-950 p-2 object-contain"
             />
           </div>
 
@@ -44,10 +44,7 @@ export default function Loading() {
 
         <div className="mt-7">
           <p className="text-2xl font-extrabold tracking-tight text-slate-950 dark:text-white">
-            Vatandoshlar
-            <span className="text-emerald-600 dark:text-emerald-400">
-              .de
-            </span>
+            UzDe
           </p>
 
           <p className="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400">

@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const copy = {
   uz: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · SUPPORT",
+      "UZDE · ADMIN · SUPPORT",
     title: "Yangi contribution qo‘shish",
     description:
       "Faqat real va tasdiqlangan PayPal yoki Taps to‘lovini kiriting. Ranking va umumiy summa serverda transactionlardan avtomatik hisoblanadi.",
@@ -33,7 +33,7 @@ const copy = {
   },
   de: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · UNTERSTÜTZUNG",
+      "UZDE · ADMIN · UNTERSTÜTZUNG",
     title: "Neuen Beitrag erfassen",
     description:
       "Erfassen Sie nur reale und bestätigte PayPal- oder Taps-Zahlungen. Rangliste und Gesamtsumme werden serverseitig automatisch aus den Transaktionen berechnet.",

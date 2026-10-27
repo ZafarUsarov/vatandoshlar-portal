@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     keywords: [
-      "Vatandoshlar.de",
+      "UzDe",
       "Zafar Usarov",
       "Uzbekistan",
       "Deutschland",
@@ -54,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
           ? "de_DE"
           : "uz_UZ",
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       url:
         `/${locale}/about/founder`,
     },
@@ -219,12 +219,6 @@ export default async function FounderPage() {
       <main>
         <FounderHero
           name={founderProfile.name}
-          imageUrl="/images/founder/vatandoshlar-project-hero.webp"
-          imageAlt={
-            locale === "de"
-              ? "Editoriale Darstellung des Projekts Vatandoshlar.de"
-              : "Vatandoshlar.de loyihasining editorial vizuali"
-          }
           labels={{
             badge: t("hero.badge"),
             title: t("hero.title"),

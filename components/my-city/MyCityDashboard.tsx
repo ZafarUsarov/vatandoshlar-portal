@@ -207,7 +207,7 @@ export default function MyCityDashboard({
           noCityTitle:
             "Wählen Sie Ihre Stadt aus",
           noCityDescription:
-            "Hinterlegen Sie Ihre Stadt in Ihrem Vatandoshlar-ID-Profil. Danach können lokale Inhalte hier angezeigt werden.",
+            "Hinterlegen Sie Ihre Stadt in Ihrem UzDe-ID-Profil. Danach können lokale Inhalte hier angezeigt werden.",
           chooseCity:
             "Stadt auswählen",
           localInfo:
@@ -269,7 +269,7 @@ export default function MyCityDashboard({
           noCityTitle:
             "Shahringizni tanlang",
           noCityDescription:
-            "Vatandoshlar ID profilingizda yashayotgan shahringizni tanlang. Shundan keyin lokal ma’lumotlar shu yerda ko‘rinadi.",
+            "UzDe ID profilingizda yashayotgan shahringizni tanlang. Shundan keyin lokal ma’lumotlar shu yerda ko‘rinadi.",
           chooseCity:
             "Shahringizni tanlang",
           localInfo:

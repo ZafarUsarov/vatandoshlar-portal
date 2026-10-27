@@ -5,7 +5,7 @@ import PublicRegisterForm from "@/components/auth/PublicRegisterForm";
 import { Link, redirect } from "@/i18n/navigation";
 import { getCurrentPublicUser } from "@/lib/auth/user";
 
-export const metadata: Metadata = { title: "Vatandoshlar.de hisobini yaratish", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "UzDe hisobini yaratish", robots: { index: false, follow: false } };
 
 export default async function VatandoshlarIdRegisterPage({ searchParams }: Readonly<{ searchParams: Promise<{ oauthError?: string; privacyError?: string }> }>) {
   const locale = (await getLocale()) === "de" ? "de" : "uz";
@@ -15,24 +15,24 @@ export default async function VatandoshlarIdRegisterPage({ searchParams }: Reado
 
   const copy = locale === "de"
     ? {
-        eyebrow: "VATANDOSHLAR ID",
-        title: "Vatandoshlar.de Konto erstellen",
+        eyebrow: "UZDE ID",
+        title: "UzDe Konto erstellen",
         description: "Erstellen Sie ein Konto mit E-Mail und Passwort oder mit Google. Danach können Sie Ihr Profil personalisieren.",
         login: "Sie haben bereits ein Konto? Anmelden",
         privacyError: "Bitte bestätigen Sie die Datenschutzerklärung, bevor Sie fortfahren.",
-        emailConflict: "Für diese E-Mail-Adresse besteht bereits eine Vatandoshlar ID. Aus Sicherheitsgründen wird sie nicht automatisch mit Google verknüpft.",
+        emailConflict: "Für diese E-Mail-Adresse besteht bereits eine UzDe ID. Aus Sicherheitsgründen wird sie nicht automatisch mit Google verknüpft.",
         googleUnverified: "Google konnte keine bestätigte E-Mail-Adresse bereitstellen.",
-        googleNotLinked: "Dieses Google-Konto ist noch nicht bei Vatandoshlar.de registriert. Bestätigen Sie die Datenschutzerklärung und wählen Sie anschließend „Mit Google registrieren“. Sie müssen die E-Mail- und Passwortfelder nicht ausfüllen.",
+        googleNotLinked: "Dieses Google-Konto ist noch nicht bei UzDe registriert. Bestätigen Sie die Datenschutzerklärung und wählen Sie anschließend „Mit Google registrieren“. Sie müssen die E-Mail- und Passwortfelder nicht ausfüllen.",
       }
     : {
-        eyebrow: "VATANDOSHLAR ID",
-        title: "Vatandoshlar.de hisobini yarating",
+        eyebrow: "UZDE ID",
+        title: "UzDe hisobini yarating",
         description: "E-mail va parol yoki Google orqali hisob yarating. Keyingi bosqichda profilingizni moslashtirishingiz mumkin.",
         login: "Hisobingiz bormi? Kirish",
         privacyError: "Davom etishdan oldin Maxfiylik siyosati bilan tanishganingizni tasdiqlang.",
-        emailConflict: "Bu e-mail bilan Vatandoshlar ID mavjud. Xavfsizlik uchun u Google hisobiga avtomatik bog‘lanmaydi.",
+        emailConflict: "Bu e-mail bilan UzDe ID mavjud. Xavfsizlik uchun u Google hisobiga avtomatik bog‘lanmaydi.",
         googleUnverified: "Google tasdiqlangan e-mail manzilini taqdim etmadi.",
-        googleNotLinked: "Bu Google hisobi hali Vatandoshlar.de’da ro‘yxatdan o‘tmagan. Maxfiylik siyosatiga rozilik bildiring va «Google orqali ro‘yxatdan o‘tish» tugmasini bosing. E-mail va parol maydonlarini to‘ldirish shart emas.",
+        googleNotLinked: "Bu Google hisobi hali UzDe’da ro‘yxatdan o‘tmagan. Maxfiylik siyosatiga rozilik bildiring va «Google orqali ro‘yxatdan o‘tish» tugmasini bosing. E-mail va parol maydonlarini to‘ldirish shart emas.",
       };
 
   const oauthMessage = query.privacyError === "1"

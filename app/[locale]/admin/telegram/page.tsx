@@ -18,7 +18,7 @@ export const dynamic =
 
 export const metadata: Metadata = {
   title:
-    "Telegram Admin | Vatandoshlar.de",
+    "Telegram Admin | UzDe",
   robots: {
     index: false,
     follow: false,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 const copy = {
   uz: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · TELEGRAM",
+      "UZDE · ADMIN · TELEGRAM",
     title:
       "Telegram hamjamiyatlarini boshqarish",
     description:
@@ -89,7 +89,7 @@ const copy = {
 
   de: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · TELEGRAM",
+      "UZDE · ADMIN · TELEGRAM",
     title:
       "Telegram-Communitys verwalten",
     description:

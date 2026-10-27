@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const copy = {
   uz: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · TADBIRLAR",
+      "UZDE · ADMIN · TADBIRLAR",
     title:
       "Yangi tadbir yaratish",
     description:
@@ -37,7 +37,7 @@ const copy = {
   },
   de: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · VERANSTALTUNGEN",
+      "UZDE · ADMIN · VERANSTALTUNGEN",
     title:
       "Neue Veranstaltung erstellen",
     description:

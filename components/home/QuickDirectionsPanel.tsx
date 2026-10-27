@@ -1,4 +1,5 @@
 import Image from "next/image";
+import BrandName from "@/components/ui/BrandName";
 import type { ReactNode } from "react";
 
 import { Link } from "../../i18n/navigation";
@@ -54,9 +55,8 @@ export default function QuickDirectionsPanel({
       <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.07] p-5 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-6 xl:p-7">
         <div className="flex items-center justify-between border-b border-white/10 pb-4 sm:pb-5">
           <div>
-            <p className="text-sm font-semibold">
-              <span className="text-white">Vatandoshlar</span>
-              <span className="text-emerald-400">.de</span>
+            <p className="text-lg font-semibold">
+              <BrandName className="text-white" />
             </p>
 
             <h2 className="mt-1 text-xl font-bold">{title}</h2>
@@ -67,7 +67,7 @@ export default function QuickDirectionsPanel({
             className="flex h-14 w-14 shrink-0 items-center justify-center"
           >
             <Image
-              src="/images/brand/Logo_New_Transparent.png"
+              src="/images/brand/uzde/uzde-logo-original-transparent.webp"
               alt=""
               width={56}
               height={56}

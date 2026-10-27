@@ -46,8 +46,8 @@ export async function generateMetadata({
     return {
       title:
         locale === "uz"
-          ? "Qo‘llanma bo‘limi topilmadi | Vatandoshlar.de"
-          : "Guide-Bereich nicht gefunden | Vatandoshlar.de",
+          ? "Qo‘llanma bo‘limi topilmadi | UzDe"
+          : "Guide-Bereich nicht gefunden | UzDe",
       robots: {
         index: false,
         follow: false,
@@ -65,8 +65,8 @@ export async function generateMetadata({
     return {
       title:
         locale === "uz"
-          ? "Qo‘llanma bo‘limi topilmadi | Vatandoshlar.de"
-          : "Guide-Bereich nicht gefunden | Vatandoshlar.de",
+          ? "Qo‘llanma bo‘limi topilmadi | UzDe"
+          : "Guide-Bereich nicht gefunden | UzDe",
       robots: {
         index: false,
         follow: false,
@@ -76,7 +76,7 @@ export async function generateMetadata({
 
   return {
     title:
-      `${category.title} | Vatandoshlar.de`,
+      `${category.title} | UzDe`,
 
     description:
       category.description,
@@ -99,7 +99,7 @@ export async function generateMetadata({
       description:
         category.description,
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
     },
   };
 }

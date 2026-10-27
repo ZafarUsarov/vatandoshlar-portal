@@ -6,12 +6,12 @@ export default function RootNotFound() {
     <main className="flex min-h-screen items-center bg-white px-6 py-16 text-slate-950 dark:bg-slate-950 dark:text-white">
       <div className="mx-auto w-full max-w-3xl text-center">
         <Image
-          src="/images/brand/Logo_New_Transparent.png"
+          src="/images/brand/uzde/uzde-logo-original-transparent.webp"
           alt=""
           width={72}
           height={72}
           priority
-          className="mx-auto h-[72px] w-[72px]"
+          className="mx-auto h-[72px] w-[72px] rounded-2xl bg-slate-950 p-2 object-contain"
         />
 
         <p className="mt-8 text-sm font-black uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">

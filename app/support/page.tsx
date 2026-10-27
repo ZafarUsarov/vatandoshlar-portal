@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
         locale === "de"
           ? "de_DE"
           : "uz_UZ",
-      siteName: "Vatandoshlar.de",
+      siteName: "UzDe",
       title,
       description,
       url: `/${locale}/support`,
@@ -84,8 +84,6 @@ export default async function SupportPage() {
           title={t("hero.title")}
           description={t("hero.description")}
           action={t("hero.action")}
-          imageSrc="/images/support/support-platform-hero.webp"
-          imageAlt={t("hero.imageAlt")}
         />
 
         <SupportOptions

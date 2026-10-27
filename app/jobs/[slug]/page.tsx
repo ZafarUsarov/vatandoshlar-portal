@@ -55,8 +55,8 @@ export async function generateMetadata({
     return {
       title:
         locale === "uz"
-          ? "Ish qo‘llanmasi topilmadi | Vatandoshlar.de"
-          : "Jobleitfaden nicht gefunden | Vatandoshlar.de",
+          ? "Ish qo‘llanmasi topilmadi | UzDe"
+          : "Jobleitfaden nicht gefunden | UzDe",
       robots: {
         index: false,
         follow: false,
@@ -66,7 +66,7 @@ export async function generateMetadata({
 
   return {
     title:
-      `${guide.title} | Vatandoshlar.de`,
+      `${guide.title} | UzDe`,
     description:
       guide.description,
     alternates: {
@@ -88,7 +88,7 @@ export async function generateMetadata({
       url:
         `/${locale}/jobs/${guide.slug}`,
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       locale:
         locale === "de"
           ? "de_DE"
@@ -162,7 +162,7 @@ export default async function JobGuidePage({
       "@type":
         "Organization",
       name:
-        "Vatandoshlar.de",
+        "UzDe",
       url:
         baseUrl,
     },

@@ -79,7 +79,7 @@ export default async function TelegramSection() {
               "O‘zingiz yashayotgan federal yer guruhiga qo‘shiling, tajriba almashing, foydali ma’lumotlar va e’lonlarni birinchi bo‘lib oling.",
             officialChannel: "Rasmiy Telegram kanali",
             officialChannelAria:
-              "Vatandoshlar.de rasmiy Telegram kanalini ochish",
+              "UzDe rasmiy Telegram kanalini ochish",
           },
           professional: {
             eyebrow: "Professional hamjamiyatlar",
@@ -98,7 +98,7 @@ export default async function TelegramSection() {
               "Finden Sie die passende regionale Gruppe, tauschen Sie Erfahrungen aus und erhalten Sie hilfreiche Hinweise und lokale Informationen.",
             officialChannel: "Offizieller Telegram-Kanal",
             officialChannelAria:
-              "Offiziellen Telegram-Kanal von Vatandoshlar.de öffnen",
+              "Offiziellen Telegram-Kanal von UzDe öffnen",
           },
           professional: {
             eyebrow: "Professionelle Communitys",

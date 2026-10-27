@@ -1,13 +1,9 @@
-import Image from "next/image";
-import { Fragment } from "react";
 
 import { Link } from "@/i18n/navigation";
-import BrandName from "@/components/ui/BrandName";
+import BrandedText from "@/components/ui/BrandedText";
 
 type FounderHeroProps = Readonly<{
   name: string;
-  imageUrl?: string;
-  imageAlt: string;
   labels: Readonly<{
     badge: string;
     title: string;
@@ -17,29 +13,6 @@ type FounderHeroProps = Readonly<{
     specialistButton: string;
   }>;
 }>;
-
-function BrandedText({
-  text,
-}: Readonly<{
-  text: string;
-}>) {
-  const parts = text.split("Vatandoshlar.de");
-
-  if (parts.length === 1) {
-    return text;
-  }
-
-  return (
-    <>
-      {parts.map((part, index) => (
-        <Fragment key={`${part}-${index}`}>
-          {index > 0 && <BrandName />}
-          {part}
-        </Fragment>
-      ))}
-    </>
-  );
-}
 
 function ArrowUpRightIcon() {
   return (
@@ -62,8 +35,6 @@ function ArrowUpRightIcon() {
 
 export default function FounderHero({
   name,
-  imageUrl,
-  imageAlt,
   labels,
 }: FounderHeroProps) {
   return (
@@ -73,7 +44,7 @@ export default function FounderHero({
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(16,185,129,0.14),transparent_28%),radial-gradient(circle_at_85%_20%,rgba(59,130,246,0.11),transparent_26%),radial-gradient(circle_at_60%_100%,rgba(139,92,246,0.08),transparent_28%)]"
       />
 
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1fr_380px] lg:items-center lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div>
           <span className="inline-flex rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700 shadow-sm dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
             {labels.badge}
@@ -114,42 +85,6 @@ export default function FounderHero({
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-sm">
-          <div
-            aria-hidden="true"
-            className="absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-emerald-400/20 via-cyan-400/10 to-violet-400/20 blur-2xl"
-          />
-
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[2.75rem] border border-white/60 bg-slate-100 shadow-2xl shadow-emerald-950/20 dark:border-white/10 dark:bg-slate-900">
-            {imageUrl ? (
-              <>
-                <Image
-                  src={imageUrl}
-                  alt={imageAlt}
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 380px, (min-width: 640px) 384px, calc(100vw - 48px)"
-                  className="object-cover"
-                />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_58%,rgba(2,6,23,0.16))] dark:bg-[linear-gradient(180deg,rgba(2,6,23,0.04),rgba(2,6,23,0.28))]"
-                />
-              </>
-            ) : (
-              <div className="flex h-full items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-800 text-center text-white">
-                <div>
-                  <span className="block text-7xl font-black tracking-[-0.08em]">
-                    ZU
-                  </span>
-                  <span className="mt-4 block text-sm font-bold uppercase tracking-[0.22em]">
-                    <BrandName />
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
       </div>
     </section>
   );

@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return locale === "uz"
     ? {
         title:
-          "Germaniya qo‘llanmasi | Vatandoshlar.de",
+          "Germaniya qo‘llanmasi | UzDe",
         description:
           "Germaniyaga kelish, vizalar, ta’lim, ish, oila, hujjatlar va kelgandan keyingi jarayonlar bo‘yicha tizimli qo‘llanmalar.",
         alternates: {
@@ -47,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
       }
     : {
         title:
-          "Deutschland-Ratgeber | Vatandoshlar.de",
+          "Deutschland-Ratgeber | UzDe",
         description:
           "Strukturierte Leitfäden zu Einreise, Visa, Bildung, Arbeit, Familie, Dokumenten und den ersten Schritten nach der Ankunft.",
         alternates: {
@@ -123,7 +123,7 @@ export default async function GuidePage() {
       ? {
           hero: {
             eyebrow:
-              "Vatandoshlar.de bilim markazi",
+              "UzDe bilim markazi",
             title:
               "Germaniyaga kelish va bu yerda hayot boshlash uchun yagona qo‘llanma",
             description:
@@ -199,7 +199,7 @@ export default async function GuidePage() {
       : {
           hero: {
             eyebrow:
-              "Wissenszentrum von Vatandoshlar.de",
+              "Wissenszentrum von UzDe",
             title:
               "Der zentrale Ratgeber für Einreise und den Start in Deutschland",
             description:

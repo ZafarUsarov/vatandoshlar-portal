@@ -20,10 +20,10 @@ function escapeHtml(value: string): string {
 }
 
 function renderEmailTemplate(input: TemplateInput): string {
-  const logoUrl = `${getSiteUrl()}/images/brand/Logo_New_Transparent.png`;
+  const logoUrl = `${getSiteUrl()}/images/brand/uzde/uzde-icon-512.png`;
   const footer = input.locale === "de"
-    ? "Diese E-Mail wurde automatisch von Vatandoshlar.de gesendet."
-    : "Ushbu xat Vatandoshlar.de tomonidan avtomatik yuborildi.";
+    ? "Diese E-Mail wurde automatisch von UzDe gesendet."
+    : "Ushbu xat UzDe tomonidan avtomatik yuborildi.";
   const fallback = input.locale === "de"
     ? "Falls die Schaltfläche nicht funktioniert, kopieren Sie diesen Link und öffnen Sie ihn in Ihrem Browser:"
     : "Agar tugma ishlamasa, quyidagi havolani nusxalab brauzeringizda oching:";
@@ -41,8 +41,8 @@ function renderEmailTemplate(input: TemplateInput): string {
 <tr><td align="center" style="padding:32px 16px;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:600px;background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;">
 <tr><td style="padding:32px 32px 24px;text-align:center;border-bottom:1px solid #eef2f6;">
-<img src="${escapeHtml(logoUrl)}" width="64" height="64" alt="Vatandoshlar.de" style="display:block;width:64px;height:64px;margin:0 auto 14px;border:0;outline:none;text-decoration:none;">
-<div style="font-size:22px;line-height:28px;font-weight:800;letter-spacing:-0.5px;color:#0f2744;">Vatandoshlar<span style="color:#159a9c;">.de</span></div>
+<img src="${escapeHtml(logoUrl)}" width="64" height="64" alt="UzDe" style="display:block;width:64px;height:64px;margin:0 auto 14px;border:0;outline:none;text-decoration:none;">
+<div style="font-size:22px;line-height:28px;font-weight:800;letter-spacing:-0.5px;color:#0f2744;">UzDe</div>
 </td></tr>
 <tr><td style="padding:32px;">
 <div style="margin:0 0 10px;font-size:12px;line-height:18px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#159a9c;">${escapeHtml(input.eyebrow)}</div>
@@ -58,7 +58,7 @@ function renderEmailTemplate(input: TemplateInput): string {
 </td></tr>
 <tr><td style="padding:22px 32px;background:#f8fafc;border-top:1px solid #eef2f6;border-radius:0 0 20px 20px;text-align:center;">
 <p style="margin:0 0 6px;font-size:12px;line-height:18px;color:#64748b;">${escapeHtml(footer)}</p>
-<p style="margin:0;font-size:12px;line-height:18px;"><a href="${escapeHtml(getSiteUrl())}" style="color:#0f766e;text-decoration:none;font-weight:700;">vatandoshlar.de</a></p>
+<p style="margin:0;font-size:12px;line-height:18px;"><a href="${escapeHtml(getSiteUrl())}" style="color:#0f766e;text-decoration:none;font-weight:700;">UzDe</a></p>
 </td></tr>
 </table>
 </td></tr>
@@ -69,11 +69,11 @@ function renderEmailTemplate(input: TemplateInput): string {
 
 export async function sendVerificationEmail(email: string, token: string, locale: Locale) {
   const url = `${getSiteUrl()}/${locale}/id/verify-email?token=${encodeURIComponent(token)}`;
-  const subject = locale === "de" ? "E-Mail-Adresse bestätigen – Vatandoshlar.de" : "E-mail manzilingizni tasdiqlang – Vatandoshlar.de";
-  const intro = locale === "de" ? "Bestätigen Sie Ihre E-Mail-Adresse, um Ihr Vatandoshlar.de Konto zu aktivieren." : "Vatandoshlar.de hisobingizni faollashtirish uchun e-mail manzilingizni tasdiqlang.";
+  const subject = locale === "de" ? "E-Mail-Adresse bestätigen – UzDe" : "E-mail manzilingizni tasdiqlang – UzDe";
+  const intro = locale === "de" ? "Bestätigen Sie Ihre E-Mail-Adresse, um Ihr UzDe-Konto zu aktivieren." : "UzDe hisobingizni faollashtirish uchun e-mail manzilingizni tasdiqlang.";
   const actionLabel = locale === "de" ? "E-Mail bestätigen" : "E-mailni tasdiqlash";
   const expiry = locale === "de" ? "Dieser Bestätigungslink ist 24 Stunden gültig." : "Ushbu tasdiqlash havolasi 24 soat amal qiladi.";
-  const securityNote = locale === "de" ? "Falls Sie kein Vatandoshlar.de Konto erstellt haben, können Sie diese E-Mail ignorieren." : "Agar siz Vatandoshlar.de hisobini yaratmagan bo‘lsangiz, ushbu xatni e’tiborsiz qoldirishingiz mumkin.";
+  const securityNote = locale === "de" ? "Falls Sie kein UzDe-Konto erstellt haben, können Sie diese E-Mail ignorieren." : "Agar siz UzDe hisobini yaratmagan bo‘lsangiz, ushbu xatni e’tiborsiz qoldirishingiz mumkin.";
 
   await sendTransactionalEmail({
     to: email,
@@ -90,8 +90,8 @@ export async function sendVerificationEmail(email: string, token: string, locale
 
 export async function sendPasswordResetEmail(email: string, token: string, locale: Locale) {
   const url = `${getSiteUrl()}/${locale}/id/reset-password?token=${encodeURIComponent(token)}`;
-  const subject = locale === "de" ? "Passwort zurücksetzen – Vatandoshlar.de" : "Parolni tiklash – Vatandoshlar.de";
-  const intro = locale === "de" ? "Sie haben eine Zurücksetzung Ihres Vatandoshlar.de Passworts angefordert." : "Siz Vatandoshlar.de hisobingiz parolini tiklashni so‘radingiz.";
+  const subject = locale === "de" ? "Passwort zurücksetzen – UzDe" : "Parolni tiklash – UzDe";
+  const intro = locale === "de" ? "Sie haben eine Zurücksetzung Ihres UzDe Passworts angefordert." : "Siz UzDe hisobingiz parolini tiklashni so‘radingiz.";
   const actionLabel = locale === "de" ? "Neues Passwort festlegen" : "Yangi parol o‘rnatish";
   const expiry = locale === "de" ? "Dieser Link ist 60 Minuten gültig." : "Ushbu havola 60 daqiqa amal qiladi.";
   const securityNote = locale === "de" ? "Falls Sie diese Passwort-Zurücksetzung nicht angefordert haben, können Sie diese E-Mail ignorieren. Ihr Passwort bleibt unverändert." : "Agar siz parolni tiklashni so‘ramagan bo‘lsangiz, ushbu xatni e’tiborsiz qoldirishingiz mumkin. Parolingiz o‘zgarmaydi.";

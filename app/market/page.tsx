@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 type Locale = "uz" | "de";
 const copy = {
   uz: {
-    title: "Vatandosh Market", description: "Germaniyadagi vatandoshlar e’lonlari.",
+    title: "UzDe Market", description: "Germaniyadagi vatandoshlar e’lonlari.",
     all: "Barcha turlar", typeLabel: "E’lon turi", sell: "Sotaman", buy: "Sotib olaman", giveaway: "Bepul beraman",
     filter: "Filtrlash", create: "E’lon joylash", mine: "Mening e’lonlarim", empty: "Hozircha mos e’lonlar yo‘q.",
     open: "E’lonni ko‘rish", price: "Narx kelishiladi", free: "Bepul",
@@ -23,7 +23,7 @@ const copy = {
     next: "Keyingi", page: "Sahifa", of: "/", results: "ta e’lon", reset: "Filtrlarni tozalash",
   },
   de: {
-    title: "Vatandosh Market", description: "Anzeigen der usbekischen Community in Deutschland.",
+    title: "UzDe Market", description: "Anzeigen der usbekischen Community in Deutschland.",
     all: "Alle Arten", typeLabel: "Anzeigenart", sell: "Verkaufen", buy: "Suche", giveaway: "Verschenken",
     filter: "Filtern", create: "Anzeige aufgeben", mine: "Meine Anzeigen", empty: "Noch keine passenden Anzeigen.",
     open: "Anzeige ansehen", price: "Preis auf Anfrage", free: "Kostenlos",

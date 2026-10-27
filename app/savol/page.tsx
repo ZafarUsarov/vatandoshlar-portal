@@ -9,7 +9,7 @@ import SavolCategoryFilter from "@/components/savol/SavolCategoryFilter";
 import { ArrowRight, MessageCircle, MessagesSquare, Plus, ShieldCheck, Users, SquarePen, Handshake } from "lucide-react";
 
 export const dynamic = "force-dynamic";
-export async function generateMetadata(): Promise<Metadata> { const de=(await getLocale())==="de";return {title:de?"Fragen & Antworten | Vatandoshlar.de":"Savol-javob | Vatandoshlar.de",description:de?"Fragen und Antworten aus der Community.":"Vatandoshlar hamjamiyatida savol bering va javob toping."}; }
+export async function generateMetadata(): Promise<Metadata> { const de=(await getLocale())==="de";return {title:de?"Fragen & Antworten | UzDe":"Savol-javob | UzDe",description:de?"Fragen und Antworten aus der Community.":"Vatandoshlar hamjamiyatida savol bering va javob toping."}; }
 export default async function SavolPage(){
  const de=(await getLocale())==="de";
  const [questions,categories]=await Promise.all([getPublishedQuestions(),getActiveQuestionCategories()]);

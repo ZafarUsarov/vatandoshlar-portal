@@ -4,9 +4,9 @@ const baseUrl =
 const organizationStructuredData = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Vatandoshlar.de",
+  name: "UzDe",
   url: baseUrl,
-  logo: `${baseUrl}/images/brand/Logo_New_Transparent.png`,
+  logo: `${baseUrl}/images/brand/uzde/uzde-icon-512.png`,
   sameAs: [
     "https://t.me/Vatandoshlar_de",
     "https://www.instagram.com/vatandoshlar.de",
@@ -17,7 +17,7 @@ const organizationStructuredData = {
 const websiteStructuredData = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Vatandoshlar.de",
+  name: "UzDe",
   url: baseUrl,
 };
 

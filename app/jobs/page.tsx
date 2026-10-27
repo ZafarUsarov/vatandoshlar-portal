@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return locale === "uz"
     ? {
         title:
-          "Ish va karyera | Vatandoshlar.de",
+          "Ish va karyera | UzDe",
         description:
           "Germaniyada talabalar uchun ish, ingliz tilidagi vakansiyalar, Minijob, Werkstudent, amaliyot, Ausbildung va malakali mutaxassislar uchun qo‘llanmalar.",
         alternates: {
@@ -51,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
       }
     : {
         title:
-          "Arbeit und Karriere | Vatandoshlar.de",
+          "Arbeit und Karriere | UzDe",
         description:
           "Leitfäden zu Studentenjobs, englischsprachigen Stellen, Minijob, Werkstudent, Praktikum, Ausbildung und qualifizierter Beschäftigung in Deutschland.",
         alternates: {
@@ -85,7 +85,7 @@ export default async function JobsPage() {
     locale === "uz"
       ? {
           eyebrow:
-            "Vatandoshlar.de ish va karyera markazi",
+            "UzDe ish va karyera markazi",
           title:
             "Germaniyada ish topish uchun aniq va xavfsiz yo‘l",
           description:
@@ -167,7 +167,7 @@ export default async function JobsPage() {
         }
       : {
           eyebrow:
-            "Vatandoshlar.de Zentrum für Arbeit und Karriere",
+            "UzDe Zentrum für Arbeit und Karriere",
           title:
             "Ein klarer und sicherer Weg zur Jobsuche in Deutschland",
           description:
@@ -278,7 +278,7 @@ export default async function JobsPage() {
             <PageHero
               eyebrow={
                 <span className="text-slate-900 dark:text-slate-100">
-                  <BrandedText text={copy.eyebrow} />
+                  <span className="normal-case"><BrandedText text={copy.eyebrow} /></span>
                 </span>
               }
               title={

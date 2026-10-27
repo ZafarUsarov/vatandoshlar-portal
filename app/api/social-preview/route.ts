@@ -1,10 +1,17 @@
 import { ImageResponse } from "next/og";
 import { createElement } from "react";
-
-const BRAND_ICON_URL =
-  "https://vatandoshlar.de/images/brand/Logo_New_Transparent.png";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
 export async function GET() {
+  const logoBuffer = await readFile(
+    join(
+      process.cwd(),
+      "public/images/brand/uzde/uzde-logo-original-transparent.png"
+    )
+  );
+
+  const brandIconUrl = `data:image/png;base64,${logoBuffer.toString("base64")}`;
   const content = createElement(
     "div",
     {
@@ -32,9 +39,22 @@ export async function GET() {
           border: "2px solid #e6f5ef",
         },
       },
-      createElement("img", {
-        src: BRAND_ICON_URL,
-        alt: "Vatandoshlar.de",
+      createElement(
+        "div",
+        {
+          style: {
+            width: "340px",
+            height: "340px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#020617",
+            borderRadius: "56px",
+          },
+        },
+        createElement("img", {
+          src: brandIconUrl,
+        alt: "UzDe",
         width: 280,
         height: 280,
         style: {
@@ -43,6 +63,7 @@ export async function GET() {
           objectFit: "contain",
         },
       }),
+      ),
     ),
   );
 

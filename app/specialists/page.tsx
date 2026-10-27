@@ -88,7 +88,7 @@ export async function generateMetadata(): Promise<Metadata> {
           ? "de_DE"
           : "uz_UZ",
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       title,
       description,
       url:

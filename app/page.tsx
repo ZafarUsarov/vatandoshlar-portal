@@ -21,6 +21,7 @@ export default function HomePage() {
 
         <MarketHomeEntry />
 
+
         <Reveal>
           <SearchSection />
         </Reveal>

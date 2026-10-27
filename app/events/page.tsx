@@ -82,7 +82,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return locale === "uz"
     ? {
         title:
-          "Tadbirlar | Vatandoshlar.de",
+          "Tadbirlar | UzDe",
         description:
           "Germaniyadagi o‘zbekistonliklar uchun e’lon qilingan tadbirlar va kelajak uchun rejalashtirilayotgan hamjamiyat tadbirlari.",
         alternates: {
@@ -98,7 +98,7 @@ export async function generateMetadata(): Promise<Metadata> {
       }
     : {
         title:
-          "Veranstaltungen | Vatandoshlar.de",
+          "Veranstaltungen | UzDe",
         description:
           "Veröffentlichte Veranstaltungen und geplante Community-Veranstaltungen für Usbeken in Deutschland.",
         alternates: {
@@ -466,7 +466,7 @@ export default async function EventsPage() {
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-cyan-200/80 bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 shadow-sm backdrop-blur dark:border-cyan-400/15 dark:bg-white/[0.035] dark:text-cyan-300">
                 <CalendarIcon className="size-4" />
-                <BrandName /> · {copy.heroEyebrow}
+                <span className="normal-case"><BrandName /></span> · {copy.heroEyebrow}
               </span>
 
               <h1 className="mt-7 max-w-4xl text-4xl font-black tracking-[-0.05em] sm:text-5xl lg:text-6xl">

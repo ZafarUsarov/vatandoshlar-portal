@@ -7,7 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { requirePublicUser } from "@/lib/auth/user";
 
 export const metadata: Metadata = {
-  title: "Vatandoshlar ID",
+  title: "UzDe ID",
   robots: { index: false, follow: false },
 };
 
@@ -23,9 +23,9 @@ export default async function AccountPage() {
 
   const copy = locale === "de"
     ? {
-        eyebrow: "VATANDOSHLAR ID",
+        eyebrow: "UZDE ID",
         title: "Ihr Konto ist aktiv",
-        description: "Ihre Vatandoshlar ID ist bereit. Ergänzen Sie Ihr Profil, damit wir Inhalte später besser personalisieren können.",
+        description: "Ihre UzDe ID ist bereit. Ergänzen Sie Ihr Profil, damit wir Inhalte später besser personalisieren können.",
         email: "E-Mail",
         profile: profileComplete ? "Profil bearbeiten" : "Profil einrichten",
         myCity: "Meine Stadt",
@@ -41,9 +41,9 @@ export default async function AccountPage() {
         home: "Zur Startseite",
       }
     : {
-        eyebrow: "VATANDOSHLAR ID",
+        eyebrow: "UZDE ID",
         title: "Akkauntingiz faol",
-        description: "Vatandoshlar ID tayyor. Portalni sizga moslashtirish uchun profilingizni to‘ldiring.",
+        description: "UzDe ID tayyor. Portalni sizga moslashtirish uchun profilingizni to‘ldiring.",
         email: "E-mail",
         profile: profileComplete ? "Profilni tahrirlash" : "Profilni sozlash",
         myCity: "Mening shahrim",

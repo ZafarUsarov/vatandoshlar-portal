@@ -6,7 +6,7 @@ import { Link, redirect } from "@/i18n/navigation";
 import { getCurrentPublicUser } from "@/lib/auth/user";
 
 export const metadata: Metadata = {
-  title: "Vatandoshlar ID",
+  title: "UzDe ID",
   robots: {
     index: false,
     follow: false,
@@ -64,11 +64,11 @@ export default async function VatandoshlarIdLoginPage({
   const copy =
     locale === "de"
       ? {
-          eyebrow: "VATANDOSHLAR ID",
+          eyebrow: "UZDE ID",
           title:
-            "Bei Vatandoshlar.de anmelden",
+            "Bei UzDe anmelden",
           description:
-            "Bleiben Sie im Portal und melden Sie sich mit Ihrer Vatandoshlar ID oder einem bereits verbundenen Google-Konto an.",
+            "Bleiben Sie im Portal und melden Sie sich mit Ihrer UzDe ID oder einem bereits verbundenen Google-Konto an.",
           newUser:
             "Noch kein Konto?",
           register:
@@ -81,11 +81,11 @@ export default async function VatandoshlarIdLoginPage({
             "Google konnte keine bestätigte E-Mail-Adresse bereitstellen.",
         }
       : {
-          eyebrow: "VATANDOSHLAR ID",
+          eyebrow: "UZDE ID",
           title:
-            "Vatandoshlar.de hisobingizga kiring",
+            "UzDe hisobingizga kiring",
           description:
-            "Portaldan uzilmasdan Vatandoshlar ID yoki avval bog‘langan Google hisobingiz orqali kiring.",
+            "Portaldan uzilmasdan UzDe ID yoki avval bog‘langan Google hisobingiz orqali kiring.",
           newUser:
             "Hali hisobingiz yo‘qmi?",
           register:

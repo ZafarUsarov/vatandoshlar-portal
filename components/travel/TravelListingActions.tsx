@@ -16,7 +16,7 @@ export default function TravelListingActions({ id, slug, status, locale }: Props
   const [shareUrl, setShareUrl] = useState("");
   const [copied, setCopied] = useState(false);
 
-  const shareText = de ? "Reiseanzeige auf Vatandoshlar.de" : "Vatandoshlar.de saytidagi safar e’loni";
+  const shareText = de ? "Reiseanzeige auf UzDe" : "UzDe saytidagi safar e’loni";
   const encodedShare = encodeURIComponent(`${shareText}\n${shareUrl}`);
 
   async function copyLink() {

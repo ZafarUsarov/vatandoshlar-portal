@@ -17,7 +17,7 @@ const serviceCards = [
  { id: "parcel", icon: Package, uz: "Jo‘natmalar", de: "Sendungen", uzDesc: "Jo‘natma yuborish yoki olib ketish", deDesc: "Sendungen mitgeben oder mitnehmen" },
 ] as const;
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Vatandosh Safarlar" };
+export const metadata: Metadata = { title: "UzDe Safarlar" };
 export default async function TravelPage({ searchParams }: { searchParams: Promise<{ kind?: string; service?: string; from?: string; to?: string; fromRegion?: string; toRegion?: string; date?: string; womenOnly?: string; cargoType?: string; paymentType?: string }> }) {
  const locale = (await getLocale()) === "de" ? "de" : "uz";
  const params = await searchParams;
@@ -38,7 +38,7 @@ export default async function TravelPage({ searchParams }: { searchParams: Promi
  return <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white"><Header />
  <main className="mx-auto w-full max-w-7xl min-w-0 px-3 pb-14 pt-24 sm:px-6 sm:pb-20 sm:pt-28 lg:px-8">
  <div className="flex min-w-0 flex-col justify-between gap-3 sm:flex-row sm:items-start sm:gap-4">
- <div><h1 className="text-2xl font-extrabold tracking-tight sm:text-4xl">{de ? "Vatandosh Reisen" : "Vatandosh Safarlar"}</h1><p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400 sm:text-base">{de ? "Mitfahrten, Begleitung und Sendungen – einfach und zuverlässig." : "Safar, hamroh va jo‘natmalar — tez, qulay va ishonchli."}</p></div>
+ <div><h1 className="text-2xl font-extrabold tracking-tight sm:text-4xl">{de ? "UzDe Reisen" : "UzDe Safarlar"}</h1><p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400 sm:text-base">{de ? "Mitfahrten, Begleitung und Sendungen – einfach und zuverlässig." : "Safar, hamroh va jo‘natmalar — tez, qulay va ishonchli."}</p></div>
  <div className="grid grid-cols-2 gap-2 sm:flex sm:shrink-0 sm:flex-wrap"><Link href={`/safar/new?service=${service}`} className="inline-flex min-h-11 min-w-0 items-center justify-center gap-1.5 rounded-xl bg-emerald-700 px-2 text-xs font-bold sm:gap-2 sm:px-5 sm:text-sm text-white shadow-sm transition-colors hover:bg-emerald-800"><Plus size={19} aria-hidden="true" />{de ? "Anzeige aufgeben" : "E’lon joylash"}</Link><Link href="/safar/mine" className="inline-flex min-h-11 min-w-0 items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-2 text-xs font-semibold sm:gap-2 sm:px-4 sm:text-sm hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-900"><ClipboardList size={17} aria-hidden="true" />{de ? "Meine Anzeigen" : "Mening e’lonlarim"}</Link></div>
  </div>
  <nav className="mt-4 grid grid-cols-3 gap-1.5 sm:mt-6 sm:gap-2" aria-label={de ? "Anzeigenkategorie" : "E’lonlar bo‘limi"}>

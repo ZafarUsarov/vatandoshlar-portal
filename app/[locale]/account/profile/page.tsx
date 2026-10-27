@@ -7,7 +7,7 @@ import { getActiveProfileLocations } from "@/lib/locations/location-repository";
 import { interestOptions, residencyStageOptions } from "@/lib/users/profile-options";
 
 export const metadata: Metadata = {
-  title: "Vatandoshlar ID profil",
+  title: "UzDe ID profil",
   robots: { index: false, follow: false },
 };
 
@@ -21,14 +21,14 @@ export default async function AccountProfilePage() {
 
   const copy = locale === "de"
     ? {
-        eyebrow: "VATANDOSHLAR ID",
+        eyebrow: "UZDE ID",
         title: "Profil personalisieren",
-        description: "Wählen Sie Ihren Wohnort, Ihre aktuelle Situation und Ihre Interessen. So kann Vatandoshlar.de Inhalte besser auf Sie abstimmen.",
+        description: "Wählen Sie Ihren Wohnort, Ihre aktuelle Situation und Ihre Interessen. So kann UzDe Inhalte besser auf Sie abstimmen.",
       }
     : {
-        eyebrow: "VATANDOSHLAR ID",
+        eyebrow: "UZDE ID",
         title: "Profilni moslashtiring",
-        description: "Yashash joyingiz, hozirgi holatingiz va qiziqishlaringizni tanlang. Bu Vatandoshlar.de’ga sizga mos lokal va foydali kontentni ko‘rsatishga yordam beradi.",
+        description: "Yashash joyingiz, hozirgi holatingiz va qiziqishlaringizni tanlang. Bu UzDe’ga sizga mos lokal va foydali kontentni ko‘rsatishga yordam beradi.",
       };
 
   return (

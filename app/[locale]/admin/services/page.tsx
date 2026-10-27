@@ -22,7 +22,7 @@ export const dynamic =
 
 export const metadata: Metadata = {
   title:
-    "Services Admin | Vatandoshlar.de",
+    "Services Admin | UzDe",
   robots: {
     index: false,
     follow: false,
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 const copy = {
   uz: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · XIZMATLAR",
+      "UZDE · ADMIN · XIZMATLAR",
     title:
       "Xizmatlarni boshqarish",
     description:
@@ -107,7 +107,7 @@ const copy = {
 
   de: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · DIENSTLEISTUNGEN",
+      "UZDE · ADMIN · DIENSTLEISTUNGEN",
     title:
       "Dienstleistungen verwalten",
     description:

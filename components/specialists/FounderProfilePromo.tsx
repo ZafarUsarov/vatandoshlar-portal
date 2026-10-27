@@ -1,33 +1,9 @@
-import { Fragment } from "react";
 
 import { getLocale } from "next-intl/server";
 
 import { Link } from "../../i18n/navigation";
 
-import BrandName from "../ui/BrandName";
-
-function BrandedText({
-  text,
-}: Readonly<{
-  text: string;
-}>) {
-  const parts = text.split("Vatandoshlar.de");
-
-  if (parts.length === 1) {
-    return text;
-  }
-
-  return (
-    <>
-      {parts.map((part, index) => (
-        <Fragment key={`${part}-${index}`}>
-          {index > 0 && <BrandName />}
-          {part}
-        </Fragment>
-      ))}
-    </>
-  );
-}
+import BrandedText from "../ui/BrandedText";
 
 function ArrowUpRightIcon() {
   return (
@@ -82,17 +58,17 @@ export default async function FounderProfilePromo() {
       ? {
           label: "Zafar Usarov · Ausführliches Profil",
           title:
-            "Mehr über meinen beruflichen Hintergrund und Vatandoshlar.de",
+            "Mehr über meinen beruflichen Hintergrund und UzDe",
           description:
-            "Dieses Fachkräfteprofil bietet einen kompakten Überblick. Ausführliche Informationen zu meinem beruflichen Hintergrund, meiner Arbeit, den eingesetzten Technologien sowie zur Entstehung und Mission von Vatandoshlar.de finden Sie auf der Gründerseite.",
+            "Dieses Fachkräfteprofil bietet einen kompakten Überblick. Ausführliche Informationen zu meinem beruflichen Hintergrund, meiner Arbeit, den eingesetzten Technologien sowie zur Entstehung und Mission von UzDe finden Sie auf der Gründerseite.",
           action: "Ausführliches Profil ansehen",
         }
       : {
           label: "Zafar Usarov · Batafsil profil",
           title:
-            "Professional faoliyatim va Vatandoshlar.de haqida batafsil",
+            "Professional faoliyatim va UzDe haqida batafsil",
           description:
-            "Ushbu mutaxassis profilida asosiy ma’lumotlar qisqacha jamlangan. Professional faoliyatim, tajribam, foydalanadigan texnologiyalarim hamda Vatandoshlar.de loyihasining yaratilishi va missiyasi haqidagi batafsil ma’lumotlar loyiha asoschisi sahifasida keltirilgan.",
+            "Ushbu mutaxassis profilida asosiy ma’lumotlar qisqacha jamlangan. Professional faoliyatim, tajribam, foydalanadigan texnologiyalarim hamda UzDe loyihasining yaratilishi va missiyasi haqidagi batafsil ma’lumotlar loyiha asoschisi sahifasida keltirilgan.",
           action: "Batafsil profilni ko‘rish",
         };
 

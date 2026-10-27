@@ -53,8 +53,8 @@ export async function generateMetadata({
     return {
       title:
         locale === "uz"
-          ? "Xizmat topilmadi | Vatandoshlar.de"
-          : "Dienstleistung nicht gefunden | Vatandoshlar.de",
+          ? "Xizmat topilmadi | UzDe"
+          : "Dienstleistung nicht gefunden | UzDe",
       robots: {
         index: false,
         follow: false,
@@ -64,7 +64,7 @@ export async function generateMetadata({
 
   return {
     title:
-      `${service.title} | Vatandoshlar.de`,
+      `${service.title} | UzDe`,
     description:
       service.description,
     alternates: {
@@ -86,7 +86,7 @@ export async function generateMetadata({
       url:
         `/${locale}/services/${service.slug}`,
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       locale:
         locale === "de"
           ? "de_DE"
@@ -181,7 +181,7 @@ export default async function ServiceDetailPage({
           notesTitle:
             "Buyurtma berishdan oldin e’tibor bering",
           disclaimer:
-            "Vatandoshlar.de xizmat ko‘rsatuvchini tavsiya qilish yoki uning natijasiga kafolat berish o‘rniga, foydalanuvchiga rasmiy manbalar orqali mustaqil tekshirish yo‘lini ko‘rsatadi.",
+            "UzDe xizmat ko‘rsatuvchini tavsiya qilish yoki uning natijasiga kafolat berish o‘rniga, foydalanuvchiga rasmiy manbalar orqali mustaqil tekshirish yo‘lini ko‘rsatadi.",
           relatedEyebrow: "Boshqa yo‘nalishlar",
           relatedTitle:
             "Sizga foydali bo‘lishi mumkin",
@@ -208,7 +208,7 @@ export default async function ServiceDetailPage({
           notesTitle:
             "Das sollten Sie vor der Beauftragung beachten",
           disclaimer:
-            "Vatandoshlar.de garantiert weder Anbieter noch Ergebnisse. Die Plattform zeigt, wie Nutzer Angaben selbstständig über offizielle Quellen prüfen können.",
+            "UzDe garantiert weder Anbieter noch Ergebnisse. Die Plattform zeigt, wie Nutzer Angaben selbstständig über offizielle Quellen prüfen können.",
           relatedEyebrow: "Weitere Bereiche",
           relatedTitle:
             "Das könnte ebenfalls hilfreich sein",

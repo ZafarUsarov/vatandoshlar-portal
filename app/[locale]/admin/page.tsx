@@ -15,11 +15,11 @@ export const metadata: Metadata = {
 
 const copy = {
   uz: {
-    eyebrow: "VATANDOSHLAR.DE · ADMIN",
+    eyebrow: "UZDE · ADMIN",
     title: "Boshqaruv paneli",
     welcome: "Xush kelibsiz",
     description:
-      "Vatandoshlar.de boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
+      "UzDe boshqaruv modullarini shu yerdan boshqarishingiz mumkin.",
     modulesTitle: "Boshqaruv modullari",
     modulesDescription:
       "Yangiliklar, Ish va karyera, Xizmatlar, Mutaxassislar, Tadbirlar, Germaniya qo‘llanmasi, Telegram hamjamiyatlari, Support va sayt analitikasi PostgreSQL asosida boshqariladi.",
@@ -81,11 +81,11 @@ const copy = {
   },
 
   de: {
-    eyebrow: "VATANDOSHLAR.DE · ADMIN",
+    eyebrow: "UZDE · ADMIN",
     title: "Verwaltungsbereich",
     welcome: "Willkommen",
     description:
-      "Von hier aus können Sie die Verwaltungsbereiche von Vatandoshlar.de aufrufen.",
+      "Von hier aus können Sie die Verwaltungsbereiche von UzDe aufrufen.",
     modulesTitle: "Verwaltungsmodule",
     modulesDescription:
       "Nachrichten, Arbeit und Karriere, Dienstleistungen, Fachkräfte, Veranstaltungen, der Deutschland-Ratgeber, Telegram-Communitys, Unterstützung und die Website-Analyse werden PostgreSQL-basiert verwaltet.",

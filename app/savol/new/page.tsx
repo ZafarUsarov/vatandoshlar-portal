@@ -14,14 +14,14 @@ type SupportedLocale = "uz" | "de";
 
 const copy = {
   uz: {
-    title: "Savol berish | Vatandoshlar.de",
+    title: "Savol berish | UzDe",
     heading: "Savol bering",
     description:
       "Savolingizni aniq yozing. Javob beruvchilarga vaziyatingizni tushunish uchun kerakli ma’lumotlarni kiriting.",
     back: "Barcha savollar",
   },
   de: {
-    title: "Frage stellen | Vatandoshlar.de",
+    title: "Frage stellen | UzDe",
     heading: "Frage stellen",
     description:
       "Formulieren Sie Ihre Frage möglichst konkret und geben Sie die Informationen an, die für hilfreiche Antworten nötig sind.",

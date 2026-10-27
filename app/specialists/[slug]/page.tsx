@@ -116,7 +116,7 @@ export async function generateMetadata({
       url:
         canonicalUrl,
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       locale:
         locale === "de"
           ? "de_DE"

@@ -57,7 +57,7 @@
       }
     },
     "finalCta": {
-      "badge": "Vatandoshlar hamjamiyati",
+      "badge": "UzDe hamjamiyati",
       "title": "Germaniyadagi hayotingizni ishonchli ma’lumot bilan osonlashtiring",
       "description": "Kerakli xizmat, ish platformasi, rasmiy yangilik yoki hududingizdagi hamjamiyatni bir necha bosishda toping.",
       "telegramButton": "Telegram guruhlarini ko‘rish",
@@ -103,7 +103,7 @@
       "navigationDescription": "Kerakli portal bo‘limini tanlang"
     },
     "accessibility": {
-      "homeLink": "Vatandoshlar.de bosh sahifasi",
+      "homeLink": "UzDe bosh sahifasi",
       "mainNavigation": "Asosiy navigatsiya",
       "openSearch": "Tezkor qidiruvni ochish",
       "enableLightMode": "Yorug‘ rejimni yoqish",
@@ -205,7 +205,7 @@
   "FeaturesSection": {
     "badge": "Platforma imkoniyatlari",
     "title": "Germaniyadagi hayotingiz uchun kerakli imkoniyatlar bir joyda",
-    "description": "Ish topishdan tortib, ishonchli xizmatlar, tadbirlar va mahalliy hamjamiyatlargacha — Vatandoshlar.de sizga kerakli ma’lumotni tez va qulay topishga yordam beradi.",
+    "description": "Ish topishdan tortib, ishonchli xizmatlar, tadbirlar va mahalliy hamjamiyatlargacha — UzDe sizga kerakli ma’lumotni tez va qulay topishga yordam beradi.",
     "viewAll": "Barcha bo‘limlarni ko‘rish",
     "items": {
       "telegramGroups": {
@@ -268,7 +268,7 @@
   },
   "NewsPage": {
     "metadata": {
-      "title": "Yangiliklar va foydali ma’lumotlar | Vatandoshlar.de",
+      "title": "Yangiliklar va foydali ma’lumotlar | UzDe",
       "description": "Germaniyadagi o‘zbekistonliklar uchun rasmiy manbalarga asoslangan integratsiya, ish, ta’lim va konsullik ma’lumotlari."
     },
     "hero": {
@@ -347,8 +347,8 @@
   },
   "NewsDetailPage": {
     "metadata": {
-      "notFound": "Ma’lumot topilmadi | Vatandoshlar.de",
-      "title": "{title} | Vatandoshlar.de"
+      "notFound": "Ma’lumot topilmadi | UzDe",
+      "title": "{title} | UzDe"
     },
     "backToAll": "Barcha materiallar",
     "lastVerified": "Ma’lumot oxirgi marta {date} kuni tekshirildi.",
@@ -362,7 +362,7 @@
       "title": "Muhim eslatma",
       "description": "Qonunlar, to‘lovlar, ariza talablari, muddatlar va idoralarning ish tartibi o‘zgarishi mumkin. Rasmiy harakatni boshlashdan oldin yuqoridagi birlamchi manbani qayta tekshiring."
     },
-    "preparedNote": "Material rasmiy manba asosida Vatandoshlar.de uchun o‘zbek tilida tayyorlandi.",
+    "preparedNote": "Material rasmiy manba asosida UzDe uchun o‘zbek tilida tayyorlandi.",
     "related": {
       "eyebrow": "Foydali ma’lumotlar",
       "title": "Boshqa materiallar"
@@ -507,7 +507,7 @@
     "commands": {
       "home": {
         "title": "Bosh sahifa",
-        "description": "Vatandoshlar.de asosiy sahifasiga o‘tish"
+        "description": "UzDe asosiy sahifasiga o‘tish"
       },
       "news": {
         "title": "Rasmiy yangiliklar",
@@ -586,13 +586,13 @@
       }
     },
     "bottom": {
-      "copyright": "© {year} Vatandoshlar.de. Barcha huquqlar himoyalangan.",
+      "copyright": "© {year} UzDe. Barcha huquqlar himoyalangan.",
       "disclaimer": "Portal yuridik, soliq yoki migratsion maslahat o‘rnini bosmaydi.",
       "backToTop": "Yuqoriga",
       "support": "Loyihaga hissa qo‘shish"
     },
     "accessibility": {
-      "homeLink": "Vatandoshlar.de bosh sahifasi",
+      "homeLink": "UzDe bosh sahifasi",
       "navigation": "Footer navigatsiyasi"
     }
   },
@@ -675,7 +675,7 @@
   },
   "SpecialistsPage": {
     "metadata": {
-      "title": "O‘zbek mutaxassislari katalogi | Vatandoshlar.de",
+      "title": "O‘zbek mutaxassislari katalogi | UzDe",
       "description": "Germaniyadagi o‘zbek shifokorlar, advokatlar, IT mutaxassislari, ustalar va boshqa xizmat ko‘rsatuvchilar katalogi."
     },
     "hero": {
@@ -741,7 +741,7 @@
   },
   "SpecialistDetailPage": {
     "metadata": {
-      "notFound": "Mutaxassis topilmadi | Vatandoshlar.de",
+      "notFound": "Mutaxassis topilmadi | UzDe",
       "title": "{name} | Mutaxassislar katalogi"
     },
     "backToDirectory": "Barcha mutaxassislar",
@@ -804,26 +804,26 @@
   },
   "FounderPage": {
     "metadata": {
-      "title": "Loyiha asoschisi va dasturchisi | Vatandoshlar.de",
-      "description": "Vatandoshlar.de loyihasi asoschisi va dasturchisi Zafar Usarov haqida professional ma’lumot."
+      "title": "Loyiha asoschisi va dasturchisi | UzDe",
+      "description": "UzDe loyihasi asoschisi va dasturchisi Zafar Usarov haqida professional ma’lumot."
     },
     "hero": {
       "badge": "Loyiha asoschisi",
       "profession": "Loyiha asoschisi va dasturchisi",
       "title": "Germaniyadagi o‘zbekistonliklar uchun ishonchli raqamli platforma yaratuvchisi",
-      "description": "Vatandoshlar.de — Germaniyada yashayotgan o‘zbekistonliklarga tekshirilgan ma’lumot, xizmat va foydali yo‘nalishlarni bir joyda taqdim etish maqsadida yaratilgan uzoq muddatli loyiha.",
+      "description": "UzDe — Germaniyada yashayotgan o‘zbekistonliklarga tekshirilgan ma’lumot, xizmat va foydali yo‘nalishlarni bir joyda taqdim etish maqsadida yaratilgan uzoq muddatli loyiha.",
       "contactButton": "Bog‘lanish",
       "specialistButton": "Mutaxassis profilini ko‘rish"
     },
     "story": {
       "title": "Men haqimda",
       "paragraphs": {
-        "0": "Men — Zafar Usarov, Vatandoshlar.de loyihasining asoschisi va dasturchisiman. Production darajasidagi veb-ilovalarni toza arxitektura, qat’iy TypeScript va uzoq muddatli rivojlanishga mos yondashuv asosida yarataman.",
-        "1": "Vatandoshlar.de men uchun oddiy sayt emas. Uning maqsadi Germaniyadagi o‘zbekistonliklarga kerakli ma’lumot va ishonchli mutaxassislarni tezroq topishga yordam beradigan mustaqil, zamonaviy va mas’uliyatli platforma qurishdir."
+        "0": "Men — Zafar Usarov, UzDe loyihasining asoschisi va dasturchisiman. Production darajasidagi veb-ilovalarni toza arxitektura, qat’iy TypeScript va uzoq muddatli rivojlanishga mos yondashuv asosida yarataman.",
+        "1": "UzDe men uchun oddiy sayt emas. Uning maqsadi Germaniyadagi o‘zbekistonliklarga kerakli ma’lumot va ishonchli mutaxassislarni tezroq topishga yordam beradigan mustaqil, zamonaviy va mas’uliyatli platforma qurishdir."
       }
     },
     "mission": {
-      "title": "Vatandoshlar.de missiyasi",
+      "title": "UzDe missiyasi",
       "description": "Platforma foydalanuvchiga ortiqcha murakkabliksiz, tushunarli va tekshiriladigan ma’lumot taqdim etishga qaratilgan.",
       "items": {
         "0": "Rasmiy va tekshiriladigan manbalarga asoslangan ma’lumot",
@@ -851,7 +851,7 @@
     },
     "contact": {
       "title": "Men bilan bog‘lanish",
-      "description": "Professional savollar, hamkorlik yoki Vatandoshlar.de bo‘yicha murojaat uchun quyidagi kanallardan foydalaning.",
+      "description": "Professional savollar, hamkorlik yoki UzDe bo‘yicha murojaat uchun quyidagi kanallardan foydalaning.",
       "socials": {
         "email": "E-mail",
         "telegram": "Telegram",
@@ -863,21 +863,21 @@
   },
   "SupportPage": {
     "metadata": {
-      "title": "Loyihaga hissa qo‘shish | Vatandoshlar.de",
-      "description": "Vatandoshlar.de’ni ixtiyoriy qo‘llab-quvvatlang. Har bir qo‘llab-quvvatlashning 20% qismi G‘azodagi bolalarni qo‘llab-quvvatlash uchun ajratiladi."
+      "title": "Loyihaga hissa qo‘shish | UzDe",
+      "description": "UzDe’ni ixtiyoriy qo‘llab-quvvatlang. Har bir qo‘llab-quvvatlashning 20% qismi G‘azodagi bolalarni qo‘llab-quvvatlash uchun ajratiladi."
     },
     "hero": {
       "badge": "Loyihaga hissa qo‘shish",
-      "title": "Loyiha siz uchun foydalimi?",
-      "description": "Unda uning rivojlanishini ixtiyoriy qo‘llab-quvvatlashingiz mumkin. Har bir qo‘llab-quvvatlashning 20% qismi G‘azodagi bolalarni qo‘llab-quvvatlash uchun ajratiladi.",
+      "title": "Loyihamizni siz foydali deb hisoblaysizmi?",
+      "description": "Unda uning rivojlanishi, domen, hosting va texnik xarajatlarini qoplash uchun bizni ixtiyoriy ravishda qo‘llab-quvvatlashingiz mumkin. Har bir qo‘llab-quvvatlash summasining 20 foizi yil yakunida hisoblanib, G‘azodagi bolalarga yordam ko‘rsatish uchun ajratiladi. Bizni qo‘llab-quvvatlayotgan barchaga chuqur minnatdorchilik bildiramiz.",
       "secondaryDescription": "",
       "action": "Hissa qo‘shish",
-      "imageAlt": "Vatandoshlar.de platformasini rivojlantirish va hamjamiyatni qo‘llab-quvvatlashni ifodalovchi surat"
+      "imageAlt": "UzDe platformasini rivojlantirish va hamjamiyatni qo‘llab-quvvatlashni ifodalovchi surat"
     },
     "purpose": {
       "title": "Qo‘llab-quvvatlash mablag‘lari qanday ishlatiladi?",
       "tagline": "Platformani rivojlantirish va ezgu maqsadni birgalikda qo‘llab-quvvatlash.",
-      "description": "Sizning qo‘llab-quvvatlashingiz Vatandoshlar.de’ni rivojlantirish bilan birga ezgu maqsadga ham xizmat qiladi. Har bir qo‘llab-quvvatlashning 20% qismi G‘azodagi bolalarni qo‘llab-quvvatlash uchun ajratiladi. Qolgan qismi platformaning domen, hosting, texnik va rivojlantirish xarajatlariga sarflanadi."
+      "description": "Sizning qo‘llab-quvvatlashingiz UzDe’ni rivojlantirish bilan birga ezgu maqsadga ham xizmat qiladi. Har bir qo‘llab-quvvatlashning 20% qismi G‘azodagi bolalarni qo‘llab-quvvatlash uchun ajratiladi. Qolgan qismi platformaning domen, hosting, texnik va rivojlantirish xarajatlariga sarflanadi."
     },
     "trust": {
       "voluntary": "Ixtiyoriy qo‘llab-quvvatlash",
@@ -891,14 +891,14 @@
         "description": "Germaniya va boshqa davlatlardan PayPal orqali ixtiyoriy qo‘llab-quvvatlash.",
         "action": "PayPal orqali qo‘llab-quvvatlash",
         "noteTitle": "To‘lov izohi",
-        "note": "Agar xohlasangiz, PayPal orqali yuborayotganda izohga “Vatandoshlar.de” deb yozishingiz mumkin."
+        "note": "Agar xohlasangiz, PayPal orqali yuborayotganda izohga “UzDe” deb yozishingiz mumkin."
       },
       "taps": {
         "name": "Taps",
         "description": "O‘zbekistondan Taps orqali ixtiyoriy qo‘llab-quvvatlash.",
         "action": "Taps orqali qo‘llab-quvvatlash"
       },
-      "secondaryText": "Qo‘llab-quvvatlash izohiga “Vatandoshlar.de” deb yozishingiz mumkin."
+      "secondaryText": "Qo‘llab-quvvatlash izohiga “UzDe” deb yozishingiz mumkin."
     },
     "transparency": {
       "title": "Shaffoflik",
@@ -913,7 +913,7 @@
       },
       "disclaimer": "Hozir mavjud bo‘lmagan summa, tashkilot, tranzaksiya yoki tasdiqlovchi hujjat ko‘rsatilmaydi. To‘lov provayderi yoki yordamni qabul qiluvchi tashkilot tomonidan komissiyalar qo‘llanishi mumkin."
     },
-    "privacy": "To‘lov bevosita PayPal yoki Taps platformasida amalga oshiriladi. Vatandoshlar.de karta yoki bank ma’lumotlaringizni qabul qilmaydi va saqlamaydi."
+    "privacy": "To‘lov bevosita PayPal yoki Taps platformasida amalga oshiriladi. UzDe karta yoki bank ma’lumotlaringizni qabul qilmaydi va saqlamaydi."
   },
   "ErrorPage": {
     "eyebrow": "Xatolik yuz berdi",

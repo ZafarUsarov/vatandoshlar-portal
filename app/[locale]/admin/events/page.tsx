@@ -28,7 +28,7 @@ export const dynamic =
 
 export const metadata: Metadata = {
   title:
-    "Events Admin | Vatandoshlar.de",
+    "Events Admin | UzDe",
   robots: {
     index: false,
     follow: false,
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 const copy = {
   uz: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · TADBIRLAR",
+      "UZDE · ADMIN · TADBIRLAR",
     title:
       "Tadbirlarni boshqarish",
     description:
@@ -145,7 +145,7 @@ const copy = {
 
   de: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · VERANSTALTUNGEN",
+      "UZDE · ADMIN · VERANSTALTUNGEN",
     title:
       "Veranstaltungen verwalten",
     description:

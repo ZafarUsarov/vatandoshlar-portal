@@ -614,7 +614,7 @@ export default function Header() {
     locale === "de"
       ? {
           account:
-            "Vatandoshlar ID",
+            "UzDe ID",
           myCity:
             "Meine Stadt",
           admin:
@@ -624,7 +624,7 @@ export default function Header() {
         }
       : {
           account:
-            "Vatandoshlar ID",
+            "UzDe ID",
           myCity:
             "Mening shahrim",
           admin:
@@ -837,15 +837,8 @@ export default function Header() {
 
       event.preventDefault();
 
-      window.scrollTo({
-
-        top: 0,
-
-        left: 0,
-
-        behavior: "smooth",
-
-      });
+      window.scrollTo(0, 0);
+      window.location.reload();
 
     },
 
@@ -1248,7 +1241,7 @@ export default function Header() {
 
             aria-label={t("accessibility.homeLink")}
 
-            className="group flex shrink-0 items-center gap-1"
+            className="group ml-2 flex shrink-0 items-center gap-1 lg:ml-4"
 
           >
 
@@ -1257,7 +1250,8 @@ export default function Header() {
               className="
 
                 relative flex shrink-0 items-center justify-center
-
+                rounded-md border border-slate-950 bg-slate-950 p-0.5
+                dark:border-transparent dark:bg-transparent
                 transition-all duration-300
 
                 group-hover:-translate-y-0.5
@@ -1268,19 +1262,19 @@ export default function Header() {
 
               <Image
 
-                src="/images/brand/Logo_New_Transparent.png"
+                src="/images/brand/uzde/uzde-logo-original-transparent.webp"
 
                 alt=""
 
                 aria-hidden="true"
 
-                width={44}
+                width={30}
 
-                height={44}
+                height={27}
 
                 priority
 
-                className="-translate-y-px h-7 w-auto object-contain"
+                className="!h-[27px] !w-[30px] object-contain"
 
               />
 
@@ -1304,9 +1298,9 @@ export default function Header() {
 
                     isScrolled
 
-                      ? "text-sm min-[390px]:text-base xl:text-lg"
+                      ? "text-sm min-[390px]:text-base xl:text-[22px]"
 
-                      : "text-sm min-[390px]:text-base xl:text-xl"
+                      : "text-sm min-[390px]:text-base xl:text-[24px]"
 
                   }
 
@@ -2140,12 +2134,12 @@ export default function Header() {
                 <div className="space-y-1">
                   <Link href="/safar" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
                     <Plane aria-hidden="true" className="h-5 w-5 shrink-0" />
-                    {locale === "de" ? "Vatandosh Reisen" : "Vatandosh Safar"}
+                    {locale === "de" ? "UzDe Reisen" : "UzDe Safar"}
                     <ChevronRight aria-hidden="true" className="ml-auto h-5 w-5 shrink-0 text-slate-300 dark:text-slate-600" />
                   </Link>
                   <Link href="/savol" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
                     <MessagesSquare aria-hidden="true" className="h-5 w-5 shrink-0" />
-                    {locale === "de" ? "Vatandosh Q&A" : "Vatandosh Savol"}
+                    {locale === "de" ? "UzDe Q&A" : "UzDe Savol"}
                     <ChevronRight aria-hidden="true" className="ml-auto h-5 w-5 shrink-0 text-slate-300 dark:text-slate-600" />
                   </Link>
                   <Link href="/market" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">

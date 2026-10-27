@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ id: string }>; searchParams: Promise<{ page?: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const seller = await getPublicMarketSeller((await params).id);
-  return { title: seller?.displayName ? `${seller.displayName} | Vatandosh Market` : "Market", robots: { index: false, follow: false } };
+  return { title: seller?.displayName ? `${seller.displayName} | UzDe Market` : "Market", robots: { index: false, follow: false } };
 }
 export default async function SellerMarketPage({ params, searchParams }: Props) {
   const locale = (await getLocale()) === "de" ? "de" : "uz";

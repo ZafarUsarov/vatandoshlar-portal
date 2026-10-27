@@ -34,7 +34,7 @@ export async function notifyConversationRecipient(conversationId: string, sender
 
   const locale = user.preferred_locale === 'de' ? 'de' : 'uz';
   const de = locale === 'de';
-  const subject = de ? 'Neue Nachricht – Vatandoshlar.de' : 'Yangi xabar – Vatandoshlar.de';
+  const subject = de ? 'Neue Nachricht – UzDe' : 'Yangi xabar – UzDe';
   const intro = de
     ? `${user.sender_name} hat Ihnen eine Nachricht zu „${user.listing_title}“ gesendet.`
     : `${user.sender_name} sizga “${user.listing_title}” e’loni bo‘yicha xabar yubordi.`;
@@ -44,8 +44,8 @@ export async function notifyConversationRecipient(conversationId: string, sender
     await sendTransactionalEmail({
       to: user.email,
       subject,
-      text: `${intro}\n\n${action}: ${url}\n\nVatandoshlar.de`,
-      html: `<!doctype html><html lang="${locale}"><body style="margin:0;padding:32px 16px;background:#f4f7f9;font-family:Arial,Helvetica,sans-serif;color:#0f172a"><div style="max-width:600px;margin:auto;padding:32px;border:1px solid #e2e8f0;border-radius:18px;background:white"><p style="font-size:12px;font-weight:700;color:#047857">VATANDOSHLAR.DE</p><h1 style="font-size:25px">${escapeHtml(subject)}</h1><p style="font-size:16px;line-height:1.6">${escapeHtml(intro)}</p><a href="${escapeHtml(url)}" style="display:inline-block;margin-top:12px;padding:14px 22px;border-radius:10px;background:#047857;color:#fff;text-decoration:none;font-weight:700">${escapeHtml(action)}</a><p style="margin-top:28px;font-size:12px;color:#64748b">${de ? 'Automatische Benachrichtigung. Antworten Sie bitte auf der Website.' : 'Avtomatik bildirishnoma. Javobni sayt orqali yuboring.'}</p></div></body></html>`,
+      text: `${intro}\n\n${action}: ${url}\n\nUzDe`,
+      html: `<!doctype html><html lang="${locale}"><body style="margin:0;padding:32px 16px;background:#f4f7f9;font-family:Arial,Helvetica,sans-serif;color:#0f172a"><div style="max-width:600px;margin:auto;padding:32px;border:1px solid #e2e8f0;border-radius:18px;background:white"><p style="font-size:12px;font-weight:700;color:#047857">UZDE</p><h1 style="font-size:25px">${escapeHtml(subject)}</h1><p style="font-size:16px;line-height:1.6">${escapeHtml(intro)}</p><a href="${escapeHtml(url)}" style="display:inline-block;margin-top:12px;padding:14px 22px;border-radius:10px;background:#047857;color:#fff;text-decoration:none;font-weight:700">${escapeHtml(action)}</a><p style="margin-top:28px;font-size:12px;color:#64748b">${de ? 'Automatische Benachrichtigung. Antworten Sie bitte auf der Website.' : 'Avtomatik bildirishnoma. Javobni sayt orqali yuboring.'}</p></div></body></html>`,
     });
   } catch (error) {
     console.error('Messaging email notification failed', error instanceof Error ? error.message : 'unknown error');

@@ -303,8 +303,8 @@ export async function generateMetadata({
     return {
       title:
         locale === "uz"
-          ? "Tadbir topilmadi | Vatandoshlar.de"
-          : "Veranstaltung nicht gefunden | Vatandoshlar.de",
+          ? "Tadbir topilmadi | UzDe"
+          : "Veranstaltung nicht gefunden | UzDe",
       robots: {
         index: false,
         follow: false,
@@ -314,7 +314,7 @@ export async function generateMetadata({
 
   return {
     title:
-      `${event.title} | Vatandoshlar.de`,
+      `${event.title} | UzDe`,
     description:
       event.excerpt,
     alternates: {
@@ -336,7 +336,7 @@ export async function generateMetadata({
       url:
         `/${locale}/events/${event.slug}`,
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       locale:
         locale === "de"
           ? "de_DE"

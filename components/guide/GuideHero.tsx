@@ -43,7 +43,7 @@ export default function GuideHero({
       <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8 lg:py-28">
         <div className="max-w-4xl">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">
-            {eyebrow}
+            <span className="normal-case">{eyebrow}</span>
           </p>
 
           <h1 className="mt-5 text-4xl font-bold tracking-[-0.045em] sm:text-6xl sm:leading-[1.08]">

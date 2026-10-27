@@ -58,7 +58,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       url: canonicalUrl,
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       locale:
         locale === "de"
           ? "de_DE"
@@ -126,7 +126,7 @@ export default async function NewsPage() {
           </div>
 
           <PageHero
-            eyebrow={<BrandName />}
+            eyebrow={<span className="normal-case"><BrandName /></span>}
             title={t(
               "hero.title",
             )}

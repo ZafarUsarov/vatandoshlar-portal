@@ -4,7 +4,7 @@ import { requirePublicUser } from "@/lib/auth/user";
 import MessagesClient from "@/components/messaging/MessagesClient";
 
 export const metadata: Metadata = {
-  title: "Xabarlar | Nachrichten | Vatandoshlar.de",
+  title: "Xabarlar | Nachrichten | UzDe",
   robots: { index: false, follow: false },
 };
 

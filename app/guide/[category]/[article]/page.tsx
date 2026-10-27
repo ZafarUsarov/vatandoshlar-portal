@@ -61,8 +61,8 @@ export async function generateMetadata({
     return {
       title:
         locale === "uz"
-          ? "Qo‘llanma topilmadi | Vatandoshlar.de"
-          : "Leitfaden nicht gefunden | Vatandoshlar.de",
+          ? "Qo‘llanma topilmadi | UzDe"
+          : "Leitfaden nicht gefunden | UzDe",
       robots: {
         index: false,
         follow: false,
@@ -81,8 +81,8 @@ export async function generateMetadata({
     return {
       title:
         locale === "uz"
-          ? "Qo‘llanma topilmadi | Vatandoshlar.de"
-          : "Leitfaden nicht gefunden | Vatandoshlar.de",
+          ? "Qo‘llanma topilmadi | UzDe"
+          : "Leitfaden nicht gefunden | UzDe",
       robots: {
         index: false,
         follow: false,
@@ -92,7 +92,7 @@ export async function generateMetadata({
 
   return {
     title:
-      `${guideArticle.title} | Vatandoshlar.de`,
+      `${guideArticle.title} | UzDe`,
 
     description:
       guideArticle.excerpt,
@@ -119,7 +119,7 @@ export async function generateMetadata({
       url:
         `/${locale}/guide/${categorySlug}/${articleSlug}`,
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       locale:
         locale === "de"
           ? "de_DE"
@@ -218,7 +218,7 @@ export default async function GuideArticleRoute({
       "@type":
         "Organization",
       name:
-        "Vatandoshlar.de",
+        "UzDe",
       url:
         baseUrl,
     },
@@ -226,7 +226,7 @@ export default async function GuideArticleRoute({
       "@type":
         "WebSite",
       name:
-        "Vatandoshlar.de",
+        "UzDe",
       url:
         baseUrl,
     },

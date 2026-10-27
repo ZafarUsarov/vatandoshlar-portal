@@ -77,7 +77,7 @@ export default async function MarketHomeEntry() {
         id="ecosystem-services-title"
         className="mb-5 text-2xl font-bold tracking-tight sm:text-3xl min-[2560px]:text-4xl"
       >
-        {de ? "Unsere Angebote" : "Vatandoshlar xizmatlari"}
+        {de ? "Unsere Angebote" : "Hamjamiyat xizmatlari"}
       </h2>
 
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">

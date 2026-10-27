@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return locale === "uz"
     ? {
-        title: "Xizmatlar | Vatandoshlar.de",
+        title: "Xizmatlar | UzDe",
         description:
           "Germaniyada tarjima, huquq, soliq, tibbiyot, hunarmandchilik va boshqa xizmat yo‘nalishlarini topish hamda rasmiy manbalar orqali tekshirish bo‘yicha qo‘llanmalar.",
         alternates: {
@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
         },
       }
     : {
-        title: "Dienstleistungen | Vatandoshlar.de",
+        title: "Dienstleistungen | UzDe",
         description:
           "Leitfäden zu Dienstleistungen in Deutschland: Übersetzung, Recht, Steuern, Medizin, Handwerk und weitere Bereiche finden und über offizielle Quellen prüfen.",
         alternates: {

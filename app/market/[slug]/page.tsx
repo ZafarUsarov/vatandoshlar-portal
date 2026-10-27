@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: item.title, description,
     alternates: { canonical: url, languages: { uz: `/uz/market/${item.slug}`, de: `/de/market/${item.slug}` } },
-    openGraph: { type: "website", url, siteName: "Vatandoshlar.de", title: `${item.title}${price ? ` — ${price}` : ""}`, description,
+    openGraph: { type: "website", url, siteName: "UzDe", title: `${item.title}${price ? ` — ${price}` : ""}`, description,
       ...(imageUrl ? { images: [{ url: imageUrl, alt: item.title }] } : {}) },
     twitter: { card: imageUrl ? "summary_large_image" : "summary", title: item.title, description,
       ...(imageUrl ? { images: [imageUrl] } : {}) },

@@ -33,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const copy = {
   uz: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · YANGILIKLAR",
+      "UZDE · ADMIN · YANGILIKLAR",
     title: "Yangiliklarni boshqarish",
     description:
       "PostgreSQL’dagi yangiliklarni yarating, tahrirlang, e’lon holatini va featured maqolani boshqaring.",
@@ -66,7 +66,7 @@ const copy = {
 
   de: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · NACHRICHTEN",
+      "UZDE · ADMIN · NACHRICHTEN",
     title: "Nachrichten verwalten",
     description:
       "Erstellen und bearbeiten Sie Nachrichten in PostgreSQL und verwalten Sie Veröffentlichungsstatus sowie den Featured-Beitrag.",

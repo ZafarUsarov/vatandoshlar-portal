@@ -19,8 +19,8 @@ export async function generateMetadata(): Promise<Metadata> {
     locale === "de";
 
   const title = isGerman
-    ? "Telegram-Communitys | Vatandoshlar.de"
-    : "Telegram hamjamiyatlari | Vatandoshlar.de";
+    ? "Telegram-Communitys | UzDe"
+    : "Telegram hamjamiyatlari | UzDe";
 
   const description = isGerman
     ? "Finden Sie usbekische Telegram-Communitys nach Bundesländern in Deutschland."
@@ -46,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
           ? "de_DE"
           : "uz_UZ",
       siteName:
-        "Vatandoshlar.de",
+        "UzDe",
       title,
       description,
       url:

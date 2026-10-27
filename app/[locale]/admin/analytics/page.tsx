@@ -31,10 +31,10 @@ export async function generateMetadata(): Promise<Metadata> {
 const copy = {
   uz: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · ANALITIKA",
+      "UZDE · ADMIN · ANALITIKA",
     title: "Sayt analitikasi",
     description:
-      "Vatandoshlar.de sahifalarining ko‘rilishi, tashrif buyuruvchilar davlati va til bo‘yicha yig‘ilgan maxfiylikka yo‘naltirilgan statistikani kuzating.",
+      "UzDe sahifalarining ko‘rilishi, tashrif buyuruvchilar davlati va til bo‘yicha yig‘ilgan maxfiylikka yo‘naltirilgan statistikani kuzating.",
     back: "Boshqaruv paneliga qaytish",
     today: "Bugun",
     last7Days: "Oxirgi 7 kun",
@@ -61,10 +61,10 @@ const copy = {
 
   de: {
     eyebrow:
-      "VATANDOSHLAR.DE · ADMIN · ANALYSE",
+      "UZDE · ADMIN · ANALYSE",
     title: "Website-Analyse",
     description:
-      "Beobachten Sie die datenschutzorientiert erfassten Seitenaufrufe von Vatandoshlar.de nach Zeitraum, Herkunftsland und Sprache.",
+      "Beobachten Sie die datenschutzorientiert erfassten Seitenaufrufe von UzDe nach Zeitraum, Herkunftsland und Sprache.",
     back: "Zurück zum Verwaltungsbereich",
     today: "Heute",
     last7Days: "Letzte 7 Tage",

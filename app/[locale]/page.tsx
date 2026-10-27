@@ -4,15 +4,15 @@ import { getLocale } from "next-intl/server";
 type Locale = "uz" | "de";
 
 const SITE_URL = "https://vatandoshlar.de";
-const SOCIAL_PREVIEW_IMAGE_URL = `${SITE_URL}/api/social-preview?v=20260910`;
+const SOCIAL_PREVIEW_IMAGE_URL = `${SITE_URL}/api/social-preview?v=uzde-m19-4`;
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale;
   const isGerman = locale === "de";
 
   const title = isGerman
-    ? "Vatandoshlar.de – Plattform für Usbeken rund um Deutschland"
-    : "Vatandoshlar.de – Germaniya bo‘yicha o‘zbekistonliklar platformasi";
+    ? "UzDe – Plattform für Usbeken rund um Deutschland"
+    : "UzDe – Germaniya bo‘yicha o‘zbekistonliklar platformasi";
 
   const socialTitle = isGerman
     ? "Plattform für Usbeken rund um Deutschland"
@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale: isGerman ? "de_DE" : "uz_UZ",
-      siteName: "Vatandoshlar.de",
+      siteName: "UzDe",
       title: socialTitle,
       description,
       url: canonicalUrl,
@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: SOCIAL_PREVIEW_IMAGE_URL,
           width: 1200,
           height: 630,
-          alt: "Vatandoshlar.de",
+          alt: "UzDe",
           type: "image/png",
         },
       ],
