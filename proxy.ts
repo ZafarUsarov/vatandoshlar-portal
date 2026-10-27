@@ -1,138 +1,122 @@
+
 import createMiddleware from "next-intl/middleware";
 import { NextResponse } from "next/server";
 
 import { auth } from "@/auth";
-import {
-  getPathname,
-} from "@/i18n/navigation";
+import { getPathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
-const handleI18nRouting =
-  createMiddleware(routing);
+const handleI18nRouting = createMiddleware(routing);
 
 const RAILWAY_HOSTNAME =
   "vatandoshlar-portal-production.up.railway.app";
 
-const CANONICAL_HOSTNAME =
-  "vatandoshlar.de";
+const CANONICAL_HOSTNAME = "vatandoshlar.de";
 
-type AppLocale =
-  (typeof routing.locales)[number];
+const NEW_HOSTNAME = "uzde.de";
 
-function resolveLocale(
-  pathname: string,
-): AppLocale {
-  const localeCandidate =
-    pathname
-      .split("/")
-      .filter(Boolean)[0];
+type AppLocale = (typeof routing.locales)[number];
 
-  if (
-    routing.locales.includes(
-      localeCandidate as AppLocale,
-    )
-  ) {
+function resolveLocale(pathname: string): AppLocale {
+  const localeCandidate = pathname.split("/").filter(Boolean)[0];
+
+  if (routing.locales.includes(localeCandidate as AppLocale)) {
     return localeCandidate as AppLocale;
   }
 
   return routing.defaultLocale;
 }
 
-function getInternalPathname(
-  pathname: string,
-): string {
-  const segments =
-    pathname
-      .split("/")
-      .filter(Boolean);
+function getInternalPathname(pathname: string): string {
+  const segments = pathname.split("/").filter(Boolean);
+  const firstSegment = segments[0];
 
-  const firstSegment =
-    segments[0];
-
-  const hasLocalePrefix =
-    routing.locales.includes(
-      firstSegment as AppLocale,
-    );
+  const hasLocalePrefix = routing.locales.includes(
+    firstSegment as AppLocale,
+  );
 
   if (!hasLocalePrefix) {
     return pathname;
   }
 
-  const internalSegments =
-    segments.slice(1);
+  const internalSegments = segments.slice(1);
 
   return internalSegments.length
     ? `/${internalSegments.join("/")}`
     : "/";
 }
 
-function isAdminPath(
-  pathname: string,
-): boolean {
-  const internalPathname =
-    getInternalPathname(pathname);
+function isAdminPath(pathname: string): boolean {
+  const internalPathname = getInternalPathname(pathname);
 
   return (
     internalPathname === "/admin" ||
-    internalPathname.startsWith(
-      "/admin/",
-    )
+    internalPathname.startsWith("/admin/")
   );
 }
 
 export default auth((request) => {
-  const forwardedHost =
-    request.headers
-      .get("x-forwarded-host")
-      ?.split(",")[0]
-      ?.trim()
-      .toLowerCase();
+  const forwardedHost = request.headers
+    .get("x-forwarded-host")
+    ?.split(",")[0]
+    ?.trim()
+    .toLowerCase();
 
-  if (
-    forwardedHost ===
-    RAILWAY_HOSTNAME
-  ) {
-    const canonicalUrl =
-      request.nextUrl.clone();
+  if (forwardedHost === RAILWAY_HOSTNAME) {
+    const canonicalUrl = request.nextUrl.clone();
 
     canonicalUrl.protocol = "https:";
-    canonicalUrl.hostname =
-      CANONICAL_HOSTNAME;
+    canonicalUrl.hostname = CANONICAL_HOSTNAME;
     canonicalUrl.port = "";
 
-    return NextResponse.redirect(
-      canonicalUrl,
-      308,
-    );
+    return NextResponse.redirect(canonicalUrl, 308);
   }
 
-  const pathname =
-    request.nextUrl.pathname;
+  const pathname = request.nextUrl.pathname;
 
   if (
     isAdminPath(pathname) &&
     request.auth?.user?.role !== "admin"
   ) {
-    const locale =
-      resolveLocale(pathname);
+    const locale = resolveLocale(pathname);
+    const loginUrl = request.nextUrl.clone();
 
-    const loginUrl =
-      request.nextUrl.clone();
-
-    loginUrl.pathname =
-      getPathname({
-        locale,
-        href: "/login",
-      });
+    loginUrl.pathname = getPathname({
+      locale,
+      href: "/login",
+    });
 
     loginUrl.search = "";
 
-    return NextResponse.redirect(
-      loginUrl,
-    );
+    return NextResponse.redirect(loginUrl);
   }
 
-  return handleI18nRouting(request);
+  const response = handleI18nRouting(request);
+
+  // Preserve the new domain when next-intl adds a locale prefix.
+  // AUTH_URL still points to vatandoshlar.de during migration.
+  if (response.status === 307 || response.status === 308) {
+    const location = response.headers.get("location");
+
+    if (location) {
+      const redirectUrl = new URL(location, request.url);
+
+      if (
+        forwardedHost === NEW_HOSTNAME &&
+        redirectUrl.hostname === CANONICAL_HOSTNAME
+      ) {
+        redirectUrl.protocol = "https:";
+        redirectUrl.host = NEW_HOSTNAME;
+
+        response.headers.set(
+          "location",
+          redirectUrl.toString(),
+        );
+      }
+    }
+  }
+
+  return response;
 });
 
 export const config = {
