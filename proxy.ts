@@ -101,7 +101,6 @@ export const config = {
   matcher: [
     "/",
     "/(uz|de)/:path*",
-    "/api/auth/:path*",
     "/((?!api|_next|_vercel|.*\\..*).*)",
   ],
 };
