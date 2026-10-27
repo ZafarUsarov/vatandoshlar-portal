@@ -11,9 +11,9 @@ const handleI18nRouting = createMiddleware(routing);
 const RAILWAY_HOSTNAME =
   "vatandoshlar-portal-production.up.railway.app";
 
-const CANONICAL_HOSTNAME = "vatandoshlar.de";
+const OLD_HOSTNAME = "vatandoshlar.de";
 
-const NEW_HOSTNAME = "uzde.de";
+const CANONICAL_HOSTNAME = "uzde.de";
 
 type AppLocale = (typeof routing.locales)[number];
 
@@ -62,7 +62,10 @@ export default auth((request) => {
     ?.trim()
     .toLowerCase();
 
-  if (forwardedHost === RAILWAY_HOSTNAME) {
+  if (
+    forwardedHost === RAILWAY_HOSTNAME ||
+    forwardedHost === OLD_HOSTNAME
+  ) {
     const canonicalUrl = request.nextUrl.clone();
 
     canonicalUrl.protocol = "https:";
@@ -91,38 +94,14 @@ export default auth((request) => {
     return NextResponse.redirect(loginUrl);
   }
 
-  const response = handleI18nRouting(request);
-
-  // Preserve the new domain when next-intl adds a locale prefix.
-  // AUTH_URL still points to vatandoshlar.de during migration.
-  if (response.status === 307 || response.status === 308) {
-    const location = response.headers.get("location");
-
-    if (location) {
-      const redirectUrl = new URL(location, request.url);
-
-      if (
-        forwardedHost === NEW_HOSTNAME &&
-        redirectUrl.hostname === CANONICAL_HOSTNAME
-      ) {
-        redirectUrl.protocol = "https:";
-        redirectUrl.host = NEW_HOSTNAME;
-
-        response.headers.set(
-          "location",
-          redirectUrl.toString(),
-        );
-      }
-    }
-  }
-
-  return response;
+  return handleI18nRouting(request);
 });
 
 export const config = {
   matcher: [
     "/",
     "/(uz|de)/:path*",
+    "/api/auth/:path*",
     "/((?!api|_next|_vercel|.*\\..*).*)",
   ],
 };
