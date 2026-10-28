@@ -22,6 +22,8 @@ type PublishedNewsSummaryRow = {
   content_type: string;
   reading_time_uz: string;
   reading_time_de: string;
+  content_uz: string[];
+  content_de: string[];
   source_name_uz: string;
   source_name_de: string;
   source_url: string;
@@ -37,11 +39,7 @@ type PublishedNewsSummaryRow = {
   view_count: string | number;
 };
 
-type PublishedNewsDetailRow =
-  PublishedNewsSummaryRow & {
-    content_uz: string[];
-    content_de: string[];
-  };
+type PublishedNewsDetailRow = PublishedNewsSummaryRow;
 
 const contentTypeLabels = {
   official_info: {
@@ -119,6 +117,12 @@ function toSafeNumericId(
     : 0;
 }
 
+function calculateReadingTime(content: string[], locale: PublicNewsLocale): string {
+  const words = content.join(" ").replace(/<[^>]*>/g, " ").trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / 225));
+  return locale === "de" ? `${minutes} Min.` : `${minutes} daqiqa`;
+}
+
 function toPublicNewsSummary(
   row: PublishedNewsSummaryRow,
   locale: PublicNewsLocale,
@@ -146,10 +150,7 @@ function toPublicNewsSummary(
         row.content_type,
         locale,
       ),
-    readingTime:
-      locale === "de"
-        ? row.reading_time_de
-        : row.reading_time_uz,
+    readingTime: calculateReadingTime(locale === "de" ? row.content_de : row.content_uz, locale),
     verifiedAt:
       toDateOnlyString(
         row.verified_at,
@@ -259,6 +260,8 @@ const loadPublishedNews =
               content_type,
               reading_time_uz,
               reading_time_de,
+              content_uz,
+              content_de,
               source_name_uz,
               source_name_de,
               source_url,
@@ -275,9 +278,7 @@ const loadPublishedNews =
             FROM news_articles
             WHERE status = 'published'
             ORDER BY
-              featured DESC,
-              verified_at DESC,
-              updated_at DESC,
+              published_at DESC NULLS LAST,
               id DESC
             ${
               limit === null
@@ -395,6 +396,8 @@ const loadRelatedPublishedNews =
               content_type,
               reading_time_uz,
               reading_time_de,
+              content_uz,
+              content_de,
               source_name_uz,
               source_name_de,
               source_url,
@@ -463,6 +466,8 @@ const loadFeaturedPublishedNews =
               content_type,
               reading_time_uz,
               reading_time_de,
+              content_uz,
+              content_de,
               source_name_uz,
               source_name_de,
               source_url,

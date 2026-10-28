@@ -1,4 +1,4 @@
-import Header from "../components/Header";
+import RebrandingHomeFrame from "../components/home/RebrandingHomeFrame";
 import MarketHomeEntry from "../components/home/MarketHomeEntry";
 import GuidePreviewSection from "../components/home/GuidePreviewSection";
 import JobsSection from "../components/JobsSection";
@@ -14,9 +14,8 @@ import {
 export default function HomePage() {
   return (
     <>
-      <Header />
-
-      <main className="min-h-screen bg-white pt-24 text-slate-950 transition-colors lg:pt-28 dark:bg-slate-950 dark:text-white">
+      <RebrandingHomeFrame>
+      <main className="min-h-screen bg-white pt-[calc(6rem+var(--rebranding-height))] text-slate-950 transition-[background-color,color,padding] lg:pt-[calc(7rem+var(--rebranding-height))] dark:bg-slate-950 dark:text-white">
         <HeroSection />
 
         <MarketHomeEntry />
@@ -42,6 +41,7 @@ export default function HomePage() {
       </main>
 
       <HomeFooter />
+      </RebrandingHomeFrame>
     </>
   );
 }

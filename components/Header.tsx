@@ -590,7 +590,7 @@ function getInitialDarkMode(): boolean {
 
 }
 
-export default function Header() {
+export default function Header({ showRebrandingBanner = false }: { showRebrandingBanner?: boolean }) {
 
   const t = useTranslations("Header");
 
@@ -1212,6 +1212,16 @@ export default function Header() {
         `}
 
       >
+
+        {showRebrandingBanner && (
+          <div className="flex h-9 items-center justify-center gap-2 overflow-hidden bg-teal-700 px-3 text-center text-[11px] font-medium text-white sm:text-xs">
+            <span className="shrink-0 sm:hidden">{locale === "de" ? "Vatandoshlar.de heißt jetzt UzDe!" : "Vatandoshlar.de endi UzDe!"}</span>
+            <span className="hidden truncate sm:inline">{locale === "de" ? "Vatandoshlar.de heißt jetzt UzDe! Neuer Name, neues Logo – unsere Mission bleibt." : "Vatandoshlar.de endi UzDe! Yangi nom, yangi logo — maqsadimiz o‘zgarmadi."}</span>
+            <Link href="/news/vatandoshlar-de-endi-uzde" className="shrink-0 font-bold underline underline-offset-2 hover:text-teal-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+              {locale === "de" ? "Mehr →" : "Batafsil →"}
+            </Link>
+          </div>
+        )}
 
         <div
 
@@ -1957,9 +1967,9 @@ export default function Header() {
 
                 isScrolled
 
-                  ? "top-16 max-h-[calc(100dvh-4rem)]"
+                  ? (showRebrandingBanner ? "top-[100px] max-h-[calc(100dvh-100px)]" : "top-16 max-h-[calc(100dvh-4rem)]")
 
-                  : "top-20 max-h-[calc(100dvh-5rem)]"
+                  : (showRebrandingBanner ? "top-[116px] max-h-[calc(100dvh-116px)]" : "top-20 max-h-[calc(100dvh-5rem)]")
 
               }
 

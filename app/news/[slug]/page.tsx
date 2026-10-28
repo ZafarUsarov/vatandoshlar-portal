@@ -250,8 +250,7 @@ export default async function NewsDetailPage({
           <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-slate-500 sm:text-sm dark:text-slate-400">
             <span className="rounded-full bg-blue-50 px-3 py-1 font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-300">{article.category}</span>
             <span className="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">{article.contentType}</span>
-            <span className="inline-flex items-center gap-1"><Clock3 size={15} aria-hidden="true" />{article.readingTime}</span>
-            <ViewCount count={article.viewCount} locale={locale} />
+
             <time className="ml-auto hidden sm:inline" dateTime={article.verifiedAt}>{formatNewsDate(article.verifiedAt, locale)}</time>
           </div>
 
@@ -272,10 +271,29 @@ export default async function NewsDetailPage({
             </div>
           )}
 
-          <div className="mt-4 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 px-3 py-3 dark:border-slate-800 sm:px-4">
-            <span className="text-xs font-semibold text-slate-600 sm:text-sm dark:text-slate-300">{appLocale === "de" ? "Artikel teilen:" : "Maqolani ulashish:"}</span>
-            <NewsShareActions locale={appLocale} title={article.title} url={articleUrl} />
-          </div>
+          {article.slug === "vatandoshlar-de-endi-uzde" && (
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-5" aria-label={appLocale === "de" ? "Bisheriges und neues Logo" : "Eski va yangi logo"}>
+              {[
+                { src: "/images/brand/Logo_New_Transparent.png", label: appLocale === "de" ? "Bisher: Vatandoshlar.de" : "Avval: Vatandoshlar.de" },
+                { src: "/images/brand/uzde/uzde-logo-original-transparent.png", label: appLocale === "de" ? "Jetzt: UzDe" : "Hozir: UzDe" },
+              ].map(({ src, label }) => (
+                <figure key={src} className={`flex min-w-0 flex-col items-center justify-center gap-3 rounded-2xl border p-4 sm:p-7 ${src.includes("uzde-logo-original") ? "border-slate-800 bg-slate-950" : "border-slate-200 bg-white"}`}>
+                  <div className="relative h-28 w-full sm:h-44">
+                    <Image src={src} alt={label} fill sizes="(max-width: 640px) 50vw, 360px" className="object-contain" />
+                  </div>
+                  <figcaption className={`text-center text-xs font-semibold sm:text-sm ${src.includes("uzde-logo-original") ? "text-white" : "text-slate-700"}`}>{label}</figcaption>
+                </figure>
+              ))}
+            </div>
+          )}
+
+          <div className="mx-auto mt-6 flex max-w-4xl flex-col gap-3 border-y border-slate-200 py-3 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
+              <div className="flex shrink-0 items-center justify-center gap-4 text-xs text-slate-600 sm:justify-start sm:text-sm dark:text-slate-300">
+                <span className="inline-flex items-center gap-1.5"><Clock3 size={15} aria-hidden="true" />{article.readingTime}</span>
+                <ViewCount count={article.viewCount} locale={locale} />
+              </div>
+              <NewsShareActions locale={appLocale} title={article.title} url={articleUrl} />
+            </div>
 
           <div className="mx-auto mt-7 max-w-4xl">
             {article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? (
@@ -316,10 +334,7 @@ export default async function NewsDetailPage({
                 </a>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{t("lastVerified", { date: formatNewsDate(article.verifiedAt, locale) })}</p>
               </div>
-              <aside className="flex max-w-sm items-start gap-2 rounded-xl bg-amber-50 px-3 py-2.5 text-xs leading-5 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
-                <Info className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-                <p><strong>{t("disclaimer.title")}:</strong> {t("disclaimer.description")}</p>
-              </aside>
+
             </div>
           </div>
         </article>

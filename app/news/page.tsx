@@ -8,15 +8,11 @@ import Header from "../../components/Header";
 import NewsCard from "../../components/cards/NewsCard";
 import BrandName from "../../components/ui/BrandName";
 import {
-  ButtonLink,
   Container,
   PageHero,
   Section,
 } from "../../components/ui";
-import { Link } from "../../i18n/navigation";
-import { formatNewsDate } from "../../lib/news/format-news-date";
 import {
-  getFeaturedPublishedNews,
   getPublishedNews,
   type PublicNewsLocale,
 } from "../../lib/news/public-news-repository";
@@ -82,17 +78,7 @@ export default async function NewsPage() {
       ? "de"
       : "uz";
 
-  const [
-    allNews,
-    featuredNews,
-  ] = await Promise.all([
-    getPublishedNews(
-      appLocale,
-    ),
-    getFeaturedPublishedNews(
-      appLocale,
-    ),
-  ]);
+  const allNews = await getPublishedNews(appLocale);
 
   return (
     <>
@@ -208,125 +194,16 @@ export default async function NewsPage() {
                 </span>
               </div>
             }
-            className="relative z-10 !bg-transparent !pb-14 sm:!pb-16 lg:!pb-20"
+            className="relative z-10 !bg-transparent !pb-6 sm:!pb-8 lg:!pb-10"
             contentClassName="relative z-10"
           />
         </div>
 
-        {featuredNews && (
-          <Section
-            tone="page"
-            spacing="none"
-            aria-labelledby="featured-news-heading"
-            className="relative overflow-hidden pb-16 pt-8 sm:pb-20 sm:pt-10 lg:pb-24 lg:pt-12"
-          >
-            <Container className="relative z-10">
-              <article className="overflow-hidden rounded-[2rem] border border-border-default bg-surface shadow-sm">
-                <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
-                  <div className="relative flex min-h-[280px] items-end overflow-hidden bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,0.34),transparent_35%),radial-gradient(circle_at_80%_30%,rgba(14,165,233,0.26),transparent_34%),linear-gradient(145deg,#0f172a,#102a2a_58%,#0f172a)] p-7 text-white sm:min-h-[340px] sm:p-10 lg:min-h-[430px] lg:p-12">
-                    <div className="relative z-10 max-w-md border-t border-white/15 pt-5 sm:pt-6">
-                      <p className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-emerald-200 sm:text-xs">
-                        {t(
-                          "featured.officialSource",
-                        )}
-                      </p>
-
-                      <p className="mt-2 text-base font-semibold leading-7 text-white sm:text-lg">
-                        {
-                          featuredNews.sourceName
-                        }
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col justify-center bg-surface p-7 sm:p-10 lg:p-12 xl:p-14">
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-text-muted">
-                      <span className="font-semibold text-brand">
-                        {
-                          featuredNews.category
-                        }
-                      </span>
-
-                      <span aria-hidden="true">
-                        •
-                      </span>
-
-                      <span>
-                        {
-                          featuredNews.readingTime
-                        }
-                      </span>
-
-                      {featuredNews.location && (
-                        <>
-                          <span aria-hidden="true">
-                            •
-                          </span>
-                          <span>
-                            {
-                              featuredNews.location
-                            }
-                          </span>
-                        </>
-                      )}
-                    </div>
-
-                    <h2
-                      id="featured-news-heading"
-                      className="mt-5 text-2xl font-bold leading-tight tracking-tight text-text-primary sm:mt-6 sm:text-3xl lg:text-4xl"
-                    >
-                      <Link
-                        href={`/news/${featuredNews.slug}`}
-                        className="rounded-sm transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4"
-                      >
-                        {
-                          featuredNews.title
-                        }
-                      </Link>
-                    </h2>
-
-                    <p className="mt-5 max-w-2xl text-base leading-7 text-text-secondary sm:mt-6 sm:text-lg sm:leading-8">
-                      {
-                        featuredNews.excerpt
-                      }
-                    </p>
-
-                    <div className="mt-7 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:items-center">
-                      <ButtonLink
-                        href={`/news/${featuredNews.slug}`}
-                        size="lg"
-                      >
-                        {t(
-                          "featured.readMore",
-                        )}
-                      </ButtonLink>
-
-                      <p className="text-sm text-text-muted">
-                        {t(
-                          "featured.verified",
-                        )}{" "}
-                        <time
-                          dateTime={
-                            featuredNews.verifiedAt
-                          }
-                        >
-                          {formatNewsDate(
-                            featuredNews.verifiedAt,
-                            locale,
-                          )}
-                        </time>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </Container>
-          </Section>
-        )}
 
         <Section
           tone="page"
-          spacing="xl"
+          spacing="none"
+          className="pb-12 pt-5 sm:pb-16 sm:pt-7"
           aria-labelledby="all-news-heading"
         >
           <Container>
@@ -340,14 +217,14 @@ export default async function NewsPage() {
 
                 <h2
                   id="all-news-heading"
-                  className="section-title mt-3"
+                  className="section-title mt-2"
                 >
                   {t(
                     "all.title",
                   )}
                 </h2>
 
-                <p className="section-description mt-4">
+                <p className="section-description mt-2">
                   {t(
                     "all.description",
                   )}
@@ -366,34 +243,22 @@ export default async function NewsPage() {
             </div>
 
             {allNews.length > 0 ? (
-              <div className="mt-10 space-y-7">
-                <div className="grid items-stretch gap-7 lg:grid-cols-[1.35fr_1fr]">
-                  <div className="min-w-0">
-                    <NewsCard item={allNews[0]} index={0} lead />
-                  </div>
-
-                  {allNews.length > 1 && (
-                    <div className="grid min-w-0 content-start items-start gap-7 sm:grid-cols-2 lg:grid-cols-1">
-                      {allNews.slice(1, 3).map((item, index) => (
-                        <NewsCard
-                          key={item.slug}
-                          item={item}
-                          index={index + 1}
-                          compact
-                        />
-                      ))}
-                    </div>
-                  )}
+              <div className="mt-6 space-y-5">
+                <div className="grid gap-4">
+                  {allNews.slice(0, 2).map((item, index) => (
+                    <NewsCard key={item.slug} item={{
+                        ...item,
+                        imageUrl:
+                          item.slug === "vatandoshlar-de-endi-uzde"
+                            ? "/images/brand/uzde/uzde-logo-original-transparent.webp"
+                            : item.imageUrl,
+                      }} index={index} horizontal />
+                  ))}
                 </div>
-
-                {allNews.length > 3 && (
-                  <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-                    {allNews.slice(3).map((item, index) => (
-                      <NewsCard
-                        key={item.slug}
-                        item={item}
-                        index={index + 3}
-                      />
+                {allNews.length > 2 && (
+                  <div className="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {allNews.slice(2).map((item, index) => (
+                      <NewsCard key={item.slug} item={item} index={index + 2} catalog />
                     ))}
                   </div>
                 )}
