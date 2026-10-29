@@ -1,29 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 import Header from "@/components/Header";
 import { Link } from "@/i18n/navigation";
-
-function CompassIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="h-10 w-10"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.7"
-      viewBox="0 0 24 24"
-    >
-      <circle cx="12" cy="12" r="8.5" />
-      <path
-        d="m14.75 9.25-1.8 3.7-3.7 1.8 1.8-3.7 3.7-1.8Z"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 export default function NotFoundPage() {
   const t = useTranslations("NotFoundPage");
@@ -35,7 +16,14 @@ export default function NotFoundPage() {
       <main className="flex min-h-screen items-center px-6 pb-16 pt-28 lg:px-8 lg:pt-32">
         <div className="mx-auto w-full max-w-3xl text-center">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-emerald-200 bg-emerald-50 text-emerald-700 shadow-sm dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
-            <CompassIcon />
+            <Image
+              src="/images/brand/uzde/uzde-logo-original-transparent.webp"
+              alt="UzDe"
+              width={64}
+              height={64}
+              priority
+              className="h-16 w-16 object-contain"
+            />
           </div>
 
           <p className="mt-8 text-sm font-black uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">
