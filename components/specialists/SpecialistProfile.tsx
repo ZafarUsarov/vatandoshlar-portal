@@ -237,30 +237,6 @@ export default function SpecialistProfile({
           href: specialist.contact.telegram,
         }
       : null,
-    specialist.contact.instagram
-      ? {
-          key: "instagram",
-          label: labels.instagram,
-          value: labels.instagram,
-          href: specialist.contact.instagram,
-        }
-      : null,
-    specialist.contact.youtube
-      ? {
-          key: "youtube",
-          label: labels.youtube,
-          value: labels.youtube,
-          href: specialist.contact.youtube,
-        }
-      : null,
-    specialist.contact.facebook
-      ? {
-          key: "facebook",
-          label: labels.facebook,
-          value: labels.facebook,
-          href: specialist.contact.facebook,
-        }
-      : null,
     specialist.contact.googleScholar ? { key: "googleScholar", label: labels.googleScholar, value: labels.googleScholar, href: specialist.contact.googleScholar } : null,
     specialist.contact.researchGate ? { key: "researchGate", label: labels.researchGate, value: labels.researchGate, href: specialist.contact.researchGate } : null,
     specialist.contact.github ? { key: "github", label: labels.github, value: labels.github, href: specialist.contact.github } : null,
@@ -275,6 +251,22 @@ export default function SpecialistProfile({
       href: string;
     } => Boolean(item),
   );
+
+  const socialLinks = [
+    specialist.contact.instagram
+      ? { key: "instagram", label: labels.instagram, href: specialist.contact.instagram }
+      : null,
+    specialist.contact.youtube
+      ? { key: "youtube", label: labels.youtube, href: specialist.contact.youtube }
+      : null,
+    specialist.contact.facebook
+      ? { key: "facebook", label: labels.facebook, href: specialist.contact.facebook }
+      : null,
+  ].filter((item): item is {
+    key: string;
+    label: string;
+    href: string;
+  } => item !== null);
 
   return (
     <main className="min-h-screen bg-white bg-[radial-gradient(circle_at_8%_28%,rgba(16,185,129,0.055),transparent_30rem),radial-gradient(circle_at_92%_48%,rgba(59,130,246,0.045),transparent_34rem),radial-gradient(circle_at_45%_88%,rgba(20,184,166,0.04),transparent_32rem)] bg-no-repeat pt-20 text-slate-950 dark:bg-none dark:bg-slate-950 dark:text-white">
@@ -584,6 +576,45 @@ export default function SpecialistProfile({
                   );
                 })}
               </div>
+
+              {socialLinks.length > 0 && (
+                <div className="mt-5 flex flex-wrap items-center gap-2.5">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.key}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      title={social.label}
+                      className={`flex size-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:focus-visible:ring-offset-slate-900 ${
+                        social.key === "instagram"
+                          ? "hover:border-fuchsia-300 hover:bg-fuchsia-50 hover:text-fuchsia-600 hover:shadow-fuchsia-500/10 focus-visible:ring-fuchsia-500 dark:hover:border-fuchsia-400/30 dark:hover:bg-fuchsia-400/10 dark:hover:text-fuchsia-300"
+                          : social.key === "youtube"
+                            ? "hover:border-red-300 hover:bg-red-50 hover:text-red-600 hover:shadow-red-500/10 focus-visible:ring-red-500 dark:hover:border-red-400/30 dark:hover:bg-red-400/10 dark:hover:text-red-300"
+                            : "hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-blue-500/10 focus-visible:ring-blue-500 dark:hover:border-blue-400/30 dark:hover:bg-blue-400/10 dark:hover:text-blue-300"
+                      }`}
+                    >
+                      {social.key === "instagram" ? (
+                        <svg aria-hidden="true" className="size-5" fill="none" viewBox="0 0 24 24">
+                          <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" strokeWidth="1.8" />
+                          <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.8" />
+                          <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" />
+                        </svg>
+                      ) : social.key === "youtube" ? (
+                        <svg aria-hidden="true" className="size-5" fill="none" viewBox="0 0 24 24">
+                          <rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="currentColor" />
+                          <path d="m10 9 5 3-5 3V9Z" fill="white" />
+                        </svg>
+                      ) : (
+                        <svg aria-hidden="true" className="size-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M13.6 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.6 1.7-1.6H17V3.8c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V10H8v3h2.6v8h3Z" />
+                        </svg>
+                      )}
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           </aside>
         </div>
