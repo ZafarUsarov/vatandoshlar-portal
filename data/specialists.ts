@@ -128,7 +128,7 @@ export const specialists: ReadonlyArray<Specialist> = [
       de: "Deutschlandweit",
     },
     contact: {
-      email: "info.vatandoshlar@gmx.de",
+      email: "info@uzde.de",
       telegram: "https://t.me/ZafarUsarov",
       instagram: "https://www.instagram.com/zafarbek_usarov",
       youtube: "https://youtube.com/@zafarusarov",

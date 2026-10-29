@@ -261,7 +261,7 @@ export default function SpecialistsDirectory({
             </p>
 
             <a
-              href="mailto:info.vatandoshlar@gmx.de?subject=Mutaxassislar%20katalogiga%20qo%27shilish"
+              href="mailto:info@uzde.de?subject=Mutaxassislar%20katalogiga%20qo%27shilish"
               className="mt-7 inline-flex rounded-full bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950"
             >
               {labels.empty.applyButton}

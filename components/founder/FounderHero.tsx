@@ -68,7 +68,7 @@ export default function FounderHero({
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a
-              href="mailto:info.vatandoshlar@gmx.de"
+              href="mailto:info@uzde.de"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950"
             >
               {labels.contactButton}

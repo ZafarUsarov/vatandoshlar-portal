@@ -549,14 +549,14 @@ export default async function PrivacyPage() {
                 </Link>
 
                 <a
-                  href="mailto:info.vatandoshlar@gmx.de"
+                  href="mailto:info@uzde.de"
                   className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-emerald-300 hover:bg-emerald-50/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-emerald-500/40 dark:hover:bg-emerald-500/10 dark:focus-visible:ring-offset-slate-900"
                 >
                   <span className="block text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
                     {currentCopy.contactLabel}
                   </span>
                   <span className="mt-1 block break-all font-bold text-emerald-700 dark:text-emerald-400">
-                    info.vatandoshlar@gmx.de
+                    info@uzde.de
                   </span>
                 </a>
               </div>
@@ -687,10 +687,10 @@ export default async function PrivacyPage() {
               </p>
 
               <a
-                href="mailto:info.vatandoshlar@gmx.de"
+                href="mailto:info@uzde.de"
                 className="inline-flex min-h-10 items-center font-semibold text-emerald-700 underline decoration-emerald-300 underline-offset-4 transition hover:text-emerald-600 dark:text-emerald-400 dark:decoration-emerald-700 dark:hover:text-emerald-300"
               >
-                info.vatandoshlar@gmx.de
+                info@uzde.de
               </a>
             </Section>
 
