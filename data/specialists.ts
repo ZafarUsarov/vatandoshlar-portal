@@ -129,7 +129,6 @@ export const specialists: ReadonlyArray<Specialist> = [
     },
     contact: {
       email: "info@uzde.de",
-      telegram: "https://t.me/ZafarUsarov",
       instagram: "https://www.instagram.com/zafarbek_usarov",
       youtube: "https://youtube.com/@zafarusarov",
       facebook: "https://www.facebook.com/ZafarbekUsarov",
