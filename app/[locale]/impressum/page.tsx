@@ -1,0 +1,179 @@
+import type { Metadata } from "next";
+import { Globe, Info, Mail } from "lucide-react";
+import FounderAvatar from "./FounderAvatar";
+import { specialists } from "@/data/specialists";
+import { getLocale } from "next-intl/server";
+
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import BrandName from "@/components/ui/BrandName";
+import { imprint } from "@/data/legal/imprint";
+import { Link } from "@/i18n/navigation";
+
+const copy = {
+  uz: {
+    eyebrow: "HUQUQIY MA’LUMOT",
+    title: "Impressum",
+    description:
+      "UzDe — Germaniyada yashayotgan hamda Germaniyaga kelishni rejalashtirayotgan o‘zbekistonliklar uchun axborot va hamjamiyat platformasi.",
+    operator: "Platforma operatori",
+    founderRole: "UzDe asoschisi va platforma boshqaruvchisi",
+    founderPlatform:
+      "UzDe — Germaniyadagi o‘zbekistonliklar uchun mustaqil axborot va hamjamiyat platformasi.",
+    operatorText:
+      "UzDe hozircha ro‘yxatdan o‘tgan kompaniya yoki tashkilot emas. Operatorning to‘liq huquqiy rekvizitlari va qonuniy pochta manzili hali e’lon qilinmagan.",
+    contact: "Aloqa",
+    website: "Veb-sayt",
+    warning: "Muhim huquqiy eslatma",
+    warningText:
+      "Ushbu sahifa hozircha qonunchilikda belgilangan to‘liq Impressum talablariga javob bermaydi. Yetishmayotgan ma’lumotlar aniqlashtirilmoqda.",
+    metadataDescription: "UzDe platformasining vaqtinchalik huquqiy ma’lumotlari.",
+  },
+  de: {
+    eyebrow: "RECHTLICHE INFORMATIONEN",
+    title: "Impressum",
+    description:
+      "UzDe ist eine Informations- und Community-Plattform für Menschen aus Usbekistan, die bereits in Deutschland leben oder planen, nach Deutschland zu kommen.",
+    operator: "Angaben zum Diensteanbieter",
+    founderRole: "Gründer und Betreiber der Plattform UzDe",
+    founderPlatform:
+      "UzDe — eine unabhängige Informations- und Community-Plattform für Menschen aus Usbekistan in Deutschland.",
+    operatorText:
+      "UzDe ist derzeit keine eingetragene Gesellschaft oder Organisation. Die vollständigen rechtlichen Angaben zum Diensteanbieter und die ladungsfähige Anschrift sind noch nicht veröffentlicht.",
+    contact: "Kontakt",
+    website: "Website",
+    warning: "Wichtiger rechtlicher Hinweis",
+    warningText:
+      "Diese Seite erfüllt derzeit nicht sämtliche gesetzlichen Anforderungen an ein vollständiges Impressum. Die fehlenden Angaben werden geklärt.",
+    metadataDescription: "Vorläufige rechtliche Informationen zur Plattform UzDe.",
+  },
+} as const;
+
+const founderAvatarUrl =
+  specialists.find((specialist) => specialist.slug === "zafar-usarov")
+    ?.avatarUrl ?? null;
+
+export default async function ImpressumPage() {
+  const locale = await getLocale();
+  const t = locale === "de" ? copy.de : copy.uz;
+
+  return (
+    <>
+      <Header />
+      <main
+        id="top"
+        className="relative overflow-hidden bg-slate-50 px-4 pb-10 pt-28 dark:bg-slate-950 sm:px-6 sm:pb-12 sm:pt-32 lg:px-8 lg:pb-16 lg:pt-28"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.13),transparent_42%),radial-gradient(circle_at_top_left,rgba(14,165,233,0.08),transparent_34%)]"
+        />
+        <div className="relative mx-auto max-w-7xl">
+          <header className="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 p-7 shadow-[0_24px_70px_-48px_rgba(15,23,42,0.5)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/90 sm:p-9 lg:p-11">
+            <div className="relative">
+              <div className="flex min-h-6 flex-wrap items-center gap-x-2 gap-y-1 text-xs font-black leading-6 uppercase tracking-[0.16em]">
+                <span className="inline-flex items-center normal-case tracking-normal"><BrandName className="text-slate-950 dark:text-white" /></span>
+                <span aria-hidden="true" className="text-slate-300 dark:text-slate-600">·</span>
+                <span className="inline-flex items-center leading-6 text-emerald-600 dark:text-emerald-400">{t.eyebrow}</span>
+              </div>
+              <h1 className="mt-5 text-3xl font-black tracking-[-0.035em] text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
+                {t.title}
+              </h1>
+              <p className="mt-5 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
+                {t.description.startsWith("UzDe") ? <><BrandName className="text-inherit" />{t.description.slice(4)}</> : t.description}
+              </p>
+            </div>
+          </header>
+
+          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+            <section className="group rounded-[1.75rem] border border-slate-200/80 bg-white/90 p-6 shadow-sm transition-[box-shadow,border-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-[0_18px_45px_-30px_rgba(15,23,42,0.3)] motion-reduce:transform-none motion-reduce:transition-none dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-emerald-500/30 dark:hover:shadow-[0_18px_45px_-30px_rgba(0,0,0,0.5)] sm:p-8">
+              <h2 className="text-xl font-bold text-slate-950 dark:text-white">{t.operator}</h2>
+              <p className="mt-4 leading-7 text-slate-600 dark:text-slate-300">
+                {t.founderPlatform.startsWith("UzDe") ? (
+                  <>
+                    <BrandName className="text-inherit" />
+                    {t.founderPlatform.slice(4)}
+                  </>
+                ) : (
+                  t.founderPlatform
+                )}
+              </p>
+              <p className="mt-4 leading-7 text-slate-600 dark:text-slate-300">{t.operatorText.startsWith("UzDe") ? <><BrandName className="text-inherit" />{t.operatorText.slice(4)}</> : t.operatorText}</p>
+            </section>
+
+            <section className="group rounded-[1.75rem] border border-slate-200/80 bg-white/90 p-6 shadow-sm transition-[box-shadow,border-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-[0_18px_45px_-30px_rgba(15,23,42,0.3)] motion-reduce:transform-none motion-reduce:transition-none dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-emerald-500/30 dark:hover:shadow-[0_18px_45px_-30px_rgba(0,0,0,0.5)] sm:p-8">
+              <h2 className="text-xl font-bold text-slate-950 dark:text-white">{t.contact}</h2>
+              <div className="mt-5 flex items-start gap-3">
+                <FounderAvatar
+                  src={founderAvatarUrl}
+                  alt="Zafar Usarov"
+                />
+                <div className="min-w-0">
+                  <Link
+                    href="/about/founder"
+                    className="inline-flex rounded-sm font-bold text-slate-950 underline decoration-emerald-500/40 underline-offset-4 transition-colors hover:text-emerald-700 hover:decoration-emerald-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:text-white dark:hover:text-emerald-300"
+                  >
+                    Zafar Usarov
+                  </Link>
+                  <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                    {t.founderRole}
+                  </p>
+                </div>
+              </div>
+              <div aria-hidden="true" className="my-5 h-px bg-slate-200/80 dark:bg-slate-700/70" />
+              <div className="space-y-4">
+                <div className="flex min-w-0 items-center gap-3">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50 text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
+                    <Globe aria-hidden="true" size={19} strokeWidth={1.8} />
+                  </span>
+                  <a
+                    href={imprint.website}
+                    className="min-w-0 break-all text-sm font-medium text-slate-700 underline decoration-transparent underline-offset-4 transition-colors hover:text-emerald-700 hover:decoration-current focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:text-slate-200 dark:hover:text-emerald-300 sm:text-base"
+                  >
+                    {imprint.website}
+                  </a>
+                </div>
+                <div className="flex min-w-0 items-center gap-3">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50 text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
+                    <Mail aria-hidden="true" size={19} strokeWidth={1.8} />
+                  </span>
+                  <a
+                    href={`mailto:${imprint.email}`}
+                    className="min-w-0 break-all text-sm font-medium text-slate-700 underline decoration-transparent underline-offset-4 transition-colors hover:text-emerald-700 hover:decoration-current focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:text-slate-200 dark:hover:text-emerald-300 sm:text-base"
+                  >
+                    {imprint.email}
+                  </a>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <section className="mt-4 flex items-start gap-2.5 rounded-xl border border-amber-200/60 bg-amber-50/40 px-3 py-2 dark:border-amber-500/15 dark:bg-amber-500/5 sm:px-4">
+            <Info
+              aria-hidden="true"
+              size={15}
+              strokeWidth={1.8}
+              className="mt-0.5 shrink-0 text-amber-700 dark:text-amber-300"
+            />
+            <div className="min-w-0 text-xs leading-5 text-amber-900 dark:text-amber-100 sm:text-sm">
+              <h2 className="inline font-semibold">{t.warning}</h2>
+              <span className="ml-1.5">{t.warningText}</span>
+            </div>
+          </section>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = locale === "de" ? copy.de : copy.uz;
+
+  return {
+    title: t.title,
+    description: t.metadataDescription,
+    robots: { index: false, follow: true },
+  };
+}
