@@ -224,10 +224,6 @@ export default async function FounderPage() {
             title: t("hero.title"),
             profession: t("hero.profession"),
             description: t("hero.description"),
-            contactButton: t("hero.contactButton"),
-            specialistButton: t(
-              "hero.specialistButton",
-            ),
           }}
         />
 
@@ -258,6 +254,7 @@ export default async function FounderPage() {
             technologiesTitle: t(
               "technologies.title",
             ),
+            specialistButton: t("hero.specialistButton"),
             contactTitle:
               locale === "de"
                 ? "Zafar Usarov in sozialen Medien"

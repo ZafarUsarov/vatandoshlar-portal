@@ -2,6 +2,7 @@ import {
   Globe, GraduationCap, MessageCircle, Send, BookOpen,
 } from "lucide-react";
 import type { SVGProps } from "react";
+import { zafarSocialLinks } from "@/components/founder/ZafarExtraSocials";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -49,11 +50,11 @@ type Labels = Readonly<{
   emailCopyFailed: string; callPhone: string;
 }>;
 
-type Props = Readonly<{ contact: LocalizedSpecialist["contact"]; labels: Labels }>;
+type Props = Readonly<{ contact: LocalizedSpecialist["contact"]; labels: Labels; isFounder?: boolean }>;
 
 const iconClass = "flex size-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-600 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300";
 
-export default function SpecialistContactLinks({ contact, labels }: Props) {
+export default function SpecialistContactLinks({ contact, labels, isFounder = false }: Props) {
   const links = [
     { key: "website", href: contact.website, label: labels.website, Icon: Globe },
     { key: "whatsapp", href: contact.whatsapp, label: labels.whatsapp, Icon: MessageCircle },
@@ -65,10 +66,14 @@ export default function SpecialistContactLinks({ contact, labels }: Props) {
     { key: "researchGate", href: contact.researchGate, label: labels.researchGate, Icon: BookOpen },
     { key: "github", href: contact.github, label: labels.github, Icon: Github },
     { key: "linkedin", href: contact.linkedin, label: labels.linkedin, Icon: Linkedin },
-  ].filter((item): item is { key: string; href: string; label: string; Icon: typeof Globe } => Boolean(item.href));
+  ].filter((item) => Boolean(item.href));
+  const visibleLinks = isFounder ? [
+    ...links.filter((item) => ["instagram", "youtube", "facebook"].includes(item.key)),
+    ...zafarSocialLinks.map((item) => ({ key: item.platform, href: item.href, label: item.label, Icon: item.Icon })),
+  ] : links;
 
   return (
-    <div className="mt-5 flex flex-wrap items-center gap-2.5">
+    <div className={`mt-5 flex flex-wrap items-center ${isFounder ? "gap-2" : "gap-2.5"}`}>
       {contact.email && (
         <SpecialistEmailPopover email={contact.email} label={labels.email}
           copyLabel={labels.copyEmail} composeLabel={labels.composeEmail}
@@ -84,7 +89,7 @@ export default function SpecialistContactLinks({ contact, labels }: Props) {
           copyLabel={labels.copyEmail} copiedLabel={labels.emailCopied}
           copyFailedLabel={labels.emailCopyFailed} callLabel={labels.callPhone} />
       )}
-      {links.map(({ key, href, label, Icon }) => (
+      {visibleLinks.map(({ key, href, label, Icon }) => (
         <a key={key} href={href} target="_blank" rel="noopener noreferrer"
           aria-label={label} title={label} className={iconClass}>
           <Icon aria-hidden="true" className="size-5" />

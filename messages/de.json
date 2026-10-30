@@ -815,7 +815,7 @@
     "hero": {
       "badge": "Projektgründer",
       "profession": "Projektgründer und Softwareentwickler",
-      "title": "Entwickler einer verlässlichen digitalen Plattform für Usbeken in Deutschland",
+      "title": "Entwickler einer verlässlichen digitalen Plattform für Usbeken, die in Deutschland leben oder planen, nach Deutschland zu kommen",
       "description": "UzDe ist ein langfristiges Projekt mit dem Ziel, Usbeken in Deutschland geprüfte Informationen, Dienstleistungen und hilfreiche Orientierung an einem Ort bereitzustellen.",
       "contactButton": "Kontakt aufnehmen",
       "specialistButton": "Fachkräfteprofil ansehen"
@@ -824,7 +824,7 @@
       "title": "Über mich",
       "paragraphs": {
         "0": "Ich bin Zafar Usarov, Gründer und Entwickler von UzDe. Ich entwickle produktionsreife Webanwendungen mit sauberer Architektur, strengem TypeScript und einem Ansatz, der auf langfristige Weiterentwicklung ausgelegt ist.",
-        "1": "UzDe ist für mich keine einfache Website. Ziel ist eine unabhängige, moderne und verantwortungsvolle Plattform, die Usbeken in Deutschland hilft, relevante Informationen und verlässliche Fachkräfte schneller zu finden."
+        "1": "UzDe ist für mich mehr als nur eine Website. Ziel ist es, eine unabhängige, moderne und verantwortungsvolle Plattform zu schaffen, die Usbeken, die in Deutschland leben oder planen, nach Deutschland zu kommen, dabei hilft, wichtige Informationen, nützliche Dienstleistungen und vertrauenswürdige Fachkräfte einfach zu finden."
       }
     },
     "mission": {

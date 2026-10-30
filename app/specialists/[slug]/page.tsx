@@ -10,7 +10,6 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import FounderProfilePromo from "@/components/specialists/FounderProfilePromo";
 import SpecialistProfile from "@/components/specialists/SpecialistProfile";
 import {
   getPublishedSpecialistBySlug,
@@ -255,6 +254,7 @@ export default async function SpecialistDetailPage({
       <Header />
       <SpecialistProfile
         specialist={specialist}
+        locale={locale}
         labels={{
           backToDirectory:
             t(
@@ -372,10 +372,6 @@ export default async function SpecialistDetailPage({
           languagesMap,
         }}
       />
-      {specialist.slug ===
-        "zafar-usarov" && (
-        <FounderProfilePromo />
-      )}
       <Footer />
     </div>
   );

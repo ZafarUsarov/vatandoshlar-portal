@@ -815,7 +815,7 @@
     "hero": {
       "badge": "Loyiha asoschisi",
       "profession": "Loyiha asoschisi va dasturchisi",
-      "title": "Germaniyadagi o‘zbekistonliklar uchun ishonchli raqamli platforma yaratuvchisi",
+      "title": "Germaniyada yashayotgan va Germaniyaga kelishni rejalashtirayotgan o‘zbekistonliklar uchun ishonchli raqamli platforma yaratuvchisi",
       "description": "UzDe — Germaniyada yashayotgan o‘zbekistonliklarga tekshirilgan ma’lumot, xizmat va foydali yo‘nalishlarni bir joyda taqdim etish maqsadida yaratilgan uzoq muddatli loyiha.",
       "contactButton": "Bog‘lanish",
       "specialistButton": "Mutaxassis profilini ko‘rish"
@@ -824,7 +824,7 @@
       "title": "Men haqimda",
       "paragraphs": {
         "0": "Men — Zafar Usarov, UzDe loyihasining asoschisi va dasturchisiman. Production darajasidagi veb-ilovalarni toza arxitektura, qat’iy TypeScript va uzoq muddatli rivojlanishga mos yondashuv asosida yarataman.",
-        "1": "UzDe men uchun oddiy sayt emas. Uning maqsadi Germaniyadagi o‘zbekistonliklarga kerakli ma’lumot va ishonchli mutaxassislarni tezroq topishga yordam beradigan mustaqil, zamonaviy va mas’uliyatli platforma qurishdir."
+        "1": "UzDe men uchun oddiy sayt emas. Uning maqsadi Germaniyada yashayotgan hamda Germaniyaga kelishni rejalashtirayotgan o‘zbekistonliklarga kerakli ma’lumotlar, foydali xizmatlar va ishonchli mutaxassislarni oson topishda yordam beradigan mustaqil, zamonaviy va mas’uliyatli platforma yaratishdir."
       }
     },
     "mission": {

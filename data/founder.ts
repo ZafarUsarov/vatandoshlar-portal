@@ -22,10 +22,10 @@ export const founderProfile: FounderProfile = {
     "Next.js",
     "React",
     "TypeScript",
+    "GitHub",
     "Tailwind CSS",
     "Node.js",
     "PostgreSQL",
     "Git",
-    "GitHub",
   ],
 };

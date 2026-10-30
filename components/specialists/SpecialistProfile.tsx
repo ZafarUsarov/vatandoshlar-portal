@@ -1,3 +1,4 @@
+import FounderProfilePromo from "@/components/specialists/FounderProfilePromo";
 import SpecialistContactLinks from "@/components/specialists/SpecialistContactLinks";
 import BrandedText from "@/components/ui/BrandedText";
 import { Link } from "@/i18n/navigation";
@@ -9,6 +10,7 @@ import type {
 
 type SpecialistProfileProps = Readonly<{
   specialist: LocalizedSpecialist;
+  locale: "uz" | "de";
   labels: Readonly<{
     backToDirectory: string;
     verified: string;
@@ -163,9 +165,11 @@ function getLocationLabel(
 
 export default function SpecialistProfile({
   specialist,
+  locale,
   labels,
 }: SpecialistProfileProps) {
   const locationLabel = getLocationLabel(specialist);
+  const isFounder = specialist.slug === "zafar-usarov";
   const isEntrepreneurProfile =
     specialist.categories.includes("entrepreneur");
 
@@ -276,7 +280,7 @@ export default function SpecialistProfile({
           <div className="space-y-8">
             <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">
               <p className="text-lg leading-8 text-slate-600 dark:text-slate-300">
-                <BrandedText text={specialist.shortDescription} />
+                <BrandedText text={specialist.slug === "zafar-usarov" ? (locale === "de" ? "Ich bin Gründer und Entwickler von UzDe. Ich entwickle Webplattformen und biete praxisorientierte Unterstützung bei Unterlagen für Bachelor-, Master- und Promotionsstudiengänge." : "UzDe asoschisi va dasturchisiman. Veb-platformalar ishlab chiqish hamda bakalavr, magistratura va doktorantura hujjatlari bo‘yicha amaliy yo‘naltirish bilan shug‘ullanaman.") : specialist.shortDescription} />
               </p>
 
               <div className="mt-7 grid gap-5 sm:grid-cols-2">
@@ -430,21 +434,22 @@ export default function SpecialistProfile({
             </article>
           </div>
 
-          <aside>
-            <div className="sticky top-28 rounded-[2rem] border border-slate-200/80 bg-white p-6 shadow-sm transition-[border-color,box-shadow,background-color] duration-300 hover:border-emerald-200 hover:shadow-[0_18px_45px_-30px_rgba(5,150,105,0.45)] motion-reduce:transition-none dark:border-white/[0.08] dark:bg-slate-900 dark:hover:border-emerald-400/20">
+          <aside className="min-w-0">
+            <div className="space-y-5 lg:sticky lg:top-28">
+              {specialist.slug === "zafar-usarov" && <FounderProfilePromo />}
+              <div className="rounded-[2rem] border border-slate-200/80 bg-white p-6 shadow-sm transition-[border-color,box-shadow,background-color] duration-300 hover:border-emerald-200 hover:shadow-[0_18px_45px_-30px_rgba(5,150,105,0.45)] motion-reduce:transition-none dark:border-white/[0.08] dark:bg-slate-900 dark:hover:border-emerald-400/20">
               <h2 className="text-xl font-bold text-slate-950 dark:text-white">
-                {isEntrepreneurProfile
-                  ? labels.website
-                  : labels.contact}
+                {isFounder ? (locale === "de" ? "Soziale Netzwerke & Kontakt" : "Ijtimoiy tarmoqlar va bog‘lanish") : isEntrepreneurProfile ? labels.website : labels.contact}
               </h2>
 
-              {!isEntrepreneurProfile && (
+              {!isEntrepreneurProfile && !isFounder && (
                 <p className="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400">
                   {labels.contactDescription}
                 </p>
               )}
 
-              <SpecialistContactLinks contact={specialist.contact} labels={labels} />
+              <SpecialistContactLinks contact={specialist.contact} labels={labels} isFounder={isFounder} />
+              </div>
             </div>
           </aside>
         </div>

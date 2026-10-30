@@ -1,5 +1,4 @@
 
-import { Link } from "@/i18n/navigation";
 import BrandedText from "@/components/ui/BrandedText";
 
 type FounderHeroProps = Readonly<{
@@ -9,36 +8,15 @@ type FounderHeroProps = Readonly<{
     title: string;
     profession: string;
     description: string;
-    contactButton: string;
-    specialistButton: string;
   }>;
 }>;
-
-function ArrowUpRightIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-4"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M7 17 17 7M8 7h9v9"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 export default function FounderHero({
   name,
   labels,
 }: FounderHeroProps) {
   return (
-    <section className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-50 py-20 dark:border-slate-800 dark:bg-slate-950 sm:py-28">
+    <section className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-50 pb-10 pt-28 dark:border-slate-800 dark:bg-slate-950 sm:pb-14 sm:pt-32">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(16,185,129,0.14),transparent_28%),radial-gradient(circle_at_85%_20%,rgba(59,130,246,0.11),transparent_26%),radial-gradient(circle_at_60%_100%,rgba(139,92,246,0.08),transparent_28%)]"
@@ -50,7 +28,7 @@ export default function FounderHero({
             {labels.badge}
           </span>
 
-          <h1 className="mt-7 text-5xl font-bold tracking-[-0.055em] text-slate-950 sm:text-6xl lg:text-7xl dark:text-white">
+          <h1 className="mt-5 text-5xl font-bold tracking-[-0.055em] text-slate-950 sm:text-6xl lg:text-7xl dark:text-white">
             {name}
           </h1>
 
@@ -58,31 +36,15 @@ export default function FounderHero({
             {labels.profession}
           </p>
 
-          <h2 className="mt-8 max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.035em] text-slate-900 sm:text-3xl dark:text-slate-100">
+          <h2 className="mt-6 max-w-4xl text-2xl font-semibold leading-tight tracking-[-0.035em] text-slate-900 sm:text-3xl dark:text-slate-100">
             {labels.title}
           </h2>
 
-          <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
+          <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg dark:text-slate-400">
             <BrandedText text={labels.description} />
           </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="mailto:info@uzde.de"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950"
-            >
-              {labels.contactButton}
-              <ArrowUpRightIcon />
-            </a>
 
-            <Link
-              href="/specialists/zafar-usarov"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-bold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:border-slate-600 dark:focus-visible:ring-offset-slate-950"
-            >
-              {labels.specialistButton}
-              <ArrowUpRightIcon />
-            </Link>
-          </div>
         </div>
 
       </div>

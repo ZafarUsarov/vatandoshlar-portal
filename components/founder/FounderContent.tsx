@@ -1,5 +1,7 @@
 
 import FounderSocials from "@/components/founder/FounderSocials";
+import { Link } from "@/i18n/navigation";
+import { ArrowUpRight } from "lucide-react";
 import BrandedText from "@/components/ui/BrandedText";
 import type {
   FounderProfile,
@@ -31,6 +33,7 @@ type FounderContentProps = Readonly<{
     approachItems: ReadonlyArray<string>;
     technologiesTitle: string;
     contactTitle: string;
+    specialistButton: string;
     socials: Readonly<
       Record<FounderSocialPlatform | "email", string>
     >;
@@ -107,15 +110,15 @@ export default function FounderContent({
   labels,
 }: FounderContentProps) {
   return (
-    <section className="relative isolate overflow-hidden bg-white py-20 dark:bg-slate-950 sm:py-28">
+    <section className="relative isolate overflow-hidden bg-white py-10 dark:bg-slate-950 sm:py-14">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(16,185,129,0.07),transparent_25%),radial-gradient(circle_at_88%_20%,rgba(59,130,246,0.07),transparent_26%),radial-gradient(circle_at_50%_100%,rgba(139,92,246,0.05),transparent_30%)] dark:bg-[radial-gradient(circle_at_12%_18%,rgba(16,185,129,0.08),transparent_25%),radial-gradient(circle_at_88%_20%,rgba(59,130,246,0.07),transparent_26%),radial-gradient(circle_at_50%_100%,rgba(139,92,246,0.05),transparent_30%)]"
       />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
-          <article className="group relative overflow-hidden rounded-[2rem] border border-emerald-200/80 bg-gradient-to-br from-emerald-50/80 via-white to-cyan-50/70 p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/10 dark:border-emerald-400/15 dark:from-emerald-500/[0.07] dark:via-slate-900 dark:to-cyan-500/[0.05] sm:p-9">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:items-start">
+          <article className="group relative overflow-hidden rounded-[2rem] border border-emerald-200/80 bg-gradient-to-br from-emerald-50/80 via-white to-cyan-50/70 p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/10 dark:border-emerald-400/15 dark:from-emerald-500/[0.07] dark:via-slate-900 dark:to-cyan-500/[0.05] sm:p-8">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute -right-20 -top-20 size-48 rounded-full bg-emerald-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125"
@@ -126,7 +129,7 @@ export default function FounderContent({
                 {labels.storyTitle}
               </h2>
 
-              <div className="mt-6 space-y-5">
+              <div className="mt-5 space-y-4">
                 {labels.storyParagraphs.map((paragraph) => (
                   <p
                     key={paragraph}
@@ -139,7 +142,7 @@ export default function FounderContent({
             </div>
           </article>
 
-          <aside className="grid gap-8 sm:grid-cols-2 lg:grid-cols-1">
+          <aside className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
             <div className="group relative overflow-hidden rounded-[2rem] border border-amber-200/70 bg-gradient-to-br from-amber-50/70 via-white to-emerald-50/60 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-amber-300 hover:shadow-xl hover:shadow-amber-500/10 dark:border-amber-400/15 dark:from-amber-500/[0.05] dark:via-slate-900 dark:to-emerald-500/[0.04]">
               <div
                 aria-hidden="true"
@@ -151,11 +154,11 @@ export default function FounderContent({
                   {labels.technologiesTitle}
                 </h2>
 
-                <div className="mt-5 flex flex-wrap gap-2">
+                <div className="mt-5 flex flex-wrap gap-1.5">
                   {founder.technologies.map((technology) => (
                     <span
                       key={technology}
-                      className="rounded-full border border-white/80 bg-white/80 px-3 py-2 text-xs font-bold text-slate-700 shadow-sm backdrop-blur dark:border-white/[0.08] dark:bg-white/[0.05] dark:text-slate-300"
+                      className="rounded-full border border-white/80 bg-white/80 px-2.5 py-1.5 text-xs font-bold text-slate-700 shadow-sm backdrop-blur dark:border-white/[0.08] dark:bg-white/[0.05] dark:text-slate-300"
                     >
                       {technology}
                     </span>
@@ -181,13 +184,20 @@ export default function FounderContent({
                     socialLinks={founder.socialLinks}
                     labels={labels.socials}
                   />
+                  <Link
+                    href="/specialists/zafar-usarov"
+                    className="mt-5 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-semibold text-slate-900 shadow-sm transition hover:border-emerald-400 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:border-emerald-500 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-900"
+                  >
+                    <span>{labels.specialistButton}</span>
+                    <ArrowUpRight aria-hidden="true" className="size-4 shrink-0" />
+                  </Link>
                 </div>
               </div>
             </div>
           </aside>
         </div>
 
-        <div className="mt-8 space-y-8">
+        <div className="mt-6 space-y-6">
           <article className="group relative overflow-hidden rounded-[2rem] border border-violet-200/70 bg-gradient-to-br from-violet-50/70 via-white to-sky-50/70 p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 dark:border-violet-400/15 dark:from-violet-500/[0.06] dark:via-slate-900 dark:to-sky-500/[0.05] sm:p-9">
             <div
               aria-hidden="true"

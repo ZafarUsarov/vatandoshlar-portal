@@ -1,3 +1,4 @@
+import { zafarSocialLinks } from "@/components/founder/ZafarExtraSocials";
 import type {
   FounderSocialLink,
   FounderSocialPlatform,
@@ -41,6 +42,10 @@ function PlatformIcon({ platform }: { platform: string }) {
   if (platform === "instagram") return <InstagramIcon className={className} />;
   if (platform === "youtube") return <YoutubeIcon className={className} />;
   if (platform === "facebook") return <FacebookIcon className={className} />;
+  if (platform === "x" || platform === "tiktok") {
+    const entry = zafarSocialLinks.find((item) => item.platform === platform);
+    if (entry) return <entry.Icon className={className} />;
+  }
   return <MailIcon className={className} />;
 }
 
@@ -52,10 +57,10 @@ export default function FounderSocials({ email, socialLinks, labels }: FounderSo
     href: social.href,
     external: true,
   }));
-  const links = [...socialItems, { key: "email" as const, label: labels.email, tooltip: email, href: `mailto:${email}`, external: false }];
+  const links = [{ key: "email" as const, label: labels.email, tooltip: email, href: `mailto:${email}`, external: false }, ...socialItems, ...zafarSocialLinks.map((item) => ({ key: item.platform, label: item.label, tooltip: item.label, href: item.href, external: true }))];
 
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap justify-center gap-3">
       {links.map((link) => (
         <div key={link.key} className="group/tooltip relative">
           <a
@@ -63,7 +68,7 @@ export default function FounderSocials({ email, socialLinks, labels }: FounderSo
             target={link.external ? "_blank" : undefined}
             rel={link.external ? "noopener noreferrer" : undefined}
             aria-label={link.key === "email" ? `${link.label}: ${email}` : link.label}
-            className={`group/social flex size-11 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:focus-visible:ring-offset-slate-950 motion-reduce:transform-none motion-reduce:transition-none ${platformStyles[link.key]}`}
+            className={`group/social flex size-11 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:focus-visible:ring-offset-slate-950 motion-reduce:transform-none motion-reduce:transition-none ${link.key === "x" || link.key === "tiktok" ? platformStyles.email : platformStyles[link.key as keyof typeof platformStyles]}`}
           >
             <PlatformIcon platform={link.key} />
             <span className="sr-only">{link.label}</span>

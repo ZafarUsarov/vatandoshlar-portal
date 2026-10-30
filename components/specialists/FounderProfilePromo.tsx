@@ -58,69 +58,44 @@ export default async function FounderProfilePromo() {
       ? {
           label: "Zafar Usarov · Ausführliches Profil",
           title:
-            "Mehr über meinen beruflichen Hintergrund und UzDe",
+            "Mein beruflicher Hintergrund und UzDe",
           description:
-            "Dieses Fachkräfteprofil bietet einen kompakten Überblick. Ausführliche Informationen zu meinem beruflichen Hintergrund, meiner Arbeit, den eingesetzten Technologien sowie zur Entstehung und Mission von UzDe finden Sie auf der Gründerseite.",
+            "Mehr zu meiner Arbeit, Erfahrung und der Entstehung von UzDe auf der Gründerseite.",
           action: "Ausführliches Profil ansehen",
         }
       : {
           label: "Zafar Usarov · Batafsil profil",
           title:
-            "Professional faoliyatim va UzDe haqida batafsil",
+            "Faoliyatim va UzDe haqida",
           description:
-            "Ushbu mutaxassis profilida asosiy ma’lumotlar qisqacha jamlangan. Professional faoliyatim, tajribam, foydalanadigan texnologiyalarim hamda UzDe loyihasining yaratilishi va missiyasi haqidagi batafsil ma’lumotlar loyiha asoschisi sahifasida keltirilgan.",
+            "Faoliyatim, tajribam va UzDe loyihasi haqida batafsil ma’lumot asoschi sahifasida.",
           action: "Batafsil profilni ko‘rish",
         };
 
   return (
     <section
       aria-labelledby="founder-profile-promo-title"
-      className="relative isolate overflow-hidden border-t border-slate-200/80 bg-slate-50/70 py-12 transition-colors dark:border-white/[0.08] dark:bg-slate-950 sm:py-14"
+      className="min-w-0 overflow-hidden rounded-[2rem] border border-emerald-200/80 bg-gradient-to-br from-emerald-50 via-white to-slate-50 p-5 shadow-sm dark:border-emerald-400/20 dark:from-emerald-500/10 dark:via-slate-900 dark:to-slate-900 sm:p-6"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-24 top-1/2 size-64 -translate-y-1/2 rounded-full bg-violet-400/15 blur-3xl dark:bg-violet-400/10"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(139,92,246,0.45),rgba(16,185,129,0.35),transparent)]"
-      />
-
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="group overflow-hidden rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-sm backdrop-blur transition duration-300 hover:border-violet-200 hover:shadow-lg dark:border-white/[0.09] dark:bg-white/[0.045] dark:hover:border-violet-400/20 sm:p-8 lg:p-10">
-          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-violet-200/80 bg-violet-50 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-violet-700 dark:border-violet-400/20 dark:bg-violet-400/10 dark:text-violet-300">
-                <span className="flex size-5 items-center justify-center rounded-full border border-current/20">
-                  <UserIcon />
-                </span>
-                <BrandedText text={copy.label} />
-              </div>
-
-              <h2
-                id="founder-profile-promo-title"
-                className="mt-5 text-2xl font-bold tracking-[-0.035em] text-slate-950 dark:text-white sm:text-3xl lg:text-4xl"
-              >
-                <BrandedText text={copy.title} />
-              </h2>
-
-              <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-400 sm:text-lg sm:leading-8">
-                <BrandedText text={copy.description} />
-              </p>
-            </div>
-
-            <Link
-              href="/about/founder"
-              className="group/link inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-violet-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-violet-600/20 transition duration-200 hover:-translate-y-0.5 hover:bg-violet-500 hover:shadow-xl hover:shadow-violet-600/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto lg:min-w-56 dark:focus-visible:ring-offset-slate-950"
-            >
-              {copy.action}
-              <span className="transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
-                <ArrowUpRightIcon />
-              </span>
-            </Link>
-          </div>
-        </div>
+      <div className="flex min-w-0 items-center gap-2 text-[10px] font-bold uppercase tracking-[0.08em] text-emerald-700 dark:text-emerald-300">
+        <span className="flex size-6 shrink-0 items-center justify-center rounded-full border border-emerald-300/70 bg-white/70 dark:border-emerald-400/30 dark:bg-emerald-400/10">
+          <UserIcon />
+        </span>
+        <span className="min-w-0 break-words"><BrandedText text={copy.label} /></span>
       </div>
+      <h2 id="founder-profile-promo-title" className="mt-4 text-lg font-bold leading-snug tracking-tight text-slate-950 dark:text-white">
+        <BrandedText text={copy.title} />
+      </h2>
+      <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+        <BrandedText text={copy.description} />
+      </p>
+      <Link
+        href="/about/founder"
+        className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-4 py-2.5 text-center text-sm font-bold text-white shadow-md shadow-emerald-600/15 transition-colors hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+      >
+        {copy.action}
+        <ArrowUpRightIcon />
+      </Link>
     </section>
   );
 }
