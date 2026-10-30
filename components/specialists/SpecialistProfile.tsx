@@ -266,7 +266,7 @@ export default function SpecialistProfile({
   } => item !== null);
 
   return (
-    <main className="min-h-screen bg-white bg-[radial-gradient(circle_at_8%_28%,rgba(16,185,129,0.055),transparent_30rem),radial-gradient(circle_at_92%_48%,rgba(59,130,246,0.045),transparent_34rem),radial-gradient(circle_at_45%_88%,rgba(20,184,166,0.04),transparent_32rem)] bg-no-repeat pt-8 text-slate-950 dark:bg-none dark:bg-slate-950 dark:text-white">
+    <main className="min-h-screen bg-white bg-[radial-gradient(circle_at_8%_28%,rgba(16,185,129,0.055),transparent_30rem),radial-gradient(circle_at_92%_48%,rgba(59,130,246,0.045),transparent_34rem),radial-gradient(circle_at_45%_88%,rgba(20,184,166,0.04),transparent_32rem)] bg-no-repeat pt-[60px] text-slate-950 dark:bg-none dark:bg-slate-950 dark:text-white">
       <section className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-50 py-8 dark:border-slate-800 dark:bg-slate-950 sm:py-12">
         <div
           aria-hidden="true"
