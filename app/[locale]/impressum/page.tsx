@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Globe, Info, Mail } from "lucide-react";
+import { Globe, Mail } from "lucide-react";
 import FounderAvatar from "./FounderAvatar";
 import { specialists } from "@/data/specialists";
 import { getLocale } from "next-intl/server";
@@ -21,13 +21,12 @@ const copy = {
     founderPlatform:
       "UzDe — Germaniyadagi o‘zbekistonliklar uchun mustaqil axborot va hamjamiyat platformasi.",
     operatorText:
-      "UzDe hozircha ro‘yxatdan o‘tgan kompaniya yoki tashkilot emas. Operatorning to‘liq huquqiy rekvizitlari va qonuniy pochta manzili hali e’lon qilinmagan.",
+      "UzDe xususiy, notijorat axborot va hamjamiyat loyihasidir.",
+    address: "Pochta manzili",
+    editorial: "§ 18 Abs. 2 MStV bo‘yicha jurnalistik-tahririy mas’ul",
     contact: "Aloqa",
     website: "Veb-sayt",
-    warning: "Muhim huquqiy eslatma",
-    warningText:
-      "Ushbu sahifa hozircha qonunchilikda belgilangan to‘liq Impressum talablariga javob bermaydi. Yetishmayotgan ma’lumotlar aniqlashtirilmoqda.",
-    metadataDescription: "UzDe platformasining vaqtinchalik huquqiy ma’lumotlari.",
+    metadataDescription: "UzDe platformasining operatori, aloqa manzili va tahririy mas’ul shaxs haqidagi huquqiy ma’lumotlar.",
   },
   de: {
     eyebrow: "RECHTLICHE INFORMATIONEN",
@@ -39,13 +38,12 @@ const copy = {
     founderPlatform:
       "UzDe — eine unabhängige Informations- und Community-Plattform für Menschen aus Usbekistan in Deutschland.",
     operatorText:
-      "UzDe ist derzeit keine eingetragene Gesellschaft oder Organisation. Die vollständigen rechtlichen Angaben zum Diensteanbieter und die ladungsfähige Anschrift sind noch nicht veröffentlicht.",
+      "UzDe ist ein privat betriebenes, nicht kommerzielles Informations- und Community-Projekt.",
+    address: "Postanschrift",
+    editorial: "Verantwortlich für journalistisch-redaktionelle Inhalte gemäß § 18 Abs. 2 MStV",
     contact: "Kontakt",
     website: "Website",
-    warning: "Wichtiger rechtlicher Hinweis",
-    warningText:
-      "Diese Seite erfüllt derzeit nicht sämtliche gesetzlichen Anforderungen an ein vollständiges Impressum. Die fehlenden Angaben werden geklärt.",
-    metadataDescription: "Vorläufige rechtliche Informationen zur Plattform UzDe.",
+    metadataDescription: "Rechtliche Angaben zum Betreiber, zur Kontaktanschrift und zur redaktionell verantwortlichen Person von UzDe.",
   },
 } as const;
 
@@ -99,6 +97,12 @@ export default async function ImpressumPage() {
                 )}
               </p>
               <p className="mt-4 leading-7 text-slate-600 dark:text-slate-300">{t.operatorText.startsWith("UzDe") ? <><BrandName className="text-inherit" />{t.operatorText.slice(4)}</> : t.operatorText}</p>
+              <div className="mt-5 not-italic leading-7 text-slate-700 dark:text-slate-200">
+                <p className="font-semibold">{imprint.operatorName}</p>
+                <address className="not-italic">
+                  {imprint.serviceAddress.map((line) => <span key={line} className="block">{line}</span>)}
+                </address>
+              </div>
             </section>
 
             <section className="group rounded-[1.75rem] border border-slate-200/80 bg-white/90 p-6 shadow-sm transition-[box-shadow,border-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-[0_18px_45px_-30px_rgba(15,23,42,0.3)] motion-reduce:transform-none motion-reduce:transition-none dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-emerald-500/30 dark:hover:shadow-[0_18px_45px_-30px_rgba(0,0,0,0.5)] sm:p-8">
@@ -148,16 +152,13 @@ export default async function ImpressumPage() {
             </section>
           </div>
 
-          <section className="mt-4 flex items-start gap-2.5 rounded-xl border border-amber-200/60 bg-amber-50/40 px-3 py-2 dark:border-amber-500/15 dark:bg-amber-500/5 sm:px-4">
-            <Info
-              aria-hidden="true"
-              size={15}
-              strokeWidth={1.8}
-              className="mt-0.5 shrink-0 text-amber-700 dark:text-amber-300"
-            />
-            <div className="min-w-0 text-xs leading-5 text-amber-900 dark:text-amber-100 sm:text-sm">
-              <h2 className="inline font-semibold">{t.warning}</h2>
-              <span className="ml-1.5">{t.warningText}</span>
+          <section aria-labelledby="editorial-responsibility" className="mt-6 rounded-[1.75rem] border border-slate-200/80 bg-white/90 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/90 sm:p-8">
+            <h2 id="editorial-responsibility" className="text-xl font-bold text-slate-950 dark:text-white">{t.editorial}</h2>
+            <div className="mt-4 leading-7 text-slate-700 dark:text-slate-200">
+              <p className="font-semibold">{imprint.editorialResponsible}</p>
+              <address className="not-italic">
+                {imprint.serviceAddress.map((line) => <span key={line} className="block">{line}</span>)}
+              </address>
             </div>
           </section>
         </div>
@@ -174,6 +175,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t.title,
     description: t.metadataDescription,
-    robots: { index: false, follow: true },
+    robots: { index: true, follow: true },
   };
 }
