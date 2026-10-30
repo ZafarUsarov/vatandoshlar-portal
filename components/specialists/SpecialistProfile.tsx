@@ -266,8 +266,8 @@ export default function SpecialistProfile({
   } => item !== null);
 
   return (
-    <main className="min-h-screen bg-white bg-[radial-gradient(circle_at_8%_28%,rgba(16,185,129,0.055),transparent_30rem),radial-gradient(circle_at_92%_48%,rgba(59,130,246,0.045),transparent_34rem),radial-gradient(circle_at_45%_88%,rgba(20,184,166,0.04),transparent_32rem)] bg-no-repeat pt-20 text-slate-950 dark:bg-none dark:bg-slate-950 dark:text-white">
-      <section className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-50 py-14 dark:border-slate-800 dark:bg-slate-950 sm:py-20">
+    <main className="min-h-screen bg-white bg-[radial-gradient(circle_at_8%_28%,rgba(16,185,129,0.055),transparent_30rem),radial-gradient(circle_at_92%_48%,rgba(59,130,246,0.045),transparent_34rem),radial-gradient(circle_at_45%_88%,rgba(20,184,166,0.04),transparent_32rem)] bg-no-repeat pt-8 text-slate-950 dark:bg-none dark:bg-slate-950 dark:text-white">
+      <section className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-50 py-8 dark:border-slate-800 dark:bg-slate-950 sm:py-12">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(16,185,129,0.12),transparent_28%),radial-gradient(circle_at_85%_20%,rgba(59,130,246,0.10),transparent_25%)]"
@@ -282,7 +282,7 @@ export default function SpecialistProfile({
             {labels.backToDirectory}
           </Link>
 
-          <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
               <div
                 className={`flex shrink-0 items-center justify-center overflow-hidden rounded-[2rem] text-2xl font-black text-white shadow-xl ${
@@ -367,7 +367,7 @@ export default function SpecialistProfile({
         </div>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className="py-8 sm:py-12">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 lg:grid-cols-[1fr_360px] lg:px-8">
           <div className="space-y-8">
             <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8">

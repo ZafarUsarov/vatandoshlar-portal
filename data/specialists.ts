@@ -108,8 +108,8 @@ export const specialists: ReadonlyArray<Specialist> = [
       de: "Softwareentwickler und Projektgründer",
     },
     shortDescription: {
-      uz: "Vatandoshlar.de asoschisi va dasturchisi. Veb-platformalar hamda Bachelor, Master va PhD hujjatlari bo‘yicha amaliy yo‘naltirish bilan shug‘ullanadi.",
-      de: "Gründer und Entwickler von Vatandoshlar.de. Unterstützt bei Webplattformen sowie bei der Orientierung rund um Bachelor-, Master- und Promotionsunterlagen.",
+      uz: "UzDe asoschisi va dasturchisi. Veb-platformalar hamda Bachelor, Master va PhD hujjatlari bo‘yicha amaliy yo‘naltirish bilan shug‘ullanadi.",
+      de: "Gründer und Entwickler von UzDe. Unterstützt bei Webplattformen sowie bei der Orientierung rund um Bachelor-, Master- und Promotionsunterlagen.",
     },
     categories: ["technology", "academic-documents"],
     languages: ["uz", "de"],
