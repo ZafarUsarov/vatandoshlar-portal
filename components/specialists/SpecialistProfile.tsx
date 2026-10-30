@@ -1,3 +1,4 @@
+import SpecialistEmailPopover from "@/components/specialists/SpecialistEmailPopover";
 import BrandedText from "@/components/ui/BrandedText";
 import { Link } from "@/i18n/navigation";
 import type {
@@ -26,6 +27,10 @@ type SpecialistProfileProps = Readonly<{
     phone: string;
     mobile: string;
     email: string;
+    copyEmail: string;
+    composeEmail: string;
+    emailCopied: string;
+    emailCopyFailed: string;
     website: string;
     whatsapp: string;
     telegram: string;
@@ -203,14 +208,6 @@ export default function SpecialistProfile({
             /\s+/g,
             "",
           )}`,
-        }
-      : null,
-    specialist.contact.email
-      ? {
-          key: "email",
-          label: labels.email,
-          value: specialist.contact.email,
-          href: `mailto:${specialist.contact.email}`,
         }
       : null,
     specialist.contact.website
@@ -577,8 +574,18 @@ export default function SpecialistProfile({
                 })}
               </div>
 
-              {socialLinks.length > 0 && (
+              {(specialist.contact.email || socialLinks.length > 0) && (
                 <div className="mt-5 flex flex-wrap items-center gap-2.5">
+                  {specialist.contact.email && (
+                    <SpecialistEmailPopover
+                      email={specialist.contact.email}
+                      label={labels.email}
+                      copyLabel={labels.copyEmail}
+                      composeLabel={labels.composeEmail}
+                      copiedLabel={labels.emailCopied}
+                      copyFailedLabel={labels.emailCopyFailed}
+                    />
+                  )}
                   {socialLinks.map((social) => (
                     <a
                       key={social.key}
