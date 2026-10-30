@@ -325,6 +325,7 @@ export default async function SpecialistDetailPage({
               "contact.email",
             ),
           copyEmail: t("contact.copyEmail"),
+            callPhone: t("contact.callPhone"),
           composeEmail: t("contact.composeEmail"),
           emailCopied: t("contact.emailCopied"),
           emailCopyFailed: t("contact.emailCopyFailed"),
