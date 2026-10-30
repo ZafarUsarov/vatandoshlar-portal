@@ -1187,6 +1187,8 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
       <header
 
+        data-uzde-ipad-header
+
         className={`
 
           ${useIOSWebViewFallback ? "absolute" : "fixed"}
@@ -1198,6 +1200,8 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
           transition-[background-color,border-color,box-shadow]
 
           duration-300
+
+          min-[1024px]:max-[1359px]:pb-12
 
           ${
 
@@ -1213,6 +1217,43 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
       >
 
+        <style>{`
+          @media screen and (min-width: 1024px) and (max-width: 1359px) {
+            header[data-uzde-ipad-header] { padding-bottom: 0; }
+            header [data-uzde-ipad-nav] {
+              display: flex !important;
+              position: static !important;
+              inset: auto !important;
+              flex: 1 1 auto;
+              width: auto !important;
+              min-width: 0;
+              height: auto !important;
+              margin: 0 !important;
+              justify-content: center;
+              overflow: visible;
+              border: 0 !important;
+              padding: 0 !important;
+              gap: 4px;
+            }
+            header [data-uzde-ipad-nav] > a {
+              font-size: 14px !important;
+              line-height: 20px;
+              padding-inline: 5px;
+            }
+            header [data-uzde-desktop-actions] {
+              display: flex !important;
+              margin-left: 0 !important;
+              flex-shrink: 0;
+            }
+            /* A loading-only auth skeleton was reserving ~116px of empty space. */
+            header [data-uzde-desktop-actions] > span[aria-hidden="true"] {
+              display: none !important;
+            }
+            header [data-uzde-mobile-actions] { display: none !important; }
+            [data-uzde-mobile-overlay] { display: none !important; }
+          }
+        `}</style>
+
         {showRebrandingBanner && (
           <div className="flex h-9 items-center justify-center gap-2 overflow-hidden bg-teal-700 px-3 text-center text-[11px] font-medium text-white sm:text-xs">
             <span className="shrink-0 sm:hidden">{locale === "de" ? "Vatandoshlar.de heißt jetzt UzDe!" : "Vatandoshlar.de endi UzDe!"}</span>
@@ -1225,15 +1266,17 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
         <div
 
+          data-uzde-ipad-inner
+
           className={`
 
             mx-auto flex w-full max-w-[1440px] min-[1921px]:max-w-[1680px] min-[2560px]:max-w-[2200px]
 
-            items-center gap-3 px-4
+            relative items-center gap-3 px-4
 
             transition-[height] duration-300
 
-            sm:px-6 min-[1160px]:px-5
+            sm:px-6 min-[1360px]:px-5
 
             xl:px-8 2xl:px-10
 
@@ -1362,13 +1405,15 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           <nav
 
+            data-uzde-ipad-nav
+
             aria-label={t("accessibility.mainNavigation")}
 
             className="
 
               hidden min-w-max shrink-0 items-center gap-0.5
 
-              min-[1160px]:ml-auto min-[1160px]:flex
+              min-[1024px]:flex min-[1024px]:max-[1359px]:absolute min-[1024px]:max-[1359px]:inset-x-0 min-[1024px]:max-[1359px]:bottom-0 min-[1024px]:max-[1359px]:h-12 min-[1024px]:max-[1359px]:w-full min-[1024px]:max-[1359px]:min-w-0 min-[1024px]:max-[1359px]:justify-center min-[1024px]:max-[1359px]:overflow-x-auto min-[1024px]:max-[1359px]:border-t min-[1024px]:max-[1359px]:px-3 min-[1360px]:ml-auto
 
               xl:gap-1
 
@@ -1419,7 +1464,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                     transition-all duration-300
 
-                    xl:text-sm
+                    min-[1024px]:max-[1359px]:text-xs xl:text-sm
 
                     ${
 
@@ -1485,7 +1530,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           </nav>
 
-          <div className="ml-auto hidden shrink-0 items-center gap-1.5 min-[1160px]:flex xl:gap-2">
+          <div data-uzde-desktop-actions className="ml-auto hidden shrink-0 items-center gap-1.5 min-[1024px]:flex xl:gap-2">
 
             <button
 
@@ -1781,7 +1826,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           </div>
 
-          <div className="ml-auto flex items-center gap-2 min-[1160px]:hidden">
+          <div data-uzde-mobile-actions className="ml-auto flex items-center gap-2 min-[1024px]:hidden">
 
             <button
 
@@ -1929,7 +1974,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
       {isMobileMenuOpen && (
 
-        <div className="fixed inset-0 z-40 min-[1160px]:hidden">
+        <div data-uzde-mobile-overlay className="fixed inset-0 z-40 min-[1024px]:hidden">
 
           <button
 
