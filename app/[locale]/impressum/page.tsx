@@ -24,6 +24,7 @@ const copy = {
       "UzDe xususiy, notijorat axborot va hamjamiyat loyihasidir.",
     address: "Pochta manzili",
     editorial: "§ 18 Abs. 2 MStV bo‘yicha jurnalistik-tahririy mas’ul",
+    editorialAddressReference: "Manzil yuqorida ko‘rsatilgan.",
     contact: "Aloqa",
     website: "Veb-sayt",
     metadataDescription: "UzDe platformasining operatori, aloqa manzili va tahririy mas’ul shaxs haqidagi huquqiy ma’lumotlar.",
@@ -41,6 +42,7 @@ const copy = {
       "UzDe ist ein privat betriebenes, nicht kommerzielles Informations- und Community-Projekt.",
     address: "Postanschrift",
     editorial: "Verantwortlich für journalistisch-redaktionelle Inhalte gemäß § 18 Abs. 2 MStV",
+    editorialAddressReference: "Anschrift wie oben.",
     contact: "Kontakt",
     website: "Website",
     metadataDescription: "Rechtliche Angaben zum Betreiber, zur Kontaktanschrift und zur redaktionell verantwortlichen Person von UzDe.",
@@ -156,9 +158,7 @@ export default async function ImpressumPage() {
             <h2 id="editorial-responsibility" className="text-xl font-bold text-slate-950 dark:text-white">{t.editorial}</h2>
             <div className="mt-4 leading-7 text-slate-700 dark:text-slate-200">
               <p className="font-semibold">{imprint.editorialResponsible}</p>
-              <address className="not-italic">
-                {imprint.serviceAddress.map((line) => <span key={line} className="block">{line}</span>)}
-              </address>
+              <p>{t.editorialAddressReference}</p>
             </div>
           </section>
         </div>
