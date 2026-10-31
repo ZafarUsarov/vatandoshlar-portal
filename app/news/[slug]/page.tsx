@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowUpRight, BookOpen, ExternalLink, Info, Clock3 } from "lucide-react";
+import { ArrowUpRight, BookOpen, ExternalLink, Clock3 } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
@@ -173,6 +173,7 @@ export default async function NewsDetailPage({
     notFound();
   }
 
+  const isPegasus = article.slug === "pegasus-ozbekiston-germaniya-aviachiptalar-2026";
   const articleUrl =
     `${baseUrl}/${locale}/news/${article.slug}`;
 
@@ -261,7 +262,7 @@ export default async function NewsDetailPage({
             <div className="relative mt-5 aspect-[16/9] overflow-hidden rounded-2xl bg-slate-100 sm:aspect-[16/7] dark:bg-slate-800">
               <Image
                 src={article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : article.imageUrl!}
-                alt={article.title}
+                alt={isPegasus ? (appLocale === "de" ? "Pegasus Airlines Airbus A320neo am Flughafen Köln/Bonn" : "Köln/Bonn aeroportidagi Pegasus Airlines Airbus A320neo samolyoti") : article.title}
                 fill
                 unoptimized
                 priority
@@ -269,6 +270,12 @@ export default async function NewsDetailPage({
                 className="object-cover"
               />
             </div>
+          )}
+
+          {isPegasus && (
+            <p className="mt-1 text-right text-[10px] leading-4 text-slate-500 dark:text-slate-400">
+              Foto: © Raimond Spekking / <a className="underline underline-offset-2" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a> (via <a className="underline underline-offset-2" href="https://commons.wikimedia.org/wiki/File:Pegasus_Airlines_-_Airbus_A320-251N_-_TC-NBM_-_Cologne_Bonn_Airport-6670.jpg" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>; 1920 × 1080 versiya)
+            </p>
           )}
 
           {article.slug === "vatandoshlar-de-endi-uzde" && (
@@ -313,6 +320,36 @@ export default async function NewsDetailPage({
                   ))}
                 </div>
               </>
+            ) : isPegasus ? (
+              <div className="space-y-4">
+                {article.content.map((paragraph, index) => paragraph.startsWith("## ") ? (
+                  <h2 key={`${article.slug}-${index}`} className="pt-4 text-xl font-bold tracking-tight sm:text-2xl">{paragraph.slice(3)}</h2>
+                ) : paragraph.startsWith("SOURCE|") ? (
+                  index === article.content.findIndex((item) => item.startsWith("SOURCE|")) ? (
+                    <div key={`${article.slug}-sources`} className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs leading-5">
+                      {article.content.filter((item) => item.startsWith("SOURCE|")).map((item) => {
+                        const [, label, url] = item.split("|");
+                        const approvedSources = [
+                          "https://uza.uz/sp/posts/istanbuldan-buxoro-andijon-va-termizga-togridan-togri-reyslar-ochiladi_929724",
+                          "https://www.spot.uz/en/2026/10/29/pegasus-airlines/",
+                          "https://www.uzdaily.uz/en/pegasus-airlines-to-launch-flights-to-three-uzbek-cities/",
+                          "https://www.flypgs.com/en/pegasus-baggage-allowance",
+                        ];
+                        return approvedSources.includes(url) ? (
+                          <a key={url} href={url} target="_blank" rel="noopener noreferrer" className="font-medium text-blue-700 underline underline-offset-2 dark:text-blue-400">{label}</a>
+                        ) : null;
+                      })}
+                    </div>
+                  ) : null
+                ) : (
+                  <p key={`${article.slug}-${index}`} className="text-base leading-7 text-slate-700 dark:text-slate-300">{paragraph}</p>
+                ))}
+                <p className="border-t border-slate-200 pt-5 text-sm dark:border-slate-800">
+                  {appLocale === "de" ? "Artikel von: " : "Maqolani tayyorladi: "}
+                  <Link href="/about/founder" className="font-semibold text-blue-700 underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-blue-400">Zafar Usarov</Link>
+                </p>
+                <p className="text-sm leading-6 text-slate-600 dark:text-slate-400"><strong className="font-bold">UzDe</strong>{appLocale === "de" ? " ist eine Plattform für verlässliche Informationen und praktische Hinweise für Menschen aus Usbekistan, die in Deutschland leben oder einen Aufenthalt planen." : " — Germaniyada yashayotgan o‘zbekistonliklar hamda Germaniyaga kelishni rejalashtirayotganlar uchun ishonchli axborot va foydali ma’lumotlar platformasi."}</p>
+              </div>
             ) : (
               <div className="space-y-4">
                 {article.content.map((paragraph, index) => <p key={`${article.slug}-${index}`} className="text-base leading-7 text-slate-700 dark:text-slate-300">{paragraph}</p>)}
@@ -327,15 +364,16 @@ export default async function NewsDetailPage({
               </Link>
             )}
 
-            <div className="mt-7 grid gap-4 border-t border-slate-200 pt-4 sm:grid-cols-[1fr_auto] dark:border-slate-800">
-              <div className="text-sm">
-                <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:underline dark:text-blue-400">
-                  {appLocale === "de" ? "Offizielle Quelle:" : "Rasmiy manba:"} {article.sourceName}<ExternalLink className="size-4" aria-hidden="true" />
-                </a>
-                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{t("lastVerified", { date: formatNewsDate(article.verifiedAt, locale) })}</p>
+            {!isPegasus && (
+              <div className="mt-7 grid gap-4 border-t border-slate-200 pt-4 sm:grid-cols-[1fr_auto] dark:border-slate-800">
+                <div className="text-sm">
+                  <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:underline dark:text-blue-400">
+                    {appLocale === "de" ? "Offizielle Quelle:" : "Rasmiy manba:"} {article.sourceName}<ExternalLink className="size-4" aria-hidden="true" />
+                  </a>
+                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{t("lastVerified", { date: formatNewsDate(article.verifiedAt, locale) })}</p>
+                </div>
               </div>
-
-            </div>
+            )}
           </div>
         </article>
 
