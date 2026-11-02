@@ -15,7 +15,7 @@ export default async function PlacesPage({searchParams}:{searchParams:Promise<{q
  return <div className="min-h-screen bg-slate-50 text-slate-950 dark:bg-slate-950 dark:text-white"><Header/><main className="mx-auto max-w-6xl px-5 pb-24 pt-32 sm:px-8"><div className="grid w-full min-w-0 overflow-hidden rounded-3xl bg-slate-900 text-white lg:h-[330px] lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
   <div className="flex min-w-0 flex-col justify-center px-7 py-9 sm:px-10 sm:py-10 lg:px-10 lg:py-8 xl:px-12">
     <span className="text-sm font-semibold normal-case tracking-[0.2em] text-emerald-300">UzDe</span>
-    <h1 className="mt-3 text-4xl font-bold sm:text-5xl">{t.title}</h1>
+    <h1 className={`mt-3 font-bold ${locale === "de" ? "text-[2.1rem] sm:text-[2.75rem] [overflow-wrap:normal]" : "text-4xl sm:text-5xl"}`}>{t.title}</h1>
     <p className="mt-4 max-w-2xl text-lg text-slate-200">{t.subtitle}</p>
   </div>
   <div className="relative aspect-[1115/613] w-full min-w-0 overflow-hidden bg-slate-900 lg:aspect-auto lg:h-full">
