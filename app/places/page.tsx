@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, MapPin, Building2 } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, Building2, GraduationCap, Stethoscope, UtensilsCrossed } from "lucide-react";
 import { getLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -31,8 +31,12 @@ export default async function PlacesPage({searchParams}:{searchParams:Promise<{q
 </div><PlacesFilters locale={locale} q={q} category={category??""} location={location} locationId={locationId}/><div className="mb-5 mt-10 text-sm font-medium text-slate-500 dark:text-slate-400">{places.length} {t.count}</div>{places.length===0?<div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-20 text-center text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">{t.empty}</div>:<div className="grid grid-cols-1 items-start gap-5 sm:grid-cols-2 xl:grid-cols-3">
   {places.map((p) => {
     const categoryName = p.categoryLabel || t.cats[p.category];
-    const CategoryIcon = Building2;
-    const logoSrc = p.logoPath;
+    const CategoryIcon =
+      p.slug === "taste-of-samarkand" ? UtensilsCrossed :
+      p.slug === "polar-dent" ? Stethoscope :
+      p.slug === "bildung-beruf" ? GraduationCap :
+      Building2;
+    const logoSrc = p.logoPath || (p.slug === "taste-of-samarkand" ? "/images/places/taste-of-samarkand.webp" : null);
     return (
       <article key={p.slug} className="group relative flex w-full max-w-[326px] flex-col overflow-hidden rounded-[22px] border border-slate-200/90 bg-white px-5 pb-4 pt-5 shadow-[0_3px_12px_rgba(15,23,42,0.035)] transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-emerald-300 hover:shadow-[0_14px_32px_rgba(15,23,42,0.10)] dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-700">
         <div className="absolute inset-x-0 top-0 h-[3px] bg-emerald-500/80" aria-hidden="true" />
