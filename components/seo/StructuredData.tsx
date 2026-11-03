@@ -11,6 +11,7 @@ const organizationStructuredData = {
     "https://t.me/UzDe_de",
     "https://www.instagram.com/uzde_de",
     "https://www.facebook.com/uzde.dee",
+    "https://www.youtube.com/@ZafarUsarov",
   ],
 };
 
