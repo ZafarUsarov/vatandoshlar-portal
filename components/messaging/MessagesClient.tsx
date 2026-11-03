@@ -105,6 +105,49 @@ export default function MessagesClient({ userId, de }: Props) {
     if (nearBottom) setShowNewMessageButton(false);
   }, []);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+
+  const [mobileViewport, setMobileViewport] = useState<{ height: number; top: number } | null>(null);
+  useEffect(() => {
+    if (!active || !window.matchMedia("(max-width: 767px)").matches) return;
+    const viewport = window.visualViewport;
+    let frame = 0;
+    const update = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const height = viewport?.height ?? window.innerHeight;
+        const top = viewport?.offsetTop ?? 0;
+        setMobileViewport(previous =>
+          previous?.height === height && previous.top === top ? previous : { height, top }
+        );
+      });
+    };
+    update();
+    viewport?.addEventListener("resize", update);
+    viewport?.addEventListener("scroll", update);
+    window.addEventListener("resize", update);
+    document.addEventListener("focusin", update);
+    document.addEventListener("focusout", update);
+    return () => {
+      cancelAnimationFrame(frame);
+      viewport?.removeEventListener("resize", update);
+      viewport?.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      document.removeEventListener("focusin", update);
+      document.removeEventListener("focusout", update);
+    };
+  }, [active]);
+  // Follow viewport resizing only when the user was already reading the latest messages.
+  useLayoutEffect(() => {
+    if (!active || !mobileViewport || !window.matchMedia("(max-width: 767px)").matches) return;
+    if (stickToBottomRef.current || forceBottomRef.current) scrollToBottom();
+  }, [active, mobileViewport, scrollToBottom]);
+  useEffect(() => {
+    if (!active || !window.matchMedia("(max-width: 767px)").matches) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previous; };
+  }, [active]);
   useEffect(() => {
     if (!lightbox) return;
     const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") setLightbox(null); };
@@ -274,12 +317,25 @@ export default function MessagesClient({ userId, de }: Props) {
           xhr.onerror=()=>reject(new Error("Network error"));xhr.send(form);
         });
       } else response = await fetch(`/api/messages/conversations/${active}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ body: text }) });
-      if (!response.ok) throw new Error("send");
+      if (!response.ok) {
+        const payload: unknown = await response.json().catch(() => null);
+        const serverError = payload && typeof payload === "object" && "error" in payload && typeof payload.error === "string" ? payload.error : "";
+        const knownErrors: Record<string, string> = {
+          "Unsupported or invalid file": t("Fayl turi yoki tarkibi qabul qilinmadi.", "Dateityp oder Dateiinhalt nicht akzeptiert."),
+          "Payload too large": t("Fayllar hajmi juda katta.", "Dateien sind zu groß."),
+          "Too many messages": t("Juda ko‘p xabar yuborildi. Biroz kuting.", "Zu viele Nachrichten. Bitte warten."),
+          "Unauthorized": t("Sessiya tugagan. Qayta kiring.", "Sitzung abgelaufen. Bitte erneut anmelden."),
+        };
+        console.error("Messaging send failed", { status: response.status, error: serverError });
+        throw new Error(knownErrors[serverError] || t("Xabar yuborilmadi. Qayta urinib ko‘ring.", "Nachricht konnte nicht gesendet werden. Bitte erneut versuchen."));
+      }
       setDraft("");setPendingFiles([]);setProgress(0);
       await Promise.all([refreshMessages(active), refresh()]);
       chatScrollRef.current?.scrollTo({ top: chatScrollRef.current.scrollHeight, behavior: "smooth" });
-    } catch { setError(t("Xabar yuborilmadi. Qayta urinib ko‘ring.", "Nachricht konnte nicht gesendet werden. Bitte erneut versuchen.")); }
-    finally { setBusy(false); }
+    } catch (cause) {
+      forceBottomRef.current = false;
+      setError(cause instanceof Error ? cause.message : t("Xabar yuborilmadi. Qayta urinib ko‘ring.", "Nachricht konnte nicht gesendet werden. Bitte erneut versuchen."));
+    } finally { setBusy(false); }
   }
 
   return (
@@ -287,6 +343,14 @@ export default function MessagesClient({ userId, de }: Props) {
       <style jsx global>{`
         :root { --messaging-unread-background: #c6f2df; }
         .dark { --messaging-unread-background: #164e3d; }
+        @media (max-width: 767px) {
+          .uzde-mobile-chat-active {
+            top: var(--messaging-mobile-top, 0px);
+            bottom: auto;
+            height: var(--messaging-mobile-height, 100dvh);
+            min-height: 0;
+          }
+        }
       `}</style>
       <div className="mb-6">
         <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">{t("Xabarlar", "Nachrichten")}</h1>
@@ -307,7 +371,16 @@ export default function MessagesClient({ userId, de }: Props) {
             </button>)}
           </div>
         </aside>
-        <section className={`${active ? "flex" : "hidden md:flex"} min-h-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900`} aria-label={t("Chat oynasi", "Chatfenster")}>
+        <section
+          className={`${active ? "uzde-mobile-chat-active flex max-md:fixed max-md:inset-x-0 max-md:z-[100] max-md:rounded-none" : "hidden md:flex"} min-h-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900`}
+          style={active ? {
+            ...(mobileViewport ? {
+              "--messaging-mobile-top": `${mobileViewport.top}px`,
+              "--messaging-mobile-height": `${mobileViewport.height}px`,
+            } as React.CSSProperties : {}),
+          } : undefined}
+          aria-label={t("Chat oynasi", "Chatfenster")}
+        >
           {!selected ? <div className="flex h-full flex-col items-center justify-center px-8 text-center"><div className="mb-5 rounded-3xl bg-emerald-50 p-5 dark:bg-emerald-950"><MessageCircle className="h-10 w-10 text-emerald-600"/></div><h2 className="text-xl font-bold text-slate-900 dark:text-white">{t("Suhbatni tanlang", "Unterhaltung auswählen")}</h2><p className="mt-2 max-w-sm text-sm text-slate-500 dark:text-slate-400">{t("Xabarlarni o‘qish va javob yozish uchun chap tomondan suhbatni tanlang.", "Wählen Sie links eine Unterhaltung, um Nachrichten zu lesen und zu antworten.")}</p><p className="mt-5 flex items-center gap-2 text-xs text-slate-400"><ShieldCheck className="h-4 w-4"/>{t("Telefon raqamingizni ulashish shart emas", "Sie müssen Ihre Telefonnummer nicht teilen")}</p></div> : <>
             <div className="flex shrink-0 items-center gap-3 border-b border-slate-100 px-3 py-3 dark:border-slate-800 sm:px-5 sm:py-4">
               <button type="button" onClick={() => selectConversation(null)} className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600 dark:text-slate-300 dark:hover:bg-slate-800 md:hidden" aria-label={t("Suhbatlarga qaytish", "Zurück zu Unterhaltungen")}><ArrowLeft className="h-5 w-5"/></button>
@@ -323,7 +396,7 @@ export default function MessagesClient({ userId, de }: Props) {
             </div>
             {showNewMessageButton && <button type="button" onClick={() => { stickToBottomRef.current = true; forceBottomRef.current = false; scrollToBottom(); setShowNewMessageButton(false); }} className="absolute bottom-3 left-1/2 z-10 inline-flex -translate-x-1/2 items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"><ArrowDown className="h-4 w-4"/>{t("Yangi xabar", "Neue Nachricht")}</button>}
             </div>
-            <div className="shrink-0 px-4">{pendingFiles.length>0 && <div className="flex flex-wrap gap-2 py-2">{pendingFiles.map((f,i)=><PendingPreview key={`${f.name}-${i}`} file={f} onRemove={()=>setPendingFiles(v=>v.filter((_,j)=>j!==i))} removeLabel={t("Olib tashlash", "Entfernen")}/>)}</div>}{preparing && <p className="text-xs text-slate-500">{t("Rasm siqilmoqda...", "Bild wird komprimiert...")}</p>}{busy && pendingFiles.length>0 && <p className="text-xs text-slate-500">{t("Yuklanmoqda", "Wird hochgeladen")}: {progress}%</p>}</div><form className="shrink-0 border-t border-slate-100 bg-white px-3 py-3 dark:border-slate-800 dark:bg-slate-900 sm:px-5 sm:py-4" onSubmit={e => { e.preventDefault(); void send(); }}><div className="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-1.5 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/15 dark:border-slate-700 dark:bg-slate-800"><input ref={fileRef} type="file" multiple accept=".jpg,.jpeg,.png,.webp,.pdf,.txt" className="sr-only" aria-label={t("Fayl tanlash", "Datei auswählen")} onChange={e=>void chooseFiles(e.target.files)}/><button type="button" onClick={()=>fileRef.current?.click()} disabled={busy||preparing} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-200 focus-visible:outline-2 focus-visible:outline-emerald-600 disabled:opacity-50 dark:text-slate-300 dark:hover:bg-slate-700" aria-label={t("Fayl biriktirish", "Datei anhängen")}><Paperclip className="h-5 w-5"/></button><label htmlFor="chat-message" className="sr-only">{t("Xabar", "Nachricht")}</label><textarea ref={textareaRef} id="chat-message" value={draft} onChange={e => setDraft(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void send(); } }} rows={1} maxLength={2000} placeholder={t("Xabar yozing...", "Nachricht schreiben...")} className="max-h-40 min-h-10 min-w-0 flex-1 resize-none appearance-none border-0 bg-transparent px-3 py-2.5 text-sm text-slate-900 shadow-none outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 focus-visible:outline-none dark:text-white placeholder:text-slate-400 sm:text-base" style={{ boxShadow: "none", outline: "none" }}/><button type="submit" disabled={busy || preparing || (!draft.trim() && !pendingFiles.length)} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white transition-colors hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:cursor-not-allowed disabled:opacity-50" aria-label={t("Yuborish", "Senden")}>{busy ? <LoaderCircle className="h-5 w-5 animate-spin"/> : <Send className="h-5 w-5"/>}</button></div><p className="mt-2 hidden text-right text-[11px] text-slate-400 sm:block">{t("Enter — yuborish · Shift + Enter — yangi qator", "Enter — senden · Shift + Enter — neue Zeile")}</p></form>
+            <div className="shrink-0 px-4">{pendingFiles.length>0 && <div className="flex flex-wrap gap-2 py-2">{pendingFiles.map((f,i)=><PendingPreview key={`${f.name}-${i}`} file={f} onRemove={()=>setPendingFiles(v=>v.filter((_,j)=>j!==i))} removeLabel={t("Olib tashlash", "Entfernen")}/>)}</div>}{preparing && <p className="text-xs text-slate-500">{t("Rasm siqilmoqda...", "Bild wird komprimiert...")}</p>}{busy && pendingFiles.length>0 && <p className="text-xs text-slate-500">{t("Yuklanmoqda", "Wird hochgeladen")}: {progress}%</p>}</div><form className="shrink-0 border-t border-slate-100 bg-white px-3 py-3 dark:border-slate-800 dark:bg-slate-900 sm:px-5 sm:py-4" onSubmit={e => { e.preventDefault(); void send(); }}><div className="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-1.5 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/15 dark:border-slate-700 dark:bg-slate-800"><input ref={fileRef} type="file" multiple accept=".jpg,.jpeg,.png,.webp,.pdf,.txt" className="sr-only" aria-label={t("Fayl tanlash", "Datei auswählen")} onChange={e=>void chooseFiles(e.target.files)}/><button type="button" onClick={()=>fileRef.current?.click()} disabled={busy||preparing} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-200 focus-visible:outline-2 focus-visible:outline-emerald-600 disabled:opacity-50 dark:text-slate-300 dark:hover:bg-slate-700" aria-label={t("Fayl biriktirish", "Datei anhängen")}><Paperclip className="h-5 w-5"/></button><label htmlFor="chat-message" className="sr-only">{t("Xabar", "Nachricht")}</label><textarea ref={textareaRef} id="chat-message" value={draft} onChange={e => setDraft(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing && window.matchMedia("(hover: hover) and (pointer: fine)").matches) { e.preventDefault(); void send(); } }} rows={1} maxLength={2000} placeholder={t("Xabar yozing...", "Nachricht schreiben...")} className="max-h-40 min-h-10 min-w-0 flex-1 resize-none appearance-none border-0 bg-transparent px-3 py-2.5 text-sm text-slate-900 shadow-none outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 focus-visible:outline-none dark:text-white placeholder:text-slate-400 sm:text-base" style={{ boxShadow: "none", outline: "none" }}/><button type="submit" disabled={busy || preparing || (!draft.trim() && !pendingFiles.length)} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white transition-colors hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:cursor-not-allowed disabled:opacity-50" aria-label={t("Yuborish", "Senden")}>{busy ? <LoaderCircle className="h-5 w-5 animate-spin"/> : <Send className="h-5 w-5"/>}</button></div><p className="mt-2 hidden text-right text-[11px] text-slate-400 sm:block">{t("Enter — yuborish · Shift + Enter — yangi qator", "Enter — senden · Shift + Enter — neue Zeile")}</p></form>
           </>}
           {error && <div role="alert" className="border-t border-red-100 bg-red-50 px-4 py-2 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">{error}<button type="button" className="ml-3 underline" onClick={() => { setError(""); void refresh(); if (active) void refreshMessages(active); }}>{t("Qayta urinish", "Erneut versuchen")}</button></div>}
         </section>
