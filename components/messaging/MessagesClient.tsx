@@ -144,9 +144,24 @@ export default function MessagesClient({ userId, de }: Props) {
   }, [active, mobileViewport, scrollToBottom]);
   useEffect(() => {
     if (!active || !window.matchMedia("(max-width: 767px)").matches) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = previous; };
+    const root = document.documentElement;
+    const body = document.body;
+    const previous = {
+      rootOverflow: root.style.overflow,
+      rootOverscroll: root.style.overscrollBehavior,
+      bodyOverflow: body.style.overflow,
+      bodyOverscroll: body.style.overscrollBehavior,
+    };
+    root.style.overflow = "hidden";
+    root.style.overscrollBehavior = "none";
+    body.style.overflow = "hidden";
+    body.style.overscrollBehavior = "none";
+    return () => {
+      root.style.overflow = previous.rootOverflow;
+      root.style.overscrollBehavior = previous.rootOverscroll;
+      body.style.overflow = previous.bodyOverflow;
+      body.style.overscrollBehavior = previous.bodyOverscroll;
+    };
   }, [active]);
   useEffect(() => {
     if (!lightbox) return;
@@ -356,6 +371,7 @@ export default function MessagesClient({ userId, de }: Props) {
         <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">{t("Xabarlar", "Nachrichten")}</h1>
         <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 sm:text-base">{t("E’lonlar orqali bog‘langan suhbatlaringiz shu yerda.", "Hier finden Sie Ihre Unterhaltungen zu Anzeigen.")}</p>
       </div>
+      {active && <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[90] bg-white dark:bg-slate-950 md:hidden" />}
       <div className="grid min-h-[min(730px,calc(100dvh-220px))] gap-3 md:grid-cols-[minmax(280px,38fr)_minmax(0,62fr)] lg:gap-4" style={{ height: "min(760px, calc(100dvh - 215px))" }}>
         <aside className={`${active ? "hidden md:flex" : "flex"} min-h-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900`} aria-label={t("Suhbatlar", "Unterhaltungen")}>
           <div className="shrink-0 border-b border-slate-100 px-4 pb-4 pt-5 dark:border-slate-800 sm:px-5">
@@ -389,7 +405,7 @@ export default function MessagesClient({ userId, de }: Props) {
               {selected.listing_slug && <Link href={`/${selected.kind === "market" ? "market" : "safar"}/${selected.listing_slug}`} className="inline-flex min-h-10 shrink-0 items-center gap-1 rounded-xl border border-emerald-500 px-2.5 text-xs font-semibold text-emerald-800 hover:bg-emerald-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600 dark:text-emerald-300 dark:hover:bg-emerald-950 sm:px-4"><ArrowUpRight className="h-4 w-4"/><span className="hidden sm:inline">{t("E’lonni ko‘rish", "Anzeige ansehen")}</span><span className="sm:hidden">{t("E’lon", "Anzeige")}</span></Link>}
             </div>
             <div className="relative min-h-0 flex-1">
-            <div ref={chatScrollRef} onScroll={onChatScroll} className="h-full min-h-0 space-y-3 overflow-y-auto overscroll-y-auto bg-slate-50/40 px-3 py-5 dark:bg-slate-950/40 sm:px-6" aria-live="polite" aria-relevant="additions text">
+            <div ref={chatScrollRef} onScroll={onChatScroll} className="h-full min-h-0 space-y-3 overflow-y-auto overscroll-y-contain bg-slate-50/40 px-3 py-5 dark:bg-slate-950/40 sm:px-6" aria-live="polite" aria-relevant="additions text">
               {loadingChat && <p className="flex items-center justify-center gap-2 py-6 text-sm text-slate-500"><LoaderCircle className="h-4 w-4 animate-spin"/>{t("Yuklanmoqda...", "Wird geladen...")}</p>}
               {!loadingChat && messages.length === 0 && <p className="py-10 text-center text-sm text-slate-500">{t("Hali xabar yo‘q. Birinchi xabarni yuboring.", "Noch keine Nachrichten. Schreiben Sie die erste Nachricht.")}</p>}
               {messages.map((m, i) => { const own = m.sender_user_id === userId; const prev = messages[i - 1]; const divider = !prev || new Date(prev.created_at).toDateString() !== new Date(m.created_at).toDateString(); return <div key={m.id}>{divider && <div className="my-5 flex justify-center"><span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-300">{dateLabel(m.created_at, de)}</span></div>}<div className={`flex ${own ? "justify-end" : "justify-start"}`}><div className="max-w-[85%] sm:max-w-[75%]"><div className={`rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm sm:text-base ${own ? "rounded-br-md bg-emerald-100 text-slate-900 dark:bg-emerald-900 dark:text-emerald-50" : "rounded-bl-md bg-white text-slate-900 ring-1 ring-slate-200 dark:bg-slate-800 dark:text-white dark:ring-slate-700"}`}>{m.body !== "📎" && <p className="whitespace-pre-wrap break-words [overflow-wrap:anywhere]">{m.body}</p>}{m.attachments?.map(a=>{const src=`/api/messages/conversations/${active}/attachments/${a.id}`;return <div key={a.id} className="mt-2 min-w-0">{a.mime_type.startsWith("image/") ? <button type="button" onClick={()=>setLightbox({src,alt:a.original_filename})} className="block max-w-full overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600" aria-label={t("Rasmni kattalashtirish", "Bild vergrößern")}><img src={src} loading="lazy" alt={a.original_filename} className="max-h-64 max-w-full rounded-xl object-contain" /></button> : <a href={src} target="_blank" rel="noopener noreferrer" className="flex min-w-0 items-center gap-2 rounded-xl border border-slate-200/60 p-2 text-sm underline-offset-2 hover:underline dark:border-slate-600"><FileText className="h-5 w-5 shrink-0"/><span className="min-w-0 break-all">{a.original_filename} ({Math.ceil(Number(a.file_size)/1024)} KB)</span></a>}</div>;})}</div><div className={`mt-1 flex items-center gap-1 text-[11px] text-slate-400 ${own ? "justify-end" : "justify-start"}`}><time dateTime={m.created_at}>{time(m.created_at, de)}</time>{own && (m.read_at ? <CheckCheck aria-label={t("O‘qilgan", "Gelesen")} className="h-3.5 w-3.5 text-emerald-600"/> : <Check aria-label={t("Yuborilgan", "Gesendet")} className="h-3.5 w-3.5"/>)}</div></div></div></div>; })}
