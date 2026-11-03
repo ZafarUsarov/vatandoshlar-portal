@@ -1,5 +1,5 @@
 const baseUrl =
-  "https://vatandoshlar.de";
+  "https://uzde.de";
 
 const organizationStructuredData = {
   "@context": "https://schema.org",

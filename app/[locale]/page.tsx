@@ -3,7 +3,7 @@ import { getLocale } from "next-intl/server";
 
 type Locale = "uz" | "de";
 
-const SITE_URL = "https://vatandoshlar.de";
+const SITE_URL = "https://uzde.de";
 const SOCIAL_PREVIEW_IMAGE_URL = `${SITE_URL}/api/social-preview?v=uzde-m19-4`;
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -8,7 +8,7 @@ import TelegramCultureGuide from "../../../components/telegram/TelegramCultureGu
 type Locale = "uz" | "de";
 
 const baseUrl =
-  "https://vatandoshlar.de";
+  "https://uzde.de";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale =

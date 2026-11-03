@@ -7,7 +7,7 @@ import StructuredData from "../components/seo/StructuredData";
 
 import "./globals.css";
 
-const SITE_URL = "https://vatandoshlar.de";
+const SITE_URL = "https://uzde.de";
 const SOCIAL_PREVIEW_IMAGE_URL = `${SITE_URL}/api/social-preview?v=uzde-m19-4`;
 
 export const viewport: Viewport = {

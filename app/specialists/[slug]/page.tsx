@@ -36,7 +36,7 @@ const DONIYOR_SLUG =
   "doniyor-tojiboyev";
 
 const baseUrl =
-  "https://vatandoshlar.de";
+  "https://uzde.de";
 
 function getCanonicalSpecialistSlug(
   slug: string,

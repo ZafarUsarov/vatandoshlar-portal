@@ -32,10 +32,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const item = original ? (await localizeMarketListings([original], locale))[0] : null;
   if (!item) return { title: "Market", robots: { index: false, follow: false } };
   const images = await getReadyMarketImagesForPublishedListing(item.id);
-  const url = `https://vatandoshlar.de/${locale}/market/${item.slug}`;
+  const url = `https://uzde.de/${locale}/market/${item.slug}`;
   const price = formatMarketPrice(item, locale);
   const description = [price, item.cityName, item.description].filter(Boolean).join(" · ").slice(0, 190);
-  const imageUrl = images[0] ? `https://vatandoshlar.de/api/market/og/${images[0].id}` : undefined;
+  const imageUrl = images[0] ? `https://uzde.de/api/market/og/${images[0].id}` : undefined;
   return {
     title: item.title, description,
     alternates: { canonical: url, languages: { uz: `/uz/market/${item.slug}`, de: `/de/market/${item.slug}` } },

@@ -26,7 +26,7 @@ export const dynamic =
   "force-dynamic";
 
 const baseUrl =
-  "https://vatandoshlar.de";
+  "https://uzde.de";
 
 const locales = [
   "uz",
