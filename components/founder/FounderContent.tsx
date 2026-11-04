@@ -1,5 +1,6 @@
 
 import FounderSocials from "@/components/founder/FounderSocials";
+import ShareButton from "@/components/shared/ShareButton";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "lucide-react";
 import BrandedText from "@/components/ui/BrandedText";
@@ -10,6 +11,7 @@ import type {
 
 type FounderContentProps = Readonly<{
   founder: FounderProfile;
+  locale: "uz" | "de";
   labels: Readonly<{
     storyTitle: string;
     storyParagraphs: ReadonlyArray<string>;
@@ -108,6 +110,7 @@ function CheckIcon() {
 export default function FounderContent({
   founder,
   labels,
+  locale,
 }: FounderContentProps) {
   return (
     <section className="relative isolate overflow-hidden bg-white py-10 dark:bg-slate-950 sm:py-14">
@@ -167,7 +170,7 @@ export default function FounderContent({
               </div>
             </div>
 
-            <div className="group relative overflow-hidden rounded-[2rem] border border-violet-200/70 bg-gradient-to-br from-violet-50/75 via-white to-emerald-50/60 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 dark:border-violet-400/15 dark:from-violet-500/[0.06] dark:via-slate-900 dark:to-emerald-500/[0.04]">
+            <div className="group relative z-10 overflow-visible rounded-[2rem] border border-violet-200/70 bg-gradient-to-br from-violet-50/75 via-white to-emerald-50/60 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 dark:border-violet-400/15 dark:from-violet-500/[0.06] dark:via-slate-900 dark:to-emerald-500/[0.04]">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-16 -top-16 size-36 rounded-full bg-violet-400/10 blur-3xl transition-transform duration-500 group-hover:scale-125"
@@ -184,13 +187,24 @@ export default function FounderContent({
                     socialLinks={founder.socialLinks}
                     labels={labels.socials}
                   />
+                  <div className="mt-5 flex items-center gap-2">
                   <Link
                     href="/specialists/zafar-usarov"
-                    className="mt-5 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-semibold text-slate-900 shadow-sm transition hover:border-emerald-400 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:border-emerald-500 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-900"
+                    className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-semibold text-slate-900 shadow-sm transition hover:border-emerald-400 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:border-emerald-500 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-900"
                   >
                     <span>{labels.specialistButton}</span>
                     <ArrowUpRight aria-hidden="true" className="size-4 shrink-0" />
                   </Link>
+                  <div className="relative shrink-0">
+                    <ShareButton
+                      title={locale === "de"
+                        ? `Über ${founder.name} – UzDe`
+                        : `${founder.name} – UzDe loyihasi asoschisi`}
+                      locale={locale}
+                      iconOnly
+                    />
+                  </div>
+                  </div>
                 </div>
               </div>
             </div>

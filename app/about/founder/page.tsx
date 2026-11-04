@@ -228,6 +228,7 @@ export default async function FounderPage() {
         />
 
         <FounderContent
+          locale={locale}
           founder={founderProfile}
           labels={{
             storyTitle: t("story.title"),

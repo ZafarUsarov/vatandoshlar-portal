@@ -80,6 +80,7 @@ export default async function SupportPage() {
 
       <main className="pt-20">
         <SupportHero
+          locale={locale}
           badge={t("hero.badge")}
           title={t("hero.title")}
           description={t("hero.description")}

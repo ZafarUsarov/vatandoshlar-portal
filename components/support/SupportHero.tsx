@@ -1,11 +1,13 @@
 
 import BrandedText from "@/components/ui/BrandedText";
+import ShareButton from "@/components/shared/ShareButton";
 
 type SupportHeroProps = Readonly<{
   badge: string;
   title: string;
   description: string;
   action: string;
+  locale: "uz" | "de";
 }>;
 
 function HeartIcon() {
@@ -51,6 +53,7 @@ export default function SupportHero({
   title,
   description,
   action,
+  locale,
 }: SupportHeroProps) {
   return (
     <section className="relative isolate overflow-hidden border-b border-slate-200/80 bg-slate-50 text-slate-950 dark:border-white/[0.08] dark:bg-slate-950 dark:text-white">
@@ -77,13 +80,21 @@ export default function SupportHero({
               </p>
             </div>
 
+            <div className="mt-7 flex flex-wrap items-center gap-3">
             <a
               href="#support-options"
-              className="mt-7 inline-flex min-h-12 w-fit items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-emerald-500 hover:shadow-xl hover:shadow-emerald-600/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none dark:focus-visible:ring-offset-slate-950"
+              className="inline-flex min-h-12 w-fit items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-emerald-500 hover:shadow-xl hover:shadow-emerald-600/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none dark:focus-visible:ring-offset-slate-950"
             >
               {action}
               <ArrowDownIcon />
             </a>
+            <div className="relative z-10">
+              <ShareButton
+                title={locale === "de" ? "UzDe unterstützen" : "UzDe loyihasini qo‘llab-quvvatlang"}
+                locale={locale}
+              />
+            </div>
+            </div>
           </div>
 
 
