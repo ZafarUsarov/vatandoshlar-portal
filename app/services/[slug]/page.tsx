@@ -3,6 +3,7 @@ import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import Header from "../../../components/Header";
+import ShareButton from "../../../components/shared/ShareButton";
 import ServiceCard from "../../../components/cards/ServiceCard";
 import BrandName from "../../../components/ui/BrandName";
 import BrandedText from "../../../components/ui/BrandedText";
@@ -276,6 +277,9 @@ export default async function ServiceDetailPage({
               <p className="mt-7 text-sm font-medium text-slate-500 dark:text-slate-400">
                 {service.location}
               </p>
+              <div className="mt-5">
+                <ShareButton title={service.title} locale={locale} />
+              </div>
             </div>
           </header>
 

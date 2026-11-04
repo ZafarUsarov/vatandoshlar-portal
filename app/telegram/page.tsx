@@ -5,6 +5,7 @@ import { getLocale } from "next-intl/server";
 import Footer from "../../components/Footer";
 import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
+import ShareButton from "../../components/shared/ShareButton";
 import TelegramSection from "../../components/TelegramSection";
 import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
 import { Link } from "../../i18n/navigation";
@@ -126,6 +127,9 @@ export default async function TelegramPage() {
                 <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">
                   {copy.description}
                 </p>
+                <div className="mt-5">
+                  <ShareButton title={copy.title} locale={locale} />
+                </div>
               </div>
             </div>
           </section>

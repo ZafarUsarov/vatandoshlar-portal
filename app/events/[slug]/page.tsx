@@ -8,6 +8,7 @@ import BrandName from "../../../components/ui/BrandName";
 import EventCard from "../../../components/cards/EventCard";
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
+import ShareButton from "../../../components/shared/ShareButton";
 import SectionPromo from "../../../components/SectionPromo";
 import {
   formatEventDate,
@@ -755,6 +756,7 @@ export default async function EventPage({
               <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
                 {event.excerpt}
               </p>
+
             </div>
           </header>
 
@@ -1130,6 +1132,11 @@ export default async function EventPage({
                     )}
                   </div>
                 )}
+                <div className="mt-7 border-t border-slate-200 pt-5 dark:border-slate-700">
+                  <div className="inline-flex rounded-full shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-[0.97] [&_button]:border-emerald-200 [&_button]:bg-emerald-50 [&_button]:text-emerald-800 [&_button]:transition-colors [&_button]:duration-200 hover:[&_button]:border-emerald-400 hover:[&_button]:bg-emerald-100 dark:[&_button]:border-emerald-500/30 dark:[&_button]:bg-emerald-500/10 dark:[&_button]:text-emerald-200 dark:hover:[&_button]:bg-emerald-500/20">
+                    <ShareButton title={event.title} locale={locale} />
+                  </div>
+                </div>
               </div>
             </aside>
           </div>

@@ -3,6 +3,7 @@ import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import Header from "../../../components/Header";
+import ShareButton from "../../../components/shared/ShareButton";
 import JobGuideCard from "../../../components/cards/JobGuideCard";
 import BrandName from "../../../components/ui/BrandName";
 import { Link } from "../../../i18n/navigation";
@@ -323,6 +324,9 @@ export default async function JobGuidePage({
                   guide.description
                 }
               </p>
+              <div className="mt-5">
+                <ShareButton title={guide.title} locale={locale} />
+              </div>
 
               <div className="mt-8 border-t border-slate-200 pt-6 text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
                 <p>
