@@ -1,5 +1,6 @@
 import RebrandingHomeFrame from "../components/home/RebrandingHomeFrame";
 import MarketHomeEntry from "../components/home/MarketHomeEntry";
+import HomeShareCTA from "../components/home/HomeShareCTA";
 import GuidePreviewSection from "../components/home/GuidePreviewSection";
 import JobsSection from "../components/JobsSection";
 import PopularCategoriesSection from "../components/home/PopularCategoriesSection";
@@ -38,6 +39,7 @@ export default function HomePage() {
         <Reveal>
           <JobsSection />
         </Reveal>
+        <HomeShareCTA />
       </main>
 
       <HomeFooter />
