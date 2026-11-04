@@ -42,7 +42,11 @@ export async function POST(request: Request, {params}: {params:Promise<{id:strin
      console.error("Messaging notification error", error instanceof Error ? error.message : "unknown error");
    });
    return NextResponse.json({ok:true},{status:201});
- } catch {
+ } catch (error) {
+   console.error(
+     "[Messaging Attachment Upload]",
+     error instanceof Error ? error.message : error
+   );
    if(client) await client.query("ROLLBACK").catch(()=>{});
    await Promise.allSettled(uploaded.map(key=>deleteAttachment(key)));
    return NextResponse.json({error:"Upload failed"},{status:500});
