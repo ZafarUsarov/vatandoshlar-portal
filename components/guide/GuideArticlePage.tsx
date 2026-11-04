@@ -22,6 +22,7 @@ import GuideTableOfContents, {
 } from "./GuideTableOfContents";
 import GuideRichContent from "./rich-content/GuideRichContent";
 import GuideAuthor from "./GuideAuthor";
+import ShareButton from "@/components/shared/ShareButton";
 
 type GuideArticlePageProps = Readonly<{
   article: GuideArticle;
@@ -289,6 +290,9 @@ export default function GuideArticlePage({
                 locale={locale}
                 className="px-1 py-2 text-sm font-semibold text-slate-300"
               />
+            </div>
+            <div className="mt-5">
+              <ShareButton title={article.title} locale={locale} variant="dark" />
             </div>
           </div>
         </header>

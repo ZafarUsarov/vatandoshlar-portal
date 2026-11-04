@@ -1,5 +1,6 @@
 import FounderProfilePromo from "@/components/specialists/FounderProfilePromo";
 import SpecialistContactLinks from "@/components/specialists/SpecialistContactLinks";
+import ShareButton from "@/components/shared/ShareButton";
 import BrandedText from "@/components/ui/BrandedText";
 import { Link } from "@/i18n/navigation";
 import type {
@@ -449,6 +450,12 @@ export default function SpecialistProfile({
               )}
 
               <SpecialistContactLinks contact={specialist.contact} labels={labels} isFounder={isFounder} />
+              <div className="mt-5 flex items-center justify-between gap-3 border-t border-slate-200 pt-4 dark:border-slate-700">
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  {locale === "de" ? "Profil teilen" : "Profilni ulashish"}
+                </span>
+                <ShareButton title={specialist.name} locale={locale} iconOnly />
+              </div>
               </div>
             </div>
           </aside>
