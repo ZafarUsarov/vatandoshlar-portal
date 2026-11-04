@@ -1113,7 +1113,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
         {[
           {
             href: "/savol" as const,
-            label: locale === "de" ? "Fragen & Antworten" : "Savol-javob",
+            label: locale === "de" ? "F&Q" : "Savol-javob",
             Icon: MessageCircleQuestion,
             color: "text-emerald-600 dark:text-emerald-400",
             hover: "hover:bg-emerald-50 focus-visible:bg-emerald-50",
