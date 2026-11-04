@@ -14,11 +14,6 @@ export const metadata: Metadata = {
 export default async function AccountPage() {
   const locale = (await getLocale()) === "de" ? "de" : "uz";
   const context = await requirePublicUser(locale);
-  const profileComplete = Boolean(
-    context.profile?.homeLocationId ||
-    context.profile?.residencyStage ||
-    context.interests.length > 0,
-  );
   const hasHomeLocation = Boolean(context.profile?.homeLocationId);
 
   const copy = locale === "de"
@@ -27,14 +22,16 @@ export default async function AccountPage() {
         title: "Ihr Konto ist aktiv",
         description: "Ihre UzDe ID ist bereit. Ergänzen Sie Ihr Profil, damit wir Inhalte später besser personalisieren können.",
         email: "E-Mail",
-        profile: profileComplete ? "Profil bearbeiten" : "Profil einrichten",
+
         myCity: "Meine Stadt",
+        messages: "Nachrichten",
         notifications: "Benachrichtigungen",
         myListings: "Meine Anzeigen",
         myCityDisabled: "Wählen Sie zuerst einen Wohnort in Ihrem Profil aus.",
         myCityDescription: "Stadtinformationen ansehen und bearbeiten.",
-        profileDescription: "Persönliche Angaben aktualisieren.",
+
         listingsDescription: "Anzeigen ansehen und verwalten.",
+        messagesDescription: "Nachrichten ansehen und beantworten.",
         notificationsDescription: "Neuigkeiten und Aktivitäten ansehen.",
         homeDescription: "Zur Startseite des Portals.",
         editEmail: "Bearbeiten",
@@ -45,14 +42,16 @@ export default async function AccountPage() {
         title: "Akkauntingiz faol",
         description: "UzDe ID tayyor. Portalni sizga moslashtirish uchun profilingizni to‘ldiring.",
         email: "E-mail",
-        profile: profileComplete ? "Profilni tahrirlash" : "Profilni sozlash",
+
         myCity: "Mening shahrim",
+        messages: "Xabarlar",
         notifications: "Bildirishnomalar",
         myListings: "Mening e’lonlarim",
         myCityDisabled: "Avval profilingizda yashash joyingizni tanlang.",
         myCityDescription: "Shahringiz ma’lumotlarini ko‘ring va tahrirlang.",
-        profileDescription: "Shaxsiy ma’lumotlaringizni yangilang.",
+
         listingsDescription: "E’lonlaringizni ko‘ring, tahrirlang va boshqaring.",
+        messagesDescription: "Xabarlaringizni ko‘ring va javob yozing.",
         notificationsDescription: "Yangi xabarlar va faoliyatlar haqida.",
         homeDescription: "Portalning bosh sahifasiga qayting.",
         editEmail: "Tahrirlash",
@@ -110,15 +109,15 @@ export default async function AccountPage() {
             </div>
           )}
 
-          <Link href="/account/profile" className={`${tileBase} border-blue-200 bg-blue-50/70 hover:bg-blue-100/80 dark:border-blue-900 dark:bg-blue-950/30 dark:hover:bg-blue-950/60`}>
-            <span className={`${iconCircle} bg-blue-100 text-blue-600 dark:bg-blue-900/60 dark:text-blue-300`}><AccountIcon name="file" /></span>
-            <span className={tileText}><span className={tileTitle}>{copy.profile}</span><span className={tileDescription}>{copy.profileDescription}</span></span>
+<Link href="/market/mine" className={`${tileBase} border-amber-200 bg-amber-50/70 hover:bg-amber-100/80 dark:border-amber-900 dark:bg-amber-950/30 dark:hover:bg-amber-950/60`}>
+            <span className={`${iconCircle} bg-amber-100 text-amber-600 dark:bg-amber-900/60 dark:text-amber-300`}><AccountIcon name="megaphone" /></span>
+            <span className={tileText}><span className={tileTitle}>{copy.myListings}</span><span className={tileDescription}>{copy.listingsDescription}</span></span>
             <AccountIcon name="chevron" size={19} />
           </Link>
 
-          <Link href="/market/mine" className={`${tileBase} border-amber-200 bg-amber-50/70 hover:bg-amber-100/80 dark:border-amber-900 dark:bg-amber-950/30 dark:hover:bg-amber-950/60`}>
-            <span className={`${iconCircle} bg-amber-100 text-amber-600 dark:bg-amber-900/60 dark:text-amber-300`}><AccountIcon name="megaphone" /></span>
-            <span className={tileText}><span className={tileTitle}>{copy.myListings}</span><span className={tileDescription}>{copy.listingsDescription}</span></span>
+          <Link href="/account/messages" className={`${tileBase} border-blue-200 bg-blue-50/70 hover:bg-blue-100/80 dark:border-blue-900 dark:bg-blue-950/30 dark:hover:bg-blue-950/60`}>
+            <span className={`${iconCircle} bg-blue-100 text-blue-600 dark:bg-blue-900/60 dark:text-blue-300`}><AccountIcon name="mail" /></span>
+            <span className={tileText}><span className={tileTitle}>{copy.messages}</span><span className={tileDescription}>{copy.messagesDescription}</span></span>
             <AccountIcon name="chevron" size={19} />
           </Link>
 

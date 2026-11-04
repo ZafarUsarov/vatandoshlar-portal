@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { signOut } from "next-auth/react";
-import { LogOut, MapPin, MessageCircle, Pencil, ShoppingBag } from "lucide-react";
+import { LogOut, MapPin, MessageCircle, ShoppingBag } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 
 type AccountInfo = {
@@ -209,7 +209,12 @@ export default function HeaderAccountMenu({
             id={menuId}
             className="absolute right-0 top-full z-[90] mt-3 w-[min(19rem,calc(100vw-1.5rem))] rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl dark:border-slate-700 dark:bg-slate-900"
           >
-            <div className="flex items-center gap-3 border-b border-slate-100 px-2 py-3 dark:border-slate-800">
+            <Link
+                href="/account"
+                onClick={closeAndNavigate}
+                aria-label={de ? "UzDe ID öffnen" : "UzDe ID sahifasini ochish"}
+                className="flex items-center gap-3 rounded-xl border-b border-slate-100 px-2 py-3 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-800 dark:hover:bg-slate-800"
+              >
               {avatar}
               <div className="min-w-0">
                 <p className="truncate text-sm font-bold text-slate-950 dark:text-white">
@@ -221,12 +226,16 @@ export default function HeaderAccountMenu({
                   </p>
                 )}
               </div>
-            </div>
+            </Link>
 
             <nav
               className="mt-2 grid gap-1"
               aria-label={de ? "Kontobereiche" : "Akkaunt bo‘limlari"}
             >
+              <Link href="/my-city" onClick={closeAndNavigate} className={itemClass}>
+                <MapPin size={18} aria-hidden="true" />
+                {de ? "Meine Stadt" : "Mening shahrim"}
+              </Link>
               <Link href="/market/mine" onClick={closeAndNavigate} className={itemClass}>
                 <ShoppingBag size={18} aria-hidden="true" />
                 {de ? "Meine Anzeigen" : "Mening e’lonlarim"}
@@ -243,14 +252,6 @@ export default function HeaderAccountMenu({
                   </span>
                 )}
               </Link>
-              <Link href="/my-city" onClick={closeAndNavigate} className={itemClass}>
-                <MapPin size={18} aria-hidden="true" />
-                {de ? "Meine Stadt" : "Mening shahrim"}
-              </Link>
-              <Link href="/account/profile" onClick={closeAndNavigate} className={itemClass}>
-                <Pencil size={18} aria-hidden="true" />
-                {de ? "Profil bearbeiten" : "Profilni tahrirlash"}
-              </Link>
             </nav>
 
             <div className="mt-2 border-t border-slate-100 pt-2 dark:border-slate-800">
@@ -260,7 +261,7 @@ export default function HeaderAccountMenu({
                   setOpen(false);
                   setConfirming(true);
                 }}
-                className="flex min-h-11 w-full items-center gap-3 rounded-xl px-3 text-left text-sm font-bold text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/30"
+                className="ml-auto flex min-h-11 w-fit items-center justify-end gap-3 rounded-xl px-3 text-right text-sm font-bold text-rose-600 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/30"
               >
                 <LogOut size={18} aria-hidden="true" />
                 {de ? "Abmelden" : "Chiqish"}
@@ -291,15 +292,6 @@ export default function HeaderAccountMenu({
             </p>
             <div className="mt-6 flex justify-end gap-3">
               <button
-                ref={cancelRef}
-                type="button"
-                disabled={submitting}
-                onClick={() => setConfirming(false)}
-                className="min-h-11 rounded-xl border border-slate-300 px-4 font-semibold text-slate-700 dark:border-slate-700 dark:text-white"
-              >
-                {de ? "Abbrechen" : "Bekor qilish"}
-              </button>
-              <button
                 type="button"
                 disabled={submitting}
                 onClick={async () => {
@@ -313,6 +305,15 @@ export default function HeaderAccountMenu({
                 className="min-h-11 rounded-xl bg-rose-600 px-4 font-semibold text-white hover:bg-rose-700 disabled:opacity-60"
               >
                 {de ? "Ja, abmelden" : "Ha, chiqish"}
+              </button>
+              <button
+                ref={cancelRef}
+                type="button"
+                disabled={submitting}
+                onClick={() => setConfirming(false)}
+                className="min-h-11 rounded-xl border border-emerald-300 bg-emerald-50 px-4 font-semibold text-emerald-700 hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
+              >
+                {de ? "Abbrechen" : "Bekor qilish"}
               </button>
             </div>
           </div>
