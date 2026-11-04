@@ -37,8 +37,14 @@ export async function createAnswerAction(
   formData: FormData,
 ): Promise<CreateAnswerState> {
   const locale = resolveLocale(formData.get("locale"));
-  const context = await requirePublicUser(locale);
   const slug = textValue(formData.get("slug"));
+  // Keep the answer destination when an unauthenticated user signs in.
+  // Reject path separators and control characters before building a return URL.
+  const safeSlug = /^[a-zA-Z0-9_-]+$/.test(slug) ? slug : "";
+  const context = await requirePublicUser(
+    locale,
+    safeSlug ? `/savol/${safeSlug}#answer-form-heading` : "/savol",
+  );
   const body = textValue(formData.get("body"));
 
   const error =

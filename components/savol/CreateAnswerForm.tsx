@@ -21,6 +21,28 @@ export default function CreateAnswerForm({ locale, slug }: { locale: "uz" | "de"
   const handled = useRef<string | null>(null);
   const queuedRef = useRef<Queued[]>([]);
   const de = locale === "de";
+  const draftKey = `uzde:savol:answer:${locale}:${slug}`;
+
+  useEffect(() => {
+    try {
+      const draft = window.sessionStorage.getItem(draftKey);
+      const textarea = formRef.current?.elements.namedItem("body");
+      if (draft !== null && textarea instanceof HTMLTextAreaElement) {
+        textarea.value = draft;
+      }
+    } catch { /* Storage can be unavailable in privacy modes. */ }
+  }, [draftKey]);
+
+  function saveDraft(event: React.FormEvent<HTMLTextAreaElement>) {
+    try {
+      window.sessionStorage.setItem(draftKey, event.currentTarget.value);
+    } catch { /* Do not block answer editing when storage is unavailable. */ }
+  }
+
+  function clearDraft() {
+    try { window.sessionStorage.removeItem(draftKey); }
+    catch { /* Storage can be unavailable. */ }
+  }
   function addFiles(files: FileList | null) {
     if (!files) return;
     setMessage("");
@@ -41,6 +63,7 @@ export default function CreateAnswerForm({ locale, slug }: { locale: "uz" | "de"
   useEffect(() => {
     if (!state.answerId || handled.current === state.answerId) return;
     handled.current = state.answerId;
+    clearDraft();
     const answerId = state.answerId;
     const files = queuedRef.current;
     formRef.current?.reset();
@@ -84,7 +107,7 @@ export default function CreateAnswerForm({ locale, slug }: { locale: "uz" | "de"
     {state.error && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{state.error}</p>}
     {message && <p role="status" className="text-sm text-emerald-700 dark:text-emerald-400">{message}</p>}
     <div><label htmlFor="savol-answer" className="mb-2 block text-sm font-semibold">{de ? "Ihre Antwort" : "Javobingiz"}</label>
-      <textarea id="savol-answer" name="body" rows={3} minLength={10} maxLength={10000} required disabled={busy} placeholder={de ? "Schreiben Sie eine hilfreiche und konkrete Antwort." : "Foydali va aniq javob yozing."} className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 leading-7 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-950 dark:text-white"/>
+      <textarea id="savol-answer" name="body" onInput={saveDraft} rows={3} minLength={10} maxLength={10000} required disabled={busy} placeholder={de ? "Schreiben Sie eine hilfreiche und konkrete Antwort." : "Foydali va aniq javob yozing."} className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 leading-7 text-slate-950 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-950 dark:text-white"/>
     </div>
     {queued.length > 0 && <ul className="flex flex-wrap gap-2">{queued.map((item, index) => <li key={`${item.file.name}-${index}`} className="flex max-w-full items-center gap-2 rounded-xl border border-slate-200 p-2 text-xs dark:border-slate-700">{item.url ?   <img src={item.url} alt="" className="size-12 rounded-lg object-cover"/> : <Paperclip size={20}/>}<span className="max-w-32 truncate" title={item.file.name}>{item.file.name}</span><button type="button" disabled={busy} onClick={() => remove(index)} aria-label={de ? "Entfernen" : "O‘chirish"}><X size={16}/></button></li>)}</ul>}
     <p className="text-xs text-slate-500 dark:text-slate-400">JPG, PNG, WebP, PDF · {de ? "max. 3 Dateien, je 5 MB" : "3 ta faylgacha, har biri 5 MB"}</p>
