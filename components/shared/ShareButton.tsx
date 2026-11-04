@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, Share, Share2 } from "lucide-react";
+import { Check, Copy, Share } from "lucide-react";
 
 type Props = Readonly<{
   title: string;
@@ -47,7 +47,7 @@ export default function ShareButton({ title, locale, variant = "light", iconOnly
   return (
     <div className="relative inline-flex shrink-0 items-center">
       <button type="button" onClick={() => void share()} className={buttonClass} aria-expanded={showFallback} aria-label={iconOnly ? (de ? "Profil teilen" : "Profilni ulashish") : label} title={iconOnly ? (de ? "Profil teilen" : "Profilni ulashish") : label}>
-        {iconOnly ? <Share size={20} aria-hidden="true" /> : <Share2 size={17} aria-hidden="true" />} {!iconOnly && label}
+        <Share size={iconOnly ? 20 : 17} aria-hidden="true" /> {!iconOnly && label}
       </button>
       {showFallback && (
         <div className="absolute right-0 top-full z-50 mt-2 flex w-[min(18rem,calc(100vw-2rem))] flex-wrap items-center gap-2 rounded-xl border border-slate-200 bg-white p-2 text-sm shadow-lg dark:border-slate-700 dark:bg-slate-900">

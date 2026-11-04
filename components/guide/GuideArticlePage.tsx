@@ -285,14 +285,14 @@ export default function GuideArticlePage({
                 )}
               </span>
 
+              <div className="flex items-center [&_button]:min-h-0 [&_button]:rounded-full [&_button]:px-4 [&_button]:py-2 [&_button]:text-sm">
+                <ShareButton title={article.title} locale={locale} variant="dark" />
+              </div>
               <ViewCount
                 count={article.viewCount}
                 locale={locale}
                 className="px-1 py-2 text-sm font-semibold text-slate-300"
               />
-            </div>
-            <div className="mt-5">
-              <ShareButton title={article.title} locale={locale} variant="dark" />
             </div>
           </div>
         </header>
