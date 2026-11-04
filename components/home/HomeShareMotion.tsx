@@ -31,6 +31,7 @@ export default function HomeShareMotion({ children }: Props) {
       ref={ref}
       data-home-share-motion
       data-visible={visible}
+      className="relative z-10"
     >
       {children}
     </div>

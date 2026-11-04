@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, Share } from "lucide-react";
+import { Check, Copy, Mail, MessageCircle, Send, Share } from "lucide-react";
 
 type Props = Readonly<{
   title: string;
@@ -50,12 +50,54 @@ export default function ShareButton({ title, locale, variant = "light", iconOnly
         <Share size={iconOnly ? 20 : 17} aria-hidden="true" /> {!iconOnly && label}
       </button>
       {showFallback && (
-        <div className="absolute right-0 top-full z-50 mt-2 flex w-[min(18rem,calc(100vw-2rem))] flex-wrap items-center gap-2 rounded-xl border border-slate-200 bg-white p-2 text-sm shadow-lg dark:border-slate-700 dark:bg-slate-900">
-          <a className="rounded-lg px-3 py-2 text-slate-900 underline-offset-2 hover:underline dark:text-white" href={`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`} target="_blank" rel="noopener noreferrer">Telegram</a>
-          <a className="rounded-lg px-3 py-2 text-slate-900 underline-offset-2 hover:underline dark:text-white" href={`https://wa.me/?text=${encodeURIComponent(`${title} — ${url}`)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
-          <button type="button" onClick={() => void copy()} className="inline-flex min-h-10 items-center gap-1 rounded-lg px-3 py-2 text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800">
-            {copied ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
-            {copied ? (de ? "Kopiert" : "Nusxalandi") : (de ? "Link kopieren" : "Havolani nusxalash")}
+        <div
+          role="group"
+          aria-label={de ? "Teilen über" : "Ulashish usullari"}
+          className="absolute right-0 top-full z-50 mt-2 grid w-[min(19rem,calc(100vw-2rem))] grid-cols-4 gap-1 rounded-xl border border-slate-200 bg-white p-2 text-center shadow-lg dark:border-slate-700 dark:bg-slate-900"
+        >
+          <a
+            href={`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Telegram"
+            className="flex min-w-0 flex-col items-center gap-1 rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            <Send size={22} className="text-sky-500" aria-hidden="true" />
+            <span className="text-[11px] text-slate-700 dark:text-slate-200">Telegram</span>
+          </a>
+
+          <a
+            href={`https://wa.me/?text=${encodeURIComponent(`${title} — ${url}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            className="flex min-w-0 flex-col items-center gap-1 rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            <MessageCircle size={22} className="text-green-500" aria-hidden="true" />
+            <span className="text-[11px] text-slate-700 dark:text-slate-200">WhatsApp</span>
+          </a>
+
+          <a
+            href={`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${title}\n${url}`)}`}
+            aria-label={de ? "E-Mail" : "Email"}
+            className="flex min-w-0 flex-col items-center gap-1 rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            <Mail size={22} className="text-slate-600 dark:text-slate-300" aria-hidden="true" />
+            <span className="text-[11px] text-slate-700 dark:text-slate-200">Email</span>
+          </a>
+
+          <button
+            type="button"
+            onClick={() => void copy()}
+            aria-label={copied ? (de ? "Kopiert" : "Nusxalandi") : (de ? "Link kopieren" : "Havolani nusxalash")}
+            className="flex min-w-0 flex-col items-center gap-1 rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            {copied
+              ? <Check size={22} className="text-emerald-600" aria-hidden="true" />
+              : <Copy size={22} className="text-slate-600 dark:text-slate-300" aria-hidden="true" />}
+            <span className="text-[11px] text-slate-700 dark:text-slate-200">
+              {copied ? (de ? "Kopiert" : "Nusxalandi") : (de ? "Kopieren" : "Nusxalash")}
+            </span>
           </button>
         </div>
       )}
