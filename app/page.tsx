@@ -2,11 +2,9 @@ import RebrandingHomeFrame from "../components/home/RebrandingHomeFrame";
 import MarketHomeEntry from "../components/home/MarketHomeEntry";
 import HomeShareCTA from "../components/home/HomeShareCTA";
 import GuidePreviewSection from "../components/home/GuidePreviewSection";
-import JobsSection from "../components/JobsSection";
 import PopularCategoriesSection from "../components/home/PopularCategoriesSection";
 import Reveal from "../components/Reveal";
 import SearchSection from "../components/SearchSection";
-import ServicesSection from "../components/ServicesSection";
 import {
   HeroSection,
   HomeFooter,
@@ -32,13 +30,6 @@ export default function HomePage() {
           <PopularCategoriesSection />
         </Reveal>
 
-        <Reveal>
-          <ServicesSection />
-        </Reveal>
-
-        <Reveal>
-          <JobsSection />
-        </Reveal>
         <HomeShareCTA />
       </main>
 

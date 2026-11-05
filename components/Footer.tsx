@@ -275,7 +275,7 @@ export default async function Footer({
 
       <div className="relative mx-auto max-w-7xl px-6 py-6 sm:py-8 lg:px-8 lg:py-10">
         {showHomeDetails && (
-          <div className="mt-8 border-t border-slate-200/80 pt-6 dark:border-white/[0.08] sm:mt-10 sm:pt-7">
+          <div className={`${showHomeDetails ? "mt-0 pt-4 sm:pt-5" : "mt-8 pt-6 sm:mt-10 sm:pt-7"} border-t border-slate-200/80 dark:border-white/[0.08]`}>
             <div className="flex max-w-2xl items-center gap-3">
               <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300">
                 <ShieldCheckIcon className="size-4" />
@@ -446,7 +446,7 @@ export default async function Footer({
 
               <span aria-hidden="true" className="hidden h-5 w-px bg-slate-200 dark:bg-white/10 lg:block" />
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
                 <Link href="/install" className="inline-flex min-h-11 items-center rounded-lg px-1 text-sm font-semibold text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-slate-300 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950">{localCopy.installLink}</Link>
                   <span aria-hidden="true" className="h-4 w-px bg-slate-200 dark:bg-white/10" />
                   <Link href="/impressum" className="inline-flex min-h-11 items-center rounded-lg px-1 text-sm font-semibold text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-slate-300 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950">{localCopy.impressumLink}</Link>

@@ -24,6 +24,7 @@ export default function InstallVideo({ de }: InstallVideoProps) {
           controls
           playsInline
           preload="none"
+          poster="/images/install/uzde-video-poster.jpg"
           aria-label={de ? "UzDe Installationsvideo" : "UzDe o‘rnatish videosi"}
         >
           <source src="/videos/uzde-install-guide.mp4" type="video/mp4" />

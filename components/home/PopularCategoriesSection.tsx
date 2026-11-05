@@ -128,7 +128,7 @@ export default async function PopularCategoriesSection() {
     <section
       id="popular-categories"
       aria-labelledby="help-discovery-heading"
-      className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-50 py-16 sm:py-20 lg:py-24 dark:border-slate-800 dark:bg-slate-950"
+      className="relative isolate overflow-hidden border-b border-slate-200 bg-slate-50 py-8 sm:py-10 lg:py-12 dark:border-slate-800 dark:bg-slate-950"
     >
       <div
         aria-hidden="true"
@@ -144,17 +144,17 @@ export default async function PopularCategoriesSection() {
 
           <h2
             id="help-discovery-heading"
-            className="mt-5 max-w-3xl text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white"
+            className="mt-3 max-w-3xl text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white"
           >
             {copy.title}
           </h2>
 
-          <p className="mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
+          <p className="mt-3 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
             {copy.description}
           </p>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2 sm:mt-12">
+        <div className="mt-6 grid gap-5 md:grid-cols-2 sm:mt-8">
           <Link
             href="/services"
             className="group relative overflow-hidden rounded-[2rem] border border-blue-200/80 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-4 dark:border-blue-400/15 dark:bg-white/[0.045] dark:hover:border-blue-400/30 dark:focus-visible:ring-offset-slate-950 sm:p-7"

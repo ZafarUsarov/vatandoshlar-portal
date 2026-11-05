@@ -183,8 +183,8 @@ export default async function GuidePreviewSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center xl:gap-14">
-          <div className="max-w-2xl">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start xl:gap-14">
+          <div className="max-w-2xl lg:-translate-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-300 backdrop-blur">
               <BookOpenIcon />
               {copy.eyebrow}
@@ -211,18 +211,18 @@ export default async function GuidePreviewSection() {
               </Link>
 
               {totalArticleCount > 0 && (
-                <div className="rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 backdrop-blur">
-                  <span className="block text-xl font-extrabold text-white">
+                <div className="inline-flex min-h-12 items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 backdrop-blur">
+                  <span className="text-xl font-extrabold text-white">
                     {totalArticleCount}+
                   </span>
-                  <span className="mt-0.5 block text-xs font-semibold text-slate-400">
+                  <span className="text-xs font-semibold text-slate-400">
                     {copy.totalLabel}
                   </span>
                 </div>
               )}
             </div>
 
-            <div className="mt-8 flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.05] p-5 backdrop-blur">
+            <div className="mt-6 flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.05] p-5 backdrop-blur lg:mt-4">
               <span className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-300">
                 <ShieldCheckIcon />
               </span>

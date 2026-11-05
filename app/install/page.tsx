@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import ShareButton from "../../components/shared/ShareButton";
 import InstallVideo from "../../components/install/InstallVideo";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -53,7 +54,14 @@ export default async function InstallPage() {
                 <p className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-emerald-300">{de ? "Immer griffbereit" : "Har doim yoningizda"}</p>
                 <h1 className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl">{de ? "UzDe auf deinem Smartphone. Wie eine App." : "UzDe telefoningizda. Xuddi ilovadek."}</h1>
                 <p className="mt-6 max-w-xl text-base leading-8 text-slate-300">{de ? "Füge UzDe deinem Startbildschirm hinzu und öffne die Plattform mit nur einem Fingertipp – ganz ohne App Store." : "UzDe’ni bosh ekranga qo‘shing va bir tegish bilan oching. App Store yoki Play Market’dan yuklab olish shart emas."}</p>
-                <a href="#anleitung" className="mt-8 inline-flex min-h-12 items-center justify-center rounded-xl bg-emerald-400 px-6 text-sm font-bold text-slate-950 transition-colors hover:bg-emerald-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300">{de ? "Anleitung ansehen" : "O‘rnatish qo‘llanmasi"}<span aria-hidden="true" className="ml-2">↓</span></a>
+                <a href="#anleitung" className="mt-8 inline-flex min-h-12 items-center justify-center rounded-xl px-6 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 !bg-[#059669] !text-black hover:!bg-[#047857]">{de ? "Anleitung ansehen" : "O‘rnatish qo‘llanmasi"}<span aria-hidden="true" className="ml-2">↓</span></a>
+                <span className="ml-3 inline-flex align-middle">
+                  <ShareButton
+                    title={de ? "UzDe installieren" : "UzDe ilovasini o‘rnatish"}
+                    locale={locale}
+                    variant="install"
+                  />
+                </span>
                 <p className="mt-4 text-xs text-slate-400">{de ? "Für iPhone und Android · Kostenlos" : "iPhone va Android uchun · Bepul"}</p>
               </div>
               <div className="flex justify-center lg:justify-end" aria-label={de ? "Illustration: UzDe auf einem Smartphone" : "UzDe telefon bosh ekranidagi ko‘rinishining illustratsiyasi"}>

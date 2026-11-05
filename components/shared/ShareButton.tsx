@@ -6,7 +6,7 @@ import { Check, Copy, Mail, MessageCircle, Send, Share } from "lucide-react";
 type Props = Readonly<{
   title: string;
   locale: "uz" | "de";
-  variant?: "light" | "dark";
+  variant?: "light" | "dark" | "install";
   iconOnly?: boolean;
 }>;
 
@@ -18,6 +18,8 @@ export default function ShareButton({ title, locale, variant = "light", iconOnly
   const url = typeof window === "undefined" ? "" : window.location.href.split("#")[0];
   const buttonClass = iconOnly
     ? "inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-emerald-500 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+    : variant === "install"
+    ? "inline-flex min-h-12 items-center gap-2 rounded-xl border border-slate-500 bg-[#263047] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#34415c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
     : variant === "dark"
     ? "inline-flex min-h-11 items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
     : "inline-flex min-h-11 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:border-emerald-500 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-600 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800";
