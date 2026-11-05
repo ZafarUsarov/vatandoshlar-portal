@@ -5,6 +5,7 @@ import AccountSignOutButton from "@/components/account/AccountSignOutButton";
 import AccountActionsMenu from "@/components/account/AccountActionsMenu";
 import { Link } from "@/i18n/navigation";
 import { requirePublicUser } from "@/lib/auth/user";
+import { countUnreadMessages } from "@/lib/messaging/messaging-repository";
 
 export const metadata: Metadata = {
   title: "UzDe ID",
@@ -15,6 +16,7 @@ export default async function AccountPage() {
   const locale = (await getLocale()) === "de" ? "de" : "uz";
   const context = await requirePublicUser(locale);
   const hasHomeLocation = Boolean(context.profile?.homeLocationId);
+  const unreadCount = await countUnreadMessages(context.user.id);
 
   const copy = locale === "de"
     ? {
@@ -118,7 +120,10 @@ export default async function AccountPage() {
           <Link href="/account/messages" className={`${tileBase} border-blue-200 bg-blue-50/70 hover:bg-blue-100/80 dark:border-blue-900 dark:bg-blue-950/30 dark:hover:bg-blue-950/60`}>
             <span className={`${iconCircle} bg-blue-100 text-blue-600 dark:bg-blue-900/60 dark:text-blue-300`}><AccountIcon name="mail" /></span>
             <span className={tileText}><span className={tileTitle}>{copy.messages}</span><span className={tileDescription}>{copy.messagesDescription}</span></span>
-            <AccountIcon name="chevron" size={19} />
+            {unreadCount > 0 && (
+                <span aria-label={`${unreadCount} ${locale === "de" ? "ungelesene Nachrichten" : "o‘qilmagan xabar"}`} className="flex min-h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 px-1.5 text-xs font-bold text-white">{unreadCount > 99 ? "99+" : unreadCount}</span>
+              )}
+              <AccountIcon name="chevron" size={19} />
           </Link>
 
           <Link href="/account/notifications" className={`${tileBase} border-violet-200 bg-violet-50/70 hover:bg-violet-100/80 dark:border-violet-900 dark:bg-violet-950/30 dark:hover:bg-violet-950/60`}>
