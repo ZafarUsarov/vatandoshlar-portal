@@ -217,6 +217,7 @@ export default async function Footer({
             "Platformani rivojlantirishni qo‘llab-quvvatlang. Har bir qo‘llab-quvvatlashning 20% qismi G‘azodagi bolalarni qo‘llab-quvvatlash uchun ajratiladi.",
           supportAction: "Hissa qo‘shish",
           compactSupportLink: "Hissa qo‘shish",
+          installLink: "UzDe ilovasini o‘rnatish",
           privacyLink: "Maxfiylik",
             impressumLink: "Impressum",
           emailLabel: "UzDe elektron pochtasi",
@@ -248,6 +249,7 @@ export default async function Footer({
             "Unterstützen Sie die Weiterentwicklung der Plattform. 20% jeder Unterstützung werden für die Unterstützung von Kindern in Gaza vorgesehen.",
           supportAction: "Beitrag leisten",
           compactSupportLink: "Beitrag leisten",
+          installLink: "UzDe installieren",
           privacyLink: "Datenschutz",
             impressumLink: "Impressum",
           emailLabel: "E-Mail an UzDe",
@@ -445,7 +447,9 @@ export default async function Footer({
               <span aria-hidden="true" className="hidden h-5 w-px bg-slate-200 dark:bg-white/10 lg:block" />
 
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <Link href="/impressum" className="inline-flex min-h-11 items-center rounded-lg px-1 text-sm font-semibold text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-slate-300 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950">{localCopy.impressumLink}</Link>
+                <Link href="/install" className="inline-flex min-h-11 items-center rounded-lg px-1 text-sm font-semibold text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-slate-300 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950">{localCopy.installLink}</Link>
+                  <span aria-hidden="true" className="h-4 w-px bg-slate-200 dark:bg-white/10" />
+                  <Link href="/impressum" className="inline-flex min-h-11 items-center rounded-lg px-1 text-sm font-semibold text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-slate-300 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950">{localCopy.impressumLink}</Link>
                 <span aria-hidden="true" className="h-4 w-px bg-slate-200 dark:bg-white/10" />
                 <Link href="/privacy" className="inline-flex min-h-11 items-center rounded-lg px-1 text-sm font-semibold text-slate-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-slate-300 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950">
                   {localCopy.privacyLink}
