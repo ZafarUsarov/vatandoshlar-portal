@@ -32,7 +32,7 @@ export default async function PlaceDetail({ params }: Props) {
   const place = await getPublicPlace(locale, slug);
   if (!place) notFound();
   const extra = getPlaceExtra(place.slug);
-  const logoSrc = place.logoPath || (place.slug === "taste-of-samarkand" ? "/images/places/taste-of-samarkand.webp" : null);
+  const logoSrc = (place.slug === "marakand-restaurant" ? "/images/places/marakand-restaurant-transparent.webp" : place.logoPath) || (place.slug === "taste-of-samarkand" ? "/images/places/taste-of-samarkand.webp" : null);
 
   const founders = await getDb().query<Founder>(`
     SELECT s.slug, s.name, s.avatar_url

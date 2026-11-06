@@ -36,7 +36,7 @@ export default async function PlacesPage({searchParams}:{searchParams:Promise<{q
       p.slug === "polar-dent" ? Stethoscope :
       p.slug === "bildung-beruf" ? GraduationCap :
       Building2;
-    const logoSrc = p.logoPath || (p.slug === "taste-of-samarkand" ? "/images/places/taste-of-samarkand.webp" : null);
+    const logoSrc = (p.slug === "marakand-restaurant" ? "/images/places/marakand-restaurant-transparent.webp" : p.logoPath) || (p.slug === "taste-of-samarkand" ? "/images/places/taste-of-samarkand.webp" : null);
     return (
       <article key={p.slug} className="group relative flex w-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-slate-200/90 bg-white px-5 pb-4 pt-5 shadow-[0_3px_12px_rgba(15,23,42,0.035)] transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-emerald-300 hover:shadow-[0_14px_32px_rgba(15,23,42,0.10)] dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-700">
         <div className="absolute inset-x-0 top-0 h-[3px] bg-emerald-500/80" aria-hidden="true" />
@@ -46,7 +46,7 @@ export default async function PlacesPage({searchParams}:{searchParams:Promise<{q
             <span>{categoryName}</span>
           </span>
           {logoSrc ? (
-            <div className={p.slug === "dill-vegan" ? "relative h-[38px] w-[80px] shrink-0 overflow-hidden rounded-lg bg-green-900" : "relative h-11 w-[92px] shrink-0 overflow-hidden rounded-lg border border-slate-100 bg-white p-1 dark:border-slate-700"} aria-label={`${p.name} logotipi`}>
+            <div className={p.slug === "marakand-restaurant" ? "relative h-11 w-[110px] shrink-0 overflow-hidden" : p.slug === "dill-vegan" ? "relative h-[38px] w-[80px] shrink-0 overflow-hidden rounded-lg bg-green-900" : "relative h-11 w-[92px] shrink-0 overflow-hidden rounded-lg border border-slate-100 bg-white p-1 dark:border-slate-700"} aria-label={`${p.name} logotipi`}>
               <Image unoptimized={logoSrc.startsWith("/api/")} src={logoSrc} alt={p.name} fill sizes="92px" className="object-contain p-1" />
             </div>
           ) : (
