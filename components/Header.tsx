@@ -689,7 +689,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
       href: "/specialists",
 
-      description: specialistsT("hero.description"),
+      description: locale === "uz"
+          ? "Germaniyadagi o‘zbek mutaxassislarini toping"
+          : "Usbekische Fachkräfte in Deutschland finden",
 
       icon: <SpecialistsIcon />,
 
