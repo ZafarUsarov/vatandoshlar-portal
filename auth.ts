@@ -11,7 +11,7 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  session: { strategy: "jwt", maxAge: 8 * 60 * 60 },
+  session: { strategy: "jwt", maxAge: 90 * 24 * 60 * 60 },
   pages: { signIn: "/login" },
   providers: [
     Credentials({
@@ -101,6 +101,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.userId = user.id;
         token.role = user.role;
+        if (user.role === "admin") {
+          token.adminLoginAt = Math.floor(Date.now() / 1000);
+        }
+      }
+      if (token.role === "admin") {
+        const loginAt = token.adminLoginAt;
+        if (
+          typeof loginAt !== "number" ||
+          !Number.isFinite(loginAt) ||
+          loginAt > Date.now() / 1000 ||
+          Date.now() / 1000 - loginAt >= 8 * 60 * 60
+        ) {
+          return null;
+        }
       }
       return token;
     },
