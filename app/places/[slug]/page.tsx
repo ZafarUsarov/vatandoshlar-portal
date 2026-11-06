@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { MapPin, BookOpen, Building2, GraduationCap, Stethoscope, UtensilsCrossed } from "lucide-react";
+import { MapPin, Globe, Phone, Building2, GraduationCap, Stethoscope, UtensilsCrossed } from "lucide-react";
 import SpecialistEmailPopover from "@/components/specialists/SpecialistEmailPopover";
 import PlaceAddressPopover from "@/components/places/PlaceAddressPopover";
 import PlaceMiniMap from "@/components/places/PlaceMiniMap";
@@ -48,7 +48,7 @@ export default async function PlaceDetail({ params }: Props) {
     : `${address}, Germany`;
 
   const CategoryIcon =
-    place.slug === "taste-of-samarkand" ? UtensilsCrossed :
+    place.category === "restaurant" ? UtensilsCrossed :
     place.slug === "polar-dent" ? Stethoscope :
     place.slug === "bildung-beruf" ? GraduationCap :
     Building2;
@@ -64,9 +64,9 @@ export default async function PlaceDetail({ params }: Props) {
         <div className="p-6 sm:p-9">
           <div className="grid gap-7 md:grid-cols-[minmax(0,1fr)_340px] md:items-start">
             <div className="min-w-0">
-              {logoSrc && <Image unoptimized={logoSrc.startsWith("/api/")} src={logoSrc} alt={`${place.name} logotipi`} width={810} height={160} className="mb-5 h-auto max-h-20 w-auto max-w-full object-contain object-left" priority />}
+              {logoSrc && <div className={place.slug === "dill-vegan" ? "mb-5 inline-flex max-w-full items-center h-16 w-[148px] justify-center overflow-hidden rounded-lg bg-green-900 px-1 py-0" : "contents"}><Image unoptimized={logoSrc.startsWith("/api/")} src={logoSrc} alt={`${place.name} logotipi`} width={810} height={160} className={place.slug === "dill-vegan" ? "block h-auto max-h-16 w-auto max-w-full object-contain object-center" : "mb-5 h-auto max-h-20 w-auto max-w-full object-contain object-left"} priority /></div>}
               <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300"><CategoryIcon aria-hidden="true" className="size-3.5 shrink-0" />{categoryLabel}</span>
-              <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{place.name}</h1>
+              <h1 className={place.slug === "dill-vegan" ? "mt-4 text-3xl font-bold tracking-tight text-green-900 sm:text-4xl" : "mt-4 text-3xl font-bold tracking-tight sm:text-4xl"}>{place.name}</h1>
               <div className="mt-4 flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
                 <svg aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
                 <span>{address}</span>
@@ -97,8 +97,9 @@ export default async function PlaceDetail({ params }: Props) {
 
           <div className="mt-6 flex flex-wrap items-center gap-2.5">
             {address && <a href={mapLink} target="_blank" rel="noopener noreferrer" aria-label={locale === "de" ? "In Google Maps öffnen" : "Xaritada ochish"} title={locale === "de" ? "In Google Maps öffnen" : "Xaritada ochish"} className={contactIconClass}><MapPin aria-hidden="true" className="size-5" /></a>}
-            {place.website && /^https?:\/\//i.test(place.website) && <a href={place.website} target="_blank" rel="noopener noreferrer nofollow" aria-label={locale === "de" ? (extra?.websiteLabelDe ?? "Website besuchen") : (extra?.websiteLabelUz ?? "Veb-saytga o‘tish")} title={locale === "de" ? (extra?.websiteLabelDe ?? "Website besuchen") : (extra?.websiteLabelUz ?? "Veb-saytga o‘tish")} className={contactIconClass}><BookOpen aria-hidden="true" className="size-5" /></a>}
+            {place.website && /^https?:\/\//i.test(place.website) && <a href={place.website} target="_blank" rel="noopener noreferrer nofollow" aria-label={locale === "de" ? (extra?.websiteLabelDe ?? "Website besuchen") : (extra?.websiteLabelUz ?? "Veb-saytga o‘tish")} title={locale === "de" ? (extra?.websiteLabelDe ?? "Website besuchen") : (extra?.websiteLabelUz ?? "Veb-saytga o‘tish")} className={contactIconClass}><Globe aria-hidden="true" className="size-5" /></a>}
             {extra?.instagram && <a href={extra.instagram} target="_blank" rel="noopener noreferrer nofollow" aria-label="Instagram" title="Instagram" className={contactIconClass}><svg aria-hidden="true" className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>}
+              {extra?.phone && <a href={`tel:${extra.phone}`} aria-label={locale === "de" ? "Anrufen" : "Qo‘ng‘iroq qilish"} title={locale === "de" ? "Anrufen" : "Qo‘ng‘iroq qilish"} className={contactIconClass}><Phone aria-hidden="true" className="size-5" /></a>}
             {extra?.email && <SpecialistEmailPopover email={extra.email} label={locale === "de" ? "E-Mail" : "Email"} copyLabel={locale === "de" ? "Kopieren" : "Nusxalash"} composeLabel={locale === "de" ? "Schreiben" : "Xat yozish"} copiedLabel={locale === "de" ? "Kopiert" : "Nusxalandi"} copyFailedLabel={locale === "de" ? "Kopieren fehlgeschlagen" : "Nusxalab bo‘lmadi"} />}
           </div>
         </div>
@@ -108,9 +109,15 @@ export default async function PlaceDetail({ params }: Props) {
             <span className="text-sm font-semibold text-slate-900 dark:text-white">{extra.manager}</span>
           </div>
         </div>}
+        {extra?.owner && <div className="border-t border-slate-100 bg-slate-50/70 px-6 py-4 dark:border-slate-800 dark:bg-slate-800/40 sm:px-9">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{locale === "de" ? "Gründer" : "Asoschi"}</span>
+            <span className="text-sm font-semibold text-slate-900 dark:text-white">{extra.owner}</span>
+          </div>
+        </div>}
         {founders.rows.length > 0 && <div className="border-t border-slate-100 bg-slate-50/70 px-6 py-4 dark:border-slate-800 dark:bg-slate-800/40 sm:px-9">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-            <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{locale === "de" ? "Gründer / Inhaber" : "Asoschisi"}</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{locale === "de" ? "Gründer" : "Asoschi"}</span>
             {founders.rows.map(founder => <Link key={founder.slug} href={`/specialists/${founder.slug}`} className="group inline-flex items-center gap-2 text-sm font-semibold transition hover:text-emerald-700 dark:hover:text-emerald-400">
               {founder.avatar_url?.startsWith("/images/specialists/")
                 ? <Image src={founder.avatar_url} alt={founder.name} width={32} height={32} className="h-8 w-8 rounded-full object-cover" />

@@ -46,7 +46,7 @@ export default async function PlacesPage({searchParams}:{searchParams:Promise<{q
             <span>{categoryName}</span>
           </span>
           {logoSrc ? (
-            <div className="relative h-11 w-[92px] shrink-0 overflow-hidden rounded-lg border border-slate-100 bg-white p-1 dark:border-slate-700" aria-label={`${p.name} logotipi`}>
+            <div className={p.slug === "dill-vegan" ? "relative h-[38px] w-[80px] shrink-0 overflow-hidden rounded-lg bg-green-900" : "relative h-11 w-[92px] shrink-0 overflow-hidden rounded-lg border border-slate-100 bg-white p-1 dark:border-slate-700"} aria-label={`${p.name} logotipi`}>
               <Image unoptimized={logoSrc.startsWith("/api/")} src={logoSrc} alt={p.name} fill sizes="92px" className="object-contain p-1" />
             </div>
           ) : (
