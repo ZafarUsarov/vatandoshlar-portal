@@ -143,7 +143,7 @@ export default function SpecialistCard({
           {locationLabel && <p className="mt-1.5 flex items-start gap-1 text-xs leading-4 text-slate-500 dark:text-slate-400"><LocationIcon className="mt-0.5 size-3.5 shrink-0" /><span className="line-clamp-1">{locationLabel}</span></p>}
         </div>
       </div>
-      <div className="mt-3 flex flex-wrap gap-1.5">
+      <div className="mt-auto flex flex-wrap gap-1.5 pt-3 pb-2">
         {specialist.categories.slice(0, 2).map((category) => (
           <span key={category} className="max-w-full truncate rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">{labels.categories[category] ?? category}</span>
         ))}
