@@ -12,7 +12,7 @@ const labels={uz:{title:"Biznes va tashkilotlar",subtitle:"Germaniyadagi vatando
 export async function generateMetadata():Promise<Metadata>{const locale=(await getLocale())==='de'?'de':'uz';return {title:`${labels[locale].title} | UzDe`,description:labels[locale].subtitle,alternates:{canonical:`/${locale}/places`,languages:{uz:'/uz/places',de:'/de/places'}}};}
 export default async function PlacesPage({searchParams}:{searchParams:Promise<{q?:string;category?:string;city?:string;location?:string;locationId?:string}>}){
  const locale=(await getLocale())==='de'?'de':'uz';const t=labels[locale];const params=await searchParams;const q=typeof params.q==='string'?params.q.trim().slice(0,100):'';const category=placeCategories.find(c=>c===params.category);const location=typeof params.location==='string'?params.location.trim().slice(0,100):'';const locationId=typeof params.locationId==='string' && /^\d{1,18}$/.test(params.locationId)?params.locationId:'';const places=await listPublicPlaces(locale,{q,category,location,locationId});
- return <div className="min-h-screen bg-slate-50 text-slate-950 dark:bg-slate-950 dark:text-white"><Header/><main className="mx-auto max-w-6xl px-5 pb-24 pt-32 sm:px-8"><div className="grid w-full min-w-0 overflow-hidden rounded-3xl bg-slate-900 text-white lg:h-[330px] lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+ return <div className="min-h-screen bg-slate-50 text-slate-950 dark:bg-slate-950 dark:text-white"><Header/><main className="mx-auto max-w-6xl px-5 pb-24 pt-32 sm:px-8 2xl:max-w-[1600px]"><div className="mx-auto grid w-full max-w-6xl min-w-0 overflow-hidden rounded-3xl bg-slate-900 text-white lg:h-[330px] lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
   <div className="flex min-w-0 flex-col justify-center px-7 py-9 sm:px-10 sm:py-10 lg:px-10 lg:py-8 xl:px-12">
     <span className="text-sm font-semibold normal-case tracking-[0.2em] text-emerald-300">UzDe</span>
     <h1 className={`mt-3 font-bold ${locale === "de" ? "text-[2.1rem] sm:text-[2.75rem] [overflow-wrap:normal]" : "text-4xl sm:text-5xl"}`}>{t.title}</h1>
@@ -28,7 +28,7 @@ export default async function PlacesPage({searchParams}:{searchParams:Promise<{q
       priority
     />
   </div>
-</div><PlacesFilters locale={locale} q={q} category={category??""} location={location} locationId={locationId}/><div className="mb-5 mt-10 text-sm font-medium text-slate-500 dark:text-slate-400">{places.length} {t.count}</div>{places.length===0?<div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-20 text-center text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">{t.empty}</div>:<div className="grid grid-cols-1 items-start gap-5 sm:grid-cols-2 xl:grid-cols-3">
+</div><div className="mx-auto max-w-6xl"><PlacesFilters locale={locale} q={q} category={category??""} location={location} locationId={locationId}/><div className="mb-5 mt-10 text-sm font-medium text-slate-500 dark:text-slate-400">{places.length} {t.count}</div></div>{places.length===0?<div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-20 text-center text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">{t.empty}</div>:<div className="grid grid-cols-1 items-start gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
   {places.map((p) => {
     const categoryName = p.categoryLabel || t.cats[p.category];
     const CategoryIcon =
@@ -38,7 +38,7 @@ export default async function PlacesPage({searchParams}:{searchParams:Promise<{q
       Building2;
     const logoSrc = p.logoPath || (p.slug === "taste-of-samarkand" ? "/images/places/taste-of-samarkand.webp" : null);
     return (
-      <article key={p.slug} className="group relative flex w-full max-w-[326px] flex-col overflow-hidden rounded-[22px] border border-slate-200/90 bg-white px-5 pb-4 pt-5 shadow-[0_3px_12px_rgba(15,23,42,0.035)] transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-emerald-300 hover:shadow-[0_14px_32px_rgba(15,23,42,0.10)] dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-700">
+      <article key={p.slug} className="group relative flex w-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-slate-200/90 bg-white px-5 pb-4 pt-5 shadow-[0_3px_12px_rgba(15,23,42,0.035)] transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-emerald-300 hover:shadow-[0_14px_32px_rgba(15,23,42,0.10)] dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-700">
         <div className="absolute inset-x-0 top-0 h-[3px] bg-emerald-500/80" aria-hidden="true" />
         <div className="flex items-center justify-between gap-3">
           <span className="inline-flex min-w-0 items-center gap-2 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
