@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useLocale } from "next-intl";
 
 import SpecialistCard from "@/components/specialists/SpecialistCard";
 import SpecialistFilters from "@/components/specialists/SpecialistFilters";
@@ -78,6 +79,8 @@ export default function SpecialistsDirectory({
   initialCategory,
   labels,
 }: SpecialistsDirectoryProps) {
+  const locale = useLocale();
+  const [visibleCount, setVisibleCount] = useState(12);
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState<
     "all" | SpecialistCategory
@@ -137,6 +140,17 @@ export default function SpecialistsDirectory({
         matchesVerified &&
         matchesPremium
       );
+    }).sort((first, second) => {
+      if (first.slug === "zafar-usarov") return -1;
+      if (second.slug === "zafar-usarov") return 1;
+
+      const firstDate = first.createdAt ? Date.parse(first.createdAt) : NaN;
+      const secondDate = second.createdAt ? Date.parse(second.createdAt) : NaN;
+      const firstTime = Number.isFinite(firstDate) ? firstDate : -Infinity;
+      const secondTime = Number.isFinite(secondDate) ? secondDate : -Infinity;
+
+      if (firstTime === secondTime) return 0;
+      return secondTime > firstTime ? 1 : -1;
     });
   }, [
     bundesland,
@@ -147,7 +161,13 @@ export default function SpecialistsDirectory({
     verifiedOnly,
   ]);
 
+  const updateFilter = <T,>(setter: (value: T) => void, value: T) => {
+    setter(value);
+    setVisibleCount(12);
+  };
+
   const resetFilters = () => {
+    setVisibleCount(12);
     setSearchQuery("");
     setCategory("all");
     setBundesland("all");
@@ -170,7 +190,7 @@ export default function SpecialistsDirectory({
       <div>
         <div
           aria-label={labels.filters.categoryLabel}
-          className="mb-5 flex flex-wrap gap-2"
+          className="mb-5 hidden flex-wrap gap-2 sm:flex"
           role="group"
         >
           {categories.map((option) => {
@@ -182,7 +202,7 @@ export default function SpecialistsDirectory({
                 type="button"
                 aria-pressed={isActive}
                 onClick={() =>
-                  setCategory(option.value)
+                  updateFilter(setCategory, option.value)
                 }
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950 ${
                   isActive
@@ -198,15 +218,15 @@ export default function SpecialistsDirectory({
 
         <SpecialistFilters
           searchQuery={searchQuery}
-          onSearchQueryChange={setSearchQuery}
+          onSearchQueryChange={(value) => updateFilter(setSearchQuery, value)}
           category={category}
-          onCategoryChange={setCategory}
+          onCategoryChange={(value) => updateFilter(setCategory, value)}
           bundesland={bundesland}
-          onBundeslandChange={setBundesland}
+          onBundeslandChange={(value) => updateFilter(setBundesland, value)}
           verifiedOnly={verifiedOnly}
-          onVerifiedOnlyChange={setVerifiedOnly}
+          onVerifiedOnlyChange={(value) => updateFilter(setVerifiedOnly, value)}
           premiumOnly={premiumOnly}
-          onPremiumOnlyChange={setPremiumOnly}
+          onPremiumOnlyChange={(value) => updateFilter(setPremiumOnly, value)}
           onReset={resetFilters}
           categories={categories}
           bundeslaender={bundeslaender}
@@ -234,8 +254,9 @@ export default function SpecialistsDirectory({
         </div>
 
         {filteredSpecialists.length > 0 ? (
-          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {filteredSpecialists.map((specialist) => (
+          <div>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {filteredSpecialists.slice(0, visibleCount).map((specialist) => (
               <SpecialistCard
                 key={specialist.id}
                 specialist={specialist}
@@ -245,6 +266,14 @@ export default function SpecialistsDirectory({
                 }}
               />
             ))}
+          </div>
+          {filteredSpecialists.length > visibleCount && (
+            <div className="mt-7 flex justify-center">
+              <button type="button" onClick={() => setVisibleCount((count) => count + 12)} className="rounded-full border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-800 transition hover:border-emerald-400 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:text-white">
+                {locale === "de" ? "Weitere 12 anzeigen" : "Yana 12 ta ko‘rsatish"}
+              </button>
+            </div>
+          )}
           </div>
         ) : (
           <div className="mt-8 rounded-[2rem] border border-dashed border-slate-300 bg-slate-50 px-6 py-16 text-center dark:border-slate-700 dark:bg-slate-900/60 sm:px-10">

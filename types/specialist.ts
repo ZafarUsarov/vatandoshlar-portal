@@ -183,6 +183,7 @@ export type Specialist = Readonly<{
 
   reviewCount?: number;
 
+  createdAt?: string;
   updatedAt?: string;
 
 }>;

@@ -117,126 +117,46 @@ export default function SpecialistCard({
   const locationLabel = getLocationLabel(specialist);
 
   return (
-    <article className="group relative isolate flex min-h-[420px] overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-emerald-200 hover:shadow-xl hover:shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500/30 dark:hover:shadow-black/20 sm:p-7">
+    <article className="group relative flex min-w-0 flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-emerald-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 sm:p-5">
       {specialist.status.sponsored && (
-        <span className="absolute right-5 top-5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-300">
-          {labels.sponsored}
-        </span>
+        <span className="mb-2 self-start rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:bg-amber-500/10 dark:text-amber-300">{labels.sponsored}</span>
       )}
-
-      <div className="flex w-full flex-col">
-        <div className="flex items-center gap-4">
-          <div className={`flex shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-lg font-black text-white shadow-lg shadow-emerald-600/20 ${
-              specialist.slug === "nigora-okhunova"
-                ? "size-16 bg-white"
-                : "size-16"
-            }`}>
-            {specialist.avatarUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={specialist.avatarUrl}
-                alt=""
-                className="h-full w-full"
-                style={{
-                  objectFit: specialist.slug === "nigora-okhunova" ? "contain" : (specialist.imageFit ?? "cover"),
-                  objectPosition: specialist.imagePosition ?? "center",
-                  transform: specialist.slug === "nigora-okhunova" ? "scale(0.88)" : `scale(${specialist.imageScale ?? 1})`,
-                }}
-              />
-            ) : (
-              getInitials(specialist.name)
+      <div className="flex min-w-0 items-start gap-3">
+        <div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 font-bold text-white sm:size-16">
+          {specialist.avatarUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={specialist.avatarUrl} alt="" className="h-full w-full" style={{
+              objectFit: specialist.slug === "nigora-okhunova" ? "contain" : (specialist.imageFit ?? "cover"),
+              objectPosition: specialist.imagePosition ?? "center",
+              transform: specialist.slug === "nigora-okhunova" ? "scale(0.88)" : `scale(${specialist.imageScale ?? 1})`,
+            }} />
+          ) : getInitials(specialist.name)}
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start gap-1.5">
+            <h3 className="min-w-0 text-base font-bold leading-5 text-slate-950 dark:text-white sm:text-lg">{specialist.name}</h3>
+            {specialist.status.verified && (
+              <span title={labels.verified} className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"><VerifiedIcon className="size-3.5" /></span>
             )}
           </div>
-
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-2">
-              <h3 className="truncate text-xl font-bold text-slate-950 dark:text-white">
-                {specialist.name}
-              </h3>
-
-              {specialist.status.verified && (
-                <span
-                  title={labels.verified}
-                  className="inline-flex size-6 items-center justify-center rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
-                >
-                  <VerifiedIcon className="size-4" />
-                </span>
-              )}
-            </div>
-
-            <p className="mt-1 line-clamp-2 text-sm font-semibold leading-5 text-emerald-700 dark:text-emerald-400">
-              {specialist.profession}
-            </p>
-          </div>
+          <p className="mt-1 line-clamp-2 text-sm font-semibold leading-5 text-emerald-700 dark:text-emerald-400">{specialist.profession}</p>
+          {locationLabel && <p className="mt-1.5 flex items-start gap-1 text-xs leading-4 text-slate-500 dark:text-slate-400"><LocationIcon className="mt-0.5 size-3.5 shrink-0" /><span className="line-clamp-1">{locationLabel}</span></p>}
         </div>
-
-        <p className="mt-6 line-clamp-3 text-[15px] leading-7 text-slate-600 dark:text-slate-400">
-          {specialist.shortDescription}
-        </p>
-
-        <div className="mt-6 flex flex-wrap gap-2">
-          {specialist.categories.slice(0, 2).map((category) => (
-            <span
-              key={category}
-              className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-300"
-            >
-              {labels.categories?.[category] ?? category}
-            </span>
-          ))}
-
-          {specialist.status.premium && (
-            <span className="rounded-full bg-violet-50 px-3 py-1.5 text-xs font-bold text-violet-700 dark:bg-violet-500/10 dark:text-violet-300">
-              {labels.premium}
-            </span>
-          )}
-        </div>
-
-        {locationLabel && (
-          <div className="mt-5">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
-              {labels.serviceArea}
-            </p>
-
-            <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
-              <LocationIcon className="size-4 text-emerald-600 dark:text-emerald-400" />
-              {locationLabel}
-            </p>
-          </div>
-        )}
-
-        {specialist.languages.length > 0 && (
-          <div className="mt-5">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
-              {labels.languages}
-            </p>
-
-            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-              {specialist.languages
-                .map((language) => language.toUpperCase())
-                .join(" · ")}
-            </p>
-          </div>
-        )}
-
-        <div className="mt-auto border-t border-slate-200 pt-5 dark:border-slate-800">
-          {specialist.profilePublished ? (
-            <Link
-              href={`/specialists/${specialist.slug}`}
-              className="inline-flex items-center gap-2 text-sm font-bold text-emerald-600 transition-all group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:text-emerald-400 dark:focus-visible:ring-offset-slate-900"
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-0"
-              />
-              {labels.details}
-              <ArrowUpRightIcon />
-            </Link>
-          ) : (
-            <span className="inline-flex items-center gap-2 text-sm font-bold text-slate-400 dark:text-slate-500">
-              {labels.detailsSoon}
-            </span>
-          )}
-        </div>
+      </div>
+      <div className="mt-3 flex flex-wrap gap-1.5">
+        {specialist.categories.slice(0, 2).map((category) => (
+          <span key={category} className="max-w-full truncate rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">{labels.categories[category] ?? category}</span>
+        ))}
+        {specialist.status.premium && <span className="rounded-full bg-violet-50 px-2.5 py-1 text-[11px] font-medium text-violet-700 dark:bg-violet-500/10 dark:text-violet-300">{labels.premium}</span>}
+      </div>
+      <div className="mt-auto flex min-w-0 items-center justify-between gap-2 border-t border-slate-100 pt-3 dark:border-slate-800">
+        <span className="min-w-0 truncate text-xs text-slate-500 dark:text-slate-400">{specialist.languages.map((language) => language.toUpperCase()).join(" · ")}</span>
+        {specialist.profilePublished ? (
+          <Link href={`/specialists/${specialist.slug}`} className="inline-flex shrink-0 items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-600 focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-400">
+            <span aria-hidden="true" className="absolute inset-0" />
+            {labels.details}<ArrowUpRightIcon />
+          </Link>
+        ) : <span className="shrink-0 text-xs text-slate-400">{labels.detailsSoon}</span>}
       </div>
     </article>
   );

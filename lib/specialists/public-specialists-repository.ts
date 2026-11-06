@@ -121,6 +121,8 @@ type PublishedSpecialistRow = {
 
   sponsored: boolean;
 
+  created_at: string | Date;
+
   updated_at: string | Date;
 
 };
@@ -709,13 +711,9 @@ function toPublicSpecialist(
 
       : {}),
 
-    updatedAt:
+    createdAt: toDateTimeString(row.created_at),
 
-      toDateTimeString(
-
-        row.updated_at,
-
-      ),
+    updatedAt: toDateTimeString(row.updated_at),
 
   };
 
@@ -874,6 +872,8 @@ const publishedSpecialistSelect = `
     premium,
 
     sponsored,
+
+    created_at,
 
     updated_at
 

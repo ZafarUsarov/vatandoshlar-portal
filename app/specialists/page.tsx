@@ -223,11 +223,11 @@ export default async function SpecialistsPage({
                 priority
                 sizes="100vw"
                 quality={88}
-                className="object-cover object-[72%_center] opacity-32 sm:object-[70%_center] sm:opacity-38 lg:object-[68%_center] lg:opacity-44 dark:opacity-22 dark:sm:opacity-26 dark:lg:opacity-30"
+                className="object-cover object-[72%_center] opacity-75 sm:object-[70%_center] sm:opacity-70 lg:object-[68%_center] lg:opacity-80 dark:opacity-45 dark:sm:opacity-50 dark:lg:opacity-60"
               />
 
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.995)_0%,rgba(248,250,252,0.97)_36%,rgba(248,250,252,0.86)_54%,rgba(248,250,252,0.48)_72%,rgba(248,250,252,0.18)_100%)] dark:bg-[linear-gradient(90deg,rgba(2,6,23,0.995)_0%,rgba(2,6,23,0.97)_36%,rgba(2,6,23,0.88)_54%,rgba(2,6,23,0.62)_72%,rgba(2,6,23,0.38)_100%)]" />
-              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(248,250,252,0.08),rgba(248,250,252,0.46))] dark:bg-[linear-gradient(to_bottom,rgba(2,6,23,0.04),rgba(2,6,23,0.28))]" />
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.97)_0%,rgba(248,250,252,0.91)_36%,rgba(248,250,252,0.63)_63%,rgba(248,250,252,0.16)_100%)] dark:bg-[linear-gradient(90deg,rgba(2,6,23,0.96)_0%,rgba(2,6,23,0.88)_36%,rgba(2,6,23,0.65)_63%,rgba(2,6,23,0.22)_100%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(248,250,252,0.02),rgba(248,250,252,0.18))] dark:bg-[linear-gradient(to_bottom,rgba(2,6,23,0.02),rgba(2,6,23,0.14))]" />
             </div>
 
             <DirectoryHeader
@@ -263,7 +263,7 @@ export default async function SpecialistsPage({
           </div>
         </SectionHeroBackground>
 
-        <section className="bg-white py-16 dark:bg-slate-950 sm:py-20">
+        <section className="bg-white pt-8 pb-12 dark:bg-slate-950 sm:py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <SpecialistsDirectory
               specialists={
