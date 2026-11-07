@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, Mail, MessageCircle, Send, Share } from "lucide-react";
+import { Check, Copy, Mail, MessageCircle, Send, Share as ShareIcon } from "lucide-react";
 
 type Props = Readonly<{
   title: string;
@@ -49,7 +49,7 @@ export default function ShareButton({ title, locale, variant = "light", iconOnly
   return (
     <div className="relative inline-flex shrink-0 items-center">
       <button type="button" onClick={() => void share()} className={buttonClass} aria-expanded={showFallback} aria-label={iconOnly ? (de ? "Profil teilen" : "Profilni ulashish") : label} title={iconOnly ? (de ? "Profil teilen" : "Profilni ulashish") : label}>
-        <Share size={iconOnly ? 20 : 17} aria-hidden="true" /> {!iconOnly && label}
+        <ShareIcon size={iconOnly ? 20 : 17} aria-hidden="true" /> {!iconOnly && label}
       </button>
       {showFallback && (
         <div

@@ -6,6 +6,7 @@ import { MapPin, Globe, Phone, Building2, GraduationCap, Stethoscope, UtensilsCr
 import SpecialistEmailPopover from "@/components/specialists/SpecialistEmailPopover";
 import PlaceAddressPopover from "@/components/places/PlaceAddressPopover";
 import PlaceMiniMap from "@/components/places/PlaceMiniMap";
+import ShareButton from "@/components/shared/ShareButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "@/i18n/navigation";
@@ -100,6 +101,7 @@ export default async function PlaceDetail({ params }: Props) {
             {place.website && /^https?:\/\//i.test(place.website) && <a href={place.website} target="_blank" rel="noopener noreferrer nofollow" aria-label={locale === "de" ? (extra?.websiteLabelDe ?? "Website besuchen") : (extra?.websiteLabelUz ?? "Veb-saytga o‘tish")} title={locale === "de" ? (extra?.websiteLabelDe ?? "Website besuchen") : (extra?.websiteLabelUz ?? "Veb-saytga o‘tish")} className={contactIconClass}><Globe aria-hidden="true" className="size-5" /></a>}
             {extra?.instagram && <a href={extra.instagram} target="_blank" rel="noopener noreferrer nofollow" aria-label="Instagram" title="Instagram" className={contactIconClass}><svg aria-hidden="true" className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>}
               {extra?.phone && <a href={`tel:${extra.phone}`} aria-label={locale === "de" ? "Anrufen" : "Qo‘ng‘iroq qilish"} title={locale === "de" ? "Anrufen" : "Qo‘ng‘iroq qilish"} className={contactIconClass}><Phone aria-hidden="true" className="size-5" /></a>}
+            <ShareButton title={place.name} locale={locale} iconOnly />
             {extra?.email && <SpecialistEmailPopover email={extra.email} label={locale === "de" ? "E-Mail" : "Email"} copyLabel={locale === "de" ? "Kopieren" : "Nusxalash"} composeLabel={locale === "de" ? "Schreiben" : "Xat yozish"} copiedLabel={locale === "de" ? "Kopiert" : "Nusxalandi"} copyFailedLabel={locale === "de" ? "Kopieren fehlgeschlagen" : "Nusxalab bo‘lmadi"} />}
           </div>
         </div>
