@@ -118,6 +118,14 @@ function InstagramIcon({ className }: IconProps) {
   );
 }
 
+function LinkedInIcon({ className }: IconProps) {
+  return (
+    <svg aria-hidden="true" className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124Zm1.782 13.019H3.555V9h3.564v11.452Z"/>
+    </svg>
+  );
+}
+
 function FacebookIcon({ className }: IconProps) {
   return (
     <svg
@@ -211,6 +219,7 @@ export default async function Footer({
           telegramLabel: "UzDe Telegram sahifasi",
           instagramLabel: "UzDe Instagram sahifasi",
           facebookLabel: "UzDe Facebook sahifasi",
+          linkedinLabel: "UzDe LinkedIn sahifasi",
           supportEyebrow: "Loyihaga hissa qo‘shish",
           supportTitle: "UzDe siz uchun foydalimi?",
           supportDescription:
@@ -243,6 +252,7 @@ export default async function Footer({
           telegramLabel: "UzDe auf Telegram",
           instagramLabel: "UzDe auf Instagram",
           facebookLabel: "UzDe auf Facebook",
+          linkedinLabel: "UzDe auf LinkedIn",
           supportEyebrow: "Zum Projekt beitragen",
           supportTitle: "Ist UzDe für Sie hilfreich?",
           supportDescription:
@@ -427,6 +437,13 @@ export default async function Footer({
                     <FacebookIcon className="size-5" />
                   </a>
                   <span id="footer-facebook-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/facebook:opacity-100 group-focus-within/facebook:opacity-100 dark:bg-white dark:text-slate-950">Facebook</span>
+                </div>
+
+                <div className="group/linkedin relative">
+                  <a href="https://www.linkedin.com/company/uzde" target="_blank" rel="noopener noreferrer" aria-label={localCopy.linkedinLabel} aria-describedby="footer-linkedin-tooltip" className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-lg hover:shadow-blue-500/10 focus-visible:-translate-y-1 focus-visible:scale-105 focus-visible:border-blue-300 focus-visible:bg-blue-50 focus-visible:text-blue-600 focus-visible:shadow-lg focus-visible:shadow-blue-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-blue-400/30 dark:hover:bg-blue-400/10 dark:hover:text-blue-300 dark:focus-visible:border-blue-400/30 dark:focus-visible:bg-blue-400/10 dark:focus-visible:text-blue-300 dark:focus-visible:ring-offset-slate-950">
+                    <LinkedInIcon className="size-5" />
+                  </a>
+                  <span id="footer-linkedin-tooltip" role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 motion-reduce:transition-none group-hover/linkedin:opacity-100 group-focus-within/linkedin:opacity-100 dark:bg-white dark:text-slate-950">LinkedIn</span>
                 </div>
 
                 <div className="group/support relative">
