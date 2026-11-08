@@ -62,11 +62,69 @@ export default async function TelegramSection() {
         group.communityType === "professional",
     );
 
-  const visibleRegionalGroups =
-    regionalGroups.filter(
-      (group) =>
-        group.shortName !== "BW-STR",
+  // One card per supported Bundesland; city groups remain on its detail page.
+  const regionalDetailPages: Record<string, string> = {
+    "Baden-Württemberg": "/telegram/baden-wuerttemberg",
+    Bayern: "/telegram/bayern",
+    Niedersachsen: "/telegram/niedersachsen",
+  };
+  const generalShortNames: Record<string, string> = {
+    "Baden-Württemberg": "BW",
+    Bayern: "BY",
+    Niedersachsen: "NI",
+  };
+  const visibleRegionalGroups = regionalGroups
+    .filter((group) => {
+      const generalCode = generalShortNames[group.bundesland];
+      return !generalCode || group.shortName === generalCode;
+    })
+    .map((group) => {
+      const detailPage = regionalDetailPages[group.bundesland];
+      const hasActiveGroup = detailPage && regionalGroups.some(
+        (item) => item.bundesland === group.bundesland && item.status === "active",
+      );
+      const isRegionalDetail = group.bundesland === "Bayern" || group.bundesland === "Niedersachsen";
+      return {
+        ...group,
+        state: isRegionalDetail ? group.bundesland : group.state,
+        description: isRegionalDetail
+          ? locale === "uz"
+            ? `${group.bundesland} hududidagi umumiy va shahar Telegram guruhlarini ko‘ring.`
+            : `Entdecken Sie landesweite und lokale Telegram-Gruppen in ${group.bundesland}.`
+          : group.description,
+        status: hasActiveGroup ? "active" as const : group.status,
+        statusLabel: hasActiveGroup
+          ? locale === "uz" ? "Faol" : "Aktiv"
+          : group.statusLabel,
+      };
+    });
+
+  // A state can have city groups before its statewide group is available.
+  for (const bundesland of ["Bayern", "Niedersachsen"]) {
+    const stateGroups = regionalGroups.filter(
+      (group) => group.bundesland === bundesland,
     );
+    if (
+      stateGroups.length > 0 &&
+      !visibleRegionalGroups.some((group) => group.bundesland === bundesland)
+    ) {
+      const firstGroup = stateGroups[0];
+      const hasActiveCity = stateGroups.some((group) => group.status === "active");
+      visibleRegionalGroups.push({
+        ...firstGroup,
+        shortName: generalShortNames[bundesland],
+        state: bundesland,
+        description: locale === "uz"
+          ? `${bundesland} hududidagi o‘zbek Telegram guruhlarini ko‘ring.`
+          : `Usbekische Telegram-Gruppen in ${bundesland} entdecken.`,
+        href: null,
+        status: hasActiveCity ? "active" : "coming-soon",
+        statusLabel: locale === "uz"
+          ? hasActiveCity ? "Faol" : "Tez orada"
+          : hasActiveCity ? "Aktiv" : "Demnächst",
+      });
+    }
+  }
 
   const copy =
     locale === "uz"
@@ -231,16 +289,10 @@ export default async function TelegramSection() {
                 key={group.shortName}
                 group={group}
                 index={index}
-                detailsHref={
-                  group.shortName === "BW"
-                    ? "/telegram/baden-wuerttemberg"
-                    : undefined
-                }
+                detailsHref={regionalDetailPages[group.bundesland]}
                 detailsLabel={
-                  group.shortName === "BW"
-                    ? locale === "uz"
-                      ? "Guruhlarni ko‘rish"
-                      : "Gruppen ansehen"
+                  regionalDetailPages[group.bundesland]
+                    ? locale === "uz" ? "Guruhlarni ko‘rish" : "Gruppen ansehen"
                     : undefined
                 }
               />
