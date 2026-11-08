@@ -43,10 +43,10 @@ export default function TelegramCard({
     <article
       className={`
         group relative flex h-full flex-col overflow-hidden
-        rounded-[2rem] border p-6
+        rounded-2xl border p-4 sm:p-5
         backdrop-blur-xl
         transition duration-500
-        hover:-translate-y-1.5
+        hover:-translate-y-0.5
         ${
           isActive
             ? "border-sky-200 bg-white shadow-[0_20px_60px_-35px_rgba(14,165,233,.35)] dark:border-sky-400/20 dark:bg-white/[0.04]"
@@ -61,8 +61,8 @@ export default function TelegramCard({
         <div
           aria-hidden="true"
           className={`
-            flex h-16 w-16 shrink-0 items-center justify-center
-            rounded-2xl text-lg font-bold
+            flex h-11 w-11 shrink-0 items-center justify-center
+            rounded-xl text-sm font-bold
             ${
               isActive
                 ? "bg-sky-100 text-sky-700 dark:bg-sky-500/10 dark:text-sky-300"
@@ -75,7 +75,7 @@ export default function TelegramCard({
 
         <span
           className={`
-            rounded-full px-3 py-1.5
+            rounded-full px-2.5 py-1
             text-xs font-semibold
             ${
               isActive
@@ -88,11 +88,11 @@ export default function TelegramCard({
         </span>
       </div>
 
-      <h3 className="mt-6 text-xl font-semibold text-slate-950 dark:text-white">
+      <h3 className="mt-4 text-lg font-semibold text-slate-950 dark:text-white">
         {group.state}
       </h3>
 
-      <p className="mt-3 flex-1 leading-7 text-slate-600 dark:text-slate-400">
+      <p className="mt-2 flex-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
         {group.description}
       </p>
 
@@ -100,7 +100,7 @@ export default function TelegramCard({
         <Link
           href={detailsHref}
           className="
-            mt-6 inline-flex min-h-11 items-center justify-center gap-2
+            mt-4 inline-flex min-h-10 items-center justify-center gap-2
             rounded-xl bg-sky-600 px-4 py-2.5
             text-sm font-semibold text-white
             transition
@@ -121,7 +121,7 @@ export default function TelegramCard({
           target="_blank"
           rel="noopener noreferrer"
           className="
-            mt-6 inline-flex min-h-11 items-center justify-center gap-2
+            mt-4 inline-flex min-h-10 items-center justify-center gap-2
             rounded-xl bg-sky-600 px-4 py-2.5
             text-sm font-semibold text-white
             transition
@@ -139,7 +139,7 @@ export default function TelegramCard({
       ) : (
         <span
           className="
-            mt-6 inline-flex min-h-11 items-center justify-center
+            mt-4 inline-flex min-h-10 items-center justify-center
             rounded-xl bg-slate-100 px-4 py-2.5
             text-sm font-semibold text-slate-500
             dark:bg-white/5 dark:text-slate-400

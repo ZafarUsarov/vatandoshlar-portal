@@ -3,11 +3,11 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Link } from "@/i18n/navigation";
 import { getPublicTelegramGroups } from "@/lib/telegram/public-telegram-repository";
-import type { SupportedTelegramLocale, TelegramGroup } from "@/types/telegram";
+import type { SupportedTelegramLocale } from "@/types/telegram";
 
 type Props = {
-  bundesland: "Bayern" | "Niedersachsen";
-  generalShortName: "BY" | "NI";
+  bundesland: "Baden-Württemberg" | "Bayern" | "Niedersachsen";
+  generalShortName: "BW" | "BY" | "NI";
 };
 
 export default async function TelegramRegionPage({ bundesland, generalShortName }: Props) {
@@ -15,40 +15,6 @@ export default async function TelegramRegionPage({ bundesland, generalShortName 
   const groups = (await getPublicTelegramGroups(locale)).filter(
     (group) => group.communityType === "regional" && group.bundesland === bundesland,
   );
-  // Only supply a missing regional card; never replace a published database record.
-  const fallbackGroups: Record<Props["bundesland"], Array<{
-    shortName: string;
-    name: string;
-    href: string;
-    descriptionUz: string;
-    descriptionDe: string;
-  }>> = {
-    Bayern: [
-      { shortName: "BY", name: "Bayern", href: "https://t.me/Bayern_uzbeklar", descriptionUz: "Bayern hududidagi vatandoshlar uchun Telegram guruhi.", descriptionDe: "Telegram-Gruppe für die usbekische Community in Bayern." },
-      { shortName: "BY-MUC", name: "München Vatandoshlar", href: "https://t.me/Muenchen_Vatandoshlar_bot", descriptionUz: "München va uning atrofidagi vatandoshlar uchun Telegram hamjamiyati.", descriptionDe: "Telegram-Community für Usbeken in und um München." },
-    ],
-    Niedersachsen: [
-      { shortName: "NI", name: "Niedersachsen", href: "https://t.me/niedersachen_uz", descriptionUz: "Niedersachsen hududidagi vatandoshlar uchun Telegram guruhi.", descriptionDe: "Telegram-Gruppe für die usbekische Community in Niedersachsen." },
-      { shortName: "NI-HA", name: "Hannover Vatandoshlar", href: "https://t.me/hannover_uzbeklar", descriptionUz: "Hannover va uning atrofidagi vatandoshlar uchun Telegram hamjamiyati.", descriptionDe: "Telegram-Community für Usbeken in und um Hannover." },
-    ],
-  };
-  const visibleGroups: TelegramGroup[] = [...groups];
-  for (const fallback of fallbackGroups[bundesland]) {
-    if (visibleGroups.some((group) => group.shortName === fallback.shortName)) continue;
-    visibleGroups.push({
-      bundesland,
-      shortName: fallback.shortName,
-      state: fallback.name,
-      description: locale === "uz" ? fallback.descriptionUz : fallback.descriptionDe,
-      href: fallback.href,
-      button: locale === "uz" ? "Telegramga qo‘shilish" : "Telegram-Gruppe öffnen",
-      status: "active",
-      statusLabel: locale === "uz" ? "Faol" : "Aktiv",
-      communityType: "regional",
-    });
-  }
-  visibleGroups.sort((a, b) => Number(a.shortName !== generalShortName) - Number(b.shortName !== generalShortName));
-
   const copy = locale === "uz"
     ? {
         back: "Telegram guruhlariga qaytish",
@@ -72,9 +38,9 @@ export default async function TelegramRegionPage({ bundesland, generalShortName 
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white pt-24 text-slate-950 lg:pt-28 dark:bg-slate-950 dark:text-white">
-        <section className="border-b border-slate-200/80 bg-gradient-to-b from-sky-50/80 to-white dark:border-slate-800 dark:from-sky-400/[0.06] dark:to-slate-950">
-          <div className="mx-auto max-w-6xl px-6 py-14 sm:py-16 lg:px-8">
+      <main className="min-h-screen bg-white pt-20 text-slate-950 lg:pt-24 dark:bg-slate-950 dark:text-white">
+        <section className="border-b border-slate-200/80 bg-gradient-to-b from-sky-50/70 to-white dark:border-slate-800 dark:from-sky-400/[0.06] dark:to-slate-950">
+          <div className="mx-auto max-w-6xl px-5 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-11">
             <Link
               href="/telegram"
               className="inline-flex items-center gap-2 text-sm font-semibold text-sky-700 transition hover:text-sky-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-4 dark:text-sky-300 dark:hover:text-sky-200 dark:focus-visible:ring-offset-slate-950"
@@ -83,45 +49,45 @@ export default async function TelegramRegionPage({ bundesland, generalShortName 
               {copy.back}
             </Link>
 
-            <div className="mt-10 max-w-3xl">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-700 dark:text-sky-300">
+            <div className="mt-6 max-w-3xl sm:mt-7">
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300">
                 {copy.eyebrow}
               </p>
-              <h1 className="mt-4 text-4xl font-bold tracking-[-0.04em] sm:text-5xl">
+              <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
                 {copy.title}
               </h1>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-400 sm:text-base">
                 {copy.description}
               </p>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl px-6 py-12 sm:py-16 lg:px-8">
-          <div className="grid gap-5 md:grid-cols-2">
-            {visibleGroups.map((group) => {
+        <section className="mx-auto max-w-6xl px-5 py-7 sm:px-6 sm:py-9 lg:px-8">
+          <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
+            {groups.map((group) => {
               const isGeneral = group.shortName === generalShortName;
 
               return (
                 <article
                   key={group.shortName}
-                  className="flex min-h-64 flex-col rounded-[1.75rem] border border-sky-200/80 bg-white p-6 shadow-[0_22px_65px_-48px_rgba(14,165,233,0.55)] dark:border-sky-400/15 dark:bg-white/[0.035] sm:p-7"
+                  className="flex min-w-0 flex-col rounded-2xl border border-sky-200/80 bg-white p-4 shadow-sm dark:border-sky-400/15 dark:bg-white/[0.035] sm:p-5"
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <span className="rounded-full bg-sky-100 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-sky-700 dark:bg-sky-400/10 dark:text-sky-300">
+                    <span className="rounded-full bg-sky-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-sky-700 dark:bg-sky-400/10 dark:text-sky-300">
                       {isGeneral ? copy.general : copy.city}
                     </span>
                     <span className={group.status === "active"
-                      ? "rounded-full bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
-                      : "rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:bg-white/5 dark:text-slate-400"}>
+                      ? "rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
+                      : "rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 dark:bg-white/5 dark:text-slate-400"}>
                       {group.statusLabel}
                     </span>
                   </div>
 
-                  <h2 className="mt-6 text-2xl font-bold tracking-[-0.025em]">
+                  <h2 className="mt-4 text-lg font-bold tracking-tight sm:text-xl">
                     {group.state}
                   </h2>
-                  <p className="mt-3 flex-1 leading-7 text-slate-600 dark:text-slate-400">
+                  <p className="mt-2 flex-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
                     {group.description}
                   </p>
 
@@ -130,7 +96,7 @@ export default async function TelegramRegionPage({ bundesland, generalShortName 
                       href={group.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
+                      className="mt-4 inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
                     >
                       {copy.join}
                       <span aria-hidden="true">↗</span>

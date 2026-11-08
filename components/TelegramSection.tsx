@@ -178,7 +178,7 @@ export default async function TelegramSection() {
           from-sky-50
           via-white
           to-slate-50
-          py-24 sm:py-28 lg:py-32
+          py-10 sm:py-12 lg:py-16
           dark:from-slate-950
           dark:via-slate-950
           dark:to-slate-900
@@ -193,7 +193,7 @@ export default async function TelegramSection() {
         />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
+          <div className="grid items-end gap-5 lg:grid-cols-[1fr_auto]">
             <div className="max-w-3xl">
               <div
                 className="
@@ -217,13 +217,13 @@ export default async function TelegramSection() {
               <h2
                 id="telegram-heading"
                 className="
-                  mt-6
-                  text-3xl
+                  mt-3
+                  text-2xl
                   font-semibold
                   tracking-[-0.04em]
                   text-slate-950
-                  sm:text-4xl
-                  lg:text-5xl
+                  sm:text-3xl
+                  lg:text-4xl
                   dark:text-white
                 "
               >
@@ -232,7 +232,7 @@ export default async function TelegramSection() {
 
               <p
                 className="
-                  mt-5
+                  mt-3
                   max-w-2xl
                   text-base
                   leading-8
@@ -283,7 +283,7 @@ export default async function TelegramSection() {
             </a>
           </div>
 
-          <div className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {visibleRegionalGroups.map((group, index) => (
               <TelegramCard
                 key={group.shortName}
@@ -299,7 +299,7 @@ export default async function TelegramSection() {
             ))}
           </div>
 
-          <div className="mt-10 flex justify-center lg:hidden">
+          <div className="mt-6 flex justify-center lg:hidden">
             <a
               href="https://t.me/UzDe_de"
               target="_blank"
@@ -341,9 +341,9 @@ export default async function TelegramSection() {
             <section
               aria-labelledby="telegram-professional-heading"
               className="
-                mt-20
+                mt-12
                 border-t border-slate-200/80
-                pt-14
+                pt-8
                 dark:border-slate-800/80
               "
             >
@@ -386,7 +386,7 @@ export default async function TelegramSection() {
                 </p>
               </div>
 
-              <div className="mt-8 grid gap-7 md:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                 {professionalGroups.map((group, index) => (
                   <TelegramCard
                     key={group.shortName}

@@ -80,7 +80,7 @@ export default async function TelegramPage() {
     <>
       <Header />
 
-      <main className="min-h-screen bg-white pt-24 text-slate-950 lg:pt-28 dark:bg-slate-950 dark:text-white">
+      <main className="min-h-screen bg-white pt-20 text-slate-950 sm:pt-24 dark:bg-slate-950 dark:text-white">
         <SectionHeroBackground tone="telegram">
           <section className="relative isolate overflow-hidden border-b border-slate-200/80 bg-transparent dark:border-slate-800/80">
             <div
@@ -94,14 +94,14 @@ export default async function TelegramPage() {
                 priority
                 sizes="100vw"
                 quality={88}
-                className="object-cover object-[72%_center] opacity-34 sm:object-[70%_center] sm:opacity-40 lg:object-[68%_center] lg:opacity-46 dark:opacity-24 dark:sm:opacity-28 dark:lg:opacity-32"
+                className="object-cover object-[72%_center] opacity-75 sm:object-[70%_center] sm:opacity-80 lg:object-[68%_center] lg:opacity-85 dark:opacity-55 dark:sm:opacity-60 dark:lg:opacity-65"
               />
 
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.995)_0%,rgba(248,250,252,0.97)_36%,rgba(248,250,252,0.86)_54%,rgba(248,250,252,0.48)_72%,rgba(248,250,252,0.18)_100%)] dark:bg-[linear-gradient(90deg,rgba(2,6,23,0.995)_0%,rgba(2,6,23,0.97)_36%,rgba(2,6,23,0.88)_54%,rgba(2,6,23,0.62)_72%,rgba(2,6,23,0.38)_100%)]" />
-              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(248,250,252,0.08),rgba(248,250,252,0.46))] dark:bg-[linear-gradient(to_bottom,rgba(2,6,23,0.04),rgba(2,6,23,0.28))]" />
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.94)_0%,rgba(248,250,252,0.83)_38%,rgba(248,250,252,0.54)_68%,rgba(248,250,252,0.22)_100%)] dark:bg-[linear-gradient(90deg,rgba(2,6,23,0.94)_0%,rgba(2,6,23,0.82)_38%,rgba(2,6,23,0.60)_68%,rgba(2,6,23,0.30)_100%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(248,250,252,0.04),rgba(248,250,252,0.18))] dark:bg-[linear-gradient(to_bottom,rgba(2,6,23,0.02),rgba(2,6,23,0.14))]" />
             </div>
 
-            <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8">
+            <div className="relative mx-auto max-w-7xl px-6 py-9 sm:py-12 lg:px-8 lg:py-14">
               <Link
                 href="/"
                 className="inline-flex items-center text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
@@ -115,19 +115,19 @@ export default async function TelegramPage() {
                 {copy.backHome}
               </Link>
 
-              <div className="mt-10 max-w-3xl">
+              <div className="mt-6 max-w-3xl">
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">
                   {copy.eyebrow}
                 </p>
 
-                <h1 className="mt-5 text-4xl font-bold tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl dark:text-white">
+                <h1 className="mt-3 text-3xl font-bold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white">
                   {copy.title}
                 </h1>
 
-                <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">
+                <p className="mt-3 max-w-2xl text-base leading-7 sm:text-lg text-slate-600 dark:text-slate-400">
                   {copy.description}
                 </p>
-                <div className="mt-5">
+                <div className="mt-4">
                   <ShareButton title={copy.title} locale={locale} />
                 </div>
               </div>
