@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Link } from "@/i18n/navigation";
 import { getPublicTelegramGroups } from "@/lib/telegram/public-telegram-repository";
-import type { SupportedTelegramLocale } from "@/types/telegram";
+import type { SupportedTelegramLocale, TelegramGroup } from "@/types/telegram";
 
 type Props = {
   bundesland: "Bayern" | "Niedersachsen";
@@ -15,6 +15,40 @@ export default async function TelegramRegionPage({ bundesland, generalShortName 
   const groups = (await getPublicTelegramGroups(locale)).filter(
     (group) => group.communityType === "regional" && group.bundesland === bundesland,
   );
+  // Only supply a missing regional card; never replace a published database record.
+  const fallbackGroups: Record<Props["bundesland"], Array<{
+    shortName: string;
+    name: string;
+    href: string;
+    descriptionUz: string;
+    descriptionDe: string;
+  }>> = {
+    Bayern: [
+      { shortName: "BY", name: "Bayern", href: "https://t.me/Bayern_uzbeklar", descriptionUz: "Bayern hududidagi vatandoshlar uchun Telegram guruhi.", descriptionDe: "Telegram-Gruppe für die usbekische Community in Bayern." },
+      { shortName: "BY-MUC", name: "München Vatandoshlar", href: "https://t.me/Muenchen_Vatandoshlar_bot", descriptionUz: "München va uning atrofidagi vatandoshlar uchun Telegram hamjamiyati.", descriptionDe: "Telegram-Community für Usbeken in und um München." },
+    ],
+    Niedersachsen: [
+      { shortName: "NI", name: "Niedersachsen", href: "https://t.me/niedersachen_uz", descriptionUz: "Niedersachsen hududidagi vatandoshlar uchun Telegram guruhi.", descriptionDe: "Telegram-Gruppe für die usbekische Community in Niedersachsen." },
+      { shortName: "NI-HA", name: "Hannover Vatandoshlar", href: "https://t.me/hannover_uzbeklar", descriptionUz: "Hannover va uning atrofidagi vatandoshlar uchun Telegram hamjamiyati.", descriptionDe: "Telegram-Community für Usbeken in und um Hannover." },
+    ],
+  };
+  const visibleGroups: TelegramGroup[] = [...groups];
+  for (const fallback of fallbackGroups[bundesland]) {
+    if (visibleGroups.some((group) => group.shortName === fallback.shortName)) continue;
+    visibleGroups.push({
+      bundesland,
+      shortName: fallback.shortName,
+      state: fallback.name,
+      description: locale === "uz" ? fallback.descriptionUz : fallback.descriptionDe,
+      href: fallback.href,
+      button: locale === "uz" ? "Telegramga qo‘shilish" : "Telegram-Gruppe öffnen",
+      status: "active",
+      statusLabel: locale === "uz" ? "Faol" : "Aktiv",
+      communityType: "regional",
+    });
+  }
+  visibleGroups.sort((a, b) => Number(a.shortName !== generalShortName) - Number(b.shortName !== generalShortName));
+
   const copy = locale === "uz"
     ? {
         back: "Telegram guruhlariga qaytish",
@@ -65,7 +99,7 @@ export default async function TelegramRegionPage({ bundesland, generalShortName 
 
         <section className="mx-auto max-w-6xl px-6 py-12 sm:py-16 lg:px-8">
           <div className="grid gap-5 md:grid-cols-2">
-            {groups.map((group) => {
+            {visibleGroups.map((group) => {
               const isGeneral = group.shortName === generalShortName;
 
               return (
