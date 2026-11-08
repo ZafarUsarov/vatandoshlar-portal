@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Link } from "@/i18n/navigation";
 import { getPublicTelegramGroups } from "@/lib/telegram/public-telegram-repository";
-import type { SupportedTelegramLocale } from "@/types/telegram";
+import type { SupportedTelegramLocale, TelegramGroup } from "@/types/telegram";
 
 type Props = {
   bundesland: "Baden-Württemberg" | "Bayern" | "Niedersachsen";
@@ -12,9 +12,53 @@ type Props = {
 
 export default async function TelegramRegionPage({ bundesland, generalShortName }: Props) {
   const locale = (await getLocale()) as SupportedTelegramLocale;
-  const groups = (await getPublicTelegramGroups(locale)).filter(
+  const fetchedGroups = (await getPublicTelegramGroups(locale)).filter(
     (group) => group.communityType === "regional" && group.bundesland === bundesland,
   );
+
+  // Ensure the two verified groups for each region remain visible even when
+  // the runtime returns the pre-migration regional records.
+  const expected = bundesland === "Bayern"
+    ? [
+        { code: "BY", name: "Bayern", href: "https://t.me/Bayern_uzbeklar" },
+        { code: "BY-MUC", name: "München Vatandoshlar", href: "https://t.me/Muenchen_Vatandoshlar_bot" },
+      ]
+    : bundesland === "Niedersachsen"
+      ? [
+          { code: "NI", name: "Niedersachsen", href: "https://t.me/niedersachen_uz" },
+          { code: "NI-HA", name: "Hannover Vatandoshlar", href: "https://t.me/hannover_uzbeklar" },
+        ]
+      : [];
+
+  const groups: TelegramGroup[] = expected.length === 0
+    ? fetchedGroups
+    : expected.map(({ code, name, href }) => {
+        const current = fetchedGroups.find((group) => group.shortName === code);
+        const isOldMunich = code === "BY" && current?.state === "München Vatandoshlar";
+        const originalMunich = fetchedGroups.find((group) => group.shortName === "BY" && group.state === "München Vatandoshlar");
+        const base = isOldMunich ? undefined : current;
+        const link = code === "BY-MUC" && !current && originalMunich?.href
+          ? originalMunich.href
+          : base?.href || href;
+        const general = code === generalShortName;
+        return {
+          bundesland,
+          state: base?.state || name,
+          shortName: code,
+          description: base?.description || (locale === "uz"
+            ? general
+              ? `${bundesland} hududidagi vatandoshlar uchun Telegram guruhi.`
+              : `${name} hamjamiyati uchun Telegram guruhi.`
+            : general
+              ? `Telegram-Gruppe für die usbekische Community in ${bundesland}.`
+              : `Telegram-Gruppe für ${name}.`),
+          href: link,
+          button: base?.button || (locale === "uz" ? "Telegramga qo‘shilish" : "Telegram-Gruppe öffnen"),
+          status: "active",
+          statusLabel: locale === "uz" ? "Faol" : "Aktiv",
+          communityType: "regional",
+        };
+      });
   const copy = locale === "uz"
     ? {
         back: "Telegram guruhlariga qaytish",
