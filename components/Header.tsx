@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Plane, MessagesSquare, MessageCircleQuestion, ShoppingBag, MapPin, ChevronRight } from "lucide-react";
+import { Plane, MessagesSquare, ShoppingBag, MapPin, ChevronRight } from "lucide-react";
 
 import { useLocale, useTranslations } from "next-intl";
 
@@ -53,6 +53,71 @@ type HeaderAuthState =
   | "guest"
   | "user"
   | "admin";
+
+function SocialTelegramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path d="M21.7 3.3a1.5 1.5 0 0 0-1.55-.23L3.2 9.6a1.55 1.55 0 0 0 .06 2.91l4.09 1.34 1.58 4.87a1.55 1.55 0 0 0 2.65.55l2.3-2.54 4.25 3.12a1.55 1.55 0 0 0 2.43-.95l2.03-14.12a1.5 1.5 0 0 0-.89-1.48ZM9.67 13.1l7.86-5.34-6.55 6.37-.73 2.78-.58-3.81Z" />
+    </svg>
+  );
+}
+
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <rect
+        x="3.5"
+        y="3.5"
+        width="17"
+        height="17"
+        rx="5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="4"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" />
+    </svg>
+  );
+}
+
+function LinkedInIcon({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124Zm1.782 13.019H3.555V9h3.564v11.452Z"/>
+    </svg>
+  );
+}
+
+function FacebookIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path d="M13.6 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.6 1.7-1.6H17V3.8c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V10H8v3h2.6v8h3Z" />
+    </svg>
+  );
+}
+
+
 
 function getIOSWebViewFallbackSnapshot() {
 
@@ -525,28 +590,6 @@ function CloseIcon() {
         d="m5 5 14 14M19 5 5 19"
 
         strokeLinecap="round"
-
-      />
-
-    </Icon>
-
-  );
-
-}
-
-function ArrowRightIcon() {
-
-  return (
-
-    <Icon>
-
-      <path
-
-        d="M5 12h14M14 7l5 5-5 5"
-
-        strokeLinecap="round"
-
-        strokeLinejoin="round"
 
       />
 
@@ -1107,86 +1150,6 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
     <>
 
-      {/* Desktop ecosystem shortcuts */}
-      <nav
-        aria-label={locale === "de" ? "Weitere Angebote" : "Qo‘shimcha xizmatlar"}
-        className="fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-1.5 lg:flex"
-      >
-        {[
-          {
-            href: "/savol" as const,
-            label: locale === "de" ? "F&Q" : "Savol-javob",
-            Icon: MessageCircleQuestion,
-            color: "text-emerald-600 dark:text-emerald-400",
-            hover: "hover:bg-emerald-50 focus-visible:bg-emerald-50",
-            available: true,
-          },
-          {
-            href: "/market" as const,
-            label: locale === "de" ? "Marktplatz" : "Market",
-            Icon: ShoppingBag,
-            color: "text-amber-600 dark:text-amber-400",
-            hover: "hover:bg-amber-50 focus-visible:bg-amber-50",
-            available: true,
-          },
-          {
-            href: "/travel" as const,
-            label: locale === "de" ? "Reisen" : "Sayohat",
-            Icon: Plane,
-            color: "text-blue-600 dark:text-blue-400",
-            hover: "hover:bg-blue-100 focus-visible:bg-blue-100 dark:hover:bg-blue-950 dark:focus-visible:bg-blue-950",
-            available: true,
-          },
-          {
-            href: "/places" as const,
-            label: locale === "de" ? "Organisationen" : "Tashkilotlar",
-            Icon: MapPin,
-            color: "text-violet-600 dark:text-violet-400",
-            hover: "hover:bg-violet-50 focus-visible:bg-violet-50 dark:hover:bg-violet-950",
-            available: true,
-          },
-        ].map(({ href, label, Icon, color, hover, available }) => {
-          const content = (
-            <>
-              <span className="absolute right-12 whitespace-nowrap px-3 text-sm font-semibold opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
-                {label}
-              </span>
-              <span className={`absolute right-0 flex h-12 w-12 items-center justify-center ${color}`}>
-                <Icon aria-hidden="true" className="h-6 w-6" strokeWidth={2.2} />
-              </span>
-            </>
-          );
-
-          const baseClass =
-            "group absolute right-0 top-0 flex h-12 w-12 items-center overflow-hidden rounded-l-xl border border-r-0 border-slate-200 bg-white/95 text-slate-900 shadow-md backdrop-blur-sm transition-[width,background-color] duration-300 ease-out dark:border-slate-700 dark:bg-slate-900/95 dark:text-white";
-
-          return (
-            <div key={href} className="relative h-12 w-12">
-              {available ? (
-                <Link
-                  href={href}
-                  aria-label={label}
-                  style={{ "--shortcut-width": "170px" } as React.CSSProperties}
-                  className={`${baseClass} hover:w-[var(--shortcut-width)] focus-visible:w-[var(--shortcut-width)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:hover:bg-slate-800 ${hover}`}
-                >
-                  {content}
-                </Link>
-              ) : (
-                <div
-                  aria-label={label}
-                  title={label}
-                  className={`${baseClass} cursor-not-allowed opacity-75`}
-                >
-                  <span className={`absolute right-0 flex h-12 w-12 items-center justify-center ${color}`}>
-                    <Icon aria-hidden="true" className="h-6 w-6" strokeWidth={2.2} />
-                  </span>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </nav>
-
       <header
 
         data-uzde-ipad-header
@@ -1282,7 +1245,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
             xl:px-8 2xl:px-10
 
-            ${isScrolled ? "h-16" : "h-20"}
+            ${isScrolled ? "h-16" : "h-20"} max-[1023px]:!h-14
 
           `}
 
@@ -1296,7 +1259,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
             aria-label={t("accessibility.homeLink")}
 
-            className="group ml-2 flex shrink-0 items-center gap-1 lg:ml-4"
+            className="group ml-0 flex min-w-0 shrink items-center gap-1 lg:ml-4"
 
           >
 
@@ -1548,11 +1511,11 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 flex shrink-0 items-center justify-center
 
-                overflow-hidden rounded-xl
+                overflow-hidden
 
-                border border-slate-200
+                border-0
 
-                bg-white text-slate-500
+                bg-transparent text-slate-500
 
                 transition-all duration-300
 
@@ -1570,9 +1533,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 focus-visible:ring-offset-2
 
-                dark:border-slate-700
+                dark:border-0
 
-                dark:bg-slate-900
+                dark:bg-transparent
 
                 dark:text-slate-400
 
@@ -1640,7 +1603,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                   overflow-hidden rounded-md
 
-                  border border-slate-200
+                  border-0
 
                   bg-slate-50
 
@@ -1650,7 +1613,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                   transition-all duration-300
 
-                  dark:border-slate-700
+                  dark:border-0
 
                   dark:bg-slate-800
 
@@ -1696,11 +1659,11 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
               className={`
 
-                flex items-center justify-center rounded-xl
+                flex items-center justify-center
 
-                border border-slate-200
+                border-0
 
-                bg-white text-slate-600
+                bg-transparent text-slate-600
 
                 transition-all duration-300
 
@@ -1718,9 +1681,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 focus-visible:ring-offset-2
 
-                dark:border-slate-700
+                dark:border-0
 
-                dark:bg-slate-900
+                dark:bg-transparent
 
                 dark:text-slate-300
 
@@ -1734,11 +1697,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 ${
 
-                  isScrolled
-
-                    ? "h-10 w-10"
-
-                    : "h-11 w-11"
+                  "h-11 w-11"
 
                 }
 
@@ -1828,7 +1787,11 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           </div>
 
-          <div data-uzde-mobile-actions className="ml-auto flex items-center gap-2 min-[1024px]:hidden">
+          <div data-uzde-mobile-actions className="ml-auto flex shrink-0 items-center gap-0 min-[1024px]:hidden">
+            <LanguageSwitcher variant="dropdown" onLocaleChange={closeMobileMenu} />
+            <button type="button" onClick={toggleTheme} aria-label={isDarkMode ? t("actions.lightMode") : t("actions.darkMode")} className="flex h-11 w-10 shrink-0 items-center justify-center rounded-md text-slate-900 transition-colors hover:bg-slate-900/5 active:bg-slate-900/10 [&_svg]:h-[22px] [&_svg]:w-[22px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-100 dark:hover:bg-white/10 dark:active:bg-white/15">
+              {isDarkMode ? <SunIcon /> : <MoonIcon />}
+            </button>
 
             <button
 
@@ -1844,11 +1807,11 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 flex items-center justify-center
 
-                rounded-xl
+                rounded-md
 
-                border border-slate-200
+                text-slate-900
 
-                bg-white text-slate-600
+                hover:bg-slate-900/5 active:bg-slate-900/10
 
                 transition-all duration-300
 
@@ -1862,23 +1825,11 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 focus-visible:ring-offset-2
 
-                dark:border-slate-700
-
-                dark:bg-slate-900
-
-                dark:text-slate-300
+                dark:text-slate-100 dark:hover:bg-white/10 dark:active:bg-white/15
 
                 dark:focus-visible:ring-offset-slate-950
 
-                ${
-
-                  isScrolled
-
-                    ? "h-10 w-10"
-
-                    : "h-11 w-11"
-
-                }
+                h-11 w-10 shrink-0 [&_svg]:h-[22px] [&_svg]:w-[22px]
 
               `}
 
@@ -1920,9 +1871,10 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 flex items-center justify-center
 
-                rounded-xl
+                rounded-md
 
-                bg-slate-950 text-white
+                text-slate-900 hover:bg-slate-900/5 active:bg-slate-900/10
+                [&_svg]:h-5 [&_svg]:w-5
 
                 transition-all duration-300
 
@@ -1936,21 +1888,13 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 focus-visible:ring-offset-2
 
-                dark:bg-white
+                dark:hover:bg-white/10 dark:active:bg-white/15
 
-                dark:text-slate-950
+                dark:text-slate-100
 
                 dark:focus-visible:ring-offset-slate-950
 
-                ${
-
-                  isScrolled
-
-                    ? "h-10 w-10"
-
-                    : "h-11 w-11"
-
-                }
+                h-11 w-10 shrink-0 [&_svg]:h-[22px] [&_svg]:w-[22px]
 
               `}
 
@@ -2014,9 +1958,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 isScrolled
 
-                  ? (showRebrandingBanner ? "top-[100px] max-h-[calc(100dvh-100px)]" : "top-16 max-h-[calc(100dvh-4rem)]")
+                  ? (showRebrandingBanner ? "top-[100px] max-h-[calc(100dvh-100px)] max-[1023px]:!top-[92px] max-[1023px]:!max-h-[calc(100dvh-92px)]" : "top-16 max-h-[calc(100dvh-4rem)] max-[1023px]:!top-14 max-[1023px]:!max-h-[calc(100dvh-3.5rem)]")
 
-                  : (showRebrandingBanner ? "top-[116px] max-h-[calc(100dvh-116px)]" : "top-20 max-h-[calc(100dvh-5rem)]")
+                  : (showRebrandingBanner ? "top-[116px] max-h-[calc(100dvh-116px)] max-[1023px]:!top-[92px] max-[1023px]:!max-h-[calc(100dvh-92px)]" : "top-20 max-h-[calc(100dvh-5rem)] max-[1023px]:!top-14 max-[1023px]:!max-h-[calc(100dvh-3.5rem)]")
 
               }
 
@@ -2024,268 +1968,53 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           >
 
-            <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
-
-              <div className="mb-5 flex items-center justify-between">
-
-                <div>
-
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">{t("mobile.navigationTitle")}</p>
-
-                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t("mobile.navigationDescription")}</p>
-
-                </div>
-
-                <button
-
-                  type="button"
-
-                  onClick={closeMobileMenu}
-
-                  aria-label={t("accessibility.closeMobileMenu")}
-
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white dark:focus-visible:ring-offset-slate-950"
-
-                >
-
-                  <CloseIcon />
-
-                </button>
-
-              </div>
-
-              <div className="grid gap-2">
-
+            <div className="mx-auto max-w-2xl px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 sm:px-6">
+              <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{t("mobile.navigationTitle")}</p>
+              <nav aria-label={t("mobile.navigationTitle")} className="divide-y divide-slate-200 border-y border-slate-200 dark:divide-slate-800 dark:border-slate-800">
                 {navigation.map((item) => {
-
-                  const isActive = isActiveRoute(
-
-                    item.href,
-
-                  );
-
+                  const isActive = isActiveRoute(item.href);
                   return (
-
-                    <Link
-
-                      key={item.href}
-
-                      href={item.href}
-
-                      onClick={(event) =>
-
-                        handleNavigationClick(
-
-                          event,
-
-                          item.href,
-
-                        )
-
-                      }
-
-                      aria-current={
-
-                        isActive
-
-                          ? "page"
-
-                          : undefined
-
-                      }
-
-                      className={`
-
-                        flex items-center gap-4
-
-                        rounded-2xl border p-4
-
-                        transition
-
-                        focus-visible:outline-none
-
-                        focus-visible:ring-2
-
-                        focus-visible:ring-emerald-500
-
-                        focus-visible:ring-offset-2
-
-                        dark:focus-visible:ring-offset-slate-950
-
-                        ${
-
-                          isActive
-
-                            ? "border-emerald-200 bg-emerald-50 text-emerald-700 shadow-sm dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-400"
-
-                            : "border-transparent text-slate-700 hover:border-slate-200 hover:bg-slate-50 dark:text-slate-200 dark:hover:border-slate-700 dark:hover:bg-slate-900"
-
-                        }
-
-                      `}
-
-                    >
-
-                      <span
-
-                        className={`
-
-                          flex h-11 w-11 shrink-0
-
-                          items-center justify-center
-
-                          rounded-xl
-
-                          ${
-
-                            isActive
-
-                              ? "bg-emerald-600 text-white"
-
-                              : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300"
-
-                          }
-
-                        `}
-
-                      >
-
-                        {item.icon}
-
-                      </span>
-
-                      <span className="min-w-0 flex-1">
-
-                        <span className="block font-bold">
-
-                          {item.name}
-
-                        </span>
-
-                        <span className="mt-0.5 block text-sm text-slate-500 dark:text-slate-400">
-
-                          {item.description}
-
-                        </span>
-
-                      </span>
-
-                      <span className="shrink-0 text-slate-300 dark:text-slate-600">
-
-                        <ArrowRightIcon />
-
-                      </span>
-
+                    <Link key={item.href} href={item.href} onClick={(event) => handleNavigationClick(event, item.href)} aria-current={isActive ? "page" : undefined} className={`flex min-h-11 items-center justify-between gap-3 px-2 py-2 text-[14px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-500 ${isActive ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-300" : "text-slate-900 hover:bg-slate-50 dark:text-slate-100 dark:hover:bg-slate-900"}`}>
+                      <span>{item.name}</span>
+                      <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0 text-slate-400" />
                     </Link>
-
                   );
-
                 })}
-
-              </div>
-
-              <div className="mt-6 border-t border-slate-200 pt-5 dark:border-slate-800">
-                <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                  {locale === "de" ? "Weitere Angebote" : "Qo‘shimcha xizmatlar"}
-                </p>
-                <div className="space-y-1">
-                  <Link href="/safar" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
-                    <Plane aria-hidden="true" className="h-5 w-5 shrink-0" />
-                    {locale === "de" ? "UzDe Reisen" : "UzDe Safar"}
-                    <ChevronRight aria-hidden="true" className="ml-auto h-5 w-5 shrink-0 text-slate-300 dark:text-slate-600" />
-                  </Link>
-                  <Link href="/savol" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
-                    <MessagesSquare aria-hidden="true" className="h-5 w-5 shrink-0" />
-                    {locale === "de" ? "UzDe Q&A" : "UzDe Savol"}
-                    <ChevronRight aria-hidden="true" className="ml-auto h-5 w-5 shrink-0 text-slate-300 dark:text-slate-600" />
-                  </Link>
-                  <Link href="/market" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
-                    <ShoppingBag aria-hidden="true" className="h-5 w-5 shrink-0" />
-                    {t("navigation.market")}
-                    <ChevronRight aria-hidden="true" className="ml-auto h-5 w-5 shrink-0 text-slate-300 dark:text-slate-600" />
-                  </Link>
-                  <Link href="/places" onClick={closeMobileMenu} className="flex min-h-12 items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-900">
-                    <MapPin aria-hidden="true" className="h-5 w-5 shrink-0" />
-                    {t("navigation.places")}
-                    <ChevronRight aria-hidden="true" className="ml-auto h-5 w-5 shrink-0 text-slate-300 dark:text-slate-600" />
-                  </Link>
+              </nav>
+              <section aria-label={locale === "de" ? "UzDe Angebote" : "UzDe xizmatlari"} className="mt-4">
+                <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{locale === "de" ? "UzDe Angebote" : "UzDe xizmatlari"}</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {([
+                    { href: "/safar", label: locale === "de" ? "UzDe Reisen" : "UzDe Safar", icon: Plane },
+                    { href: "/savol", label: locale === "de" ? "UzDe Q&A" : "UzDe Savol", icon: MessagesSquare },
+                    { href: "/market", label: t("navigation.market"), icon: ShoppingBag },
+                    { href: "/places", label: t("navigation.places"), icon: MapPin },
+                  ] as const).map(({ href, label, icon: ServiceIcon }) => (
+                    <Link key={href} href={href} onClick={closeMobileMenu} className="flex min-h-12 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold leading-tight text-slate-900 transition-colors hover:border-emerald-300 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800">
+                      <ServiceIcon aria-hidden="true" className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />
+                      <span>{label}</span>
+                    </Link>
+                  ))}
                 </div>
-              </div>
-
-              <button
-
-                type="button"
-
-                onClick={openCommandPalette}
-
-                className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-950"
-
-              >
-
-                <SearchIcon />
-
-                {t("actions.searchPortal")}
-
-              </button>
-
-              <LanguageSwitcher
-
-                variant="full"
-
-                className="mt-3"
-
-                onLocaleChange={closeMobileMenu}
-
-              />
-
-              <div aria-hidden="true" className="h-4" />
-
-              <button
-
-                type="button"
-
-                onClick={toggleTheme}
-
-                className="mt-0 flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-offset-slate-950"
-
-              >
-
-                {isDarkMode ? (
-
-                  <SunIcon />
-
-                ) : (
-
-                  <MoonIcon />
-
-                )}
-
-                {isDarkMode
-
-                  ? t("actions.lightMode")
-
-                  : t("actions.darkMode")}
-
-              </button>
-
+              </section>
+              <nav aria-label={locale === "de" ? "Soziale Netzwerke" : "Ijtimoiy tarmoqlar"} className="mt-3 flex items-center justify-center gap-2 border-t border-slate-200 pt-3 dark:border-slate-800">
+                {([
+                  { href: "https://t.me/UzDe_de", label: "Telegram", icon: SocialTelegramIcon },
+                  { href: "https://www.instagram.com/uzde_de", label: "Instagram", icon: InstagramIcon },
+                  { href: "https://www.facebook.com/uzde.dee", label: "Facebook", icon: FacebookIcon },
+                  { href: "https://www.linkedin.com/company/uzde", label: "LinkedIn", icon: LinkedInIcon },
+                ] as const).map(({ href, label, icon: SocialIcon }) => (
+                  <a key={href} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-slate-800 transition-colors hover:border-emerald-500 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:text-slate-100 dark:hover:text-emerald-400">
+                    <SocialIcon aria-hidden="true" className="h-5 w-5" />
+                  </a>
+                ))}
+              </nav>
               {authState !== "user" && authState !== "loading" && (
-                <Link
-                  href={
-                    authState === "admin"
-                      ? "/admin"
-                      : "/id/login"
-                  }
-                  onClick={closeMobileMenu}
-                  className="mt-3 flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-4 font-bold text-white shadow-lg shadow-emerald-600/20 transition hover:shadow-xl hover:shadow-emerald-600/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
-                >
-                  {authState === "admin"
-                    ? authCopy.admin
-                    : authCopy.login}
+                <Link href={authState === "admin" ? "/admin" : "/id/login"} onClick={closeMobileMenu} className="mt-2 flex min-h-11 items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                  {authState === "admin" ? authCopy.admin : authCopy.login}
                 </Link>
               )}
-
             </div>
-
           </div>
 
         </div>

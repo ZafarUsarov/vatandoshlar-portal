@@ -272,7 +272,7 @@ export default async function Footer({
         };
 
   return (
-    <footer className="relative isolate overflow-hidden border-t border-slate-200/80 bg-gradient-to-b from-white via-slate-50/45 to-white text-slate-950 shadow-[0_-1px_0_rgba(15,23,42,0.02)] transition-colors dark:border-white/[0.08] dark:from-slate-950 dark:via-slate-950 dark:to-slate-950 dark:text-white dark:shadow-none">
+    <footer className="relative isolate overflow-hidden lg:pb-[54px] border-t border-slate-200/80 bg-gradient-to-b from-white via-slate-50/45 to-white text-slate-950 shadow-[0_-1px_0_rgba(15,23,42,0.02)] transition-colors dark:border-white/[0.08] dark:from-slate-950 dark:via-slate-950 dark:to-slate-950 dark:text-white dark:shadow-none">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(16,185,129,0.12),transparent_28%),radial-gradient(circle_at_88%_8%,rgba(14,165,233,0.09),transparent_26%),linear-gradient(135deg,rgba(16,185,129,0.025),transparent_35%,rgba(14,165,233,0.025))] dark:bg-[radial-gradient(circle_at_12%_0%,rgba(16,185,129,0.15),transparent_30%),radial-gradient(circle_at_88%_8%,rgba(14,165,233,0.10),transparent_28%),linear-gradient(135deg,rgba(16,185,129,0.035),transparent_38%,rgba(14,165,233,0.03))]"

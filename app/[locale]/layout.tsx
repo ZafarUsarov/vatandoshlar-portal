@@ -11,6 +11,7 @@ import type { ReactNode } from "react";
 
 import PageViewTracker from "../../components/analytics/PageViewTracker";
 import CommandPalette from "../../components/CommandPalette";
+import DesktopQuickNavigation from "../../components/navigation/DesktopQuickNavigation";
 import { routing } from "../../i18n/routing";
 
 type LocaleLayoutProps = Readonly<{
@@ -50,6 +51,7 @@ export default async function LocaleLayout({
       {children}
 
       <CommandPalette />
+      <DesktopQuickNavigation />
     </NextIntlClientProvider>
   );
 }

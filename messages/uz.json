@@ -933,5 +933,6 @@
     "description": "Siz izlayotgan sahifa mavjud emas yoki uning manzili o‘zgargan.",
     "home": "Bosh sahifaga qaytish",
     "guide": "Qo‘llanmani ko‘rish"
-  }
+  },
+  "DesktopQuickNavigation": {"home": "Bosh sahifa", "questions": "Savol-javob", "market": "Market", "support": "Qo‘llab-quvvatlash", "navigation": "Tezkor navigatsiya", "travel": "Sayohat"}
 }

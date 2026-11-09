@@ -933,5 +933,6 @@
     "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
     "home": "Zur Startseite",
     "guide": "Ratgeber ansehen"
-  }
+  },
+  "DesktopQuickNavigation": {"home": "Startseite", "questions": "Fragen & Antworten", "market": "Marktplatz", "support": "Support", "navigation": "Schnellnavigation", "travel": "Reisen"}
 }
