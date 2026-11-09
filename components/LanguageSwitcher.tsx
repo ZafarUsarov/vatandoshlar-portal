@@ -1,14 +1,14 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useTransition } from "react";
+import { useState, useRef, useEffect, useTransition } from "react";
 
 import { usePathname, useRouter } from "../i18n/navigation";
 
 type SupportedLocale = "uz" | "de";
 
 type LanguageSwitcherProps = Readonly<{
-  variant?: "compact" | "full";
+  variant?: "compact" | "full" | "dropdown";
   className?: string;
   onLocaleChange?: () => void;
 }>;
@@ -37,12 +37,31 @@ export default function LanguageSwitcher({
   const pathname = usePathname();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [isOpen]);
 
   const changeLocale = (nextLocale: SupportedLocale) => {
     if (nextLocale === locale || isPending) {
       return;
     }
 
+    setIsOpen(false);
     onLocaleChange?.();
 
     startTransition(() => {
@@ -51,6 +70,28 @@ export default function LanguageSwitcher({
       });
     });
   };
+
+  if (variant === "dropdown") {
+    return (
+      <div ref={dropdownRef} className={`relative shrink-0 ${className}`}>
+        <button type="button" aria-label={t("groupLabel")} aria-haspopup="true" aria-expanded={isOpen} onClick={() => setIsOpen((current) => !current)} className="flex h-11 min-w-11 items-center justify-center gap-0.5 rounded-md px-0.5 text-sm font-semibold text-slate-900 transition-colors hover:bg-slate-900/5 active:bg-slate-900/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-100 dark:hover:bg-white/10 dark:active:bg-white/15">
+          <span aria-hidden="true">{locale === "uz" ? "🇺🇿" : "🇩🇪"}</span>
+          <span>{locale.toUpperCase()}</span>
+          <span aria-hidden="true" className="text-[10px]">⌄</span>
+        </button>
+        {isOpen && (
+          <div role="group" aria-label={t("groupLabel")} className="absolute right-0 top-full z-[70] mt-1 w-[86px] rounded-lg border border-slate-200 bg-white p-1 shadow-xl dark:border-slate-700 dark:bg-slate-900">
+            {locales.map((item) => (
+              <button key={item.code} type="button" disabled={isPending} aria-pressed={locale === item.code} onClick={() => { if (locale === item.code) setIsOpen(false); else changeLocale(item.code); }} aria-label={t("switchTo", { language: t(`languages.${item.code}`) })} className="flex min-h-11 w-full items-center justify-center gap-2 rounded-md px-1 text-sm font-semibold text-slate-800 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-100 dark:hover:bg-slate-800">
+                <span aria-hidden="true">{item.code === "uz" ? "🇺🇿" : "🇩🇪"}</span>
+                <span>{item.shortLabel}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   if (variant === "full") {
     return (
