@@ -59,7 +59,7 @@ export default function DirectoryHeader({
   ];
 
   return (
-    <section className="border-b border-slate-200/80 bg-transparent pt-12 pb-8 dark:border-slate-800/80 sm:py-24 lg:py-28">
+    <section className="border-b border-slate-200/80 bg-transparent pt-24 pb-8 dark:border-slate-800/80 sm:py-24 lg:py-28">
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid gap-6 sm:gap-12 lg:grid-cols-[1fr_auto] lg:items-end">
           <div className="max-w-4xl">
