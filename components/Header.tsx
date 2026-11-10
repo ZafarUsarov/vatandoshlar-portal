@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Plane, MessagesSquare, ShoppingBag, MapPin, ChevronRight } from "lucide-react";
+import { Plane, MessagesSquare, ShoppingBag, MapPin, ChevronRight, Heart } from "lucide-react";
 
 import { useLocale, useTranslations } from "next-intl";
 
@@ -1997,23 +1997,32 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
                   ))}
                 </div>
               </section>
-              <nav aria-label={locale === "de" ? "Soziale Netzwerke" : "Ijtimoiy tarmoqlar"} className="mt-3 flex items-center justify-center gap-2 border-t border-slate-200 pt-3 dark:border-slate-800">
+              {authState !== "user" && authState !== "loading" && (
+                <Link href={authState === "admin" ? "/admin" : "/id/login"} onClick={closeMobileMenu} className="mt-2 flex min-h-11 items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                  {authState === "admin" ? authCopy.admin : authCopy.login}
+                </Link>
+              )}
+              <nav aria-label={locale === "de" ? "Soziale Netzwerke" : "Ijtimoiy tarmoqlar"} className="mt-3 flex items-center justify-between gap-2 border-t border-slate-200 pt-3 dark:border-slate-800">
                 {([
                   { href: "https://t.me/UzDe_de", label: "Telegram", icon: SocialTelegramIcon },
                   { href: "https://www.instagram.com/uzde_de", label: "Instagram", icon: InstagramIcon },
                   { href: "https://www.facebook.com/uzde.dee", label: "Facebook", icon: FacebookIcon },
                   { href: "https://www.linkedin.com/company/uzde", label: "LinkedIn", icon: LinkedInIcon },
                 ] as const).map(({ href, label, icon: SocialIcon }) => (
-                  <a key={href} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-slate-800 transition-colors hover:border-emerald-500 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:text-slate-100 dark:hover:text-emerald-400">
+                  <a key={href} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-11 w-11 shrink-0 items-center justify-center text-slate-800 transition-colors hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-100 dark:hover:text-emerald-400">
                     <SocialIcon aria-hidden="true" className="h-5 w-5" />
                   </a>
                 ))}
-              </nav>
-              {authState !== "user" && authState !== "loading" && (
-                <Link href={authState === "admin" ? "/admin" : "/id/login"} onClick={closeMobileMenu} className="mt-2 flex min-h-11 items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
-                  {authState === "admin" ? authCopy.admin : authCopy.login}
+                <Link
+                  href="/support"
+                  onClick={closeMobileMenu}
+                  aria-label={locale === "de" ? "UzDe unterstützen" : "Qo‘llab-quvvatlash"}
+                  title={locale === "de" ? "UzDe unterstützen" : "Qo‘llab-quvvatlash"}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center text-slate-800 transition-colors hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-100 dark:hover:text-emerald-400"
+                >
+                  <Heart aria-hidden="true" className="h-5 w-5" />
                 </Link>
-              )}
+              </nav>
             </div>
           </div>
 

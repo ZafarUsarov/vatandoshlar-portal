@@ -151,7 +151,7 @@ export default function HeaderAccountMenu({
     (de ? "Mein Konto" : "Mening akkauntim");
 
   const avatar = (
-    <span className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-emerald-700 text-sm font-bold text-white">
+    <span className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-emerald-700 text-sm font-bold text-white ${compact ? "size-9" : "size-10"}`}>
       {account?.avatarUrl ? (
         // The URL comes from the authenticated account endpoint.
         // eslint-disable-next-line @next/next/no-img-element
@@ -185,10 +185,10 @@ export default function HeaderAccountMenu({
           aria-expanded={open}
           onClick={() => setOpen((value) => !value)}
           className={`flex items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-            compact ? "size-10" : "size-11"
+            "size-11"
           }`}
         >
-          <span className="relative inline-flex size-10 shrink-0">
+          <span className={`relative inline-flex shrink-0 items-center justify-center ${compact ? "size-9" : "size-10"}`}>
             {avatar}
             {unreadCount > 0 && (
               <span
