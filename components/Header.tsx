@@ -1519,9 +1519,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 transition-all duration-300
 
-                hover:border-slate-300
 
-                hover:bg-slate-50
+
+
 
                 hover:text-slate-950
 
@@ -1539,9 +1539,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 dark:text-slate-400
 
-                dark:hover:border-slate-600
 
-                dark:hover:bg-slate-800
+
+
 
                 dark:hover:text-white
 
@@ -1667,9 +1667,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 transition-all duration-300
 
-                hover:border-slate-300
 
-                hover:bg-slate-50
+
+
 
                 hover:text-emerald-600
 
@@ -1687,9 +1687,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 dark:text-slate-300
 
-                dark:hover:border-slate-600
 
-                dark:hover:bg-slate-800
+
+
 
                 dark:hover:text-emerald-400
 
@@ -1990,7 +1990,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
                     { href: "/market", label: t("navigation.market"), icon: ShoppingBag },
                     { href: "/places", label: t("navigation.places"), icon: MapPin },
                   ] as const).map(({ href, label, icon: ServiceIcon }) => (
-                    <Link key={href} href={href} onClick={closeMobileMenu} className="flex min-h-12 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold leading-tight text-slate-900 transition-colors hover:border-emerald-300 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800">
+                    <Link key={href} href={href} onClick={closeMobileMenu} className="flex min-h-12 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold leading-tight text-slate-900 transition-colors hover:border-emerald-300 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800">
                       <ServiceIcon aria-hidden="true" className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />
                       <span>{label}</span>
                     </Link>
@@ -1998,7 +1998,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
                 </div>
               </section>
               {authState !== "user" && authState !== "loading" && (
-                <Link href={authState === "admin" ? "/admin" : "/id/login"} onClick={closeMobileMenu} className="mt-2 flex min-h-11 items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                <Link href={authState === "admin" ? "/admin" : "/id/login"} onClick={closeMobileMenu} className="mt-2 flex min-h-11 items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
                   {authState === "admin" ? authCopy.admin : authCopy.login}
                 </Link>
               )}
