@@ -7,11 +7,30 @@ import Header from "../Header";
 const BANNER_END = Date.parse("2027-01-01T00:00:00+01:00");
 
 export default function RebrandingHomeFrame({ children }: { children: ReactNode }) {
-  const [visible, setVisible] = useState(() => Date.now() < BANNER_END);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const remaining = BANNER_END - Date.now();
-    const timer = window.setTimeout(() => setVisible(false), Math.max(0, remaining));
+    const CHECK_INTERVAL = 24 * 60 * 60 * 1000;
+
+    let timer: number | undefined;
+
+    const checkExpiration = () => {
+      const remaining = BANNER_END - Date.now();
+
+      if (remaining <= 0) {
+        setVisible(false);
+        return;
+      }
+
+      setVisible(true);
+      timer = window.setTimeout(
+        checkExpiration,
+        Math.min(remaining, CHECK_INTERVAL),
+      );
+    };
+
+    checkExpiration();
+
     return () => window.clearTimeout(timer);
   }, []);
 
