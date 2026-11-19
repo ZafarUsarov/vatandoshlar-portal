@@ -134,7 +134,7 @@ export default async function NewsCard({
       />}
 
       {(item.imageUrl || item.slug === "vatandoshlar-de-endi-uzde") && (
-        <div className={`relative z-10 w-full overflow-hidden ${newsroom ? "aspect-[16/9] shrink-0" : horizontal ? "aspect-[16/7] shrink-0 sm:aspect-auto sm:w-[32%]" : catalog ? (item.slug === "vatandoshlar-de-endi-uzde" ? "aspect-[16/9] shrink-0" : "aspect-[2.5/1] shrink-0") : lead ? "min-h-[220px] flex-1" : relatedRecommendation && item.slug === "vatandoshlar-de-endi-uzde" ? "aspect-[16/9] shrink-0" : "aspect-[2/1] shrink-0"}`}>
+        <Link href={newsHref} aria-label={item.title} className={`relative z-30 block w-full overflow-hidden ${newsroom ? "aspect-[16/9] shrink-0" : horizontal ? "aspect-[16/7] shrink-0 sm:aspect-auto sm:w-[32%]" : catalog ? (item.slug === "vatandoshlar-de-endi-uzde" ? "aspect-[16/9] shrink-0" : "aspect-[2.5/1] shrink-0") : lead ? "min-h-[220px] flex-1" : relatedRecommendation && item.slug === "vatandoshlar-de-endi-uzde" ? "aspect-[16/9] shrink-0" : "aspect-[2/1] shrink-0"}`}>
           <Image
             src={newsroom && item.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/newsroom-medical-editorial.webp" : item.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : item.slug === "vatandoshlar-de-endi-uzde" ? "/images/news/uzde-rebranding-2026.webp" : item.imageUrl!}
             alt={item.title}
@@ -149,7 +149,7 @@ export default async function NewsCard({
                   : "object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               }
           />
-        </div>
+        </Link>
       )}
 
       <div className={`relative z-10 flex w-full flex-col ${newsroom ? "min-w-0 flex-1 p-4 sm:p-5" : horizontal ? "min-w-0 flex-1 justify-center p-4 sm:p-5" : catalog ? "p-4" : lead ? "shrink-0 p-4 sm:p-5" : compact ? "flex-1 p-4 sm:p-5" : "flex-1 p-5 sm:p-6"}`}>
