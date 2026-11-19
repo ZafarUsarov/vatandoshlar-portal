@@ -216,7 +216,7 @@ export default function SearchSection() {
               {t("badge")}
             </span>
 
-            <h2 className={`mx-auto mt-5 w-full min-w-0 text-center text-[clamp(1.35rem,3.2vw,4.5rem)] font-semibold leading-[1.1] tracking-[-0.01em] [word-spacing:0.08em] text-[#202020] dark:text-white uppercase ${locale === "de" ? "text-balance" : "xl:whitespace-nowrap"}`}>
+            <h2 className={`mx-auto mt-5 w-full min-w-0 text-center text-[clamp(1.35rem,3.2vw,4.5rem)] font-semibold leading-[1.1] tracking-[-0.01em] [word-spacing:0.08em] text-[#202020] dark:text-white uppercase ${locale === "de" ? "text-balance" : ""}`}>
               {t("title")}
             </h2>
 

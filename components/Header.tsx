@@ -1212,7 +1212,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
 
         {showRebrandingBanner && (
-          <div className="flex h-8 items-center justify-center gap-2 overflow-hidden border-b border-zinc-200 bg-[#F1F1F1] px-3 text-center text-[11px] font-medium text-[#202020] sm:text-xs dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100">
+          <div className="flex h-8 items-center justify-center gap-2 overflow-hidden border-b border-zinc-200 bg-[#38332E] px-3 text-center text-[11px] font-medium text-[#FFFFFF] sm:text-xs dark:border-zinc-800 dark:bg-[#302C29] dark:text-[#F5F1EC]">
             <span className="shrink-0 sm:hidden">{locale === "de" ? "Vatandoshlar.de heißt jetzt UzDe!" : "Vatandoshlar.de endi UzDe!"}</span>
             <span className="hidden truncate sm:inline">{locale === "de" ? "Vatandoshlar.de heißt jetzt UzDe! Neuer Name, neues Logo – unsere Mission bleibt." : "Vatandoshlar.de endi UzDe! Yangi nom, yangi logo — maqsadimiz o‘zgarmadi."}</span>
             <Link href="/news/vatandoshlar-de-endi-uzde" className="shrink-0 font-semibold underline underline-offset-2 hover:text-zinc-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:hover:text-zinc-300 dark:focus-visible:outline-white">
@@ -1227,7 +1227,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           className={`
 
-            mx-auto flex w-full max-w-none
+            mx-auto flex w-full max-w-[1600px] min-[1280px]:grid min-[1280px]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]
 
             relative items-center gap-2 px-3 min-[390px]:px-4 min-[1440px]:gap-3
 
@@ -1397,7 +1397,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                   text-[10px] font-semibold
 
-                  2xl:block
+                  2xl:hidden
 
                   uppercase tracking-[0.16em]
 
@@ -1433,7 +1433,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
             aria-label={t("accessibility.mainNavigation")}
 
-            className={`${isSearchOpen ? "hidden" : "hidden min-[1024px]:flex"} min-w-0 shrink items-center gap-1 min-[1280px]:gap-2 min-[1440px]:gap-4 min-[1600px]:gap-6 min-[1920px]:gap-7 min-[1600px]:mr-8`}
+            className={`${isSearchOpen ? "hidden" : "hidden min-[1024px]:flex"} min-w-0 shrink items-center gap-1 min-[1280px]:justify-self-center min-[1280px]:gap-2 min-[1440px]:gap-4 min-[1600px]:gap-6 min-[1920px]:gap-7 min-[1600px]:mr-0`}
 
           >
 
@@ -1487,7 +1487,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           </nav>
 
-          <div data-uzde-desktop-actions className={`ml-auto hidden min-w-0 items-center gap-3 min-[1024px]:flex min-[1600px]:gap-3 ${isSearchOpen ? "flex-1" : "shrink"}`}>
+          <div data-uzde-desktop-actions className={`ml-auto hidden min-w-0 items-center gap-3 min-[1280px]:justify-self-end min-[1280px]:w-full min-[1024px]:flex min-[1600px]:gap-3 ${isSearchOpen ? "flex-1" : "shrink"}`}>
 
             {isSearchOpen ? (
               <div data-uzde-search-slot="desktop" className="flex h-10 min-w-0 flex-1 items-center" />
@@ -1502,7 +1502,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
               aria-keyshortcuts="Meta+K Control+K"
 
-              className="flex h-10 min-w-0 w-9 shrink-0 items-center gap-2 rounded-md bg-zinc-100 px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-200 hover:text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 min-[1280px]:w-[clamp(100px,13vw,320px)] min-[1280px]:shrink dark:bg-[#191C21] dark:text-zinc-300 dark:hover:bg-[#252A30] dark:hover:text-white"
+              className="flex h-10 min-w-0 w-9 shrink-0 items-center gap-2 rounded-md bg-zinc-100 px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-200 hover:text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 min-[1280px]:w-[clamp(100px,13vw,320px)] min-[1280px]:flex-[1_1_0%] min-[1280px]:min-w-0 dark:bg-[#191C21] dark:text-zinc-300 dark:hover:bg-[#252A30] dark:hover:text-white"
 
             >
 
@@ -1598,7 +1598,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
             {authState === "user" ? (
               <HeaderAccountMenu locale={locale} />
             ) : authState === "loading" ? (
-              <span aria-hidden="true" className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-md bg-[#242424] px-3 text-xs font-semibold !text-white transition-colors hover:bg-black hover:!text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 min-[1600px]:px-5 min-[1600px]:text-sm dark:bg-zinc-100 dark:!text-zinc-950 dark:hover:bg-white dark:hover:!text-zinc-950">{authCopy.login}</span>
+              <span aria-hidden="true" className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-md border border-[#292929] bg-transparent px-3 text-sm font-semibold tracking-[0.02em] !text-[#020617] transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 min-[1600px]:px-5 min-[1600px]:text-sm dark:border-zinc-400 dark:bg-transparent dark:!text-zinc-100 dark:hover:bg-white/10">{authCopy.login}</span>
             ) : (
               <Link
                 href={
@@ -1606,7 +1606,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
                     ? "/admin"
                     : "/id/login"
                 }
-                className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-md bg-[#242424] px-3 text-xs font-semibold !text-white transition-colors hover:bg-black hover:!text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 min-[1600px]:px-5 min-[1600px]:text-sm dark:bg-zinc-100 dark:!text-zinc-950 dark:hover:bg-white dark:hover:!text-zinc-950"
+                className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-md border border-[#292929] bg-transparent px-3 text-sm font-semibold tracking-[0.02em] !text-[#020617] transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 min-[1600px]:px-5 min-[1600px]:text-sm dark:border-zinc-400 dark:bg-transparent dark:!text-zinc-100 dark:hover:bg-white/10"
               >
                 {
                   authState === "admin"

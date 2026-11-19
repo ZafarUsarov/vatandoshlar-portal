@@ -18,6 +18,7 @@ export default function HomePage() {
     <>
       <RebrandingHomeFrame>
       <main className="min-h-screen bg-[var(--uzde-page-bg)] pt-[calc(66px+var(--rebranding-height)-4px)] text-slate-950 transition-[background-color,color,padding] lg:pt-[calc(5rem+var(--rebranding-height))] dark:text-white">
+        <div className="mx-auto w-full max-w-[1600px]">
         <EditorialNewsHome />
 
         <MarketHomeEntry />
@@ -39,6 +40,7 @@ export default function HomePage() {
         <EditorialSupportSection />
 
         <HomeShareCTA />
+        </div>
       </main>
 
       <HomeFooter />
