@@ -6,27 +6,37 @@ import { Share } from "lucide-react";
 type Props = { locale: "uz" | "de"; title: string; url: string };
 type CopyStatus = "idle" | "success" | "error";
 
-export default function NewsShareActions({ locale, title, url }: Props) {
+export default function NewsShareActions({ locale, title }: Props) {
   const de = locale === "de";
   const [copyStatus, setCopyStatus] = useState<CopyStatus>("idle");
 
-  async function shareArticle() {
+  function shareArticle() {
     setCopyStatus("idle");
-    if (typeof navigator.share === "function") {
-      try {
-        await navigator.share({ title, url });
-        return;
-      } catch (error) {
+    const shareUrl = window.location.href;
+
+    if (window.isSecureContext && typeof navigator.share === "function") {
+      // Call synchronously during the click event to retain user activation.
+      const nativeShare = navigator.share({
+        title: document.title,
+        text: title,
+        url: shareUrl,
+      });
+      void nativeShare.catch((error: unknown) => {
         if (error instanceof DOMException && error.name === "AbortError") return;
+        setCopyStatus("error");
+      });
+      return;
+    }
+
+    void (async () => {
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
+        await navigator.clipboard.writeText(shareUrl);
+        setCopyStatus("success");
+      } catch {
+        setCopyStatus("error");
       }
-    }
-    try {
-      if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
-      await navigator.clipboard.writeText(url);
-      setCopyStatus("success");
-    } catch {
-      setCopyStatus("error");
-    }
+    })();
   }
 
   return (
