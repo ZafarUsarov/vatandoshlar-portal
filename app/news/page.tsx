@@ -150,7 +150,7 @@ export default async function NewsPage() {
         </Container>
       </main>
 
-      <SectionPromo target="guide" variant="editorial" />
+      <SectionPromo target="guide" />
 
       <Footer variant="editorial" />
     </>
