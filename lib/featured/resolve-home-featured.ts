@@ -1,5 +1,5 @@
 import { getDb } from "@/lib/db";
-import { getPublishedNews, getPublishedNewsBySlug } from "@/lib/news/public-news-repository";
+import { getPublishedNewsBySlug } from "@/lib/news/public-news-repository";
 import { getActiveFeaturedContent, localizeFeaturedContent } from "./featured-repository";
 import type { FeaturedLocale } from "@/types/featured-content";
 
@@ -54,15 +54,16 @@ export async function resolveHomeFeatured(locale: FeaturedLocale): Promise<HomeF
       };
     }
   }
-  const latest = (await getPublishedNews(locale, 1))[0];
-  if (latest) return {
-    title: latest.title, description: latest.excerpt || null, category: latest.category,
-    imageUrl: latest.imageUrl ?? null, href: `/news/${latest.slug}`, cta: fallbackCta,
-  };
   return {
-    title: de ? "LEBEN IN DEUTSCHLAND. ALLES AN EINEM ORT." : "GERMANIYA HAYOTI. BIR JOYDA.",
-    description: de ? "Nachrichten, Ratgeber und Möglichkeiten." : "Yangiliklar, qo‘llanmalar va imkoniyatlar.",
-    category: de ? "UZDE / COMMUNITY" : "UZDE / HAMJAMIYAT",
-    imageUrl: null, href: "/news", cta: de ? "Nachrichten entdecken" : "Yangiliklarni ko‘rish",
+    title: de
+      ? "Usbekische Fachkräfte in Deutschland"
+      : "Germaniyadagi özbek mutaxassislari",
+    description: de
+      ? "Entdecken Sie usbekische Fachkräfte aus verschiedenen Bereichen in Deutschland."
+      : "Germaniyada turli sohalarda faoliyat yuritayotgan özbek mutaxassislari.",
+    category: de ? "FACHKRÄFTE" : "MUTAXASSISLAR",
+    imageUrl: "/images/home/featured/uzde-specialists-featured.webp",
+    href: "/specialists",
+    cta: de ? "Fachkräfte entdecken" : "Mutaxassislarni körish",
   };
 }
