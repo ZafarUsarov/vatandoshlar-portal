@@ -242,24 +242,24 @@ export default async function NewsDetailPage({
         contentId={article.id}
       />
 
-      <main className="min-h-screen bg-white pt-20 text-slate-950 transition-colors dark:bg-slate-950 dark:text-white">
-        <article className="mx-auto max-w-5xl px-5 pb-10 pt-5 sm:px-7 sm:pt-7 lg:px-8">
-          <Link href="/news" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition hover:text-emerald-700 dark:text-slate-300">
+      <main className="min-h-screen bg-[#f7f7f7] pt-20 text-zinc-950 transition-colors dark:bg-[var(--uzde-home-surface,#111419)] dark:text-zinc-100">
+        <article className="mx-auto max-w-6xl px-5 pb-16 pt-7 sm:px-7 sm:pt-10 lg:px-8">
+          <Link href="/news" className="inline-flex items-center gap-2 border-b border-transparent pb-1 text-sm font-medium text-zinc-600 transition-colors hover:border-emerald-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white">
             ← {t("backToAll")}
           </Link>
 
-          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-slate-500 sm:text-sm dark:text-slate-400">
-            <span className="rounded-full bg-blue-50 px-3 py-1 font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-300">{article.category}</span>
-            <span className="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">{article.contentType}</span>
+          <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-zinc-300 pt-5 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-600 dark:border-zinc-700 dark:text-zinc-400">
+            <span className="border-l-2 border-emerald-600 pl-3 text-zinc-800 dark:text-zinc-200">{article.category}</span>
+            <span className="text-zinc-500 dark:text-zinc-400">{article.contentType}</span>
 
-            <time className="ml-auto hidden sm:inline" dateTime={article.verifiedAt}>{formatNewsDate(article.verifiedAt, locale)}</time>
+            <time className="ml-auto" dateTime={article.verifiedAt}>{formatNewsDate(article.verifiedAt, locale)}</time>
           </div>
 
-          <h1 className="mt-4 max-w-4xl text-[clamp(1.9rem,3.6vw,3rem)] font-bold leading-[1.13] tracking-tight">{article.title}</h1>
-          <p className="mt-3 max-w-4xl text-base leading-7 text-slate-600 sm:text-lg dark:text-slate-300">{article.excerpt}</p>
+          <h1 className="mt-7 max-w-5xl text-[clamp(2.4rem,5vw,5.5rem)] font-semibold leading-[1.06] tracking-[-0.045em]">{article.title}</h1>
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-600 sm:text-xl dark:text-zinc-300">{article.excerpt}</p>
 
           {(article.imageUrl || article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026") && (
-            <div className="relative mt-5 aspect-[16/9] overflow-hidden rounded-2xl bg-slate-100 sm:aspect-[16/7] dark:bg-slate-800">
+            <div className={`relative mt-9 aspect-[16/9] overflow-hidden rounded-sm bg-zinc-200 dark:bg-zinc-800 ${article.slug === "vatandoshlar-de-endi-uzde" ? "" : "sm:aspect-[16/7]"}`}>
               <Image
                 src={article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : article.imageUrl!}
                 alt={isPegasus ? (appLocale === "de" ? "Pegasus Airlines Airbus A320neo am Flughafen Köln/Bonn" : "Köln/Bonn aeroportidagi Pegasus Airlines Airbus A320neo samolyoti") : article.title}
@@ -267,7 +267,7 @@ export default async function NewsDetailPage({
                 unoptimized
                 priority
                 sizes="(max-width: 1024px) 100vw, 1024px"
-                className="object-cover"
+                className={article.slug === "vatandoshlar-de-endi-uzde" ? "object-contain" : "object-cover"}
               />
             </div>
           )}
@@ -278,23 +278,8 @@ export default async function NewsDetailPage({
             </p>
           )}
 
-          {article.slug === "vatandoshlar-de-endi-uzde" && (
-            <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-5" aria-label={appLocale === "de" ? "Bisheriges und neues Logo" : "Eski va yangi logo"}>
-              {[
-                { src: "/images/brand/Logo_New_Transparent.png", label: appLocale === "de" ? "Bisher: Vatandoshlar.de" : "Avval: Vatandoshlar.de" },
-                { src: "/images/brand/uzde/uzde-logo-original-transparent.png", label: appLocale === "de" ? "Jetzt: UzDe" : "Hozir: UzDe" },
-              ].map(({ src, label }) => (
-                <figure key={src} className={`flex min-w-0 flex-col items-center justify-center gap-3 rounded-2xl border p-4 sm:p-7 ${src.includes("uzde-logo-original") ? "border-slate-800 bg-slate-950" : "border-slate-200 bg-white"}`}>
-                  <div className="relative h-28 w-full sm:h-44">
-                    <Image src={src} alt={label} fill sizes="(max-width: 640px) 50vw, 360px" className="object-contain" />
-                  </div>
-                  <figcaption className={`text-center text-xs font-semibold sm:text-sm ${src.includes("uzde-logo-original") ? "text-white" : "text-slate-700"}`}>{label}</figcaption>
-                </figure>
-              ))}
-            </div>
-          )}
 
-          <div className="mx-auto mt-6 flex max-w-4xl flex-col gap-3 border-y border-slate-200 py-3 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
+          <div className="mx-auto mt-8 flex max-w-3xl flex-col gap-3 border-y border-zinc-300 py-4 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-700">
               <div className="flex shrink-0 items-center justify-center gap-4 text-xs text-slate-600 sm:justify-start sm:text-sm dark:text-slate-300">
                 <span className="inline-flex items-center gap-1.5"><Clock3 size={15} aria-hidden="true" />{article.readingTime}</span>
                 <ViewCount count={article.viewCount} locale={locale} />
@@ -302,19 +287,19 @@ export default async function NewsDetailPage({
               <NewsShareActions locale={appLocale} title={article.title} url={articleUrl} />
             </div>
 
-          <div className="mx-auto mt-7 max-w-4xl">
+          <div className="mx-auto mt-10 max-w-3xl">
             {article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? (
               <>
                 <p className="text-base leading-7 text-slate-700 sm:text-[17px] dark:text-slate-300">{article.content[0]}</p>
-                <div className="mt-5 rounded-2xl border border-emerald-100 bg-emerald-50/70 p-5 dark:border-emerald-900 dark:bg-emerald-950/30">
-                  <h2 className="text-lg font-bold text-emerald-950 dark:text-emerald-100">{appLocale === "de" ? "Das Wichtigste auf einen Blick" : "Asosiy yangilik"}</h2>
+                <div className="mt-8 border-l-2 border-emerald-600 bg-white/60 px-6 py-6 dark:bg-white/[0.04]">
+                  <h2 className="text-lg font-semibold tracking-tight text-zinc-950 dark:text-zinc-100">{appLocale === "de" ? "Das Wichtigste auf einen Blick" : "Asosiy yangilik"}</h2>
                   <p className="mt-2 text-[15px] leading-7 text-slate-700 dark:text-slate-300">{article.content[2] ?? article.content[1]}</p>
                 </div>
-                <h2 className="mt-7 text-2xl font-bold tracking-tight">{appLocale === "de" ? "Was ändert sich?" : "Nimalar o‘zgaradi?"}</h2>
-                <div className="mt-4 space-y-4">
+                <h2 className="mt-12 border-t border-zinc-300 pt-8 text-2xl font-semibold tracking-tight dark:border-zinc-700">{appLocale === "de" ? "Was ändert sich?" : "Nimalar o‘zgaradi?"}</h2>
+                <div className="mt-6 divide-y divide-zinc-200 dark:divide-zinc-800">
                   {article.content.slice(1).filter((_, i) => i !== 1).map((paragraph, index) => (
-                    <div key={`${article.slug}-${index}`} className="flex items-start gap-3">
-                      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">{index + 1}</span>
+                    <div key={`${article.slug}-${index}`} className="grid grid-cols-[2.5rem_minmax(0,1fr)] items-start gap-4 py-5">
+                      <span className="flex w-11 shrink-0 flex-col items-start gap-2 pt-0.5 text-sm font-semibold tabular-nums text-zinc-900 dark:text-zinc-100"><span>{String(index + 1).padStart(2, "0")}</span><span aria-hidden="true" className="h-0.5 w-7 bg-emerald-600 dark:bg-emerald-400" /></span>
                       <p className="pt-1 text-[15px] leading-7 text-slate-700 sm:text-base dark:text-slate-300">{paragraph}</p>
                     </div>
                   ))}
@@ -357,15 +342,15 @@ export default async function NewsDetailPage({
             )}
 
             {article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" && (
-              <Link href="/guide/recognition/regulated-professions" className="mt-7 flex items-center gap-3 rounded-2xl border border-blue-200 bg-blue-50/70 px-4 py-4 text-blue-950 transition hover:border-blue-400 dark:border-blue-900 dark:bg-blue-950/30 dark:text-blue-100">
-                <BookOpen className="size-7 shrink-0 text-blue-600" aria-hidden="true" />
-                <span className="min-w-0 flex-1"><span className="block text-xs font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-300">{appLocale === "de" ? "Hilfreicher Ratgeber" : "Foydali qo‘llanma"}</span><span className="block text-sm font-bold sm:text-base">{appLocale === "de" ? "Anerkennung reglementierter Berufe" : "Shifokorlar uchun qo‘llanma: diplomni tan oldirish"}</span></span>
+              <Link href="/guide/recognition/regulated-professions" className="mt-10 flex items-center gap-4 border-y border-zinc-300 py-6 text-zinc-950 transition-colors hover:text-emerald-700 dark:border-zinc-700 dark:text-zinc-100 dark:hover:text-emerald-300">
+                <BookOpen className="size-6 shrink-0 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
+                <span className="min-w-0 flex-1"><span className="block text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">{appLocale === "de" ? "Hilfreicher Ratgeber" : "Foydali qo‘llanma"}</span><span className="block text-sm font-bold sm:text-base">{appLocale === "de" ? "Anerkennung reglementierter Berufe" : "Shifokorlar uchun qo‘llanma: diplomni tan oldirish"}</span></span>
                 <ArrowUpRight className="size-5 shrink-0" aria-hidden="true" />
               </Link>
             )}
 
             {!isPegasus && (
-              <div className="mt-7 grid gap-4 border-t border-slate-200 pt-4 sm:grid-cols-[1fr_auto] dark:border-slate-800">
+              <div className="mt-10 grid gap-4 border-t border-zinc-300 pt-6 sm:grid-cols-[1fr_auto] dark:border-zinc-700">
                 <div className="text-sm">
                   <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-semibold text-blue-700 hover:underline dark:text-blue-400">
                     {appLocale === "de" ? "Offizielle Quelle:" : "Rasmiy manba:"} {article.sourceName}<ExternalLink className="size-4" aria-hidden="true" />
@@ -378,27 +363,28 @@ export default async function NewsDetailPage({
         </article>
 
         {relatedNews.length > 0 && (
-          <section className="border-t border-slate-200 bg-slate-50 py-20 transition-colors dark:border-slate-800 dark:bg-slate-900/60">
+          <section className="border-t border-zinc-300 bg-[#f7f7f7] py-16 transition-colors dark:border-zinc-700 dark:bg-[var(--uzde-home-surface,#111419)]">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
                 {t(
                   "related.eyebrow",
                 )}
               </p>
 
-              <h2 className="mt-3 text-3xl font-bold">
+              <h2 className="mt-4 text-[clamp(2rem,4vw,3.5rem)] font-semibold tracking-[-0.04em]">
                 {t(
                   "related.title",
                 )}
               </h2>
 
-              <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3 dark:[&_article]:!border-[#292e36] dark:[&_article]:!bg-[#191c21]">
                 {relatedNews.map(
                   (
                     item,
                     index,
                   ) => (
                     <NewsCard
+                      relatedRecommendation
                       key={
                         item.slug
                       }
@@ -417,7 +403,7 @@ export default async function NewsDetailPage({
         )}
       </main>
 
-      <footer className="border-t border-slate-200 bg-white py-10 transition-colors dark:border-slate-800 dark:bg-slate-950">
+      <footer className="border-t border-zinc-300 bg-[#f7f7f7] py-10 transition-colors dark:border-zinc-700 dark:bg-[var(--uzde-home-surface,#111419)]">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between lg:px-8 dark:text-slate-400">
           <p>
             © 2026 <BrandName />

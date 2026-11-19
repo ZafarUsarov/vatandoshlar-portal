@@ -15,6 +15,8 @@ type NewsCardProps = {
   lead?: boolean;
   horizontal?: boolean;
   catalog?: boolean;
+  newsroom?: boolean;
+  relatedRecommendation?: boolean;
 };
 
 type IconProps = {
@@ -99,6 +101,8 @@ export default async function NewsCard({
   lead = false,
   horizontal = false,
   catalog = false,
+  newsroom = false,
+  relatedRecommendation = false,
 }: NewsCardProps) {
   const locale = await getLocale();
   const t = await getTranslations("NewsCard");
@@ -111,7 +115,7 @@ export default async function NewsCard({
       variant="interactive"
       padding="none"
       aria-labelledby={titleId}
-      className={`group relative isolate flex overflow-hidden bg-surface animate-fade-in-up ${horizontal ? "flex-col-reverse rounded-xl sm:flex-row-reverse" : catalog ? "flex-col rounded-xl" : `flex-col rounded-[1.5rem] ${compact ? "h-auto" : "h-full"}`}`}
+      className={`group relative isolate flex overflow-hidden bg-surface animate-fade-in-up ${newsroom ? "h-full min-w-0 flex-col rounded-xl border border-slate-200 shadow-[0_1px_3px_rgba(15,23,42,0.05)] dark:border-[#292e36] dark:bg-[#191c21]" : horizontal ? "flex-col-reverse rounded-xl sm:flex-row-reverse" : catalog ? "flex-col rounded-xl" : `flex-col rounded-[1.5rem] ${compact ? "h-auto" : "h-full"}`}`}
       style={{ animationDelay: `${index * 70}ms` }}
     >
       {!horizontal && !catalog && <div
@@ -130,23 +134,25 @@ export default async function NewsCard({
       />}
 
       {item.imageUrl && (
-        <div className={`relative z-10 w-full overflow-hidden ${horizontal ? "aspect-[16/7] shrink-0 sm:aspect-auto sm:w-[32%]" : catalog ? "aspect-[2.5/1] shrink-0" : lead ? "min-h-[220px] flex-1" : "aspect-[2/1] shrink-0"}`}>
+        <div className={`relative z-10 w-full overflow-hidden ${newsroom ? "aspect-[16/9] shrink-0" : horizontal ? "aspect-[16/7] shrink-0 sm:aspect-auto sm:w-[32%]" : catalog ? (item.slug === "vatandoshlar-de-endi-uzde" ? "aspect-[16/9] shrink-0" : "aspect-[2.5/1] shrink-0") : lead ? "min-h-[220px] flex-1" : relatedRecommendation && item.slug === "vatandoshlar-de-endi-uzde" ? "aspect-[16/9] shrink-0" : "aspect-[2/1] shrink-0"}`}>
           <Image
-            src={item.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : item.imageUrl}
+            src={newsroom && item.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/newsroom-medical-editorial.webp" : item.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : item.imageUrl}
             alt={item.title}
             fill
             unoptimized
             sizes={horizontal ? "(max-width: 640px) 100vw, 32vw" : "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"}
             className={
                 item.slug === "vatandoshlar-de-endi-uzde"
-                  ? "object-contain p-5 sm:p-7 bg-[#020617]"
+                  ? "object-contain bg-[#f7f7f4]"
+                  : newsroom
+                  ? "object-cover object-center transition-transform duration-500 group-hover:scale-[1.015]"
                   : "object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               }
           />
         </div>
       )}
 
-      <div className={`relative z-10 flex w-full flex-col ${horizontal ? "min-w-0 flex-1 justify-center p-4 sm:p-5" : catalog ? "p-4" : lead ? "shrink-0 p-4 sm:p-5" : compact ? "flex-1 p-4 sm:p-5" : "flex-1 p-5 sm:p-6"}`}>
+      <div className={`relative z-10 flex w-full flex-col ${newsroom ? "min-w-0 flex-1 p-4 sm:p-5" : horizontal ? "min-w-0 flex-1 justify-center p-4 sm:p-5" : catalog ? "p-4" : lead ? "shrink-0 p-4 sm:p-5" : compact ? "flex-1 p-4 sm:p-5" : "flex-1 p-5 sm:p-6"}`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Badge variant="primary">
             {item.category}
@@ -165,14 +171,14 @@ export default async function NewsCard({
           </div>
         </div>
 
-        <div className={compact || lead || horizontal || catalog ? "mt-2" : "mt-5"}>
+        <div className={newsroom ? "mt-3 flex-1" : compact || lead || horizontal || catalog ? "mt-2" : "mt-5"}>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">
             {item.contentType}
           </p>
 
           <h3
             id={titleId}
-            className={`mt-2 font-bold leading-snug tracking-tight text-text-primary ${catalog ? "text-base sm:text-lg" : horizontal ? "text-lg sm:text-xl" : compact ? "text-lg" : "text-xl sm:text-[22px]"}`}
+            className={`mt-2 font-bold leading-snug tracking-tight text-text-primary ${newsroom ? "line-clamp-3 text-base sm:text-lg" : catalog ? "text-base sm:text-lg" : horizontal ? "text-lg sm:text-xl" : compact ? "text-lg" : "text-xl sm:text-[22px]"}`}
           >
             <Link
               href={newsHref}
@@ -191,7 +197,7 @@ export default async function NewsCard({
           </p>
         </div>
 
-        <div className={compact || lead || horizontal || catalog ? "mt-3" : "mt-auto pt-5"}>
+        <div className={newsroom ? "mt-auto pt-5" : compact || lead || horizontal || catalog ? "mt-3" : "mt-auto pt-5"}>
           <div className="flex items-end justify-between gap-5 border-t border-border-default pt-3">
             <div className="min-w-0">
               <div className="flex items-center gap-2 text-xs font-medium text-text-muted">

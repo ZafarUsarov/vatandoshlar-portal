@@ -556,3 +556,22 @@ export async function getFeaturedPublishedNews(
     locale,
   );
 }
+
+/** Newsroom-only selection. Homepage `featured` remains independent. */
+export async function getNewsroomFeaturedSlug(): Promise<string | null> {
+  assertDatabaseAvailable();
+  if (canSkipDatabaseDuringBuild()) return null;
+  try {
+    const result = await getDb().query<{ slug: string }>(
+      `SELECT slug FROM news_articles
+       WHERE status = 'published' AND newsroom_featured = TRUE
+       LIMIT 1`,
+    );
+    return result.rows[0]?.slug ?? null;
+  } catch (error) {
+    if (error && typeof error === "object" && "code" in error && error.code === "42703") {
+      return null;
+    }
+    throw error;
+  }
+}

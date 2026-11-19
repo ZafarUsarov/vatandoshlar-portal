@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 
@@ -6,14 +8,13 @@ import Footer from "../../components/Footer";
 import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import NewsCard from "../../components/cards/NewsCard";
-import BrandName from "../../components/ui/BrandName";
+import NewsroomCatalogFilter from "../../components/news/NewsroomCatalogFilter";
 import {
   Container,
-  PageHero,
-  Section,
 } from "../../components/ui";
 import {
   getPublishedNews,
+  getNewsroomFeaturedSlug,
   type PublicNewsLocale,
 } from "../../lib/news/public-news-repository";
 
@@ -79,206 +80,79 @@ export default async function NewsPage() {
       : "uz";
 
   const allNews = await getPublishedNews(appLocale);
+  const newsroomSlug = await getNewsroomFeaturedSlug();
+  const lead = allNews.find((item) => item.slug === newsroomSlug)
+    ?? allNews.find((item) => Boolean(item.imageUrl))
+    ?? allNews[0];
+  const remaining = allNews.filter((item) => item.slug !== lead?.slug);
+  const latest = remaining.slice(0, 2);
+  const catalog = allNews;
+  const de = appLocale === "de";
 
   return (
     <>
       <Header />
 
-      <main className="page-main">
-        <div className="relative isolate overflow-hidden">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
-          >
-            <Image
-              src="/images/news/news-master-visual.webp"
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              quality={88}
-              className="object-cover object-[72%_center] opacity-42 sm:object-[70%_center] sm:opacity-50 lg:object-[68%_center] lg:opacity-62 dark:opacity-34 dark:sm:opacity-42 dark:lg:opacity-52"
-            />
-
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.995)_0%,rgba(248,250,252,0.97)_34%,rgba(248,250,252,0.84)_52%,rgba(248,250,252,0.46)_72%,rgba(248,250,252,0.18)_100%)] dark:bg-[linear-gradient(90deg,rgba(2,6,23,0.995)_0%,rgba(2,6,23,0.97)_34%,rgba(2,6,23,0.86)_52%,rgba(2,6,23,0.58)_72%,rgba(2,6,23,0.30)_100%)]" />
-
-            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(248,250,252,0.06),rgba(248,250,252,0.44))] dark:bg-[linear-gradient(to_bottom,rgba(2,6,23,0.04),rgba(2,6,23,0.28))]" />
-
-            <div className="absolute -left-40 top-8 size-[32rem] rounded-full bg-cyan-200/16 blur-[120px] sm:size-[38rem] lg:size-[44rem] dark:bg-cyan-400/[0.025]" />
-            <div className="absolute -right-32 -top-20 size-[34rem] rounded-full bg-emerald-200/14 blur-[130px] sm:size-[40rem] lg:size-[46rem] dark:bg-emerald-400/[0.025]" />
-
-            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-slate-50/55 dark:to-slate-950/30" />
-            <div className="absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(148,163,184,0.18),rgba(16,185,129,0.16),rgba(56,189,248,0.14),transparent)]" />
-          </div>
-
-          <PageHero
-            eyebrow={<span className="normal-case"><BrandName /></span>}
-            title={t(
-              "hero.title",
-            )}
-            description={t(
-              "hero.description",
-            )}
-            actions={
-              <div
-                className="flex flex-wrap items-center gap-2"
-                aria-label={
-                  locale === "de"
-                    ? "Informationsmerkmale"
-                    : "Ma’lumot xususiyatlari"
-                }
-              >
-                <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200/80 bg-emerald-50/85 px-3 py-1.5 text-xs font-semibold text-emerald-800 shadow-[0_1px_0_rgba(255,255,255,0.65)] backdrop-blur-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300 dark:shadow-none">
-                  <span
-                    aria-hidden="true"
-                    className="size-1.5 rounded-full bg-emerald-500"
-                  />
-                  {locale === "de"
-                    ? "Offizielle Quellen"
-                    : "Rasmiy manbalar"}
-                </span>
-
-                <span className="inline-flex items-center gap-2 rounded-full border border-border-default bg-surface/85 px-3 py-1.5 text-xs font-semibold text-text-secondary shadow-[0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-sm dark:shadow-none">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    className="size-3.5 text-brand"
-                  >
-                    <path
-                      d="m6.75 10 2.1 2.1 4.4-4.7"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <circle
-                      cx="10"
-                      cy="10"
-                      r="7"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                    />
-                  </svg>
-
-                  {locale === "de"
-                    ? "Geprüft"
-                    : "Tekshirilgan"}
-                </span>
-
-                <span className="inline-flex items-center gap-2 rounded-full border border-border-default bg-surface/85 px-3 py-1.5 text-xs font-semibold text-text-secondary shadow-[0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-sm dark:shadow-none">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    className="size-3.5 text-brand"
-                  >
-                    <circle
-                      cx="10"
-                      cy="10"
-                      r="7"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M3.4 10h13.2M10 3c1.7 1.9 2.6 4.2 2.6 7S11.7 15.1 10 17M10 3C8.3 4.9 7.4 7.2 7.4 10s.9 5.1 2.6 7"
-                      stroke="currentColor"
-                      strokeWidth="1.3"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-
-                  {locale === "de"
-                    ? "Deutschland"
-                    : "Germaniya"}
-                </span>
-              </div>
-            }
-            className="relative z-10 !bg-transparent !pb-6 sm:!pb-8 lg:!pb-10"
-            contentClassName="relative z-10"
-          />
-        </div>
-
-
-        <Section
-          tone="page"
-          spacing="none"
-          className="pb-12 pt-5 sm:pb-16 sm:pt-7"
-          aria-labelledby="all-news-heading"
-        >
-          <Container>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="page-eyebrow">
-                  {t(
-                    "all.eyebrow",
-                  )}
-                </p>
-
-                <h2
-                  id="all-news-heading"
-                  className="section-title mt-2"
-                >
-                  {t(
-                    "all.title",
-                  )}
-                </h2>
-
-                <p className="section-description mt-2">
-                  {t(
-                    "all.description",
-                  )}
-                </p>
-              </div>
-
-              <p className="shrink-0 text-sm text-text-muted">
-                {t(
-                  "all.count",
-                  {
-                    count:
-                      allNews.length,
-                  },
-                )}
-              </p>
-            </div>
-
-            {allNews.length > 0 ? (
-              <div className="mt-6 space-y-5">
-                <div className="grid gap-4">
-                  {allNews.slice(0, 2).map((item, index) => (
-                    <NewsCard key={item.slug} item={{
-                        ...item,
-                        imageUrl:
-                          item.slug === "vatandoshlar-de-endi-uzde"
-                            ? "/images/brand/uzde/uzde-logo-original-transparent.webp"
-                            : item.imageUrl,
-                      }} index={index} horizontal />
-                  ))}
-                </div>
-                {allNews.length > 2 && (
-                  <div className="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {allNews.slice(2).map((item, index) => (
-                      <NewsCard key={item.slug} item={item} index={index + 2} catalog />
-                    ))}
+      <main className="page-main uzde-newsroom-page uzde-newsroom-editorial !text-slate-950 dark:!text-white">
+        <Container>
+          <header className="pt-8 pb-7 text-center sm:pt-9 sm:pb-8 lg:pt-10 lg:pb-9">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">UZDE / {de ? "NACHRICHTEN" : "YANGILIKLAR"}</p>
+            <h1 className="mx-auto mt-4 max-w-full text-[clamp(2.75rem,8.8vw,8.25rem)] font-semibold leading-[1.02] tracking-[-0.015em] [overflow-wrap:anywhere]">{de ? "Nachrichten." : "Yangiliklar."}</h1>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:mt-5 sm:text-lg">{de ? "Wichtige Ereignisse. Verlässliche Informationen. Neue Chancen." : "Muhim voqealar. Işonçli ma’lumotlar. Yangi imkoniyatlar."}</p>
+          </header>
+          {lead && (
+            <section aria-labelledby="newsroom-lead-heading" className="border-b border-slate-200 pt-0 pb-10 dark:border-slate-800 sm:pb-12">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">UZDE / {de ? "TITELTHEMA" : "ASOSIY MAVZU"}</p>
+              <Link href={`/news/${lead.slug}`} className="group block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500">
+                {lead.imageUrl ? (
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 sm:aspect-[16/9] lg:aspect-[2/1]">
+                    <Image src={lead.imageUrl} alt={lead.title} fill priority sizes="(min-width: 1280px) 1152px, 100vw" className="object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.015]" />
                   </div>
+                ) : (
+                  <div className="flex aspect-[16/8] items-end bg-slate-100 p-8 dark:bg-slate-900"><span className="text-xs font-semibold uppercase tracking-widest text-slate-500">UZDE / EDITORIAL</span></div>
                 )}
+                <div className="mt-6 flex items-start justify-between gap-6">
+                  <div className="min-w-0 max-w-4xl">
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{lead.category}</p>
+                    <h2 id="newsroom-lead-heading" className="mt-3 text-balance text-3xl font-semibold leading-tight tracking-[-0.045em] sm:text-4xl lg:text-5xl">{lead.title}</h2>
+                    <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">{lead.excerpt}</p>
+                  </div>
+                  <ArrowUpRight aria-hidden="true" className="mt-1 size-6 shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </div>
+              </Link>
+            </section>
+          )}
+          {latest.length > 0 && (
+            <section aria-labelledby="newsroom-latest-heading" className="border-b border-slate-200 py-10 dark:border-slate-800 sm:py-14">
+              <h2 id="newsroom-latest-heading" className="mb-7 text-sm font-semibold uppercase tracking-[0.14em]">{de ? "NEUESTE NACHRICHTEN" : "SÖNGGI YANGILIKLAR"}</h2>
+              <div className="grid items-stretch gap-8 sm:grid-cols-2">
+                {latest.map((item, index) => <NewsCard key={item.slug} item={item} index={index} catalog newsroom />)}
               </div>
+            </section>
+          )}
+          <section aria-labelledby="newsroom-all-heading" className="py-10 sm:py-14">
+            <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
+              <h2 id="newsroom-all-heading" className="text-sm font-semibold uppercase tracking-[0.14em]">{de ? "ALLE BEITRÄGE" : "BARÇA MATERIALLAR"}</h2>
+              <span className="text-sm text-slate-500 dark:text-slate-400">{t("all.count", { count: catalog.length })}</span>
+            </div>
+            {catalog.length > 0 ? (
+              <NewsroomCatalogFilter
+                categories={Array.from(new Set(catalog.map((item) => item.category)))}
+                categoryByIndex={catalog.map((item) => item.category)}
+                locale={appLocale}
+              >
+                {catalog.map((item, index) => <NewsCard key={item.slug} item={item} index={index + 2} catalog newsroom />)}
+              </NewsroomCatalogFilter>
             ) : (
-              <div className="mt-10 rounded-3xl border border-dashed border-border-default bg-surface p-8 text-center sm:p-10">
-                <p className="text-base font-semibold text-text-primary">
-                  {locale === "de"
-                    ? "Derzeit sind keine veröffentlichten Nachrichten vorhanden."
-                    : "Hozircha e’lon qilingan yangiliklar mavjud emas."}
-                </p>
-              </div>
+              <p className="py-8 text-sm text-slate-500 dark:text-slate-400">{de ? "Keine weiteren Beiträge vorhanden." : "Hozircha boshqa materiallar mavjud emas."}</p>
             )}
-          </Container>
-        </Section>
+          </section>
+        </Container>
       </main>
 
-      <SectionPromo target="services" />
+      <SectionPromo target="guide" variant="editorial" />
 
-      <Footer />
+      <Footer variant="editorial" />
     </>
   );
 }
