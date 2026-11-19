@@ -258,10 +258,10 @@ export default async function NewsDetailPage({
           <h1 className="mt-7 max-w-5xl text-[clamp(2.4rem,5vw,5.5rem)] font-semibold leading-[1.06] tracking-[-0.045em]">{article.title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-600 sm:text-xl dark:text-zinc-300">{article.excerpt}</p>
 
-          {(article.imageUrl || article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026") && (
+          {(article.imageUrl || article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" || article.slug === "vatandoshlar-de-endi-uzde") && (
             <div className={`relative mt-9 aspect-[16/9] overflow-hidden rounded-sm bg-zinc-200 dark:bg-zinc-800 ${article.slug === "vatandoshlar-de-endi-uzde" ? "" : "sm:aspect-[16/7]"}`}>
               <Image
-                src={article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : article.imageUrl!}
+                src={article.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : article.slug === "vatandoshlar-de-endi-uzde" ? "/images/news/uzde-rebranding-2026.webp" : article.imageUrl!}
                 alt={isPegasus ? (appLocale === "de" ? "Pegasus Airlines Airbus A320neo am Flughafen Köln/Bonn" : "Köln/Bonn aeroportidagi Pegasus Airlines Airbus A320neo samolyoti") : article.title}
                 fill
                 unoptimized

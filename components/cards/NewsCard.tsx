@@ -133,10 +133,10 @@ export default async function NewsCard({
         className="pointer-events-none absolute -bottom-28 -left-24 size-56 rounded-full bg-brand/5 blur-3xl transition-transform duration-700 group-hover:scale-125"
       />}
 
-      {item.imageUrl && (
+      {(item.imageUrl || item.slug === "vatandoshlar-de-endi-uzde") && (
         <div className={`relative z-10 w-full overflow-hidden ${newsroom ? "aspect-[16/9] shrink-0" : horizontal ? "aspect-[16/7] shrink-0 sm:aspect-auto sm:w-[32%]" : catalog ? (item.slug === "vatandoshlar-de-endi-uzde" ? "aspect-[16/9] shrink-0" : "aspect-[2.5/1] shrink-0") : lead ? "min-h-[220px] flex-1" : relatedRecommendation && item.slug === "vatandoshlar-de-endi-uzde" ? "aspect-[16/9] shrink-0" : "aspect-[2/1] shrink-0"}`}>
           <Image
-            src={newsroom && item.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/newsroom-medical-editorial.webp" : item.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : item.imageUrl}
+            src={newsroom && item.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/newsroom-medical-editorial.webp" : item.slug === "germaniyada-tibbiyot-diplomlarini-tan-olish-2026" ? "/images/news/medical-recognition-2026.webp" : item.slug === "vatandoshlar-de-endi-uzde" ? "/images/news/uzde-rebranding-2026.webp" : item.imageUrl!}
             alt={item.title}
             fill
             unoptimized

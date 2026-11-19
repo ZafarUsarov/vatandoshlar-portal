@@ -82,7 +82,7 @@ export default async function NewsPage() {
   const allNews = await getPublishedNews(appLocale);
   const newsroomSlug = await getNewsroomFeaturedSlug();
   const lead = allNews.find((item) => item.slug === newsroomSlug)
-    ?? allNews.find((item) => Boolean(item.imageUrl))
+    ?? allNews.find((item) => Boolean(item.imageUrl || item.slug === "vatandoshlar-de-endi-uzde"))
     ?? allNews[0];
   const remaining = allNews.filter((item) => item.slug !== lead?.slug);
   const latest = remaining.slice(0, 2);
@@ -104,9 +104,9 @@ export default async function NewsPage() {
             <section aria-labelledby="newsroom-lead-heading" className="border-b border-slate-200 pt-0 pb-10 dark:border-slate-800 sm:pb-12">
               <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">UZDE / {de ? "TITELTHEMA" : "ASOSIY MAVZU"}</p>
               <Link href={`/news/${lead.slug}`} className="group block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500">
-                {lead.imageUrl ? (
+                {(lead.imageUrl || lead.slug === "vatandoshlar-de-endi-uzde") ? (
                   <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 sm:aspect-[16/9] lg:aspect-[2/1]">
-                    <Image src={lead.imageUrl} alt={lead.title} fill priority sizes="(min-width: 1280px) 1152px, 100vw" className="object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.015]" />
+                    <Image src={lead.slug === "vatandoshlar-de-endi-uzde" ? "/images/news/uzde-rebranding-2026.webp" : lead.imageUrl!} alt={lead.title} fill priority sizes="(min-width: 1280px) 1152px, 100vw" className="object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.015]" />
                   </div>
                 ) : (
                   <div className="flex aspect-[16/8] items-end bg-slate-100 p-8 dark:bg-slate-900"><span className="text-xs font-semibold uppercase tracking-widest text-slate-500">UZDE / EDITORIAL</span></div>
