@@ -396,244 +396,6 @@ function ClockIcon() {
   );
 }
 
-function CommandIcon({
-  icon,
-}: {
-  icon: CommandIconName;
-}) {
-  const commonProps = {
-    "aria-hidden": true,
-    className: "h-5 w-5",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 1.8,
-    viewBox: "0 0 24 24",
-  };
-
-  switch (icon) {
-    case "home":
-      return (
-        <svg {...commonProps}>
-          <path
-            d="m3.75 10.25 8.25-7 8.25 7V20H14.5v-5.75h-5V20H3.75v-9.75Z"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-
-    case "news":
-      return (
-        <svg {...commonProps}>
-          <path
-            d="M5 4.75h11.5A2.5 2.5 0 0 1 19 7.25V19H7.5A2.5 2.5 0 0 1 5 16.5V4.75Z"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M19 9h1.25v7.75A2.25 2.25 0 0 1 18 19"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M8.5 9h7M8.5 12.5h7M8.5 16h4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-
-    case "service":
-      return (
-        <svg {...commonProps}>
-          <path
-            d="M12 3.75 19 6.3v5.15c0 4.35-2.7 7.65-7 9.05-4.3-1.4-7-4.7-7-9.05V6.3L12 3.75Z"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="m8.75 11.9 2.1 2.1 4.5-4.55"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-
-    case "specialist":
-      return (
-        <svg {...commonProps}>
-          <circle cx="9" cy="8" r="3" />
-          <circle cx="16.5" cy="9.5" r="2.5" />
-          <path
-            d="M3.75 19c.35-3.4 2.45-5.25 5.25-5.25S13.9 15.6 14.25 19M14 14.4c2.75-.3 5.45 1.35 5.9 4.6"
-            strokeLinecap="round"
-          />
-        </svg>
-      );
-
-    case "guide":
-      return (
-        <svg {...commonProps}>
-          <path
-            d="M5 4.75h5.25A2.75 2.75 0 0 1 13 7.5v11.75H7A2 2 0 0 1 5 17.25V4.75Z"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M19 4.75h-3.25A2.75 2.75 0 0 0 13 7.5v11.75h4A2 2 0 0 0 19 17.25V4.75Z"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-
-    case "translation":
-      return (
-        <svg {...commonProps}>
-          <path
-            d="M4 5.5h8M8 3.5v2M5.25 8.25c1.5 2.7 3.85 4.9 6.75 6.15"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M11.25 8.25c-1.15 2.15-2.85 4.05-5.15 5.55M14.25 19.5l3.1-8 3.15 8M15.4 16.5h4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-
-    case "legal":
-      return (
-        <svg {...commonProps}>
-          <path
-            d="M12 4v16M6.5 7h11M8 7 4.75 13h6.5L8 7Zm8 0-3.25 6h6.5L16 7Z"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M4.75 13c.35 1.65 1.45 2.5 3.25 2.5s2.9-.85 3.25-2.5M12.75 13c.35 1.65 1.45 2.5 3.25 2.5s2.9-.85 3.25-2.5M8.5 20h7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-
-    case "tax":
-      return (
-        <svg {...commonProps}>
-          <circle cx="12" cy="12" r="8.5" />
-          <path
-            d="M14.75 8.25c-.6-.55-1.35-.85-2.25-.85-1.75 0-3 1.15-3.4 2.85h4.55M9.1 13.1h4.2c-.45 1.6-1.65 2.65-3.3 2.65-.8 0-1.55-.25-2.15-.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-
-    case "job":
-      return (
-        <svg {...commonProps}>
-          <path
-            d="M4 7.75h16A2.25 2.25 0 0 1 22.25 10v8A2.25 2.25 0 0 1 20 20.25H4A2.25 2.25 0 0 1 1.75 18v-8A2.25 2.25 0 0 1 4 7.75Z"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M8.25 7.75V6A2.25 2.25 0 0 1 10.5 3.75h3A2.25 2.25 0 0 1 15.75 6v1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-
-    case "telegram":
-      return (
-        <svg {...commonProps}>
-          <path
-            d="m20.5 4-3.1 15.25c-.2.95-1.05 1.2-1.8.75l-4.7-3.45-2.3 2.2c-.25.25-.45.45-.95.45l.35-4.8 8.75-7.9c.4-.35-.1-.55-.6-.2L5.35 13.1.7 11.65c-1-.3-1.05-1 .2-1.5L19.1 3.1c.85-.3 1.6.2 1.4.9Z"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-
-    case "event":
-      return (
-        <svg {...commonProps}>
-          <rect
-            x="2.75"
-            y="4.75"
-            width="18.5"
-            height="16.5"
-            rx="2.25"
-          />
-          <path d="M7.5 2.75v4M16.5 2.75v4M2.75 9h18.5" />
-        </svg>
-      );
-  }
-}
-
-function getCommandIconStyles(
-  icon: CommandIconName,
-  isSelected: boolean,
-) {
-  const styles: Record<CommandIconName, string> = {
-    home:
-      "border-emerald-600 bg-emerald-600 text-white shadow-md shadow-emerald-600/20 dark:border-emerald-500 dark:bg-emerald-500 dark:text-slate-950",
-    news:
-      "border-blue-200 bg-blue-50 text-blue-600 dark:border-blue-500/25 dark:bg-blue-500/15 dark:text-blue-300",
-    service:
-      "border-emerald-200 bg-emerald-50 text-emerald-600 dark:border-emerald-500/25 dark:bg-emerald-500/15 dark:text-emerald-300",
-    specialist:
-      "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-600 dark:border-fuchsia-500/25 dark:bg-fuchsia-500/15 dark:text-fuchsia-300",
-    guide:
-      "border-emerald-200 bg-emerald-50 text-emerald-600 dark:border-emerald-500/25 dark:bg-emerald-500/15 dark:text-emerald-300",
-    translation:
-      "border-sky-200 bg-sky-50 text-sky-600 dark:border-sky-500/25 dark:bg-sky-500/15 dark:text-sky-300",
-    legal:
-      "border-violet-200 bg-violet-50 text-violet-600 dark:border-violet-500/25 dark:bg-violet-500/15 dark:text-violet-300",
-    tax:
-      "border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-500/25 dark:bg-orange-500/15 dark:text-orange-300",
-    job:
-      "border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-500/25 dark:bg-orange-500/15 dark:text-orange-300",
-    telegram:
-      "border-sky-200 bg-sky-50 text-sky-500 dark:border-sky-500/25 dark:bg-sky-500/15 dark:text-sky-300",
-    event:
-      "border-rose-200 bg-rose-50 text-rose-600 dark:border-rose-500/25 dark:bg-rose-500/15 dark:text-rose-300",
-  };
-
-  return `${styles[icon]} ${
-    isSelected
-      ? "scale-[1.03]"
-      : "group-hover:scale-[1.03]"
-  }`;
-}
-
-function getCategoryStyles(category: SearchCategory) {
-  switch (category) {
-    case "Yangilik":
-      return "bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-300";
-    case "Xizmat":
-      return "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300";
-    case "Mutaxassis":
-      return "bg-fuchsia-50 text-fuchsia-700 dark:bg-fuchsia-500/10 dark:text-fuchsia-300";
-    case "Ish":
-      return "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300";
-    case "Ish platformasi":
-      return "bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300";
-    case "Telegram":
-      return "bg-cyan-50 text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300";
-    case "Tadbir":
-      return "bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-300";
-    case "Qo‘llanma":
-      return "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300";
-    case "Sahifa":
-    default:
-      return "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300";
-  }
-}
-
 function getQuickCategory(command: CommandDefinition): SearchCategory {
   if (command.key === "events") return "Tadbir";
   if (command.key === "telegram") return "Telegram";
@@ -691,8 +453,11 @@ export default function CommandPalette() {
     getMobileSearchViewportServerSnapshot,
   );
   const [isOpen, setIsOpen] = useState(false);
+  const [headerBottom, setHeaderBottom] = useState(80);
+  const [inputHost, setInputHost] = useState<HTMLElement | null>(null);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [activeCategory, setActiveCategory] = useState<SearchCategory | "all">("all");
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   const commands = useMemo<LocalizedCommand[]>(
@@ -738,7 +503,7 @@ export default function CommandPalette() {
     debounceMs: 220,
   });
 
-  const filteredCommands = useMemo<ReadonlyArray<PaletteItem>>(() => {
+  const allCommands = useMemo<ReadonlyArray<PaletteItem>>(() => {
     if (!hasQuery) {
       return commands.map((command) => ({
         id: command.id,
@@ -757,15 +522,34 @@ export default function CommandPalette() {
     }));
   }, [commands, hasQuery, locale, searchResults]);
 
+  const categories = useMemo(() => {
+    const available = Array.from(new Set(allCommands.map((item) => item.category)));
+    return available;
+  }, [allCommands]);
+
+  const filteredCommands = useMemo(
+    () => activeCategory === "all"
+      ? allCommands
+      : allCommands.filter((item) => item.category === activeCategory),
+    [activeCategory, allCommands],
+  );
+
+  const selectCategory = useCallback((category: SearchCategory | "all") => {
+    setActiveCategory(category);
+    setSelectedIndex(0);
+  }, []);
+
   const openPalette = useCallback(() => {
     setRecentSearches(readRecentSearches(storageKey));
     setIsOpen(true);
+    setActiveCategory("all");
     setSelectedIndex(0);
   }, [storageKey]);
 
   const closePalette = useCallback(() => {
     setIsOpen(false);
     setQuery("");
+    setActiveCategory("all");
     setSelectedIndex(0);
   }, []);
 
@@ -865,12 +649,59 @@ export default function CommandPalette() {
   }, [closePalette, isOpen, openPalette]);
 
   useEffect(() => {
+    window.dispatchEvent(new CustomEvent("uzde-search-state", { detail: { open: isOpen } }));
+    if (!isOpen) {
+      return;
+    }
+    let frame = 0;
+    const findHost = () => {
+      const device = window.matchMedia("(min-width: 1024px)").matches ? "desktop" : "mobile";
+      const host = document.querySelector<HTMLElement>(`[data-uzde-search-slot="${device}"]`);
+      if (host) setInputHost(host);
+      else frame = window.requestAnimationFrame(findHost);
+    };
+    const onResize = () => {
+      setInputHost(null);
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(findHost);
+    };
+    frame = window.requestAnimationFrame(findHost);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", onResize);
+      window.dispatchEvent(new CustomEvent("uzde-search-state", { detail: { open: false } }));
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const header = document.querySelector<HTMLElement>("[data-uzde-ipad-header]");
+    const updatePosition = () => {
+      setHeaderBottom(Math.max(0, Math.ceil(header?.getBoundingClientRect().bottom ?? 80)));
+    };
+    updatePosition();
+    const observer = header ? new ResizeObserver(updatePosition) : null;
+    if (header && observer) observer.observe(header);
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, { passive: true });
+    window.visualViewport?.addEventListener("resize", updatePosition);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition);
+      window.visualViewport?.removeEventListener("resize", updatePosition);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     if (!isOpen) {
       return;
     }
 
     const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    if (!isMobileSearchViewport) document.body.style.overflow = "hidden";
 
     const focusTimer = window.setTimeout(() => {
       inputRef.current?.focus();
@@ -880,7 +711,7 @@ export default function CommandPalette() {
       window.clearTimeout(focusTimer);
       document.body.style.overflow = previousOverflow;
     };
-  }, [isOpen]);
+  }, [isOpen, isMobileSearchViewport]);
 
   useEffect(() => {
     const activeElement =
@@ -942,83 +773,27 @@ export default function CommandPalette() {
     return null;
   }
 
-  return createPortal(
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto px-4 pb-10 pt-[8vh] sm:px-6 sm:pt-[12vh]"
-          initial={prefersReducedMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{
-            duration: prefersReducedMotion ? 0 : 0.18,
-          }}
-        >
-          <motion.button
-            type="button"
-            aria-label={closeLabel}
-            className="absolute inset-0 cursor-default bg-slate-950/65 backdrop-blur-md"
-            onClick={closePalette}
-            initial={prefersReducedMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          />
-
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="command-palette-title"
-            className="relative w-full max-w-2xl overflow-hidden rounded-[1.75rem] border border-white/15 bg-white shadow-2xl shadow-black/30 dark:border-slate-700 dark:bg-slate-900"
-            initial={
-              prefersReducedMotion
-                ? false
-                : {
-                    opacity: 0,
-                    y: -16,
-                    scale: 0.97,
-                  }
-            }
-            animate={{
-              opacity: 1,
-              y: 0,
-              scale: 1,
-            }}
-            exit={{
-              opacity: 0,
-              y: -10,
-              scale: 0.98,
-            }}
-            transition={{
-              duration: prefersReducedMotion ? 0 : 0.24,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
-            <h2 id="command-palette-title" className="sr-only">
-              {t("title")}
-            </h2>
-
-            <div className="h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
-
-            <style>{`
-              #command-palette-search-input,
-              #command-palette-search-input:focus,
-              #command-palette-search-input:focus-visible {
-                border: 0 !important;
-                outline: 0 !important;
-                outline-offset: 0 !important;
-                box-shadow: none !important;
-                -webkit-box-shadow: none !important;
-                -webkit-appearance: none;
-                appearance: none;
-              }
-            `}</style>
-
-            <div className="w-full min-w-0 border-b border-slate-200 px-3 py-4 dark:border-slate-800 sm:px-5">
-              <div className="flex w-full min-w-0 min-h-14 items-center gap-2 rounded-full border border-slate-200 bg-slate-50/80 px-3 transition focus-within:border-emerald-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-500/20 sm:gap-3 sm:px-4 dark:border-slate-700 dark:bg-slate-950/60 dark:focus-within:border-emerald-500 dark:focus-within:bg-slate-950 dark:focus-within:ring-emerald-400/15">
-                <span className="shrink-0 text-slate-400">
-                  <SearchIcon className="h-5 w-5 sm:h-6 sm:w-6" />
-                </span>
-
+  return (
+    <>
+      <style>{`
+        #command-palette-search-input,
+        #command-palette-search-input:focus,
+        #command-palette-search-input:focus-visible {
+          border: 0 !important;
+          outline: none !important;
+          box-shadow: none !important;
+          --tw-ring-shadow: 0 0 #0000 !important;
+        }
+        [data-uzde-search-input-shell]:has(#command-palette-search-input:focus-visible) {
+          box-shadow: inset 0 0 0 1px #0f766e;
+        }
+        .dark [data-uzde-search-input-shell]:has(#command-palette-search-input:focus-visible) {
+          box-shadow: inset 0 0 0 1px #5eead4;
+        }
+      `}</style>
+      {isOpen && inputHost && createPortal(
+        <div data-uzde-search-input-shell className="flex h-10 w-full min-w-0 items-center gap-2 rounded-md bg-zinc-100 px-2 dark:bg-[#191c21]">
+          <span className="shrink-0 text-zinc-500"><SearchIcon className="h-4 w-4" /></span>
                 <input
                   id="command-palette-search-input"
                   ref={inputRef}
@@ -1032,30 +807,95 @@ export default function CommandPalette() {
                   placeholder={searchPlaceholder}
                   autoComplete="off"
                   spellCheck={false}
-                  className="h-14 w-full min-w-0 flex-1 box-border appearance-none border-0 bg-transparent p-0 text-sm font-medium text-slate-950 outline-none placeholder:text-slate-400 ring-0 shadow-none sm:text-lg dark:text-white [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
+                  className="h-10 w-full min-w-0 flex-1 appearance-none border-0 bg-transparent p-0 text-[13px] text-zinc-950 outline-none ring-0 shadow-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 placeholder:text-zinc-400 dark:text-white dark:placeholder:text-zinc-500 [&::-webkit-search-cancel-button]:hidden"
                   aria-label={t("accessibility.searchInput")}
-                  aria-controls="command-palette-results"
+                  aria-controls={!isMobileSearchViewport || hasQuery ? "command-palette-results" : undefined}
                   aria-activedescendant={
                     filteredCommands[selectedIndex]
                       ? `command-${filteredCommands[selectedIndex].id}`
                       : undefined
                   }
                 />
+          <button type="button" onClick={closePalette} aria-label={closeLabel} className="shrink-0 rounded p-1 text-zinc-500 hover:text-zinc-950 dark:hover:text-white"><CloseIcon /></button>
+        </div>,
+        inputHost,
+      )}
+      {createPortal(
+    <AnimatePresence>
+      {isOpen && (!isMobileSearchViewport || hasQuery) && (
+        <motion.div
+          className={`fixed inset-x-0 z-40 flex items-start justify-center px-3 sm:px-6 ${isMobileSearchViewport ? "pointer-events-none" : "bottom-0"}`}
+          style={{ top: headerBottom }}
+          initial={prefersReducedMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{
+            duration: prefersReducedMotion ? 0 : 0.18,
+          }}
+        >
+          {!isMobileSearchViewport && <motion.button
+            type="button"
+            aria-label={closeLabel}
+            className="absolute inset-0 cursor-default bg-black/30 dark:bg-black/45"
+            onClick={closePalette}
+            initial={prefersReducedMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />}
 
-                <button
-                  type="button"
-                  onClick={closePalette}
-                  aria-label={closeLabel}
-                  title={closeLabel}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-200/70 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:hover:bg-slate-800 dark:hover:text-white dark:focus-visible:ring-offset-slate-950"
-                >
-                  <CloseIcon />
-                </button>
-              </div>
-            </div>
+          <motion.div
+            role="dialog"
+            aria-modal="false"
+            aria-labelledby="command-palette-title"
+            className="pointer-events-auto relative flex w-full max-w-[1440px] min-h-0 max-h-[min(65dvh,650px)] flex-col overflow-hidden rounded-b-xl border border-t-0 border-zinc-200 bg-white shadow-xl dark:border-[#292e36] dark:bg-[#191c21] max-md:max-h-[min(45dvh,360px)]"
+            initial={
+              prefersReducedMotion
+                ? false
+                : {
+                    opacity: 0,
+                    y: -16,
+                  }
+            }
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -10,
+            }}
+            transition={{
+              duration: prefersReducedMotion ? 0 : 0.24,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            <h2 id="command-palette-title" className="sr-only">
+              {t("title")}
+            </h2>
 
+
+
+            <div className="grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)] overflow-hidden md:min-h-[min(390px,55dvh)] md:grid-cols-[230px_minmax(0,1fr)] md:grid-rows-1 lg:grid-cols-[270px_minmax(0,1fr)]">
+              <nav aria-label={locale === "de" ? "Suchkategorien" : "Qidiruv kategoriyalari"} className="hidden min-h-0 border-b border-zinc-200 px-4 py-3 dark:border-[#292e36] md:block md:overflow-y-auto md:overscroll-contain md:border-b-0 md:border-r md:px-6 md:py-5">
+                <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
+                  {locale === "de" ? "Kategorien" : "Kategoriyalar"}
+                </p>
+                <div className="flex gap-1 overflow-x-auto md:flex-col md:overflow-x-visible">
+                  <button type="button" onClick={() => selectCategory("all")} aria-pressed={activeCategory === "all"}
+                    className={`shrink-0 rounded-md px-3 py-2 text-left text-sm transition-colors md:w-full ${activeCategory === "all" ? "bg-zinc-100 font-semibold text-zinc-950 dark:bg-[#292e36] dark:text-white" : "text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-[#252a30]"}`}>
+                    {locale === "de" ? "Alle" : "Barçasi"}
+                  </button>
+                  {categories.map((category) => (
+                    <button key={category} type="button" onClick={() => selectCategory(category)} aria-pressed={activeCategory === category}
+                      className={`shrink-0 rounded-md px-3 py-2 text-left text-sm transition-colors md:w-full ${activeCategory === category ? "bg-zinc-100 font-semibold text-zinc-950 dark:bg-[#292e36] dark:text-white" : "text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-[#252a30]"}`}>
+                      {getSearchCategoryLabel(category, locale)}
+                    </button>
+                  ))}
+                </div>
+              </nav>
+              <div className="flex min-h-0 min-w-0 flex-col overflow-hidden">
             {!query && (
-              <div className="border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+              <div className="hidden shrink-0 border-b border-zinc-200 px-5 py-3 dark:border-[#292e36] md:block">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.15em] text-slate-400">
                     {t("popularTitle")}
@@ -1069,7 +909,7 @@ export default function CommandPalette() {
                         onClick={() =>
                           handleSuggestedSearch(popularSearch)
                         }
-                        className="rounded-full border border-slate-200 bg-slate-50 px-3.5 py-2 text-sm font-semibold text-slate-600 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-emerald-500/30 dark:hover:bg-emerald-500/10 dark:hover:text-emerald-300"
+                        className="rounded-md border border-zinc-200 px-3 py-2 text-sm text-zinc-600 transition hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-zinc-500 dark:border-[#292e36] dark:text-zinc-300 dark:hover:bg-[#292e36]"
                       >
                         {popularSearch}
                       </button>
@@ -1102,7 +942,7 @@ export default function CommandPalette() {
                           onClick={() =>
                             handleSuggestedSearch(recentSearch)
                           }
-                          className="rounded-full bg-slate-100 px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white"
+                          className="rounded-md border border-zinc-200 px-3 py-2 text-sm text-zinc-600 transition hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-zinc-500 dark:border-[#292e36] dark:text-zinc-300 dark:hover:bg-[#292e36]"
                         >
                           {recentSearch}
                         </button>
@@ -1113,12 +953,15 @@ export default function CommandPalette() {
               </div>
             )}
 
+                <p className="px-5 pt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
+                  {locale === "de" ? "Ergebnisse" : "Natijalar"}
+                </p>
             <div
               ref={listRef}
               id="command-palette-results"
               role="listbox"
               aria-label={t("accessibility.results")}
-              className="max-h-[min(60vh,32rem)] overflow-y-auto p-2"
+              className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-2 sm:px-5"
             >
               {hasQuery && isLoading ? (
                 <div className="px-6 py-14 text-center" role="status" aria-live="polite">
@@ -1153,20 +996,12 @@ export default function CommandPalette() {
                       data-command-index={index}
                       onMouseEnter={() => setSelectedIndex(index)}
                       onClick={() => selectCommand(command)}
-                      className={`group flex w-full items-center gap-4 rounded-2xl p-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                      className={`group flex w-full items-center gap-4 border-b border-zinc-100 p-3 text-left transition focus-visible:outline-2 focus-visible:outline-zinc-500 dark:border-[#292e36] ${
                         isSelected
                           ? "bg-slate-100 dark:bg-slate-800"
                           : "hover:bg-slate-50 dark:hover:bg-slate-800/70"
                       }`}
                     >
-                      <span
-                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition duration-200 ${getCommandIconStyles(
-                          command.icon,
-                          isSelected,
-                        )}`}
-                      >
-                        <CommandIcon icon={command.icon} />
-                      </span>
 
                       <span className="min-w-0 flex-1">
                         <span className="flex flex-wrap items-center gap-2">
@@ -1178,11 +1013,7 @@ export default function CommandPalette() {
                             />
                           </span>
 
-                          <span
-                            className={`rounded-full px-2.5 py-1 text-[11px] font-bold ${getCategoryStyles(
-                              command.category,
-                            )}`}
-                          >
+                          <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">
                             {command.badge ??
                               getSearchCategoryLabel(command.category, locale)}
                           </span>
@@ -1197,13 +1028,7 @@ export default function CommandPalette() {
                         </span>
                       </span>
 
-                      <span
-                        className={`shrink-0 transition ${
-                          isSelected
-                            ? "translate-x-0 text-emerald-600 dark:text-emerald-400"
-                            : "-translate-x-1 text-slate-300 group-hover:translate-x-0 group-hover:text-emerald-600 dark:text-slate-600 dark:group-hover:text-emerald-400"
-                        }`}
-                      >
+                      <span className="shrink-0 text-zinc-400 transition-colors group-hover:text-zinc-800 dark:group-hover:text-white">
                         <ArrowRightIcon />
                       </span>
                     </button>
@@ -1237,7 +1062,10 @@ export default function CommandPalette() {
               )}
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-slate-50 px-5 py-3 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400">
+              </div>
+            </div>
+
+            <div className="hidden shrink-0 flex-wrap items-center justify-between gap-3 border-t border-slate-200 md:flex bg-slate-50 px-5 py-2 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400">
               <div className="flex items-center gap-4">
                 <span className="inline-flex items-center gap-1.5">
                   <kbd className="rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono dark:border-slate-700 dark:bg-slate-800">
@@ -1259,7 +1087,7 @@ export default function CommandPalette() {
 
               <span>
                 {t("resultCount", {
-                  count: hasQuery ? searchTotal : filteredCommands.length,
+                  count: activeCategory === "all" && hasQuery ? searchTotal : filteredCommands.length,
                 })}
               </span>
             </div>
@@ -1268,5 +1096,7 @@ export default function CommandPalette() {
       )}
     </AnimatePresence>,
     document.body,
+      )}
+    </>
   );
 }

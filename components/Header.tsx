@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Plane, MessagesSquare, ShoppingBag, MapPin, ChevronRight, Heart } from "lucide-react";
+import { ChevronRight, Heart, UserRound } from "lucide-react";
 
 import { useLocale, useTranslations } from "next-intl";
 
@@ -10,6 +10,8 @@ import {
   useCallback,
 
   useEffect,
+
+  useRef,
 
   useState,
 
@@ -25,8 +27,8 @@ import { Link, usePathname } from "../i18n/navigation";
 
 import LanguageSwitcher from "./LanguageSwitcher";
 import HeaderAccountMenu from "./account/HeaderAccountMenu";
-
 import BrandName from "./ui/BrandName";
+
 
 type NavigationItem = {
 
@@ -669,11 +671,11 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
           account:
             "UzDe ID",
           myCity:
-            "Mening shahrim",
+            "Mening şahrim",
           admin:
             "Admin",
           login:
-            "Kirish",
+            "Kiriş",
         };
 
   const navigation: NavigationItem[] = [
@@ -733,7 +735,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
       href: "/specialists",
 
       description: locale === "uz"
-          ? "Germaniyadagi o‘zbek mutaxassislarini toping"
+          ? "Germaniyadagi özbek mutaxassislarini toping"
           : "Usbekische Fachkräfte in Deutschland finden",
 
       icon: <SpecialistsIcon />,
@@ -781,10 +783,23 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
   const [isMobileMenuOpen, setIsMobileMenuOpen] =
 
     useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const mobileTriggerRef = useRef<HTMLButtonElement>(null);
+  const menuWasOpenRef = useRef(false);
 
   const [isDarkMode, setIsDarkMode] =
 
     useState(false);
+
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  useEffect(() => {
+    const onSearchState = (event: Event) => {
+      setIsSearchOpen((event as CustomEvent<{ open: boolean }>).detail.open);
+    };
+    window.addEventListener("uzde-search-state", onSearchState);
+    return () => window.removeEventListener("uzde-search-state", onSearchState);
+  }, []);
 
   const [isScrolled, setIsScrolled] =
 
@@ -846,15 +861,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
       setIsMobileMenuOpen(false);
 
-      window.scrollTo({
+      window.scrollTo(0, 0);
+      window.location.reload();
 
-        top: 0,
-
-        left: 0,
-
-        behavior: "smooth",
-
-      });
 
     },
 
@@ -884,6 +893,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
       window.scrollTo(0, 0);
       window.location.reload();
+
 
     },
 
@@ -964,15 +974,11 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
     applyTheme(initialDarkMode);
 
     const frameId = window.requestAnimationFrame(() => {
-
       setIsDarkMode(initialDarkMode);
-
     });
 
     return () => {
-
       window.cancelAnimationFrame(frameId);
-
     };
 
   }, [applyTheme]);
@@ -1054,17 +1060,38 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
   }, []);
 
   useEffect(() => {
-
-    document.body.style.overflow =
-
-      isMobileMenuOpen ? "hidden" : "";
-
-    return () => {
-
-      document.body.style.overflow = "";
-
+    if (!isMobileMenuOpen) {
+      if (menuWasOpenRef.current) mobileTriggerRef.current?.focus();
+      menuWasOpenRef.current = false;
+      return;
+    }
+    menuWasOpenRef.current = true;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const menu = mobileMenuRef.current;
+    const focusables = () => Array.from(menu?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    ) ?? []).filter((element) => element.getClientRects().length > 0);
+    focusables()[0]?.focus();
+    const handleTab = (event: KeyboardEvent) => {
+      if (event.key !== "Tab") return;
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-
+    document.addEventListener("keydown", handleTab);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleTab);
+    };
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
@@ -1162,19 +1189,19 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           border-b
 
-          transition-[background-color,border-color,box-shadow]
+          transition-[box-shadow]
 
           duration-300
 
-          min-[1024px]:max-[1359px]:pb-12
+
 
           ${
 
             isScrolled
 
-              ? "border-slate-200/90 bg-white/80 shadow-[0_12px_40px_-24px_rgba(15,23,42,0.35)] backdrop-blur-2xl dark:border-white/10 dark:bg-slate-950/80"
+              ? "border-slate-200/90 bg-white/80 shadow-[0_12px_40px_-24px_rgba(15,23,42,0.35)] backdrop-blur-2xl dark:border-[#30343A] dark:bg-[#111419]/95"
 
-              : "border-slate-200/80 bg-white/90 shadow-[0_1px_20px_rgba(15,23,42,0.04)] backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-950/90"
+              : "border-slate-200/80 bg-white/90 shadow-[0_1px_20px_rgba(15,23,42,0.04)] backdrop-blur-xl dark:border-[#30343A] dark:bg-[#111419]"
 
           }
 
@@ -1182,48 +1209,13 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
       >
 
-        <style>{`
-          @media screen and (min-width: 1024px) and (max-width: 1359px) {
-            header[data-uzde-ipad-header] { padding-bottom: 0; }
-            header [data-uzde-ipad-nav] {
-              display: flex !important;
-              position: static !important;
-              inset: auto !important;
-              flex: 1 1 auto;
-              width: auto !important;
-              min-width: 0;
-              height: auto !important;
-              margin: 0 !important;
-              justify-content: center;
-              overflow: visible;
-              border: 0 !important;
-              padding: 0 !important;
-              gap: 4px;
-            }
-            header [data-uzde-ipad-nav] > a {
-              font-size: 14px !important;
-              line-height: 20px;
-              padding-inline: 5px;
-            }
-            header [data-uzde-desktop-actions] {
-              display: flex !important;
-              margin-left: 0 !important;
-              flex-shrink: 0;
-            }
-            /* A loading-only auth skeleton was reserving ~116px of empty space. */
-            header [data-uzde-desktop-actions] > span[aria-hidden="true"] {
-              display: none !important;
-            }
-            header [data-uzde-mobile-actions] { display: none !important; }
-            [data-uzde-mobile-overlay] { display: none !important; }
-          }
-        `}</style>
+
 
         {showRebrandingBanner && (
-          <div className="flex h-9 items-center justify-center gap-2 overflow-hidden bg-teal-700 px-3 text-center text-[11px] font-medium text-white sm:text-xs">
+          <div className="flex h-8 items-center justify-center gap-2 overflow-hidden border-b border-zinc-200 bg-[#F1F1F1] px-3 text-center text-[11px] font-medium text-[#202020] sm:text-xs dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100">
             <span className="shrink-0 sm:hidden">{locale === "de" ? "Vatandoshlar.de heißt jetzt UzDe!" : "Vatandoshlar.de endi UzDe!"}</span>
             <span className="hidden truncate sm:inline">{locale === "de" ? "Vatandoshlar.de heißt jetzt UzDe! Neuer Name, neues Logo – unsere Mission bleibt." : "Vatandoshlar.de endi UzDe! Yangi nom, yangi logo — maqsadimiz o‘zgarmadi."}</span>
-            <Link href="/news/vatandoshlar-de-endi-uzde" className="shrink-0 font-bold underline underline-offset-2 hover:text-teal-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+            <Link href="/news/vatandoshlar-de-endi-uzde" className="shrink-0 font-semibold underline underline-offset-2 hover:text-zinc-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:hover:text-zinc-300 dark:focus-visible:outline-white">
               {locale === "de" ? "Mehr →" : "Batafsil →"}
             </Link>
           </div>
@@ -1235,9 +1227,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           className={`
 
-            mx-auto flex w-full max-w-[1440px] min-[1921px]:max-w-[1680px] min-[2560px]:max-w-[2200px]
+            mx-auto flex w-full max-w-none
 
-            relative items-center gap-3 px-4
+            relative items-center gap-2 px-3 min-[390px]:px-4 min-[1440px]:gap-3
 
             transition-[height] duration-300
 
@@ -1245,11 +1237,78 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
             xl:px-8 2xl:px-10
 
-            ${isScrolled ? "h-16" : "h-20"} max-[1023px]:!h-14
+            ${isScrolled ? "h-16" : "h-20"} max-[1023px]:!h-[66px]
 
           `}
 
         >
+
+            <button
+
+              type="button"
+
+              onClick={toggleMobileMenu}
+
+              ref={mobileTriggerRef}
+              aria-controls="mobile-navigation"
+
+              aria-expanded={isMobileMenuOpen}
+
+              aria-label={
+
+                isMobileMenuOpen
+
+                  ? t("accessibility.closeMenu")
+
+                  : t("accessibility.openMenu")
+
+              }
+
+              className={`min-[1024px]:hidden
+
+                flex items-center justify-center
+
+                rounded-md
+
+                text-slate-900 hover:bg-slate-900/5 active:bg-slate-900/10
+
+
+                transition-all duration-300
+
+                active:scale-95
+
+                focus-visible:outline-none
+
+                focus-visible:ring-2
+
+                focus-visible:ring-emerald-500
+
+                focus-visible:ring-offset-2
+
+                dark:hover:bg-white/10 dark:active:bg-white/15
+
+                dark:text-slate-100
+
+                dark:focus-visible:ring-offset-slate-950
+
+                relative h-10 w-9 shrink-0 before:absolute before:left-1/2 before:top-1/2 before:h-11 before:w-11 before:-translate-x-1/2 before:-translate-y-1/2 [&_svg]:h-[21px] [&_svg]:w-[21px]
+
+              `}
+
+            >
+
+              {isMobileMenuOpen ? (
+
+                <CloseIcon />
+
+              ) : (
+
+                <MenuIcon />
+
+              )}
+
+            </button>
+
 
           <Link
 
@@ -1259,7 +1318,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
             aria-label={t("accessibility.homeLink")}
 
-            className="group ml-0 flex min-w-0 shrink items-center gap-1 lg:ml-4"
+            className={`group ml-0 min-w-0 shrink-0 items-center gap-1 lg:ml-4 min-[1280px]:mr-5 min-[1440px]:mr-7 ${isSearchOpen ? "hidden min-[1024px]:flex" : "flex"}`}
 
           >
 
@@ -1268,7 +1327,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
               className="
 
                 relative flex shrink-0 items-center justify-center
-                rounded-md border border-slate-950 bg-slate-950 p-0.5
+                rounded-[8px] border border-slate-950 bg-slate-950 p-[1.5px] min-[1024px]:p-0.5
                 dark:border-transparent dark:bg-transparent
                 transition-all duration-300
 
@@ -1292,7 +1351,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 priority
 
-                className="!h-[27px] !w-[30px] object-contain"
+                className="!h-[19px] !w-[21px] object-contain min-[1024px]:!h-[27px] min-[1024px]:!w-[30px]"
 
               />
 
@@ -1316,9 +1375,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                     isScrolled
 
-                      ? "text-sm min-[390px]:text-base xl:text-[22px]"
+                      ? "text-[17px] min-[1024px]:text-base xl:text-[22px]"
 
-                      : "text-sm min-[390px]:text-base xl:text-[24px]"
+                      : "text-[17px] min-[1024px]:text-base xl:text-[24px]"
 
                   }
 
@@ -1326,7 +1385,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
               >
 
-                <BrandName />
+                <BrandName withDot />
 
               </span>
 
@@ -1374,20 +1433,11 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
             aria-label={t("accessibility.mainNavigation")}
 
-            className="
-
-              hidden min-w-max shrink-0 items-center gap-0.5
-
-              min-[1024px]:flex min-[1024px]:max-[1359px]:absolute min-[1024px]:max-[1359px]:inset-x-0 min-[1024px]:max-[1359px]:bottom-0 min-[1024px]:max-[1359px]:h-12 min-[1024px]:max-[1359px]:w-full min-[1024px]:max-[1359px]:min-w-0 min-[1024px]:max-[1359px]:justify-center min-[1024px]:max-[1359px]:overflow-x-auto min-[1024px]:max-[1359px]:border-t min-[1024px]:max-[1359px]:px-3 min-[1360px]:ml-auto
-
-              xl:gap-1
-
-
-            "
+            className={`${isSearchOpen ? "hidden" : "hidden min-[1024px]:flex"} min-w-0 shrink items-center gap-1 min-[1280px]:gap-2 min-[1440px]:gap-4 min-[1600px]:gap-6 min-[1920px]:gap-7 min-[1600px]:mr-8`}
 
           >
 
-            {navigation.map((item) => {
+            {navigation.filter((item) => item.href !== "/").map((item) => {
 
               const isActive = isActiveRoute(
 
@@ -1421,71 +1471,13 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                   }
 
-                  className={`
-
-                    relative shrink-0 whitespace-nowrap rounded-xl
-
-                    text-[11px] font-semibold
-
-                    transition-all duration-300
-
-                    min-[1024px]:max-[1359px]:text-xs xl:text-sm
-
-                    ${
-
-                      isScrolled
-
-                        ? "px-1 py-2 xl:px-2.5"
-
-                        : "px-1 py-2.5 xl:px-2.5"
-
-                    }
-
-                    ${
-
-                      isActive
-
-                        ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
-
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-
-                    }
-
-                  `}
+                  className={`shrink-0 whitespace-nowrap px-0.5 py-2 text-[12px] font-medium transition-colors min-[1280px]:text-sm min-[1600px]:text-[15px] ${isActive ? "text-slate-950 dark:text-white" : "text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"} focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900 dark:focus-visible:outline-white`}
 
                 >
 
                   {item.name}
 
-                  {isActive && (
 
-                    <span
-
-                      className={`
-
-                        absolute inset-x-4
-
-                        h-0.5 rounded-full
-
-                        bg-emerald-500
-
-                        transition-[bottom] duration-300
-
-                        ${
-
-                          isScrolled
-
-                            ? "-bottom-[13px]"
-
-                            : "-bottom-[19px]"
-
-                        }
-
-                      `}
-
-                    />
-
-                  )}
 
                 </Link>
 
@@ -1495,8 +1487,11 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           </nav>
 
-          <div data-uzde-desktop-actions className="ml-auto hidden shrink-0 items-center gap-1.5 min-[1024px]:flex xl:gap-2">
+          <div data-uzde-desktop-actions className={`ml-auto hidden min-w-0 items-center gap-3 min-[1024px]:flex min-[1600px]:gap-3 ${isSearchOpen ? "flex-1" : "shrink"}`}>
 
+            {isSearchOpen ? (
+              <div data-uzde-search-slot="desktop" className="flex h-10 min-w-0 flex-1 items-center" />
+            ) : (
             <button
 
               type="button"
@@ -1507,57 +1502,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
               aria-keyshortcuts="Meta+K Control+K"
 
-              className={`
-
-                flex shrink-0 items-center justify-center
-
-                overflow-hidden
-
-                border-0
-
-                bg-transparent text-slate-500
-
-                transition-all duration-300
-
-
-
-
-
-                hover:text-slate-950
-
-                focus-visible:outline-none
-
-                focus-visible:ring-2
-
-                focus-visible:ring-emerald-500
-
-                focus-visible:ring-offset-2
-
-                dark:border-0
-
-                dark:bg-transparent
-
-                dark:text-slate-400
-
-
-
-
-
-                dark:hover:text-white
-
-                dark:focus-visible:ring-offset-slate-950
-
-                ${
-
-                  isScrolled
-
-                    ? "h-10 w-10 gap-0 px-0"
-
-                    : "h-11 w-11 gap-0 px-0"
-
-                }
-
-              `}
+              className="flex h-10 min-w-0 w-9 shrink-0 items-center gap-2 rounded-md bg-zinc-100 px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-200 hover:text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 min-[1280px]:w-[clamp(100px,13vw,320px)] min-[1280px]:shrink dark:bg-[#191C21] dark:text-zinc-300 dark:hover:bg-[#252A30] dark:hover:text-white"
 
             >
 
@@ -1567,77 +1512,10 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
               </span>
 
-              <span
-
-                aria-hidden={isScrolled}
-
-                className={`
-
-                  shrink-0 whitespace-nowrap
-
-                  text-sm font-medium
-
-                  transition-all duration-300
-
-                  ${
-
-                    isScrolled
-
-                      ? "max-w-0 -translate-x-1 overflow-hidden opacity-0"
-
-                      : "max-w-0 -translate-x-1 overflow-hidden opacity-0"
-
-                  }
-
-                `}
-
-              >{t("actions.search")}</span>
-
-              <kbd
-
-                aria-hidden={isScrolled}
-
-                className={`
-
-                  shrink-0 items-center gap-1
-
-                  overflow-hidden rounded-md
-
-                  border-0
-
-                  bg-slate-50
-
-                  text-[10px] font-semibold
-
-                  text-slate-400
-
-                  transition-all duration-300
-
-                  dark:border-0
-
-                  dark:bg-slate-800
-
-                  ${
-
-                    isScrolled
-
-                      ? "hidden max-w-0 border-0 px-0 py-0 opacity-0"
-
-                      : "hidden max-w-0 border-0 px-0 py-0 opacity-0"
-
-                  }
-
-                `}
-
-              >
-
-                <span className="text-xs">⌘</span>
-
-                <span>K</span>
-
-              </kbd>
+              <span className="hidden truncate text-left min-[1280px]:block">{t("actions.search")}</span>
 
             </button>
+            )}
 
             <LanguageSwitcher variant="compact" />
 
@@ -1720,14 +1598,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
             {authState === "user" ? (
               <HeaderAccountMenu locale={locale} />
             ) : authState === "loading" ? (
-              <span
-                aria-hidden="true"
-                className={
-                  isScrolled
-                    ? "h-10 w-[108px]"
-                    : "h-11 w-[116px]"
-                }
-              />
+              <span aria-hidden="true" className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-md bg-[#242424] px-3 text-xs font-semibold !text-white transition-colors hover:bg-black hover:!text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 min-[1600px]:px-5 min-[1600px]:text-sm dark:bg-zinc-100 dark:!text-zinc-950 dark:hover:bg-white dark:hover:!text-zinc-950">{authCopy.login}</span>
             ) : (
               <Link
                 href={
@@ -1735,47 +1606,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
                     ? "/admin"
                     : "/id/login"
                 }
-                className={`
-
-                flex shrink-0 items-center justify-center whitespace-nowrap rounded-xl
-
-                bg-gradient-to-r
-
-                from-emerald-600 to-teal-600
-
-                text-sm font-bold text-white
-
-                shadow-lg shadow-emerald-600/20
-
-                transition-all duration-300
-
-                hover:-translate-y-0.5
-
-                hover:shadow-xl
-
-                hover:shadow-emerald-600/25
-
-                focus-visible:outline-none
-
-                focus-visible:ring-2
-
-                focus-visible:ring-emerald-500
-
-                focus-visible:ring-offset-2
-
-                dark:focus-visible:ring-offset-slate-950
-
-                ${
-
-                  isScrolled
-
-                    ? "h-10 min-w-[92px] px-3 xl:min-w-[108px] xl:px-4"
-
-                    : "h-11 min-w-[96px] px-3 xl:min-w-[116px] xl:px-5"
-
-                }
-
-              `}
+                className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-md bg-[#242424] px-3 text-xs font-semibold !text-white transition-colors hover:bg-black hover:!text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 min-[1600px]:px-5 min-[1600px]:text-sm dark:bg-zinc-100 dark:!text-zinc-950 dark:hover:bg-white dark:hover:!text-zinc-950"
               >
                 {
                   authState === "admin"
@@ -1787,131 +1618,34 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           </div>
 
-          <div data-uzde-mobile-actions className="ml-auto flex shrink-0 items-center gap-0 min-[1024px]:hidden">
-            <LanguageSwitcher variant="dropdown" onLocaleChange={closeMobileMenu} />
-            <button type="button" onClick={toggleTheme} aria-label={isDarkMode ? t("actions.lightMode") : t("actions.darkMode")} className="flex h-11 w-10 shrink-0 items-center justify-center rounded-md text-slate-900 transition-colors hover:bg-slate-900/5 active:bg-slate-900/10 [&_svg]:h-[22px] [&_svg]:w-[22px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-100 dark:hover:bg-white/10 dark:active:bg-white/15">
-              {isDarkMode ? <SunIcon /> : <MoonIcon />}
-            </button>
-
+          <div data-uzde-mobile-actions className="ml-auto flex min-w-0 flex-1 items-center gap-2 min-[1024px]:hidden">
+            {isSearchOpen ? (
+              <div data-uzde-search-slot="mobile" className="flex h-10 min-w-0 flex-1 items-center" />
+            ) : (
             <button
-
               type="button"
-
               onClick={openCommandPalette}
-
               aria-label={t("accessibility.openSearch")}
-
               aria-keyshortcuts="Meta+K Control+K"
-
-              className={`
-
-                flex items-center justify-center
-
-                rounded-md
-
-                text-slate-900
-
-                hover:bg-slate-900/5 active:bg-slate-900/10
-
-                transition-all duration-300
-
-                active:scale-95
-
-                focus-visible:outline-none
-
-                focus-visible:ring-2
-
-                focus-visible:ring-emerald-500
-
-                focus-visible:ring-offset-2
-
-                dark:text-slate-100 dark:hover:bg-white/10 dark:active:bg-white/15
-
-                dark:focus-visible:ring-offset-slate-950
-
-                h-11 w-10 shrink-0 [&_svg]:h-[22px] [&_svg]:w-[22px]
-
-              `}
-
+              className="flex h-10 min-w-0 flex-1 items-center gap-2 rounded-[13px] bg-zinc-100 px-3 text-left text-sm text-zinc-500 transition-colors hover:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
             >
-
-              <SearchIcon />
-
+              <span className="shrink-0"><SearchIcon /></span>
+              <span className="min-w-0 truncate text-[13px]">{t("actions.search")}</span>
             </button>
-
-            {authState === "user" && (
-              <HeaderAccountMenu
-                locale={locale}
-                compact
-                onNavigate={closeMobileMenu}
-              />
             )}
-
-            <button
-
-              type="button"
-
-              onClick={toggleMobileMenu}
-
-              aria-controls="mobile-navigation"
-
-              aria-expanded={isMobileMenuOpen}
-
-              aria-label={
-
-                isMobileMenuOpen
-
-                  ? t("accessibility.closeMenu")
-
-                  : t("accessibility.openMenu")
-
-              }
-
-              className={`
-
-                flex items-center justify-center
-
-                rounded-md
-
-                text-slate-900 hover:bg-slate-900/5 active:bg-slate-900/10
-                [&_svg]:h-5 [&_svg]:w-5
-
-                transition-all duration-300
-
-                active:scale-95
-
-                focus-visible:outline-none
-
-                focus-visible:ring-2
-
-                focus-visible:ring-emerald-500
-
-                focus-visible:ring-offset-2
-
-                dark:hover:bg-white/10 dark:active:bg-white/15
-
-                dark:text-slate-100
-
-                dark:focus-visible:ring-offset-slate-950
-
-                h-11 w-10 shrink-0 [&_svg]:h-[22px] [&_svg]:w-[22px]
-
-              `}
-
-            >
-
-              {isMobileMenuOpen ? (
-
-                <CloseIcon />
-
-              ) : (
-
-                <MenuIcon />
-
-              )}
-
-            </button>
-
+            {authState === "user" ? (
+              <div className="flex size-10 shrink-0 items-center justify-center">
+                <HeaderAccountMenu locale={locale} compact onNavigate={closeMobileMenu} />
+              </div>
+            ) : (
+              <Link
+                href={authState === "admin" ? "/admin" : "/id/login"}
+                aria-label={authState === "admin" ? authCopy.admin : authCopy.login}
+                className="flex size-10 shrink-0 items-center justify-center text-slate-900 dark:text-slate-100"
+              >
+                <UserRound aria-hidden="true" className="h-[22px] w-[22px]" />
+              </Link>
+            )}
           </div>
 
         </div>
@@ -1930,13 +1664,17 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
             aria-label={t("accessibility.closeMobileMenu")}
 
-            className="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-950/25"
 
           />
 
           <div
 
             id="mobile-navigation"
+            ref={mobileMenuRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t("mobile.navigationTitle")}
 
             className={`
 
@@ -1946,7 +1684,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
               border-b border-slate-200
 
-              bg-white shadow-2xl
+              bg-white
 
               transition-[top,max-height] duration-300
 
@@ -1958,9 +1696,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
                 isScrolled
 
-                  ? (showRebrandingBanner ? "top-[100px] max-h-[calc(100dvh-100px)] max-[1023px]:!top-[92px] max-[1023px]:!max-h-[calc(100dvh-92px)]" : "top-16 max-h-[calc(100dvh-4rem)] max-[1023px]:!top-14 max-[1023px]:!max-h-[calc(100dvh-3.5rem)]")
+                  ? (showRebrandingBanner ? "top-[100px] max-h-[calc(100dvh-100px)] max-[1023px]:!top-[88px] max-[1023px]:!max-h-[calc(100dvh-88px)]" : "top-16 max-h-[calc(100dvh-4rem)] max-[1023px]:!top-14 max-[1023px]:!max-h-[calc(100dvh-3.5rem)]")
 
-                  : (showRebrandingBanner ? "top-[116px] max-h-[calc(100dvh-116px)] max-[1023px]:!top-[92px] max-[1023px]:!max-h-[calc(100dvh-92px)]" : "top-20 max-h-[calc(100dvh-5rem)] max-[1023px]:!top-14 max-[1023px]:!max-h-[calc(100dvh-3.5rem)]")
+                  : (showRebrandingBanner ? "top-[116px] max-h-[calc(100dvh-116px)] max-[1023px]:!top-[88px] max-[1023px]:!max-h-[calc(100dvh-88px)]" : "top-20 max-h-[calc(100dvh-5rem)] max-[1023px]:!top-14 max-[1023px]:!max-h-[calc(100dvh-3.5rem)]")
 
               }
 
@@ -1968,40 +1706,48 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           >
 
-            <div className="mx-auto max-w-2xl px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 sm:px-6">
-              <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{t("mobile.navigationTitle")}</p>
-              <nav aria-label={t("mobile.navigationTitle")} className="divide-y divide-slate-200 border-y border-slate-200 dark:divide-slate-800 dark:border-slate-800">
+            <div className="mx-auto w-full max-w-2xl min-w-0 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 sm:px-6">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500 dark:text-zinc-400">{t("mobile.navigationTitle")}</p>
+              <nav aria-label={t("mobile.navigationTitle")} className="-mx-4 divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-800 dark:border-zinc-800 sm:-mx-6">
                 {navigation.map((item) => {
                   const isActive = isActiveRoute(item.href);
                   return (
-                    <Link key={item.href} href={item.href} onClick={(event) => handleNavigationClick(event, item.href)} aria-current={isActive ? "page" : undefined} className={`flex min-h-11 items-center justify-between gap-3 px-2 py-2 text-[14px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-500 ${isActive ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-300" : "text-slate-900 hover:bg-slate-50 dark:text-slate-100 dark:hover:bg-slate-900"}`}>
+                    <Link key={item.href} href={item.href} onClick={(event) => handleNavigationClick(event, item.href)} aria-current={isActive ? "page" : undefined} className={`flex min-h-[50px] items-center justify-between gap-3 px-4 py-2 text-[15px] font-medium leading-[1.4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-500 ${isActive ? "text-zinc-950 dark:text-white" : "text-zinc-800 hover:text-zinc-950 dark:text-zinc-100 dark:hover:text-white"}`}>
                       <span>{item.name}</span>
                       <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0 text-slate-400" />
                     </Link>
                   );
                 })}
               </nav>
-              <section aria-label={locale === "de" ? "UzDe Angebote" : "UzDe xizmatlari"} className="mt-4">
-                <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{locale === "de" ? "UzDe Angebote" : "UzDe xizmatlari"}</p>
-                <div className="grid grid-cols-2 gap-2">
+              <section aria-label={locale === "de" ? "UzDe Plattformen" : "UzDe platformalari"} className="mt-5 min-w-0">
+                <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-500 dark:text-zinc-400">{locale === "de" ? "UzDe Plattformen" : "UzDe platformalari"}</p>
+                <div className="grid w-full min-w-0 grid-cols-4 gap-1 rounded-[10px] bg-[#202020] p-[6px]" role="group" aria-label={locale === "de" ? "UzDe Plattformen" : "UzDe platformalari"}>
                   {([
-                    { href: "/safar", label: locale === "de" ? "UzDe Reisen" : "UzDe Safar", icon: Plane },
-                    { href: "/savol", label: locale === "de" ? "UzDe Q&A" : "UzDe Savol", icon: MessagesSquare },
-                    { href: "/market", label: t("navigation.market"), icon: ShoppingBag },
-                    { href: "/places", label: t("navigation.places"), icon: MapPin },
-                  ] as const).map(({ href, label, icon: ServiceIcon }) => (
-                    <Link key={href} href={href} onClick={closeMobileMenu} className="flex min-h-12 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold leading-tight text-slate-900 transition-colors hover:border-emerald-300 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800">
-                      <ServiceIcon aria-hidden="true" className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />
-                      <span>{label}</span>
+                    { href: "/safar", short: locale === "de" ? "Reisen" : "Safar", full: locale === "de" ? "UzDe Reisen" : "UzDe Safar" },
+                    { href: "/savol", short: locale === "de" ? "Fragen" : "Savol", full: locale === "de" ? "UzDe Fragen" : "UzDe Savol" },
+                    { href: "/market", short: "Market", full: t("navigation.market") },
+                    { href: "/places", short: locale === "de" ? "Business" : "Biznes", full: t("navigation.places") },
+                  ] as const).map(({ href, short, full }) => (
+                    <Link key={href} href={href} onClick={closeMobileMenu} aria-label={full} title={full} className="flex min-h-11 min-w-0 items-center justify-center whitespace-nowrap rounded-[6px] border border-[#454545] bg-[#303030] px-0.5 text-center text-xs font-medium leading-[1.4] !text-white transition-colors hover:bg-[#414141] active:bg-[#505050] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" style={{ color: "#FFFFFF" }}>
+                      {short}
                     </Link>
                   ))}
                 </div>
               </section>
-              {authState !== "user" && authState !== "loading" && (
-                <Link href={authState === "admin" ? "/admin" : "/id/login"} onClick={closeMobileMenu} className="mt-2 flex min-h-11 items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
-                  {authState === "admin" ? authCopy.admin : authCopy.login}
-                </Link>
-              )}
+              <section aria-label={locale === "de" ? "Einstellungen" : "Sozlamalar"} className="mt-4 border-t border-zinc-200 pt-2 dark:border-zinc-800">
+                <div className="flex min-w-0 items-center justify-between gap-2 border-b border-zinc-200 py-1 dark:border-zinc-800">
+                  <div className="flex min-w-0 items-center gap-1 text-[13px] text-zinc-900 dark:text-white">
+                    <span>{locale === "de" ? "Sprache:" : "Til:"}</span>
+                    <LanguageSwitcher variant="compact" onLocaleChange={closeMobileMenu} />
+                  </div>
+                  <div className="flex shrink-0 items-center gap-1 text-[13px] text-zinc-900 dark:text-white">
+                    <span>{locale === "de" ? "Modus:" : "Rejim:"}</span>
+                    <button type="button" onClick={toggleTheme} aria-label={isDarkMode ? t("actions.lightMode") : t("actions.darkMode")} className="flex size-11 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:focus-visible:outline-white">
+                      {isDarkMode ? <SunIcon /> : <MoonIcon />}
+                    </button>
+                  </div>
+                </div>
+              </section>
               <nav aria-label={locale === "de" ? "Soziale Netzwerke" : "Ijtimoiy tarmoqlar"} className="mt-3 flex items-center justify-between gap-2 border-t border-slate-200 pt-3 dark:border-slate-800">
                 {([
                   { href: "https://t.me/UzDe_de", label: "Telegram", icon: SocialTelegramIcon },
@@ -2016,8 +1762,8 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
                 <Link
                   href="/support"
                   onClick={closeMobileMenu}
-                  aria-label={locale === "de" ? "UzDe unterstützen" : "Qo‘llab-quvvatlash"}
-                  title={locale === "de" ? "UzDe unterstützen" : "Qo‘llab-quvvatlash"}
+                  aria-label={locale === "de" ? "UzDe unterstützen" : "Qöllab-quvvatlaş"}
+                  title={locale === "de" ? "UzDe unterstützen" : "Qöllab-quvvatlaş"}
                   className="flex h-11 w-11 shrink-0 items-center justify-center text-slate-800 transition-colors hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-100 dark:hover:text-emerald-400"
                 >
                   <Heart aria-hidden="true" className="h-5 w-5" />

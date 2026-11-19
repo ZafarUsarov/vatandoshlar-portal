@@ -76,40 +76,19 @@ function ArrowRightIcon() {
   );
 }
 
-function getCategoryStyles(
-  category: SearchCategory,
-) {
-  switch (category) {
-    case "Yangilik":
-      return "bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-300";
+function getCategoryStyles(_category: SearchCategory) {
+  return "border border-[#E5E5E5] bg-[#F4F4F3] text-[#55585D] dark:border-[#34383D] dark:bg-[#24272B] dark:text-[#C7C9CC]";
+}
 
-    case "Xizmat":
-      return "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300";
-
-    case "Mutaxassis":
-      return "bg-fuchsia-50 text-fuchsia-700 dark:bg-fuchsia-500/10 dark:text-fuchsia-300";
-
-    case "Ish":
-      return "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300";
-
-    case "Telegram":
-      return "bg-cyan-50 text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300";
-
-    case "Tadbir":
-      return "bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-300";
-
-    case "Qo‘llanma":
-      return "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300";
-
-    case "Ish platformasi":
-      return "bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300";
-
-    case "Sahifa":
-      return "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300";
-
-    default:
-      return "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300";
-  }
+// Display-only conversion: internal category identifiers remain unchanged.
+function toUzbekUiAlphabet(label: string): string {
+  return label
+    .replace(/([Oo])[‘’ʻʼ]/g, (_, letter: string) => letter === "O" ? "Ö" : "ö")
+    .replace(/([Gg])[‘’ʻʼ]/g, (_, letter: string) => letter === "G" ? "Ğ" : "ğ")
+    .replace(/Sh/g, "Ş")
+    .replace(/sh/g, "ş")
+    .replace(/Ch/g, "Ç")
+    .replace(/ch/g, "ç");
 }
 
 export default function SearchSection() {
@@ -228,37 +207,27 @@ export default function SearchSection() {
   return (
     <section
       id="search"
-      className="relative overflow-hidden border-b border-slate-200 bg-white pt-5 pb-14 sm:pt-6 sm:pb-20 lg:pt-8 lg:pb-24 dark:border-slate-800 dark:bg-slate-950"
+      className="relative border-b border-[#DADADA] bg-[#F7F7F7] py-10 sm:py-14 lg:py-16 dark:border-slate-800 dark:bg-[var(--uzde-home-surface)]"
     >
-      <div
-        className="absolute inset-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        <div className="absolute -right-32 top-0 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl" />
-        <div className="absolute -bottom-40 left-0 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
-      </div>
+      <div className="relative w-full px-[clamp(16px,3.5vw,96px)] text-center">
+        <div className="mx-auto w-full max-w-[1100px]">
+          <div className="mx-auto flex w-full min-w-0 flex-col items-center text-center">
+            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#686868] dark:text-slate-400">
+              {t("badge")}
+            </span>
 
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl min-[2560px]:max-w-[1400px] text-center">
-          <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-bold uppercase tracking-[0.16em] text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
-            {t("badge")}
-          </span>
+            <h2 className={`mx-auto mt-5 w-full min-w-0 text-center text-[clamp(1.35rem,3.2vw,4.5rem)] font-semibold leading-[1.1] tracking-[-0.01em] [word-spacing:0.08em] text-[#202020] dark:text-white uppercase ${locale === "de" ? "text-balance" : "xl:whitespace-nowrap"}`}>
+              {t("title")}
+            </h2>
 
-          <h2 className="mt-5 text-balance text-3xl font-extrabold tracking-tight text-slate-950 sm:mt-6 sm:text-5xl min-[2560px]:text-6xl dark:text-white">
-            {t("title")}
-          </h2>
-
-          <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8 dark:text-slate-400">
-            {t(
-              "description",
-            )}
-          </p>
+            <p className="mx-auto mt-5 w-full max-w-[700px] text-center text-base leading-7 text-[#686868] sm:text-lg dark:text-slate-400">
+              {t("description")}
+            </p>
+          </div>
         </div>
 
-        <div className="mx-auto mt-8 max-w-5xl min-[2560px]:max-w-[1800px] sm:mt-10 lg:mt-12">
-          <div className="relative overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white p-3 shadow-xl shadow-slate-950/5 sm:rounded-[2rem] sm:p-6 sm:shadow-2xl dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/20">
-            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-500" />
-
+        <div className="mt-7 w-full sm:mt-10">
+          <div className="relative rounded-[24px] border border-[#E5E5E5] bg-white p-3 sm:p-5 dark:border-[#30343A] dark:bg-[#191C21]">
             <div className="relative">
               <span className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
                 <SearchIcon />
@@ -283,7 +252,7 @@ export default function SearchSection() {
                 placeholder={t(
                   "placeholder",
                 )}
-                className="h-14 w-full rounded-xl border border-slate-200 bg-slate-50 pl-14 pr-5 text-base font-medium text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 sm:h-16 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-emerald-400 dark:focus:bg-slate-950"
+                className="h-14 w-full rounded-xl border border-[#DADADA] bg-white pl-14 pr-5 text-base text-[#202020] outline-none transition placeholder:text-slate-400 focus-visible:!outline-none focus-visible:border-[#009D84] sm:h-16 dark:border-[#34383D] dark:bg-[#111419] dark:text-white dark:focus:border-[#009D84]"
               />
             </div>
 
@@ -312,8 +281,8 @@ export default function SearchSection() {
                       }
                       className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition ${
                         isActive
-                          ? "bg-slate-950 text-white shadow-lg dark:bg-white dark:text-slate-950"
-                          : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white"
+                          ? "border border-[#202020] bg-[#202020] text-white dark:border-[#F5F5F5] dark:bg-[#F5F5F5] dark:text-[#111419]"
+                          : "border border-[#E5E5E5] bg-[#F7F7F7] text-[#686868] hover:border-[#B8BABD] hover:bg-[#EFEFEF] hover:text-[#202020] dark:border-[#34383D] dark:bg-[#24272B] dark:text-[#C7C9CC] dark:hover:border-[#575C62] dark:hover:bg-[#30343A] dark:hover:text-white"
                       }`}
                     >
                       {category ===
@@ -321,10 +290,9 @@ export default function SearchSection() {
                         ? t(
                             "categories.all",
                           )
-                        : getSearchCategoryLabel(
-                            category,
-                            locale,
-                          )}
+                        : locale === "uz"
+                          ? toUzbekUiAlphabet(getSearchCategoryLabel(category, locale))
+                          : getSearchCategoryLabel(category, locale)}
                     </button>
                   );
                 },
@@ -333,8 +301,8 @@ export default function SearchSection() {
           </div>
 
           {showResults && (
-            <div className="mt-6 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl shadow-slate-950/5 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/20">
-              <div className="flex flex-col gap-3 border-b border-slate-200 px-6 py-5 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
+            <div className="mt-6 overflow-hidden rounded-[24px] border border-[#E5E5E5] bg-white dark:border-[#30343A] dark:bg-[#191C21]">
+              <div className="flex flex-col gap-3 border-b border-[#E5E5E5] px-6 py-5 sm:flex-row sm:items-center sm:justify-between dark:border-[#30343A]">
                 <div>
                   <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-600 dark:text-emerald-400">
                     {t(
@@ -377,7 +345,7 @@ export default function SearchSection() {
 
               {filteredItems.length >
               0 ? (
-                <div className="divide-y divide-slate-200 dark:divide-slate-800">
+                <div className="divide-y divide-[#E5E5E5] dark:divide-[#30343A]">
                   {filteredItems.map(
                     (item) => (
                       <Link
@@ -387,7 +355,7 @@ export default function SearchSection() {
                         href={
                           item.href
                         }
-                        className="group flex flex-col gap-4 p-6 transition hover:bg-slate-50 sm:flex-row sm:items-center dark:hover:bg-slate-800/70"
+                        className="group flex flex-col gap-4 p-6 transition hover:bg-[#F7F7F7] sm:flex-row sm:items-center dark:hover:bg-[#24272B]"
                       >
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-3">
@@ -398,14 +366,13 @@ export default function SearchSection() {
                             </h3>
 
                             <span
-                              className={`rounded-full px-3 py-1 text-xs font-bold ${getCategoryStyles(
+                              className={`rounded-full px-3 py-1 text-xs font-semibold ${getCategoryStyles(
                                 item.category,
                               )}`}
                             >
-                              {getSearchCategoryLabel(
-                                item.category,
-                                locale,
-                              )}
+                              {locale === "uz"
+                                ? toUzbekUiAlphabet(getSearchCategoryLabel(item.category, locale))
+                                : getSearchCategoryLabel(item.category, locale)}
                             </span>
                           </div>
 
@@ -416,7 +383,7 @@ export default function SearchSection() {
                           </p>
                         </div>
 
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-400 transition group-hover:translate-x-1 group-hover:bg-emerald-600 group-hover:text-white dark:bg-slate-800 dark:text-slate-500">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#E5E5E5] bg-transparent text-[#686868] transition-transform duration-200 group-hover:translate-x-1 group-hover:border-[#009D84] group-hover:text-[#009D84] dark:border-[#34383D] dark:text-[#A9ADB2] dark:group-hover:border-[#009D84] dark:group-hover:text-[#18C5A5]">
                           <ArrowRightIcon />
                         </span>
                       </Link>
@@ -425,7 +392,7 @@ export default function SearchSection() {
                 </div>
               ) : (
                 <div className="px-6 py-14 text-center">
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-slate-400 dark:bg-slate-800">
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-[#E5E5E5] bg-[#F7F7F7] text-[#686868] dark:border-[#34383D] dark:bg-[#24272B] dark:text-[#A9ADB2]">
                     <SearchIcon />
                   </div>
 
@@ -451,7 +418,7 @@ export default function SearchSection() {
                         "Barchasi",
                       );
                     }}
-                    className="mt-6 rounded-xl bg-emerald-600 px-5 py-3 font-semibold text-white transition hover:bg-emerald-700"
+                    className="mt-6 rounded-xl bg-[#202020] px-5 py-3 font-semibold text-white transition hover:bg-[#404040] dark:bg-[#F5F5F5] dark:text-[#111419] dark:hover:bg-[#D8D8D8]"
                   >
                     {t(
                       "emptyState.clearSearch",
@@ -463,7 +430,7 @@ export default function SearchSection() {
           )}
 
           {!showResults && (
-            <div className="mt-8 hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 hidden gap-4 sm:grid sm:grid-cols-2 xl:grid-cols-4">
               {previewItems.map(
                 (item) => (
                   <Link
@@ -473,7 +440,7 @@ export default function SearchSection() {
                     href={
                       item.href
                     }
-                    className="group rounded-2xl border border-slate-200 bg-white p-5 transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500/30"
+                    className="group rounded-[20px] border border-[#E5E5E5] bg-white p-5 transition-colors duration-200 hover:border-[#B8BABD] hover:bg-[#FAFAFA] dark:border-[#30343A] dark:bg-[#191C21] dark:hover:border-[#575C62] dark:hover:bg-[#202328]"
                   >
                     <h3 className="font-bold text-slate-950 dark:text-white">
                       {

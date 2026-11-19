@@ -1,29 +1,30 @@
 "use client";
 
-import Image from "next/image";
-import { HeartHandshake, MessageCircleQuestion, ShoppingBag, Plane } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "../../i18n/navigation";
 
 export default function DesktopQuickNavigation() {
   const t = useTranslations("DesktopQuickNavigation");
-  const locale = useLocale();
-  const isGerman = locale === "de";
+  const isGerman = useLocale() === "de";
   const pathname = usePathname();
 
   const links = [
-    { href: "/market", label: "Market", Icon: ShoppingBag },
-    { href: "/travel", label: isGerman ? "Reisen" : "Sayohat", Icon: Plane },
-    { href: "/savol", label: isGerman ? "Fragen" : "Savollar", Icon: MessageCircleQuestion },
-    { href: "/support", label: isGerman ? "Beitragen" : "Hissa qo‘shish", Icon: HeartHandshake },
+    { href: "/market", label: "Market" },
+    { href: "/travel", label: isGerman ? "Reisen" : "Sayohat" },
+    { href: "/savol", label: isGerman ? "Fragen" : "Savollar" },
+    { href: "/support", label: isGerman ? "Beitragen" : "Hissa qo‘shish" },
   ] as const;
+
+  const baseClass = "flex min-h-10 min-w-0 shrink-0 items-center justify-center whitespace-nowrap rounded-[9px] border px-[clamp(5px,2vw,16px)] py-2 text-[clamp(10px,2.7vw,14px)] font-medium leading-tight transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:min-h-11";
+  const inactiveClass = "border-[#444444] bg-[#303030]! text-[#F5F5F5]! hover:border-[#777777] hover:bg-[#414141]! hover:text-[#F5F5F5]! focus-visible:text-[#F5F5F5]!";
+  const activeClass = "border-[#F1F1F1] bg-[#F1F1F1]! text-[#202020]! hover:bg-white! hover:text-[#202020]! focus-visible:text-[#202020]!";
 
   return (
     <nav
       aria-label={t("navigation")}
-      className="pointer-events-none fixed inset-x-0 bottom-[max(8px,env(safe-area-inset-bottom))] z-40 justify-center px-3 sm:bottom-6 hidden min-[1024px]:flex"
+      className="pointer-events-none fixed inset-x-0 bottom-[max(24px,env(safe-area-inset-bottom))] z-40 hidden justify-center px-2 lg:flex"
     >
-      <div className="pointer-events-auto flex h-14 max-w-full items-center gap-1 overflow-x-auto rounded-xl border border-[#D8EAE7] bg-white p-1 text-[#173B4B] dark:border-[#2A5260] dark:bg-[#10283A] dark:text-[#E1ECF1] sm:gap-1.5">
+      <div className="pointer-events-auto flex max-w-full items-center gap-1 rounded-[14px] border border-[#393939] bg-[#242424] p-1 sm:gap-1.5 sm:p-1.5">
         <Link
           href="/"
           aria-label={t("home")}
@@ -31,31 +32,23 @@ export default function DesktopQuickNavigation() {
           onClick={(event) => {
             if (pathname === "/") {
               event.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
             }
           }}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#061626] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 dark:bg-[#061626] sm:w-12"
+          className={`${baseClass} bg-[#191919]! font-semibold text-[#F5F5F5]! hover:text-[#F5F5F5]! focus-visible:text-[#F5F5F5]! ${pathname === "/" ? "border-white" : "border-[#444444] hover:bg-[#303030]"}`}
         >
-          <Image
-            src="/images/brand/uzde/uzde-logo-original-transparent.webp"
-            alt="UzDe"
-            width={30}
-            height={30}
-            className="h-[30px] w-[30px] object-contain"
-          />
+          UzDe.
         </Link>
-        {links.map(({ href, label, Icon }) => {
+        {links.map(({ href, label }) => {
           const active = pathname === href || pathname.startsWith(`${href}/`);
           return (
             <Link
               key={href}
               href={href}
               aria-current={active ? "page" : undefined}
-              aria-label={label}
-              className={`flex h-11 w-11 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-0 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 sm:w-auto sm:px-3 ${active ? "bg-[#E1F8F1] text-[#008D78] dark:bg-[#00B99B] dark:text-white" : "text-[#173B4B] hover:bg-[#E1F8F1] hover:text-[#008D78] dark:text-[#E1ECF1] dark:hover:bg-[#2A5260]"}`}
+              className={`${baseClass} ${active ? activeClass : inactiveClass}`}
             >
-              <Icon aria-hidden="true" className="h-[18px] w-[18px] shrink-0" />
-              <span className="hidden sm:inline">{label}</span>
+              {label}
             </Link>
           );
         })}

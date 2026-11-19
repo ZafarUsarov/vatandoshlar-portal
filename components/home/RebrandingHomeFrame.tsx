@@ -35,7 +35,7 @@ export default function RebrandingHomeFrame({ children }: { children: ReactNode 
   }, []);
 
   return (
-    <div style={{ "--rebranding-height": visible ? "36px" : "0px" } as React.CSSProperties}>
+    <div className="uzde-home-frame" style={{ "--rebranding-height": visible ? "36px" : "0px" } as React.CSSProperties}>
       <Header showRebrandingBanner={visible} />
       {children}
     </div>

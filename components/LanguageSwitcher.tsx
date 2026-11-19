@@ -133,15 +133,16 @@ export default function LanguageSwitcher({
   return (
     <div
       aria-label={t("groupLabel")}
-      className={`inline-flex h-10 items-center rounded-xl border border-slate-200 bg-white p-1 dark:border-slate-700 dark:bg-slate-900 ${className}`}
+      className={`inline-flex h-10 shrink-0 items-center gap-1 bg-transparent ${className}`}
       role="group"
     >
-      {locales.map((item) => {
+      {locales.map((item, index) => {
         const isActive = locale === item.code;
 
         return (
+          <span key={item.code} className="inline-flex items-center gap-1">
+            {index > 0 && <span aria-hidden="true" className="text-sm text-slate-400 dark:text-slate-500">/</span>}
           <button
-            key={item.code}
             type="button"
             aria-label={t("switchTo", {
               language: t(`languages.${item.code}`),
@@ -149,14 +150,15 @@ export default function LanguageSwitcher({
             aria-pressed={isActive}
             disabled={isPending}
             onClick={() => changeLocale(item.code)}
-            className={`flex h-7 min-w-8 items-center justify-center rounded-lg px-1.5 text-[11px] font-bold tracking-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:cursor-wait disabled:opacity-70 ${
+            className={`inline-flex min-h-10 items-center px-0.5 text-sm tracking-tight transition-colors focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 disabled:cursor-wait disabled:opacity-70 ${
               isActive
-                ? "bg-emerald-700 text-white shadow-sm dark:bg-emerald-600"
-                : "text-slate-500 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+                ? "font-normal text-slate-500 dark:text-slate-400"
+                : "font-normal text-slate-500 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
             }`}
           >
             {item.shortLabel}
           </button>
+          </span>
         );
       })}
     </div>

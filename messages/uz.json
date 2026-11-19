@@ -1,12 +1,12 @@
 {
   "Home": {
     "hero": {
-      "badge": "Germaniyadagi o‘zbekistonliklar uchun portal",
+      "badge": "Germaniyadagi özbekistonliklar uchun portal",
       "title": "Germaniyada hayot uchun kerakli ma’lumotlar",
       "highlight": "endi bir joyda",
-      "description": "Rasmiy yangiliklar, tekshirilgan xizmatlar, ish va karyera qo‘llanmalari, Telegram guruhlari hamda tadbirlarni qulay platformada toping.",
-      "servicesCta": "Xizmatlarni ko‘rish",
-      "jobsCta": "Ish bo‘limiga o‘tish",
+      "description": "Rasmiy yangiliklar, tekşirilgan xizmatlar, iş va karyera qöllanmalari, Telegram guruhlari hamda tadbirlarni qulay platformada toping.",
+      "servicesCta": "Xizmatlarni ko‘riş",
+      "jobsCta": "Iş bölimiga o‘tiş",
       "trust": {
         "officialSources": "Rasmiy manbalar",
         "verifiedListings": "Uydirma e’lonlarsiz",
@@ -14,22 +14,22 @@
       }
     },
     "quickLinks": {
-      "title": "Tezkor yo‘nalishlar",
+      "title": "Tezkor yo‘nalişlar",
       "official": {
         "title": "Rasmiy yangiliklar",
-        "description": "Germaniyada yashash, o‘qish va ishlash bo‘yicha tekshirilgan ma’lumotlar."
+        "description": "Germaniyada yaşaş, o‘qiş va işlash böyiça tekşirilgan ma’lumotlar."
       },
       "services": {
-        "title": "Tekshirilgan xizmatlar",
-        "description": "Tarjimon, huquqshunos, soliq maslahatchisi, shifokor va boshqa xizmatlar."
+        "title": "Tekşirilgan xizmatlar",
+        "description": "Tarjimon, huquqshunos, soliq maslahatchisi, şifokor va boşqa xizmatlar."
       },
       "jobs": {
-        "title": "Ish va karyera",
-        "description": "Ish platformalari, Minijob, Werkstudent, Ausbildung va karyera qo‘llanmalari."
+        "title": "Iş va karyera",
+        "description": "Iş platformalari, Minijob, Werkstudent, Ausbildung va karyera qöllanmalari."
       },
       "policy": {
-        "title": "Ishonchli ma’lumot siyosati",
-        "description": "Portalda faqat manbasi ko‘rsatilgan va tekshirilgan ma’lumotlar joylashtiriladi."
+        "title": "Işonchli ma’lumot siyosati",
+        "description": "Portalda faqat manbasi körsatilgan va tekşirilgan ma’lumotlar joylaştiriladi."
       }
     },
     "statistics": {
@@ -37,288 +37,288 @@
         "regions": {
           "value": "16",
           "label": "Bundesland",
-          "description": "Germaniyaning barcha hududlari bo‘yicha ma’lumot"
+          "description": "Germaniyaning barcha hududlari böyiça ma’lumot"
         },
         "verified": {
           "value": "100%",
-          "label": "Tekshirilgan",
+          "label": "Tekşirilgan",
           "description": "Rasmiy manbalarga asoslangan ma’lumotlar"
         },
         "availability": {
           "value": "24/7",
-          "label": "Ochiq portal",
+          "label": "Oçiq portal",
           "description": "Kerakli ma’lumotlardan istalgan vaqtda foydalaning"
         },
         "platform": {
           "value": "1",
           "label": "Yagona platforma",
-          "description": "Yangilik, xizmat, ish va hamjamiyat bir joyda"
+          "description": "Yangilik, xizmat, iş va hamjamiyat bir joyda"
         }
       }
     },
     "finalCta": {
       "badge": "UzDe hamjamiyati",
-      "title": "Germaniyadagi hayotingizni ishonchli ma’lumot bilan osonlashtiring",
-      "description": "Kerakli xizmat, ish platformasi, rasmiy yangilik yoki hududingizdagi hamjamiyatni bir necha bosishda toping.",
-      "telegramButton": "Telegram guruhlarini ko‘rish",
-      "eventsButton": "Tadbirlarni ko‘rish"
+      "title": "Germaniyadagi hayotingizni işonchli ma’lumot bilan osonlaştiring",
+      "description": "Kerakli xizmat, iş platformasi, rasmiy yangilik yoki hududingizdagi hamjamiyatni bir neça bosişda toping.",
+      "telegramButton": "Telegram guruhlarini ko‘riş",
+      "eventsButton": "Tadbirlarni ko‘riş"
     }
   },
   "Header": {
     "navigation": {
-      "home": "Bosh sahifa",
+      "home": "Boş sahifa",
       "news": "Yangiliklar",
       "services": "Xizmatlar",
-      "jobs": "Ish",
+      "jobs": "Iş",
       "market": "Market",
-      "places": "Biznes va tashkilotlar",
+      "places": "Biznes va taşkilotlar",
       "telegram": "Telegram",
       "events": "Tadbirlar",
-      "guide": "Qo‘llanma"
+      "guide": "Qöllanma"
     },
     "navigationDescriptions": {
       "home": "Portalning asosiy sahifasi",
-      "news": "Rasmiy va tekshirilgan ma’lumotlar",
+      "news": "Rasmiy va tekşirilgan ma’lumotlar",
       "services": "Mutaxassis va xizmatlar katalogi",
-      "jobs": "Ish qidirish va karyera qo‘llanmalari",
-      "market": "E’lonlarni ko‘rish va joylashtirish",
-      "places": "Bizneslar va tashkilotlar katalogi",
-      "telegram": "Bundeslandlar bo‘yicha guruhlar",
-      "events": "Tekshirilgan uchrashuv va tadbirlar",
-      "guide": "Germaniya bo‘yicha qo‘llanmalar"
+      "jobs": "Iş qidiriş va karyera qöllanmalari",
+      "market": "E’lonlarni köriş va joylaştiriş",
+      "places": "Bizneslar va taşkilotlar katalogi",
+      "telegram": "Bundeslandlar böyiça guruhlar",
+      "events": "Tekşirilgan uçraşuv va tadbirlar",
+      "guide": "Germaniya böyiça qöllanmalar"
     },
     "brand": {
-      "subtitle": "Germaniyadagi o‘zbekistonliklar portali"
+      "subtitle": "Germaniyadagi özbekistonliklar portali"
     },
     "actions": {
-      "search": "Qidirish",
-      "searchPortal": "Portal bo‘ylab qidirish",
-      "login": "Kirish",
-      "loginToPortal": "Portalga kirish",
-      "lightMode": "Yorug‘ rejim",
+      "search": "Qidiriş",
+      "searchPortal": "Portal böylab qidiriş",
+      "login": "Kiriş",
+      "loginToPortal": "Portalga kiriş",
+      "lightMode": "Yoruǵ rejim",
       "darkMode": "Tungi rejim"
     },
     "mobile": {
       "navigationTitle": "Navigatsiya",
-      "navigationDescription": "Kerakli portal bo‘limini tanlang"
+      "navigationDescription": "Kerakli portal bölimini tanlang"
     },
     "accessibility": {
-      "homeLink": "UzDe bosh sahifasi",
+      "homeLink": "UzDe boş sahifasi",
       "mainNavigation": "Asosiy navigatsiya",
-      "openSearch": "Tezkor qidiruvni ochish",
-      "enableLightMode": "Yorug‘ rejimni yoqish",
-      "enableDarkMode": "Tungi rejimni yoqish",
-      "openMenu": "Menyuni ochish",
-      "closeMenu": "Menyuni yopish",
-      "closeMobileMenu": "Mobil menyuni yopish"
+      "openSearch": "Tezkor qidiruvni oçiş",
+      "enableLightMode": "Yoruǵ rejimni yoqiş",
+      "enableDarkMode": "Tungi rejimni yoqiş",
+      "openMenu": "Menyuni oçiş",
+      "closeMenu": "Menyuni yopiş",
+      "closeMobileMenu": "Mobil menyuni yopiş"
     },
     "languageSwitcher": {
       "title": "Til",
-      "groupLabel": "Tilni tanlash",
-      "switchTo": "{language} tiliga o‘tish",
+      "groupLabel": "Tilni tanlaş",
+      "switchTo": "{language} tiliga ötiş",
       "languages": {
-        "uz": "O‘zbekcha",
+        "uz": "Özbekça",
         "de": "Deutsch"
       }
     }
   },
   "SearchSection": {
     "badge": "Global qidiruv",
-    "title": "Kerakli ma’lumotni bir necha soniyada toping",
-    "description": "Ish, xizmat, yangilik, Telegram guruhi yoki tadbirni bitta qidiruv orqali toping.",
-    "inputLabel": "Portal bo‘ylab qidirish",
-    "placeholder": "Masalan: Elektrik, Berlin, yurist, Minijob...",
-    "searchButton": "Qidirish",
+    "title": "Kerakli ma’lumotni bir neça soniyada toping",
+    "description": "Iş, xizmat, yangilik, Telegram guruhi yoki tadbirni bitta qidiruv orqali toping.",
+    "inputLabel": "Portal böylab qidiriş",
+    "placeholder": "Trjimon · Berlin · Minijob",
+    "searchButton": "Qidiriş",
     "categoryFilterLabel": "Qidiruv kategoriyalari",
     "categories": {
-      "all": "Barchasi",
+      "all": "Barçasi",
       "news": "Yangilik",
       "services": "Xizmat",
-      "jobs": "Ish",
+      "jobs": "Iş",
       "telegram": "Telegram",
       "events": "Tadbir"
     },
     "results": {
       "title": "Natijalar",
       "count": "{count} ta mos ma’lumot topildi",
-      "clearFilters": "Filtrlarni tozalash"
+      "clearFilters": "Filtrlarni tozalaş"
     },
     "emptyState": {
       "title": "Mos ma’lumot topilmadi",
-      "description": "Boshqa kalit so‘z yoki boshqa bo‘limni tanlab qayta qidiring.",
-      "clearSearch": "Qidiruvni tozalash"
+      "description": "Boşqa kalit söz yoki boşqa bölimni tanlab qayta qidiring.",
+      "clearSearch": "Qidiruvni tozalaş"
     },
     "items": {
       "officialNews": {
         "title": "Rasmiy yangiliklar",
-        "description": "Germaniyada yashash, o‘qish, ishlash va hujjatlar bo‘yicha tekshirilgan ma’lumotlar."
+        "description": "Germaniyada yaşaş, öqiş, işlaş va hujjatlar böyiça tekşirilgan ma’lumotlar."
       },
       "translationServices": {
         "title": "Tarjimon va til xizmatlari",
-        "description": "Tarjimon topish, hujjat tarjimasi va rasmiy tasdiqlash bo‘yicha qo‘llanmalar."
+        "description": "Tarjimon topiş, hujjat tarjimasi va rasmiy tasdiqlaş böyiça qöllanmalar."
       },
       "legalServices": {
         "title": "Huquqiy xizmatlar",
-        "description": "Advokat, migratsiya maslahati va iste’molchilar huquqlarini himoya qilish bo‘yicha ma’lumot."
+        "description": "Advokat, migratsiya maslahati va iste’molçilar huquqlarini himoya qiliş böyiça ma’lumot."
       },
       "career": {
-        "title": "Ish va karyera",
-        "description": "Minijob, Werkstudent, Praktikum, Ausbildung va malakali mutaxassislar uchun yo‘riqnomalar."
+        "title": "Iş va karyera",
+        "description": "Minijob, Werkstudent, Praktikum, Ausbildung va malakali mutaxassislar uçun yöriqnomalar."
       },
       "jobPlatforms": {
-        "title": "Ish platformalari",
-        "description": "Bundesagentur für Arbeit, Make it in Germany, EURES, Stepstone va boshqa portallar."
+        "title": "Iş platformalari",
+        "description": "Bundesagentur für Arbeit, Make it in Germany, EURES, Stepstone va boşqa portallar."
       },
       "telegramGroups": {
         "title": "Telegram guruhlari",
-        "description": "Bundeslandlar bo‘yicha o‘zbek hamjamiyatlari va faol Telegram guruhlari."
+        "description": "Bundeslandlar böyiça özbek hamjamiyatlari va faol Telegram guruhlari."
       },
       "events": {
         "title": "Tadbirlar",
-        "description": "Madaniy uchrashuvlar, seminarlar, karyera tadbirlari va jamoat yig‘inlari."
+        "description": "Madaniy uçraşuvlar, seminarlar, karyera tadbirlari va jamoat yiǵinlari."
       }
     },
     "preview": {
-      "open": "Ochish",
+      "open": "Oçiş",
       "jobs": {
-        "title": "Ish qidirish",
-        "description": "Minijob, Ausbildung va professional ishlar"
+        "title": "Iş qidiriş",
+        "description": "Minijob, Ausbildung va professional işlar"
       },
       "services": {
-        "title": "Xizmat topish",
-        "description": "Tarjimon, yurist, shifokor va mutaxassislar"
+        "title": "Xizmat topiş",
+        "description": "Tarjimon, yurist, şifokor va mutaxassislar"
       },
       "telegram": {
         "title": "Telegram guruhlari",
-        "description": "Bundeslandlar bo‘yicha faol hamjamiyatlar"
+        "description": "Bundeslandlar böyiça faol hamjamiyatlar"
       },
       "events": {
         "title": "Tadbirlar",
-        "description": "Tekshirilgan uchrashuv va tadbirlar"
+        "description": "Tekşirilgan uçraşuv va tadbirlar"
       },
       "guide": {
-        "title": "Germaniya qo‘llanmasi",
-        "description": "Germaniyada yashash, hujjatlar va muhim jarayonlar bo‘yicha qo‘llanmalar"
+        "title": "Germaniya qöllanmasi",
+        "description": "Germaniyada yaşaş, hujjatlar va muhim jarayonlar böyiça qöllanmalar"
       }
     }
   },
   "FeaturesSection": {
     "badge": "Platforma imkoniyatlari",
     "title": "Germaniyadagi hayotingiz uchun kerakli imkoniyatlar bir joyda",
-    "description": "Ish topishdan tortib, ishonchli xizmatlar, tadbirlar va mahalliy hamjamiyatlargacha — UzDe sizga kerakli ma’lumotni tez va qulay topishga yordam beradi.",
-    "viewAll": "Barcha bo‘limlarni ko‘rish",
+    "description": "Iş topişdan tortib, işonçli xizmatlar, tadbirlar va mahalliy hamjamiyatlargacha — UzDe sizga kerakli ma’lumotni tez va qulay topişga yordam beradi.",
+    "viewAll": "Barça bölimlarni köriş",
     "items": {
       "telegramGroups": {
         "title": "Telegram guruhlari",
-        "description": "Germaniyaning turli shahar va hududlaridagi o‘zbeklar Telegram guruhlarini toping.",
-        "linkLabel": "Guruhlarni ko‘rish"
+        "description": "Germaniyaning turli şahar va hududlaridagi özbeklar Telegram guruhlarini toping.",
+        "linkLabel": "Guruhlarni köriş"
       },
       "jobs": {
-        "title": "Ish va karyera",
-        "description": "Vakansiyalar, Minijob, Ausbildung va Germaniyada ishlash bo‘yicha foydali qo‘llanmalar.",
-        "linkLabel": "Ish bo‘limiga o‘tish"
+        "title": "Iş va karyera",
+        "description": "Vakansiyalar, Minijob, Ausbildung va Germaniyada işlaş böyiça foydali qöllanmalar.",
+        "linkLabel": "Iş bölimiga ötiş"
       },
       "services": {
-        "title": "Ishonchli xizmatlar",
-        "description": "Tarjimonlar, yuristlar, ustalar va boshqa mutaxassislarni bir joydan toping.",
-        "linkLabel": "Xizmatlarni ko‘rish"
+        "title": "Işonçli xizmatlar",
+        "description": "Tarjimonlar, yuristlar, ustalar va boşqa mutaxassislarni bir joydan toping.",
+        "linkLabel": "Xizmatlarni köriş"
       },
       "events": {
-        "title": "Tadbir va uchrashuvlar",
-        "description": "Konsertlar, seminarlar, uchrashuvlar va hamjamiyat tadbirlaridan xabardor bo‘ling.",
-        "linkLabel": "Tadbirlarni ko‘rish"
+        "title": "Tadbir va uçraşuvlar",
+        "description": "Konsertlar, seminarlar, uçraşuvlar va hamjamiyat tadbirlaridan xabardor böling.",
+        "linkLabel": "Tadbirlarni köriş"
       }
     }
   },
   "NewsSection": {
     "badge": "Yangiliklar",
-    "title": "Germaniyadagi eng muhim yangiliklar va qo‘llanmalar",
-    "description": "Ish, Ausbildung, Minijob, integratsiya, soliqlar, konsullik va Germaniyada yashashga oid eng muhim ma’lumotlarni bitta joyda kuzating.",
-    "viewAll": "Barcha maqolalar",
+    "title": "Germaniyadagi eng muhim yangiliklar va qöllanmalar",
+    "description": "Iş, Ausbildung, Minijob, integratsiya, soliqlar, konsullik va Germaniyada yaşaşga oid eng muhim ma’lumotlarni bitta joyda kuzating.",
+    "viewAll": "Barça maqolalar",
     "items": {
       "1": {
-        "title": "Germaniyada integratsiya kurslari: qatnashish va xarajatlar",
-        "excerpt": "BAMF integratsiya kurslari kimlar uchun mo‘ljallangani, kurs xarajatlari va ayrim hollarda to‘lovdan ozod bo‘lish imkoniyatlari haqida rasmiy ma’lumot beradi.",
+        "title": "Germaniyada integratsiya kurslari: qatnaşiş va xarajatlar",
+        "excerpt": "BAMF integratsiya kurslari kimlar uçun möljallangani, kurs xarajatlari va ayrim hollarda tölovdan ozod böliş imkoniyatlari haqida rasmiy ma’lumot beradi.",
         "category": "Integratsiya",
-        "contentType": "Foydali qo‘llanma",
+        "contentType": "Foydali qöllanma",
         "readingTime": "5 daqiqa",
         "location": "Germaniya"
       },
       "2": {
-        "title": "BAMF-NAvI orqali yaqin integratsiya kursini qanday topish mumkin?",
-        "excerpt": "BAMF-NAvI yashash joyiga yaqin integratsiya kurslari, kurs tashkilotchilari va mas’ul idoralarning manzillarini topishga yordam beradi.",
+        "title": "BAMF-NAvI orqali yaqin integratsiya kursini qanday topiş mumkin?",
+        "excerpt": "BAMF-NAvI yaşaş joyiga yaqin integratsiya kurslari, kurs taşkilotçilari va mas’ul idoralarning manzillarini topişga yordam beradi.",
         "category": "Nemis tili",
-        "contentType": "Foydali qo‘llanma",
+        "contentType": "Foydali qöllanma",
         "readingTime": "3 daqiqa",
         "location": "Germaniya"
       },
       "3": {
-        "title": "Opportunity Card orqali Germaniyada ish qidirish",
-        "excerpt": "Opportunity Card malakali xorijiy mutaxassislarga Germaniyada ish qidirish imkonini beruvchi yashash ruxsati shaklidir.",
-        "category": "Ish",
-        "contentType": "Ish va migratsiya",
+        "title": "Opportunity Card orqali Germaniyada iş qidiriş",
+        "excerpt": "Opportunity Card malakali xorijiy mutaxassislarga Germaniyada iş qidiriş imkonini beruvçi yaşaş ruxsati şaklidir.",
+        "category": "Iş",
+        "contentType": "Iş va migratsiya",
         "readingTime": "5 daqiqa",
         "location": "Germaniya"
       }
     }
   },
   "NewsCard": {
-    "verified": "Tekshirildi",
+    "verified": "Tekşirildi",
     "details": "Batafsil"
   },
   "NewsPage": {
     "metadata": {
       "title": "Yangiliklar va foydali ma’lumotlar | UzDe",
-      "description": "Germaniyadagi o‘zbekistonliklar uchun rasmiy manbalarga asoslangan integratsiya, ish, ta’lim va konsullik ma’lumotlari."
+      "description": "Germaniyadagi özbekistonliklar uçun rasmiy manbalarga asoslangan integratsiya, iş, ta’lim va konsullik ma’lumotlari."
     },
     "hero": {
       "title": "Yangiliklar va foydali ma’lumotlar",
-      "description": "Germaniyada yashash, o‘qish va ishlashga oid materiallar faqat tekshiriladigan rasmiy manbalar asosida tayyorlanadi."
+      "description": "Germaniyada yaşaş, öqiş va işlaşga oid materiallar faqat tekşiriladigan rasmiy manbalar asosida tayyorlanadi."
     },
     "featured": {
       "badge": "Tavsiya etilgan material",
       "officialSource": "Rasmiy manba",
-      "readMore": "Batafsil o‘qish",
-      "verified": "Tekshirildi:"
+      "readMore": "Batafsil öqiş",
+      "verified": "Tekşirildi:"
     },
     "all": {
-      "eyebrow": "Barcha materiallar",
-      "title": "Tekshirilgan ma’lumotlar",
-      "description": "Integratsiya, ish, ta’lim, huquqiy masalalar va konsullik xizmatlariga oid ishonchli materiallarni bir joyda toping.",
+      "eyebrow": "Barça materiallar",
+      "title": "Tekşirilgan ma’lumotlar",
+      "description": "Integratsiya, iş, ta’lim, huquqiy masalalar va konsullik xizmatlariga oid işonçli materiallarni bir joyda toping.",
       "count": "Jami {count} ta material"
     },
-    "footer": "Germaniyadagi o‘zbekistonliklar uchun raqamli platforma",
+    "footer": "Germaniyadagi özbekistonliklar uçun raqamli platforma",
     "items": {
       "1": {
-        "title": "Germaniyada integratsiya kurslari: qatnashish va xarajatlar",
-        "excerpt": "BAMF integratsiya kurslari kimlar uchun mo‘ljallangani, kurs xarajatlari va ayrim hollarda to‘lovdan ozod bo‘lish imkoniyatlari haqida rasmiy ma’lumot beradi.",
+        "title": "Germaniyada integratsiya kurslari: qatnaşiş va xarajatlar",
+        "excerpt": "BAMF integratsiya kurslari kimlar uçun möljallangani, kurs xarajatlari va ayrim hollarda tölovdan ozod böliş imkoniyatlari haqida rasmiy ma’lumot beradi.",
         "category": "Integratsiya",
-        "contentType": "Foydali qo‘llanma",
+        "contentType": "Foydali qöllanma",
         "readingTime": "5 daqiqa",
         "location": "Germaniya",
         "sourceLanguage": "Nemis tili"
       },
       "2": {
-        "title": "BAMF-NAvI orqali yaqin integratsiya kursini qanday topish mumkin?",
-        "excerpt": "BAMF-NAvI yashash joyiga yaqin integratsiya kurslari, kurs tashkilotchilari va mas’ul idoralarning manzillarini topishga yordam beradi.",
+        "title": "BAMF-NAvI orqali yaqin integratsiya kursini qanday topiş mumkin?",
+        "excerpt": "BAMF-NAvI yaşaş joyiga yaqin integratsiya kurslari, kurs taşkilotçilari va mas’ul idoralarning manzillarini topişga yordam beradi.",
         "category": "Nemis tili",
-        "contentType": "Foydali qo‘llanma",
+        "contentType": "Foydali qöllanma",
         "readingTime": "3 daqiqa",
         "location": "Germaniya",
         "sourceLanguage": "Nemis tili"
       },
       "3": {
-        "title": "Opportunity Card orqali Germaniyada ish qidirish",
-        "excerpt": "Opportunity Card malakali xorijiy mutaxassislarga Germaniyada ish qidirish imkonini beruvchi yashash ruxsati shaklidir.",
-        "category": "Ish",
-        "contentType": "Ish va migratsiya",
+        "title": "Opportunity Card orqali Germaniyada iş qidiriş",
+        "excerpt": "Opportunity Card malakali xorijiy mutaxassislarga Germaniyada iş qidiriş imkonini beruvçi yaşaş ruxsati şaklidir.",
+        "category": "Iş",
+        "contentType": "Iş va migratsiya",
         "readingTime": "5 daqiqa",
         "location": "Germaniya",
         "sourceLanguage": "Ingliz va nemis tillari"
       },
       "4": {
-        "title": "DAAD stipendiyalar bazasidan qanday foydalanish mumkin?",
-        "excerpt": "DAAD bazasida xalqaro talabalar, bitiruvchilar, doktorantlar va tadqiqotchilar uchun stipendiya dasturlarini qidirish mumkin.",
+        "title": "DAAD stipendiyalar bazasidan qanday foydalaniş mumkin?",
+        "excerpt": "DAAD bazasida xalqaro talabalar, bitiruvçilar, doktorantlar va tadqiqotçilar uçun stipendiya dasturlarini qidiriş mumkin.",
         "category": "Stipendiya",
         "contentType": "Ta’lim",
         "readingTime": "4 daqiqa",
@@ -326,22 +326,22 @@
         "sourceLanguage": "Nemis va ingliz tillari"
       },
       "5": {
-        "title": "O‘zbekistonning Berlindagi konsullik bo‘limi haqida ma’lumot",
-        "excerpt": "O‘zbekistonning Germaniyadagi elchixonasi konsullik xizmatlari, bog‘lanish ma’lumotlari va fuqarolar qabuli bo‘yicha rasmiy ma’lumot taqdim etadi.",
-        "category": "Elchixona",
+        "title": "Özbekistonning Berlindagi konsullik bölimi haqida ma’lumot",
+        "excerpt": "Özbekistonning Germaniyadagi elçixonasi konsullik xizmatlari, boǵlaniş ma’lumotlari va fuqarolar qabuli böyiça rasmiy ma’lumot taqdim etadi.",
+        "category": "Elçixona",
         "contentType": "Konsullik",
         "readingTime": "3 daqiqa",
         "location": "Berlin",
-        "sourceLanguage": "O‘zbek tili"
+        "sourceLanguage": "Özbek tili"
       },
       "6": {
-        "title": "Germaniyada vaqtincha konsullik ro‘yxatiga turish tartibi",
-        "excerpt": "O‘zbekistonning Germaniyadagi elchixonasi vaqtincha xorijda yashayotgan fuqarolar uchun konsullik ro‘yxatiga turish tartibini e’lon qilgan.",
+        "title": "Germaniyada vaqtinça konsullik röyxatiga turiş tartibi",
+        "excerpt": "Özbekistonning Germaniyadagi elçixonasi vaqtinça xorijda yaşayotgan fuqarolar uçun konsullik röyxatiga turiş tartibini e’lon qilgan.",
         "category": "Konsullik",
         "contentType": "Rasmiy ma’lumot",
         "readingTime": "4 daqiqa",
         "location": "Germaniya",
-        "sourceLanguage": "O‘zbek tili"
+        "sourceLanguage": "Özbek tili"
       }
     }
   },
@@ -471,15 +471,15 @@
   "CommandPalette": {
     "title": "Tezkor qidiruv",
     "placeholder": "Sahifa, xizmat yoki ma’lumotni qidiring...",
-    "popularTitle": "Mashhur qidiruvlar",
+    "popularTitle": "Maşhur qidiruvlar",
     "recentTitle": "Oxirgi qidiruvlar",
-    "clearRecent": "Tozalash",
+    "clearRecent": "Tozalaş",
     "resultCount": "{count} ta natija",
     "categories": {
       "main": "Asosiy",
       "news": "Yangilik",
       "services": "Xizmat",
-      "jobs": "Ish",
+      "jobs": "Iş",
       "community": "Hamjamiyat"
     },
     "popularSearches": {
@@ -491,108 +491,108 @@
       "internship": "Praktikum"
     },
     "keyboard": {
-      "select": "Tanlash",
-      "open": "Ochish"
+      "select": "Tanlaş",
+      "open": "Oçiş"
     },
     "emptyState": {
       "title": "Mos natija topilmadi",
-      "description": "Boshqa kalit so‘z bilan qayta qidirib ko‘ring.",
-      "clear": "Qidiruvni tozalash"
+      "description": "Boşqa kalit söz bilan qayta qidirib köring.",
+      "clear": "Qidiruvni tozalaş"
     },
     "accessibility": {
-      "closeDialog": "Qidiruv oynasini yopish",
-      "searchInput": "Sayt bo‘yicha qidirish",
+      "closeDialog": "Qidiruv oynasini yopiş",
+      "searchInput": "Sayt böyiça qidiriş",
       "results": "Qidiruv natijalari"
     },
     "commands": {
       "home": {
-        "title": "Bosh sahifa",
-        "description": "UzDe asosiy sahifasiga o‘tish"
+        "title": "Boş sahifa",
+        "description": "UzDe asosiy sahifasiga ötiş"
       },
       "news": {
         "title": "Rasmiy yangiliklar",
-        "description": "Germaniyada yashash, o‘qish va ishlash bo‘yicha ma’lumotlar"
+        "description": "Germaniyada yaşaş, öqiş va işlaş böyiça ma’lumotlar"
       },
       "services": {
-        "title": "Tekshirilgan xizmatlar",
-        "description": "Tarjimon, yurist, shifokor va boshqa mutaxassislarni topish"
+        "title": "Tekşirilgan xizmatlar",
+        "description": "Tarjimon, yurist, şifokor va boşqa mutaxassislarni topiş"
       },
       "translationServices": {
         "title": "Tarjimon va til xizmatlari",
-        "description": "Hujjat tarjimasi, rasmiy tasdiqlash va tarjimon topish"
+        "description": "Hujjat tarjimasi, rasmiy tasdiqlaş va tarjimon topiş"
       },
       "legalServices": {
         "title": "Huquqiy xizmatlar",
-        "description": "Advokat, migratsiya va iste’molchilar huquqi bo‘yicha yordam"
+        "description": "Advokat, migratsiya va iste’molçilar huquqi böyiça yordam"
       },
       "taxServices": {
-        "title": "Soliq maslahatchisi",
-        "description": "Germaniyada soliq va deklaratsiya bo‘yicha ma’lumotlar"
+        "title": "Soliq maslahatçisi",
+        "description": "Germaniyada soliq va deklaratsiya böyiça ma’lumotlar"
       },
       "jobs": {
-        "title": "Ish va karyera",
-        "description": "Minijob, Werkstudent, Ausbildung va professional ishlar"
+        "title": "Iş va karyera",
+        "description": "Minijob, Werkstudent, Ausbildung va professional işlar"
       },
       "jobPlatforms": {
-        "title": "Ish platformalari",
-        "description": "Germaniyadagi ishonchli ish qidirish portallari"
+        "title": "Iş platformalari",
+        "description": "Germaniyadagi işonçli iş qidiriş portallari"
       },
       "minijob": {
         "title": "Germaniyada Minijob",
-        "description": "Minijob topish va ishlash qoidalari bo‘yicha qo‘llanma"
+        "description": "Minijob topiş va işlaş qoidalari böyiça qöllanma"
       },
       "telegram": {
         "title": "Telegram guruhlari",
-        "description": "Bundeslandlar bo‘yicha faol o‘zbek hamjamiyatlari"
+        "description": "Bundeslandlar böyiça faol özbek hamjamiyatlari"
       },
       "events": {
         "title": "Tadbirlar",
-        "description": "Uchrashuv, seminar, networking va madaniy tadbirlar"
+        "description": "Uçraşuv, seminar, networking va madaniy tadbirlar"
       }
     }
   },
   "Footer": {
     "cta": {
-      "title": "Germaniyadagi hayotingiz uchun ishonchli ma’lumotlar",
-      "description": "Ish, ta’lim, konsullik, integratsiya, xizmatlar, tadbirlar va vatandoshlar hamjamiyatlari haqidagi foydali ma’lumotlarni bir joyda toping.",
-      "servicesButton": "Xizmatlarni ko‘rish"
+      "title": "Germaniyadagi hayotingiz uçun işonçli ma’lumotlar",
+      "description": "Iş, ta’lim, konsullik, integratsiya, xizmatlar, tadbirlar va vatandoşlar hamjamiyatlari haqidagi foydali ma’lumotlarni bir joyda toping.",
+      "servicesButton": "Xizmatlarni köriş"
     },
     "brand": {
-      "subtitle": "Germaniyadagi o‘zbekistonliklar portali",
-      "description": "Germaniyada yashayotgan, o‘qiyotgan va ishlayotgan o‘zbekistonliklar uchun mustaqil axborot va hamjamiyat platformasi.",
-      "trust": "Ma’lumotlar imkon qadar rasmiy va ishonchli manbalar asosida tayyorlanadi."
+      "subtitle": "Germaniyadagi özbekistonliklar portali",
+      "description": "Germaniyada yaşayotgan, öqiyotgan va işlayotgan özbekistonliklar uçun mustaqil axborot va hamjamiyat platformasi.",
+      "trust": "Ma’lumotlar imkon qadar rasmiy va işonçli manbalar asosida tayyorlanadi."
     },
     "columns": {
       "portal": {
         "title": "Portal",
         "links": {
-          "home": "Bosh sahifa",
+          "home": "Boş sahifa",
           "news": "Yangiliklar",
           "services": "Xizmatlar",
-          "jobs": "Ish",
+          "jobs": "Iş",
           "events": "Tadbirlar",
           "specialists": "Mutaxassislar",
-          "founder": "Loyiha asoschisi"
+          "founder": "Loyiha asosçisi"
         }
       },
       "resources": {
-        "title": "Foydali bo‘limlar",
+        "title": "Foydali bölimlar",
         "links": {
           "officialInformation": "Rasmiy ma’lumotlar",
-          "verifiedServices": "Tekshirilgan xizmatlar",
-          "career": "Ish va karyera",
-          "events": "Tadbir va uchrashuvlar"
+          "verifiedServices": "Tekşirilgan xizmatlar",
+          "career": "Iş va karyera",
+          "events": "Tadbir va uçraşuvlar"
         }
       }
     },
     "bottom": {
-      "copyright": "© {year} UzDe. Barcha huquqlar himoyalangan.",
-      "disclaimer": "Portal yuridik, soliq yoki migratsion maslahat o‘rnini bosmaydi.",
+      "copyright": "© {year} UzDe. Barça huquqlar himoyalangan.",
+      "disclaimer": "Portal yuridik, soliq yoki migratsion maslahat örnini bosmaydi.",
       "backToTop": "Yuqoriga",
-      "support": "Loyihaga hissa qo‘shish"
+      "support": "Loyihaga hissa qöşiş"
     },
     "accessibility": {
-      "homeLink": "UzDe bosh sahifasi",
+      "homeLink": "UzDe boş sahifasi",
       "navigation": "Footer navigatsiyasi"
     }
   },
@@ -761,7 +761,7 @@
       "phone": "Telefon",
       "email": "E-mail",
       "callPhone": "Qo‘ng‘iroq qilish",
-        "copyEmail": "Nusxalash",
+      "copyEmail": "Nusxalash",
       "composeEmail": "Xat yozish",
       "emailCopied": "Nusxalandi!",
       "emailCopyFailed": "Nusxalab bo‘lmadi.",
@@ -934,5 +934,12 @@
     "home": "Bosh sahifaga qaytish",
     "guide": "Qo‘llanmani ko‘rish"
   },
-  "DesktopQuickNavigation": {"home": "Bosh sahifa", "questions": "Savol-javob", "market": "Market", "support": "Qo‘llab-quvvatlash", "navigation": "Tezkor navigatsiya", "travel": "Sayohat"}
+  "DesktopQuickNavigation": {
+    "home": "Boş sahifa",
+    "questions": "Savol-javob",
+    "market": "Market",
+    "support": "Qöllab-quvvatlaş",
+    "navigation": "Tezkor navigatsiya",
+    "travel": "Sayohat"
+  }
 }

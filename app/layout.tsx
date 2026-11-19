@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { getLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 
@@ -159,16 +158,15 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <Script
+        <script
           id="vatandoshlar-theme-initialization"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: themeInitializationScript,
           }}
         />
       </head>
 
-      <body className="min-h-screen bg-white text-slate-950 antialiased transition-colors duration-200 dark:bg-slate-950 dark:text-slate-50">
+      <body className="min-h-screen bg-white text-slate-950 antialiased dark:bg-slate-950 dark:text-slate-50">
         <StructuredData />
         {children}
       </body>

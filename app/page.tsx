@@ -1,3 +1,7 @@
+import EditorialNewsHome from "../components/home/EditorialNewsHome";
+import EditorialServicesSection from "../components/home/EditorialServicesSection";
+import EditorialPartnersSection from "../components/home/EditorialPartnersSection";
+import EditorialSupportSection from "../components/home/EditorialSupportSection";
 import RebrandingHomeFrame from "../components/home/RebrandingHomeFrame";
 import MarketHomeEntry from "../components/home/MarketHomeEntry";
 import HomeShareCTA from "../components/home/HomeShareCTA";
@@ -6,7 +10,6 @@ import PopularCategoriesSection from "../components/home/PopularCategoriesSectio
 import Reveal from "../components/Reveal";
 import SearchSection from "../components/SearchSection";
 import {
-  HeroSection,
   HomeFooter,
 } from "../components/home";
 
@@ -14,11 +17,10 @@ export default function HomePage() {
   return (
     <>
       <RebrandingHomeFrame>
-      <main className="min-h-screen bg-white pt-[calc(6rem+var(--rebranding-height))] text-slate-950 transition-[background-color,color,padding] lg:pt-[calc(7rem+var(--rebranding-height))] dark:bg-slate-950 dark:text-white">
-        <HeroSection />
+      <main className="min-h-screen bg-[var(--uzde-page-bg)] pt-[calc(66px+var(--rebranding-height)-4px)] text-slate-950 transition-[background-color,color,padding] lg:pt-[calc(5rem+var(--rebranding-height))] dark:text-white">
+        <EditorialNewsHome />
 
         <MarketHomeEntry />
-
 
         <Reveal>
           <SearchSection />
@@ -29,6 +31,12 @@ export default function HomePage() {
         <Reveal>
           <PopularCategoriesSection />
         </Reveal>
+
+        <EditorialServicesSection />
+
+        <EditorialPartnersSection />
+
+        <EditorialSupportSection />
 
         <HomeShareCTA />
       </main>
