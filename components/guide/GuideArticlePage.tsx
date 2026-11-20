@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type {
   GuideArticle,
   GuideArticleSectionKey,
@@ -8,21 +7,20 @@ import type {
 import { Link } from "../../i18n/navigation";
 import BrandedText from "../ui/BrandedText";
 import ViewCount from "../content-views/ViewCount";
-import { getGuideArticleVisual } from "../../data/guide/article-visuals";
 import GuideArticleSection from "./GuideArticleSection";
 import GuideFAQ from "./GuideFAQ";
 import GuideInfoBox from "./GuideInfoBox";
 import GuideReadingProgress from "./GuideReadingProgress";
 import GuideArticleNavigation from "./GuideArticleNavigation";
 import RelatedGuideArticles from "./RelatedGuideArticles";
-import GuideSourceList from "./GuideSourceList";
+import OfficialSourcesAccordion from "./OfficialSourcesAccordion";
 import GuideStepList from "./GuideStepList";
 import GuideTableOfContents, {
   type GuideTableOfContentsItem,
 } from "./GuideTableOfContents";
 import GuideRichContent from "./rich-content/GuideRichContent";
 import GuideAuthor from "./GuideAuthor";
-import ShareButton from "@/components/shared/ShareButton";
+import GuideArticleShareButton from "./GuideArticleShareButton";
 
 type GuideArticlePageProps = Readonly<{
   article: GuideArticle;
@@ -59,6 +57,7 @@ export default function GuideArticlePage({
     locale === "uz"
       ? {
           guide: "Qo‘llanma",
+          backToCategory: "Kategoriyaga qaytiş",
           lastReviewed: "Oxirgi tekshiruv",
           readingTime: "O‘qish vaqti",
           keyFacts: "Asosiy ma’lumotlar",
@@ -77,6 +76,7 @@ export default function GuideArticlePage({
         }
       : {
           guide: "Guide",
+          backToCategory: "Zur Kategorie",
           lastReviewed: "Zuletzt geprüft",
           readingTime: "Lesezeit",
           keyFacts: "Wichtige Eckdaten",
@@ -194,90 +194,64 @@ export default function GuideArticlePage({
             : []),
         ];
 
-  const articleVisual = getGuideArticleVisual(
-    category.slug,
-    article.slug,
-  );
-
   return (
-    <main className="min-h-screen bg-slate-50 pt-20 text-slate-950 dark:bg-slate-950 dark:text-white">
+    <main className="min-h-screen bg-[#F7FAFB] pt-20 text-slate-950 dark:bg-[#111419] dark:text-slate-200">
       <GuideReadingProgress
         targetId="guide-article-content"
         label={copy.readingProgress}
       />
 
       <article id="guide-article-content">
-        <header className="relative isolate overflow-hidden border-b border-slate-800 bg-slate-950 text-white">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-          >
-            {articleVisual ? (
-              <>
-                <Image
-                  src={articleVisual}
-                  alt=""
-                  fill
-                  priority
-                  sizes="100vw"
-                  quality={88}
-                  className="object-cover object-[68%_center] opacity-58 sm:object-[70%_center] sm:opacity-64 lg:object-[72%_center] lg:opacity-72"
-                />
-
-                <div className="absolute inset-0 bg-slate-950/16" />
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.995)_0%,rgba(2,6,23,0.975)_34%,rgba(2,6,23,0.88)_52%,rgba(2,6,23,0.58)_72%,rgba(2,6,23,0.28)_100%)]" />
-                <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,6,23,0.06),rgba(2,6,23,0.28))]" />
-
-                <div className="absolute -right-32 -top-40 size-[32rem] rounded-full bg-emerald-500/10 blur-3xl" />
-                <div className="absolute -bottom-48 left-8 size-[30rem] rounded-full bg-blue-500/[0.07] blur-3xl" />
-              </>
-            ) : (
-              <>
-                <div className="absolute -right-32 -top-40 size-[32rem] rounded-full bg-emerald-500/20 blur-3xl" />
-                <div className="absolute -bottom-48 left-8 size-[30rem] rounded-full bg-blue-500/15 blur-3xl" />
-              </>
-            )}
-          </div>
-
-          <div className="relative mx-auto max-w-5xl px-6 py-16 sm:py-20 lg:px-8 lg:py-24">
-            <nav
-              aria-label="Breadcrumb"
-              className="flex flex-wrap items-center gap-2 text-sm text-slate-300"
-            >
+        <header className="relative border-b border-slate-200 bg-[#f7f7f7] text-slate-950 dark:border-slate-700 dark:bg-[#111419] dark:text-slate-100">
+          <div className="relative mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] py-5 sm:py-7 lg:py-8">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
+              <Link
+                href={`/guide/${category.slug}`}
+                aria-label={`${copy.backToCategory}: ${category.title}`}
+                className="inline-flex shrink-0 items-center gap-2 text-xs font-semibold text-[#008F78] transition-colors hover:text-[#006D5D] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#008F78] sm:text-sm dark:text-[#65CBB6] dark:hover:text-[#91E5D3] dark:focus-visible:outline-[#65CBB6] motion-reduce:transition-none"
+              >
+                <span aria-hidden="true">←</span>
+                {copy.backToCategory}
+              </Link>
+              <nav
+                aria-label="Breadcrumb"
+                className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden border-l border-slate-300 pl-4 text-xs text-slate-500 sm:text-sm dark:border-slate-700 dark:text-slate-400"
+              >
               <Link
                 href="/guide"
-                className="font-semibold text-emerald-300 transition hover:text-emerald-200"
+                className="shrink-0 font-medium text-emerald-700 transition-colors hover:text-emerald-600 focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-emerald-300 dark:hover:text-emerald-200"
               >
                 {copy.guide}
               </Link>
               <span aria-hidden="true">/</span>
               <Link
                 href={`/guide/${category.slug}`}
-                className="font-semibold text-emerald-300 transition hover:text-emerald-200"
+                className="max-w-[35%] shrink-0 truncate font-medium text-emerald-700 transition hover:text-emerald-600 dark:text-emerald-300 dark:hover:text-emerald-200"
               >
                 {category.title}
               </Link>
               <span aria-hidden="true">/</span>
-              <span aria-current="page"><BrandedText text={article.title} /></span>
-            </nav>
+              <span className="min-w-0 truncate" aria-current="page"><BrandedText text={article.title} /></span>
+              </nav>
+            </div>
 
-            <p className="mt-10 text-sm font-semibold uppercase tracking-[0.18em] text-emerald-300">
+            <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">
               {category.title}
             </p>
 
-            <h1 className="mt-5 text-4xl font-bold tracking-[-0.045em] sm:text-6xl sm:leading-[1.08]">
+            <h1 className="mt-2 max-w-4xl text-3xl font-bold leading-tight tracking-[-0.045em] sm:text-4xl lg:text-5xl">
               <BrandedText text={article.title} />
             </h1>
 
-            <p className="mt-7 max-w-4xl text-xl leading-9 text-slate-300">
+            <p className="mt-2 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8 dark:text-slate-300">
               <BrandedText text={article.excerpt} />
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold">
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-0.5 border-t border-slate-200 pt-2 text-sm dark:border-slate-700">
+              <span className="text-sm text-slate-600 dark:text-slate-300">
                 {copy.readingTime}: {article.readingTime}
               </span>
-              <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-200">
+              <span className="text-sm text-slate-600 dark:text-slate-300">
                 {copy.lastReviewed}:{" "}
                 {formatReviewDate(
                   article.lastReviewedAt,
@@ -285,45 +259,45 @@ export default function GuideArticlePage({
                 )}
               </span>
 
-              <div className="flex items-center [&_button]:min-h-0 [&_button]:rounded-full [&_button]:px-4 [&_button]:py-2 [&_button]:text-sm">
-                <ShareButton title={article.title} locale={locale} variant="dark" />
+              <div className="flex items-center">
+                  <GuideArticleShareButton title={article.title} locale={locale} />
               </div>
               <ViewCount
                 count={article.viewCount}
                 locale={locale}
-                className="px-1 py-2 text-sm font-semibold text-slate-300"
+                className="text-sm text-slate-500 dark:text-slate-400"
               />
             </div>
           </div>
         </header>
 
-        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[17rem_minmax(0,1fr)]">
+        <div className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] py-6 sm:py-8 lg:py-9">
+          <div className="grid gap-5 lg:grid-cols-[13rem_minmax(0,1fr)] xl:gap-8">
             <GuideTableOfContents
               items={tocItems}
               locale={locale}
             />
 
-            <div className="min-w-0">
-              <p className="text-xl leading-9 text-slate-700 dark:text-slate-300">
+            <div className="min-w-0 w-full max-w-[880px]">
+              <p className="max-w-[75ch] text-base leading-7 text-slate-700 sm:text-lg sm:leading-8 dark:text-slate-300">
                 <BrandedText text={article.intro} />
               </p>
 
-          <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-7 sm:p-9 dark:border-slate-800 dark:bg-slate-900">
+          <section className="mt-6 border-t border-slate-200 pt-5 dark:border-slate-700">
             <h2 className="text-2xl font-bold">
               {copy.keyFacts}
             </h2>
 
-            <dl className="mt-6 grid gap-4 sm:grid-cols-2">
+            <dl className="mt-3 grid gap-x-8 gap-y-0 sm:grid-cols-2">
               {article.facts.map((fact) => (
                 <div
                   key={fact.label}
-                  className="rounded-2xl bg-slate-50 p-5 dark:bg-slate-950"
+                  className="border-b border-slate-200 py-2.5 dark:border-slate-700"
                 >
                   <dt className="text-sm font-semibold text-slate-500 dark:text-slate-400">
                     <BrandedText text={fact.label} />
                   </dt>
-                  <dd className="mt-2 font-bold leading-7 text-slate-950 dark:text-white">
+                  <dd className="mt-1 font-semibold leading-6 text-slate-950 dark:text-white">
                     <BrandedText text={fact.value} />
                   </dd>
                 </div>
@@ -336,7 +310,7 @@ export default function GuideArticlePage({
             locale={locale}
           />
 
-          <div className="mt-8 space-y-8">
+          <div className="mt-6 space-y-6">
             {sectionOrder.map((key) => {
               const section = article.sections[key];
 
@@ -415,7 +389,7 @@ export default function GuideArticlePage({
                 id="guide-section-sources"
                 className="scroll-mt-32"
               >
-                <GuideSourceList
+                <OfficialSourcesAccordion
                   title={copy.sources}
                   description={copy.sourceDescription}
                   sources={article.sources}
@@ -425,12 +399,14 @@ export default function GuideArticlePage({
             )}
             <GuideAuthor locale={locale} />
 
-            <GuideInfoBox
-              title={copy.disclaimerTitle}
-              variant="warning"
-            >
-              <p>{copy.disclaimer}</p>
-            </GuideInfoBox>
+            <div className="[&_aside]:rounded-none [&_aside]:border-x-0 [&_aside]:border-b-0 [&_aside]:border-t-2 [&_aside]:bg-amber-50/40 [&_aside]:px-3 [&_aside]:py-3 [&_aside_h2]:text-base [&_aside_div]:mt-1 [&_aside_div]:text-sm [&_aside_div]:leading-6 dark:[&_aside]:bg-amber-500/5 sm:[&_aside]:px-4">
+              <GuideInfoBox
+                title={copy.disclaimerTitle}
+                variant="warning"
+              >
+                <p>{copy.disclaimer}</p>
+              </GuideInfoBox>
+            </div>
 
             <RelatedGuideArticles
               articles={relatedArticles}

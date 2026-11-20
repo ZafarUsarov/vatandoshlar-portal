@@ -10,18 +10,18 @@ export default function GuideFAQ({
   items,
 }: GuideFAQProps) {
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-7 sm:p-9 dark:border-slate-800 dark:bg-slate-900">
-      <h2 className="text-2xl font-bold tracking-[-0.03em] sm:text-3xl">
+    <section className="border-t border-slate-200 pt-5 dark:border-slate-700">
+      <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
         {title}
       </h2>
 
-      <div className="mt-6 space-y-3">
+      <div className="mt-3 divide-y divide-slate-200 border-b border-slate-200 dark:divide-slate-700 dark:border-slate-700">
         {items.map((item) => (
           <details
             key={item.question}
-            className="group rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-950"
+            className="group py-2.5"
           >
-            <summary className="cursor-pointer list-none font-bold text-slate-950 marker:hidden dark:text-white">
+            <summary className="cursor-pointer list-none py-1 font-semibold text-slate-950 marker:hidden focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:text-white">
               <span className="flex items-center justify-between gap-4">
                 {item.question}
                 <span
@@ -32,7 +32,7 @@ export default function GuideFAQ({
                 </span>
               </span>
             </summary>
-            <p className="mt-4 leading-7 text-slate-600 dark:text-slate-400">
+            <p className="mt-2 leading-7 text-slate-600 dark:text-slate-400">
               {item.answer}
             </p>
           </details>

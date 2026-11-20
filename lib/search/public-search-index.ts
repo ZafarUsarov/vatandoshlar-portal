@@ -268,12 +268,25 @@ async function buildPublicSearchIndex(
       })),
   );
 
+  const migratedGuideSlugs = new Set(guideGroups.flatMap(({ articles }) => articles.map((article) => article.slug)));
+  const legacyServiceGuides = new Set([
+    "qasamyod-qilgan-tarjimonlar",
+    "yuridik-yordam-va-huquqiy-xizmatlar",
+    "soliq-maslahatchisini-topish",
+    "shifokor-va-psixoterapevt-topish",
+    "elektrik-santexnik-va-hunarmand-topish",
+    "istemolchi-huquqlari-boyicha-maslahat",
+  ]);
   return uniqueById([
     ...staticPages,
     ...newsDocuments,
-    ...serviceDocuments,
+    ...serviceDocuments.filter((item) => {
+      const slug = item.href.split("/").pop() ?? "";
+      if (!legacyServiceGuides.has(slug)) return true;
+      return !migratedGuideSlugs.has(slug === "qasamyod-qilgan-tarjimonlar" ? "official-translation-guide" : slug);
+    }),
     ...specialistDocuments,
-    ...jobDocuments,
+    ...jobDocuments.filter((item) => !migratedGuideSlugs.has(item.href.split("/").pop() ?? "")),
     ...telegramDocuments,
     ...eventDocuments,
     ...guideDocuments,

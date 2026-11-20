@@ -38,14 +38,14 @@ export default function GuideArticleNavigation({
           ? "Maqola navigatsiyasi"
           : "Artikelnavigation"
       }
-      className="space-y-5"
+      className="space-y-2"
     >
       {(previous || next) && (
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-3 md:grid-cols-2">
           {previous ? (
             <Link
               href={`/guide/${previous.categorySlug}/${previous.slug}`}
-              className="group rounded-3xl border border-slate-200 bg-white p-6 no-underline transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-950/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-700 dark:focus-visible:ring-offset-slate-950"
+              className="group border-t border-slate-200 py-4 no-underline transition-colors hover:border-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:border-slate-700 dark:hover:border-emerald-700 dark:focus-visible:ring-offset-slate-950"
             >
               <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">
                 ← {copy.previous}
@@ -61,7 +61,7 @@ export default function GuideArticleNavigation({
           {next && (
             <Link
               href={`/guide/${next.categorySlug}/${next.slug}`}
-              className="group rounded-3xl border border-slate-200 bg-white p-6 text-left no-underline transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-950/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 md:text-right dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-700 dark:focus-visible:ring-offset-slate-950"
+              className="group border-t border-slate-200 py-4 text-left no-underline transition-colors hover:border-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 md:text-right dark:border-slate-700 dark:hover:border-emerald-700 dark:focus-visible:ring-offset-slate-950"
             >
               <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">
                 {copy.next} →
@@ -74,10 +74,10 @@ export default function GuideArticleNavigation({
         </div>
       )}
 
-      <div className="flex justify-center">
+      <div className="flex justify-start">
         <Link
           href={`/guide/${category.slug}`}
-          className="inline-flex min-h-12 items-center justify-center rounded-full bg-slate-950 px-6 py-3 font-semibold !text-white no-underline transition hover:-translate-y-0.5 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 visited:!text-white hover:!text-white dark:bg-white dark:!text-slate-950 dark:visited:!text-slate-950 dark:hover:!text-slate-950 dark:hover:bg-slate-100 dark:focus-visible:ring-offset-slate-950"
+          className="inline-flex min-h-11 items-center border-b border-slate-300 py-2 text-sm font-semibold text-slate-700 no-underline transition-colors hover:border-emerald-500 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:border-slate-600 dark:text-slate-200 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-950"
         >
           {copy.backToCategory}
         </Link>

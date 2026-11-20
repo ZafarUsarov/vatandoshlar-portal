@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
+import { getPublishedGuideArticleBySlug } from "../../../lib/guide/public-guide-repository";
 import Header from "../../../components/Header";
 import ShareButton from "../../../components/shared/ShareButton";
 import JobGuideCard from "../../../components/cards/JobGuideCard";
@@ -113,6 +114,12 @@ export default async function JobGuidePage({
 
   const { slug } =
     await params;
+
+  const migrated = await getPublishedGuideArticleBySlug(
+    "work-and-career", slug, locale,
+  );
+  if (migrated) permanentRedirect(`/${locale}/guide/work-and-career/${slug}`);
+
 
   const [
     guide,

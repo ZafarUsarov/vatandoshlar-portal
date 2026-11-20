@@ -76,7 +76,7 @@ export default function GuideReadingProgress({
 
   return (
     <div
-      className="fixed inset-x-0 top-20 z-40 h-1 bg-slate-200/80 backdrop-blur dark:bg-slate-800/80"
+      className="fixed inset-x-0 top-20 z-40 h-0.5 bg-slate-200/80 dark:bg-slate-800/80"
       aria-hidden="true"
     >
       <div

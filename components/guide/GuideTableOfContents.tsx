@@ -56,8 +56,8 @@ export default function GuideTableOfContents({ items, locale }: Props) {
   }, [items]);
 
   const nav = (mobile = false) => (
-    <nav aria-label={title} className={mobile ? "mt-3 space-y-1" : "space-y-1"}>
-      {items.map((item, index) => {
+    <nav aria-label={title} className={mobile ? "mt-2 space-y-0.5" : "space-y-0.5"}>
+      {items.map((item) => {
         const active = item.id === activeId;
         return (
           <a
@@ -65,24 +65,18 @@ export default function GuideTableOfContents({ items, locale }: Props) {
             href={`#${item.id}`}
             aria-current={active ? "location" : undefined}
             onClick={() => {
+              if (item.id === "guide-section-sources") {
+                window.dispatchEvent(new Event("guide:open-official-sources"));
+              }
               setActiveId(item.id);
               if (mobile) setOpen(false);
             }}
-            className={`group flex items-start gap-3 rounded-xl px-3 py-2.5 text-sm transition motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+            className={`group flex items-start border-l-2 px-3 py-1 text-[13px] leading-5 transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
               active
-                ? "bg-emerald-50 font-bold text-slate-950 dark:bg-emerald-500/10 dark:text-white"
-                : "font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                ? "border-emerald-600 font-semibold text-slate-950 dark:border-emerald-400 dark:text-white"
+                : "border-transparent font-medium text-slate-600 hover:text-emerald-700 dark:text-slate-400 dark:hover:text-emerald-300"
             }`}
           >
-            <span
-              className={`flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-                active
-                  ? "bg-emerald-600 text-white"
-                  : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300"
-              }`}
-            >
-              {index + 1}
-            </span>
             <span className="leading-6">{item.label}</span>
           </a>
         );
@@ -95,19 +89,19 @@ export default function GuideTableOfContents({ items, locale }: Props) {
   return (
     <>
       <aside className="hidden lg:block">
-        <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto rounded-3xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
-          <h2 className="px-3 pb-2 text-base font-bold text-slate-950 dark:text-white">{title}</h2>
+        <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto overscroll-contain border-l border-slate-200 py-1 dark:border-slate-700/80">
+          <h2 className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{title}</h2>
           {nav()}
         </div>
       </aside>
 
       <div className="lg:hidden">
-        <div className="rounded-2xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900">
+        <div className="border-y border-slate-200 py-2 dark:border-slate-700/80">
           <button
             type="button"
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
-            className="flex w-full items-center justify-between gap-4 rounded-xl px-2 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            className="flex w-full items-center justify-between gap-4 px-2 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
             <span>
               <span className="block text-xs font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">{title}</span>

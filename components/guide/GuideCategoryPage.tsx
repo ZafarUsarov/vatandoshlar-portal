@@ -1,11 +1,10 @@
-import Image from "next/image";
 import type {
   GuideArticle,
   GuideCategory,
   SupportedGuideLocale,
 } from "../../types/guide";
 import { Link } from "../../i18n/navigation";
-import ViewCount from "../content-views/ViewCount";
+import { getGuideCategories } from "../../data/guide";
 
 type GuideCategoryPageProps = Readonly<{
   category: GuideCategory;
@@ -18,11 +17,16 @@ export default function GuideCategoryPage({
   articles,
   locale,
 }: GuideCategoryPageProps) {
+  const categoryIndex = getGuideCategories(locale).findIndex(
+    (entry) => entry.slug === category.slug,
+  );
+  const categoryNumber = String(categoryIndex >= 0 ? categoryIndex + 1 : 1).padStart(2, "0");
+
   const copy =
     locale === "uz"
       ? {
-          back: "Barcha yo‘nalishlar",
-          eyebrow: "Germany Guide yo‘nalishi",
+          back: "Barça mavzular",
+          eyebrow: "UZDE / QÖLLANMA",
           articleCount: `${articles.length} ta maqola`,
           articlesTitle: "Maqolalar",
           trustNote: "Rasmiy manbalar asosida · Ma’lumotlar muntazam tekshiriladi",
@@ -43,7 +47,7 @@ export default function GuideCategoryPage({
           reliabilityTitle: "Ishonchli ma’lumot tamoyili",
           reliabilityDescription:
             "Har bir maqola e’lon qilinishidan oldin birlamchi rasmiy manbalar bilan tekshiriladi. Qonun va jarayonlar o‘zgarishi mumkinligi sababli, har bir materialda oxirgi tekshiruv sanasi va rasmiy manbalar ko‘rsatiladi.",
-          guideHome: "Qo‘llanma sahifasiga qaytish",
+          guideHome: "Qöllanmalar sahifasiga qaytiş",
         }
       : {
           back: "Alle Bereiche",
@@ -71,182 +75,74 @@ export default function GuideCategoryPage({
           guideHome: "Zur Guide-Startseite",
         };
 
-  const categoryHeroImages: Readonly<Record<string, string>> = {
-    "transport-and-driving":
-      "/images/guide/categories/transport-and-driving.webp",
-    "housing-and-living":
-      "/images/guide/categories/housing-and-living.webp",
-  };
-
-  const heroImageSrc =
-    categoryHeroImages[category.slug] ??
-    "/images/guide/guide-category-master-visual.webp";
-
   return (
-    <main className="min-h-screen bg-slate-50 pt-20 text-slate-950 dark:bg-slate-950 dark:text-white">
-      <section className="relative isolate overflow-hidden border-b border-slate-800 bg-slate-950 text-white">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-        >
-          <Image
-            src={heroImageSrc}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            quality={88}
-            className="object-cover object-[68%_42%] opacity-54 sm:object-[70%_42%] sm:opacity-60 lg:object-[72%_44%] lg:opacity-68"
-          />
-
-          <div className="absolute inset-0 bg-slate-950/18" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.995)_0%,rgba(2,6,23,0.975)_34%,rgba(2,6,23,0.88)_52%,rgba(2,6,23,0.58)_72%,rgba(2,6,23,0.30)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,6,23,0.08),rgba(2,6,23,0.30))]" />
-
-          <div className="absolute -right-32 -top-36 size-[30rem] rounded-full bg-emerald-500/12 blur-3xl" />
-          <div className="absolute -bottom-44 left-10 size-[28rem] rounded-full bg-blue-500/[0.08] blur-3xl" />
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-8 lg:py-24">
-          <Link
-            href="/guide"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 transition hover:text-emerald-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-          >
-            <span aria-hidden="true">←</span>
-            {copy.back}
-          </Link>
-
-          <div className="mt-10 max-w-4xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-300">
-              {copy.eyebrow}
-            </p>
-
-            <h1 className="mt-5 text-4xl font-bold tracking-[-0.045em] sm:text-6xl sm:leading-[1.08]">
-              {category.title}
-            </h1>
-
-            <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-300 sm:text-xl">
-              {category.description}
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold">
-                {copy.articleCount}
-              </span>
-
-              {articles.length === 0 && (
-                <span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-4 py-2 text-sm font-semibold text-amber-200">
-                  {copy.status}
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          {articles.length > 0 ? (
-            <>
-              <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-                <h2 className="text-2xl font-bold tracking-[-0.025em] sm:text-3xl">
-                  {copy.articlesTitle}
-                </h2>
-                <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
-                  {copy.articleCount}
-                </span>
-              </div>
-
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {articles.map((article) => (
-                <article
-                  key={article.id}
-                  className="group relative isolate flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900 dark:hover:border-emerald-500/30"
-                >
-                  <h2 className="text-xl font-bold">
-                    <Link
-                      href={`/guide/${category.slug}/${article.slug}`}
-                      className="outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-emerald-500"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-0 z-10 rounded-3xl"
-                      />
-                      {article.title}
-                    </Link>
-                  </h2>
-                  <p className="mt-3 flex-1 leading-7 text-slate-600 dark:text-slate-400">
-                    {article.excerpt}
-                  </p>
-                  <div className="mt-6 flex items-center justify-between gap-4 border-t border-slate-200 pt-5 text-sm dark:border-slate-800">
-                    <ViewCount
-                      count={article.viewCount}
-                      locale={locale}
-                      className="text-slate-500 dark:text-slate-400"
-                    />
-
-                    <span className="font-semibold text-emerald-700 dark:text-emerald-300">
-                      {locale === "uz" ? "Maqolani ochish" : "Artikel öffnen"} →
-                    </span>
-                  </div>
-                </article>
-              ))}
-              </div>
-            </>
-          ) : (
-            <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
-              <div className="grid lg:grid-cols-[0.8fr_1.2fr]">
-                <div className="flex min-h-80 items-center justify-center bg-gradient-to-br from-emerald-700 to-slate-950 p-10 text-white">
-                  <div className="text-center">
-                    <div className="mx-auto flex size-24 items-center justify-center rounded-[2rem] bg-white/10 text-5xl">
-                      ◇
-                    </div>
-                    <p className="mt-7 text-sm font-semibold uppercase tracking-[0.18em] text-emerald-200">
-                      {category.title}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-14">
-                  <span className="w-fit rounded-full bg-amber-100 px-4 py-2 text-sm font-semibold text-amber-700 dark:bg-amber-500/10 dark:text-amber-300">
-                    {copy.status}
-                  </span>
-
-                  <h2 className="mt-6 text-3xl font-bold tracking-[-0.035em] sm:text-4xl">
-                    {copy.emptyTitle}
-                  </h2>
-
-                  <p className="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-400">
-                    {copy.emptyDescription}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {articles.length > 0 && (
-            <aside className="mt-8 flex items-start gap-3 border-t border-slate-200 pt-5 text-sm text-slate-600 dark:border-slate-800 dark:text-slate-400">
-              <span
-                aria-hidden="true"
-                className="font-bold text-emerald-600 dark:text-emerald-400"
-              >
-                ✓
-              </span>
-              <p>{copy.trustNote}</p>
-            </aside>
-          )}
-
-          <div className="mt-10">
+      <main className="min-h-screen bg-[#F7FAFB] pt-20 text-slate-950 dark:bg-[#111419] dark:text-slate-100">
+        <div className="mx-auto w-full max-w-[1440px] px-4 pb-14 pt-5 sm:px-8 sm:pt-7 lg:px-12 lg:pb-20">
+          <nav aria-label={locale === "uz" ? "Qöllanma navigatsiyasi" : "Ratgeber-Navigation"}>
             <Link
               href="/guide"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3 font-semibold !text-white no-underline visited:!text-white hover:!text-white active:!text-white transition hover:-translate-y-0.5 hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:bg-emerald-500 dark:!text-slate-950 dark:visited:!text-slate-950 dark:hover:!text-slate-950 dark:active:!text-slate-950 dark:hover:bg-emerald-400 dark:focus-visible:ring-offset-slate-950"
+              className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-[#008F78] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#008F78] dark:text-slate-300 dark:hover:text-[#65CBB6] motion-reduce:transition-none"
             >
               <span aria-hidden="true">←</span>
-              {copy.guideHome}
+              {copy.back}
             </Link>
-          </div>
+          </nav>
+
+          <header className="mt-4 max-w-4xl pb-8 sm:mt-6 sm:pb-10">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#008F78] dark:text-[#65CBB6]">
+              {locale === "uz" ? `UZDE / QÖLLANMA / ${categoryNumber}` : `UZDE / RATGEBER / ${categoryNumber}`}
+            </p>
+            <h1 className="mt-4 text-[clamp(2.2rem,4.2vw,3.65rem)] font-semibold leading-[1.08] tracking-[-0.055em]">
+              {category.title}
+            </h1>
+            <p className="mt-4 max-w-2xl line-clamp-2 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8 dark:text-slate-300">
+              {category.description}
+            </p>
+            <p className="mt-5 text-xs font-medium tabular-nums tracking-wide text-slate-500 dark:text-slate-400">
+              {copy.articleCount}
+            </p>
+          </header>
+
+          <section aria-labelledby="guide-category-articles">
+            <h2 id="guide-category-articles" className="sr-only">{copy.articlesTitle}</h2>
+            {articles.length > 0 ? (
+              <ol className="border-t border-slate-300/80 dark:border-slate-700">
+                {articles.map((article, index) => (
+                  <li key={article.id} className="border-b border-slate-200 dark:border-slate-800">
+                    <Link
+                      href={`/guide/${category.slug}/${article.slug}`}
+                      className="group grid min-h-28 grid-cols-[2rem_minmax(0,1fr)_1.5rem] items-start gap-3 px-1 py-6 transition-colors duration-200 hover:bg-slate-900/[0.025] focus-visible:relative focus-visible:z-10 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008F78] sm:grid-cols-[3.5rem_minmax(0,1fr)_2rem] sm:gap-6 sm:px-3 sm:py-7 dark:hover:bg-white/[0.035] dark:focus-visible:outline-[#65CBB6] motion-reduce:transition-none"
+                    >
+                      <span aria-hidden="true" className="pt-1 text-xs font-medium tabular-nums tracking-wider text-slate-400 dark:text-slate-500">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-lg font-semibold leading-snug tracking-[-0.025em] text-slate-950 transition-colors duration-200 group-hover:text-[#007F69] sm:text-xl dark:text-slate-100 dark:group-hover:text-[#65CBB6] motion-reduce:transition-none">
+                          {article.title}
+                        </span>
+                        <span className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                          {article.excerpt}
+                        </span>
+                      </span>
+                      <span aria-hidden="true" className="mt-0.5 justify-self-end text-lg leading-6 text-slate-400 transition-[color,transform] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#008F78] dark:text-slate-500 dark:group-hover:text-[#65CBB6] motion-reduce:transform-none motion-reduce:transition-none">
+                        ↗
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <div className="border-t border-slate-300 py-8 dark:border-slate-700">
+                <p className="text-sm font-medium text-amber-700 dark:text-amber-300">{copy.status}</p>
+                <h3 className="mt-3 text-xl font-semibold">{copy.emptyTitle}</h3>
+                <p className="mt-3 max-w-3xl leading-7 text-slate-600 dark:text-slate-300">{copy.emptyDescription}</p>
+              </div>
+            )}
+            {articles.length > 0 && (
+              <p className="mt-7 text-xs leading-6 text-slate-500 dark:text-slate-400">{copy.trustNote}</p>
+            )}
+          </section>
         </div>
-      </section>
-    </main>
-  );
+      </main>
+    );
 }

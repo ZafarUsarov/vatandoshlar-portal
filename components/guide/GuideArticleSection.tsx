@@ -12,13 +12,13 @@ export default function GuideArticleSection({
   items = [],
 }: GuideArticleSectionProps) {
   return (
-    <section className="scroll-mt-28 rounded-3xl border border-slate-200 bg-white p-7 sm:p-9 dark:border-slate-800 dark:bg-slate-900">
-      <h2 className="text-2xl font-bold tracking-[-0.03em] sm:text-3xl">
+    <section className="scroll-mt-28 border-t border-slate-200 pt-5 dark:border-slate-700">
+      <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
         <BrandedText text={title} />
       </h2>
 
       {paragraphs.length > 0 && (
-        <div className="mt-5 space-y-5 text-lg leading-8 text-slate-700 dark:text-slate-300">
+        <div className="mt-3 max-w-[75ch] space-y-3 text-base leading-7 text-slate-700 dark:text-slate-300">
           {paragraphs.map((paragraph) => (
             <p key={paragraph}><BrandedText text={paragraph} /></p>
           ))}
@@ -26,11 +26,11 @@ export default function GuideArticleSection({
       )}
 
       {items.length > 0 && (
-        <ul className="mt-6 space-y-3">
+        <ul className="mt-4 space-y-2">
           {items.map((item) => (
             <li
               key={item}
-              className="flex gap-3 rounded-2xl bg-slate-50 p-4 leading-7 text-slate-700 dark:bg-slate-950 dark:text-slate-300"
+              className="flex gap-3 py-0.5 leading-7 text-slate-700 dark:text-slate-300"
             >
               <span
                 aria-hidden="true"

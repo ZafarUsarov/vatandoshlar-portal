@@ -13,6 +13,7 @@ type SectionPromoTarget =
 
 type SectionPromoProps = Readonly<{
   target: SectionPromoTarget;
+  variant?: "default" | "editorial";
 }>;
 
 type PromoCopy = Readonly<{
@@ -165,11 +166,11 @@ const promoConfig: Record<SectionPromoTarget, PromoConfig> = {
       "border-teal-200/80 bg-teal-50 text-teal-700 dark:border-teal-400/20 dark:bg-teal-400/10 dark:text-teal-300",
     glow: "bg-teal-400/15 dark:bg-teal-400/10",
     uz: {
-      label: "Keyingi bo‘lim · Qo‘llanma",
-      title: "Germaniyadagi hayot uchun kerakli mavzularni bosqichma-bosqich o‘rganing",
+      label: "Keyingi bölim · Qöllanma",
+      title: "Germaniyadagi hayot uçun kerakli mavzularni bosqiçma-bosqiç örganing",
       description:
-        "Kelish, vizalar, hujjatlar, ta’lim, ish, oila va integratsiya bo‘yicha tartibli va tekshiriladigan qo‘llanmalarga o‘ting.",
-      action: "Qo‘llanmani ochish",
+        "Keliş, vizalar, hujjatlar, ta’lim, iş, oila va integratsiya böyiça tartibli va tekşiriladigan qöllanmalarga öting.",
+      action: "Qöllanmani oçiş",
     },
     de: {
       label: "Nächster Bereich · Ratgeber",
@@ -202,10 +203,34 @@ function ArrowRightIcon() {
 
 export default async function SectionPromo({
   target,
+  variant = "default",
 }: SectionPromoProps) {
   const locale = await getLocale();
   const config = promoConfig[target];
   const copy = locale === "de" ? config.de : config.uz;
+
+  if (variant === "editorial") {
+    return (
+      <section aria-labelledby={`section-promo-${target}`} className="border-t border-zinc-300 bg-[#f7f7f7] px-[clamp(16px,3.3vw,112px)] py-12 text-zinc-950 dark:border-zinc-800 dark:bg-[var(--uzde-home-surface,#111419)] dark:text-zinc-100 sm:py-16 lg:py-20">
+        <div className="mx-auto max-w-[1600px]">
+          <div className="flex items-center gap-4 border-b border-zinc-300 pb-5 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-600 dark:border-zinc-700 dark:text-zinc-400">
+            <span aria-hidden="true">UZDE / 02</span>
+            <span>{copy.label}</span>
+          </div>
+          <div className="grid gap-8 py-9 lg:grid-cols-[minmax(0,1fr)_minmax(220px,0.3fr)] lg:items-end lg:gap-16 lg:py-12">
+            <div className="max-w-5xl">
+              <h2 id={`section-promo-${target}`} className={target === "guide" && locale === "uz" ? "max-w-none text-[clamp(2rem,3.1vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.045em]" : "max-w-[22ch] text-[clamp(2rem,4.4vw,4.75rem)] font-semibold leading-[1.08] tracking-[-0.045em]"}>{copy.title}</h2>
+              <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-600 dark:text-zinc-400 sm:text-lg sm:leading-8">{copy.description}</p>
+            </div>
+            <Link href={config.href} className="group/link inline-flex min-h-12 w-fit items-center gap-5 border-b border-emerald-700 pb-2 text-sm font-semibold text-emerald-800 transition-colors hover:border-emerald-500 hover:text-emerald-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600 dark:border-emerald-400 dark:text-emerald-300 dark:hover:text-emerald-200">
+              {copy.action}
+              <span className="transition-transform group-hover/link:translate-x-1 motion-reduce:transition-none"><ArrowRightIcon /></span>
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

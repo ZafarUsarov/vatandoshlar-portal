@@ -6,18 +6,23 @@ import { Check, Copy, Mail, MessageCircle, Send, Share as ShareIcon } from "luci
 type Props = Readonly<{
   title: string;
   locale: "uz" | "de";
-  variant?: "light" | "dark" | "install";
+  variant?: "light" | "dark" | "install" | "editorial" | "guide";
   iconOnly?: boolean;
+  ariaLabel?: string;
 }>;
 
-export default function ShareButton({ title, locale, variant = "light", iconOnly = false }: Props) {
+export default function ShareButton({ title, locale, variant = "light", iconOnly = false, ariaLabel }: Props) {
   const [showFallback, setShowFallback] = useState(false);
   const [copied, setCopied] = useState(false);
   const de = locale === "de";
   const label = de ? "Teilen" : "Ulashish";
   const url = typeof window === "undefined" ? "" : window.location.href.split("#")[0];
-  const buttonClass = iconOnly
+  const buttonClass = iconOnly && variant === "guide"
+    ? "inline-flex size-11 shrink-0 items-center justify-center text-slate-500 transition-colors hover:text-emerald-700 focus-visible:rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 motion-reduce:transition-none dark:text-slate-400 dark:hover:text-emerald-300"
+    : iconOnly
     ? "inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-emerald-500 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+    : variant === "editorial"
+    ? "inline-flex min-h-11 items-center gap-6 border-b border-current pb-2 text-base font-semibold text-zinc-950 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current dark:text-white"
     : variant === "install"
     ? "inline-flex min-h-12 items-center gap-2 rounded-xl border border-slate-500 bg-[#263047] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#34415c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
     : variant === "dark"
@@ -48,8 +53,8 @@ export default function ShareButton({ title, locale, variant = "light", iconOnly
 
   return (
     <div className="relative inline-flex shrink-0 items-center">
-      <button type="button" onClick={() => void share()} className={buttonClass} aria-expanded={showFallback} aria-label={iconOnly ? (de ? "Profil teilen" : "Profilni ulashish") : label} title={iconOnly ? (de ? "Profil teilen" : "Profilni ulashish") : label}>
-        <ShareIcon size={iconOnly ? 20 : 17} aria-hidden="true" /> {!iconOnly && label}
+      <button type="button" onClick={() => void share()} className={buttonClass} aria-expanded={showFallback} aria-label={ariaLabel ?? (iconOnly ? (de ? "Profil teilen" : "Profilni ulashish") : label)} title={ariaLabel ?? (iconOnly ? (de ? "Profil teilen" : "Profilni ulashish") : label)}>
+        {variant === "editorial" && !iconOnly ? (<> {label}<span aria-hidden="true">↗</span></>) : (<><ShareIcon size={iconOnly ? 20 : 17} aria-hidden="true" /> {!iconOnly && label}</>)}
       </button>
       {showFallback && (
         <div

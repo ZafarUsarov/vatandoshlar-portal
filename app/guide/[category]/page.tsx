@@ -3,7 +3,6 @@ import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import Footer from "../../../components/Footer";
-import SectionPromo from "../../../components/SectionPromo";
 import Header from "../../../components/Header";
 import GuideCategoryPage from "../../../components/guide/GuideCategoryPage";
 import {
@@ -167,7 +166,6 @@ export default async function GuideCategoryRoute({
         locale={locale}
       />
 
-      <SectionPromo target="news" />
 
       <Footer />
     </>

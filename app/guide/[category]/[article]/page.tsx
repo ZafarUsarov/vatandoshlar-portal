@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import Footer from "../../../../components/Footer";
 import Header from "../../../../components/Header";
 import ContentViewTracker from "../../../../components/content-views/ContentViewTracker";
-import SectionPromo from "../../../../components/SectionPromo";
+import { Link } from "../../../../i18n/navigation";
 import GuideArticlePage from "../../../../components/guide/GuideArticlePage";
 import {
   getGuideCategoryBySlug,
@@ -295,7 +295,20 @@ export default async function GuideArticleRoute({
         />
       )}
 
-      <SectionPromo target="news" />
+      <aside className="border-t border-slate-200 bg-[#F7FAFB] dark:border-slate-800 dark:bg-[#091B29]">
+        <div className="mx-auto flex w-full max-w-[1600px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-[clamp(16px,3.3vw,112px)] py-5">
+          <p className="text-sm text-slate-600 dark:text-slate-300">
+            {locale === "uz" ? "Germaniyadagi yangiliklar" : "Nachrichten aus Deutschland"}
+          </p>
+          <Link
+            href="/news"
+            className="inline-flex min-h-11 items-center gap-2 border-b border-slate-400 text-sm font-semibold text-slate-900 transition-colors hover:border-emerald-600 hover:text-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-4 dark:border-slate-600 dark:text-slate-100 dark:hover:border-emerald-400 dark:hover:text-emerald-300"
+          >
+            {locale === "uz" ? "Yangiliklarni körish" : "Nachrichten ansehen"}
+            <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+      </aside>
 
       <Footer />
     </>

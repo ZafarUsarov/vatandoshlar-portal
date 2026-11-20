@@ -74,17 +74,17 @@ export default async function GuidePage() {
 
   return <>
     <Header />
-    <main className="bg-[#F7FAFB] pt-14 min-[1024px]:pt-20 min-[1024px]:max-[1359px]:pt-32 text-[#173B4B] dark:bg-[#091B29] dark:text-[#E7F3F5]">
+    <main className="min-h-screen bg-[#F7F7F6] pt-14 text-[#202020] min-[1024px]:pt-20 min-[1024px]:max-[1359px]:pt-32 dark:bg-[#13171B] dark:text-zinc-100">
             <GuideExplorer entries={entries} locale={locale} />
 
       {featuredArticles.length > 0 && (
-        <section className="mx-auto w-full max-w-[1600px] px-4 pb-10 sm:px-6 xl:px-10 2xl:px-12">
+        <section className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] pb-10">
           <h2 className="mb-5 border-b border-neutral-200 pb-4 text-xl font-bold text-neutral-950 dark:border-slate-700 dark:text-white sm:text-2xl">
             {locale === "uz" ? "Tavsiya etilgan qo‘llanmalar" : "Empfohlene Ratgeber"}
           </h2>
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             {featuredArticles.map((article) => (
-              <article key={article.id} className="flex flex-col rounded-2xl border border-neutral-200 bg-white p-5 dark:border-slate-700 dark:bg-[#122B3B]">
+              <article key={article.id} className="flex flex-col rounded-xl border border-[#D9DDDD] bg-white p-5 dark:border-[#343D43] dark:bg-[#1B252C]">
                 <h3 className="text-base font-bold leading-snug text-neutral-950 dark:text-white">
                   {article.title}
                 </h3>
@@ -103,8 +103,8 @@ export default async function GuidePage() {
         </section>
       )}
 
-      <aside className="mx-auto w-full max-w-[1600px] px-4 pb-12 sm:px-6 xl:px-10 2xl:px-12">
-        <p className="rounded-xl border border-neutral-200 bg-white px-5 py-4 text-sm leading-relaxed text-neutral-600 dark:border-slate-700 dark:bg-[#122B3B] dark:text-slate-300">
+      <aside className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] pb-12">
+        <p className="rounded-xl border border-[#D9DDDD] bg-white px-5 py-4 text-sm leading-relaxed text-neutral-600 dark:border-[#343D43] dark:bg-[#1B252C] dark:text-slate-300">
           {locale === "uz"
             ? "Qo‘llanmalar muntazam tekshiriladi va yangilanadi. Yangi mavzular bosqichma-bosqich qo‘shib boriladi."
             : "Die Ratgeber werden regelmäßig geprüft und aktualisiert. Neue Themen werden schrittweise ergänzt."}

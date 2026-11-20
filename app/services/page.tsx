@@ -1,336 +1,85 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
-
-import Footer from "../../components/Footer";
-import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
-import ServiceCard from "../../components/cards/ServiceCard";
-import Card from "../../components/ui/Card";
-import Container from "../../components/ui/Container";
-import PageHero from "../../components/ui/PageHero";
-import Section from "../../components/ui/Section";
-import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
-import { Link } from "../../i18n/navigation";
-import {
-  getPublishedServices,
-} from "../../lib/services/public-services-repository";
+import Footer from "../../components/Footer";
+import ServicesCatalog from "../../components/services/ServicesCatalog";
+import ServicesShareButton from "../../components/services/ServicesShareButton";
+import { imprint } from "../../data/legal/imprint";
+import { getActiveFeaturedServices } from "../../lib/services/featured-services";
 import type { SupportedContentLocale } from "../../types/service";
 
-export const dynamic =
-  "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale =
-    (await getLocale()) as SupportedContentLocale;
-
-  return locale === "uz"
-    ? {
-        title: "Xizmatlar | UzDe",
-        description:
-          "Germaniyada tarjima, huquq, soliq, tibbiyot, hunarmandchilik va boshqa xizmat yo‘nalishlarini topish hamda rasmiy manbalar orqali tekshirish bo‘yicha qo‘llanmalar.",
-        alternates: {
-          canonical: "/uz/services",
-          languages: {
-            uz: "/uz/services",
-            de: "/de/services",
-          },
-        },
-      }
-    : {
-        title: "Dienstleistungen | UzDe",
-        description:
-          "Leitfäden zu Dienstleistungen in Deutschland: Übersetzung, Recht, Steuern, Medizin, Handwerk und weitere Bereiche finden und über offizielle Quellen prüfen.",
-        alternates: {
-          canonical: "/de/services",
-          languages: {
-            uz: "/uz/services",
-            de: "/de/services",
-          },
-        },
-      };
+  const locale = (await getLocale()) as SupportedContentLocale;
+  return {
+    title: locale === "uz" ? "Xizmatlar | UzDe" : "Dienstleistungen | UzDe",
+    description: locale === "uz" ? "UzDe xizmatlar konsepsiyasi: karyera, ta’lim, web va IT böyiça 20 ta yönaliş." : "20 Dienstleistungskonzepte rund um Karriere, Bildung, Web und IT.",
+    alternates: { canonical: `/${locale}/services`, languages: { uz: "/uz/services", de: "/de/services" } },
+  };
 }
 
 export default async function ServicesPage() {
-  const locale =
-    (await getLocale()) as SupportedContentLocale;
-
-  const services =
-    await getPublishedServices(
-      locale,
-    );
-
-  const copy =
-    locale === "uz"
-      ? {
-          eyebrow: "Xizmatlar katalogi",
-          title:
-            "Germaniyada kerakli xizmat turini toping va rasmiy manbalar orqali tekshiring",
-          description:
-            "Bu bo‘lim xizmat ko‘rsatuvchi odamlar katalogi emas. Bu yerda tarjima, huquq, soliq, tibbiyot, hunarmandchilik va boshqa xizmat yo‘nalishlari bo‘yicha qayerdan izlash, qanday tekshirish va nimalarga e’tibor berish kerakligi tushuntiriladi.",
-          servicesCount: "Xizmat yo‘nalishi",
-          officialSources: "Rasmiy tekshiruv",
-          germanyWide: "Bundesland",
-          listEyebrow: "Yo‘nalishlar",
-          listTitle: "Kerakli xizmat turini tanlang",
-          listDescription:
-            "Har bir karta alohida xizmat yo‘nalishiga olib boradi. U yerda xizmat tarkibi, rasmiy tekshirish usullari va muhim ogohlantirishlar beriladi.",
-          details: "Batafsil",
-          empty:
-            "Hozircha e’lon qilingan xizmat yo‘nalishlari mavjud emas.",
-          distinctionEyebrow: "Muhim farq",
-          distinctionTitle:
-            "Xizmat va mutaxassis — ikki xil tushuncha",
-          distinctionDescription:
-            "Xizmat — siz izlayotgan yordam turi. Mutaxassis esa shu xizmatni ko‘rsatadigan shaxs yoki tashkilot. Mutaxassislarni alohida katalog orqali topishingiz mumkin.",
-          specialistsAction: "Mutaxassislar katalogini ochish",
-          safetyEyebrow: "Xavfsiz foydalanish",
-          safetyTitle:
-            "Xizmat buyurtma qilishdan oldin tekshiring",
-          safetyItems: [
-            {
-              title: "Vakolatni tekshiring",
-              description:
-                "Xizmat ko‘rsatuvchining rasmiy ro‘yxatda borligini, litsenziyasi, manzili va aloqa ma’lumotlarini tekshiring.",
-            },
-            {
-              title: "Yozma narx oling",
-              description:
-                "Narx, muddat, xizmat hajmi va qo‘shimcha xarajatlarni yozma ravishda kelishib oling.",
-            },
-            {
-              title: "Hujjatlarni saqlang",
-              description:
-                "Shartnoma, hisob-faktura, elektron xat va to‘lov tasdiqlarini saqlang.",
-            },
-            {
-              title: "Shubhali taklifni rad eting",
-              description:
-                "Faqat naqd pul talab qiladigan yoki rasmiy ma’lumot bermaydigan takliflardan ehtiyot bo‘ling.",
-            },
-          ],
-        }
-      : {
-          eyebrow: "Dienstleistungsverzeichnis",
-          title:
-            "Passende Dienstleistungen in Deutschland finden und über offizielle Quellen prüfen",
-          description:
-            "Dieser Bereich ist kein Personenverzeichnis. Hier erfahren Sie für Übersetzung, Recht, Steuern, Medizin, Handwerk und weitere Leistungsbereiche, wo Sie suchen, wie Sie Anbieter prüfen und worauf Sie achten sollten.",
-          servicesCount: "Leistungsbereiche",
-          officialSources: "Offizielle Prüfung",
-          germanyWide: "Bundesländer",
-          listEyebrow: "Bereiche",
-          listTitle: "Wählen Sie die passende Dienstleistung",
-          listDescription:
-            "Jede Karte führt zu einem eigenen Leistungsbereich mit Leistungsumfang, offiziellen Prüfmöglichkeiten und wichtigen Hinweisen.",
-          details: "Details",
-          empty:
-            "Derzeit sind keine veröffentlichten Dienstleistungsbereiche vorhanden.",
-          distinctionEyebrow: "Wichtiger Unterschied",
-          distinctionTitle:
-            "Dienstleistung und Fachkraft sind zwei verschiedene Dinge",
-          distinctionDescription:
-            "Eine Dienstleistung beschreibt die gesuchte Hilfe. Eine Fachkraft ist die Person oder Organisation, die diese Leistung anbietet. Fachkräfte finden Sie im separaten Verzeichnis.",
-          specialistsAction: "Fachkräfteverzeichnis öffnen",
-          safetyEyebrow: "Sichere Nutzung",
-          safetyTitle:
-            "Vor der Beauftragung sorgfältig prüfen",
-          safetyItems: [
-            {
-              title: "Befugnis prüfen",
-              description:
-                "Prüfen Sie Registereintrag, Zulassung, Anschrift und Kontaktdaten des Anbieters.",
-            },
-            {
-              title: "Schriftliches Angebot einholen",
-              description:
-                "Vereinbaren Sie Preis, Frist, Leistungsumfang und Zusatzkosten schriftlich.",
-            },
-            {
-              title: "Unterlagen aufbewahren",
-              description:
-                "Bewahren Sie Vertrag, Rechnung, E-Mails und Zahlungsnachweise auf.",
-            },
-            {
-              title: "Zweifelhafte Angebote ablehnen",
-              description:
-                "Seien Sie vorsichtig bei reiner Barzahlung oder fehlenden offiziellen Angaben.",
-            },
-          ],
-        };
-
-  const heroStats = (
-    <>
-      <div className="rounded-3xl border border-border-default bg-surface-soft p-5 text-center">
-        <strong className="block text-3xl font-bold text-text-primary">
-          {services.length}
-        </strong>
-        <span className="mt-1 block text-sm text-text-muted">
-          {copy.servicesCount}
-        </span>
-      </div>
-
-      <div className="rounded-3xl border border-border-default bg-surface-soft p-5 text-center">
-        <strong className="block text-3xl font-bold text-text-primary">
-          ✓
-        </strong>
-        <span className="mt-1 block text-sm text-text-muted">
-          {copy.officialSources}
-        </span>
-      </div>
-
-      <div className="rounded-3xl border border-border-default bg-surface-soft p-5 text-center">
-        <strong className="block text-3xl font-bold text-text-primary">
-          16
-        </strong>
-        <span className="mt-1 block text-sm text-text-muted">
-          {copy.germanyWide}
-        </span>
-      </div>
-    </>
-  );
-
+  const locale = (await getLocale()) === "de" ? "de" : "uz";
+  const uz = locale === "uz";
+  const featured = getActiveFeaturedServices(new Date());
+  const primary = featured[0];
+  const groups = uz ? [
+    { id: "web", title: "Web va raqamli xizmatlar", summary: "Biznes va şaxsiy loyihalar uçun raqamli imkoniyatlar.", items: ["Web-sayt yaratiş", "Onlayn dökon yaratiş", "Brending va grafik dizayn", "SEO va Google Business Profile", "Biznes jarayonlarini avtomatlaştiriş"] },
+    { id: "it", title: "IT va texnik yordam", summary: "Raqamli iş muhitini sozlaş va saqlaş.", items: ["Kompyuter va dasturlarni sozlaş", "Microsoft 365 va Google Workspace", "E-mail va domen sozlaş", "Web-saytlarga texnik xizmat", "Ma’lumotlarni zaxiralaş va IT xavfsizligi"] },
+    { id: "career", title: "Karyera va iş", summary: "Kasbiy rivojlaniş va ariza jarayonlariga tayyorgarlik.", items: ["CV va Bewerbung tayyorlaş", "İş qidirişda yordam", "İş suhbatiga tayyorgarlik", "LinkedIn va XING profilini optimallaştiriş", "Ausbildung va Praktikum arizalari"] },
+    { id: "education", title: "Ta’lim va hujjatlar", summary: "Öqiş va akademik jarayonlarni rejalashtiriş.", items: ["Universitetga ariza tayyorlaş", "Studienkolleg va stipendiya arizalari", "Motivatsion xat va akademik CV", "Hujjatlarni tartibga soliş", "Anerkennung jarayoni böyiça taşkiliy yordam"] },
+  ] : [
+    { id: "web", title: "Web und digitale Dienste", summary: "Digitale Lösungen für Projekte und Unternehmen.", items: ["Websites entwickeln", "Onlineshops erstellen", "Branding und Grafikdesign", "SEO und Google Business Profile", "Geschäftsprozesse automatisieren"] },
+    { id: "it", title: "IT und technischer Support", summary: "Digitale Arbeitsumgebungen einrichten und pflegen.", items: ["Computer und Software einrichten", "Microsoft 365 und Google Workspace", "E-Mail und Domains einrichten", "Technische Website-Betreuung", "Datensicherung und IT-Sicherheit"] },
+    { id: "career", title: "Karriere und Beruf", summary: "Bewerbung und berufliche Entwicklung.", items: ["Lebenslauf und Bewerbung erstellen", "Unterstützung bei der Jobsuche", "Vorbereitung auf Vorstellungsgespräche", "LinkedIn- und XING-Profil optimieren", "Bewerbungen für Ausbildung und Praktikum"] },
+    { id: "education", title: "Bildung und Dokumente", summary: "Studium und Unterlagen strukturieren.", items: ["Hochschulbewerbung vorbereiten", "Studienkolleg- und Stipendienbewerbungen", "Motivationsschreiben und akademischer Lebenslauf", "Unterlagen strukturieren", "Organisatorische Hilfe bei Anerkennungsverfahren"] },
+  ];
   return (
-    <>
-      <Header />
-
-      <main className="min-h-screen bg-page pt-20 text-foreground">
-        <SectionHeroBackground tone="services">
-          <div className="relative isolate overflow-hidden">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-            >
-              <Image
-                src="/images/services/services-master-visual.webp"
-                alt=""
-                fill
-                priority
-                sizes="100vw"
-                quality={88}
-                className="object-cover object-[72%_center] opacity-34 sm:object-[70%_center] sm:opacity-40 lg:object-[68%_center] lg:opacity-46 dark:opacity-24 dark:sm:opacity-28 dark:lg:opacity-32"
-              />
-
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.995)_0%,rgba(248,250,252,0.97)_36%,rgba(248,250,252,0.86)_54%,rgba(248,250,252,0.48)_72%,rgba(248,250,252,0.18)_100%)] dark:bg-[linear-gradient(90deg,rgba(2,6,23,0.995)_0%,rgba(2,6,23,0.97)_36%,rgba(2,6,23,0.88)_54%,rgba(2,6,23,0.62)_72%,rgba(2,6,23,0.38)_100%)]" />
-              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(248,250,252,0.08),rgba(248,250,252,0.46))] dark:bg-[linear-gradient(to_bottom,rgba(2,6,23,0.04),rgba(2,6,23,0.28))]" />
+    <><Header />
+      <main className="min-h-screen bg-[#F7F7F7] pt-20 text-[#202020] dark:bg-[#111419] dark:text-zinc-100">
+        <section aria-labelledby="featured-title" className="px-[clamp(16px,3.3vw,112px)] pb-12 pt-10 sm:pb-16 sm:pt-14">
+          <div className="mx-auto max-w-[1800px]">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3 text-xs font-semibold uppercase tracking-[0.18em]"><span className="text-teal-700 dark:text-teal-300">UZDE / {uz ? "XIZMATLAR" : "DIENSTLEISTUNGEN"}</span></div>
+            <div className="relative isolate flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 sm:bg-zinc-900 sm:min-h-[610px] sm:justify-end lg:min-h-[680px]">
+              <div className="relative aspect-video w-full sm:absolute sm:inset-0 sm:-z-20 sm:aspect-auto">
+                <Image src={primary.image} alt={primary.imageAlt[locale]} fill priority sizes="(max-width: 639px) 100vw, 100vw" className="object-contain object-center sm:object-cover" />
+              </div>
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 hidden sm:block bg-gradient-to-t from-black/90 via-black/50 to-transparent sm:bg-gradient-to-r sm:from-black/85 sm:via-black/50 sm:to-transparent" />
+              <div className="relative z-10 max-w-4xl px-5 pb-5 pt-5 text-zinc-950 dark:text-white sm:p-12 sm:text-white lg:p-16">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal-700 dark:text-teal-300 sm:text-xs sm:tracking-[0.2em] sm:text-teal-200">{uz ? "ASOSIY YÖNALIŞ / KONSEPT" : "FEATURED / KONZEPT"}</p>
+                <h1 id="featured-title" className="mt-2 break-words text-[clamp(1.65rem,7vw,2.15rem)] font-semibold leading-[1.12] tracking-[-0.045em] sm:mt-5 sm:text-[clamp(2.5rem,4.8vw,5.2rem)] sm:leading-[1.05] sm:tracking-[-0.055em] xl:whitespace-nowrap">{primary.title[locale]}</h1>
+                <p className="mt-3 max-w-[58ch] text-sm leading-6 text-zinc-600 dark:text-zinc-300 sm:mt-6 sm:text-zinc-100 sm:text-lg sm:leading-7">{primary.description[locale]}</p>
+                <a href={primary.ctaTarget} className="mt-3 inline-flex min-h-11 items-center gap-5 border-b border-teal-700 text-sm font-semibold text-teal-800 transition-colors hover:text-teal-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-700 dark:border-teal-300 dark:text-teal-300 dark:hover:text-teal-200 sm:mt-8 sm:min-h-12 sm:border-teal-200 sm:text-white sm:hover:text-teal-200 sm:focus-visible:outline-white motion-reduce:transition-none">{primary.ctaLabel[locale]} <span aria-hidden="true">↗</span></a>
+              </div>
             </div>
-
-            <PageHero
-              eyebrow={copy.eyebrow}
-              title={copy.title}
-              description={copy.description}
-              stats={heroStats}
-              className="!bg-transparent"
-            />
+            {featured.length > 1 && <nav aria-label={uz ? "Asosiy xizmatlar" : "Featured Services"} className="mt-4 flex flex-wrap gap-4">{featured.map((item) => <a key={item.id} href={item.ctaTarget} className="border-b border-zinc-400 py-2 text-sm font-medium hover:text-teal-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 dark:hover:text-teal-300">{item.title[locale]} ↗</a>)}</nav>}
           </div>
-        </SectionHeroBackground>
-
-        <Section tone="page" spacing="xl">
-          <Container>
-            <div className="max-w-3xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
-                {copy.listEyebrow}
-              </p>
-
-              <h2 className="mt-4 text-3xl font-bold tracking-[-0.04em] text-text-primary sm:text-4xl">
-                {copy.listTitle}
-              </h2>
-
-              <p className="mt-5 text-base leading-8 text-text-secondary sm:text-lg">
-                {copy.listDescription}
-              </p>
+        </section>
+        <section id="services-catalog" aria-labelledby="services-catalog-title" className="scroll-mt-28 border-t border-zinc-300 px-[clamp(16px,3.3vw,112px)] py-10 sm:py-20 dark:border-zinc-700">
+          <div className="mx-auto max-w-[1800px]">
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-300">{uz ? "XIZMATLAR / 20 YÖNALIŞ" : "DIENSTLEISTUNGEN / 20 BEREICHE"}</p>
+            <div className="relative">
+              <div className="absolute right-0 top-0 z-10">
+                <ServicesShareButton locale={locale} />
+              </div>
+              <h2 id="services-catalog-title" className="mx-auto mt-4 max-w-[calc(100%-3.5rem)] text-center text-[clamp(2rem,8vw,3rem)] font-semibold leading-[1.08] tracking-[-0.05em] sm:mt-5 sm:max-w-none sm:text-[clamp(2.5rem,5vw,5rem)] sm:leading-[1.05]">{uz ? "Barça xizmatlar" : "Alle Dienstleistungen"}</h2>
             </div>
-
-            {services.length > 0 ? (
-              <div className="mt-10 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-                {services.map((service, index) => (
-                  <ServiceCard
-                    key={service.id}
-                    service={service}
-                    index={index}
-                    detailsLabel={copy.details}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="mt-10 rounded-3xl border border-dashed border-border-default bg-surface p-8 text-center sm:p-10">
-                <p className="text-base font-semibold text-text-primary">
-                  {copy.empty}
-                </p>
-              </div>
-            )}
-          </Container>
-        </Section>
-
-        <Section tone="muted" spacing="lg">
-          <Container>
-            <Card padding="lg">
-              <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-                <div className="max-w-3xl">
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
-                    {copy.distinctionEyebrow}
-                  </p>
-
-                  <h2 className="mt-4 text-2xl font-bold tracking-[-0.035em] text-text-primary sm:text-3xl">
-                    {copy.distinctionTitle}
-                  </h2>
-
-                  <p className="mt-4 leading-7 text-text-secondary">
-                    {copy.distinctionDescription}
-                  </p>
+            <p className="mx-auto mb-8 mt-4 max-w-[72ch] text-center text-sm leading-6 sm:mb-10 sm:mt-5 sm:text-base sm:leading-7 text-zinc-600 dark:text-zinc-300">{uz ? "Bu 20 yönaliş hozirça xizmat konsepsiyasidir. Tasdiqlangan buyurtma yoki kafolat mavjud emas." : "Diese 20 Bereiche sind Konzepte, keine bestätigten oder buchbaren Angebote."}</p>
+              <ServicesCatalog groups={groups} locale={locale} contactEmail={imprint.email} />
+              <section aria-labelledby="services-contact-title" className="mt-20 border-t border-zinc-300 pb-4 pt-12 dark:border-zinc-700 sm:mt-28 sm:pt-16">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-300">{uz ? "UZDE / BOǴLANIŞ" : "UZDE / KONTAKT"}</p>
+                <div className="mt-5 flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
+                  <div className="max-w-3xl">
+                    <h2 id="services-contact-title" className="text-[clamp(2rem,6vw,4rem)] font-semibold leading-[1.1] tracking-[-0.05em]">{uz ? "Loyihangizni birgalikda boşlaymiz." : "Starten wir Ihr Projekt gemeinsam."}</h2>
+                    <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-600 dark:text-zinc-300">{uz ? "Web-sayt, IT yeçimlari, karyera yoki hujjatlar böyiça savolingiz bormi? Bizga yozing." : "Fragen zu Websites, IT-Lösungen, Karriere oder Dokumenten? Schreiben Sie uns."}</p>
+                  </div>
+                  <a href={`mailto:${imprint.email}?subject=${encodeURIComponent(uz ? "UzDe — Xizmatlar böyiça murojaat" : "UzDe — Anfrage zu Dienstleistungen")}`} className="inline-flex min-h-12 shrink-0 items-center gap-5 border-b border-teal-700 pb-2 text-sm font-semibold text-teal-800 transition-colors hover:text-teal-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-600 dark:border-teal-300 dark:text-teal-300 dark:hover:text-teal-200">{uz ? "Email orqali boǵlaniş" : "Kontakt per E-Mail"}<span aria-hidden="true">↗</span></a>
                 </div>
-
-                <Link
-                  href="/specialists"
-                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-brand px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-surface"
-                >
-                  {copy.specialistsAction}
-                </Link>
-              </div>
-            </Card>
-          </Container>
-        </Section>
-
-        <Section tone="muted" spacing="xl">
-          <Container>
-            <div className="max-w-3xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
-                {copy.safetyEyebrow}
-              </p>
-
-              <h2 className="mt-4 text-3xl font-bold tracking-[-0.04em] text-text-primary sm:text-4xl">
-                {copy.safetyTitle}
-              </h2>
-            </div>
-
-            <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-              {copy.safetyItems.map((item, index) => (
-                <Card
-                  key={item.title}
-                  variant="default"
-                  padding="md"
-                >
-                  <span className="text-sm font-bold text-brand">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
-                  <h3 className="mt-4 text-lg font-bold text-text-primary">
-                    {item.title}
-                  </h3>
-
-                  <p className="mt-3 leading-7 text-text-secondary">
-                    {item.description}
-                  </p>
-                </Card>
-              ))}
-            </div>
-          </Container>
-        </Section>
-      </main>
-
-      <SectionPromo target="specialists" />
-
-      <Footer />
-    </>
+              </section>
+          </div>
+        </section>
+      </main><Footer /></>
   );
 }

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
+import { getPublishedGuideArticleBySlug } from "../../../lib/guide/public-guide-repository";
 import Header from "../../../components/Header";
 import ShareButton from "../../../components/shared/ShareButton";
 import ServiceCard from "../../../components/cards/ServiceCard";
@@ -19,6 +20,15 @@ type ServiceDetailPageProps = Readonly<{
     slug: string;
   }>;
 }>;
+
+const migratedServiceGuideCategories: Record<string, "documents" | "after-arrival" | "housing-and-living"> = {
+  "elektrik-santexnik-va-hunarmand-topish": "housing-and-living",
+  "istemolchi-huquqlari-boyicha-maslahat": "after-arrival",
+  "shifokor-va-psixoterapevt-topish": "after-arrival",
+  "soliq-maslahatchisini-topish": "after-arrival",
+  "yuridik-yordam-va-huquqiy-xizmatlar": "after-arrival",
+  "qasamyod-qilgan-tarjimonlar": "documents"
+};
 
 export const dynamic =
   "force-dynamic";
@@ -111,6 +121,14 @@ export default async function ServiceDetailPage({
 
   const { slug } =
     await params;
+
+  const category = migratedServiceGuideCategories[slug];
+  if (category) {
+    const targetSlug = slug === "qasamyod-qilgan-tarjimonlar" ? "official-translation-guide" : slug;
+    const migrated = await getPublishedGuideArticleBySlug(category, targetSlug, locale);
+    if (migrated) permanentRedirect(`/${locale}/guide/${category}/${targetSlug}`);
+  }
+
 
   const [
     service,
