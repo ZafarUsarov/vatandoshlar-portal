@@ -30,7 +30,7 @@ export default async function JobsPage() {
   return (
     <>
       <Header />
-      <main className="min-h-[65vh] bg-[#f8f8f8] text-text-primary dark:bg-background">
+      <main className="min-h-[65vh] bg-[#f8f8f8] text-text-primary dark:bg-[var(--uzde-page-bg)] dark:text-slate-100">
         <JobsExplorer locale={locale} jobs={publishedVacancies} contactEmail={imprint.email} />
       </main>
       <Footer />
