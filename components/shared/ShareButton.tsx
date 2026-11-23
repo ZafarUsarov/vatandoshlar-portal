@@ -6,7 +6,7 @@ import { Check, Copy, Mail, MessageCircle, Send, Share as ShareIcon } from "luci
 type Props = Readonly<{
   title: string;
   locale: "uz" | "de";
-  variant?: "light" | "dark" | "install" | "editorial" | "guide";
+  variant?: "light" | "dark" | "install" | "editorial" | "guide" | "specialist";
   iconOnly?: boolean;
   ariaLabel?: string;
 }>;
@@ -17,7 +17,9 @@ export default function ShareButton({ title, locale, variant = "light", iconOnly
   const de = locale === "de";
   const label = de ? "Teilen" : "Ulashish";
   const url = typeof window === "undefined" ? "" : window.location.href.split("#")[0];
-  const buttonClass = iconOnly && variant === "guide"
+  const buttonClass = iconOnly && variant === "specialist"
+    ? "inline-flex size-[38px] shrink-0 items-center justify-center rounded-md text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-300 dark:hover:bg-white/10"
+    : iconOnly && variant === "guide"
     ? "inline-flex size-11 shrink-0 items-center justify-center text-slate-500 transition-colors hover:text-emerald-700 focus-visible:rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 motion-reduce:transition-none dark:text-slate-400 dark:hover:text-emerald-300"
     : iconOnly
     ? "inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-emerald-500 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
