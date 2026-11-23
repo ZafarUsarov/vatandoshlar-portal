@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/navigation";
+import PremiumBadge from "@/components/specialists/PremiumBadge";
 import type {
   LocalizedSpecialist,
   SpecialistCategory,
@@ -6,6 +7,7 @@ import type {
 
 type SpecialistCardProps = Readonly<{
   specialist: LocalizedSpecialist;
+  compact?: boolean;
   labels: Readonly<{
     verified: string;
     premium: string;
@@ -113,16 +115,18 @@ function getLocationLabel(
 export default function SpecialistCard({
   specialist,
   labels,
+  compact = false,
 }: SpecialistCardProps) {
   const locationLabel = getLocationLabel(specialist);
+  const hiddenCategories = Math.max(0, specialist.categories.length - 2);
 
   return (
-    <article className="group relative flex min-w-0 flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-emerald-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 sm:p-5">
+    <article className={`group relative flex min-w-0 flex-col rounded-xl border border-zinc-200 bg-white transition-[transform,border-color] duration-200 hover:border-zinc-400 dark:border-[#2A343A] dark:bg-[#181E22] dark:hover:border-[#40534F] motion-reduce:transition-none ${specialist.status.premium ? "border-[#83B8A4] hover:border-[#379B78] dark:border-[#24765B] dark:hover:border-[#34D399]" : ""} ${compact ? "p-3.5 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0" : "p-5 sm:p-6"}`}>
       {specialist.status.sponsored && (
         <span className="mb-2 self-start rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:bg-amber-500/10 dark:text-amber-300">{labels.sponsored}</span>
       )}
       <div className="flex min-w-0 items-start gap-3">
-        <div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 font-bold text-white sm:size-16">
+        <div className={`flex shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-emerald-500 to-teal-700 font-bold text-white ${compact ? "size-11" : "size-14 sm:size-16"}`}>
           {specialist.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={specialist.avatarUrl} alt="" className="h-full w-full" style={{
@@ -133,26 +137,27 @@ export default function SpecialistCard({
           ) : getInitials(specialist.name)}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex items-start gap-1.5">
-            <h3 className="min-w-0 text-base font-bold leading-5 text-slate-950 dark:text-white sm:text-lg">{specialist.name}</h3>
+          <div className={`flex min-w-0 items-center gap-2`}>
+            <h3 className={`min-w-0 font-bold leading-5 text-slate-950 dark:text-white ${compact ? "line-clamp-2 text-[15px]" : "text-base sm:text-lg"}`}>{specialist.name}</h3>
+            {specialist.status.premium && <PremiumBadge />}
             {specialist.status.verified && (
-              <span title={labels.verified} className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"><VerifiedIcon className="size-3.5" /></span>
+              <span title={labels.verified} className="inline-flex size-5 shrink-0 self-center items-center justify-center rounded-full bg-emerald-50 text-emerald-700 dark:bg-[#203B37] dark:text-[#9BDED0]"><VerifiedIcon className="size-3.5" /></span>
             )}
           </div>
-          <p className="mt-1 line-clamp-2 text-sm font-semibold leading-5 text-emerald-700 dark:text-emerald-400">{specialist.profession}</p>
-          {locationLabel && <p className="mt-1.5 flex items-start gap-1 text-xs leading-4 text-slate-500 dark:text-slate-400"><LocationIcon className="mt-0.5 size-3.5 shrink-0" /><span className="line-clamp-1">{locationLabel}</span></p>}
+          <p className={`mt-1 line-clamp-2 font-semibold text-emerald-700 dark:text-[#9BDED0] ${compact ? "text-[13px] leading-[18px]" : "text-sm leading-5"}`}>{specialist.profession}</p>
+          {(locationLabel || compact) && <p className={`flex min-w-0 items-start gap-1 text-xs leading-4 text-slate-500 dark:text-slate-400 ${compact ? "mt-1" : "mt-1.5"}`}>{locationLabel && <LocationIcon className="mt-0.5 size-3.5 shrink-0" />}<span className="min-w-0 truncate">{locationLabel}</span></p>}
         </div>
       </div>
-      <div className="mt-auto flex flex-wrap gap-1.5 pt-3 pb-2">
+      <div className={`flex min-w-0 flex-wrap gap-1.5 ${compact ? "min-h-6 flex-nowrap items-center overflow-hidden pb-1.5 pt-2" : "pb-3 pt-5"}`}>
         {specialist.categories.slice(0, 2).map((category) => (
-          <span key={category} className="max-w-full truncate rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">{labels.categories[category] ?? category}</span>
+          <span key={category} className={`max-w-full truncate rounded-full bg-zinc-100 text-[11px] font-medium text-zinc-600 dark:bg-white/10 dark:text-zinc-300 ${compact ? "max-w-[45%] px-2 py-0.5" : "px-2.5 py-1"}`}>{labels.categories[category] ?? category}</span>
         ))}
-        {specialist.status.premium && <span className="rounded-full bg-violet-50 px-2.5 py-1 text-[11px] font-medium text-violet-700 dark:bg-violet-500/10 dark:text-violet-300">{labels.premium}</span>}
+        {compact && hiddenCategories > 0 && <span className="shrink-0 rounded-full bg-zinc-100 px-2 py-0.5 text-[11px] font-medium text-zinc-600 dark:bg-white/10 dark:text-zinc-300">+{hiddenCategories}</span>}
       </div>
-      <div className="mt-auto flex min-w-0 items-center justify-between gap-2 border-t border-slate-100 pt-3 dark:border-slate-800">
+      <div className={`mt-auto flex min-w-0 items-center justify-between gap-2 border-t border-zinc-100 dark:border-white/10 ${compact ? "pt-1.5" : "pt-4"}`}>
         <span className="min-w-0 truncate text-xs text-slate-500 dark:text-slate-400">{specialist.languages.map((language) => language.toUpperCase()).join(" · ")}</span>
         {specialist.profilePublished ? (
-          <Link href={`/specialists/${specialist.slug}`} className="inline-flex shrink-0 items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-600 focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-400">
+          <Link href={`/specialists/${specialist.slug}`} className="inline-flex shrink-0 items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-600 focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-zinc-200 dark:hover:text-[#65CBB6]">
             <span aria-hidden="true" className="absolute inset-0" />
             {labels.details}<ArrowUpRightIcon />
           </Link>

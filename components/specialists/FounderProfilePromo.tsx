@@ -56,7 +56,7 @@ export default async function FounderProfilePromo() {
   const copy =
     locale === "de"
       ? {
-          label: "Zafar Usarov · Ausführliches Profil",
+          label: "Ausführliches Profil",
           title:
             "Mein beruflicher Hintergrund und UzDe",
           description:
@@ -64,34 +64,34 @@ export default async function FounderProfilePromo() {
           action: "Ausführliches Profil ansehen",
         }
       : {
-          label: "Zafar Usarov · Batafsil profil",
+          label: "Batafsil profil",
           title:
             "Faoliyatim va UzDe haqida",
           description:
             "Faoliyatim, tajribam va UzDe loyihasi haqida batafsil ma’lumot asoschi sahifasida.",
-          action: "Batafsil profilni ko‘rish",
+          action: "Batafsil profilni körış",
         };
 
   return (
     <section
       aria-labelledby="founder-profile-promo-title"
-      className="min-w-0 overflow-hidden rounded-[2rem] border border-emerald-200/80 bg-gradient-to-br from-emerald-50 via-white to-slate-50 p-5 shadow-sm dark:border-emerald-400/20 dark:from-emerald-500/10 dark:via-slate-900 dark:to-slate-900 sm:p-6"
+      className="min-w-0 w-full rounded-[20px] border border-slate-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-900/40 sm:p-6"
     >
-      <div className="flex min-w-0 items-center gap-2 text-[10px] font-bold uppercase tracking-[0.08em] text-emerald-700 dark:text-emerald-300">
-        <span className="flex size-6 shrink-0 items-center justify-center rounded-full border border-emerald-300/70 bg-white/70 dark:border-emerald-400/30 dark:bg-emerald-400/10">
+      <h2 id="founder-profile-promo-title" className="flex min-w-0 items-center gap-2 text-[18px] font-semibold leading-snug text-slate-950 dark:text-zinc-100">
+        <span className="flex size-6 shrink-0 items-center justify-center text-slate-500 dark:text-zinc-400">
           <UserIcon />
         </span>
         <span className="min-w-0 break-words"><BrandedText text={copy.label} /></span>
-      </div>
-      <h2 id="founder-profile-promo-title" className="mt-4 text-lg font-bold leading-snug tracking-tight text-slate-950 dark:text-white">
-        <BrandedText text={copy.title} />
       </h2>
-      <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+      <p className="mt-3 text-sm font-medium leading-5 text-slate-800 dark:text-zinc-300">
+        <BrandedText text={copy.title} />
+      </p>
+      <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-300">
         <BrandedText text={copy.description} />
       </p>
       <Link
         href="/about/founder"
-        className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-4 py-2.5 text-center text-sm font-bold text-white shadow-md shadow-emerald-600/15 transition-colors hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
+        className="mt-4 inline-flex min-h-[38px] max-w-full items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-3.5 py-2 text-center text-[13px] font-semibold leading-5 text-slate-800 transition-colors hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-100 dark:hover:border-zinc-500 dark:hover:bg-[#344355] dark:focus-visible:ring-offset-[#111419]"
       >
         {copy.action}
         <ArrowUpRightIcon />

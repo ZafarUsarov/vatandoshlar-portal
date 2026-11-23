@@ -4,7 +4,9 @@ import { useMemo, useState } from "react";
 import { useLocale } from "next-intl";
 
 import SpecialistCard from "@/components/specialists/SpecialistCard";
+import { Link } from "@/i18n/navigation";
 import SpecialistFilters from "@/components/specialists/SpecialistFilters";
+import SpecialistsCategoryMarquee from "./SpecialistsCategoryMarquee";
 import type {
   LocalizedSpecialist,
   SpecialistCategory,
@@ -74,6 +76,18 @@ const categoryKeys: ReadonlyArray<
   "science",
 ];
 
+function normalizeSpecialistSearch(value: string): string {
+  return value
+    .toLocaleLowerCase("uz")
+    .replace(/[’‘ʻʼ']/g, "'")
+    .replace(/o'/g, "o")
+    .replace(/g'/g, "g")
+    .replace(/ş/g, "sh")
+    .replace(/ç/g, "ch")
+    .replace(/ö/g, "o")
+    .replace(/ǵ/g, "g");
+}
+
 export default function SpecialistsDirectory({
   specialists,
   initialCategory,
@@ -100,12 +114,12 @@ export default function SpecialistsDirectory({
   );
 
   const filteredSpecialists = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
+    const query = normalizeSpecialistSearch(searchQuery.trim());
 
     return specialists.filter((specialist) => {
       const matchesQuery =
         query.length === 0 ||
-        [
+        normalizeSpecialistSearch([
           specialist.name,
           specialist.profession,
           specialist.shortDescription,
@@ -115,8 +129,7 @@ export default function SpecialistsDirectory({
           ...specialist.services,
           ...specialist.languages,
         ]
-          .join(" ")
-          .toLowerCase()
+          .join(" "))
           .includes(query);
 
       const matchesCategory =
@@ -186,35 +199,14 @@ export default function SpecialistsDirectory({
   }));
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
       <div>
-        <div
-          aria-label={labels.filters.categoryLabel}
-          className="mb-5 hidden flex-wrap gap-2 sm:flex"
-          role="group"
-        >
-          {categories.map((option) => {
-            const isActive = category === option.value;
-
-            return (
-              <button
-                key={option.value}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() =>
-                  updateFilter(setCategory, option.value)
-                }
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950 ${
-                  isActive
-                    ? "bg-slate-950 text-white shadow-lg dark:bg-white dark:text-slate-950"
-                    : "border border-slate-200 bg-white text-slate-600 hover:border-emerald-300 hover:text-emerald-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
-                }`}
-              >
-                {option.label}
-              </button>
-            );
-          })}
-        </div>
+        <SpecialistsCategoryMarquee
+          categories={categories}
+          selectedCategory={category}
+          label={labels.filters.categoryLabel}
+          onSelect={(value) => updateFilter(setCategory, value)}
+        />
 
         <SpecialistFilters
           searchQuery={searchQuery}
@@ -235,7 +227,7 @@ export default function SpecialistsDirectory({
       </div>
 
       <div>
-        <div className="flex items-end justify-between gap-6">
+        <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold tracking-[-0.03em] text-slate-950 dark:text-white">
               {labels.results.title}
@@ -245,19 +237,20 @@ export default function SpecialistsDirectory({
               aria-live="polite"
               className="mt-2 text-sm text-slate-500 dark:text-slate-400"
             >
-              {labels.results.count.replace(
-                "{count}",
-                String(filteredSpecialists.length),
-              )}
+              {locale === "de" ? `${filteredSpecialists.length} Profile gefunden` : `${filteredSpecialists.length} ta profil topildi`}
             </p>
           </div>
+          <Link href="/premium?context=specialist" className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-lg border border-emerald-700/30 bg-white px-3 text-sm font-semibold text-zinc-900 transition-colors hover:border-emerald-600 dark:border-emerald-500/30 dark:bg-[#1a1c1e] dark:text-white dark:hover:border-emerald-400">
+            UzDe. Premium
+          </Link>
         </div>
 
         {filteredSpecialists.length > 0 ? (
           <div>
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-8 grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
             {filteredSpecialists.slice(0, visibleCount).map((specialist) => (
               <SpecialistCard
+                compact
                 key={specialist.id}
                 specialist={specialist}
                 labels={{
@@ -276,25 +269,33 @@ export default function SpecialistsDirectory({
           )}
           </div>
         ) : (
-          <div className="mt-8 rounded-[2rem] border border-dashed border-slate-300 bg-slate-50 px-6 py-16 text-center dark:border-slate-700 dark:bg-slate-900/60 sm:px-10">
-            <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-emerald-50 text-2xl font-black text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
-              V
+          <div className="mt-6 flex min-w-0 flex-col gap-4 rounded-2xl border border-zinc-200 bg-zinc-50/70 p-5 dark:border-white/10 dark:bg-white/[0.035] sm:p-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+            <div className="flex min-w-0 items-start gap-3 sm:items-center">
+              <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-zinc-100 text-zinc-500 dark:bg-white/10 dark:text-zinc-300">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="size-5">
+                  <path d="M16 20v-1.5a4.5 4.5 0 0 0-4.5-4.5h-4A4.5 4.5 0 0 0 3 18.5V20" />
+                  <circle cx="9.5" cy="7.5" r="3.5" />
+                  <path d="M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14.5a4.5 4.5 0 0 1 3 4.2V20" />
+                </svg>
+              </span>
+              <div className="min-w-0">
+                <h3 className="text-lg font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-xl">
+                  {locale === "de" ? labels.empty.title : "Bu yönalışda hali mutaxassis yöq"}
+                </h3>
+                <p className="mt-1 text-[13px] leading-5 text-zinc-600 dark:text-zinc-400 sm:text-sm">
+                  {locale === "de" ? labels.empty.description : "Böşqa yönalışni tanlang yoki katalogga mutaxassis tavsiya qiling."}
+                </p>
+              </div>
             </div>
-
-            <h3 className="mt-6 text-2xl font-bold tracking-[-0.03em] text-slate-950 dark:text-white">
-              {labels.empty.title}
-            </h3>
-
-            <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600 dark:text-slate-400">
-              {labels.empty.description}
-            </p>
-
-            <a
-              href="mailto:info@uzde.de?subject=Mutaxassislar%20katalogiga%20qo%27shilish"
-              className="mt-7 inline-flex rounded-full bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:focus-visible:ring-offset-slate-950"
-            >
-              {labels.empty.applyButton}
-            </a>
+            <div className="flex shrink-0 flex-wrap items-center gap-2 pl-0 sm:pl-[52px] lg:pl-0">
+              <button type="button" onClick={resetFilters} className="inline-flex min-h-10 items-center justify-center rounded-xl border border-zinc-300 bg-white px-4 text-[13px] font-semibold text-zinc-800 transition-colors hover:border-zinc-400 hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 dark:border-white/20 dark:bg-white/5 dark:text-zinc-100 dark:hover:bg-white/10">
+                {labels.filters.reset}
+              </button>
+              <a href="mailto:info@uzde.de?subject=Mutaxassislar%20katalogiga%20qo%27shilish" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-[13px] font-semibold text-white transition-colors hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">
+                {locale === "de" ? labels.empty.applyButton : "Mutaxassis tavsiya qılış"}
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
         )}
       </div>

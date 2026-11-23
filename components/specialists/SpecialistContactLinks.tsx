@@ -52,7 +52,7 @@ type Labels = Readonly<{
 
 type Props = Readonly<{ contact: LocalizedSpecialist["contact"]; labels: Labels; isFounder?: boolean }>;
 
-const iconClass = "flex size-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm transition duration-300 motion-reduce:transform-none motion-reduce:transition-none hover:-translate-y-1 hover:scale-105 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-600 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:border-emerald-400/30 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300";
+const iconClass = "flex size-[38px] shrink-0 items-center justify-center rounded-md text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-zinc-300 dark:hover:bg-[#263344] dark:hover:text-teal-300";
 
 export default function SpecialistContactLinks({ contact, labels, isFounder = false }: Props) {
   const links = [
@@ -73,26 +73,26 @@ export default function SpecialistContactLinks({ contact, labels, isFounder = fa
   ] : links;
 
   return (
-    <div className={`mt-5 flex flex-wrap items-center ${isFounder ? "gap-2" : "gap-2.5"}`}>
+    <div className={`mt-3 flex flex-wrap items-center gap-2`}>
       {contact.email && (
-        <SpecialistEmailPopover email={contact.email} label={labels.email}
+        <SpecialistEmailPopover minimal email={contact.email} label={labels.email}
           copyLabel={labels.copyEmail} composeLabel={labels.composeEmail}
           copiedLabel={labels.emailCopied} copyFailedLabel={labels.emailCopyFailed} />
       )}
       {contact.phone && (
-        <SpecialistPhonePopover number={contact.phone} label={labels.phone}
+        <SpecialistPhonePopover minimal number={contact.phone} label={labels.phone}
           copyLabel={labels.copyEmail} copiedLabel={labels.emailCopied}
           copyFailedLabel={labels.emailCopyFailed} callLabel={labels.callPhone} />
       )}
       {contact.mobile && (
-        <SpecialistPhonePopover number={contact.mobile} label={labels.mobile}
+        <SpecialistPhonePopover minimal number={contact.mobile} label={labels.mobile}
           copyLabel={labels.copyEmail} copiedLabel={labels.emailCopied}
           copyFailedLabel={labels.emailCopyFailed} callLabel={labels.callPhone} />
       )}
       {visibleLinks.map(({ key, href, label, Icon }) => (
         <a key={key} href={href} target="_blank" rel="noopener noreferrer"
           aria-label={label} title={label} className={iconClass}>
-          <Icon aria-hidden="true" className="size-5" />
+          <Icon aria-hidden="true" className="size-[18px]" />
           <span className="sr-only">{label}</span>
         </a>
       ))}

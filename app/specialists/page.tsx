@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 import {
   getLocale,
@@ -6,11 +5,10 @@ import {
 } from "next-intl/server";
 
 import Footer from "@/components/Footer";
-import SectionPromo from "@/components/SectionPromo";
+import SpecialistsJobsPromo from "@/components/specialists/SpecialistsJobsPromo";
 import Header from "@/components/Header";
 import DirectoryHeader from "@/components/specialists/DirectoryHeader";
 import SpecialistsDirectory from "@/components/specialists/SpecialistsDirectory";
-import SectionHeroBackground from "@/components/ui/SectionHeroBackground";
 import {
   getPublishedSpecialists,
 } from "@/lib/specialists/public-specialists-repository";
@@ -206,65 +204,31 @@ export default async function SpecialistsPage({
     ).length;
 
   return (
-    <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
+    <div className="min-h-screen bg-white text-zinc-950 dark:bg-[var(--uzde-page-bg)] dark:text-zinc-100">
       <Header />
 
-      <main>
-        <SectionHeroBackground tone="specialists">
-          <div className="relative isolate overflow-hidden">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-            >
-              <Image
-                src="/images/specialists/specialists-master-visual.webp"
-                alt=""
-                fill
-                priority
-                sizes="100vw"
-                quality={88}
-                className="object-cover object-[72%_center] opacity-75 sm:object-[70%_center] sm:opacity-70 lg:object-[68%_center] lg:opacity-80 dark:opacity-45 dark:sm:opacity-50 dark:lg:opacity-60"
-              />
+      <main className="pt-[66px] lg:pt-20">
+        <div className="border-b border-zinc-200 bg-[#f8f8f8] dark:border-white/10 dark:bg-[var(--uzde-page-bg)]">
+          <DirectoryHeader
+            showFlow={locale === "uz"}
+            labels={{
+              badge: t("hero.badge"),
+              title: locale === "uz" ? "ÖZBEK MUTAXASSISLARI" : t("hero.title"),
+              description: locale === "uz" ? "Germaniya böylab özbek mutaxassislarini bir joyda toping." : t("hero.description"),
+              profilesLabel: t("hero.statistics.profiles"),
+              categoriesLabel: t("hero.statistics.categories"),
+              verifiedLabel: t("hero.statistics.verified"),
+            }}
+            statistics={{
+              profiles: localizedSpecialists.length,
+              categories: uniqueCategories,
+              verified: verifiedProfiles,
+            }}
+          />
+        </div>
 
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.97)_0%,rgba(248,250,252,0.91)_36%,rgba(248,250,252,0.63)_63%,rgba(248,250,252,0.16)_100%)] dark:bg-[linear-gradient(90deg,rgba(2,6,23,0.96)_0%,rgba(2,6,23,0.88)_36%,rgba(2,6,23,0.65)_63%,rgba(2,6,23,0.22)_100%)]" />
-              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(248,250,252,0.02),rgba(248,250,252,0.18))] dark:bg-[linear-gradient(to_bottom,rgba(2,6,23,0.02),rgba(2,6,23,0.14))]" />
-            </div>
-
-            <DirectoryHeader
-              labels={{
-                badge:
-                  t("hero.badge"),
-                title:
-                  t("hero.title"),
-                description:
-                  t("hero.description"),
-                profilesLabel:
-                  t(
-                    "hero.statistics.profiles",
-                  ),
-                categoriesLabel:
-                  t(
-                    "hero.statistics.categories",
-                  ),
-                verifiedLabel:
-                  t(
-                    "hero.statistics.verified",
-                  ),
-              }}
-              statistics={{
-                profiles:
-                  localizedSpecialists.length,
-                categories:
-                  uniqueCategories,
-                verified:
-                  verifiedProfiles,
-              }}
-            />
-          </div>
-        </SectionHeroBackground>
-
-        <section className="bg-white pt-8 pb-12 dark:bg-slate-950 sm:py-20">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <section className="bg-white pb-8 pt-8 dark:bg-[var(--uzde-page-bg)] sm:pb-10 sm:pt-10 lg:pb-12">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-14">
             <SpecialistsDirectory
               specialists={
                 localizedSpecialists
@@ -399,9 +363,9 @@ export default async function SpecialistsPage({
         </section>
       </main>
 
-      <SectionPromo target="jobs" />
+      <SpecialistsJobsPromo locale={locale} />
 
-      <Footer />
+      <Footer variant="compact" />
     </div>
   );
 }

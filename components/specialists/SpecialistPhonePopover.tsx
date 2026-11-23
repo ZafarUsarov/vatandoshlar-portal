@@ -5,6 +5,7 @@ import { Check, Copy, Phone, PhoneCall } from "lucide-react";
 
 type Props = Readonly<{
   number: string;
+  minimal?: boolean;
   label: string;
   copyLabel: string;
   copiedLabel: string;
@@ -12,7 +13,7 @@ type Props = Readonly<{
   callLabel: string;
 }>;
 
-export default function SpecialistPhonePopover({ number, label, copyLabel, copiedLabel, copyFailedLabel, callLabel }: Props) {
+export default function SpecialistPhonePopover({ number, label, copyLabel, copiedLabel, copyFailedLabel, callLabel, minimal = false }: Props) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<"idle" | "copied" | "failed">("idle");
   const rootRef = useRef<HTMLDivElement>(null);
@@ -62,15 +63,15 @@ export default function SpecialistPhonePopover({ number, label, copyLabel, copie
         aria-expanded={open}
         aria-controls={open ? id : undefined}
         onClick={() => { setStatus("idle"); setOpen(value => !value); }}
-        className="flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-600 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-emerald-400/10 dark:hover:text-emerald-300"
+        className={minimal ? "flex size-[38px] shrink-0 items-center justify-center rounded-md text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-[#B8C3D1] dark:hover:bg-[#263344] dark:hover:text-[#34D5B0]" : "flex size-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-600 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-[#303B4B] dark:bg-[#263344] dark:text-[#B8C3D1] dark:hover:bg-[#263344] dark:hover:text-[#34D5B0]"}
       >
         <Phone aria-hidden="true" className="size-5" />
       </button>
       {open && (
-        <div id={id} role="dialog" aria-label={label} className="absolute bottom-full left-0 z-30 mb-2 w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-slate-200 bg-white p-3.5 shadow-xl dark:border-white/10 dark:bg-slate-900">
-          <p className="break-words text-sm font-semibold text-slate-800 dark:text-slate-100">{number}</p>
+        <div id={id} role="dialog" aria-label={label} className="absolute bottom-full left-0 z-30 mb-2 w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-slate-200 bg-white p-3.5 shadow-xl dark:border-[#303B4B] dark:bg-[#19212D]">
+          <p className="break-words text-sm font-semibold text-slate-800 dark:text-[#F5F7FA]">{number}</p>
           <div className="mt-3 grid grid-cols-[minmax(0,1fr)_minmax(0,1.45fr)] gap-2">
-            <button ref={copyRef} type="button" onClick={copyNumber} className="inline-flex h-9 min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-slate-200 px-2.5 text-[13px] font-medium leading-none text-slate-800 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-white/20 dark:text-slate-100 dark:hover:bg-white/10">
+            <button ref={copyRef} type="button" onClick={copyNumber} className="inline-flex h-9 min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-slate-200 px-2.5 text-[13px] font-medium leading-none text-slate-800 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-[#34445D] dark:text-[#F5F7FA] dark:hover:bg-[#263344] dark:hover:text-[#34D5B0]">
               {status === "copied" ? <Check aria-hidden="true" className="size-3.5 shrink-0" /> : <Copy aria-hidden="true" className="size-3.5 shrink-0" />}
               <span>{status === "copied" ? copiedLabel : copyLabel}</span>
             </button>

@@ -1,0 +1,16 @@
+/* Specialists-only: native scrolling plus stable requestAnimationFrame auto-scroll. */
+.viewport {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+}
+.viewport::-webkit-scrollbar { display: none; }
+.track { display: flex; width: max-content; }
+.group { display: flex; flex: none; align-items: center; gap: 0.5rem; padding-right: 0.5rem; }
+.duplicate { display: none; }
+@media (min-width: 1024px) {
+  .duplicate { display: flex; }
+  .viewport { cursor: grab; user-select: none; }
+  .viewport:active { cursor: grabbing; }
+}

@@ -1,0 +1,10 @@
+/* The invisible original Ö preserves exact advance width and line metrics. */
+.letter { position: relative; display: inline-grid; vertical-align: baseline; white-space: nowrap; }
+.measure { grid-area: 1 / 1; visibility: hidden; }
+.base { grid-area: 1 / 1; }
+.dots { position: absolute; left: 0.19em; top: -0.07em; display: inline-flex; gap: 0.145em; }
+.eye { position: relative; width: 0.115em; height: 0.115em; border-radius: 45%; background: currentColor; transform-origin: center; animation: blink 8s ease-in-out infinite; }
+.pupil { position: absolute; top: 27%; left: 34%; width: 34%; height: 46%; border-radius: 50%; background: #2dd4bf; animation: glance 8s ease-in-out infinite; }
+@keyframes glance { 0%,15%,36%,55%,77%,100% { transform: translateX(0); } 21%,29% { transform: translateX(-0.09em); } 62%,70% { transform: translateX(0.09em); } }
+@keyframes blink { 0%,74%,76.2%,100% { transform: scaleY(1); } 75%,75.8% { transform: scaleY(0.12); } }
+@media (prefers-reduced-motion: reduce) { .measure { visibility: visible; } .base,.dots { display: none; } }

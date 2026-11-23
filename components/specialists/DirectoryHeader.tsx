@@ -1,6 +1,9 @@
 import AnimatedStatNumber from "./AnimatedStatNumber";
+import SpecialistsFlowMark from "./SpecialistsFlowMark";
+import AnimatedO from "./AnimatedO";
 
 type DirectoryHeaderProps = Readonly<{
+  showFlow?: boolean;
   labels: Readonly<{
     badge: string;
     title: string;
@@ -42,6 +45,7 @@ function UsersIcon() {
 export default function DirectoryHeader({
   labels,
   statistics,
+  showFlow = false,
 }: DirectoryHeaderProps) {
   const items = [
     {
@@ -59,39 +63,43 @@ export default function DirectoryHeader({
   ];
 
   return (
-    <section className="border-b border-slate-200/80 bg-transparent pt-24 pb-8 dark:border-slate-800/80 sm:py-24 lg:py-28">
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid gap-6 sm:gap-12 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div className="max-w-4xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700 shadow-sm dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
-              <UsersIcon />
-              {labels.badge}
-            </span>
-
-            <h1 className="mt-5 text-3xl sm:mt-7 sm:text-5xl font-bold tracking-[-0.055em] text-slate-950 lg:text-6xl dark:text-white">
-              {labels.title}
+    <section className="pb-8 pt-9 md:pb-12 md:pt-14 lg:pb-12 lg:pt-16">
+      <div className="mx-auto max-w-[1600px] px-5 text-center sm:px-8 lg:px-14">
+        <p className="inline-flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.23em] text-teal-700 dark:text-teal-300">
+          <UsersIcon /> {labels.badge}
+        </p>
+        {showFlow && labels.title.startsWith("ÖZBEK ") && (
+          <div className="mt-7 flex min-w-0 flex-col items-center md:hidden">
+            <h1 className="flex w-full min-w-0 flex-col items-center gap-1 font-semibold uppercase leading-[1.12] tracking-normal text-zinc-950 dark:text-zinc-100">
+              <span className="whitespace-nowrap text-[clamp(27px,8vw,36px)]"><AnimatedO />ZBEK</span>
+              <span className="max-w-full whitespace-nowrap text-[clamp(17px,5.2vw,23px)]">{labels.title.slice(6)}</span>
             </h1>
-
-            <p className="mt-4 max-w-3xl text-base leading-7 sm:mt-6 sm:text-lg sm:leading-8 text-slate-600 dark:text-slate-400">
-              {labels.description}
-            </p>
+            <div className="mt-4 flex items-center justify-center text-zinc-950 dark:text-zinc-100 [&>span]:!m-0 [&>span]:!size-14 [&>span]:!translate-y-0">
+              <SpecialistsFlowMark />
+            </div>
           </div>
-
-          <div className="grid grid-cols-3 gap-2 sm:gap-4">
-            {items.map((item) => (
-              <div
-                key={item.label}
-                className="min-w-0 rounded-xl border border-emerald-200/80 bg-gradient-to-br from-white via-emerald-50/80 to-teal-100/70 px-1.5 py-2 text-center shadow-[0_5px_18px_rgba(5,150,105,0.12)] ring-1 ring-white/70 sm:min-w-24 sm:rounded-xl sm:px-3 sm:py-2.5 dark:border-emerald-900/60 dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950 dark:ring-emerald-900/30"
-              >
-                <p className="text-lg font-black tabular-nums tracking-[-0.04em] text-emerald-950 sm:text-xl dark:text-emerald-100">
-                  <AnimatedStatNumber value={item.value} />
-                </p>
-                <p className="mt-0.5 text-[10px] font-semibold text-slate-600 sm:text-[11px] dark:text-slate-300">
-                  {item.label}
-                </p>
-              </div>
-            ))}
-          </div>
+        )}
+        <h1 className={`mx-auto mt-9 max-w-[1450px] font-semibold uppercase leading-[1.04] tracking-normal text-zinc-950 dark:text-zinc-100 ${showFlow && labels.title.startsWith("ÖZBEK ") ? "hidden md:block" : ""}`}
+          style={{ fontSize: showFlow ? "clamp(25px, 5.5vw, 88px)" : "clamp(48px, 5.5vw, 88px)" }}>
+          {showFlow && labels.title.startsWith("ÖZBEK ") ? (
+            <span className="inline-flex max-w-full flex-wrap items-baseline justify-center gap-x-[0.24em] gap-y-2">
+              <span className="whitespace-nowrap"><AnimatedO />ZBEK</span>
+              <span className="whitespace-nowrap">{labels.title.slice(6)}<SpecialistsFlowMark /></span>
+            </span>
+          ) : (
+            <>{labels.title}{showFlow && <SpecialistsFlowMark />}</>
+          )}
+        </h1>
+        <p className="mx-auto mt-4 max-w-3xl text-base leading-7 md:mt-6 text-zinc-600 dark:text-zinc-400 sm:text-lg sm:leading-8">
+          {labels.description}
+        </p>
+        <div className="mx-auto mt-7 grid max-w-2xl md:mt-10 grid-cols-3 gap-x-2 gap-y-4 border-t border-zinc-200 pt-6 dark:border-white/10 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-12">
+          {items.map((item) => (
+            <div key={item.label} className="flex min-w-0 flex-col items-center gap-1 text-center sm:flex-row sm:items-baseline sm:gap-2">
+              <span className="text-2xl font-semibold tabular-nums tracking-tight text-zinc-950 dark:text-zinc-100"><AnimatedStatNumber value={item.value} /></span>
+              <span className="text-[11px] leading-4 text-zinc-500 dark:text-zinc-400 sm:text-xs">{item.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>

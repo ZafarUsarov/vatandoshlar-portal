@@ -18,7 +18,7 @@ export default function AnimatedStatNumber({ value }: AnimatedStatNumberProps) {
     let frame = 0;
     let startedAt: number | null = null;
     let started = false;
-    const duration = 850;
+    const duration = 1100;
 
     const tick = (now: number) => {
       if (startedAt === null) startedAt = now;
