@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import PremiumBadge from "@/components/specialists/PremiumBadge";
 import { PREMIUM_CONTACT_EMAIL, PREMIUM_PRICING, PREMIUM_SAVINGS, type PremiumContext, type PremiumPlan } from "@/lib/premium/config";
 import { premiumContent } from "@/lib/premium/content";
@@ -12,6 +14,28 @@ export default function PremiumPricing({ locale, initialContext, profileUrl }: R
   const t = premiumContent[locale];
   const [context, setContext] = useState<PremiumContext>(initialContext);
   const [plan, setPlan] = useState<PremiumPlan>("yearly");
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const legacyContext = url.searchParams.get("context");
+    let entryContext: string | null = null;
+    try {
+      entryContext = sessionStorage.getItem("uzde-premium-entry-context");
+      sessionStorage.removeItem("uzde-premium-entry-context");
+    } catch { /* Storage may be unavailable. */ }
+    const resolvedContext = legacyContext === "specialist" || legacyContext === "organization"
+      ? legacyContext
+      : entryContext === "specialist" || entryContext === "organization"
+        ? entryContext
+        : null;
+    if (resolvedContext && resolvedContext !== initialContext) {
+      queueMicrotask(() => setContext(resolvedContext));
+    }
+    if (url.searchParams.has("context")) {
+      url.searchParams.delete("context");
+      window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+    }
+  }, []);
+
   const pricing = PREMIUM_PRICING[plan];
   const mailto = useMemo(() => {
     const subject = `${t.subject} — ${context === "specialist" ? t.specialist : t.organization} — ${plan === "yearly" ? t.yearly : t.monthly}`;
@@ -22,6 +46,12 @@ export default function PremiumPricing({ locale, initialContext, profileUrl }: R
   return (
     <>
       <section className="mx-auto max-w-6xl px-5 pb-12 pt-12 sm:px-8 sm:pt-16 lg:pt-20">
+        <Link href={`/${locale}/${context === "organization" ? "places" : "specialists"}`} className="mb-5 inline-flex min-h-10 items-center gap-2 text-sm font-medium text-zinc-600 transition-colors duration-150 hover:text-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 motion-reduce:transition-none dark:text-zinc-300 dark:hover:text-emerald-300">
+          <ArrowLeft aria-hidden="true" className="size-4 shrink-0" />
+          {context === "organization"
+            ? locale === "de" ? "Zurück zu den Organisationen" : "Tashkilotlar bo‘limiga qaytish"
+            : locale === "de" ? "Zurück zu den Fachkräften" : "Mutaxassislar bo‘limiga qaytish"}
+        </Link>
         <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto]">
           <div className="min-w-0">
             <p className="text-xs font-bold tracking-[0.18em] text-emerald-700 dark:text-emerald-300">{t.eyebrow}</p>

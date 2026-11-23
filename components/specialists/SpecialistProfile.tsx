@@ -235,31 +235,22 @@ export default function SpecialistProfile({
               </div>
 
               <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <span
-                    className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-[11px] font-semibold ${
-                      specialist.status.verified
-                        ? "bg-emerald-100 text-emerald-700 dark:bg-teal-950/30 dark:text-teal-300"
-                        : "bg-slate-200 text-slate-600 dark:bg-zinc-800/60 dark:text-zinc-300"
-                    }`}
-                  >
-                    <VerifiedIcon className="size-3.5" />
-                    {specialist.status.verified
-                      ? labels.verified
-                      : labels.notVerified}
-                  </span>
-
-                  {specialist.status.sponsored && (
-                    <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[11px] font-semibold text-amber-700 dark:bg-zinc-800/60 dark:text-amber-300">
-                      {labels.sponsored}
+                <h1 className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-[clamp(1.75rem,4vw,2.375rem)] font-semibold leading-tight tracking-[-0.035em] text-slate-950 sm:mt-2 dark:text-zinc-100">
+                  <span className="min-w-0 break-words">{specialist.name}</span>
+                  {specialist.status.verified && (
+                    <span title={labels.verified} aria-label={labels.verified} className="inline-flex size-7 shrink-0 items-center justify-center self-center rounded-md text-emerald-700 dark:text-teal-300">
+                      <VerifiedIcon className="size-5" />
                     </span>
                   )}
-                </div>
-
-                <h1 className="mt-2 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-[clamp(1.75rem,4vw,2.375rem)] font-semibold leading-tight tracking-[-0.035em] text-slate-950 sm:mt-2 dark:text-zinc-100">
-                  <span className="min-w-0 break-words">{specialist.name}</span>
                   {specialist.status.premium && <PremiumBadge size="profile" />}
                 </h1>
+
+                {(specialist.status.sponsored || !specialist.status.verified) && (
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] font-semibold">
+                    {!specialist.status.verified && <span className="rounded-md bg-slate-200 px-2 py-1 text-slate-600 dark:bg-zinc-800/60 dark:text-zinc-300">{labels.notVerified}</span>}
+                    {specialist.status.sponsored && <span className="rounded-md bg-amber-100 px-2 py-1 text-amber-700 dark:bg-zinc-800/60 dark:text-amber-300">{labels.sponsored}</span>}
+                  </div>
+                )}
 
                 <p className="mt-1 text-[15px] font-semibold leading-snug text-emerald-700 sm:text-[15px] dark:text-teal-300">
                   {specialist.profession}

@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { listPublicPlaces, placeCategories } from "@/lib/places/places-repository";
 import PlacesFilters from "@/components/places/PlacesFilters";
+import PremiumEntryLink from "@/components/premium/PremiumEntryLink";
 import { Link } from "@/i18n/navigation";
 export const dynamic="force-dynamic";
 const labels={uz:{title:"Biznes va tashkilotlar",subtitle:"Germaniyadagi vatandoshlar bizneslari va tashkilotlari",search:"Nomi yoki tavsifi bo‘yicha qidiring",city:"Barcha shaharlar",category:"Barcha yo‘nalishlar",find:"Qidirish",reset:"Tozalash",empty:"Hozircha mos joylar topilmadi.",details:"Batafsil",count:"ta joy",cats:{restaurant:"Restoran va kafe",hotel:"Mehmonxona",shop:"Do‘kon",service:"Xizmat",organization:"Tashkilot",other:"Boshqa"}},de:{title:"Unternehmen & Organisationen",subtitle:"Unternehmen und Organisationen der Community in Deutschland",search:"Nach Name oder Beschreibung suchen",city:"Alle Städte",category:"Alle Kategorien",find:"Suchen",reset:"Zurücksetzen",empty:"Noch keine passenden Orte gefunden.",details:"Details",count:"Orte",cats:{restaurant:"Restaurant & Café",hotel:"Hotel",shop:"Geschäft",service:"Dienstleistung",organization:"Organisation",other:"Sonstige"}}} as const;
@@ -28,7 +29,7 @@ export default async function PlacesPage({searchParams}:{searchParams:Promise<{q
       priority
     />
   </div>
-</div><div className="mx-auto max-w-6xl"><PlacesFilters locale={locale} q={q} category={category??""} location={location} locationId={locationId}/><div className="mb-5 mt-10 text-sm font-medium text-slate-500 dark:text-slate-400">{places.length} {t.count}</div></div>{places.length===0?<div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-20 text-center text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">{t.empty}</div>:<div className="grid grid-cols-1 items-start gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
+</div><div className="mx-auto max-w-6xl"><PlacesFilters locale={locale} q={q} category={category??""} location={location} locationId={locationId}/><div className="mb-5 mt-10 flex flex-wrap items-center justify-between gap-3"><span className="text-sm font-medium text-slate-500 dark:text-slate-400">{places.length} {t.count}</span><PremiumEntryLink context="organization" className="inline-flex min-h-11 items-center gap-1 rounded-xl border border-emerald-700/30 bg-white px-3 text-sm font-semibold text-zinc-900 hover:border-emerald-600 dark:border-emerald-500/30 dark:bg-[#1a1c1e] dark:text-white">UzDe. Premium</PremiumEntryLink></div></div>{places.length===0?<div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-20 text-center text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">{t.empty}</div>:<div className="grid grid-cols-1 items-start gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
   {places.map((p) => {
     const categoryName = p.categoryLabel || t.cats[p.category];
     const CategoryIcon =

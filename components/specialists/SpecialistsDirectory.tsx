@@ -3,8 +3,8 @@
 import { useMemo, useState } from "react";
 import { useLocale } from "next-intl";
 
+import PremiumEntryLink from "@/components/premium/PremiumEntryLink";
 import SpecialistCard from "@/components/specialists/SpecialistCard";
-import { Link } from "@/i18n/navigation";
 import SpecialistFilters from "@/components/specialists/SpecialistFilters";
 import SpecialistsCategoryMarquee from "./SpecialistsCategoryMarquee";
 import type {
@@ -240,9 +240,9 @@ export default function SpecialistsDirectory({
               {locale === "de" ? `${filteredSpecialists.length} Profile gefunden` : `${filteredSpecialists.length} ta profil topildi`}
             </p>
           </div>
-          <Link href="/premium?context=specialist" className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-lg border border-emerald-700/30 bg-white px-3 text-sm font-semibold text-zinc-900 transition-colors hover:border-emerald-600 dark:border-emerald-500/30 dark:bg-[#1a1c1e] dark:text-white dark:hover:border-emerald-400">
+          <PremiumEntryLink context="specialist" className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-lg border border-emerald-700/30 bg-white px-3 text-sm font-semibold text-zinc-900 transition-colors hover:border-emerald-600 dark:border-emerald-500/30 dark:bg-[#1a1c1e] dark:text-white dark:hover:border-emerald-400">
             UzDe. Premium
-          </Link>
+          </PremiumEntryLink>
         </div>
 
         {filteredSpecialists.length > 0 ? (
