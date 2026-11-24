@@ -1,15 +1,21 @@
 import { getLocale } from "next-intl/server";
 import { Inter_Tight } from "next/font/google";
 
+
 import { Link } from "@/i18n/navigation";
 import type { SupportedTelegramLocale } from "@/types/telegram";
+import ShareButton from "@/components/shared/ShareButton";
+import GuideInfoBox from "@/components/guide/GuideInfoBox";
 import TelegramGuideConversation from "./TelegramGuideConversation";
+import TelegramArticleConversation from "./TelegramArticleConversation";
+
 
 const interTight = Inter_Tight({
   subsets: ["latin", "latin-ext"],
   weight: "600",
   display: "swap",
 });
+
 
 type GuideSection = Readonly<{
   number: string;
@@ -19,9 +25,11 @@ type GuideSection = Readonly<{
   note?: string;
 }>;
 
+
 type TelegramCultureGuideProps = Readonly<{
   variant?: "embedded" | "standalone";
 }>;
+
 
 function ArrowUpRightIcon({ className = "size-4" }: { className?: string }) {
   return (
@@ -30,6 +38,7 @@ function ArrowUpRightIcon({ className = "size-4" }: { className?: string }) {
     </svg>
   );
 }
+
 
 function ArrowRightIcon({ className = "size-4" }: { className?: string }) {
   return (
@@ -50,6 +59,7 @@ function ArrowRightIcon({ className = "size-4" }: { className?: string }) {
   );
 }
 
+
 function BookIcon({ className = "size-5" }: { className?: string }) {
   return (
     <svg
@@ -69,30 +79,6 @@ function BookIcon({ className = "size-5" }: { className?: string }) {
   );
 }
 
-function ShieldIcon({ className = "size-5" }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M12 3.5 19 6v5.25c0 4.3-2.8 7.75-7 9.25-4.2-1.5-7-4.95-7-9.25V6l7-2.5Z"
-        stroke="currentColor"
-        strokeLinejoin="round"
-        strokeWidth="1.7"
-      />
-      <path
-        d="m9 12 2 2 4-4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.7"
-      />
-    </svg>
-  );
-}
 
 function getCultureCopy(locale: SupportedTelegramLocale) {
   return locale === "uz"
@@ -122,117 +108,53 @@ function getCultureCopy(locale: SupportedTelegramLocale) {
           },
         },
         article: {
-          badge: "Telegram · Amaliy qo‘llanma",
-          title: "Guruhda qanday qilib to‘g‘ri savol berish kerak?",
+          badge: "Telegram / Amaliy qöllanma",
+          title: "Guruhda qanday qilib töǵri savol beriş kerak?",
           lead:
-            "Yaxshi savol murakkab bo‘lishi shart emas. Yetarli kontekst, aniq muammo va bitta tushunarli xabar ko‘pincha foydali javob olishni ancha osonlashtiradi.",
+            "Aniq savol. Tuşunarli kontekst. Foydali javob.",
           intro:
-            "Bu qo‘llanmaning maqsadi kimnidir tanqid qilish emas. Maqsad — Telegram guruhlaridagi muloqotni tartibli, xavfsiz va barcha a’zolar uchun o‘qishga qulay saqlash.",
+            "Telegram guruhlarida samarali, hurmatli va xavfsiz muloqot qiliş uçun 10 ta amaliy tavsiya.",
           readingLabel: "Qisqa va amaliy",
           rulesLabel: "10 ta qoida",
           principlesLabel: "Asosiy tamoyillar",
           principles: [
-            "Savolni bitta tushunarli xabarda yozing",
-            "Javob berish uchun kerakli kontekstni qo‘shing",
-            "Shaxsiy ma’lumotlarni ochiq guruhda ulashmang",
+            "Savolni bitta tuşunarli xabarda yozing",
+            "Javob beriş uçun kerakli kontekstni qöşing",
+            "Şaxsiy ma’lumotlarni oçiq guruhda ulaşmang",
           ],
           sections: [
-            {
-              number: "01",
-              title: "Bitta fikrni bitta to‘liq xabarda yozing",
-              description:
-                "Savolni ketma-ket bir nechta qisqa xabarga bo‘lib yuborish o‘rniga, vaziyat va savolni imkon qadar bitta tushunarli xabarda yozing.",
-              bullets: [
-                "“Salom”, “Bir savolim bor”, “Kim biladi?”, “Anmeldung haqida” kabi xabarlarni alohida-alohida yubormang.",
-                "Bitta to‘liq xabar boshqa a’zolarga kontekstni darhol tushunishga yordam beradi.",
-              ],
-            },
-            {
-              number: "02",
-              title: "Kerakli kontekstni qo‘shing",
-              description:
-                "Faqat savolning o‘zini emas, uni tushunish uchun zarur bo‘lgan qisqa kontekstni ham yozing.",
-              bullets: [
-                "Qaysi shahar yoki Bundeslandda ekaningiz.",
-                "Qanday vaziyat yuz bergani.",
-                "Aynan nimada muammo borligi.",
-                "Nimani bilmoqchi ekaningiz.",
-              ],
-              note:
-                "Savolga aloqasi bo‘lmagan ortiqcha shaxsiy ma’lumotlarni qo‘shish shart emas.",
-            },
-            {
-              number: "03",
-              title: "Muammoni aniq tushuntiring",
-              description:
-                "“Nima qilishim kerak?” kabi juda umumiy savol o‘rniga aynan qaysi qism tushunarsiz yoki qayerda muammo paydo bo‘lganini yozing.",
-            },
-            {
-              number: "04",
-              title: "Oldin nimalarni sinab ko‘rganingizni ayting",
-              description:
-                "Rasmiy saytni ko‘rgan, idoraga yozgan yoki boshqa usulni sinab ko‘rgan bo‘lsangiz, buni qisqacha yozing. Shunda boshqalar sizga bir xil maslahatni qayta berib o‘tirmaydi.",
-            },
-            {
-              number: "05",
-              title: "Kerak bo‘lsa screenshot yoki link qo‘shing",
-              description:
-                "Rasmiy sahifa, xatolik yoki screenshot muammoni tushunishga yordam bersa, uni qo‘shishingiz mumkin.",
-              note:
-                "Screenshot yuborishdan oldin ism, manzil, hujjat raqami, QR-kod va boshqa maxfiy ma’lumotlar ko‘rinmayotganini tekshiring.",
-            },
-            {
-              number: "06",
-              title: "Shaxsiy ma’lumotlarni ochiq guruhga yubormang",
-              description:
-                "Passport raqami, Aufenthaltstitel ma’lumotlari, telefon raqami, to‘liq manzil, bank ma’lumotlari, login ma’lumotlari va maxfiy hujjatlarni ochiq guruhga joylamang.",
-            },
-            {
-              number: "07",
-              title: "Foydali savol va javobni guruhda qoldiring",
-              description:
-                "Agar savol va javob boshqa a’zolarga ham foydali bo‘lishi mumkin bo‘lsa, suhbatni darhol shaxsiy chatga olib ketishga shoshilmang. Guruhda qolgan javob keyinchalik shu muammoga duch keladigan odamlarga ham yordam beradi.",
-            },
-            {
-              number: "08",
-              title: "Tajribali a’zolarning vaqtini hurmat qiling",
-              description:
-                "Professional yoki tajribali a’zolar har doim darhol javob bera olmasligi tabiiy. Biror kishidan javob talab qilish yoki uni qayta-qayta belgilash o‘rniga savolni aniq qoldiring va biroz vaqt bering.",
-            },
-            {
-              number: "09",
-              title: "Bir xil savolni qayta-qayta yubormang",
-              description:
-                "Javob darhol kelmasa, qisqa vaqt ichida savolni qayta yuborish yoki “??”, “javob bormi?”, “kim biladi?” kabi xabarlar bilan guruhni to‘ldirmang.",
-            },
-            {
-              number: "10",
-              title: "Muammo hal bo‘lgach natijani bo‘lishing",
-              description:
-                "Muammo hal bo‘lsa, imkon qadar qanday yo‘l ishlaganini qisqacha yozib qoldiring. Sizning yakuniy xabaringiz keyingi foydalanuvchi uchun eng foydali javobga aylanishi mumkin.",
-            },
-          ] satisfies GuideSection[],
+{"number": "01", "title": "Savolingizni bitta töliq xabarda yozing", "description": "Salomlaşiş, vaziyat va savolingizni imkon qadar bitta xabarda ifodalang. Bu boşqa a’zolarga murojaatingizni tezroq tuşunişga yordam beradi. «Salom», «Bir savolim bor», «Kim biladi?» kabi ketma-ket alohida xabarlar örniga töliq savol yozing."},
+{"number": "02", "title": "Kerakli kontekstni qöşing", "description": "Savolingizga javob beriş uçun zarur bölgan tafsilotlarni kiriting. Masalan, qaysi şaharda yaşayotganingiz, qaysi idoraga murojaat qilganingiz yoki qanday jarayonda ekaningizni körsating. Savolga aloqasi bölmagan şaxsiy ma’lumotlarni yoziş şart emas."},
+{"number": "03", "title": "Muammoni aniq tuşuntiring", "description": "Aynan nimani bilmoqçi ekaningizni yoki qaysi bosqiçda muammoga duç kelganingizni tuşunarli yozing. Umumiy savollarga qaraganda aniq savollarga foydali javob beriş osonroq."},
+{"number": "04", "title": "Oldin nimalarni sinab körganingizni ayting", "description": "Agar rasmiy saytni tekşirgan, tegişli idoraga murojaat qilgan yoki boşqa yeçimlarni sinab körgan bölsangiz, buni qisqaça ayting. Bu takroriy maslahatlarning oldini oladi."},
+{"number": "05", "title": "Zarur bölsa, havola yoki skrinşot qöşing", "description": "Rasmiy manba, xatolik xabari yoki skrinşot vaziyatni yaxşiroq tuşuntirişga yordam berişi mumkin. Ulaşişdan oldin şaxsiy va maxfiy ma’lumotlar körinmayotganini tekşiring."},
+{"number": "06", "title": "Şaxsiy ma’lumotlaringizni himoya qiling", "description": "Pasport, Aufenthaltstitel, bank ma’lumotlari, telefon raqami, töliq manzil va maxfiy hujjatlarni oçiq guruhlarga joylamang."},
+{"number": "07", "title": "Foydali savol va javoblarni guruhda qoldiring", "description": "Agar suhbat boşqa a’zolar uçun ham foydali bölsa, uni darhol şaxsiy chatga olib ötişga şoşilmang. Guruhda qolgan javoblar kelajakda boşqa vatandoşlarga ham yordam berişi mumkin. Şaxsiy yoki maxfiy masalalarni esa şaxsiy muloqotda davom ettiring."},
+{"number": "08", "title": "Boşqalarning vaqtini hurmat qiling", "description": "Guruh a’zolari har doim ham darhol javob bera olmasligi tabiiy. Biror kişidan javob talab qiliş yoki uni qayta-qayta belgilaş örniga, savolingizni aniq qoldiring va javob uçun vaqt bering."},
+{"number": "09", "title": "Bir xil savolni takrorlamang", "description": "Savolga javob darhol kelmasa, uni qisqa vaqt içida qayta-qayta yubormang. Yangi ma’lumot paydo bölsa, imkon qadar avvalgi xabaringizni töldiring."},
+{"number": "10", "title": "Natijani boşqalar bilan bölişing", "description": "Muammo hal bölgaç, qanday yeçim yordam berganini qisqaça yozing. Sizning tajribangiz keyinçalik şu vaziyatga duç keladigan boşqa vatandoşlar uçun foydali bölişi mumkin."}
+] satisfies GuideSection[],
           groupCulture: {
             eyebrow: "Guruh madaniyati",
-            title: "Umumiy guruh ekanini yodda tuting",
+            title: "Birgalikda foydali hamjamiyat yarataylik",
             description:
-              "Telegram guruhi barcha a’zolar uchun umumiy axborot va muloqot maydoni. Maqsad suhbatni cheklash emas — uni tartibli, foydali va o‘qishga qulay saqlash.",
+              "Telegram guruhlari — vatandoşlarimiz tajriba almaşadigan, bir-biriga yordam beradigan va foydali ma’lumotlarni ulaşadigan umumiy muloqot maydoni. Har bir xabar boşqa a’zolarning ham vaqtiga va e’tiboriga ta’sir qilişini hisobga olaylik.",
             points: [
-              "Bir mavzu bo‘yicha fikrni imkon qadar mazmunli va to‘liq xabarda ifodalang.",
-              "“Ha”, “to‘g‘ri”, “men ham”, “keyin-chi?”, “nima bo‘ldi?”, “??” kabi alohida qisqa xabarlarni ketma-ket yuborib guruhni ikki kishilik chatga aylantirmang.",
-              "Har bir yangi xabar ko‘plab guruh a’zolariga notification bo‘lishi mumkinligini hisobga oling.",
+              "Bir mavzu böyiça fikrni imkon qadar mazmunli va töliq xabarda ifodalang.",
+              "“Ha”, “töǵri”, “men ham”, “keyin-çi?”, “nima böldi?”, “??” kabi alohida qisqa xabarlarni ketma-ket yuborib guruhni ikki kişilik çatga aylantirmang.",
+              "Har bir yangi xabar köplab guruh a’zolariga notification bölişi mumkinligini hisobga oling.",
             ],
             publicLabel: "Guruhda qoladi",
             publicText:
-              "Boshqalarga ham foydali savol, tajriba yoki javob.",
-            privateLabel: "Private chatga o‘tadi",
+              "Boşqalarga ham foydali savol, tajriba yoki javob.",
+            privateLabel: "Şaxsiy chatga ötadi",
             privateText:
-              "Faqat ikki kishiga tegishli bo‘lib qolgan va boshqalarga foyda bermaydigan shaxsiy suhbat.",
+              "Faqat ikki kişiga tegişli bölib qolgan va boşqalarga foyda bermaydigan şaxsiy suhbat.",
           },
           example: {
             eyebrow: "Amaliy misol",
-            title: "Savolni qanday yaxshilash mumkin?",
-            improveLabel: "Yaxshilash mumkin",
+            title: "Bitta savol. Ikki xil yondaşuv.",
+            improveLabel: "Yaxşilaş kerak",
             improveMessages: [
               "Salom",
               "Kim bor?",
@@ -242,42 +164,42 @@ function getCultureCopy(locale: SupportedTelegramLocale) {
               "Javob bormi?",
               "??",
             ],
-            goodLabel: "Yaxshi",
+            goodLabel: "Tavsiya etiladigan variant",
             goodMessage:
-              "Assalomu alaykum. Anmeldung bo‘yicha bir savolim bor. Men Kiel shahrida yangi kvartiraga ko‘chdim va Bürgeramt uchun Wohnungsgeberbestätigungning PDF nusxasi yetarlimi yoki originalini olib borishim kerakmi, tushunmadim. Kiel Bürgeramt bilan yaqinda shu jarayondan o‘tganlar bo‘lsa, tajribangizni bo‘lishsangiz xursand bo‘lardim.",
-            whyTitle: "Nega bu variant yaxshiroq?",
+              "Assalomu alaykum! Anmeldung böyiça savolim bor. Yaqinda Kiel şahrida yangi kvartiraga köçdim.\n\nBürgeramtga Wohnungsgeberbestätigung hujjatining PDF nusxasini olib boriş yetarlimi yoki asl nusxasi ham kerakmi?\n\nKielda yaqinda şu jarayondan ötgan vatandoşlar bölsa, tajribangiz bilan bölişsangiz, xursand bölardim. Rahmat!",
+            whyTitle: "Nega bu variant yaxşiroq?",
             whyItems: [
-              "Joy ko‘rsatilgan",
-              "Vaziyat tushunarli",
+              "Joy körsatilgan",
+              "Vaziyat tuşunarli",
               "Aniq savol berilgan",
-              "Hammasi bitta to‘liq xabarda",
-              "Javob beruvchi nimaga javob berishini darhol tushunadi",
+              "Hammasi bitta töliq xabarda",
+              "Javob beruvçi nimaga javob berişini darhol tuşunadi",
             ],
           },
           privacy: {
-            eyebrow: "Xavfsizlik",
-            title: "Yuborishdan oldin maxfiy ma’lumotlarni tekshiring",
+            eyebrow: "Maxfiylik va xavfsizlik",
+            title: "Şaxsiy ma’lumotlaringizni himoya qiling",
             description:
-              "Hujjat yoki screenshot savolni tushuntirishga yordam berishi mumkin, lekin ochiq guruhga yuborilgan ma’lumotni ko‘plab odamlar ko‘rishi mumkin.",
+              "Hujjat yoki skrinşot savolingizni tuşuntirişga yordam berişi mumkin. Biroq guruhga yuborilgan ma’lumotlarni köplab odamlar körişi, saqlaşi yoki boşqalarga yuborişi mumkin.",
             items: [
-              "Passport va Aufenthaltstitel raqamlari",
-              "To‘liq manzil va telefon raqami",
-              "Bank va login ma’lumotlari",
+              "Pasport va Aufenthaltstitel raqamlari",
+              "Töliq manzil va telefon raqami",
+              "Bank ma’lumotlari, parollar va login ma’lumotlari",
               "Aktenzeichen, QR-kod va maxfiy hujjatlar",
             ],
           },
           checklist: {
-            eyebrow: "Yuborishdan oldin",
-            title: "10 soniyalik tekshiruv",
+            eyebrow: "Yuborişdan oldin",
+            title: "10 soniyalik tekşiruv",
             items: [
-              "Muammo aniq yozildimi?",
-              "Kerakli joy va kontekst bormi?",
-              "Aynan nimani bilmoqchi ekanim tushunarlimi?",
-              "Shaxsiy yoki maxfiy ma’lumot yo‘qmi?",
-              "Savol bitta to‘liq xabarda yozildimi?",
+              "Muammomni aniq tuşuntirdimmi?",
+              "Kerakli kontekstni qöşdimmi?",
+              "Savolim tuşunarlimi?",
+              "Maxfiy ma’lumotlar yöqmi?",
+              "Savolim bitta töliq xabardami?",
             ],
           },
-          backAction: "Telegram guruhlariga qaytish",
+          backAction: "Telegram guruhlariga qaytiş",
         },
       }
     : {
@@ -306,12 +228,12 @@ function getCultureCopy(locale: SupportedTelegramLocale) {
           },
         },
         article: {
-          badge: "Telegram · Praktischer Leitfaden",
+          badge: "Telegram / Praktischer Leitfaden",
           title: "Wie stellt man eine gute Frage in der Gruppe?",
           lead:
-            "Eine gute Frage muss nicht kompliziert sein. Der nötige Kontext, ein klar beschriebenes Problem und eine verständliche Nachricht erleichtern hilfreiche Antworten deutlich.",
+            "Klare Frage. Verständlicher Kontext. Hilfreiche Antwort.",
           intro:
-            "Dieser Leitfaden soll niemanden kritisieren. Er hilft dabei, die Kommunikation in Telegram-Gruppen übersichtlich, sicher und für alle Mitglieder gut lesbar zu halten.",
+            "10 praktische Tipps für eine hilfreiche, respektvolle und sichere Kommunikation in Telegram-Gruppen.",
           readingLabel: "Kurz und praxisnah",
           rulesLabel: "10 Regeln",
           principlesLabel: "Grundprinzipien",
@@ -398,7 +320,7 @@ function getCultureCopy(locale: SupportedTelegramLocale) {
           ] satisfies GuideSection[],
           groupCulture: {
             eyebrow: "Gruppenkultur",
-            title: "Den gemeinsamen Gruppenraum im Blick behalten",
+            title: "Gemeinsam eine hilfreiche Community gestalten",
             description:
               "Eine Telegram-Gruppe ist ein gemeinsamer Informations- und Gesprächsraum für alle Mitglieder. Es geht nicht darum, Gespräche einzuschränken, sondern sie übersichtlich, hilfreich und gut lesbar zu halten.",
             points: [
@@ -415,7 +337,7 @@ function getCultureCopy(locale: SupportedTelegramLocale) {
           },
           example: {
             eyebrow: "Praxisbeispiel",
-            title: "Wie lässt sich eine Frage verbessern?",
+            title: "Eine Frage. Zwei Ansätze.",
             improveLabel: "Kann verbessert werden",
             improveMessages: [
               "Hallo",
@@ -426,9 +348,9 @@ function getCultureCopy(locale: SupportedTelegramLocale) {
               "Gibt es eine Antwort?",
               "??",
             ],
-            goodLabel: "Gut",
+            goodLabel: "Empfohlene Variante",
             goodMessage:
-              "Hallo zusammen. Ich habe eine Frage zur Anmeldung. Ich bin in Kiel in eine neue Wohnung gezogen und bin unsicher, ob für den Termin beim Bürgeramt eine PDF-Kopie der Wohnungsgeberbestätigung ausreicht oder ob ich das Original mitbringen muss. Falls jemand den Vorgang beim Bürgeramt Kiel kürzlich gemacht hat, würde ich mich über einen kurzen Erfahrungsbericht freuen.",
+              "Hallo zusammen! Ich habe eine Frage zur Anmeldung. Ich bin vor Kurzem in Kiel in eine neue Wohnung gezogen.\n\nReicht beim Bürgeramt eine PDF-Kopie der Wohnungsgeberbestätigung aus oder muss ich das Original mitbringen?\n\nFalls jemand diesen Vorgang kürzlich in Kiel erledigt hat, freue ich mich über einen kurzen Erfahrungsbericht. Vielen Dank!",
             whyTitle: "Warum ist diese Variante hilfreicher?",
             whyItems: [
               "Der Ort ist genannt",
@@ -440,7 +362,7 @@ function getCultureCopy(locale: SupportedTelegramLocale) {
           },
           privacy: {
             eyebrow: "Sicherheit",
-            title: "Vor dem Senden vertrauliche Angaben prüfen",
+            title: "Schützen Sie Ihre persönlichen Daten",
             description:
               "Dokumente oder Screenshots können eine Frage verständlicher machen. In einer öffentlichen Gruppe können diese Inhalte jedoch von vielen Personen gesehen werden.",
             items: [
@@ -455,16 +377,17 @@ function getCultureCopy(locale: SupportedTelegramLocale) {
             title: "10-Sekunden-Check",
             items: [
               "Ist mein Problem klar beschrieben?",
-              "Sind Ort und nötiger Kontext genannt?",
-              "Ist verständlich, was ich konkret wissen möchte?",
-              "Enthält die Nachricht keine vertraulichen Daten?",
-              "Steht die Frage in einer vollständigen Nachricht?",
+              "Ist der nötige Kontext genannt?",
+              "Ist meine Frage verständlich?",
+              "Keine vertraulichen Daten?",
+              "Alles in einer Nachricht?",
             ],
           },
           backAction: "Zurück zu den Telegram-Gruppen",
         },
       };
 }
+
 
 function GuidePreview({
   copy,
@@ -482,6 +405,7 @@ function GuidePreview({
             {copy.eyebrow}
           </p>
 
+
           <h2
             id="telegram-guides-heading"
             className={`${interTight.className} mt-4 text-3xl font-semibold leading-tight tracking-normal text-slate-950 sm:text-4xl dark:text-white`}
@@ -489,10 +413,12 @@ function GuidePreview({
             {copy.title}
           </h2>
 
+
           <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-[var(--telegram-secondary,#94a3b8)]">
             {copy.description}
           </p>
         </div>
+
 
       </div>
       <div className="mx-auto w-full px-5 sm:px-6 lg:px-8">
@@ -541,404 +467,52 @@ function GuidePreview({
   );
 }
 
-function ArticleSection({ section }: { section: GuideSection }) {
+
+function GuideArticle({ copy, locale }: { copy: ReturnType<typeof getCultureCopy>["article"]; locale: SupportedTelegramLocale }) {
+  const uz = locale === "uz";
+  const heading = `${interTight.className} text-2xl font-semibold tracking-normal sm:text-3xl`;
+  const eyebrow = "text-sm font-medium uppercase tracking-[0.16em] text-teal-700 dark:text-[var(--telegram-accent)]";
+  const body = "text-base leading-7 text-slate-600 dark:text-[var(--telegram-secondary)]";
+  const border = "border-slate-200 dark:border-[var(--telegram-border)]";
+  const principles = uz ? [
+    ["Bitta töliq xabar", "Vaziyat va savolingizni imkon qadar bitta tuşunarli xabarda ifodalang."],
+    ["Yetarli kontekst", "Javob beriş uçun zarur bölgan joy, vaziyat va muhim tafsilotlarni kiriting."],
+    ["Maxfiylik va xavfsizlik", "Şaxsiy va maxfiy ma’lumotlaringizni oçiq guruhlarda ulaşmang."],
+  ] : [
+    ["Eine vollständige Nachricht", "Beschreiben Sie Situation und Frage möglichst in einer verständlichen Nachricht."],
+    ["Ausreichender Kontext", "Nennen Sie den Ort, die Situation und relevante Einzelheiten."],
+    ["Privatsphäre und Sicherheit", "Teilen Sie keine persönlichen oder vertraulichen Daten in öffentlichen Gruppen."],
+  ];
+  const culture = uz ? [["Guruhda muhokama qiliş", "Boşqalarga ham foydali savollar", "Amaliy tajribalar va yeçimlar", "Muhim yangiliklar va foydali manbalar", "Umumiy mavzudagi muhokamalar"], ["Şaxsiy chatda davom ettiriş", "Faqat ikki kişiga tegişli suhbatlar", "Şaxsiy va maxfiy masalalar", "Individual kelişuvlar", "Umumiy mavzuga aloqasi bölmagan suhbatlar"]] : [["In der Gruppe besprechen", "Fragen von allgemeinem Interesse", "Praktische Erfahrungen und Lösungen", "Wichtige Neuigkeiten und hilfreiche Quellen", "Diskussionen zu gemeinsamen Themen"], ["Im privaten Chat fortsetzen", "Gespräche zwischen zwei Personen", "Persönliche und vertrauliche Anliegen", "Individuelle Absprachen", "Gespräche ohne Bezug zum Gruppenthema"]];
   return (
-    <section
-      className="group relative my-3 overflow-hidden rounded-[1.5rem] border border-slate-200/90 bg-white/88 p-5 shadow-[0_14px_42px_-38px_rgba(15,23,42,0.5)] transition duration-300 before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-gradient-to-b before:from-sky-400 before:via-cyan-400 before:to-emerald-400 hover:-translate-y-0.5 hover:border-sky-200 hover:shadow-[0_20px_52px_-40px_rgba(14,165,233,0.34)] sm:p-6 dark:border-slate-800 dark:bg-slate-900/72 dark:hover:border-sky-400/20 motion-reduce:transform-none motion-reduce:transition-none"
-    >
-      <div className="grid gap-4 sm:grid-cols-[3.5rem_1fr] sm:gap-5">
-        <div className="relative">
-          <span className="relative z-10 flex size-11 items-center justify-center rounded-xl border border-sky-200/90 bg-gradient-to-br from-white to-sky-50 text-xs font-black tracking-[0.12em] text-sky-700 shadow-[0_10px_30px_-22px_rgba(14,165,233,0.9)] transition duration-200 group-hover:-translate-y-0.5 group-hover:border-sky-300 group-hover:shadow-[0_16px_34px_-20px_rgba(14,165,233,0.75)] motion-reduce:transform-none motion-reduce:transition-none dark:border-sky-400/20 dark:from-slate-900 dark:to-sky-950/30 dark:text-sky-300">
-            {section.number}
-          </span>
-
-        </div>
-
-        <div>
-          <h2 className="text-xl font-bold tracking-[-0.025em] text-slate-950 sm:text-[1.35rem] dark:text-white">
-            {section.title}
-          </h2>
-
-          <p className="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400">
-            {section.description}
-          </p>
-
-          {section.bullets && (
-            <ul className="mt-5 space-y-3">
-              {section.bullets.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3 text-sm leading-7 text-slate-600 sm:text-base dark:text-slate-400"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="mt-3 size-1.5 shrink-0 rounded-full bg-sky-500"
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-
-          {section.note && (
-            <div className="mt-7 overflow-hidden rounded-2xl border border-amber-200/80 bg-gradient-to-r from-amber-50/90 via-white to-amber-50/45 shadow-[0_18px_42px_-34px_rgba(245,158,11,0.55)] dark:border-amber-400/15 dark:from-amber-400/[0.055] dark:via-slate-900/80 dark:to-slate-900/80">
-              <div className="flex">
-                <span
-                  aria-hidden="true"
-                  className="w-1 shrink-0 bg-amber-400/80 dark:bg-amber-400/45"
-                />
-                <div className="flex gap-3 px-5 py-4 text-sm leading-7 text-slate-700 dark:text-slate-300">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-white text-amber-700 shadow-sm dark:bg-slate-800 dark:text-amber-300"
-                  >
-                    !
-                  </span>
-                  <p>{section.note}</p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function GuideArticle({
-  copy,
-}: {
-  copy: ReturnType<typeof getCultureCopy>["article"];
-}) {
-  return (
-    <article className="relative overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_38%,#ffffff_74%,#f8fbfd_100%)] dark:bg-[linear-gradient(180deg,#020617_0%,#07111f_42%,#020617_100%)]">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-      >
-        <div className="absolute -right-36 top-[8%] size-[34rem] rounded-full bg-cyan-200/16 blur-[120px] dark:bg-cyan-400/[0.025]" />
-        <div className="absolute -left-40 top-[36%] size-[30rem] rounded-full bg-sky-200/13 blur-[110px] dark:bg-sky-400/[0.02]" />
-        <div className="absolute right-[8%] top-[68%] size-[26rem] rounded-full bg-emerald-200/11 blur-[115px] dark:bg-emerald-400/[0.018]" />
-      </div>
-
-      <header className="relative overflow-hidden border-b border-slate-200/80 bg-white/35 backdrop-blur-[2px] dark:border-slate-800 dark:bg-slate-950/20">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-        >
-          <div className="absolute -left-24 -top-28 size-[28rem] rounded-full bg-sky-200/30 blur-[100px] dark:bg-sky-400/[0.045]" />
-          <div className="absolute right-[4%] -top-10 size-[27rem] rounded-full bg-emerald-200/20 blur-[100px] dark:bg-emerald-400/[0.03]" />
-          <div className="absolute right-[18%] top-[58%] size-[18rem] rounded-full bg-cyan-200/14 blur-[95px] dark:bg-cyan-400/[0.02]" />
-        </div>
-
-        <div className="relative mx-auto grid max-w-6xl gap-10 px-6 pb-14 pt-14 sm:pb-16 sm:pt-18 lg:grid-cols-[minmax(0,1.85fr)_minmax(15rem,1fr)] lg:items-center lg:gap-12 lg:px-8 lg:pb-20 lg:pt-20">
-          <div className="min-w-0">
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white/80 px-3.5 py-2 text-xs font-bold uppercase tracking-[0.15em] text-sky-700 shadow-sm backdrop-blur dark:border-sky-400/20 dark:bg-white/[0.04] dark:text-sky-300">
-              <BookIcon className="size-4" />
-              {copy.badge}
-            </div>
-
-            <h1 className="mt-7 max-w-4xl text-4xl font-black tracking-[-0.05em] text-slate-950 sm:text-5xl lg:text-6xl dark:text-white">
-              {copy.title}
-            </h1>
-
-            <p className="mt-7 max-w-3xl text-xl font-semibold leading-9 text-slate-700 dark:text-slate-300">
-              {copy.lead}
-            </p>
-
-            <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
-              {copy.intro}
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/90 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-600 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300">
-                <span
-                  aria-hidden="true"
-                  className="size-2 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(52,211,153,0.10)] dark:bg-emerald-300"
-                />
-                {copy.readingLabel}
-              </span>
-
-              <span className="inline-flex items-center gap-2 rounded-full border border-sky-200/90 bg-sky-50/80 px-4 py-2 text-sm font-bold text-sky-700 shadow-sm backdrop-blur dark:border-sky-400/15 dark:bg-sky-400/[0.055] dark:text-sky-300">
-                <span
-                  aria-hidden="true"
-                  className="flex size-6 items-center justify-center rounded-full bg-white text-[0.68rem] font-black text-sky-700 shadow-sm dark:bg-slate-900 dark:text-sky-300"
-                >
-                  10
-                </span>
-                {copy.rulesLabel}
-              </span>
-            </div>
+    <article className="uzde-telegram-page uzde-home-frame bg-[var(--uzde-page-bg)] pb-24 dark:text-[var(--telegram-text)]">
+      <header className={`border-b ${border}`}>
+        <div className="mx-auto max-w-7xl px-5 pb-7 pt-3 sm:px-6 lg:px-8 lg:pb-9">
+          <Link href="/telegram" className="inline-flex min-h-11 items-center gap-2 text-sm font-medium hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">← {copy.backAction}</Link>
+          <div className="mx-auto mt-2 max-w-5xl text-center sm:mt-3">
+            <p className={eyebrow}>{copy.badge}</p>
+            <h1 className={`${interTight.className} mt-3 text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-[1.08] tracking-normal [text-wrap:balance]`}>{copy.title}</h1>
+            <p className="mt-3 text-base font-medium sm:text-lg">{copy.lead}</p>
+            <p className={`mx-auto mt-2 max-w-3xl ${body}`}>{copy.intro}</p>
           </div>
-
-          <div
-            aria-hidden="true"
-            className="relative hidden min-h-[19rem] lg:block"
-          >
-            <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_45%_35%,rgba(56,189,248,0.12),transparent_38%),radial-gradient(circle_at_70%_68%,rgba(52,211,153,0.11),transparent_34%)] dark:bg-[radial-gradient(circle_at_45%_35%,rgba(56,189,248,0.05),transparent_38%),radial-gradient(circle_at_70%_68%,rgba(52,211,153,0.045),transparent_34%)]" />
-
-            <div className="absolute left-[4%] top-[16%] w-[78%] rounded-[1.4rem] border border-sky-200/65 bg-white/58 p-5 shadow-[0_18px_50px_-36px_rgba(14,165,233,0.75)] backdrop-blur-xl dark:border-sky-400/12 dark:bg-slate-900/42">
-              <div className="flex items-center gap-3">
-                <span className="size-2.5 rounded-full bg-sky-400 shadow-[0_0_0_5px_rgba(56,189,248,0.08)]" />
-                <span className="h-2 w-20 rounded-full bg-sky-200/80 dark:bg-sky-400/12" />
-                <span className="h-px flex-1 bg-gradient-to-r from-sky-200/70 to-transparent dark:from-sky-400/12" />
-              </div>
-              <div className="mt-5 space-y-3">
-                <span className="block h-2.5 w-[82%] rounded-full bg-slate-200/70 dark:bg-slate-700/65" />
-                <span className="block h-2.5 w-[66%] rounded-full bg-slate-200/55 dark:bg-slate-700/50" />
-              </div>
-            </div>
-
-            <div className="absolute right-[2%] top-[46%] w-[70%] rounded-[1.4rem] border border-emerald-200/65 bg-white/56 p-5 shadow-[0_18px_50px_-38px_rgba(16,185,129,0.72)] backdrop-blur-xl dark:border-emerald-400/12 dark:bg-slate-900/40">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex-1 space-y-3">
-                  <span className="block h-2.5 w-[78%] rounded-full bg-slate-200/65 dark:bg-slate-700/60" />
-                  <span className="block h-2.5 w-[55%] rounded-full bg-slate-200/50 dark:bg-slate-700/45" />
-                </div>
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-emerald-200/80 bg-emerald-50/90 text-sm font-black text-emerald-700 shadow-sm dark:border-emerald-400/15 dark:bg-emerald-400/[0.06] dark:text-emerald-300">
-                  ✓
-                </span>
-              </div>
-            </div>
-
-            <div className="absolute bottom-[9%] left-[18%] flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/55 px-3.5 py-2 shadow-[0_12px_34px_-26px_rgba(15,23,42,0.45)] backdrop-blur-xl dark:border-slate-700/70 dark:bg-slate-900/38">
-              <span className="size-1.5 rounded-full bg-cyan-400" />
-              <span className="h-1.5 w-10 rounded-full bg-slate-200/80 dark:bg-slate-700/70" />
-              <span className="h-1.5 w-5 rounded-full bg-emerald-200/90 dark:bg-emerald-400/15" />
-            </div>
-
-            <div className="absolute right-[8%] top-[28%] h-px w-[28%] bg-gradient-to-r from-transparent via-sky-300/45 to-transparent dark:via-sky-400/12" />
-            <div className="absolute bottom-[24%] left-[5%] h-px w-[24%] bg-gradient-to-r from-transparent via-emerald-300/45 to-transparent dark:via-emerald-400/12" />
-          </div>
+          <div className="relative left-1/2 mt-5 w-[calc(100vw-16px)] -translate-x-1/2 sm:mt-6 sm:w-[calc(100vw-24px)] lg:w-[calc(100vw-32px)]"><TelegramArticleConversation locale={locale} /></div>
         </div>
       </header>
-
-      <div className="relative mx-auto grid max-w-7xl gap-8 px-6 py-12 lg:grid-cols-[minmax(0,1fr)_17rem] lg:px-8 lg:py-16 xl:grid-cols-[minmax(0,1fr)_16rem] xl:gap-10">
-        <div className="min-w-0">
-          <section className="relative mb-8 overflow-hidden rounded-[2rem] border border-sky-200/80 bg-gradient-to-br from-sky-50/85 via-white to-cyan-50/55 p-6 shadow-[0_22px_58px_-42px_rgba(14,165,233,0.55)] sm:p-8 dark:border-sky-400/15 dark:from-sky-400/[0.055] dark:via-slate-900/80 dark:to-cyan-400/[0.025]">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-16 -top-20 size-52 rounded-full border border-sky-200/45 dark:border-sky-400/[0.08]"
-            />
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-sky-700 dark:text-sky-300">
-              {copy.principlesLabel}
-            </p>
-
-            <ul className="mt-6 grid gap-3 sm:grid-cols-3">
-              {copy.principles.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-2xl border border-white/90 bg-white/75 p-4 text-sm font-semibold leading-6 text-slate-700 shadow-sm dark:border-white/10 dark:bg-white/[0.035] dark:text-slate-300"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="mb-3 flex size-8 items-center justify-center rounded-xl bg-sky-100 text-sky-700 dark:bg-sky-400/[0.08] dark:text-sky-300"
-                  >
-                    ✓
-                  </span>
-                  <span className="block">{item}</span>
-                </li>
-              ))}
-            </ul>
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <section className={`border-b py-10 ${border}`}>
+          <div className="flex items-center justify-between gap-4"><h2 className={eyebrow}>{copy.principlesLabel}</h2><div className="md:hidden"><ShareButton title={copy.title} shareUrl={`https://uzde.de/${locale}/telegram/how-to-ask`} locale={locale} variant="guide" iconOnly /></div></div>
+          <div className="mt-5 grid gap-6 md:grid-cols-3 md:gap-10">{principles.map(([title, description], index) => <div key={title}><span className={eyebrow}>0{index + 1}</span><h3 className="mt-2 text-xl font-semibold">{title}</h3><p className={`mt-2 ${body}`}>{description}</p></div>)}</div>
+        </section>
+        <div className="grid items-start gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-14">
+          <section className="min-w-0"><h2 className={heading}>{uz ? "Önta asosiy qoida" : "Zehn Grundregeln"}</h2>
+            <ol className="mt-5">{(copy.sections as readonly GuideSection[]).map(section => <li key={section.number} className={`grid grid-cols-[2rem_minmax(0,1fr)] gap-3 border-b py-6 sm:grid-cols-[3rem_minmax(0,1fr)] sm:gap-5 ${border}`}><span className={`${interTight.className} text-xl font-semibold text-teal-700 dark:text-[var(--telegram-accent)]`}>{section.number}</span><div><h3 className="text-xl font-semibold">{section.title}</h3><p className={`mt-2 ${body}`}>{section.description}</p>{"bullets" in section && section.bullets && <ul className={`mt-3 list-disc space-y-1 pl-5 ${body}`}>{section.bullets.map(item => <li key={item}>{item}</li>)}</ul>}{"note" in section && section.note && <p className={`mt-3 ${body}`}>{section.note}</p>}</div></li>)}</ol>
           </section>
-
-          <div>
-            {copy.sections.slice(0, 6).map((section) => (
-              <ArticleSection key={section.number} section={section} />
-            ))}
-          </div>
-
-          <section className="my-8 overflow-hidden rounded-[2rem] border border-cyan-200/75 bg-gradient-to-br from-white via-cyan-50/35 to-sky-50/45 shadow-[0_22px_64px_-48px_rgba(6,182,212,0.48)] dark:border-cyan-400/15 dark:from-slate-900 dark:via-cyan-950/10 dark:to-sky-950/10">
-            <div className="border-b border-slate-200 p-6 sm:p-8 dark:border-slate-800">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-sky-600 dark:text-sky-400">
-                {copy.groupCulture.eyebrow}
-              </p>
-              <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-3xl dark:text-white">
-                {copy.groupCulture.title}
-              </h2>
-              <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600 dark:text-slate-400">
-                {copy.groupCulture.description}
-              </p>
-            </div>
-
-            <div className="p-6 sm:p-8">
-              <ul className="space-y-4">
-                {copy.groupCulture.points.map((point) => (
-                  <li
-                    key={point}
-                    className="flex gap-3 text-sm leading-7 text-slate-600 sm:text-base dark:text-slate-400"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="mt-2.5 size-2 shrink-0 rounded-full bg-sky-500"
-                    />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/70 p-5 dark:border-emerald-400/15 dark:bg-emerald-400/[0.05]">
-                  <p className="text-sm font-bold text-emerald-800 dark:text-emerald-300">
-                    {copy.groupCulture.publicLabel}
-                  </p>
-                  <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
-                    {copy.groupCulture.publicText}
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-violet-200/80 bg-violet-50/70 p-5 dark:border-violet-400/15 dark:bg-violet-400/[0.05]">
-                  <p className="text-sm font-bold text-violet-800 dark:text-violet-300">
-                    {copy.groupCulture.privateLabel}
-                  </p>
-                  <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
-                    {copy.groupCulture.privateText}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <div>
-            {copy.sections.slice(6).map((section) => (
-              <ArticleSection key={section.number} section={section} />
-            ))}
-          </div>
-
-          <section className="my-8 overflow-hidden rounded-[2rem] border border-slate-200/90 bg-white shadow-[0_28px_80px_-52px_rgba(15,23,42,0.45)] dark:border-slate-800 dark:bg-slate-900">
-            <div className="border-b border-slate-200 p-6 sm:p-8 dark:border-slate-800">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-sky-600 dark:text-sky-400">
-                {copy.example.eyebrow}
-              </p>
-              <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-3xl dark:text-white">
-                {copy.example.title}
-              </h2>
-            </div>
-
-            <div className="grid lg:grid-cols-2">
-              <div className="border-b border-rose-200/70 bg-gradient-to-br from-rose-50/80 via-orange-50/30 to-white p-6 sm:p-8 lg:border-b-0 lg:border-r dark:border-slate-800 dark:from-rose-400/[0.055] dark:via-orange-400/[0.018] dark:to-slate-900">
-                <p className="text-sm font-bold text-rose-700 dark:text-rose-300">
-                  {copy.example.improveLabel}
-                </p>
-
-                <div className="mt-5 space-y-2">
-                  {copy.example.improveMessages.map((message) => (
-                    <div
-                      key={message}
-                      className="w-fit max-w-full rounded-2xl rounded-bl-md border border-rose-200/70 bg-white/90 px-4 py-2.5 text-sm text-slate-700 shadow-[0_10px_24px_-18px_rgba(244,63,94,0.45)] transition duration-200 hover:-translate-y-0.5 hover:border-rose-300 motion-reduce:transform-none motion-reduce:transition-none dark:border-rose-400/10 dark:bg-slate-800/90 dark:text-slate-200"
-                    >
-                      {message}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-emerald-50/80 via-cyan-50/25 to-white p-6 sm:p-8 dark:from-emerald-400/[0.055] dark:via-cyan-400/[0.018] dark:to-slate-900">
-                <p className="text-sm font-bold text-emerald-700 dark:text-emerald-300">
-                  {copy.example.goodLabel}
-                </p>
-
-                <div className="mt-5 rounded-2xl rounded-bl-md border border-emerald-200 bg-white/95 px-5 py-4 text-sm leading-7 text-slate-700 shadow-[0_14px_30px_-22px_rgba(16,185,129,0.5)] transition duration-200 hover:-translate-y-0.5 hover:border-emerald-300 motion-reduce:transform-none motion-reduce:transition-none dark:border-emerald-400/15 dark:bg-slate-800/90 dark:text-slate-200">
-                  {copy.example.goodMessage}
-                </div>
-
-                <p className="mt-7 text-sm font-bold text-slate-950 dark:text-white">
-                  {copy.example.whyTitle}
-                </p>
-
-                <ul className="mt-3 space-y-2">
-                  {copy.example.whyItems.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-2.5 text-sm leading-6 text-slate-600 dark:text-slate-400"
-                    >
-                      <span className="mt-0.5 text-emerald-600 dark:text-emerald-400">
-                        ✓
-                      </span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <section className="relative overflow-hidden rounded-[2rem] border border-amber-200/80 bg-gradient-to-br from-amber-50/80 via-white to-orange-50/40 p-6 shadow-[0_22px_62px_-48px_rgba(245,158,11,0.48)] sm:p-8 dark:border-amber-400/15 dark:from-amber-400/[0.055] dark:via-slate-900 dark:to-orange-400/[0.018]">
-            <span
-              aria-hidden="true"
-              className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-amber-300 via-amber-500 to-orange-400 dark:from-amber-400/40 dark:via-amber-400/70 dark:to-orange-400/35"
-            />
-            <div className="flex size-11 items-center justify-center rounded-2xl bg-white text-amber-700 shadow-sm dark:bg-slate-900 dark:text-amber-300">
-              <ShieldIcon className="size-5" />
-            </div>
-            <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-amber-700 dark:text-amber-300">
-              {copy.privacy.eyebrow}
-            </p>
-            <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-slate-950 dark:text-white">
-              {copy.privacy.title}
-            </h2>
-            <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-400">
-              {copy.privacy.description}
-            </p>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-              {copy.privacy.items.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-2xl border border-white/80 bg-white/70 px-4 py-3 text-sm font-semibold leading-6 text-slate-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
+          <aside className={`rounded-[14px] border p-5 lg:sticky lg:top-28 ${border} dark:bg-[var(--telegram-card)]`}><p className={eyebrow}>{copy.checklist.eyebrow}</p><h2 className="mt-2 text-xl font-semibold">{copy.checklist.title}</h2><div className="mt-4 space-y-3">{copy.checklist.items.map(item => <label key={item} className={`grid cursor-pointer grid-cols-[18px_minmax(0,1fr)] items-start gap-3 ${body}`}><span className="flex h-7 items-center translate-y-px"><input type="checkbox" className="size-[18px] shrink-0 cursor-pointer appearance-none rounded-[4px] border border-slate-400 bg-white checked:border-teal-700 checked:bg-teal-700 checked:after:block checked:after:mx-auto checked:after:mt-[1px] checked:after:h-[10px] checked:after:w-[5px] checked:after:rotate-45 checked:after:border-b-2 checked:after:border-r-2 checked:after:border-white checked:after:content-[''] hover:border-teal-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 dark:border-[var(--telegram-muted)] dark:bg-[var(--telegram-section)] dark:checked:border-[var(--telegram-accent)] dark:checked:bg-[var(--telegram-accent)] dark:checked:after:border-[var(--telegram-section)] dark:hover:border-[var(--telegram-accent)] dark:focus-visible:outline-[var(--telegram-accent)] forced-colors:appearance-auto" /></span><span>{item}</span></label>)}</div></aside>
         </div>
-
-        <aside className="lg:sticky lg:top-28 lg:self-start">
-          <div className="relative overflow-hidden rounded-[1.75rem] border border-sky-200/70 bg-white/75 p-5 shadow-[0_22px_58px_-42px_rgba(14,165,233,0.5)] backdrop-blur-xl dark:border-sky-400/15 dark:bg-slate-900/75">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-14 -top-14 size-36 rounded-full bg-cyan-200/25 blur-3xl dark:bg-cyan-400/[0.04]"
-            />
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-sky-600 dark:text-sky-400">
-              {copy.checklist.eyebrow}
-            </p>
-            <h2 className="mt-2 text-lg font-bold text-slate-950 dark:text-white">
-              {copy.checklist.title}
-            </h2>
-
-            <ol className="relative mt-6 space-y-2">
-              <span
-                aria-hidden="true"
-                className="absolute bottom-4 left-[0.8rem] top-4 w-px bg-gradient-to-b from-sky-200 via-cyan-200 to-emerald-200 dark:from-sky-400/15 dark:via-cyan-400/15 dark:to-emerald-400/15"
-              />
-
-              {copy.checklist.items.map((item, index) => (
-                <li
-                  key={item}
-                  className="group/item relative flex items-start gap-3 rounded-xl px-1 py-2 text-sm leading-6 text-slate-600 transition duration-200 hover:bg-sky-50/70 hover:text-slate-800 focus-within:bg-sky-50/70 dark:text-slate-400 dark:hover:bg-sky-400/[0.04] dark:hover:text-slate-200 motion-reduce:transition-none"
-                >
-                  <span className="relative z-10 flex size-7 shrink-0 items-center justify-center rounded-xl border border-sky-200 bg-white text-[0.68rem] font-black text-sky-700 shadow-sm transition duration-200 group-hover/item:border-sky-300 group-hover/item:bg-sky-50 dark:border-sky-400/15 dark:bg-slate-800 dark:text-sky-300 dark:group-hover/item:bg-sky-400/[0.06] motion-reduce:transition-none">
-                    {index + 1}
-                  </span>
-                  <span className="pt-0.5">{item}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <Link
-            href="/telegram"
-            className="group mt-5 inline-flex items-center gap-2 text-sm font-bold text-sky-700 transition hover:text-sky-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-4 dark:text-sky-300 dark:hover:text-sky-200 dark:focus-visible:ring-offset-slate-950"
-          >
-            <span
-              aria-hidden="true"
-              className="transition-transform group-hover:-translate-x-1 motion-reduce:transition-none"
-            >
-              ←
-            </span>
-            {copy.backAction}
-          </Link>
-        </aside>
+        <section className={`border-t py-10 ${border}`}><p className={eyebrow}>{copy.groupCulture.eyebrow}</p><h2 className={`mt-3 ${heading}`}>{copy.groupCulture.title}</h2><p className={`mt-4 max-w-3xl ${body}`}>{copy.groupCulture.description}</p><div className="mt-7 grid gap-8 md:grid-cols-2">{culture.map(([title,...items]) => <div key={title}><h3 className="text-xl font-semibold">{title}</h3><ul className={`mt-3 list-disc space-y-2 pl-5 ${body}`}>{items.map(item => <li key={item}>{item}</li>)}</ul></div>)}</div></section>
+        <section className={`border-t py-10 ${border}`}><p className={eyebrow}>{copy.example.eyebrow}</p><h2 className={`mt-3 ${heading}`}>{copy.example.title}</h2><p className={`mt-3 ${body}`}>{uz ? "Savolni qanday ifodalaşimiz boşqalarning uni tuşunişi va javob berişiga ta’sir qiladi." : "Die Formulierung einer Frage beeinflusst, wie gut andere sie verstehen und beantworten können."}</p><div className="mt-7 grid gap-5 md:grid-cols-2"><div className={`rounded-[14px] border p-5 ${border} dark:bg-[var(--telegram-card)]`}><h3 className="font-semibold text-rose-700 dark:text-rose-300">{copy.example.improveLabel}</h3><div className="mt-5 flex flex-col items-start gap-2">{copy.example.improveMessages.filter(item => item !== "??").map(item => <p key={item} className={`rounded-xl rounded-bl-sm border px-4 py-2 ${border} ${body}`}>{item}</p>)}</div></div><div className={`rounded-[14px] border p-5 ${border} dark:bg-[var(--telegram-card)]`}><h3 className="font-semibold text-teal-700 dark:text-[var(--telegram-accent)]">{copy.example.goodLabel}</h3><p className={`mt-5 whitespace-pre-line rounded-xl rounded-br-sm border border-teal-600/30 px-4 py-3 ${body}`}>{copy.example.goodMessage}</p><h4 className="mt-5 font-semibold">{copy.example.whyTitle}</h4><ul className={`mt-3 space-y-2 ${body}`}>{copy.example.whyItems.map(item => <li key={item} className="flex gap-2"><span aria-hidden="true" className="text-teal-600 dark:text-[var(--telegram-accent)]">✓</span>{item}</li>)}</ul></div></div><p className={`mt-4 text-sm ${body}`}>{uz ? "Bu misol faqat savol yoziş uslubini körsatadi, rasmiy ma’muriy maslahat emas." : "Dieses Beispiel zeigt nur die Frageformulierung und ist keine verbindliche Auskunft zur Anmeldung."}</p></section>
+        <section className={`border-t py-10 ${border}`}><p className={`mb-4 ${eyebrow}`}>{copy.privacy.eyebrow}</p><GuideInfoBox title={copy.privacy.title} variant="warning"><p>{copy.privacy.description}</p><ul className="my-3 list-disc space-y-1 pl-5">{copy.privacy.items.map(item => <li key={item}>{item}</li>)}</ul><p>{uz ? "Skrinşot yoki hujjat yuborişdan oldin şaxsiy ma’lumotlarni xavfsiz tarzda yaşiring yoki olib taşlang." : "Machen Sie persönliche Daten vor dem Teilen von Screenshots oder Dokumenten unkenntlich oder entfernen Sie sie."}</p></GuideInfoBox></section>
+        <section className={`border-t py-10 ${border}`}><h2 className={heading}>{uz ? "Hamjamiyatingizni toping" : "Finden Sie Ihre Community"}</h2><p className={`mt-3 max-w-2xl ${body}`}>{uz ? "Germaniyadagi vatandoşlarimiz bilan boǵlaning, tajriba almaşing va özingizga kerakli Telegram guruhiga qöşiling." : "Vernetzen Sie sich mit Landsleuten in Deutschland, tauschen Sie Erfahrungen aus und finden Sie die passende Telegram-Gruppe."}</p><Link href="/telegram" className="mt-5 inline-flex min-h-11 items-center gap-3 border-b border-current font-semibold hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4">{uz ? "Telegram guruhlarini köriş" : "Telegram-Gruppen entdecken"}<ArrowRightIcon /></Link></section>
       </div>
     </article>
   );
@@ -950,10 +524,12 @@ export default async function TelegramCultureGuide({
   const locale =
     (await getLocale()) as SupportedTelegramLocale;
 
+
   const copy = getCultureCopy(locale);
 
+
   return variant === "standalone" ? (
-    <GuideArticle copy={copy.article} />
+    <GuideArticle copy={copy.article} locale={locale} />
   ) : (
     <GuidePreview copy={copy.preview} />
   );
