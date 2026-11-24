@@ -79,7 +79,7 @@ export default function TelegramCard({
             {group.statusLabel}
           </span>
         </div>
-        <h3 className="mt-6 text-xl font-semibold leading-snug tracking-[-0.035em] text-slate-950 dark:text-white">
+        <h3 className="mt-3 text-xl font-semibold leading-snug tracking-[-0.035em] text-slate-950 dark:text-white">
           {group.state}
         </h3>
         <p className="mt-3 flex-1 text-sm leading-6 text-slate-600 dark:text-[var(--telegram-secondary,#94a3b8)]">
@@ -148,7 +148,7 @@ export default function TelegramCard({
         </span>
       </div>
 
-      <h3 className="mt-6 text-xl font-semibold leading-snug tracking-[-0.035em] text-slate-950 dark:text-white">
+      <h3 className="mt-3 text-xl font-semibold leading-snug tracking-[-0.035em] text-slate-950 dark:text-white">
         {group.state}
       </h3>
 
