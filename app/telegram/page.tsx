@@ -1,14 +1,20 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
+import { Inter_Tight } from "next/font/google";
 
 import Footer from "../../components/Footer";
 import SectionPromo from "../../components/SectionPromo";
 import Header from "../../components/Header";
 import ShareButton from "../../components/shared/ShareButton";
 import TelegramSection from "../../components/TelegramSection";
-import SectionHeroBackground from "../../components/ui/SectionHeroBackground";
+import TelegramCommunityNetwork from "../../components/telegram/TelegramCommunityNetwork";
 import { Link } from "../../i18n/navigation";
+
+const interTight = Inter_Tight({
+  subsets: ["latin", "latin-ext"],
+  weight: "600",
+  display: "swap",
+});
 
 type Locale = "uz" | "de";
 
@@ -63,82 +69,68 @@ export default async function TelegramPage() {
     locale === "uz"
       ? {
           backHome: "Bosh sahifaga qaytish",
-          eyebrow: "Hududiy hamjamiyatlar",
+          eyebrow: "Germaniyadagi hamjamiyatingizni toping",
           title: "Telegram guruhlari",
           description:
-            "O‘zingiz yashayotgan Bundesland bo‘yicha Telegram hamjamiyatini toping, vatandoshlar bilan bog‘laning va foydali ma’lumotlarni oling.",
+            "Vatandoshlar bilan bog‘laning, tajriba almashing va o‘z hamjamiyatingizni toping.",
         }
       : {
           backHome: "Zur Startseite",
-          eyebrow: "Regionale Communitys",
+          eyebrow: "Finden Sie Ihre Community in Deutschland",
           title: "Telegram-Gruppen",
           description:
-            "Finden Sie die Community Ihres Bundeslandes, vernetzen Sie sich mit Landsleuten und erhalten Sie hilfreiche Informationen.",
+            "Vernetzen Sie sich mit Landsleuten, tauschen Sie Erfahrungen aus und finden Sie Ihre Community.",
         };
 
   return (
     <>
       <Header />
 
-      <main className="min-h-screen bg-white pt-20 text-slate-950 sm:pt-24 dark:bg-slate-950 dark:text-white">
-        <SectionHeroBackground tone="telegram">
-          <section className="relative isolate overflow-hidden border-b border-slate-200/80 bg-transparent dark:border-slate-800/80">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-            >
-              <Image
-                src="/images/telegram/telegram-master-visual.webp"
-                alt=""
-                fill
-                priority
-                sizes="100vw"
-                quality={88}
-                className="object-cover object-[72%_center] opacity-75 sm:object-[70%_center] sm:opacity-80 lg:object-[68%_center] lg:opacity-85 dark:opacity-55 dark:sm:opacity-60 dark:lg:opacity-65"
-              />
-
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.94)_0%,rgba(248,250,252,0.83)_38%,rgba(248,250,252,0.54)_68%,rgba(248,250,252,0.22)_100%)] dark:bg-[linear-gradient(90deg,rgba(2,6,23,0.94)_0%,rgba(2,6,23,0.82)_38%,rgba(2,6,23,0.60)_68%,rgba(2,6,23,0.30)_100%)]" />
-              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(248,250,252,0.04),rgba(248,250,252,0.18))] dark:bg-[linear-gradient(to_bottom,rgba(2,6,23,0.02),rgba(2,6,23,0.14))]" />
-            </div>
-
-            <div className="relative mx-auto max-w-7xl px-6 py-9 sm:py-12 lg:px-8 lg:py-14">
+      <main className="uzde-telegram-page uzde-home-frame min-h-screen bg-[var(--uzde-page-bg)] pt-20 text-slate-950 sm:pt-24 dark:text-[var(--telegram-text)]">
+        <section className="border-b border-slate-200 bg-[var(--uzde-page-bg)] dark:border-[var(--telegram-border)]">
+          <div className="mx-auto max-w-7xl px-5 pb-10 pt-7 sm:px-6 sm:pb-14 sm:pt-9 lg:px-8 lg:pb-16">
+            <div className="flex items-center justify-between gap-4">
               <Link
-                href="/"
-                className="inline-flex items-center text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-              >
-                <span
-                  aria-hidden="true"
-                  className="mr-2"
-                >
-                  ←
-                </span>
-                {copy.backHome}
+              href="/"
+              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-sky-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500 dark:text-[var(--telegram-secondary)] dark:hover:text-sky-300"
+            >
+              <span aria-hidden="true">←</span>
+              {copy.backHome}
               </Link>
-
-              <div className="mt-6 max-w-3xl">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-400">
-                  {copy.eyebrow}
-                </p>
-
-                <h1 className="mt-3 text-3xl font-bold tracking-[-0.04em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white">
-                  {copy.title}
-                </h1>
-
-                <p className="mt-3 max-w-2xl text-base leading-7 sm:text-lg text-slate-600 dark:text-slate-400">
-                  {copy.description}
-                </p>
-                <div className="mt-4">
-                  <ShareButton title={copy.title} locale={locale} />
-                </div>
-              </div>
             </div>
-          </section>
-        </SectionHeroBackground>
+
+            <div className="mx-auto mt-8 max-w-5xl text-center sm:mt-9 lg:mt-10">
+              <p className="text-sm font-medium text-teal-700 sm:text-base dark:text-[var(--telegram-accent)]">
+                {copy.eyebrow}
+              </p>
+              <h1 className={`${interTight.className} mt-4 text-[clamp(2.375rem,9vw,3.25rem)] font-semibold leading-none tracking-normal uppercase text-slate-950 sm:mt-5 sm:text-[clamp(3.25rem,6vw,4.25rem)] lg:mt-6 lg:text-[clamp(4.25rem,5vw,4.706rem)] dark:text-white`}>
+                {copy.title}
+              </h1>
+              <p className="mx-auto mt-4 max-w-[40rem] text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8 lg:text-xl dark:text-[var(--telegram-secondary)]">
+                {copy.description}
+              </p>
+            </div>
+
+            <div className="relative left-1/2 mt-1 w-[calc(100vw-16px)] -translate-x-1/2 sm:mt-12 sm:w-[calc(100vw-24px)] lg:mt-16 lg:w-[calc(100vw-32px)]">
+              <div className="flex justify-end md:hidden">
+                <ShareButton
+                  title={copy.title}
+                  shareUrl={`https://uzde.de/${locale}/telegram`}
+                  locale={locale}
+                  variant="guide"
+                  iconOnly
+                  ariaLabel={locale === "uz" ? "Sahifani ulashish" : "Seite teilen"}
+                />
+              </div>
+              <TelegramCommunityNetwork />
+            </div>
+          </div>
+        </section>
 
         <TelegramSection />
       </main>
 
-      <SectionPromo target="events" />
+      <SectionPromo target="events" variant="compact" />
 
       <Footer />
     </>

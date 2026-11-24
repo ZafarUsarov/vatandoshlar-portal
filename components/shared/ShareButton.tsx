@@ -5,18 +5,19 @@ import { Check, Copy, Mail, MessageCircle, Send, Share as ShareIcon } from "luci
 
 type Props = Readonly<{
   title: string;
+  shareUrl?: string;
   locale: "uz" | "de";
   variant?: "light" | "dark" | "install" | "editorial" | "guide" | "specialist";
   iconOnly?: boolean;
   ariaLabel?: string;
 }>;
 
-export default function ShareButton({ title, locale, variant = "light", iconOnly = false, ariaLabel }: Props) {
+export default function ShareButton({ title, shareUrl, locale, variant = "light", iconOnly = false, ariaLabel }: Props) {
   const [showFallback, setShowFallback] = useState(false);
   const [copied, setCopied] = useState(false);
   const de = locale === "de";
   const label = de ? "Teilen" : "Ulashish";
-  const url = typeof window === "undefined" ? "" : window.location.href.split("#")[0];
+  const url = shareUrl ?? (typeof window === "undefined" ? "" : window.location.href.split("#")[0]);
   const buttonClass = iconOnly && variant === "specialist"
     ? "inline-flex size-[38px] shrink-0 items-center justify-center rounded-md text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-slate-300 dark:hover:bg-white/10"
     : iconOnly && variant === "guide"
@@ -34,7 +35,7 @@ export default function ShareButton({ title, locale, variant = "light", iconOnly
   async function share() {
     if (typeof navigator.share === "function") {
       try {
-        await navigator.share({ title, url: window.location.href.split("#")[0] });
+        await navigator.share({ title, url: shareUrl ?? window.location.href.split("#")[0] });
         return;
       } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError") return;
@@ -44,7 +45,7 @@ export default function ShareButton({ title, locale, variant = "light", iconOnly
   }
 
   async function copy() {
-    const currentUrl = window.location.href.split("#")[0];
+    const currentUrl = shareUrl ?? window.location.href.split("#")[0];
     try {
       await navigator.clipboard.writeText(currentUrl);
       setCopied(true);

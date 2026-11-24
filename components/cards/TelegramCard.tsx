@@ -1,3 +1,4 @@
+import { Code2 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import type { TelegramGroup } from "@/types/telegram";
 
@@ -6,6 +7,7 @@ type TelegramCardProps = {
   index?: number;
   detailsHref?: string;
   detailsLabel?: string;
+  variant?: "default" | "directory";
 };
 
 interface IconProps {
@@ -31,46 +33,104 @@ function ArrowUpRightIcon({ className }: IconProps) {
   );
 }
 
+function ProfessionalIcon({ shortName }: { shortName: string }) {
+  if (shortName === "IT") {
+    return <Code2 aria-hidden="true" className="size-5" strokeWidth={1.8} />;
+  }
+
+  if (shortName === "KP-ZM") {
+    return (
+      <svg aria-hidden="true" className="size-5" fill="none" viewBox="0 0 24 24">
+        <path
+          d="M12 5.2c-2.1-1.7-4.4-2.1-6.1-.8C3.3 6.5 4.5 10.5 5.7 14c.7 2 1.1 5.8 3 5.8 1.5 0 1.5-4.8 3.3-4.8s1.8 4.8 3.3 4.8c1.9 0 2.3-3.8 3-5.8 1.2-3.5 2.4-7.5-.2-9.6-1.7-1.3-4-.9-6.1.8Z"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.7"
+        />
+      </svg>
+    );
+  }
+
+  return <span>{shortName}</span>;
+}
+
 export default function TelegramCard({
   group,
-  index = 0,
+  index: _index = 0,
   detailsHref,
   detailsLabel,
+  variant = "default",
 }: TelegramCardProps) {
+  void _index;
   const isActive = group.status === "active";
+  const isDirectory = variant === "directory";
+
+  if (isDirectory) {
+    const actionClass = "mt-6 inline-flex min-h-11 items-center justify-between gap-3 border-t border-slate-200 pt-3 text-sm font-semibold text-slate-900 transition-colors hover:text-teal-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 dark:border-[var(--telegram-border,#334155)] dark:text-slate-100 dark:hover:text-teal-300";
+
+    return (
+      <article className={`group flex h-full flex-col rounded-[18px] dark:rounded-[14px] border p-5 transition-colors duration-200 sm:p-6 ${isActive ? "border-slate-200 bg-white hover:border-teal-400 dark:border-[var(--telegram-border,#1e293b)] dark:bg-[var(--telegram-card,#0f172a)] dark:hover:border-[var(--telegram-accent,#14b8a6)]" : "border-slate-200 bg-slate-100/60 dark:border-[var(--telegram-border,#1e293b)] dark:bg-[var(--telegram-card-muted,rgba(15,23,42,0.4))]"}`}>
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-xs font-semibold uppercase tracking-[0.15em] text-teal-700 dark:text-[var(--telegram-accent,#5eead4)]">
+            {group.shortName}
+          </span>
+          <span className={`text-xs font-medium ${isActive ? "text-emerald-700 dark:text-[var(--telegram-accent,#34d399)]" : "text-slate-500 dark:text-[var(--telegram-secondary,#94a3b8)]"}`}>
+            {group.statusLabel}
+          </span>
+        </div>
+        <h3 className="mt-6 text-xl font-semibold leading-snug tracking-[-0.035em] text-slate-950 dark:text-white">
+          {group.state}
+        </h3>
+        <p className="mt-3 flex-1 text-sm leading-6 text-slate-600 dark:text-[var(--telegram-secondary,#94a3b8)]">
+          {group.description}
+        </p>
+        {detailsHref ? (
+          <Link href={detailsHref} className={actionClass}>
+            <span>{detailsLabel}</span>
+            <span aria-hidden="true" className="transition-transform motion-safe:group-hover:translate-x-1">→</span>
+          </Link>
+        ) : group.href ? (
+          <a href={group.href} target="_blank" rel="noopener noreferrer" className={actionClass}>
+            <span>{group.button}</span>
+            <ArrowUpRightIcon className="size-4 shrink-0 transition-transform motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5" />
+          </a>
+        ) : (
+          <span className="mt-6 inline-flex min-h-11 items-center border-t border-slate-200 pt-3 text-sm font-medium text-slate-400 dark:border-[var(--telegram-border,#1e293b)] dark:text-slate-500">
+            {group.button}
+          </span>
+        )}
+      </article>
+    );
+  }
 
   return (
     <article
       className={`
         group relative flex h-full flex-col overflow-hidden
-        rounded-2xl border p-4 sm:p-5
-        backdrop-blur-xl
-        transition duration-500
-        hover:-translate-y-0.5
+        rounded-[18px] dark:rounded-[14px] border p-5 sm:p-6
+        transition-colors duration-200
         ${
           isActive
-            ? "border-sky-200 bg-white shadow-[0_20px_60px_-35px_rgba(14,165,233,.35)] dark:border-sky-400/20 dark:bg-white/[0.04]"
-            : "border-slate-200 bg-white/70 dark:border-white/[0.08] dark:bg-white/[0.03]"
+            ? "border-slate-200 bg-white hover:border-teal-400 dark:border-[var(--telegram-border,#1e293b)] dark:bg-[var(--telegram-card,#0f172a)] dark:hover:border-[var(--telegram-accent,#14b8a6)]"
+            : "border-slate-200 bg-slate-100/60 dark:border-[var(--telegram-border,#1e293b)] dark:bg-[var(--telegram-card-muted,rgba(15,23,42,0.4))]"
         }
       `}
-      style={{
-        animationDelay: `${index * 50}ms`,
-      }}
     >
       <div className="flex items-start justify-between gap-4">
         <div
           aria-hidden="true"
           className={`
             flex h-11 w-11 shrink-0 items-center justify-center
-            rounded-xl text-sm font-bold
+            rounded-xl text-sm font-semibold tracking-wide
             ${
               isActive
-                ? "bg-sky-100 text-sky-700 dark:bg-sky-500/10 dark:text-sky-300"
-                : "bg-slate-100 text-slate-600 dark:bg-white/5 dark:text-slate-400"
+                ? "bg-teal-50 text-teal-700 dark:bg-teal-500/10 dark:text-[var(--telegram-accent,#5eead4)]"
+                : "bg-slate-100 text-slate-600 dark:bg-white/5 dark:text-[var(--telegram-secondary,#94a3b8)]"
             }
           `}
         >
-          {group.shortName}
+          <ProfessionalIcon shortName={group.shortName} />
         </div>
 
         <span
@@ -79,8 +139,8 @@ export default function TelegramCard({
             text-xs font-semibold
             ${
               isActive
-                ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
-                : "bg-slate-100 text-slate-600 dark:bg-white/5 dark:text-slate-400"
+                ? "bg-emerald-100 text-emerald-700 dark:bg-[var(--telegram-elevated,rgba(16,185,129,0.1))] dark:text-[var(--telegram-accent,#6ee7b7)]"
+                : "bg-slate-100 text-slate-600 dark:bg-white/5 dark:text-[var(--telegram-secondary,#94a3b8)]"
             }
           `}
         >
@@ -88,29 +148,18 @@ export default function TelegramCard({
         </span>
       </div>
 
-      <h3 className="mt-4 text-lg font-semibold text-slate-950 dark:text-white">
+      <h3 className="mt-6 text-xl font-semibold leading-snug tracking-[-0.035em] text-slate-950 dark:text-white">
         {group.state}
       </h3>
 
-      <p className="mt-2 flex-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
+      <p className="mt-3 flex-1 text-sm leading-6 text-slate-600 dark:text-[var(--telegram-secondary,#94a3b8)]">
         {group.description}
       </p>
 
       {detailsHref ? (
         <Link
           href={detailsHref}
-          className="
-            mt-4 inline-flex min-h-10 items-center justify-center gap-2
-            rounded-xl bg-sky-600 px-4 py-2.5
-            text-sm font-semibold text-white
-            transition
-            hover:bg-sky-700
-            focus-visible:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-sky-500
-            focus-visible:ring-offset-2
-            dark:focus-visible:ring-offset-slate-950
-          "
+          className={"mt-6 inline-flex min-h-11 items-center justify-between gap-3 border-t border-slate-200 pt-3 text-sm font-semibold text-slate-900 transition-colors hover:text-teal-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 dark:border-[var(--telegram-border,#334155)] dark:text-slate-100 dark:hover:text-teal-300"}
         >
           {detailsLabel}
           <span aria-hidden="true">→</span>
@@ -120,30 +169,14 @@ export default function TelegramCard({
           href={group.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="
-            mt-4 inline-flex min-h-10 items-center justify-center gap-2
-            rounded-xl bg-sky-600 px-4 py-2.5
-            text-sm font-semibold text-white
-            transition
-            hover:bg-sky-700
-            focus-visible:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-sky-500
-            focus-visible:ring-offset-2
-            dark:focus-visible:ring-offset-slate-950
-          "
+          className={"mt-6 inline-flex min-h-11 items-center justify-between gap-3 border-t border-slate-200 pt-3 text-sm font-semibold text-slate-900 transition-colors hover:text-teal-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 dark:border-[var(--telegram-border,#334155)] dark:text-slate-100 dark:hover:text-teal-300"}
         >
           {group.button}
           <ArrowUpRightIcon className="size-4" />
         </a>
       ) : (
         <span
-          className="
-            mt-4 inline-flex min-h-10 items-center justify-center
-            rounded-xl bg-slate-100 px-4 py-2.5
-            text-sm font-semibold text-slate-500
-            dark:bg-white/5 dark:text-slate-400
-          "
+          className="mt-6 inline-flex min-h-11 items-center border-t border-slate-200 pt-3 text-sm font-medium text-slate-400 dark:border-[var(--telegram-border,#1e293b)] dark:text-slate-500"
         >
           {group.button}
         </span>

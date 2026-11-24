@@ -2,6 +2,7 @@ import { getLocale } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import type { SupportedTelegramLocale } from "@/types/telegram";
+import TelegramGuideConversation from "./TelegramGuideConversation";
 
 type GuideSection = Readonly<{
   number: string;
@@ -14,6 +15,14 @@ type GuideSection = Readonly<{
 type TelegramCultureGuideProps = Readonly<{
   variant?: "embedded" | "standalone";
 }>;
+
+function ArrowUpRightIcon({ className = "size-4" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
+      <path d="M7 17 17 7M8 7h9v9" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+    </svg>
+  );
+}
 
 function ArrowRightIcon({ className = "size-4" }: { className?: string }) {
   return (
@@ -90,10 +99,20 @@ function getCultureCopy(locale: SupportedTelegramLocale) {
           cardTitle: "Guruhda qanday qilib to‘g‘ri savol berish kerak?",
           cardDescription:
             "Telegram guruhlarida savolni tushunarli yozish, kerakli kontekstni berish va tezroq foydali javob olish bo‘yicha amaliy qo‘llanma.",
+          mobileDescription: "Savolni aniq yozing, kontekst bering va foydali javob oling.",
+          mobileBenefits: ["Aniq savol", "Kontekst", "Maxfiylik"],
           action: "Qo‘llanmani o‘qish",
           ariaLabel:
             "Guruhda qanday qilib to‘g‘ri savol berish kerak qo‘llanmasini o‘qish",
           meta: "Amaliy qo‘llanma",
+          benefits: ["Savolni aniq yozish", "Kerakli kontekstni berish", "Maxfiylikni saqlash"],
+          conversation: {
+            questionLabel: "Savol",
+            question: "Salom! Kiel shahrida Anmeldung uchun Wohnungsgeberbestätigung asl nusxasi kerakmi?",
+            typing: "Javob yozilmoqda…",
+            answerLabel: "Hamjamiyat javobi",
+            answer: "Bürgeramt Kiel rasmiy sahifasidagi talablarni tekshiring. Uchrashuvga hujjatning asl nusxasini ham olib borish xavfsizroq.",
+          },
         },
         article: {
           badge: "Telegram · Amaliy qo‘llanma",
@@ -264,10 +283,20 @@ function getCultureCopy(locale: SupportedTelegramLocale) {
           cardTitle: "Wie stellt man eine gute Frage in der Gruppe?",
           cardDescription:
             "Ein praktischer Leitfaden für verständliche Fragen, den nötigen Kontext und bessere Chancen auf hilfreiche Antworten in Telegram-Gruppen.",
+          mobileDescription: "Klar fragen, Kontext nennen und hilfreiche Antworten erhalten.",
+          mobileBenefits: ["Klare Frage", "Kontext", "Privatsphäre"],
           action: "Leitfaden lesen",
           ariaLabel:
             "Leitfaden zum Stellen guter Fragen in Telegram-Gruppen lesen",
           meta: "Praktischer Leitfaden",
+          benefits: ["Klar fragen", "Kontext nennen", "Privatsphäre schützen"],
+          conversation: {
+            questionLabel: "Frage",
+            question: "Hallo! Brauche ich in Kiel für die Anmeldung die Wohnungsgeberbestätigung im Original?",
+            typing: "Antwort wird geschrieben…",
+            answerLabel: "Antwort aus der Community",
+            answer: "Prüfe die Vorgaben auf der offiziellen Website des Bürgeramts Kiel. Nimm vorsichtshalber auch das Original mit.",
+          },
         },
         article: {
           badge: "Telegram · Praktischer Leitfaden",
@@ -438,88 +467,65 @@ function GuidePreview({
   return (
     <section
       aria-labelledby="telegram-guides-heading"
-      className="relative overflow-hidden border-y border-slate-200/80 bg-[radial-gradient(circle_at_85%_20%,rgba(34,211,238,0.09),transparent_28%),linear-gradient(180deg,rgba(248,250,252,0.9),rgba(255,255,255,0.98))] py-16 sm:py-20 dark:border-slate-800 dark:bg-[radial-gradient(circle_at_85%_20%,rgba(34,211,238,0.025),transparent_28%),linear-gradient(180deg,#020617,#07111f)]"
+      className="relative border-y border-slate-200/80 bg-[#F7F7F7] py-12 sm:py-14 lg:py-16 dark:border-[var(--telegram-border,#1e293b)] dark:bg-[var(--telegram-section,#202124)]"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="max-w-3xl">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-sky-600 dark:text-sky-400">
+          <p className="text-sm font-medium uppercase tracking-[0.16em] text-teal-700 dark:text-[var(--telegram-accent,#5eead4)]">
             {copy.eyebrow}
           </p>
 
           <h2
             id="telegram-guides-heading"
-            className="mt-4 text-3xl font-bold tracking-[-0.04em] text-slate-950 sm:text-4xl dark:text-white"
+            className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-slate-950 sm:text-4xl dark:text-white"
           >
             {copy.title}
           </h2>
 
-          <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg dark:text-slate-400">
+          <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-[var(--telegram-secondary,#94a3b8)]">
             {copy.description}
           </p>
         </div>
 
+      </div>
+      <div className="mx-auto w-full px-5 sm:px-6 lg:px-8">
         <Link
           href="/telegram/how-to-ask"
           aria-label={copy.ariaLabel}
-          className="group relative mt-10 block overflow-hidden rounded-[2rem] border border-sky-300/70 bg-slate-950 text-white shadow-[0_30px_90px_-45px_rgba(2,132,199,0.72)] transition duration-300 hover:-translate-y-1 hover:border-cyan-300/80 hover:shadow-[0_34px_100px_-42px_rgba(6,182,212,0.68)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-4 motion-reduce:transform-none motion-reduce:transition-none dark:border-sky-400/25 dark:focus-visible:ring-offset-slate-950"
+          className="group relative mt-5 block overflow-hidden rounded-[14px] md:mt-9 border border-[#55D7C3]/20 bg-[var(--telegram-card-guide,#202124)] text-white transition-colors duration-200 hover:border-[#55D7C3]/60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#55D7C3] motion-reduce:transition-none"
         >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(14,165,233,0.34),transparent_30%),radial-gradient(circle_at_88%_75%,rgba(16,185,129,0.20),transparent_28%),linear-gradient(135deg,#07111f_0%,#0b1d32_55%,#071827_100%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-16 -top-20 size-72 rounded-full border border-white/10"
-          />
-
-          <div className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-center lg:p-10">
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="inline-flex items-center gap-2 rounded-full border border-sky-300/25 bg-sky-300/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-sky-200">
+          <div className="relative grid min-w-0 gap-0 p-5 md:p-9 md:gap-10 lg:grid-cols-2 lg:items-center lg:gap-12 lg:p-14 xl:p-16">
+            <div className="min-w-0 max-md:contents">
+              <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5 max-md:order-1 md:gap-3">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#55D7C3]/30 bg-[#55D7C3]/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.11em] text-[#55D7C3] sm:text-xs md:gap-2 md:px-3 md:py-1.5 md:tracking-[0.16em]">
                   <BookIcon className="size-4" />
                   {copy.cardEyebrow}
                 </span>
-                <span className="text-xs font-semibold text-slate-400">
-                  {copy.meta}
-                </span>
+                <span className="text-xs font-medium text-slate-400">{copy.meta}</span>
               </div>
-
-              <h3 className="mt-5 max-w-3xl text-2xl font-black tracking-[-0.035em] text-white sm:text-3xl">
+              <h3 className="mt-3 max-w-2xl text-[clamp(1.5rem,6.5vw,1.75rem)] font-bold leading-[1.15] tracking-[-0.035em] text-white max-md:order-1 md:mt-6 md:text-3xl md:leading-tight lg:text-[2.1rem]">
                 {copy.cardTitle}
               </h3>
-
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-                {copy.cardDescription}
+              <p className="mt-2 max-w-xl text-[13px] leading-5 text-slate-300 max-md:order-1 md:mt-4 md:text-base md:leading-7">
+                <span className="md:hidden">{copy.mobileDescription}</span>
+                <span className="hidden md:inline">{copy.cardDescription}</span>
               </p>
-
-              <span className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-sky-950/20 transition duration-300 group-hover:bg-sky-50 motion-reduce:transition-none">
+              <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5 max-md:order-1 md:mt-6 md:grid md:grid-cols-3 md:gap-3 lg:grid-cols-1 xl:grid-cols-3">
+                {copy.benefits.map((benefit, index) => (
+                  <li key={benefit} className="flex items-center gap-1.5 text-xs leading-5 text-slate-200 md:items-start md:gap-2 md:text-sm">
+                    <span aria-hidden="true" className="mt-0.5 shrink-0 font-bold text-[#55D7C3]">✓</span>
+                    <span className="md:hidden">{copy.mobileBenefits[index]}</span>
+                    <span className="hidden md:inline">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+              <span className="mt-4 inline-flex min-h-11 w-fit max-w-full items-center justify-center gap-2 rounded-[11px] border border-[#55D7C3]/70 bg-[#55D7C3] px-4 py-2 text-sm font-semibold text-[#102B27] max-md:order-2 md:mt-7 transition-colors duration-200 group-hover:bg-[#D9FBF5] motion-reduce:transition-none">
                 {copy.action}
-                <ArrowRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none" />
+                <ArrowUpRightIcon className="size-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" />
               </span>
             </div>
-
-            <div aria-hidden="true" className="relative hidden min-h-48 lg:block">
-              <div className="absolute left-0 top-1 w-[88%] rounded-2xl rounded-bl-md border border-white/10 bg-white/[0.08] p-4 shadow-2xl backdrop-blur">
-                <div className="flex items-center gap-2">
-                  <span className="size-2 rounded-full bg-sky-400" />
-                  <span className="h-2 w-16 rounded-full bg-white/25" />
-                </div>
-                <div className="mt-4 space-y-2">
-                  <span className="block h-2 w-full rounded-full bg-white/18" />
-                  <span className="block h-2 w-3/4 rounded-full bg-white/12" />
-                </div>
-              </div>
-              <div className="absolute bottom-0 right-0 w-[82%] rounded-2xl rounded-br-md border border-emerald-300/20 bg-emerald-300/[0.10] p-4 shadow-2xl backdrop-blur">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex-1 space-y-2">
-                    <span className="block h-2 w-full rounded-full bg-emerald-100/35" />
-                    <span className="block h-2 w-2/3 rounded-full bg-emerald-100/20" />
-                  </div>
-                  <span className="flex size-8 items-center justify-center rounded-full bg-emerald-300 text-sm font-black text-emerald-950">
-                    ✓
-                  </span>
-                </div>
-              </div>
+            <div className="min-w-0 max-md:order-3 max-md:mt-[18px]">
+              <TelegramGuideConversation conversation={copy.conversation} />
             </div>
           </div>
         </Link>

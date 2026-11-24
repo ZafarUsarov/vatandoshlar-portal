@@ -1368,3 +1368,25 @@ html.dark .uzde-newsroom-editorial {
 .page-main.uzde-newsroom-page.uzde-newsroom-editorial {
   background-color: var(--uzde-editorial-bg);
 }
+
+/* Telegram landing: isolated dark-mode editorial surfaces. */
+/* Theme-aware card surface uses the same background utility in both themes. */
+.uzde-telegram-page {
+  --telegram-region-card-bg: var(--surface);
+}
+
+html.dark .uzde-telegram-page {
+  --telegram-region-card-bg: var(--uzde-home-card);
+  --telegram-main: var(--uzde-page-bg);
+  --telegram-section: var(--uzde-home-surface);
+  --telegram-card: var(--uzde-home-card);
+  --telegram-card-muted: var(--uzde-home-card);
+  --telegram-card-guide: var(--uzde-home-card);
+  --telegram-chat: var(--uzde-home-card);
+  --telegram-elevated: var(--uzde-home-card);
+  --telegram-text: #F5F5F5;
+  --telegram-secondary: #B6BBC4;
+  --telegram-muted: #9299A4;
+  --telegram-accent: #55D6C5;
+  --telegram-border: var(--uzde-home-border);
+}

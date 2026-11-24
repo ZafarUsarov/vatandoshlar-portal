@@ -13,7 +13,7 @@ type SectionPromoTarget =
 
 type SectionPromoProps = Readonly<{
   target: SectionPromoTarget;
-  variant?: "default" | "editorial";
+  variant?: "default" | "editorial" | "compact";
 }>;
 
 type PromoCopy = Readonly<{
@@ -208,6 +208,43 @@ export default async function SectionPromo({
   const locale = await getLocale();
   const config = promoConfig[target];
   const copy = locale === "de" ? config.de : config.uz;
+
+  if (variant === "compact") {
+    return (
+      <section
+        aria-labelledby={`section-promo-${target}`}
+        className="border-t border-slate-200 bg-[#f7f8f9] py-10 text-slate-950 dark:border-white/10 dark:bg-[#151719] dark:text-white sm:py-12"
+      >
+        <div className="mx-auto w-full px-5 sm:px-6 lg:px-8">
+          <div className="grid gap-6 border-t border-slate-300/80 pt-7 dark:border-white/20 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:pt-9">
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700 dark:text-[#55D7C3]">
+                {copy.label}
+              </p>
+              <h2
+                id={`section-promo-${target}`}
+                className="mt-4 max-w-4xl text-[clamp(1.75rem,3vw,2.75rem)] font-semibold leading-[1.12] tracking-[-0.04em]"
+              >
+                {copy.title}
+              </h2>
+              <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
+                {copy.description}
+              </p>
+            </div>
+            <Link
+              href={config.href}
+              className="group inline-flex min-h-11 w-fit items-center gap-3 border-b border-teal-700 pb-1 text-sm font-semibold text-teal-800 transition-colors hover:border-teal-500 hover:text-teal-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-600 dark:border-[#55D7C3] dark:text-[#55D7C3] dark:hover:text-white motion-reduce:transition-none"
+            >
+              {copy.action}
+              <span className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none">
+                <ArrowRightIcon />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (variant === "editorial") {
     return (

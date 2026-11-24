@@ -135,7 +135,7 @@ export default async function TelegramSection() {
               "Germaniya bo‘ylab vatandoshlar Telegram hamjamiyatlari",
             description:
               "O‘zingiz yashayotgan federal yer guruhiga qo‘shiling, tajriba almashing, foydali ma’lumotlar va e’lonlarni birinchi bo‘lib oling.",
-            officialChannel: "Rasmiy Telegram kanali",
+            officialChannel: "UzDe. rasmiy Telegram kanali",
             officialChannelAria:
               "UzDe rasmiy Telegram kanalini ochish",
           },
@@ -154,7 +154,7 @@ export default async function TelegramSection() {
               "Usbekische Telegram-Communitys in ganz Deutschland",
             description:
               "Finden Sie die passende regionale Gruppe, tauschen Sie Erfahrungen aus und erhalten Sie hilfreiche Hinweise und lokale Informationen.",
-            officialChannel: "Offizieller Telegram-Kanal",
+            officialChannel: "Offizieller Telegram-Kanal von UzDe.",
             officialChannelAria:
               "Offiziellen Telegram-Kanal von UzDe öffnen",
           },
@@ -172,58 +172,21 @@ export default async function TelegramSection() {
       <section
         id="telegram"
         aria-labelledby="telegram-heading"
-        className="
-          relative isolate overflow-hidden
-          bg-gradient-to-b
-          from-sky-50
-          via-white
-          to-slate-50
-          py-10 sm:py-12 lg:py-16
-          dark:from-slate-950
-          dark:via-slate-950
-          dark:to-slate-900
-        "
+        className="bg-slate-50/70 py-12 sm:py-14 lg:py-16 dark:bg-[var(--telegram-section,#020617)]"
       >
-        <div
-          aria-hidden="true"
-          className="
-            absolute inset-0
-            bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.12),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.10),transparent_28%)]
-          "
-        />
-
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid items-end gap-5 lg:grid-cols-[1fr_auto]">
+        <div className="relative mx-auto w-full px-5 sm:px-6 lg:px-8">
+          <div className="grid items-end gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12">
             <div className="max-w-3xl">
-              <div
-                className="
-                  inline-flex items-center gap-2
-                  rounded-full
-                  border border-sky-200
-                  bg-sky-100/80
-                  px-3 py-1.5
-                  text-xs font-semibold
-                  uppercase tracking-[0.16em]
-                  text-sky-700
-                  dark:border-sky-400/20
-                  dark:bg-sky-400/10
-                  dark:text-sky-300
-                "
-              >
-                <TelegramIcon className="size-4" />
+              <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-[0.16em] text-teal-700 dark:text-[var(--telegram-accent,#5eead4)]">
+                <TelegramIcon className="size-3.5" />
                 {copy.groups.badge}
-              </div>
+              </p>
 
               <h2
                 id="telegram-heading"
                 className="
-                  mt-3
-                  text-2xl
-                  font-semibold
-                  tracking-[-0.04em]
-                  text-slate-950
-                  sm:text-3xl
-                  lg:text-4xl
+                  mt-4 max-w-3xl text-3xl font-semibold leading-tight
+                  tracking-[-0.045em] text-slate-950 sm:text-4xl
                   dark:text-white
                 "
               >
@@ -233,12 +196,11 @@ export default async function TelegramSection() {
               <p
                 className="
                   mt-3
-                  max-w-2xl
+                  max-w-xl
                   text-base
-                  leading-8
+                  leading-7
                   text-slate-600
-                  sm:text-lg
-                  dark:text-slate-400
+                  dark:text-[var(--telegram-secondary,#94a3b8)]
                 "
               >
                 {copy.groups.description}
@@ -250,45 +212,20 @@ export default async function TelegramSection() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={copy.groups.officialChannelAria}
-              className="
-                group hidden
-                items-center gap-2
-                rounded-full
-                bg-sky-600
-                px-5 py-3
-                text-sm font-semibold
-                text-white
-                shadow-lg shadow-sky-600/25
-                transition
-                hover:-translate-y-0.5
-                hover:bg-sky-700
-                focus-visible:outline-none
-                focus-visible:ring-2
-                focus-visible:ring-sky-500
-                focus-visible:ring-offset-2
-                lg:inline-flex
-                dark:focus-visible:ring-offset-slate-950
-              "
+              className="group inline-flex w-fit items-center gap-2 border-b border-slate-300 pb-1 text-sm font-semibold text-slate-800 transition-colors hover:border-sky-600 hover:text-sky-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500 dark:border-[var(--telegram-border,#334155)] dark:text-[var(--telegram-text,#e2e8f0)] dark:hover:text-[var(--telegram-accent,#5eead4)]"
             >
               {copy.groups.officialChannel}
-
-              <ArrowUpRightIcon
-                className="
-                  size-4
-                  transition-transform duration-300
-                  group-hover:translate-x-0.5
-                  group-hover:-translate-y-0.5
-                "
-              />
+              <ArrowUpRightIcon className="size-4 transition-transform motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" />
             </a>
           </div>
 
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {visibleRegionalGroups.map((group, index) => (
               <TelegramCard
                 key={group.shortName}
                 group={group}
                 index={index}
+                variant="directory"
                 detailsHref={regionalDetailPages[group.bundesland]}
                 detailsLabel={
                   regionalDetailPages[group.bundesland]
@@ -299,62 +236,15 @@ export default async function TelegramSection() {
             ))}
           </div>
 
-          <div className="mt-6 flex justify-center lg:hidden">
-            <a
-              href="https://t.me/UzDe_de"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={copy.groups.officialChannelAria}
-              className="
-                group inline-flex
-                items-center gap-2
-                rounded-full
-                bg-sky-600
-                px-5 py-3
-                text-sm font-semibold
-                text-white
-                shadow-lg shadow-sky-600/25
-                transition
-                hover:-translate-y-0.5
-                hover:bg-sky-700
-                focus-visible:outline-none
-                focus-visible:ring-2
-                focus-visible:ring-sky-500
-                focus-visible:ring-offset-2
-                dark:focus-visible:ring-offset-slate-950
-              "
-            >
-              {copy.groups.officialChannel}
-
-              <ArrowUpRightIcon
-                className="
-                  size-4
-                  transition-transform duration-300
-                  group-hover:translate-x-0.5
-                  group-hover:-translate-y-0.5
-                "
-              />
-            </a>
-          </div>
 
           {professionalGroups.length > 0 && (
             <section
               aria-labelledby="telegram-professional-heading"
-              className="
-                mt-12
-                border-t border-slate-200/80
-                pt-8
-                dark:border-slate-800/80
-              "
+              className="mt-16 border-t border-slate-200/80 pt-10 dark:border-[var(--telegram-border,#1e293b)]"
             >
               <div className="max-w-3xl">
                 <p
-                  className="
-                    text-sm font-semibold
-                    uppercase tracking-[0.16em]
-                    text-sky-700
-                    dark:text-sky-300
-                  "
+                  className="text-sm font-medium uppercase tracking-[0.16em] text-teal-700 dark:text-[var(--telegram-accent,#5eead4)]"
                 >
                   {copy.professional.eyebrow}
                 </p>
@@ -375,18 +265,18 @@ export default async function TelegramSection() {
 
                 <p
                   className="
-                    mt-4
+                    mt-3
                     max-w-2xl
                     text-base leading-8
                     text-slate-600
-                    dark:text-slate-400
+                    dark:text-[var(--telegram-secondary,#94a3b8)]
                   "
                 >
                   {copy.professional.description}
                 </p>
               </div>
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-9 grid gap-5 md:grid-cols-2 lg:gap-6">
                 {professionalGroups.map((group, index) => (
                   <TelegramCard
                     key={group.shortName}
