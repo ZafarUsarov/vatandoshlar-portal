@@ -1,8 +1,15 @@
 import { getLocale } from "next-intl/server";
+import { Inter_Tight } from "next/font/google";
 
 import { Link } from "@/i18n/navigation";
 import type { SupportedTelegramLocale } from "@/types/telegram";
 import TelegramGuideConversation from "./TelegramGuideConversation";
+
+const interTight = Inter_Tight({
+  subsets: ["latin", "latin-ext"],
+  weight: "600",
+  display: "swap",
+});
 
 type GuideSection = Readonly<{
   number: string;
@@ -470,19 +477,19 @@ function GuidePreview({
       className="relative border-y border-slate-200/80 bg-[#F7F7F7] py-12 sm:py-14 lg:py-16 dark:border-[var(--telegram-border,#1e293b)] dark:bg-[var(--telegram-section,#202124)]"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="max-w-3xl">
+        <div className="mx-auto max-w-4xl text-center">
           <p className="text-sm font-medium uppercase tracking-[0.16em] text-teal-700 dark:text-[var(--telegram-accent,#5eead4)]">
             {copy.eyebrow}
           </p>
 
           <h2
             id="telegram-guides-heading"
-            className="mt-4 text-3xl font-semibold tracking-[-0.045em] text-slate-950 sm:text-4xl dark:text-white"
+            className={`${interTight.className} mt-4 text-3xl font-semibold leading-tight tracking-normal text-slate-950 sm:text-4xl dark:text-white`}
           >
             {copy.title}
           </h2>
 
-          <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-[var(--telegram-secondary,#94a3b8)]">
+          <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-[var(--telegram-secondary,#94a3b8)]">
             {copy.description}
           </p>
         </div>

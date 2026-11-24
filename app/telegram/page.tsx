@@ -106,12 +106,12 @@ export default async function TelegramPage() {
               <h1 className={`${interTight.className} mt-4 text-[clamp(2.375rem,9vw,3.25rem)] font-semibold leading-none tracking-normal uppercase text-slate-950 sm:mt-5 sm:text-[clamp(3.25rem,6vw,4.25rem)] lg:mt-6 lg:text-[clamp(4.25rem,5vw,4.706rem)] dark:text-white`}>
                 {copy.title}
               </h1>
-              <p className="mx-auto mt-4 max-w-[40rem] text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8 lg:text-xl dark:text-[var(--telegram-secondary)]">
+              <p className="mx-auto mt-3 max-w-[50rem] text-base leading-7 text-slate-600 sm:mt-4 sm:text-lg sm:leading-8 lg:text-xl dark:text-[var(--telegram-secondary)]">
                 {copy.description}
               </p>
             </div>
 
-            <div className="relative left-1/2 mt-1 w-[calc(100vw-16px)] -translate-x-1/2 sm:mt-12 sm:w-[calc(100vw-24px)] lg:mt-16 lg:w-[calc(100vw-32px)]">
+            <div className="relative left-1/2 mt-1 w-[calc(100vw-16px)] -translate-x-1/2 sm:mt-8 sm:w-[calc(100vw-24px)] lg:mt-8 lg:w-[calc(100vw-32px)]">
               <div className="flex justify-end md:hidden">
                 <ShareButton
                   title={copy.title}

@@ -1,9 +1,16 @@
 import { getLocale } from "next-intl/server";
+import { Inter_Tight } from "next/font/google";
 
 import TelegramCard from "@/components/cards/TelegramCard";
 import TelegramCultureGuide from "@/components/telegram/TelegramCultureGuide";
 import { getPublicTelegramGroups } from "@/lib/telegram/public-telegram-repository";
 import type { SupportedTelegramLocale } from "@/types/telegram";
+
+const interTight = Inter_Tight({
+  subsets: ["latin", "latin-ext"],
+  weight: "600",
+  display: "swap",
+});
 
 interface IconProps {
   className?: string;
@@ -172,23 +179,19 @@ export default async function TelegramSection() {
       <section
         id="telegram"
         aria-labelledby="telegram-heading"
-        className="bg-slate-50/70 py-12 sm:py-14 lg:py-16 dark:bg-[var(--telegram-section,#020617)]"
+        className="bg-slate-50/70 py-9 sm:py-10 lg:py-12 dark:bg-[var(--telegram-section,#020617)]"
       >
         <div className="relative mx-auto w-full px-5 sm:px-6 lg:px-8">
-          <div className="grid items-end gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12">
-            <div className="max-w-3xl">
-              <p className="flex items-center gap-2 text-sm font-medium uppercase tracking-[0.16em] text-teal-700 dark:text-[var(--telegram-accent,#5eead4)]">
+          <div className="flex flex-col gap-3">
+            <div className="mx-auto w-full max-w-4xl text-center">
+              <p className="flex items-center justify-center gap-2 text-sm font-medium uppercase tracking-[0.16em] text-teal-700 dark:text-[var(--telegram-accent,#5eead4)]">
                 <TelegramIcon className="size-3.5" />
                 {copy.groups.badge}
               </p>
 
               <h2
                 id="telegram-heading"
-                className="
-                  mt-4 max-w-3xl text-3xl font-semibold leading-tight
-                  tracking-[-0.045em] text-slate-950 sm:text-4xl
-                  dark:text-white
-                "
+                className={`${interTight.className} mt-3 text-3xl font-semibold leading-tight tracking-normal text-slate-950 sm:text-4xl dark:text-white`}
               >
                 {copy.groups.title}
               </h2>
@@ -196,7 +199,7 @@ export default async function TelegramSection() {
               <p
                 className="
                   mt-3
-                  max-w-xl
+                  mx-auto max-w-2xl
                   text-base
                   leading-7
                   text-slate-600
@@ -212,14 +215,14 @@ export default async function TelegramSection() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={copy.groups.officialChannelAria}
-              className="group inline-flex w-fit items-center gap-2 border-b border-slate-300 pb-1 text-sm font-semibold text-slate-800 transition-colors hover:border-sky-600 hover:text-sky-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500 dark:border-[var(--telegram-border,#334155)] dark:text-[var(--telegram-text,#e2e8f0)] dark:hover:text-[var(--telegram-accent,#5eead4)]"
+              className="group inline-flex w-fit self-end items-center gap-2 border-b border-slate-300 pb-1 text-sm font-semibold text-slate-800 transition-colors hover:border-sky-600 hover:text-sky-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500 dark:border-[var(--telegram-border,#334155)] dark:text-[var(--telegram-text,#e2e8f0)] dark:hover:text-[var(--telegram-accent,#5eead4)]"
             >
               {copy.groups.officialChannel}
               <ArrowUpRightIcon className="size-4 transition-transform motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" />
             </a>
           </div>
 
-          <div className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {visibleRegionalGroups.map((group, index) => (
               <TelegramCard
                 key={group.shortName}
@@ -242,7 +245,7 @@ export default async function TelegramSection() {
               aria-labelledby="telegram-professional-heading"
               className="mt-16 border-t border-slate-200/80 pt-10 dark:border-[var(--telegram-border,#1e293b)]"
             >
-              <div className="max-w-3xl">
+              <div className="mx-auto w-full max-w-4xl text-center">
                 <p
                   className="text-sm font-medium uppercase tracking-[0.16em] text-teal-700 dark:text-[var(--telegram-accent,#5eead4)]"
                 >
@@ -251,14 +254,7 @@ export default async function TelegramSection() {
 
                 <h3
                   id="telegram-professional-heading"
-                  className="
-                    mt-4
-                    text-2xl font-semibold
-                    tracking-[-0.035em]
-                    text-slate-950
-                    sm:text-3xl
-                    dark:text-white
-                  "
+                  className={`${interTight.className} mt-3 text-3xl font-semibold leading-tight tracking-normal text-slate-950 sm:text-4xl dark:text-white`}
                 >
                   {copy.professional.title}
                 </h3>
@@ -266,7 +262,7 @@ export default async function TelegramSection() {
                 <p
                   className="
                     mt-3
-                    max-w-2xl
+                    mx-auto max-w-2xl
                     text-base leading-8
                     text-slate-600
                     dark:text-[var(--telegram-secondary,#94a3b8)]
