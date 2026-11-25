@@ -715,6 +715,17 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
       icon: <GuideIcon />,
 
     },
+    {
+
+      name: t("navigation.jobs"),
+
+      href: "/jobs",
+
+      description: t("navigationDescriptions.jobs"),
+
+      icon: <JobsIcon />,
+
+    },
 
     {
 
@@ -742,17 +753,6 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
     },
 
-    {
-
-      name: t("navigation.jobs"),
-
-      href: "/jobs",
-
-      description: t("navigationDescriptions.jobs"),
-
-      icon: <JobsIcon />,
-
-    },
 
     {
 
