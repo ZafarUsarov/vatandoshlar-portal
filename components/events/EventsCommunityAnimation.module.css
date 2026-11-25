@@ -1,4 +1,4 @@
-.figure{margin:0 auto;width:calc(100% - 64px);overflow:hidden;border-block:1px solid var(--border);border-radius:12px;background:var(--uzde-page-bg);color:var(--text-secondary)}
+.figure{margin:0 auto;width:calc(100% - 64px);max-width:1536px;overflow:hidden;border-block:1px solid var(--border);border-radius:12px;background:var(--uzde-page-bg);color:var(--text-secondary)}
 
 .sky{fill:#eeeae0}.land{fill:#d1ded5}.plaza{fill:#eeeae0}
 
