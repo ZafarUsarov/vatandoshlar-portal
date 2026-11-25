@@ -421,7 +421,7 @@ function GuidePreview({
 
 
       </div>
-      <div className="mx-auto w-full px-5 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-5 sm:px-6 lg:px-8">
         <Link
           href="/telegram/how-to-ask"
           aria-label={copy.ariaLabel}

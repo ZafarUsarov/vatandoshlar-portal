@@ -88,7 +88,7 @@ export default async function TelegramPage() {
 
       <main className="uzde-telegram-page uzde-home-frame min-h-screen bg-[var(--uzde-page-bg)] pt-20 text-slate-950 sm:pt-24 dark:text-[var(--telegram-text)]">
         <section className="border-b border-slate-200 bg-[var(--uzde-page-bg)] dark:border-[var(--telegram-border)]">
-          <div className="mx-auto max-w-7xl px-5 pb-10 pt-7 sm:px-6 sm:pb-14 sm:pt-9 lg:px-8 lg:pb-16">
+          <div className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-5 pb-10 pt-7 sm:px-6 sm:pb-14 sm:pt-9 lg:px-8 lg:pb-16">
             <div className="flex items-center justify-between gap-4">
               <Link
               href="/"
@@ -111,7 +111,7 @@ export default async function TelegramPage() {
               </p>
             </div>
 
-            <div className="relative left-1/2 mt-1 w-[calc(100vw-16px)] -translate-x-1/2 sm:mt-8 sm:w-[calc(100vw-24px)] lg:mt-8 lg:w-[calc(100vw-32px)]">
+            <div className="relative left-1/2 mt-1 w-[calc(100vw-16px)] -translate-x-1/2 sm:mt-8 sm:w-[calc(100vw-24px)] lg:mt-8 lg:w-[calc(100vw-32px)] max-w-[calc(var(--uzde-layout-width)-32px)]">
               <div className="flex justify-end md:hidden">
                 <ShareButton
                   title={copy.title}

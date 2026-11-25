@@ -112,7 +112,7 @@ export default function TelegramCommunityNetwork() {
           src="/images/telegram/uzde-german-city-diorama.png"
           alt="UzDe. markaziy platformasi atrofida Hamburg, Berlin, Hannover, Düsseldorf, Frankfurt, Stuttgart va München shaharlarining yettita meʼmoriy miniatyurasi"
           fill
-          sizes="(min-width: 1024px) calc(100vw - 32px), (min-width: 640px) calc(100vw - 24px), calc(100vw - 16px)"
+          sizes="(min-width: 2560px) 2528px, (min-width: 1024px) calc(100vw - 32px), (min-width: 640px) calc(100vw - 24px), calc(100vw - 16px)"
           className="object-contain"
           priority={false}
         />

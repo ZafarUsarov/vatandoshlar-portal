@@ -47,7 +47,7 @@ export default async function TelegramRegionPage({ bundesland, generalShortName 
       <Header />
       <main className="uzde-telegram-page uzde-home-frame min-h-screen bg-[var(--uzde-page-bg)] pt-20 text-slate-950 lg:pt-24 dark:text-white">
         <section className="bg-[var(--uzde-page-bg)]">
-          <div className="w-full px-[clamp(16px,3.3vw,112px)] pt-8 sm:pt-10 lg:pt-11">
+          <div className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] pt-8 sm:pt-10 lg:pt-11">
             <div className="flex items-center justify-between gap-4">
               <Link
                 href="/telegram"
@@ -72,7 +72,7 @@ export default async function TelegramRegionPage({ bundesland, generalShortName 
           </div>
         </section>
 
-        <section className="w-full px-[clamp(16px,3.3vw,112px)] pb-10 pt-8 sm:pb-14 sm:pt-12 lg:pb-16 lg:pt-16">
+        <section className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] pb-10 pt-8 sm:pb-14 sm:pt-12 lg:pb-16 lg:pt-16">
           <div className="mb-4 flex items-center justify-between gap-4 border-b border-neutral-200 pb-3 dark:border-[var(--telegram-border)] sm:mb-6">
             <h2 className="text-xl font-bold text-neutral-950 dark:text-white sm:text-2xl">{copy.catalog}</h2>
             <div className="flex items-center gap-3">

@@ -181,7 +181,7 @@ export default async function TelegramSection() {
         aria-labelledby="telegram-heading"
         className="bg-slate-50/70 py-9 sm:py-10 lg:py-12 dark:bg-[var(--telegram-section,#020617)]"
       >
-        <div className="relative mx-auto w-full px-5 sm:px-6 lg:px-8">
+        <div className="relative mx-auto w-full max-w-[var(--uzde-layout-width)] px-5 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-3">
             <div className="mx-auto w-full max-w-4xl text-center">
               <p className="flex items-center justify-center gap-2 text-sm font-medium uppercase tracking-[0.16em] text-teal-700 dark:text-[var(--telegram-accent,#5eead4)]">
