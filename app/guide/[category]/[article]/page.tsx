@@ -296,7 +296,7 @@ export default async function GuideArticleRoute({
       )}
 
       <aside className="border-t border-slate-200 bg-[#F7FAFB] dark:border-slate-800 dark:bg-[#091B29]">
-        <div className="mx-auto flex w-full max-w-[1600px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-[clamp(16px,3.3vw,112px)] py-5">
+        <div className="mx-auto flex w-full max-w-[var(--uzde-layout-width)] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-[clamp(16px,3.3vw,112px)] py-5">
           <p className="text-sm text-slate-600 dark:text-slate-300">
             {locale === "uz" ? "Germaniyadagi yangiliklar" : "Nachrichten aus Deutschland"}
           </p>

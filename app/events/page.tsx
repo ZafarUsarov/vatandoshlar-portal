@@ -38,7 +38,7 @@ export default async function EventsPage() {
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 sm:mt-4 sm:text-base sm:leading-7 text-zinc-600 dark:text-zinc-400">{uz ? "Germaniyadagi vatandoşlarni birlaştiruvçi tadbirlar va uçraşuvlar." : "Veranstaltungen und Begegnungen, die die usbekische Community in Deutschland verbinden."}</p>
         </header>
         <EventsCommunityAnimation locale={locale} />
-        <div className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] pb-5 sm:pb-10">
+        <div className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] pb-5 sm:pb-10">
           <EventsExplorer locale={locale} upcoming={upcoming.map(e => toEventItem(e, locale))} planning={planning.map(e => toPlanningEventItem(e, locale))} past={past.map(e => toEventItem(e, locale))} />
           <aside className="border-t border-slate-200 py-4 sm:py-8 text-sm leading-6 text-slate-600 dark:border-zinc-800 dark:text-[#b6bbc4]"><strong className="text-slate-950 dark:text-white">{uz ? "Muhim eslatma: " : "Wichtiger Hinweis: "}</strong>{uz ? "Yölga çiqişdan oldin rasmiy manbani tekşiring. Taşkilotçi sana, manzil yoki dasturni özgartirişi mumkin." : "Prüfen Sie vor der Anreise die offizielle Quelle. Veranstalter können Termin, Ort oder Programm ändern."}</aside>
           <UzDeTalksSection locale={locale} headingClassName={interTight.className} />

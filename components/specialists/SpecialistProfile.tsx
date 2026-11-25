@@ -195,7 +195,7 @@ export default function SpecialistProfile({
   return (
     <main className="min-h-screen bg-white pt-[66px] lg:pt-20 text-slate-950 dark:bg-[#111419] dark:text-zinc-100">
       <section className="border-b border-slate-200 bg-slate-50/70 py-5 dark:border-zinc-700 dark:bg-[#111419] sm:py-7">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl min-[1601px]:max-w-[var(--uzde-layout-width)] px-4 sm:px-6 lg:px-8">
           <Link
             href="/specialists"
             className="inline-flex items-center gap-2 text-sm font-bold text-slate-600 transition hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 dark:text-zinc-300 dark:hover:text-teal-300 dark:focus-visible:ring-offset-[#111419]"
@@ -274,7 +274,7 @@ export default function SpecialistProfile({
       </section>
 
       <section className="py-5 sm:py-7">
-        <div className="mx-auto grid max-w-7xl min-w-0 grid-cols-1 gap-4 px-4 sm:gap-5 sm:px-6 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)] lg:px-8">
+        <div className="mx-auto grid max-w-7xl min-[1601px]:max-w-[var(--uzde-layout-width)] min-w-0 grid-cols-1 gap-4 px-4 sm:gap-5 sm:px-6 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)] lg:px-8">
           <div className="min-w-0 space-y-4 sm:space-y-5">
             <article className="rounded-[20px] border border-slate-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-900/40 sm:p-6">
               <p className="text-sm leading-6 text-slate-600 dark:text-zinc-300 sm:text-[15px]">

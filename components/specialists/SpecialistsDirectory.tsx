@@ -247,7 +247,7 @@ export default function SpecialistsDirectory({
 
         {filteredSpecialists.length > 0 ? (
           <div>
-          <div className="mt-8 grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+          <div className="mt-8 grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5 min-[2200px]:grid-cols-4">
             {filteredSpecialists.slice(0, visibleCount).map((specialist) => (
               <SpecialistCard
                 compact

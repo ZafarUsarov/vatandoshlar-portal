@@ -101,6 +101,7 @@
   /* Layout */
   --header-height: 5rem;
   --container-width: 80rem;
+  --uzde-layout-width: 2560px;
 
   /* Motion */
   --duration-fast: 150ms;

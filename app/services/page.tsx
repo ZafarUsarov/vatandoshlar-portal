@@ -40,7 +40,7 @@ export default async function ServicesPage() {
     <><Header />
       <main className="min-h-screen bg-[#F7F7F7] pt-20 text-[#202020] dark:bg-[#111419] dark:text-zinc-100">
         <section aria-labelledby="featured-title" className="px-[clamp(16px,3.3vw,112px)] pb-12 pt-10 sm:pb-16 sm:pt-14">
-          <div className="mx-auto max-w-[1800px]">
+          <div className="mx-auto max-w-[var(--uzde-layout-width)]">
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3 text-xs font-semibold uppercase tracking-[0.18em]"><span className="text-teal-700 dark:text-teal-300">UZDE / {uz ? "XIZMATLAR" : "DIENSTLEISTUNGEN"}</span></div>
             <div className="relative isolate flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 sm:bg-zinc-900 sm:min-h-[610px] sm:justify-end lg:min-h-[680px]">
               <div className="relative aspect-video w-full sm:absolute sm:inset-0 sm:-z-20 sm:aspect-auto">
@@ -58,7 +58,7 @@ export default async function ServicesPage() {
           </div>
         </section>
         <section id="services-catalog" aria-labelledby="services-catalog-title" className="scroll-mt-28 border-t border-zinc-300 px-[clamp(16px,3.3vw,112px)] py-10 sm:py-20 dark:border-zinc-700">
-          <div className="mx-auto max-w-[1800px]">
+          <div className="mx-auto max-w-[var(--uzde-layout-width)]">
             <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-300">{uz ? "XIZMATLAR / 20 YÖNALIŞ" : "DIENSTLEISTUNGEN / 20 BEREICHE"}</p>
             <div className="relative">
               <div className="absolute right-0 top-0 z-10">

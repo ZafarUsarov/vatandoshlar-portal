@@ -709,7 +709,7 @@ export default async function EventPage({
       <main className="bg-[var(--uzde-page-bg)] pt-20 text-[var(--text-primary)] transition-colors">
         <article>
           <header className="uzde-newsroom-editorial relative border-b border-[var(--border)] bg-[var(--uzde-editorial-bg)]">
-            <div className="relative mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] py-5 sm:py-9">
+            <div className="relative mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] py-5 sm:py-9">
               <Link
                 href="/events"
                 className="inline-flex items-center gap-2 text-sm font-medium text-[var(--text-secondary)] transition hover:text-teal-600 dark:hover:text-teal-300 focus-visible:outline-2 focus-visible:outline-offset-4"
@@ -765,7 +765,7 @@ export default async function EventPage({
             </div>
           </header>
 
-          <div className="mx-auto grid w-full max-w-[1600px] gap-7 px-[clamp(16px,3.3vw,112px)] py-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.52fr)] lg:gap-14 lg:py-10">
+          <div className="mx-auto grid w-full max-w-[var(--uzde-layout-width)] gap-7 px-[clamp(16px,3.3vw,112px)] py-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.52fr)] lg:gap-14 lg:py-10">
             <aside className="min-w-0 lg:col-start-2 lg:row-start-1">
               <div className="min-w-0">
                 <dl className="divide-y divide-[var(--border)] border-y border-[var(--border)] text-sm [&>div]:grid [&>div]:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] [&>div]:gap-x-3 [&>div]:py-3 [&_dd]:min-w-0 [&_dd]:break-words lg:[&>div]:block">
@@ -1142,7 +1142,7 @@ export default async function EventPage({
         {relatedEvents.length >
           0 && (
           <section className="border-t border-[var(--border)] py-7 sm:py-10">
-            <div className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)]">
+            <div className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)]">
               <p className="text-sm font-semibold text-[var(--text-secondary)]">
                 {
                   copy.relatedEyebrow
@@ -1184,7 +1184,7 @@ export default async function EventPage({
             </div>
           </section>
         )}
-      <nav aria-label={locale === "de" ? "Veranstaltungsnavigation" : "Tadbirlar navigatsiyasi"} className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] pb-7"><Link href="/events" className="inline-flex min-h-11 items-center border-t border-[var(--border)] text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-4">← {copy.back}</Link></nav>
+      <nav aria-label={locale === "de" ? "Veranstaltungsnavigation" : "Tadbirlar navigatsiyasi"} className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] pb-7"><Link href="/events" className="inline-flex min-h-11 items-center border-t border-[var(--border)] text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-4">← {copy.back}</Link></nav>
       </main>
 
 

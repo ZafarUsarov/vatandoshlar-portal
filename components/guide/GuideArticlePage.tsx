@@ -203,7 +203,7 @@ export default function GuideArticlePage({
 
       <article id="guide-article-content">
         <header className="relative border-b border-slate-200 bg-[#f7f7f7] text-slate-950 dark:border-slate-700 dark:bg-[#111419] dark:text-slate-100">
-          <div className="relative mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] py-5 sm:py-7 lg:py-8">
+          <div className="relative mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] py-5 sm:py-7 lg:py-8">
             <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
               <Link
                 href={`/guide/${category.slug}`}
@@ -271,7 +271,7 @@ export default function GuideArticlePage({
           </div>
         </header>
 
-        <div className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] py-6 sm:py-8 lg:py-9">
+        <div className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] py-6 sm:py-8 lg:py-9">
           <div className="grid gap-5 lg:grid-cols-[13rem_minmax(0,1fr)] xl:gap-8">
             <GuideTableOfContents
               items={tocItems}

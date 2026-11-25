@@ -77,7 +77,7 @@ export default function GuideCategoryPage({
 
   return (
       <main className="min-h-screen bg-[#F7FAFB] pt-20 text-slate-950 dark:bg-[#111419] dark:text-slate-100">
-        <div className="mx-auto w-full max-w-[1440px] px-4 pb-14 pt-5 sm:px-8 sm:pt-7 lg:px-12 lg:pb-20">
+        <div className="mx-auto w-full max-w-[1440px] min-[1601px]:max-w-[var(--uzde-layout-width)] px-4 pb-14 pt-5 sm:px-8 sm:pt-7 lg:px-12 lg:pb-20">
           <nav aria-label={locale === "uz" ? "Qöllanma navigatsiyasi" : "Ratgeber-Navigation"}>
             <Link
               href="/guide"

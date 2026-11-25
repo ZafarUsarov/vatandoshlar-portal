@@ -1227,7 +1227,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           className={`
 
-            mx-auto flex w-full max-w-[1600px] min-[1280px]:grid min-[1280px]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]
+            mx-auto flex w-full max-w-[var(--uzde-layout-width)] min-[1280px]:grid min-[1280px]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]
 
             relative items-center gap-2 px-3 min-[390px]:px-4 min-[1440px]:gap-3
 
@@ -1487,7 +1487,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
           </nav>
 
-          <div data-uzde-desktop-actions className={`ml-auto hidden min-w-0 items-center gap-3 min-[1280px]:justify-self-end min-[1280px]:w-full min-[1024px]:flex min-[1600px]:gap-3 ${isSearchOpen ? "flex-1" : "shrink"}`}>
+          <div data-uzde-desktop-actions className={`ml-auto hidden min-w-0 items-center gap-3 min-[1280px]:col-start-3 min-[1280px]:justify-self-end min-[1280px]:w-full min-[1024px]:flex min-[1600px]:gap-3 ${isSearchOpen ? "flex-1" : "shrink"}`}>
 
             {isSearchOpen ? (
               <div data-uzde-search-slot="desktop" className="flex h-10 min-w-0 flex-1 items-center" />

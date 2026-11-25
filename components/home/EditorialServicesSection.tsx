@@ -49,7 +49,7 @@ export default async function EditorialServicesSection() {
       aria-labelledby="uzde-services-title"
       className="border-b border-[#DADADA] bg-[#F7F7F7] px-[clamp(16px,3.3vw,112px)] py-12 text-[#202020] sm:py-16 lg:py-20 dark:border-[var(--uzde-home-border)] dark:bg-[var(--uzde-home-surface)] dark:text-zinc-100"
     >
-      <div className="mx-auto max-w-[1800px]">
+      <div className="mx-auto max-w-[var(--uzde-layout-width)]">
         <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">UZDE / KASBIY XIZMATLAR</p>
         <h2
           id="uzde-services-title"

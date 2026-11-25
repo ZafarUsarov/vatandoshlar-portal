@@ -56,7 +56,7 @@ export default function GuideExplorer({ entries, locale }: Props) {
         }
         @keyframes guide-marquee-scroll { to { transform: translateX(-50%); } }
       `}</style>
-      <div className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] pt-6 pb-10 sm:pt-8 sm:pb-14 lg:pt-10 lg:pb-16">
+      <div className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] pt-6 pb-10 sm:pt-8 sm:pb-14 lg:pt-10 lg:pb-16">
       <header className="relative isolate mb-10 flex min-h-[440px] flex-col justify-end overflow-hidden rounded-2xl bg-[#121518] px-5 py-6 sm:mb-12 sm:min-h-[460px] sm:px-8 sm:py-8 lg:min-h-[470px] lg:flex-row lg:items-end lg:justify-start lg:px-14 lg:py-12">
         <div className="absolute inset-0 -z-20 overflow-hidden bg-[#121518]">
           <Image
@@ -64,7 +64,7 @@ export default function GuideExplorer({ entries, locale }: Props) {
             alt="Kitob javonlari va o‘qish kreslosi joylashgan sokin kutubxona interyeri"
             fill
             priority
-            sizes="(max-width: 1600px) 100vw, 1600px"
+            sizes="(max-width: 2560px) 100vw, 2560px"
             className="object-cover object-[56%_center] sm:object-center"
           />
         </div>

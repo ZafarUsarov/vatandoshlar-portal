@@ -228,7 +228,7 @@ export default async function SpecialistsPage({
         </div>
 
         <section className="bg-white pb-8 pt-8 dark:bg-[var(--uzde-page-bg)] sm:pb-10 sm:pt-10 lg:pb-12">
-          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-14">
+          <div className="mx-auto max-w-[var(--uzde-layout-width)] px-5 sm:px-8 lg:px-14">
             <SpecialistsDirectory
               specialists={
                 localizedSpecialists

@@ -6,7 +6,7 @@ export default function SpecialistsJobsPromo({ locale }: Props) {
   const de = locale === "de";
   return (
     <section className="border-t border-zinc-200 bg-white px-5 py-8 text-zinc-950 dark:border-zinc-700 dark:bg-[#111419] dark:text-zinc-100 sm:px-8 sm:py-10 lg:px-14 lg:py-12">
-      <div className="mx-auto max-w-[1600px] rounded-2xl border border-zinc-200 bg-[#f8f8f8] px-4 py-6 dark:border-zinc-700 dark:bg-zinc-900/40 sm:px-7 sm:py-7 lg:px-9">
+      <div className="mx-auto max-w-[var(--uzde-layout-width)] rounded-2xl border border-zinc-200 bg-[#f8f8f8] px-4 py-6 dark:border-zinc-700 dark:bg-zinc-900/40 sm:px-7 sm:py-7 lg:px-9">
         <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:items-center lg:gap-10">
           <div className="min-w-0">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-700 dark:text-teal-300">

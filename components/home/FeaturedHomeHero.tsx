@@ -27,7 +27,7 @@ export default function FeaturedHomeHero({ item, de }: { item: HomeFeatured; de:
       <Link
         href={item.href}
         aria-labelledby="uzde-featured-heading"
-        className="group relative mx-auto block w-full max-w-[1600px] overflow-hidden rounded-[10px] bg-[#102a31] text-white outline-none focus-visible:ring-4 focus-visible:ring-teal-400 focus-visible:ring-offset-4 dark:bg-[#0b2026] sm:rounded-[14px]"
+        className="group relative mx-auto block w-full max-w-[var(--uzde-layout-width)] overflow-hidden rounded-[10px] bg-[#102a31] text-white outline-none focus-visible:ring-4 focus-visible:ring-teal-400 focus-visible:ring-offset-4 dark:bg-[#0b2026] sm:rounded-[14px]"
       >
         <div className="relative grid min-h-[320px] w-full grid-cols-1 grid-rows-[minmax(320px,auto)] sm:min-h-0 sm:grid-rows-[minmax(0,1fr)] sm:aspect-[16/9] lg:aspect-[1.9/1] lg:max-h-[720px]">
           {item.imageUrl ? (

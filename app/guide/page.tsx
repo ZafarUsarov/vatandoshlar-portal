@@ -78,7 +78,7 @@ export default async function GuidePage() {
             <GuideExplorer entries={entries} locale={locale} />
 
       {featuredArticles.length > 0 && (
-        <section className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] pb-10">
+        <section className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] pb-10">
           <h2 className="mb-5 border-b border-neutral-200 pb-4 text-xl font-bold text-neutral-950 dark:border-slate-700 dark:text-white sm:text-2xl">
             {locale === "uz" ? "Tavsiya etilgan qo‘llanmalar" : "Empfohlene Ratgeber"}
           </h2>
@@ -103,7 +103,7 @@ export default async function GuidePage() {
         </section>
       )}
 
-      <aside className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] pb-12">
+      <aside className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] pb-12">
         <p className="rounded-xl border border-[#D9DDDD] bg-white px-5 py-4 text-sm leading-relaxed text-neutral-600 dark:border-[#343D43] dark:bg-[#1B252C] dark:text-slate-300">
           {locale === "uz"
             ? "Qo‘llanmalar muntazam tekshiriladi va yangilanadi. Yangi mavzular bosqichma-bosqich qo‘shib boriladi."

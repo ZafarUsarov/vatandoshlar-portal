@@ -64,7 +64,7 @@ export default function DirectoryHeader({
 
   return (
     <section className="pb-8 pt-9 md:pb-12 md:pt-14 lg:pb-12 lg:pt-16">
-      <div className="mx-auto max-w-[1600px] px-5 text-center sm:px-8 lg:px-14">
+      <div className="mx-auto max-w-[var(--uzde-layout-width)] px-5 text-center sm:px-8 lg:px-14">
         <p className="inline-flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.23em] text-teal-700 dark:text-teal-300">
           <UsersIcon /> {labels.badge}
         </p>
