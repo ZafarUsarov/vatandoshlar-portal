@@ -479,3 +479,7 @@ CI
 ```
 
 After these checks pass, Events is considered complete for Vatandoshlar.de v1.0.
+
+### Public category filters (Phase 14.2)
+
+Migration 114 adds the persisted `science` category without removing existing categories. Public filters are presentation-only: `all` matches every category and `education-career` matches both `education` and `career`. Neither filter identifier is persisted. Primary filters remain visible when empty; business is a primary filter; children and consular filters appear when matching public events exist. Apply the schema migration before creating Science events.

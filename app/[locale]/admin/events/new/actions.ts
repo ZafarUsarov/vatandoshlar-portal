@@ -28,6 +28,7 @@ const categories: AdminEventCategory[] = [
   "sport",
   "children",
   "consular",
+  "science",
 ];
 
 const formats: AdminEventFormat[] = [

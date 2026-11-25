@@ -44,10 +44,11 @@ const categories: ReadonlyArray<{
   { value: "culture", uz: "Madaniyat", de: "Kultur" },
   { value: "education", uz: "Ta’lim", de: "Bildung" },
   { value: "career", uz: "Karyera", de: "Karriere" },
-  { value: "business", uz: "Biznes", de: "Business" },
+  { value: "business", uz: "Tadbirkorlik", de: "Unternehmertum" },
   { value: "community", uz: "Jamiyat", de: "Community" },
   { value: "sport", uz: "Sport", de: "Sport" },
   { value: "children", uz: "Bolalar uchun", de: "Für Kinder" },
+  { value: "science", uz: "Ilm-fan va texnologiya", de: "Wissenschaft & Technologie" },
   { value: "consular", uz: "Konsullik", de: "Konsularisches" },
 ];
 

@@ -9,7 +9,9 @@ import EventCard from "../../../components/cards/EventCard";
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import ShareButton from "../../../components/shared/ShareButton";
-import SectionPromo from "../../../components/SectionPromo";
+import { Inter_Tight } from "next/font/google";
+
+const interTight = Inter_Tight({ subsets: ["latin", "latin-ext"], weight: "600", display: "swap" });
 import {
   formatEventDate,
   formatEventDateRange,
@@ -133,17 +135,17 @@ function getRegistrationAction(
     locale === "uz"
       ? {
           google_form:
-            "Ro‘yxatdan o‘tish",
+            "Röyxatdan ötiş",
           telegram:
-            "Telegram orqali bog‘lanish",
+            "Telegram orqali boǵlaniş",
           email:
             "Email orqali ro‘yxatdan o‘tish",
           phone:
-            "Tashkilotchiga qo‘ng‘iroq qilish",
+            "Taşkilotçiga qönǵiroq qiliş",
           external_url:
-            "Ro‘yxatdan o‘tish",
+            "Röyxatdan ötiş",
           none:
-            "Ro‘yxatdan o‘tish shart emas",
+            "Röyxatdan ötiş shart emas",
         }
       : {
           google_form:
@@ -496,19 +498,19 @@ export default async function EventPage({
     locale === "uz"
       ? {
           back:
-            "Barcha tadbirlar",
+            "Barça tadbirlar",
           about:
             "Tadbir haqida",
           planningStatus:
-            "Rejalashtirilmoqda",
+            "Rejalaştirilmoqda",
           planningIntro:
-            "Bu tadbir hali reja bosqichida. Sana, manzil va qatnashish tartibi tasdiqlangach shu sahifada yangilanadi.",
+            "Tadbir reja bosqiçida. Tasdiqlangan tafsilotlar şu sahifada e’lon qilinadi.",
           planningDate:
-            "Sana keyinroq e’lon qilinadi",
+            "Hali belgilanmagan",
           planningLocation:
-            "Manzil tasdiqlangandan keyin qo‘shiladi",
+            "Tasdiqlanmagan",
           planningRegistration:
-            "Ro‘yxatdan o‘tish tafsilotlari tayyor bo‘lgach e’lon qilinadi",
+            "Keyinroq e’lon qilinadi",
           date:
             "Sana",
           time:
@@ -520,37 +522,37 @@ export default async function EventPage({
           languages:
             "Tillar",
           organizer:
-            "Tashkilotchi",
+            "Taşkilotçi",
           registration:
-            "Ro‘yxatdan o‘tish",
+            "Röyxatdan ötiş",
           registrationDeadline:
-            "Ro‘yxatdan o‘tish muddati",
+            "Röyxatdan ötiş muddati",
           registrationClosed:
-            "Ro‘yxatdan o‘tish yopilgan",
+            "Röyxatdan ötiş yopilgan",
           registrationUnavailable:
-            "Ro‘yxatdan o‘tish ma’lumoti hozircha mavjud emas",
+            "Röyxatdan ötiş ma’lumoti hozircha mavjud emas",
           noRegistration:
-            "Ro‘yxatdan o‘tish talab qilinmaydi",
+            "Röyxatdan ötiş talab qilinmaydi",
           capacity:
             "Sig‘im",
           capacityValue:
             "kishi",
           openOnline:
-            "Onlayn tadbirni ochish",
+            "Onlayn tadbirni oçiş",
           sourceEyebrow:
             "Rasmiy manba",
           sourceDescription:
-            "Tadbir ma’lumotlarini rasmiy tashkilotchi sahifasida qayta tekshiring.",
+            "Tadbir ma’lumotlarini rasmiy tashkilotchi sahifasida qayta tekşiring.",
           sourceButton:
-            "Rasmiy manbani ochish",
+            "Rasmiy manbani oçiş",
           verified:
-            "Oxirgi tekshiruv",
+            "Oxirgi tekşiruv",
           notes:
             "Muhim eslatmalar",
           relatedEyebrow:
-            "Boshqa tadbirlar",
+            "Boşqa tadbirlar",
           relatedTitle:
-            "Sizga qiziq bo‘lishi mumkin",
+            "Sizga qiziq bölişi mumkin",
           card: {
             time:
               "Vaqt",
@@ -565,13 +567,13 @@ export default async function EventPage({
             details:
               "Batafsil",
             organizer:
-              "Tashkilotchi",
+              "Taşkilotçi",
             planning:
-              "Rejalashtirilmoqda",
+              "Rejalaştirilmoqda",
             dateTbd:
-              "Sana keyinroq e’lon qilinadi",
+              "Hali belgilanmagan",
             locationTbd:
-              "Manzil tasdiqlangandan keyin qo‘shiladi",
+              "Tasdiqlanmagan",
             planningDescription:
               "Tafsilotlar tasdiqlangach yangilanadi",
           },
@@ -704,36 +706,28 @@ export default async function EventPage({
 
       <Header />
 
-      <main className="min-h-screen bg-white pt-20 text-slate-950 transition-colors dark:bg-slate-950 dark:text-white">
+      <main className="bg-[var(--uzde-page-bg)] pt-20 text-[var(--text-primary)] transition-colors">
         <article>
-          <header className="relative overflow-hidden bg-slate-950 text-white">
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 opacity-25"
-            >
-              <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-cyan-500 blur-3xl" />
-              <div className="absolute -bottom-48 left-20 h-96 w-96 rounded-full bg-emerald-500 blur-3xl" />
-            </div>
-
-            <div className="relative mx-auto max-w-5xl px-6 py-16 sm:py-24 lg:px-8">
+          <header className="uzde-newsroom-editorial relative border-b border-[var(--border)] bg-[var(--uzde-editorial-bg)]">
+            <div className="relative mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] py-5 sm:py-9">
               <Link
                 href="/events"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
+                className="inline-flex items-center gap-2 text-sm font-medium text-[var(--text-secondary)] transition hover:text-teal-600 dark:hover:text-teal-300 focus-visible:outline-2 focus-visible:outline-offset-4"
               >
                 ← {copy.back}
               </Link>
 
-              <div className="mt-8 flex flex-wrap gap-2">
-                <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-sm font-semibold text-white">
+              <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1">
+                <span className="text-sm font-medium text-[var(--text-secondary)]">
                   {event.category}
                 </span>
 
-                <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-sm font-semibold text-white">
+                <span className="text-sm font-medium text-[var(--text-secondary)]">
                   {event.format}
                 </span>
 
                 {isPlanning && (
-                  <span className="rounded-full border border-emerald-300/25 bg-emerald-400/10 px-3 py-1.5 text-sm font-semibold text-emerald-200">
+                  <span className="text-sm font-semibold text-[var(--text-primary)]">
                     {
                       copy.planningStatus
                     }
@@ -743,158 +737,47 @@ export default async function EventPage({
                 {event.eventStatus ===
                     "scheduled" &&
                   event.featured && (
-                    <span className="rounded-full border border-violet-300/30 bg-violet-400/15 px-3 py-1.5 text-sm font-semibold text-violet-100">
-                      Featured
+                    <span className="text-sm font-medium text-[var(--text-secondary)]">
+                      {locale === "de" ? "Empfohlen" : "Tavsiya etiladi"}
                     </span>
                   )}
               </div>
 
-              <h1 className="mt-6 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+              <div className="mt-5 flex items-start justify-between gap-3">
+                <h1 className={`${interTight.className} min-w-0 max-w-4xl break-words text-[clamp(2rem,5vw,4rem)] font-semibold leading-[1.08]`}>
                 {event.title}
               </h1>
+                <div className="shrink-0">
+                  <ShareButton
+                    title={event.title}
+                    locale={locale}
+                    variant="guide"
+                    iconOnly
+                    ariaLabel={locale === "de" ? "Veranstaltung teilen" : "Tadbirni ulaşiş"}
+                  />
+                </div>
+              </div>
 
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+              <p className="mt-3 max-w-3xl text-[15px] leading-7 text-[var(--text-secondary)] sm:text-lg">
                 {event.excerpt}
               </p>
 
             </div>
           </header>
 
-          <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[minmax(0,1fr)_22rem] lg:px-8 lg:py-20">
-            <div>
-              {isPlanning && (
-                <section className="mb-10 rounded-3xl border border-cyan-200/80 bg-gradient-to-br from-cyan-50 via-white to-emerald-50 p-6 shadow-sm dark:border-cyan-400/15 dark:bg-[linear-gradient(135deg,rgba(8,47,73,0.38),rgba(15,23,42,0.7),rgba(6,78,59,0.22))] sm:p-8">
-                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-300">
-                    {
-                      copy.planningStatus
-                    }
-                  </p>
-
-                  <p className="mt-4 max-w-3xl text-base leading-8 text-slate-700 dark:text-slate-300">
-                    {
-                      copy.planningIntro
-                    }
-                  </p>
-                </section>
-              )}
-
-              <section>
-                <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                  {copy.about}
-                </h2>
-
-                <div className="mt-6 space-y-5 text-base leading-8 text-slate-700 dark:text-slate-300">
-                  {event.description.map(
-                    (
-                      paragraph,
-                      index,
-                    ) => (
-                      <p
-                        key={`${event.slug}-description-${index}`}
-                      >
-                        {paragraph}
-                      </p>
-                    ),
-                  )}
-                </div>
-              </section>
-
-              {event.importantNotes.length >
-                0 && (
-                <section className="mt-12 rounded-3xl border border-amber-200 bg-amber-50 p-6 dark:border-amber-500/20 dark:bg-amber-500/10 sm:p-8">
-                  <h2 className="text-xl font-bold text-amber-950 dark:text-amber-100">
-                    {copy.notes}
-                  </h2>
-
-                  <ul className="mt-5 space-y-3 text-sm leading-7 text-amber-900 dark:text-amber-200">
-                    {event.importantNotes.map(
-                      (
-                        note,
-                        index,
-                      ) => (
-                        <li
-                          key={`${event.slug}-note-${index}`}
-                          className="flex gap-3"
-                        >
-                          <span aria-hidden="true">
-                            •
-                          </span>
-
-                          <span>
-                            {note}
-                          </span>
-                        </li>
-                      ),
-                    )}
-                  </ul>
-                </section>
-              )}
-
-              {event.eventStatus ===
-                "scheduled" && (
-                <section className="mt-12 rounded-3xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900 sm:p-8">
-                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">
-                    {
-                      copy.sourceEyebrow
-                    }
-                  </p>
-
-                  <h2 className="mt-3 text-xl font-bold">
-                    {
-                      event.officialSourceName
-                    }
-                  </h2>
-
-                  <p className="mt-4 leading-7 text-slate-600 dark:text-slate-400">
-                    {
-                      copy.sourceDescription
-                    }
-                  </p>
-
-                  <div className="mt-6 flex flex-wrap items-center gap-4">
-                    <a
-                      href={
-                        event.officialSourceUrl
-                      }
-                      target="_blank"
-                      rel="noreferrer"
-                      className="button-primary"
-                    >
-                      {
-                        copy.sourceButton
-                      }
-                    </a>
-
-                    <p className="text-sm text-slate-500 dark:text-slate-400">
-                      {copy.verified}:{" "}
-                      <time
-                        dateTime={
-                          event.verifiedAt
-                        }
-                      >
-                        {formatEventDate(
-                          event.verifiedAt,
-                          locale,
-                        )}
-                      </time>
-                    </p>
-                  </div>
-                </section>
-              )}
-            </div>
-
-            <aside>
-              <div className="sticky top-28 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-                <dl className="space-y-5 text-sm">
+          <div className="mx-auto grid w-full max-w-[1600px] gap-7 px-[clamp(16px,3.3vw,112px)] py-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.52fr)] lg:gap-14 lg:py-10">
+            <aside className="min-w-0 lg:col-start-2 lg:row-start-1">
+              <div className="min-w-0">
+                <dl className="divide-y divide-[var(--border)] border-y border-[var(--border)] text-sm [&>div]:grid [&>div]:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] [&>div]:gap-x-3 [&>div]:py-3 [&_dd]:min-w-0 [&_dd]:break-words lg:[&>div]:block">
                   {event.eventStatus ===
                   "planning" ? (
                     <>
                       <div>
-                        <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                        <dt className="font-semibold text-[var(--text-secondary)]">
                           {copy.date}
                         </dt>
 
-                        <dd className="mt-1 font-bold text-slate-950 dark:text-white">
+                        <dd className="font-medium text-[var(--text-primary)] lg:mt-1">
                           {
                             copy.planningDate
                           }
@@ -902,13 +785,13 @@ export default async function EventPage({
                       </div>
 
                       <div>
-                        <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                        <dt className="font-semibold text-[var(--text-secondary)]">
                           {
                             copy.location
                           }
                         </dt>
 
-                        <dd className="mt-1 font-bold text-slate-950 dark:text-white">
+                        <dd className="font-medium text-[var(--text-primary)] lg:mt-1">
                           {
                             copy.planningLocation
                           }
@@ -918,11 +801,11 @@ export default async function EventPage({
                   ) : (
                     <>
                       <div>
-                        <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                        <dt className="font-semibold text-[var(--text-secondary)]">
                           {copy.date}
                         </dt>
 
-                        <dd className="mt-1 font-bold text-slate-950 dark:text-white">
+                        <dd className="font-medium text-[var(--text-primary)] lg:mt-1">
                           {formatEventDateRange(
                             event.startDate,
                             locale,
@@ -932,11 +815,11 @@ export default async function EventPage({
                       </div>
 
                       <div>
-                        <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                        <dt className="font-semibold text-[var(--text-secondary)]">
                           {copy.time}
                         </dt>
 
-                        <dd className="mt-1 font-bold text-slate-950 dark:text-white">
+                        <dd className="font-medium text-[var(--text-primary)] lg:mt-1">
                           {formatEventTime(
                             locale,
                             event.startTime,
@@ -946,13 +829,13 @@ export default async function EventPage({
                       </div>
 
                       <div>
-                        <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                        <dt className="font-semibold text-[var(--text-secondary)]">
                           {
                             copy.location
                           }
                         </dt>
 
-                        <dd className="mt-1 font-bold text-slate-950 dark:text-white">
+                        <dd className="font-medium text-[var(--text-primary)] lg:mt-1">
                           {getEventLocation(
                             event,
                             locale,
@@ -960,7 +843,7 @@ export default async function EventPage({
                         </dd>
 
                         {event.address && (
-                          <dd className="mt-1 text-slate-500 dark:text-slate-400">
+                          <dd className="col-start-2 mt-1 text-[var(--text-secondary)]">
                             {
                               event.address
                             }
@@ -969,11 +852,11 @@ export default async function EventPage({
                       </div>
 
                       <div>
-                        <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                        <dt className="font-semibold text-[var(--text-secondary)]">
                           {copy.price}
                         </dt>
 
-                        <dd className="mt-1 font-bold text-slate-950 dark:text-white">
+                        <dd className="font-medium text-[var(--text-primary)] lg:mt-1">
                           {
                             event.priceLabel
                           }
@@ -985,13 +868,13 @@ export default async function EventPage({
                   {event.language.length >
                     0 && (
                     <div>
-                      <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                      <dt className="font-semibold text-[var(--text-secondary)]">
                         {
                           copy.languages
                         }
                       </dt>
 
-                      <dd className="mt-1 font-bold text-slate-950 dark:text-white">
+                      <dd className="font-medium text-[var(--text-primary)] lg:mt-1">
                         {event.language.join(
                           ", ",
                         )}
@@ -1000,11 +883,11 @@ export default async function EventPage({
                   )}
 
                   <div>
-                    <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                    <dt className="font-semibold text-[var(--text-secondary)]">
                       {copy.organizer}
                     </dt>
 
-                    <dd className="mt-1 font-bold text-slate-950 dark:text-white">
+                    <dd className="font-medium text-[var(--text-primary)] lg:mt-1">
                       <OrganizerValue
                         event={event}
                         locale={locale}
@@ -1013,16 +896,16 @@ export default async function EventPage({
                   </div>
 
                   <div>
-                    <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                    <dt className="font-semibold text-[var(--text-secondary)]">
                       {
                         copy.registration
                       }
                     </dt>
 
-                    <dd className="mt-2">
+                    <dd className="lg:mt-1">
                       {event.eventStatus ===
                       "planning" ? (
-                        <p className="leading-6 text-slate-600 dark:text-slate-400">
+                        <p className="leading-6 text-[var(--text-secondary)]">
                           {
                             registrationLabel
                           }
@@ -1056,13 +939,13 @@ export default async function EventPage({
                       "scheduled" &&
                     event.registrationDeadline && (
                     <div>
-                      <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                      <dt className="font-semibold text-[var(--text-secondary)]">
                         {
                           copy.registrationDeadline
                         }
                       </dt>
 
-                      <dd className="mt-1 font-bold text-slate-950 dark:text-white">
+                      <dd className="font-medium text-[var(--text-primary)] lg:mt-1">
                         {formatEventDate(
                           event.registrationDeadline,
                           locale,
@@ -1076,13 +959,13 @@ export default async function EventPage({
                     event.capacity !==
                       undefined && (
                     <div>
-                      <dt className="font-semibold text-slate-500 dark:text-slate-400">
+                      <dt className="font-semibold text-[var(--text-secondary)]">
                         {
                           copy.capacity
                         }
                       </dt>
 
-                      <dd className="mt-1 font-bold text-slate-950 dark:text-white">
+                      <dd className="font-medium text-[var(--text-primary)] lg:mt-1">
                         {event.capacity}{" "}
                         {
                           copy.capacityValue
@@ -1132,21 +1015,135 @@ export default async function EventPage({
                     )}
                   </div>
                 )}
-                <div className="mt-7 border-t border-slate-200 pt-5 dark:border-slate-700">
-                  <div className="inline-flex rounded-full shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-[0.97] [&_button]:border-emerald-200 [&_button]:bg-emerald-50 [&_button]:text-emerald-800 [&_button]:transition-colors [&_button]:duration-200 hover:[&_button]:border-emerald-400 hover:[&_button]:bg-emerald-100 dark:[&_button]:border-emerald-500/30 dark:[&_button]:bg-emerald-500/10 dark:[&_button]:text-emerald-200 dark:hover:[&_button]:bg-emerald-500/20">
-                    <ShareButton title={event.title} locale={locale} />
-                  </div>
-                </div>
               </div>
             </aside>
+            <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+              {isPlanning && (
+                <section className="mb-6 border-b border-[var(--border)] pb-5">
+
+
+                  <p className="max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">
+                    {
+                      copy.planningIntro
+                    }
+                  </p>
+                </section>
+              )}
+
+              <section>
+                <h2 className={`${interTight.className} text-[22px] font-semibold sm:text-[28px]`}>
+                  {copy.about}
+                </h2>
+
+                <div className="mt-4 max-w-3xl space-y-4 text-[15px] leading-7 text-[var(--text-secondary)] sm:text-base">
+                  {event.description.map(
+                    (
+                      paragraph,
+                      index,
+                    ) => (
+                      <p
+                        key={`${event.slug}-description-${index}`}
+                      >
+                        {paragraph}
+                      </p>
+                    ),
+                  )}
+                </div>
+              </section>
+
+              {event.importantNotes.length >
+                0 && (
+                <section className="mt-7 border-t border-[var(--border)] pt-5">
+                  <h2 className="text-xl font-semibold text-[var(--text-primary)]">
+                    {copy.notes}
+                  </h2>
+
+                  <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--text-secondary)]">
+                    {event.importantNotes.map(
+                      (
+                        note,
+                        index,
+                      ) => (
+                        <li
+                          key={`${event.slug}-note-${index}`}
+                          className="flex gap-3"
+                        >
+                          <span aria-hidden="true">
+                            •
+                          </span>
+
+                          <span>
+                            {note}
+                          </span>
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                </section>
+              )}
+
+              {event.eventStatus ===
+                "scheduled" && (
+                <section className="mt-7 border-t border-[var(--border)] pt-5">
+                  <p className="text-sm font-semibold text-[var(--text-secondary)]">
+                    {
+                      copy.sourceEyebrow
+                    }
+                  </p>
+
+                  <h2 className="mt-3 text-xl font-bold">
+                    {
+                      event.officialSourceName
+                    }
+                  </h2>
+
+                  <p className="mt-3 leading-7 text-[var(--text-secondary)]">
+                    {
+                      copy.sourceDescription
+                    }
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap items-center gap-4">
+                    <a
+                      href={
+                        event.officialSourceUrl
+                      }
+                      target="_blank"
+                      rel="noreferrer"
+                      className="button-primary"
+                    >
+                      {
+                        copy.sourceButton
+                      }
+                    </a>
+
+                    <p className="text-sm text-[var(--text-secondary)]">
+                      {copy.verified}:{" "}
+                      <time
+                        dateTime={
+                          event.verifiedAt
+                        }
+                      >
+                        {formatEventDate(
+                          event.verifiedAt,
+                          locale,
+                        )}
+                      </time>
+                    </p>
+                  </div>
+                </section>
+              )}
+            </div>
+
+
           </div>
         </article>
 
         {relatedEvents.length >
           0 && (
-          <section className="border-t border-slate-200 bg-slate-50 py-16 dark:border-slate-800 dark:bg-slate-900/60 sm:py-20">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-blue-600 dark:text-blue-400">
+          <section className="border-t border-[var(--border)] py-7 sm:py-10">
+            <div className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)]">
+              <p className="text-sm font-semibold text-[var(--text-secondary)]">
                 {
                   copy.relatedEyebrow
                 }
@@ -1187,9 +1184,10 @@ export default async function EventPage({
             </div>
           </section>
         )}
+      <nav aria-label={locale === "de" ? "Veranstaltungsnavigation" : "Tadbirlar navigatsiyasi"} className="mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)] pb-7"><Link href="/events" className="inline-flex min-h-11 items-center border-t border-[var(--border)] text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-4">← {copy.back}</Link></nav>
       </main>
 
-      <SectionPromo target="guide" />
+
 
       <Footer />
     </>

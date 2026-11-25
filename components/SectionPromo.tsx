@@ -9,11 +9,13 @@ type SectionPromoTarget =
   | "jobs"
   | "telegram"
   | "events"
-  | "guide";
+  | "guide"
+  | "home";
 
 type SectionPromoProps = Readonly<{
   target: SectionPromoTarget;
   variant?: "default" | "editorial" | "compact";
+  continuous?: boolean;
 }>;
 
 type PromoCopy = Readonly<{
@@ -159,6 +161,27 @@ const promoConfig: Record<SectionPromoTarget, PromoConfig> = {
       action: "Veranstaltungen ansehen",
     },
   },
+  home: {
+    href: "/",
+    icon: "U",
+    accent:
+      "border-teal-200/80 bg-teal-50 text-teal-700 dark:border-teal-400/20 dark:bg-teal-400/10 dark:text-teal-300",
+    glow: "bg-teal-400/15 dark:bg-teal-400/10",
+    uz: {
+      label: "UzDe. · Boş sahifa",
+      title: "Bir platforma. Köplab imkoniyatlar.",
+      description:
+        "Germaniyadagi vatandoşlar uçun yagona raqamli makon.",
+      action: "Boş sahifaga qaytiş",
+    },
+    de: {
+      label: "UzDe. · Startseite",
+      title: "Eine Plattform. Viele Möglichkeiten.",
+      description:
+        "Ein digitaler Raum für Usbeken in Deutschland.",
+      action: "Zur Startseite",
+    },
+  },
   guide: {
     href: "/guide",
     icon: "Q",
@@ -204,6 +227,7 @@ function ArrowRightIcon() {
 export default async function SectionPromo({
   target,
   variant = "default",
+  continuous = false,
 }: SectionPromoProps) {
   const locale = await getLocale();
   const config = promoConfig[target];
@@ -213,17 +237,17 @@ export default async function SectionPromo({
     return (
       <section
         aria-labelledby={`section-promo-${target}`}
-        className="border-t border-slate-200 bg-[#f7f8f9] py-10 text-slate-950 dark:border-white/10 dark:bg-[#151719] dark:text-white sm:py-12"
+        className={continuous ? "bg-[var(--uzde-page-bg)] py-5 text-zinc-950 dark:text-white sm:py-12" : "border-t border-slate-200 bg-[#f7f8f9] py-10 text-slate-950 dark:border-white/10 dark:bg-[#151719] dark:text-white sm:py-12"}
       >
-        <div className="mx-auto w-full px-5 sm:px-6 lg:px-8">
-          <div className="grid gap-6 border-t border-slate-300/80 pt-7 dark:border-white/20 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:pt-9">
+        <div className={continuous ? "mx-auto w-full max-w-[1600px] px-[clamp(16px,3.3vw,112px)]" : "mx-auto w-full px-5 sm:px-6 lg:px-8"}>
+          <div className={`grid gap-6 border-t pt-7 ${continuous ? "max-sm:gap-3 max-sm:pt-4" : ""} lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:pt-9 ${continuous ? "border-slate-200 dark:border-zinc-800" : "border-slate-300/80 dark:border-white/20"}`}>
             <div className="min-w-0">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700 dark:text-[#55D7C3]">
                 {copy.label}
               </p>
               <h2
                 id={`section-promo-${target}`}
-                className="mt-4 max-w-4xl text-[clamp(1.75rem,3vw,2.75rem)] font-semibold leading-[1.12] tracking-[-0.04em]"
+                className={`mt-4 max-w-4xl text-[clamp(1.75rem,3vw,2.75rem)] font-semibold leading-[1.12] tracking-[-0.04em] ${continuous ? "max-sm:mt-2 max-sm:text-[18px] max-sm:font-medium max-sm:leading-[1.25] max-sm:tracking-normal" : ""}`}
               >
                 {copy.title}
               </h2>

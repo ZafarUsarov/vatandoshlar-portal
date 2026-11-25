@@ -13,7 +13,8 @@ export type AdminEventCategory =
   | "community"
   | "sport"
   | "children"
-  | "consular";
+  | "consular"
+  | "science";
 
 export type AdminEventFormat =
   | "offline"
@@ -219,7 +220,8 @@ function normalizeCategory(value: string): AdminEventCategory {
     value === "community" ||
     value === "sport" ||
     value === "children" ||
-    value === "consular"
+    value === "consular" ||
+    value === "science"
   ) {
     return value;
   }

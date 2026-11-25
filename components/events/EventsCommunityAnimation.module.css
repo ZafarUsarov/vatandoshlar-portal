@@ -1,0 +1,135 @@
+.figure{margin:0 auto;width:calc(100% - 64px);overflow:hidden;border-block:1px solid var(--border);border-radius:12px;background:var(--uzde-page-bg);color:var(--text-secondary)}
+
+.sky{fill:#eeeae0}.land{fill:#d1ded5}.plaza{fill:#eeeae0}
+
+.desktop,.mobile{display:block;width:100%;height:auto}.mobile{display:none}
+
+.caption{display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding:8px 16px;font-size:12px;border-top:1px solid var(--border)}
+
+.controls{display:flex;gap:12px}.controls button{min-height:44px;padding:0 8px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}.controls button:disabled{opacity:.5;cursor:default}.controls button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+
+.traveller{animation:travel 20s ease-in-out infinite both}.body{animation:bob 20s linear infinite both}.legA,.legB,.armA,.armB{transform-box:fill-box;transform-origin:top center;animation:stride 20s linear infinite both}.legB,.armA{animation-name:strideReverse}.ball{animation:ball 20s ease-in-out infinite both}.identity{animation:identity 20s ease-in-out infinite both;opacity:0}
+
+.figure[data-running="false"] *{animation-play-state:paused!important}
+
+@keyframes travel{0%,43%,100%{transform:translate(0,0)}60%,77%{transform:translate(var(--dx),var(--dy))}}
+
+@keyframes bob{0%,40%,60%,75%,100%{transform:translateY(0)}42%,46%,50%,54%,58%,77%,81%,85%,89%,93%,97%{transform:translateY(-2px)}44%,48%,52%,56%,79%,83%,87%,91%,95%{transform:translateY(0)}}
+
+@keyframes stride{0%,40%,60%,75%,100%{transform:rotate(0)}42%,46%,50%,54%,58%,79%,83%,87%,91%,95%{transform:rotate(16deg)}44%,48%,52%,56%,77%,81%,85%,89%,93%,97%{transform:rotate(-16deg)}}
+
+@keyframes strideReverse{0%,40%,60%,75%,100%{transform:rotate(0)}42%,46%,50%,54%,58%,79%,83%,87%,91%,95%{transform:rotate(-16deg)}44%,48%,52%,56%,77%,81%,85%,89%,93%,97%{transform:rotate(16deg)}}
+
+@keyframes ball{0%,25%,100%{transform:translateX(0)}12%{transform:translateX(70px)}}
+
+@keyframes identity{0%,58%,83%,100%{opacity:0}63%,77%{opacity:1}}
+
+:global(.dark) .figure{background:var(--uzde-page-bg);color:var(--text-secondary);border-color:var(--uzde-home-border)}:global(.dark) .sky{fill:#202e30}:global(.dark) .land{fill:#455b50}:global(.dark) .plaza{fill:#b9c5b8}:global(.dark) .caption{border-color:var(--uzde-home-border)}
+
+@media(max-width:767px){.desktop{display:none}.mobile{display:block}.caption{padding:6px 12px}}
+
+@media(prefers-reduced-motion:reduce){.figure *{animation:none!important}.identity{opacity:1}}
+
+
+
+.chessMove0{animation:chessMove0 20s linear infinite both}
+
+@keyframes chessMove0{0%,3%{transform:translate(0,0)}7%,99%{transform:translate(var(--mx),var(--my))}100%{transform:translate(0,0)}}
+
+.chessMove1{animation:chessMove1 20s linear infinite both}
+
+@keyframes chessMove1{0%,9%{transform:translate(0,0)}13%,99%{transform:translate(var(--mx),var(--my))}100%{transform:translate(0,0)}}
+
+.chessMove2{animation:chessMove2 20s linear infinite both}
+
+@keyframes chessMove2{0%,15%{transform:translate(0,0)}19%,99%{transform:translate(var(--mx),var(--my))}100%{transform:translate(0,0)}}
+
+.chessMove3{animation:chessMove3 20s linear infinite both}
+
+@keyframes chessMove3{0%,21%{transform:translate(0,0)}25%,99%{transform:translate(var(--mx),var(--my))}100%{transform:translate(0,0)}}
+
+.chessMove4{animation:chessMove4 20s linear infinite both}
+
+@keyframes chessMove4{0%,27%{transform:translate(0,0)}31%,99%{transform:translate(var(--mx),var(--my))}100%{transform:translate(0,0)}}
+
+.chessMove5{animation:chessMove5 20s linear infinite both}
+
+@keyframes chessMove5{0%,33%{transform:translate(0,0)}37%,99%{transform:translate(var(--mx),var(--my))}100%{transform:translate(0,0)}}
+
+ .whiteHand,.blackHand{transform-box:fill-box;transform-origin:top center;animation:chessGesture 20s ease-in-out infinite both}.blackHand{animation-delay:-.96s}@keyframes chessGesture{0%,3%,9%,15%,21%,27%,33%,39%,100%{transform:rotate(0)}6%,18%,30%{transform:rotate(-22deg)}}
+
+
+
+.chessTraveller{animation:chessTravel 20s ease-in-out infinite both}.chessBody{animation:rise 20s ease-in-out infinite both}.standingLegs{animation:standing 20s steps(1,end) infinite both}.seatedLegs{animation:seated 20s steps(1,end) infinite both}
+
+@keyframes chessTravel{0%,43%,100%{transform:translate(0,0)}60%,77%{transform:translate(var(--dx),var(--dy))}}
+
+@keyframes rise{0%,38%,98%,100%{transform:translateY(8px)}40%,96%{transform:translateY(0)}}
+
+@keyframes standing{0%,98%,100%{opacity:0}40%,97%{opacity:1}}
+
+@keyframes seated{0%,98%,100%{opacity:1}40%,97%{opacity:0}}
+
+@media(prefers-reduced-motion:reduce){.standingLegs{opacity:0}.seatedLegs{opacity:1}.chessBody{transform:translateY(8px)}}
+
+
+
+.childTraveller{animation:childTravel 20s ease-in-out infinite both}.playBall{animation:playBall 20s ease-in-out infinite both}
+
+@keyframes childTravel{0%,100%{transform:translate(0,0)}10%,30%{transform:translate(9px,-5px)}20%,40%,43%{transform:translate(0,0)}60%,77%{transform:translate(var(--dx),var(--dy))}}
+
+@keyframes playBall{0%,40%,100%{transform:translate(0,0)}10%,30%{transform:translate(80px,-8px)}20%{transform:translate(40px,14px)}}
+
+
+
+@media(max-width:767px){.mobile .chessTraveller{animation-name:mobileChessTravel}.caption{gap:0 8px}.controls{gap:4px}}
+
+@keyframes mobileChessTravel{0%,43%,100%{transform:translate(0,0)}60%,77%{transform:translate(var(--dx),var(--dy))}}
+
+/* Continuous 20-second community cycle. */
+.traveller,.childTraveller,.chessTraveller{animation-name:communityTravel;animation-timing-function:ease-in-out;animation-delay:0s}
+@keyframes communityTravel{0%,40%,100%{transform:translate(0,0)}60%,75%{transform:translate(var(--dx),var(--dy))}}
+.identity{animation:none;opacity:1}
+@keyframes rise{0%,38%,98%,100%{transform:translateY(8px)}40%,96%{transform:translateY(0)}}
+@keyframes standing{0%,98%,100%{opacity:0}40%,97%{opacity:1}}
+@keyframes seated{0%,98%,100%{opacity:1}40%,97%{opacity:0}}
+@keyframes stride{0%,40%,60%,75%,100%{transform:rotate(0)}42%,46%,50%,54%,58%,79%,83%,87%,91%,95%{transform:rotate(16deg)}44%,48%,52%,56%,77%,81%,85%,89%,93%,97%{transform:rotate(-16deg)}}
+@keyframes strideReverse{0%,40%,60%,75%,100%{transform:rotate(0)}42%,46%,50%,54%,58%,79%,83%,87%,91%,95%{transform:rotate(-16deg)}44%,48%,52%,56%,77%,81%,85%,89%,93%,97%{transform:rotate(16deg)}}
+@media(max-width:767px){.mobile .chessTraveller{animation-name:communityTravel}}
+@media(prefers-reduced-motion:reduce){.traveller,.childTraveller,.chessTraveller{transform:translate(var(--dx),var(--dy))}.standingLegs{opacity:1}.seatedLegs{opacity:0}.chessBody{transform:none}}
+
+/* Education gestures and independent child anatomy/motion. */
+.scienceHand{transform-box:fill-box;transform-origin:top center;animation:scienceGesture 20s ease-in-out infinite both}
+@keyframes scienceGesture{0%,8%,16%,24%,32%,40%,100%{transform:rotate(0)}4%,12%,20%,28%,36%{transform:rotate(-12deg)}}
+.kidTravel{animation:kidGather 20s ease-in-out infinite both}
+@keyframes kidGather{0%,20%,40%,100%{transform:translate(0,0)}10%,30%{transform:translate(var(--run),-4px)}60%,75%{transform:translate(var(--dx),var(--dy))}}
+.kidBody{animation:kidBounce 20s linear infinite both}
+@keyframes kidBounce{0%,40%,60%,75%,100%{transform:translateY(0)}2%,6%,10%,14%,18%,22%,26%,30%,34%,38%,42%,46%,50%,54%,58%,77%,81%,85%,89%,93%,97%{transform:translateY(-3px)}4%,8%,12%,16%,20%,24%,28%,32%,36%,44%,48%,52%,56%,79%,83%,87%,91%,95%{transform:translateY(0)}}
+.kidLegA,.kidLegB,.kidArmA,.kidArmB{transform-box:fill-box;transform-origin:top center;animation:kidStride 20s linear infinite both}
+.kidLegB,.kidArmA{animation-name:kidStrideReverse}
+@keyframes kidStride{0%,40%,60%,75%,100%{transform:rotate(0)}2%,6%,10%,14%,18%,22%,26%,30%,34%,38%,44%,48%,52%,56%,77%,81%,85%,89%,93%,97%{transform:rotate(24deg)}4%,8%,12%,16%,20%,24%,28%,32%,36%,42%,46%,50%,54%,58%,79%,83%,87%,91%,95%{transform:rotate(-24deg)}}
+@keyframes kidStrideReverse{0%,40%,60%,75%,100%{transform:rotate(0)}2%,6%,10%,14%,18%,22%,26%,30%,34%,38%,44%,48%,52%,56%,77%,81%,85%,89%,93%,97%{transform:rotate(-24deg)}4%,8%,12%,16%,20%,24%,28%,32%,36%,42%,46%,50%,54%,58%,79%,83%,87%,91%,95%{transform:rotate(24deg)}}
+.kidsBall{animation:kidsPass 20s linear infinite both}
+@keyframes kidsPass{0%,40%,100%{transform:translate(var(--p0))}6%{transform:translate(var(--p1))}12%{transform:translate(var(--p2))}18%{transform:translate(var(--p5))}24%{transform:translate(var(--p4))}30%{transform:translate(var(--p3))}}
+@media(prefers-reduced-motion:reduce){.kidTravel{transform:translate(var(--dx),var(--dy))}.kidsBall{transform:translate(var(--p0))}}
+
+/* Reading gestures share the community clock; books stay held during travel. */
+.readerPage{transform-box:view-box;transform-origin:0px 0px;animation:readerPage 20s ease-in-out infinite both}
+.readerHand{transform-box:view-box;transform-origin:0px 0px;animation:readerHand 20s ease-in-out infinite both}
+.readerHead{transform-box:view-box;transform-origin:0px -64px;animation:readerHead 20s ease-in-out infinite both}
+.readerAlternate .readerPage{animation-name:readerPageAlternate}
+.readerAlternate .readerHand{animation-name:readerHandAlternate}
+@keyframes readerPage{0%,10%,17%,27%,34%,100%{transform:scaleX(1);opacity:0}11%,28%{transform:scaleX(1);opacity:1}13%,30%{transform:scaleX(0);opacity:1}16%,33%{transform:scaleX(-1);opacity:1}}
+@keyframes readerPageAlternate{0%,5%,12%,22%,29%,100%{transform:scaleX(1);opacity:0}6%,23%{transform:scaleX(1);opacity:1}8%,25%{transform:scaleX(0);opacity:1}11%,28%{transform:scaleX(-1);opacity:1}}
+@keyframes readerHand{0%,10%,17%,27%,34%,100%{transform:rotate(0)}11%,28%{transform:rotate(4deg)}13%,30%{transform:rotate(28deg)}16%,33%{transform:rotate(48deg)}}
+@keyframes readerHandAlternate{0%,5%,12%,22%,29%,100%{transform:rotate(0)}6%,23%{transform:rotate(4deg)}8%,25%{transform:rotate(28deg)}11%,28%{transform:rotate(48deg)}}
+@keyframes readerHead{0%,40%,100%{transform:rotate(0)}5%,15%,25%,35%{transform:rotate(5deg)}43%,97%{transform:rotate(0)}}
+@media(prefers-reduced-motion:reduce){.readerPage{opacity:0}}
+
+/* Compact landscape preview: reuse the approved complete desktop scene. */
+@media(max-width:767px){.desktop{display:block}.mobile{display:none}.caption{padding:4px 12px;gap:0 8px;font-size:11px}.controls{gap:2px}.controls button{padding:0 6px}}
+
+@media(max-width:1023px){.figure{width:calc(100% - 40px);border-radius:10px}}
+@media(max-width:767px){.figure{width:calc(100% - 24px);border-radius:8px}}
+
+@media(max-width:767px){.desktop{height:auto;aspect-ratio:1440 / 690}}

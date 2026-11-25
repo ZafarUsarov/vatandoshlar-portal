@@ -105,7 +105,7 @@ const copy = {
       career:
         "Karyera",
       business:
-        "Biznes",
+        "Tadbirkorlik",
       community:
         "Jamiyat",
       sport:
@@ -114,6 +114,7 @@ const copy = {
         "Bolalar uchun",
       consular:
         "Konsullik",
+      science: "Ilm-fan va texnologiya",
     },
     formats: {
       offline:
@@ -212,7 +213,7 @@ const copy = {
       career:
         "Karriere",
       business:
-        "Business",
+        "Unternehmertum",
       community:
         "Community",
       sport:
@@ -221,6 +222,7 @@ const copy = {
         "Für Kinder",
       consular:
         "Konsularisches",
+      science: "Wissenschaft & Technologie",
     },
     formats: {
       offline:

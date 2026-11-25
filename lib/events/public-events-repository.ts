@@ -14,7 +14,8 @@ export type PublicEventCategory =
   | "community"
   | "sport"
   | "children"
-  | "consular";
+  | "consular"
+  | "science";
 
 export type PublicEventFormat =
   | "offline"
@@ -150,6 +151,7 @@ const categoryValues:
     "sport",
     "children",
     "consular",
+    "science",
   ];
 
 const formatValues:

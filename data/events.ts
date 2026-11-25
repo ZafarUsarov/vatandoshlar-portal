@@ -12,7 +12,8 @@ export type EventCategoryKey =
   | "community"
   | "sport"
   | "children"
-  | "consular";
+  | "consular"
+  | "science";
 
 export type EventFormatKey =
   | "offline"
@@ -116,21 +117,23 @@ const categoryLabels: Readonly<
     culture: "Madaniyat",
     education: "Ta’lim",
     career: "Karyera",
-    business: "Biznes",
+    business: "Tadbirkorlik",
     community: "Jamiyat",
     sport: "Sport",
     children: "Bolalar uchun",
     consular: "Konsullik",
+    science: "Ilm-fan va texnologiya",
   },
   de: {
     culture: "Kultur",
     education: "Bildung",
     career: "Karriere",
-    business: "Wirtschaft",
+    business: "Unternehmertum",
     community: "Gemeinschaft",
     sport: "Sport",
     children: "Für Kinder",
     consular: "Konsularisches",
+    science: "Wissenschaft & Technologie",
   },
 };
 

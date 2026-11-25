@@ -85,7 +85,8 @@ try {
         'community',
         'sport',
         'children',
-        'consular'
+        'consular',
+        'science'
       )
     `),
 
