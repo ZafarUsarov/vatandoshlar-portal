@@ -8,7 +8,6 @@ import Header from "../../components/Header";
 import ShareButton from "../../components/shared/ShareButton";
 import TelegramSection from "../../components/TelegramSection";
 import TelegramCommunityNetwork from "../../components/telegram/TelegramCommunityNetwork";
-import { Link } from "../../i18n/navigation";
 
 const interTight = Inter_Tight({
   subsets: ["latin", "latin-ext"],
@@ -68,15 +67,13 @@ export default async function TelegramPage() {
   const copy =
     locale === "uz"
       ? {
-          backHome: "Bosh sahifaga qaytish",
-          eyebrow: "Germaniyadagi hamjamiyatingizni toping",
+          eyebrow: "Germaniyadagi özbek hamjamiyatlari",
           title: "Telegram guruhlari",
           description:
             "Vatandoshlar bilan bog‘laning, tajriba almashing va o‘z hamjamiyatingizni toping.",
         }
       : {
-          backHome: "Zur Startseite",
-          eyebrow: "Finden Sie Ihre Community in Deutschland",
+          eyebrow: "Usbekische Communitys in Deutschland",
           title: "Telegram-Gruppen",
           description:
             "Vernetzen Sie sich mit Landsleuten, tauschen Sie Erfahrungen aus und finden Sie Ihre Community.",
@@ -89,18 +86,10 @@ export default async function TelegramPage() {
       <main className="uzde-telegram-page uzde-home-frame min-h-screen bg-[var(--uzde-page-bg)] pt-20 text-slate-950 sm:pt-24 dark:text-[var(--telegram-text)]">
         <section className="border-b border-slate-200 bg-[var(--uzde-page-bg)] dark:border-[var(--telegram-border)]">
           <div className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-5 pb-10 pt-7 sm:px-6 sm:pb-14 sm:pt-9 lg:px-8 lg:pb-16">
-            <div className="flex items-center justify-between gap-4">
-              <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-sky-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500 dark:text-[var(--telegram-secondary)] dark:hover:text-sky-300"
-            >
-              <span aria-hidden="true">←</span>
-              {copy.backHome}
-              </Link>
-            </div>
 
-            <div className="mx-auto mt-8 max-w-5xl text-center sm:mt-9 lg:mt-10">
-              <p className="text-sm font-medium text-teal-700 sm:text-base dark:text-[var(--telegram-accent)]">
+
+            <div className="mx-auto max-w-5xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700 dark:text-[#55d6c5]">
                 {copy.eyebrow}
               </p>
               <h1 className={`${interTight.className} mt-4 text-[clamp(2.375rem,9vw,3.25rem)] font-semibold leading-none tracking-normal uppercase text-slate-950 sm:mt-5 sm:text-[clamp(3.25rem,6vw,4.25rem)] lg:mt-6 lg:text-[clamp(4.25rem,5vw,4.706rem)] dark:text-white`}>

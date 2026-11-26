@@ -93,7 +93,7 @@ export default async function NewsPage() {
       <main className="page-main uzde-newsroom-page uzde-newsroom-editorial !text-slate-950 dark:!text-white">
         <div className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-6 lg:px-8 2xl:px-10">
           <header className="pt-8 pb-7 text-center sm:pt-9 sm:pb-8 lg:pt-10 lg:pb-9">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">UZDE / {de ? "NACHRICHTEN" : "YANGILIKLAR"}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700 dark:text-[#55d6c5]">UZDE / {de ? "NACHRICHTEN" : "YANGILIKLAR"}</p>
             <h1 className="mx-auto mt-4 max-w-full text-[clamp(2.75rem,8.8vw,8.25rem)] font-semibold leading-[1.02] tracking-[-0.015em] [overflow-wrap:anywhere]">{de ? "Nachrichten." : "Yangiliklar."}</h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:mt-5 sm:text-lg">{de ? "Wichtige Ereignisse. Verlässliche Informationen. Neue Chancen." : "Muhim voqealar. Işonçli ma’lumotlar. Yangi imkoniyatlar."}</p>
           </header>

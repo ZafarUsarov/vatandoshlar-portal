@@ -1,7 +1,8 @@
-
-import BrandedText from "@/components/ui/BrandedText";
+import { Inter_Tight } from "next/font/google";
+import { ChevronDown } from "lucide-react";
 import ShareButton from "@/components/shared/ShareButton";
-
+import styles from "./Support.module.css";
+const heading = Inter_Tight({ subsets: ["latin", "latin-ext"], weight: "600", display: "swap" });
 type SupportHeroProps = Readonly<{
   badge: string;
   title: string;
@@ -10,94 +11,31 @@ type SupportHeroProps = Readonly<{
   locale: "uz" | "de";
 }>;
 
-function HeartIcon() {
+export default function SupportHero({ badge, title, description, locale }: SupportHeroProps) {
   return (
-    <svg
-      aria-hidden="true"
-      className="size-4"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M20.8 5.8a5 5 0 0 0-7.1 0L12 7.5l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21l8.8-8.1a5 5 0 0 0 0-7.1Z"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ArrowDownIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-4"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M12 5v14M6.5 13.5 12 19l5.5-5.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-export default function SupportHero({
-  badge,
-  title,
-  description,
-  action,
-  locale,
-}: SupportHeroProps) {
-  return (
-    <section className="relative isolate overflow-hidden border-b border-slate-200/80 bg-slate-50 text-slate-950 dark:border-white/[0.08] dark:bg-slate-950 dark:text-white">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(16,185,129,0.12),transparent_32%),radial-gradient(circle_at_48%_18%,rgba(20,184,166,0.06),transparent_30%)]"
-      />
-
-      <div className="relative mx-auto max-w-7xl px-6 py-10 sm:py-12 lg:px-8 lg:py-14">
-        <div className="space-y-8 sm:space-y-10">
-          <div className="max-w-5xl">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-700 shadow-sm dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
-              <HeartIcon />
-              {badge}
-            </span>
-
-            <h1 className="mt-6 text-balance text-4xl font-extrabold tracking-[-0.045em] sm:text-5xl lg:text-[3.35rem] lg:leading-[1.05] xl:whitespace-nowrap xl:text-6xl">
-              <BrandedText text={title} />
-            </h1>
-
-            <div className="mt-6 w-full max-w-5xl space-y-4 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8 dark:text-slate-300">
-              <p>
-                <BrandedText text={description} />
-              </p>
-            </div>
-
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-            <a
-              href="#support-options"
-              className="inline-flex min-h-12 w-fit items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-emerald-500 hover:shadow-xl hover:shadow-emerald-600/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none dark:focus-visible:ring-offset-slate-950"
-            >
-              {action}
-              <ArrowDownIcon />
-            </a>
-            <div className="relative z-10">
-              <ShareButton
-                title={locale === "de" ? "UzDe unterstützen" : "UzDe loyihasini qo‘llab-quvvatlang"}
-                locale={locale}
-              />
-            </div>
-            </div>
-          </div>
-
-
+    <section className={styles.hero} aria-labelledby="support-heading">
+      <div className={styles.heroLabel}>
+        <p className={styles.eyebrow}>{badge}</p>
+      </div>
+      <h1 id="support-heading" className={heading.className}>
+        <span className={styles.desktopCopy}>{title}</span>
+        <span className={styles.mobileCopy}>{locale === "de" ? "Unterstützen Sie UzDe." : "UzDe. rivojiga hissa qoşing."}</span>
+      </h1>
+      <p className={`${styles.description} ${styles.desktopCopy}`}>{description}</p>
+      <div className={styles.mobileCopy}>
+        <p className={styles.mobileIntro}>{locale === "de" ? "Ihr freiwilliger Beitrag unterstützt die Weiterentwicklung und den nachhaltigen Betrieb des Projekts." : "Sizning ixtiyoriy hissangiz loyihaning rivojlanişi va barqaror faoliyatiga xizmat qiladi."}</p>
+        <div className={styles.disclosureShare}>
+          <details className={styles.disclosure}>
+  <summary>{locale === "de" ? "Mehr erfahren" : "Batafsil"}<ChevronDown size={16} aria-hidden="true" /></summary>
+  <p>{locale === "de" ? "Mit Ihrem Beitrag helfen Sie, die Entwicklung sowie Domain-, Hosting- und technische Kosten zu finanzieren. Wir danken allen herzlich für ihre Unterstützung." : "Hissangiz loyihani rivojlantiriş, domen, hosting va texnik xarajatlarni qoplaşga yordam beradi. Bizni qöllab-quvvatlayotgan barçaga çuqur minnatdorçilik bildiramiz."}</p>
+          </details>
+        <div className={styles.mobileShare}>
+          <ShareButton title={title} locale={locale} variant="guide" iconOnly ariaLabel={locale === "de" ? "Seite teilen" : "Sahifani ulaşiş"} />
+        </div>
+        </div>
+        <div className={styles.charityRow}>
+          <strong aria-hidden="true">20%</strong>
+          <p>{locale === "de" ? "20 Prozent jedes Beitrags werden zum Jahresende berechnet und für Hilfe für Kinder in Gaza bereitgestellt." : "Har bir hissaning 20 foizi yil yakunida hisoblanib, Ǵazodagi bolalarga yordam uçun ajratiladi."}</p>
         </div>
       </div>
     </section>

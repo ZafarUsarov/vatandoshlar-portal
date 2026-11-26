@@ -1,3 +1,4 @@
+import styles from "@/components/support/Support.module.css";
 import type { Metadata } from "next";
 import {
   getLocale,
@@ -75,10 +76,10 @@ export default async function SupportPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
+    <div className="min-h-screen bg-[var(--uzde-editorial-bg)] text-zinc-900 dark:bg-[var(--uzde-home-surface,#111419)] dark:text-white">
       <Header />
 
-      <main className="pt-20">
+      <main className={styles.page}>
         <SupportHero
           locale={locale}
           badge={t("hero.badge")}
@@ -88,6 +89,7 @@ export default async function SupportPage() {
         />
 
         <SupportOptions
+          locale={locale}
           title={t("options.title")}
           description={t("options.description")}
           secondaryText={t("options.secondaryText")}
