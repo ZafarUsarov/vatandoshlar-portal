@@ -29,7 +29,7 @@ export default function GuideExplorer({ entries, locale }: Props) {
   return (
     <>
 
-      <nav className="guide-marquee hidden lg:block overflow-hidden border-y border-[#E3E5E5] bg-[#F0F1F0] py-2.5 text-[#4A5151] dark:border-[#30363A] dark:bg-[#1B2024] dark:text-zinc-300" aria-label={locale === "uz" ? "Qöllanma mavzulari" : "Ratgeberthemen"}>
+      <nav className="guide-marquee mx-auto hidden w-[calc(100%-2*clamp(16px,3.3vw,112px))] max-w-[calc(var(--uzde-layout-width)-2*clamp(16px,3.3vw,112px))] lg:block overflow-hidden border-y border-[#E3E5E5] bg-[#F0F1F0] py-2.5 text-[#4A5151] dark:border-[#30363A] dark:bg-[#1B2024] dark:text-zinc-300" aria-label={locale === "uz" ? "Qöllanma mavzulari" : "Ratgeberthemen"}>
         <div className="guide-marquee-track flex w-max items-center">
           {([0, 1] as const).map((cycle) => (
             <div key={cycle} className="flex shrink-0 items-center gap-8 pr-8 sm:gap-12 sm:pr-12" aria-hidden={cycle === 1}>

@@ -94,7 +94,7 @@ export default async function NewsPage() {
       <Header />
 
       <main className="page-main uzde-newsroom-page uzde-newsroom-editorial !text-slate-950 dark:!text-white">
-        <Container>
+        <Container size="full" className="max-w-[var(--uzde-layout-width)] 2xl:px-10">
           <header className="pt-8 pb-7 text-center sm:pt-9 sm:pb-8 lg:pt-10 lg:pb-9">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">UZDE / {de ? "NACHRICHTEN" : "YANGILIKLAR"}</p>
             <h1 className="mx-auto mt-4 max-w-full text-[clamp(2.75rem,8.8vw,8.25rem)] font-semibold leading-[1.02] tracking-[-0.015em] [overflow-wrap:anywhere]">{de ? "Nachrichten." : "Yangiliklar."}</h1>
@@ -106,7 +106,7 @@ export default async function NewsPage() {
               <Link href={`/news/${lead.slug}`} className="group block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-500">
                 {(lead.imageUrl || lead.slug === "vatandoshlar-de-endi-uzde") ? (
                   <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900 sm:aspect-[16/9] lg:aspect-[2/1]">
-                    <Image src={lead.slug === "vatandoshlar-de-endi-uzde" ? "/images/news/uzde-rebranding-2026.webp" : lead.imageUrl!} alt={lead.title} fill priority sizes="(min-width: 1280px) 1152px, 100vw" className="object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.015]" />
+                    <Image src={lead.slug === "vatandoshlar-de-endi-uzde" ? "/images/news/uzde-rebranding-2026.webp" : lead.imageUrl!} alt={lead.title} fill priority sizes="(min-width: 2560px) 2480px, (min-width: 1536px) calc(100vw - 80px), (min-width: 1024px) calc(100vw - 64px), calc(100vw - 48px)" className="object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.015]" />
                   </div>
                 ) : (
                   <div className="flex aspect-[16/8] items-end bg-slate-100 p-8 dark:bg-slate-900"><span className="text-xs font-semibold uppercase tracking-widest text-slate-500">UZDE / EDITORIAL</span></div>

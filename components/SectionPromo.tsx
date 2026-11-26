@@ -239,7 +239,7 @@ export default async function SectionPromo({
         aria-labelledby={`section-promo-${target}`}
         className={continuous ? "bg-[var(--uzde-page-bg)] py-5 text-zinc-950 dark:text-white sm:py-12" : "border-t border-slate-200 bg-[#f7f8f9] py-10 text-slate-950 dark:border-white/10 dark:bg-[#151719] dark:text-white sm:py-12"}
       >
-        <div className={continuous ? "mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)]" : "mx-auto w-full max-w-[var(--uzde-layout-width)] px-5 sm:px-6 lg:px-8"}>
+        <div className={continuous ? "mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)]" : "mx-auto w-full max-w-[var(--uzde-layout-width)] px-5 sm:px-6 lg:px-8 2xl:px-10"}>
           <div className={`grid gap-6 border-t pt-7 ${continuous ? "max-sm:gap-3 max-sm:pt-4" : ""} lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:pt-9 ${continuous ? "border-slate-200 dark:border-zinc-800" : "border-slate-300/80 dark:border-white/20"}`}>
             <div className="min-w-0">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700 dark:text-[#55D7C3]">

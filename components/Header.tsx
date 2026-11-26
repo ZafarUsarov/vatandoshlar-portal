@@ -1235,7 +1235,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
             sm:px-6 min-[1360px]:px-5
 
-            xl:px-8 2xl:px-10
+            xl:px-8 2xl:px-10 min-[1920px]:px-[clamp(16px,3.3vw,112px)]!
 
             ${isScrolled ? "h-16" : "h-20"} max-[1023px]:!h-[66px]
 
@@ -1318,7 +1318,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
 
             aria-label={t("accessibility.homeLink")}
 
-            className={`group ml-0 min-w-0 shrink-0 items-center gap-1 lg:ml-4 min-[1280px]:mr-5 min-[1440px]:mr-7 ${isSearchOpen ? "hidden min-[1024px]:flex" : "flex"}`}
+            className={`group ml-0 min-w-0 shrink-0 items-center gap-1 lg:ml-4 min-[1920px]:ml-0! min-[1280px]:mr-5 min-[1440px]:mr-7 ${isSearchOpen ? "hidden min-[1024px]:flex" : "flex"}`}
 
           >
 
@@ -1598,7 +1598,7 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
             {authState === "user" ? (
               <HeaderAccountMenu locale={locale} />
             ) : authState === "loading" ? (
-              <span aria-hidden="true" className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-md border border-[#292929] bg-transparent px-3 text-sm font-semibold tracking-[0.02em] !text-[#020617] transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 min-[1600px]:px-5 min-[1600px]:text-sm dark:border-zinc-400 dark:bg-transparent dark:!text-zinc-100 dark:hover:bg-white/10">{authCopy.login}</span>
+              <span aria-hidden="true" className="flex h-10 shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md px-3 text-sm font-semibold tracking-[0.02em] text-slate-900 transition-colors hover:text-emerald-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current min-[1600px]:px-5 dark:text-slate-100 dark:hover:text-emerald-400"><UserRound aria-hidden="true" className="size-[18px] shrink-0" />{authCopy.login}</span>
             ) : (
               <Link
                 href={
@@ -1606,8 +1606,9 @@ export default function Header({ showRebrandingBanner = false }: { showRebrandin
                     ? "/admin"
                     : "/id/login"
                 }
-                className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-md border border-[#292929] bg-transparent px-3 text-sm font-semibold tracking-[0.02em] !text-[#020617] transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 min-[1600px]:px-5 min-[1600px]:text-sm dark:border-zinc-400 dark:bg-transparent dark:!text-zinc-100 dark:hover:bg-white/10"
+                className="flex h-10 shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md px-3 text-sm font-semibold tracking-[0.02em] text-slate-900 transition-colors hover:text-emerald-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current min-[1600px]:px-5 dark:text-slate-100 dark:hover:text-emerald-400"
               >
+                <UserRound aria-hidden="true" className="size-[18px] shrink-0" />
                 {
                   authState === "admin"
                     ? authCopy.admin
