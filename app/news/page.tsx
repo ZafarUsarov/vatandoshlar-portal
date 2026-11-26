@@ -10,9 +10,6 @@ import Header from "../../components/Header";
 import NewsCard from "../../components/cards/NewsCard";
 import NewsroomCatalogFilter from "../../components/news/NewsroomCatalogFilter";
 import {
-  Container,
-} from "../../components/ui";
-import {
   getPublishedNews,
   getNewsroomFeaturedSlug,
   type PublicNewsLocale,
@@ -94,7 +91,7 @@ export default async function NewsPage() {
       <Header />
 
       <main className="page-main uzde-newsroom-page uzde-newsroom-editorial !text-slate-950 dark:!text-white">
-        <Container size="full" className="max-w-[var(--uzde-layout-width)] 2xl:px-10">
+        <div className="mx-auto w-full max-w-[var(--uzde-layout-width)] px-6 lg:px-8 2xl:px-10">
           <header className="pt-8 pb-7 text-center sm:pt-9 sm:pb-8 lg:pt-10 lg:pb-9">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">UZDE / {de ? "NACHRICHTEN" : "YANGILIKLAR"}</p>
             <h1 className="mx-auto mt-4 max-w-full text-[clamp(2.75rem,8.8vw,8.25rem)] font-semibold leading-[1.02] tracking-[-0.015em] [overflow-wrap:anywhere]">{de ? "Nachrichten." : "Yangiliklar."}</h1>
@@ -147,7 +144,7 @@ export default async function NewsPage() {
               <p className="py-8 text-sm text-slate-500 dark:text-slate-400">{de ? "Keine weiteren Beiträge vorhanden." : "Hozircha boshqa materiallar mavjud emas."}</p>
             )}
           </section>
-        </Container>
+        </div>
       </main>
 
       <SectionPromo target="guide" variant="compact" />
