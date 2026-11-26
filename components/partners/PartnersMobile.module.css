@@ -1,0 +1,93 @@
+.graphic { color: #527461; }
+.node { fill: #e2eae1; }
+.center { fill: #204c3b; }
+:global(html.dark) .graphic { color: #9bbba8; }
+:global(html.dark) .node { fill: #263b32; }
+:global(html.dark) .center { fill: #315c48; }
+@media (max-width: 1023px) {
+  .page { padding-inline: clamp(16px, 4.5vw, 20px); min-width: 0; }
+  .hero { display: grid; grid-template-columns: minmax(0,1fr); gap: 16px; padding: 8px 0 20px; border-bottom: 1px dotted var(--border-strong); }
+  .hero > div:first-child > p:first-child { font-size: 11px; letter-spacing: .12em; color: var(--text-muted); }
+  .hero h1 { font-size: clamp(26px, 7.1vw, 30px); line-height: 1.12; letter-spacing: normal; margin-top: 8px; text-wrap: wrap; }
+  .hero h1 + div { margin-top: 16px; }
+  .hero h1 + div p { font-size: 16px; line-height: 1.5; }
+  .hero > div:first-child > div:last-child { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; margin-top: 14px; }
+  .hero a, .contact a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; gap: 10px; }
+  .graphic { width: 100%; max-width: clamp(220px, 60vw, 260px); margin-inline: auto; }
+  .graphic svg { width: 100%; height: auto; }
+  .ecosystem, .benefits, .network { margin-top: 44px; min-width: 0; }
+  .ecosystem h2, .benefits h2, .network h2 button, .audience h2 { font-size: clamp(28px, 7vw, 34px); line-height: 1.12; letter-spacing: normal; font-weight: 600; overflow-wrap: anywhere; }
+  .ecosystem > p, .audience > p { font-size: 16px; line-height: 1.5; }
+  .benefits h2 { margin-bottom: 16px; }
+  .accordion h3 button, .audienceRow { display: grid; grid-template-columns: 24px minmax(0,1fr) 24px; align-items: center; gap: 10px; width: 100%; min-height: 56px; padding-block: 12px; text-align: left; }
+  .accordion h3 button > span:first-child, .audienceRow > span:first-child { font-size: 13px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+  .accordion h3 button > span:nth-child(2), .audienceRow > span:nth-child(2) { font-size: 16px; line-height: 1.35; min-width: 0; overflow-wrap: anywhere; }
+  .accordion h3 button > span:nth-child(2) { font-weight: 500; }
+  .accordion h3 button > svg, .audienceRow > svg { width: 20px; height: 20px; justify-self: end; }
+  .accordion [role=region] p { padding: 0 24px 16px 34px; font-size: 15px; line-height: 1.5; }
+  .network h2 button { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding-block: 14px; text-align: left; }
+  .network h2 button svg { flex: none; width: 24px; height: 24px; }
+  .audience { padding-block: 44px; }
+  .audience h2, .audience > p { text-align: center; }
+  .audience ol { margin-top: 20px; }
+  .contact { display: grid; grid-template-columns: minmax(0,1fr); gap: 16px; border-radius: 6px; padding: 22px; background: #102b2a; color: #f1f0e9; }
+  .contact h2 { font-size: clamp(30px, 8vw, 36px); line-height: 1.1; letter-spacing: normal; font-weight: 600; }
+  .contact p { font-size: 16px; line-height: 1.5; }
+  .contact > div:last-child { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; }
+  .contact > div:last-child a { margin: 0; padding-block: 0; overflow-wrap: anywhere; }
+}
+
+@media (max-width: 1023px) {
+  .hero { gap: 8px; padding-bottom: 12px; }
+  .hero > div:first-child > p:first-child { font-size: 10px; }
+
+  .hero h1 + div { margin-top: 10px; }
+  .hero h1 + div p { font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--text-secondary); }
+  .hero > div:first-child > div:last-child { margin-top: 8px; gap: 2px 12px; }
+  .hero a { font-size: 13px; gap: 8px; }
+  .hero a svg { width: 16px; height: 16px; }
+}
+
+/* Mobile dark contrast refinement */
+@media (max-width: 1023px) {
+  :global(html.dark) .page {
+    --border: #292e36;
+    --border-strong: #292e36;
+  }
+}
+
+
+.heroGraphic {
+  display: contents;
+}
+
+.heroShare {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .heroGraphic {
+    display: block;
+    position: relative;
+    min-width: 0;
+  }
+
+  .heroShare {
+    display: flex;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+  }
+
+  .heroShare button {
+    width: 44px;
+    height: 44px;
+    color: var(--text-secondary);
+  }
+
+  .heroShare button svg {
+    width: 20px;
+    height: 20px;
+  }
+}

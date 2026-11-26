@@ -1,8 +1,19 @@
+import mobile from "@/components/partners/PartnersMobile.module.css";
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PartnersHero from "@/components/partners/PartnersHero";
+import PartnersAccordion from "@/components/partners/PartnersAccordion";
+import EcosystemGallery from "@/components/partners/EcosystemGallery";
+import PartnersNetwork from "@/components/partners/PartnersNetwork";
+import PartnersAudience from "@/components/partners/PartnersAudience";
+import PartnersContact from "@/components/partners/PartnersContact";
+import { content } from "@/data/partners/content";
+import { Inter_Tight } from "next/font/google";
 import { imprint } from "@/data/legal/imprint";
+
+const heading = Inter_Tight({ subsets: ["latin", "latin-ext"], weight: "600", display: "swap" });
 
 export async function generateMetadata(): Promise<Metadata> {
   const de = (await getLocale()) === "de";
@@ -14,23 +25,27 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function PartnersPage() {
   const de = (await getLocale()) === "de";
+  const copy = content[de ? "de" : "uz"];
   const subject = de ? "Partnerschaftsanfrage an UzDe" : "UzDe bilan hamkorlik taklifi";
   const emailHref = `mailto:${imprint.email}?subject=${encodeURIComponent(subject)}`;
   return (
-    <div className="min-h-screen bg-[#f7f7f7] text-zinc-900 dark:bg-zinc-950 dark:text-white">
+    <div className="min-h-screen bg-[var(--uzde-editorial-bg)] text-zinc-900 dark:bg-[var(--uzde-home-surface,#111419)] dark:text-white">
       <Header />
-      <main className="px-[clamp(16px,3.3vw,112px)] pb-28 pt-36 sm:pt-44">
-        <div className="border-t border-zinc-300 pt-8 dark:border-zinc-700">
-          <p className="mb-10 text-xs font-medium tracking-[0.15em] text-zinc-500">UZDE / {de ? "PARTNERSCHAFTEN" : "HAMKORLIK"}</p>
-          <h1 className="max-w-[18ch] text-[clamp(40px,6vw,100px)] font-semibold leading-[1.06] tracking-[-0.03em]">{de ? "GEMEINSAM MEHR ERREICHEN." : "BIRGALIKDA KÖPROQ IMKONIYAT."}</h1>
-          <div className="mt-12 grid gap-8 border-t border-zinc-300 pt-10 dark:border-zinc-700 lg:grid-cols-2">
-            <p className="max-w-[52ch] text-lg leading-relaxed text-zinc-600 dark:text-zinc-300">{de ? "Sie möchten Ihr Unternehmen, Ihre Organisation oder Ihr Projekt der usbekischsprachigen Community in Deutschland vorstellen? Sprechen Sie mit uns über eine mögliche Zusammenarbeit." : "Kompaniyangiz, taşkilotingiz yoki loyihangizni Germaniyadagi özbek tilida sözlaşuvçi auditoriyaga tanitmoqçimisiz? Hamkorlik imkoniyatlarini birgalikda muhokama qilaylik."}</p>
-            <div className="flex flex-col items-start justify-end gap-5">
-              <a href={emailHref} className="inline-flex min-h-12 items-center border-b border-current pb-2 text-lg font-semibold hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4">{de ? "Partnerschaft per E-Mail anfragen" : "Email orqali boglaning"}<span aria-hidden="true" className="ml-8">↗</span></a>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">{imprint.email}</p>
-            </div>
-          </div>
-        </div>
+      <main className={`${mobile.page} mx-auto w-full max-w-[var(--uzde-layout-width)] px-[clamp(16px,3.3vw,112px)] pb-12 pt-24 sm:pb-16 sm:pt-28 lg:pt-32`}>
+        <PartnersHero locale={de ? "de" : "uz"} email={imprint.email} emailHref={emailHref} />
+        <section aria-labelledby="partners-ecosystem" className={`${mobile.ecosystem} mt-5 sm:mt-7`}>
+          <h2 id="partners-ecosystem" className={`${heading.className} text-[clamp(28px,3.5vw,56px)] font-semibold leading-tight tracking-tight`}>{copy.ecosystemTitle}</h2>
+          <p className="mb-4 mt-1 text-base sm:text-lg text-[var(--text-secondary)]">{copy.ecosystemDescription}</p>
+          <EcosystemGallery brands={copy.brands} caption={copy.internal} pause={copy.pause} play={copy.play}/>
+        </section>
+        <section aria-labelledby="partners-benefits" className={`${mobile.benefits} mt-8 w-full sm:mt-10 lg:mt-12`}>
+          <h2 id="partners-benefits" className={`${heading.className} mb-5 text-left text-[30px] font-semibold leading-tight tracking-tight sm:mb-7 sm:text-[40px] lg:mb-8 lg:text-[clamp(48px,3.5vw,56px)]`}>{copy.benefitsTitle}</h2>
+          <PartnersAccordion items={copy.benefits} />
+        </section>
+
+        <div className={`${mobile.network} mt-10`}><PartnersNetwork title={copy.networkTitle} emptyTitle={copy.networkEmptyTitle} description={copy.networkDescription} action={copy.action} emailHref={emailHref} headingClassName={heading.className}/></div>
+        <PartnersAudience title={copy.audienceTitle} description={copy.audienceDescription} items={copy.audience} headingClassName={heading.className} />
+        <PartnersContact title={copy.contactTitle} description={copy.contactDescription} action={copy.contact} emailHref={emailHref} email={imprint.email}/>
       </main>
       <Footer />
     </div>

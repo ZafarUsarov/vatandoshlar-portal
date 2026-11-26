@@ -1,0 +1,80 @@
+.gallery{min-width:0;--gap:14px;--banner-width:clamp(280px,24vw,360px)}
+.rows{display:grid;gap:var(--gap)}
+.viewport{overflow:hidden;min-width:0}
+.track{display:flex;width:max-content;animation:slide 150s linear infinite;animation-play-state:paused;will-change:transform}
+.reverse{animation-direction:reverse;animation-duration:165s}
+.group{display:flex;gap:var(--gap);padding-inline-end:var(--gap);flex:none}
+.gallery[data-running=true] .track{animation-play-state:running}
+.banner{box-sizing:border-box;flex:none;width:var(--banner-width);aspect-ratio:1.78;display:flex;flex-direction:column;justify-content:space-between;padding:16px 20px;overflow:hidden;border-radius:4px}
+.mark{align-self:flex-end;width:31%;height:53%;min-height:0}
+.copy{min-width:0}
+.name{font-size:clamp(22px,2vw,29px);font-weight:600;line-height:1.08;letter-spacing:-.025em;overflow-wrap:anywhere}
+.description{font-size:13px;line-height:1.3;margin-top:5px}
+.uzde{background:#c2d2c8;color:#153a32}.talks{background:#102b2a;color:#f1f0e9}.market{background:#d8e4cc;color:#284333}.travel{background:#e9dfcd;color:#514330}.specialists{background:#cbdfe5;color:#20444e}.guide{background:#e8e7e0;color:#333b39}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+@media(max-width:1023px){.gallery{--gap:10px;--banner-width:clamp(214px,58vw,240px)}.rows{grid-template-columns:minmax(0,1fr)}.banner{padding:12px 14px}.mark{height:42%}.name{font-size:18px;line-height:1.05;letter-spacing:0}.description{font-size:11px;line-height:1.2;margin-top:3px}}
+@media(prefers-reduced-motion:reduce){.track{animation:none;will-change:auto}.viewport{overflow-x:auto}.group:not(:first-child){display:none}}
+
+.banner{text-decoration:none;transition:filter .2s ease}
+.banner:hover{filter:brightness(.96)}
+.banner:focus-visible{outline:2px solid currentColor;outline-offset:-4px}
+
+.gallery:has(.banner:focus-visible) .track{animation:none;transform:none;will-change:auto}
+.gallery:has(.banner:focus-visible) .viewport{overflow-x:auto}
+.mark{display:flex;align-items:center;justify-content:center}
+.mark>svg{max-height:100%;width:auto!important}
+@media(prefers-reduced-motion:reduce){.banner{transition:none}}
+
+/* Partners dark theme */
+:global(html.dark) .uzde {
+  background: #253b34;
+  color: #e1efe8;
+}
+
+:global(html.dark) .talks {
+  background: #102b2a;
+  color: #f1f0e9;
+}
+
+:global(html.dark) .market {
+  background: #29382b;
+  color: #d8e4cc;
+}
+
+:global(html.dark) .travel {
+  background: #393127;
+  color: #e9dfcd;
+}
+
+:global(html.dark) .specialists {
+  background: #233740;
+  color: #cbe4ea;
+}
+
+:global(html.dark) .guide {
+  background: #303431;
+  color: #e8e7e0;
+}
+
+@media (max-width: 1023px) {
+  .gallery { container-type: inline-size; --gap: 8px; }
+  .banner { width: calc((100cqw - var(--gap)) / 2); aspect-ratio: auto; min-height: 110px; padding: 10px; gap: 4px; }
+  .mark { width: 38px; height: 38px; flex: none; }
+  .name { font-size: clamp(14px, 3.6vw, 16px); line-height: 1.1; overflow-wrap: anywhere; }
+  .description { font-size: 10px; line-height: 1.15; margin-top: 2px; overflow-wrap: anywhere; }
+}
+
+/* Mobile dark contrast refinement */
+@media (max-width: 1023px) {
+  :global(html.dark) .guide .mark { color: #f4f3ed; }
+  :global(html.dark) .market .mark { color: #e6f0df; }
+  :global(html.dark) .travel .mark { color: #f4e8d3; }
+  :global(html.dark) .guide .mark > svg > g,
+  :global(html.dark) .market .mark > svg {
+    stroke-width: 1.8;
+  }
+  :global(html.dark) .travel .mark > svg {
+    stroke-width: 1.8;
+  }
+}
