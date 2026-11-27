@@ -1,3 +1,6 @@
+import styles from "./Privacy.module.css";
+import PrivacyTableOfContents from "./PrivacyTableOfContents";
+import { Inter_Tight } from "next/font/google";
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
@@ -132,182 +135,16 @@ const copy = {
   },
 } as const;
 
-type SectionAccent =
-  | "emerald"
-  | "cyan"
-  | "blue"
-  | "violet"
-  | "fuchsia"
-  | "pink"
-  | "amber"
-  | "lime"
-  | "orange";
+const heading = Inter_Tight({ subsets: ["latin", "latin-ext"], weight: "600", display: "swap" });
 
-const sectionAccentStyles: Record<
-  SectionAccent,
-  Readonly<{
-    bar: string;
-    border: string;
-    glow: string;
-    number: string;
-  }>
-> = {
-  emerald: {
-    bar: "bg-emerald-500",
-    border:
-      "hover:border-emerald-300 dark:hover:border-emerald-500/40",
-    glow:
-      "group-hover:shadow-emerald-500/10",
-    number:
-      "border-emerald-300 text-emerald-700 dark:border-emerald-500/40 dark:text-emerald-300",
-  },
-  cyan: {
-    bar: "bg-cyan-500",
-    border:
-      "hover:border-cyan-300 dark:hover:border-cyan-500/40",
-    glow:
-      "group-hover:shadow-cyan-500/10",
-    number:
-      "border-cyan-300 text-cyan-700 dark:border-cyan-500/40 dark:text-cyan-300",
-  },
-  blue: {
-    bar: "bg-blue-500",
-    border:
-      "hover:border-blue-300 dark:hover:border-blue-500/40",
-    glow:
-      "group-hover:shadow-blue-500/10",
-    number:
-      "border-blue-300 text-blue-700 dark:border-blue-500/40 dark:text-blue-300",
-  },
-  violet: {
-    bar: "bg-violet-500",
-    border:
-      "hover:border-violet-300 dark:hover:border-violet-500/40",
-    glow:
-      "group-hover:shadow-violet-500/10",
-    number:
-      "border-violet-300 text-violet-700 dark:border-violet-500/40 dark:text-violet-300",
-  },
-  fuchsia: {
-    bar: "bg-fuchsia-500",
-    border:
-      "hover:border-fuchsia-300 dark:hover:border-fuchsia-500/40",
-    glow:
-      "group-hover:shadow-fuchsia-500/10",
-    number:
-      "border-fuchsia-300 text-fuchsia-700 dark:border-fuchsia-500/40 dark:text-fuchsia-300",
-  },
-  pink: {
-    bar: "bg-pink-500",
-    border:
-      "hover:border-pink-300 dark:hover:border-pink-500/40",
-    glow:
-      "group-hover:shadow-pink-500/10",
-    number:
-      "border-pink-300 text-pink-700 dark:border-pink-500/40 dark:text-pink-300",
-  },
-  amber: {
-    bar: "bg-amber-500",
-    border:
-      "hover:border-amber-300 dark:hover:border-amber-500/40",
-    glow:
-      "group-hover:shadow-amber-500/10",
-    number:
-      "border-amber-300 text-amber-700 dark:border-amber-500/40 dark:text-amber-300",
-  },
-  lime: {
-    bar: "bg-lime-500",
-    border:
-      "hover:border-lime-300 dark:hover:border-lime-500/40",
-    glow:
-      "group-hover:shadow-lime-500/10",
-    number:
-      "border-lime-300 text-lime-700 dark:border-lime-500/40 dark:text-lime-300",
-  },
-  orange: {
-    bar: "bg-orange-500",
-    border:
-      "hover:border-orange-300 dark:hover:border-orange-500/40",
-    glow:
-      "group-hover:shadow-orange-500/10",
-    number:
-      "border-orange-300 text-orange-700 dark:border-orange-500/40 dark:text-orange-300",
-  },
-};
-
-function Section({
-  id,
-  title,
-  accent,
-  children,
-}: Readonly<{
-  id: string;
-  title: string;
-  accent: SectionAccent;
-  children: React.ReactNode;
-}>) {
-  const styles =
-    sectionAccentStyles[accent];
-
-  return (
-    <section
-      id={id}
-      className={`group scroll-mt-24 rounded-[1.75rem] border border-slate-200/80 bg-white p-6 shadow-[0_18px_55px_-42px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-0.5 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900/80 sm:p-8 ${styles.border} ${styles.glow}`}
-    >
-      <div
-        aria-hidden="true"
-        className={`mb-5 h-1 w-12 rounded-full ${styles.bar}`}
-      />
-
-      <h2 className="text-xl font-black tracking-tight text-slate-950 dark:text-white sm:text-2xl">
-        {title}
-      </h2>
-
-      <div className="mt-4 space-y-4 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
-        {children}
-      </div>
-    </section>
-  );
-}
-
-function TocLink({
-  href,
-  number,
-  label,
-  accent,
-}: Readonly<{
-  href: string;
-  number: number;
-  label: string;
-  accent: SectionAccent;
-}>) {
-  const styles =
-    sectionAccentStyles[accent];
-
-  return (
-    <a
-      href={href}
-      className={`group relative flex min-h-16 items-center gap-4 overflow-hidden rounded-2xl border border-slate-200/80 bg-white/85 px-4 py-3 text-sm font-bold text-slate-800 shadow-sm backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-800 dark:bg-slate-900/75 dark:text-slate-200 dark:focus-visible:ring-offset-slate-950 ${styles.border} ${styles.glow}`}
-    >
-      <span
-        aria-hidden="true"
-        className={`absolute inset-y-0 left-0 w-1 ${styles.bar}`}
-      />
-
-      <span
-        className={`flex size-9 shrink-0 items-center justify-center rounded-full border text-sm font-black ${styles.number}`}
-      >
-        {number}
-      </span>
-
-      <span className="leading-5">
-        {label.replace(
-          /^\d+\.\s*/,
-          "",
-        )}
-      </span>
-    </a>
-  );
+function Section({ id, title, children }: Readonly<{ id: string; title: string; children: React.ReactNode }>) {
+  return <section id={id} tabIndex={-1} aria-labelledby={`${id}-heading`} className={styles.section}>
+    <div className={styles.sectionHeading}>
+      <span className={styles.sectionNumber} aria-hidden="true">{title.match(/^\d+/)?.[0].padStart(2, "0")}</span>
+      <h2 id={`${id}-heading`} className={heading.className}>{title.replace(/^\d+\.\s*/, "")}</h2>
+    </div>
+    <div className={styles.body}>{children}</div>
+  </section>;
 }
 
 function BrandedText({
@@ -362,154 +199,81 @@ export default async function PrivacyPage() {
       id: "controller",
       title:
         currentCopy.controllerTitle,
-      accent: "emerald",
+
     },
     {
       id: "hosting",
       title:
         currentCopy.hostingTitle,
-      accent: "cyan",
+
     },
     {
       id: "analytics",
       title:
         currentCopy.analyticsTitle,
-      accent: "blue",
+
     },
     {
       id: "content-views",
       title:
         currentCopy.contentViewsTitle,
-      accent: "violet",
+
     },
     {
       id: "storage",
       title:
         currentCopy.storageTitle,
-      accent: "fuchsia",
+
     },
     {
       id: "external-links",
       title:
         currentCopy.externalTitle,
-      accent: "pink",
+
     },
     {
       id: "rights",
       title:
         currentCopy.rightsTitle,
-      accent: "amber",
+
     },
     {
       id: "contact",
       title:
         currentCopy.contactTitle,
-      accent: "lime",
+
     },
     {
       id: "changes",
       title:
         currentCopy.changesTitle,
-      accent: "orange",
+
     },
   ] as const satisfies ReadonlyArray<{
     id: string;
     title: string;
-    accent: SectionAccent;
+
   }>;
 
   return (
-    <>
+    <div className={styles.surface}>
       <Header />
-
-      <main
-        id="top"
-        className="relative min-h-screen overflow-hidden bg-slate-50 px-4 pb-10 pt-24 dark:bg-slate-950 sm:px-6 sm:pb-12 sm:pt-24 lg:px-8 lg:pb-16 lg:pt-16"
-      >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.13),transparent_42%),radial-gradient(circle_at_top_left,rgba(14,165,233,0.08),transparent_34%)]"
-        />
-        <div className="relative mx-auto max-w-7xl">
-          <header className="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 p-6 shadow-[0_24px_70px_-48px_rgba(15,23,42,0.5)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/90 sm:p-8 lg:p-10">
-            <div aria-hidden="true" className="absolute -right-20 -top-24 h-64 w-64 rounded-full border-[42px] border-emerald-500/5" />
-            <div className="relative">
-              <div className="flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.16em]">
-                <span className="normal-case tracking-normal">
-                  <BrandName />
-                </span>
-
-                <span
-                  aria-hidden="true"
-                  className="text-slate-300 dark:text-slate-600"
-                >
-                  ·
-                </span>
-
-                <span className="text-emerald-600 dark:text-emerald-400">
-                  {currentCopy.eyebrow}
-                </span>
-              </div>
-
-              <h1 className="mt-4 max-w-3xl text-3xl font-black tracking-[-0.035em] text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
-                {currentCopy.title}
-              </h1>
-              <p className="mt-5 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
-                {currentCopy.intro}
-              </p>
-              <div className="mt-7 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-bold text-emerald-800 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
-                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-emerald-500" />
-                {currentCopy.updatedLabel}: {currentCopy.updatedValue}
-              </div>
-            </div>
-          </header>
-
-          <div className="mt-6 grid gap-6 lg:grid-cols-[19rem_minmax(0,1fr)] lg:items-start">
-            <aside className="lg:sticky lg:top-6">
-              <div className="rounded-[1.75rem] border border-slate-200/80 bg-white/70 p-4 shadow-[0_18px_55px_-42px_rgba(15,23,42,0.4)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/55">
-                <p className="px-2 pb-4 text-xs font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
-                  {currentCopy.tocTitle}
-                </p>
-
-                <nav
-                  aria-label={
-                    currentCopy.tocTitle
-                  }
-                  className="space-y-2"
-                >
-                  {sections.map(
-                    (
-                      section,
-                      index,
-                    ) => (
-                      <TocLink
-                        key={
-                          section.id
-                        }
-                        href={`#${section.id}`}
-                        number={
-                          index + 1
-                        }
-                        label={
-                          section.title
-                        }
-                        accent={
-                          section.accent
-                        }
-                      />
-                    ),
-                  )}
-                </nav>
-              </div>
-            </aside>
-
-            <article className="min-w-0 space-y-5">
+      <main id="top" className={styles.page}>
+        <header className={styles.hero}>
+          <p className={styles.eyebrow}>UZDE. / {currentCopy.eyebrow}</p>
+          <h1 className={heading.className}>{currentCopy.title}.</h1>
+          <p className={styles.intro}>{currentCopy.intro}</p>
+          <p className={styles.updated}>{currentCopy.updatedLabel}: <time dateTime="2026-09-16">{currentCopy.updatedValue}</time></p>
+        </header>
+        <div className={styles.layout}>
+          <PrivacyTableOfContents title={currentCopy.tocTitle} sections={sections} locale={appLocale} />
+          <article className={styles.article}>
                 <Section
                 id="controller"
                 title={
                   currentCopy.controllerTitle
                 }
-                accent="emerald"
+
               >
               <p>
                 {appLocale === "uz" ? (
@@ -525,24 +289,24 @@ export default async function PrivacyPage() {
                 )}{" "}
                 <Link
                   href="/about/founder"
-                  className="font-extrabold text-emerald-700 underline decoration-emerald-300 underline-offset-4 transition hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-emerald-400 dark:decoration-emerald-700 dark:hover:text-emerald-300 dark:focus-visible:ring-offset-slate-900"
+                  className={styles.link}
                 >
                   Zafar Usarov
                 </Link>
                 .
               </p>
 
-              <div className="grid gap-3 pt-1 sm:grid-cols-2">
+              <div className={styles.contactGrid}>
                 <Link
                   href="/about/founder"
-                  className="group rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-emerald-300 hover:bg-emerald-50/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-emerald-500/40 dark:hover:bg-emerald-500/10 dark:focus-visible:ring-offset-slate-900"
+                  className={styles.contactRow}
                 >
-                  <span className="block text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+                  <span className={styles.contactLabel}>
                     {appLocale === "de" ? "Gründer & Entwickler" : "Asoschi & dasturchi"}
                   </span>
-                  <span className="mt-1 flex items-center justify-between gap-3 font-black text-slate-950 dark:text-white">
+                  <span className={styles.contactValue}>
                     Zafar Usarov
-                    <span aria-hidden="true" className="text-emerald-600 transition-transform group-hover:translate-x-1 dark:text-emerald-400">
+                    <span aria-hidden="true" className={styles.arrow}>
                       →
                     </span>
                   </span>
@@ -550,12 +314,12 @@ export default async function PrivacyPage() {
 
                 <a
                   href="mailto:info@uzde.de"
-                  className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-emerald-300 hover:bg-emerald-50/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-950/50 dark:hover:border-emerald-500/40 dark:hover:bg-emerald-500/10 dark:focus-visible:ring-offset-slate-900"
+                  className={styles.contactRow}
                 >
-                  <span className="block text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+                  <span className={styles.contactLabel}>
                     {currentCopy.contactLabel}
                   </span>
-                  <span className="mt-1 block break-all font-bold text-emerald-700 dark:text-emerald-400">
+                  <span className={styles.contactValue}>
                     info@uzde.de
                   </span>
                 </a>
@@ -567,7 +331,7 @@ export default async function PrivacyPage() {
                 title={
                   currentCopy.hostingTitle
                 }
-                accent="cyan"
+
               >
               <p>
                 {currentCopy.hostingBody}
@@ -585,7 +349,7 @@ export default async function PrivacyPage() {
                 href="https://railway.com/legal/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-10 items-center font-semibold text-emerald-700 underline decoration-emerald-300 underline-offset-4 transition hover:text-emerald-600 dark:text-emerald-400 dark:decoration-emerald-700 dark:hover:text-emerald-300"
+                className={styles.link}
               >
                 {currentCopy.railwayPrivacy} ↗
               </a>
@@ -596,7 +360,7 @@ export default async function PrivacyPage() {
                 title={
                   currentCopy.analyticsTitle
                 }
-                accent="blue"
+
               >
               <p>
                 {currentCopy.analyticsBody}
@@ -616,7 +380,7 @@ export default async function PrivacyPage() {
                 title={
                   currentCopy.contentViewsTitle
                 }
-                accent="violet"
+
               >
               <p>
                 {currentCopy.contentViewsBody}
@@ -632,7 +396,7 @@ export default async function PrivacyPage() {
                 title={
                   currentCopy.storageTitle
                 }
-                accent="fuchsia"
+
               >
               <p>
                 {currentCopy.storageBody}
@@ -652,7 +416,7 @@ export default async function PrivacyPage() {
                 title={
                   currentCopy.externalTitle
                 }
-                accent="pink"
+
               >
               <p>
                 {currentCopy.externalBody}
@@ -664,7 +428,7 @@ export default async function PrivacyPage() {
                 title={
                   currentCopy.rightsTitle
                 }
-                accent="amber"
+
               >
               <p>
                 {currentCopy.rightsBody}
@@ -680,7 +444,7 @@ export default async function PrivacyPage() {
                 title={
                   currentCopy.contactTitle
                 }
-                accent="lime"
+
               >
               <p>
                 {currentCopy.contactBody}
@@ -688,7 +452,7 @@ export default async function PrivacyPage() {
 
               <a
                 href="mailto:info@uzde.de"
-                className="inline-flex min-h-10 items-center font-semibold text-emerald-700 underline decoration-emerald-300 underline-offset-4 transition hover:text-emerald-600 dark:text-emerald-400 dark:decoration-emerald-700 dark:hover:text-emerald-300"
+                className={styles.link}
               >
                 info@uzde.de
               </a>
@@ -699,14 +463,14 @@ export default async function PrivacyPage() {
                 title={
                   currentCopy.changesTitle
                 }
-                accent="orange"
+
               >
               <p>
                 {currentCopy.changesBody}
               </p>
             </Section>
 
-            <aside className="rounded-[1.75rem] border border-amber-200/80 bg-amber-50/80 px-6 py-5 text-sm leading-7 text-amber-950 shadow-[0_18px_55px_-42px_rgba(15,23,42,0.35)] dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200 sm:px-8">
+            <aside className={styles.note}>
               <BrandedText
                 text={
                   currentCopy.note
@@ -714,12 +478,11 @@ export default async function PrivacyPage() {
               />
             </aside>
             </article>
-          </div>
         </div>
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }
 
