@@ -9,6 +9,8 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    ".telegram-ui-backups/**",
+    ".patch-backups/**",
     ".next-backup-m17/**",
     "out/**",
     "build/**",

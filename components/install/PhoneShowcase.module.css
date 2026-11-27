@@ -1,0 +1,20 @@
+.showcase{position:relative;width:max-content;max-width:100%;margin-inline:auto}
+.phone{height:380px;width:auto;aspect-ratio:416/905;box-sizing:border-box;padding:3px;border:2px solid #73777b;border-radius:22px;background:#17191c;box-shadow:inset 0 0 0 1px #b1b3b5;overflow:hidden}
+ .screen{position:relative;width:100%;height:100%;border-radius:17px;overflow:hidden;isolation:isolate;background:#15191f}
+.screen img{object-fit:cover}.home{z-index:0}
+ .menu,.sheet,.result,.opened{position:absolute;inset:0;visibility:hidden;animation-duration:20s;animation-iteration-count:infinite;animation-timing-function:linear}
+.menu{z-index:1;animation-name:menuScene}.sheet{z-index:2;animation-name:sheetScene}.result{z-index:3;animation-name:resultScene}
+.touch{position:absolute;z-index:5;width:9%;aspect-ratio:1;border:1px solid white;border-radius:50%;background:#0003;pointer-events:none;animation:touch 20s infinite linear}
+ .opened{z-index:4;animation-name:openedScene}
+@keyframes menuScene{0%,19.99%{visibility:hidden}20%,39.99%{visibility:visible}40%,100%{visibility:hidden}}
+@keyframes sheetScene{0%,39.99%{visibility:hidden;clip-path:inset(100% 0 0)}40%{visibility:visible;clip-path:inset(100% 0 0);animation-timing-function:cubic-bezier(.2,.8,.2,1)}43%,59.99%{visibility:visible;clip-path:inset(0)}60%,100%{visibility:hidden;clip-path:inset(0)}}
+@keyframes resultScene{0%,59.99%{visibility:hidden}60%,99.99%{visibility:visible}100%{visibility:hidden}}
+@keyframes openedScene{0%,79.99%{visibility:hidden;clip-path:inset(68% 8% 24% 76% round 8px)}80%{visibility:visible;clip-path:inset(68% 8% 24% 76% round 8px);animation-timing-function:cubic-bezier(.2,.8,.2,1)}83%,99.99%{visibility:visible;clip-path:inset(0)}100%{visibility:hidden}}
+@keyframes touch{0%,16%{opacity:0;left:28%;top:93%;transform:translate(-50%,-50%) scale(.6)}18%{opacity:1;transform:translate(-50%,-50%) scale(1)}19.9%,36%{opacity:0;left:28%;top:93%}36.01%{left:43%;top:49.6%;opacity:0}38%{opacity:1}39.9%,56%{opacity:0;left:43%;top:49.6%}56.01%{left:45%;top:67%;opacity:0}58%{opacity:1}59.9%,76%{opacity:0;left:45%;top:67%}76.01%{left:84.5%;top:71.4%;opacity:0}78%{opacity:1}79.9%,100%{opacity:0;left:84.5%;top:71.4%}}
+.sensor{position:absolute;z-index:4;top:2.1%;left:50%;width:26%;height:2.6%;transform:translateX(-50%);border-radius:999px;background:#090a0b}
+
+.showcase[data-paused=true] .screen *{animation-play-state:paused}
+@media(min-width:1920px){.phone{height:400px}}
+@media(max-width:1023px){.phone{height:300px}}
+@media(max-width:767px){.phone{height:clamp(200px,60vw,250px);max-width:100%;border-radius:16px;padding:2px}.screen{border-radius:12px}.showcase{margin-inline:auto}}
+@media(prefers-reduced-motion:reduce){.screen *{animation:none}.menu,.sheet,.touch{display:none}.result{visibility:hidden}.opened{visibility:visible;clip-path:none}}
