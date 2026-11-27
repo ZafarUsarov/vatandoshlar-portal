@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './PhoneShowcase.module.css';
 
 export default function PhoneShowcase({label}: {label:string}) {
- 
+
  const ref=useRef<HTMLDivElement>(null);
  const [visible,setVisible]=useState(false);
  useEffect(()=>{
@@ -16,7 +16,7 @@ export default function PhoneShowcase({label}: {label:string}) {
   observer.observe(node);
   return ()=>observer.disconnect();
  },[]);
- 
+
  return <div ref={ref} className={styles.showcase} data-paused={!visible}>
   <div className={styles.phone} role="img" aria-label={label}>
    <div className={styles.screen} aria-hidden="true">
@@ -29,6 +29,6 @@ export default function PhoneShowcase({label}: {label:string}) {
     <span className={styles.sensor}/>
    </div>
   </div>
-  
+
  </div>;
 }
